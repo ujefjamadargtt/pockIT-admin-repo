@@ -1,0 +1,469 @@
+<div>
+  <form nz-form #accountMasterPage="ngForm">
+    <!-- <nz-spin [nzSpinning]="isSpinning"> -->
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Category</nz-form-label>
+
+          <nz-form-control nzHasFeedback nzErrorTip="Please Select Category">
+            <nz-select nzShowSearch nzPlaceHolder="Select Category" name="Tax" [(ngModel)]="data.CATEGORY_ID">
+              <nz-option *ngFor="let role of categories" [nzValue]="role.ID" [nzLabel]="role.NAME">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Subcategory Name</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Subcategory Name">
+            <input nz-input autocomplete="off" placeholder="Enter Subcategory Name"
+              (keypress)="commonFunction.allowOnly($event)" maxlength="128" name="name" [(ngModel)]="data.NAME" required
+              (focus)="isFocused = 'subcategory'" (blur)="isFocused = ''" />
+          </nz-form-control>
+          <!-- Dynamic Character Count -->
+          <h6 style="color: red; font-size: 10px" *ngIf="
+              isFocused === 'subcategory' ||
+              (data.NAME && isFocused === 'subcategory')
+            ">
+            {{ data.NAME.length || 0 }}/128
+          </h6>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <!-- <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Description</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input rows="2" name="description" maxlength="512" [(ngModel)]="data.DESCRIPTION"
+              placeholder="Enter Description"></textarea>
+            <h6 style="color: red; font-size: 10px" *ngIf="
+                  data.DESCRIPTION != undefined &&
+                  data.DESCRIPTION != null &&
+                  data.DESCRIPTION != ''
+                ">
+              {{ data.DESCRIPTION.length }}/512
+            </h6>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div> -->
+
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Description</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input rows="2" name="description" maxlength="512" [(ngModel)]="data.DESCRIPTION"
+              placeholder="Enter Description" (focus)="isFocused = 'description'" (blur)="isFocused = ''"></textarea>
+            <!-- Dynamic Character Count -->
+            <h6 style="color: red; font-size: 10px" *ngIf="
+                isFocused === 'description' ||
+                (data.DESCRIPTION && isFocused === 'description')
+              ">
+              {{ data.DESCRIPTION?.length || 0 }}/512
+            </h6>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="10">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Sequence No.">
+            <input nz-input placeholder="Sequence No." name="SeqNo" style="width: 110px" required
+              [(ngModel)]="data.SEQ_NO" required #seqNo="ngModel" (keypress)="commonFunction.onlynum($event)"
+              maxlength="8" autocomplete="off" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="6">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Is New?</nz-form-label>
+          <nz-form-control>
+            <nz-switch name="IS_NEW" nzCheckedChildren="Yes" nzUnCheckedChildren="No" [(ngModel)]="data.IS_NEW">
+            </nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Status</nz-form-label>
+
+          <nz-form-control>
+            <nz-switch name="Status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+              [(ngModel)]="data.STATUS">
+            </nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <!-- <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon
+            >Subcategory Icon &nbsp;<span
+              nz-icon
+              nzType="info-circle"
+              nzTheme="twotone"
+              nz-tooltip
+              nzTooltipTitle="   Please select an image file (PNG, JPG, JPEG) with a image
+                dimension 60*60."
+            ></span>
+            <span
+              *ngIf="(data.IMAGE && data.IMAGE != ' ') || fileURL"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure you want to delete subcategory Icon?"
+              nzPopconfirmPlacement="top"
+              (nzOnConfirm)="image1DeleteConfirm(data)"
+              (nzOnCancel)="deleteCancel()"
+              style="cursor: pointer; color: red; margin-left: 10px"
+            >
+              <span
+                nz-icon
+                nzType="delete"
+                nzTheme="twotone"
+                [nzTwotoneColor]="'#FF0000'"
+                nz-tooltip
+                nzTooltipTitle="Delete"
+              ></span>
+            </span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Subcategory Icon">
+            <button
+              *ngIf="!fileURL && (!data.IMAGE || data.IMAGE.trim() === '')"
+              nz-button
+              style="
+                height: 28px;
+                padding: 0px 7px;
+                font-size: 10px;
+                width: 40%;
+              "
+              (click)="image1.click()"
+            >
+              Upload Icon
+              <input
+                #image1
+                name="image1"
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                (change)="fileChangeEvent($event)"
+                style="display: none"
+              />
+            </button>
+
+            <div
+              *ngIf="
+                data.IMAGE &&
+                data.IMAGE != null &&
+                data.IMAGE != undefined &&
+                data.IMAGE != ' ' &&
+                data.IMAGE != '' &&
+                (fileURL == undefined || fileURL == null || fileURL == '')
+              "
+              style="margin-top: 10px"
+            >
+              <img
+                nz-image
+                [nzSrc]="fullImageUrl"
+                alt="Uploaded Image"
+                style="
+                  width: 120px;
+                  height: auto;
+                  border: 1px solid #ddd;
+                  margin-bottom: 10px;
+                "
+              />
+            </div>
+            <div
+              *ngIf="fileURL != undefined && fileURL != null && fileURL != ''"
+              class="ss"
+              style="align-items: center"
+            >
+              <img
+                nz-image
+                [nzSrc]="imagePreview"
+                alt="Preview"
+                style="
+                  height: auto;
+                  width: auto;
+                  overflow: auto;
+                  max-width: 600;
+                  max-height: 400;
+                "
+              />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div> -->
+      <nz-form-item>
+        <nz-form-label nzRequired nzNoColon>Sub Category Icon &nbsp;
+          <span><i nz-icon nzType="info-circle" nzTheme="twotone" nzTooltipTitle="Please select an Icon file (PNG, JPG, JPEG) with a size up to
+            1MB." nzTooltipPlacement="top" nz-tooltip>
+            </i>
+          </span>
+        </nz-form-label>
+        <nz-form-control nzHasFeedback nzErrorTip="Select Icon">
+          <button *ngIf="data.IMAGE == ' ' || data.IMAGE == null" nz-button
+            style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="icon.click()">
+            <span nz-icon nzType="upload"></span>
+            Upload Icon
+            <input #icon name="icon" type="file" accept=".png, .jpg, .jpeg" (change)="onDetailsFileSelected($event)"
+              style="display: none" maxlength="32" />
+          </button>
+
+          <div *ngIf="
+              data.IMAGE != null && data.IMAGE != undefined && data.IMAGE != ' '
+            " style="display: flex; justify-content: left">
+            <span>
+              <span *ngIf="data['IMAGE'] != null">
+                <span *ngIf="data['IMAGE'].length >= 36" nz-popover [nzPopoverContent]="data['IMAGE']"
+                  nzPopoverPlacement="topLeft" style="color: #092b9c">
+                  {{
+                  data["IMAGE"] == null
+                  ? "-"
+                  : (data["IMAGE"] | slice : 0 : 36)
+                  }}{{ data["IMAGE"].length > 36 ? "..." : "" }}
+                </span>
+                <span *ngIf="data['IMAGE'].length < 36" style="color: #092b9c">
+                  {{
+                  data["IMAGE"] == null
+                  ? "-"
+                  : (data["IMAGE"] | slice : 0 : 36)
+                  }}
+                  {{ data["IMAGE"].length > 36 ? "..." : "" }}
+                </span>
+              </span></span>
+            &nbsp;&nbsp;
+            <a style="color: #092b9c; margin-right: 9px" (click)="viewDetailsImage(data.IMAGE)" nz-tooltip
+              nzTooltipTitle="Click Here To View Uploaded Icon">
+              <span nz-icon nzType="eye" nzTheme="outline"></span>
+            </a>
+            <span *ngIf="data.ID">
+              <span style="cursor: pointer" nz-popconfirm nzPopconfirmTitle="Are you sure want delete Icon?"
+                nzPopconfirmPlacement="top" (nzOnConfirm)="IconDeleteConfirm(data)"
+                (nzOnCancel)="deleteDetailsCancel()">
+                <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                  nzTooltipTitle="Delete">
+                </span>
+              </span>
+            </span>
+            <span *ngIf="!data.ID">
+              <span style="cursor: pointer; margin-left: 10px" nz-popconfirm
+                nzPopconfirmTitle="Are you sure want Delete?" nzPopconfirmPlacement="top"
+                (nzOnConfirm)="removeDetailsImage()" (nzOnCancel)="deleteDetailsCancel()">
+                <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                  nzTooltipTitle="Delete">
+                </span>
+              </span>
+            </span>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <!-- <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Banner Image &nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+              nzTooltipTitle=" Please select an image file (PNG, JPG, JPEG) with a image dimension 345*75."></span>
+            <span *ngIf="
+                (data.BANNER_IMAGE && data.BANNER_IMAGE != ' ') || fileURL1
+              " nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete banner Image?"
+              nzPopconfirmPlacement="top" (nzOnConfirm)="image1DeleteConfirm1(data)" (nzOnCancel)="deleteCancel1()"
+              style="cursor: pointer; color: red; margin-left: 10px">
+              <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                nzTooltipTitle="Delete"></span>
+            </span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Banner Image">
+            <button *ngIf="
+                !fileURL1 &&
+                (!data.BANNER_IMAGE || data.BANNER_IMAGE.trim() === '')
+              " nz-button style="
+                height: 28px;
+                padding: 0px 7px;
+                font-size: 10px;
+                width: 40%;
+              " (click)="image2.click()">
+              Upload Image
+              <input #image2 name="image2" type="file" accept=".png, .jpg, .jpeg" (change)="fileChangeEvent2($event)"
+                style="display: none" />
+            </button>
+
+          
+            <div *ngIf="
+                data.BANNER_IMAGE &&
+                data.BANNER_IMAGE != null &&
+                data.BANNER_IMAGE != undefined &&
+                data.BANNER_IMAGE != ' ' &&
+                data.BANNER_IMAGE != '' &&
+                (fileURL1 == undefined || fileURL1 == null || fileURL1 == '')
+              " style="margin-top: 10px">
+              <img nz-image [nzSrc]="fullImageUrl1" alt="Uploaded Image" style="
+                  width: 120px;
+                  height: auto;
+                  border: 1px solid #ddd;
+                  margin-bottom: 10px;
+                " />
+             
+            </div>
+            <div *ngIf="
+                fileURL1 != undefined && fileURL1 != null && fileURL1 != ''
+              " class="ss" style="align-items: center">
+              <img nz-image [nzSrc]="imagePreview1" alt="Preview" style="
+                  height: auto;
+                  width: auto;
+                  overflow: auto;
+                  max-width: 600;
+                  max-height: 400;
+                " />
+            </div>
+          
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div> -->
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button style="margin-right: 8px" class="ant-btn" style="margin-right: 8px"
+      (click)="close(accountMasterPage)">
+      <span>Cancel</span>
+    </button>
+
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning" (click)="save(false, accountMasterPage)">
+      <span>Save & Close</span>
+    </button>
+
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
+          <a (click)="save(true, accountMasterPage)" style="color: white !important">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, accountMasterPage)">
+      <span>Update & close</span>
+    </button>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="imagePreviewVisible" nzTitle="Icon Preview" [nzFooter]="null"
+  (nzOnCancel)="imagePreviewVisible = false">
+  <img *ngIf="sanitizedFileURL" [src]="sanitizedFileURL" alt="Preview"
+    style="width: 100%; height: auto; display: block" />
+</nz-modal>
+<nz-modal [nzWidth]="900" [nzStyle]="{ 'margin-top': '-80px' }" [(nzVisible)]="CropImageModalVisible"
+  nzMaskClosable="false" nzClosable="false" [nzContent]="content2" [nzTitle]="'Crop Image'"
+  (nzOnCancel)="CropImageModalCancel()" [nzFooter]="CropImageModalFooter">
+  <ng-template #content2>
+    <nz-spin [nzSpinning]="isSpinningCrop">
+      <div *ngIf="
+          cropimageshow != undefined &&
+          cropimageshow != null &&
+          cropimageshow != ''
+        " class="ss" style="height: 500px; overflow: scroll">
+        <!-- <iframe
+      [src]="cropimageshow"
+      style="width: 832px; height: 396px"
+      frameborder="0"
+    ></iframe> -->
+        <div *ngIf="croppedImage" style="text-align: center">
+          <p>Cropped Image:</p>
+          <img [src]="croppedImage" width="60" height="60" />
+        </div>
+        <nz-divider [ngStyle]="{ width: imageWidth - 900 + 'px' }" nzPlain nzVariant="solid"></nz-divider>
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" [cropper]="cropperPosition"
+          format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)" [imageQuality]="100"
+          (cropperReady)="cropperReady($event)" (loadImageFailed)="loadImageFailed()"></image-cropper>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #CropImageModalFooter>
+    <button nz-button nzType="default" (click)="CropImageModalCancel()">
+      Close
+    </button>
+    <button nz-button nzType="primary" (click)="onFileSelected(imageChangedEvent)">
+      Upload
+    </button>
+  </ng-template>
+</nz-modal>
+<nz-modal [nzWidth]="500" [nzStyle]="{ 'margin-top': '-80px' }" [(nzVisible)]="CropImageModalVisible2"
+  nzMaskClosable="false" nzClosable="false" [nzContent]="content3" [nzTitle]="'Crop Image'"
+  (nzOnCancel)="CropImageModalCancel2()" [nzFooter]="CropImageModalFooter2">
+  <ng-template #content3>
+    <nz-spin [nzSpinning]="isSpinningCrop2">
+      <!-- <div
+        *ngIf="
+          cropimageshow2 != undefined &&
+          cropimageshow2 != null &&
+          cropimageshow2 != ''
+        "
+        class="ss"
+        style="height: 500px; overflow: scroll"
+      >
+        <div *ngIf="croppedImage2" style="text-align: center">
+          <p>Cropped Image:</p>
+          <img [src]="croppedImage2" width="345" height="75" />
+        </div>
+        <nz-divider
+          [ngStyle]="{ width: imageWidth2 - 900 + 'px' }"
+          nzPlain
+          nzVariant="solid"
+        ></nz-divider>
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent2"
+          [maintainAspectRatio]="false"
+          [cropper]="cropperPosition2"
+          format="png"
+          (imageCropped)="imageCropped2($event)"
+          (imageLoaded)="imageLoaded2($event)"
+          (cropperReady)="cropperReady2($event)"
+          (loadImageFailed)="loadImageFailed2()"
+        ></image-cropper>
+      </div> -->
+      <!-- <iframe
+        [src]="cropimageshow"
+        style="width: 832px; height: 396px"
+        frameborder="0"
+      ></iframe> -->
+    </nz-spin>
+  </ng-template>
+  <ng-template #CropImageModalFooter2>
+    <button nz-button nzType="default" (click)="CropImageModalCancel2()">
+      Close
+    </button>
+    <button nz-button nzType="primary" (click)="onFileSelected1(imageChangedEvent2)">
+      Upload
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [nzWidth]="300" [(nzVisible)]="ImageModal2Visible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="content1" [nzTitle]="'Icon View'" (nzOnCancel)="ImageModal2Cancel()" [nzFooter]="ImageModal2Footer">
+  <ng-template #content1>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div *ngIf="
+          imageshow2 != undefined && imageshow2 != null && imageshow2 != ''
+        " class="ss" style="height: 200px">
+        <iframe [src]="imageshow2" style="width: 800px; height: 400px" frameborder="0"></iframe>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #ImageModal2Footer>
+    <button nz-button nzType="default" (click)="ImageModal2Cancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>

@@ -1,0 +1,156 @@
+<div style="margin-top: 10px">
+  <form nz-form #teritorymaster="ngForm">
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Territory Name</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Territory Name">
+            <input nz-input name="Territoryname" placeholder="Enter Territory Name" required [(ngModel)]="data.NAME"
+              (keypress)="commonFunction.alphaOnly($event)" #nameField="ngModel" maxlength="128" autocomplete="off"
+              (focus)="isFocused = 'NAME'" (blur)="isFocused = ''" />
+            <h6 style="color: red; font-size: 10px" *ngIf="
+                isFocused === 'NAME' || (data.NAME && isFocused === 'NAME')
+              ">
+              {{ data.NAME?.length || 0 }}/128
+            </h6>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Country</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Select Country Name">
+            <nz-select nzAllowClear="true" nzPlaceHolder="Select Country" name="COUNTRY_ID"
+              [(ngModel)]="data.COUNTRY_ID" nzShowSearch required>
+              <nz-option *ngFor="let data of countryData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Start Time</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Select Start Time">
+            <nz-time-picker name="DayStartTime" [(ngModel)]="data.START_TIME" [nzMinuteStep]="10" required
+              (ngModelChange)="onStartTimeChange()" nzShowTime="{ nzFormat: 'HH:mm a' }" nzFormat="HH:mm a"
+              nzPlaceHolder="Time">
+            </nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>End Time</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Select End Time">
+            <nz-time-picker name="DayEndTime" [(ngModel)]="data.END_TIME" [nzMinuteStep]="10" required
+              nzShowTime="{ nzFormat: 'HH:mm a' }" nzFormat="HH:mm a" nzPlaceHolder="Time"
+              [nzDisabledHours]="disabledEndHours" [nzDisabledMinutes]="disabledEndMinutes">
+            </nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Support Contact No.</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please enter a valid Support Contact No."
+            [nzValidateStatus]="mobileNo">
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <nz-select name="countrycode" [(ngModel)]="data.SUPPORT_COUNTRY_CODE" [nzOptionOverflowSize]="5"
+                  nzShowSearch [nzDropdownMatchSelectWidth]="false" autocomplete="off" nzPlaceHolder="Code" required>
+                  <nz-option *ngFor="let option of countryCodes" [nzValue]="option.value"
+                    [nzLabel]="option.label"></nz-option>
+                </nz-select>
+              </div>
+              <div nz-col nzSpan="12">
+                <input nz-input nzHasFeedback name="mobileno" placeHolder="Enter Contact No." autocomplete="off"
+                  [(ngModel)]="data.SUPPORT_CONTACT_NUMBER" #mobileNo="ngModel" [pattern]="commonFunction.mobpattern"
+                  (keypress)="commonFunction.onlynum($event)" maxlength="10" minlength="10" required
+                  autocomplete="off" />
+              </div>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Sequence No.">
+            <input nz-input placeholder="Sequence No." name="SeqNo" style="width: 150px" required
+              [(ngModel)]="data.SEQ_NO" required #seqNo="ngModel" (keypress)="commonFunction.onlynum($event)"
+              maxlength="8" autocomplete="off" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="2"></div>
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Status</nz-form-label>
+          <nz-form-control>
+            <nz-switch name="status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+              [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <!-- <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Non-Working Days</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please select non-working days">
+            <nz-select [nzMaxTagCount]="2" nzMode="multiple" nzAllowClear="true" nzPlaceHolder="select non-working days"
+              name="selectedDays" [(ngModel)]="selectedDays" nzShowSearch>
+              <nz-option *ngFor="let day of weekdata" [nzValue]="day.shortCode" [nzLabel]="day.name"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+      </div>
+    </div> -->
+    <div nz-row>
+      <div nz-col nzSpan="16">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Is Express Service Available ?</nz-form-label>
+          <nz-form-control>
+            <nz-switch name="IS_EXPRESS_SERVICE_AVAILABLE" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+              [(ngModel)]="data.IS_EXPRESS_SERVICE_AVAILABLE"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="footer">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+    Cancel
+  </button>
+
+  <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
+    (click)="save(false, teritorymaster)" class="ant-btn ant-btn-primary">
+    Save & Close
+  </button>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
+        <a class="footer-button" style="color: white !important" (click)="save(true, teritorymaster)">Save & New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false, teritorymaster)">
+    <span>Update & Close</span>
+  </button>
+</div>

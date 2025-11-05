@@ -1,0 +1,50 @@
+<form nz-form #myForm="ngForm">
+  <div nz-row>
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzRequired nzNoColon> Employee Name </nz-form-label>
+
+        <nz-form-control>
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Please Select Employee"
+            name="empid"
+            [(ngModel)]="EMPLOYEE_ID"
+            style="width: 100%"
+            required
+          >
+            <nz-option
+              *ngFor="let emp of empList"
+              [nzValue]="emp.USER_ID"
+              [nzLabel]="emp.NAME"
+            >
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close(myForm)"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    [nzLoading]="isLoading"
+    (click)="save(myForm)"
+  >
+    <span>Save & Close</span>
+  </button>
+</div>

@@ -1,0 +1,23 @@
+.remark,
+textarea {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+
+}
+
+
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  /* Adjust as needed */
+  display: inline-block;
+}
+
+
+
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}

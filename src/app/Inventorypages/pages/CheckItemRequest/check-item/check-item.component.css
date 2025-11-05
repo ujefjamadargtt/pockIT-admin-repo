@@ -1,0 +1,54 @@
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+  width: 100%;
+}
+
+.custom-select-width {
+  width: 100px;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+.nz-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nz-col {
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+
+.nz-form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.nz-form-control {
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .nz-col {
+    width: 100%;
+    padding: 0 15px;
+  }
+}
+
+tr:nth-child(even) td {
+  background-color: #f4f3f3;
+}
+
+tr:nth-child(odd) td {
+  background-color: #ebeaea;
+}
+
+td {
+  font-size: 12px;
+}

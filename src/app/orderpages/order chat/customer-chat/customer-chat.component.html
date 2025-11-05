@@ -1,0 +1,74 @@
+<div class="select-container">
+    <div nz-col nzSpan="8">
+      <nz-form-item>
+        <nz-form-label nzRequired nzNoColon>Technician Name</nz-form-label>
+        <nz-form-control nzHasFeedback nzErrorTip="Please Select Technician Name">
+          <nz-select
+            nzAllowClear="true"
+            nzPlaceHolder="Select Technician Name"
+            name="TECHNICIAN_NAME"
+            [(ngModel)]="TECHNICIAN_NAME"
+            (ngModelChange)="onTechnicianChange()"
+            nzShowSearch
+            required
+          >
+            <nz-option
+              *ngFor="let data of techData"
+              [nzValue]="data.ID"
+              [nzLabel]="data.NAME"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+</div>
+    <div class="chat-container">
+      <div class="message-box">
+          <!-- Customer's message -->
+          <div class="message customer-message">
+              <span class="customer-name">Customer Name</span>
+              <div >
+              <div class="message-text">Message content here.hhhhhhhhhhhhhhhhhhhhhh..</div>
+              
+              <div style="text-align: right !important; width: 100%;" 
+              class="timestamp">15/Nov | 16:39 PM</div>
+            </div>
+          </div>
+          
+          <!-- Technician's message -->
+          <div class="message technician-message">
+              <span class="technician-name">Technician Name</span>
+              <div class="message-text">Message content here.hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh..</div>
+              <span class="timestamp">15/Nov | 16:40 PM</span>
+          </div>
+    
+          <!-- Customer's message -->
+          <div class="message customer-message">
+            <span class="customer-name">Customer Name</span>
+            <div >
+            <div class="message-text">Message content here...</div>
+            
+            <div style="text-align: right !important; width: 100%;" class="timestamp">15/Nov | 16:39 PM</div>
+          </div>
+        </div>
+        
+          <!-- Technician's message -->
+          <div class="message technician-message">
+            <span class="technician-name">Technician Name</span>
+            <div class="message-text">Message content here...</div>
+            <span class="timestamp">15/Nov | 16:40 PM</span>
+          </div>
+      </div>
+    
+      <div class="input-area">
+        <button  nz-button nzType="default"  class="paper-clip">
+        <span style="font-size: 20px !important;" nz-icon nzType="paper-clip" nzTheme="outline"></span>
+    </button>
+          <textarea placeholder="Type your message..." rows="1"></textarea>
+          <button type="button"  class="whatsapp-send-icon">
+            <span nz-icon nzType="send" nzTheme="outline"></span>
+          </button>
+      </div>
+    </div>
+  
+  

@@ -1,0 +1,141 @@
+<div>
+  <form nz-form #Taxmaster="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Country</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Country">
+              <nz-select nzAllowClear="true" nzPlaceHolder="Select Country" name="COUNTRY_ID"
+                [(ngModel)]="data.COUNTRY_ID" nzShowSearch required [nzLoading]="CountryLoading"
+                (ngModelChange)="oncityChange()">
+                <nz-option *ngFor="let data of countryData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Tax Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter Tax Name">
+              <input nz-input name="name" placeholder="Enter Tax Name" required [(ngModel)]="data.NAME"
+                #nameField="ngModel" (keypress)="commonFunction.allowOnly($event)" maxlength="128" autocomplete="off"
+                (focus)="isFocused = 'name'" (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="
+                  isFocused === 'name' || (data.NAME && isFocused === 'name')
+                ">
+                {{ data.NAME.length }}/128
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzXs="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>IGST</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter IGST">
+              <nz-input-group [nzAddOnAfter]="'%'">
+                <input nz-input name="IGST" placeholder="Enter IGST" required [(ngModel)]="data.IGST"
+                  #nameField="ngModel" (keypress)="commonFunction.onlynumdot($event)" maxlength="5"
+                  autocomplete="off" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzXs="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>SGST</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter SGST">
+              <nz-input-group [nzAddOnAfter]="'%'">
+                <input nz-input name="SGST" placeholder="Enter SGST" required [(ngModel)]="data.SGST"
+                  #nameField="ngModel" (keypress)="commonFunction.onlynumdot($event)" maxlength="5"
+                  autocomplete="off" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzXs="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>CGST</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter CGST">
+              <nz-input-group [nzAddOnAfter]="'%'">
+                <input nz-input name="CGST" placeholder="Enter CGST" required [(ngModel)]="data.CGST"
+                  #nameField="ngModel" (keypress)="commonFunction.onlynumdot($event)" maxlength="5"
+                  autocomplete="off" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzXs="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>CESS</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter CESS">
+              <nz-input-group [nzAddOnAfter]="'%'">
+                <input nz-input name="CESS" placeholder="Enter CESS" required [(ngModel)]="data.CESS"
+                  #nameField="ngModel" (keypress)="commonFunction.onlynumdot($event)" maxlength="5"
+                  autocomplete="off" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzXs="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter Short Code">
+              <input nz-input name="shortcode" placeholder="Enter Short Code" required [(ngModel)]="data.SHORT_CODE"
+                #nameField="ngModel" (keypress)="commonFunction.alphaOnly($event)" maxlength="8" autocomplete="off"
+                (focus)="isFocused = 'shortcode'" (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="
+                  isFocused === 'shortcode' ||
+                  (data.SHORT_CODE && isFocused === 'shortcode')
+                ">
+                {{ data.SHORT_CODE.length }}/8
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<div class="footer">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+    Cancel
+  </button>
+
+  <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
+    (click)="save(false, Taxmaster)" class="ant-btn ant-btn-primary">
+    Save & Close
+  </button>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+        <a class="footer-button" style="color: white!important" (click)="save(true, Taxmaster)">Save & New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false, Taxmaster)">
+    <span>Update & Close</span>
+  </button>
+</div>

@@ -1,0 +1,55 @@
+<div>
+  <!-- <form nz-form> -->
+  <form nz-form #couponTypePage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Coupon Type </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Coupon Type">
+              <input nz-input name="name" type="text" autocomplete="off" [(ngModel)]="data.NAME" maxlength="64" required
+                placeholder="Enter Coupon Type" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Is Active</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="is_active" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+  <div class="footer">
+    <button type="button" nz-button (click)="close(couponTypePage)" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning" (click)="save(false, couponTypePage)">
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
+          <a (click)="save(true, couponTypePage)" style="color: white !important">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, couponTypePage)">
+      <span>Update & close</span>
+    </button>
+  </div>
+
+  <!-- <div class="header">
+    <button type="button" nz-button (click)="close(couponTypePage)" class="ant-btn" style="margin-right: 8px">
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div> -->
+</div>

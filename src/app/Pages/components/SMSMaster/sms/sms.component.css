@@ -1,0 +1,97 @@
+.my-box {
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+  padding: 8px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background-color: #fafafa;
+
+}
+#Gstno {
+
+  text-transform: lowercase;
+  text-transform:  '_';
+  white-space: nowrap; /* Prevent line breaks */
+  overflow: hidden;    /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis (...) for long text */
+  
+
+}
+
+#Gstno::placeholder {
+
+  text-transform: initial; /* Set it to "initial" to reset the transformation for the placeholder */
+
+}
+
+
+#Gstno::before {
+  content: attr(data-text); /* Display the original text as a data attribute */
+}
+
+#Gstno::after {
+  content: '_'; /* Display underscores after spaces */
+  white-space: pre; /* Preserve whitespace, including spaces and underscores */
+}
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.vertical-card {
+  width: 300px;
+  border-radius: 5px;
+  margin: 0;
+  padding: 0;
+  background-image: url('/assets/sms.jpg'); 
+
+  /* Replace with your background image URL */
+  background-repeat: repeat;
+  /* You can use 'repeat', 'repeat-x', or 'repeat-y' to create a pattern */
+  background-size: cover;
+  /* Adjust to fit your design */
+  /* font-family: Arial, sans-serif; */
+  /* background-color:  rgb(250, 250, 250); */
+  font-family: 'Roboto', sans-serif !important;
+
+}
+.vertical{
+
+  /* font-family: Helvetica; */
+  font-family: 'Roboto', sans-serif !important;
+  background-color: rgb(255, 255, 255);
+  border-radius:0px 44px 44px 44px;
+  margin-top: 1px;
+  min-height: 20px;
+  position: relative;
+  overflow-wrap: break-word;
+  padding: 10px;
+
+}
+  .image {
+    margin: 0;
+    padding: 0;
+    background-image: url('/assets/sms.jpg');
+    /* Replace with your background image URL */
+    background-repeat: repeat;
+    /* You can use 'repeat', 'repeat-x', or 'repeat-y' to create a pattern */
+    background-size: cover;
+    /* Adjust to fit your design */
+    /* font-family: Arial, sans-serif; */
+    font-family: 'Roboto', sans-serif !important;
+
+  }
+  .phone-select {
+    width: 70px;
+  }
+      
+  .header {
+      position: absolute;
+      top: 0px;
+      width: 100%;
+      border-top: 1px solid rgb(232, 232, 232);
+      padding: 10px 16px;
+      text-align: right;
+      right: 0px;
+    }

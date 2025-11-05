@@ -1,0 +1,41 @@
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+
+
+.container {  
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;    
+}
+
+.quote {
+    color: #8cc540;
+    font-style: italic;
+}
+
+.redText {
+    color: Red;
+    font-size: 12px;
+    font-family: Arial;
+}
+
+h1.titleText {
+    color: #69a8cf;
+    text-align: left;
+    margin-top: 40px;
+    font-weight: normal;
+}
+
+:host::ng-deep angular-editor .angular-editor-toolbar button {
+  position: relative; /* Ensures toolbar buttons are positioned relative */
+}
+
+:host::ng-deep angular-editor .angular-editor-toolbar .color-picker-dropdown {
+  left: auto !important; /* Adjust the horizontal positioning */
+  right: 0; /* Ensures it opens on the correct side */
+  z-index: 1000; /* Prevents overlapping issues */
+}

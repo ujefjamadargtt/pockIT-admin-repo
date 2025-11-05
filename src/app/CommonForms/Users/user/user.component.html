@@ -1,0 +1,291 @@
+<div>
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Role </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Role">
+              <nz-select name="role" nzPlaceHolder="Select Role" nzShowSearch style="width: 100%"
+                [(ngModel)]="data.ROLE_ID" [disabled]="data.ID">
+                <nz-option *ngFor="let role of roles" [nzValue]="role.ID" [nzLabel]="role.NAME"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <!-- User Name -->
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>User Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter User Name">
+              <input nz-input name="name" placeholder="Enter User Name" [(ngModel)]="data.NAME" required maxlength="128"
+                autocomplete="off" (focus)="isFocused = 'username'" (blur)="isFocused = ''"
+                (keypress)="commonFunction.allowOnly($event)" />
+              <h6 style="color: red; font-size: 10px" *ngIf="data.NAME && isFocused === 'username'">
+                {{ data.NAME.length || 0 }}/128
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <!-- Email  -->
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Email</nz-form-label>
+            <nz-form-control nzHasFeedback [nzErrorTip]="
+                email.invalid && email.touched ? 'Please Enter Valid Email' : ''
+              ">
+              <input nz-input name="email" placeholder="Enter Email" [pattern]="commonFunction.email"
+                [(ngModel)]="data.EMAIL_ID" [disabled]="data.ID" required maxlength="64" #email="ngModel"
+                autocomplete="off" (focus)="isFocused = 'email'" (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="data.EMAIL_ID && isFocused === 'email'">
+                {{ data.EMAIL_ID.length || 0 }}/64
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <!-- <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Mobile No </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Invalid Mobile No.">
+              <input
+                nz-input
+                name="mobile"
+                placeholder="Enter Mobile No"
+                maxlength="10"
+                [pattern]="commonFunction.mobpattern"
+                [(ngModel)]="data.MOBILE_NUMBER"
+                required
+                (keypress)="commonFunction.onlynum($event)"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div> -->
+
+      <div nz-col nzSpan="24" *ngIf="!data.ID">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Password&nbsp;<i nz-icon nzType="info-circle" nzTheme="twotone"
+              nzTooltipTitle="Note: Password must contain at least 8
+      characters which include 1 uppercase, 1 special character, and 1 number." nzTooltipPlacement="top" nz-tooltip>
+            </i></nz-form-label>
+
+          <nz-form-control nzHasFeedback style="text-align: left" nzRequired>
+            <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
+              <input nz-input [type]="passwordVisible ? 'text' : 'password'" name="password" [(ngModel)]="data.PASSWORD"
+                #password="ngModel" placeholder="Enter Password" required maxlength="20" autocomplete="off"
+                [pattern]="commonFunction.passPattern" (focus)="isFocused1 = true" (blur)="isFocused1 = false" />
+            </nz-input-group>
+            <!-- Display length when focused -->
+            <h6 style="color: red; font-size: 10px" *ngIf="data.PASSWORD && isFocused1">
+              {{ data.PASSWORD.length || 0 }}/20
+            </h6>
+
+            <ng-template #suffixTemplate>
+              <i nz-icon [nzType]="passwordVisible ? 'eye' : 'eye-invisible'"
+                (click)="passwordVisible = !passwordVisible">
+              </i>
+            </ng-template>
+          </nz-form-control>
+
+          <div style="color: red; font-size: 10px; text-align: left">
+            <span *ngIf="password.errors?.['required'] && password.touched">Password is required.</span>
+            <span *ngIf="password.errors?.['minlength'] && password.touched">Password must be at least 8 characters
+              long.</span>
+            <span *ngIf="password.errors?.['maxlength'] && password.touched">Password cannot exceed 15
+              characters.</span>
+            <!-- <span *ngIf="password.errors?.['pattern'] && password.touched">Password must meet the specified pattern requirements.</span> -->
+          </div>
+
+          <!-- Password requirements tooltip -->
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Profile Photo</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Profile Photo">
+            <button *ngIf="data.PROFILE_PHOTO == ' ' || data.PROFILE_PHOTO == null" nz-button style="
+                height: 28px;
+                padding: 0px 7px;
+                font-size: 12px;
+                width: 30%;
+              " (click)="icon.click()" nz-tooltip
+              nzTooltipTitle="Note: Please select an image file (PNG, JPG, JPEG) with a size up to 1MB and Dimension 128*128.">
+              Upload
+              <input #icon name="icon" type="file" accept=".png, .jpg, .jpeg" (change)="fileChangeEvent($event)"
+                style="display: none" maxlength="32" />
+            </button>
+
+            <div *ngIf="
+                data.PROFILE_PHOTO != null &&
+                data.PROFILE_PHOTO != undefined &&
+                data.PROFILE_PHOTO != ' '
+              " style="display: flex; justify-content: left">
+              <span>
+                <span *ngIf="data['PROFILE_PHOTO'] != null">
+                  <span *ngIf="data['PROFILE_PHOTO'].length >= 36" nz-popover [nzPopoverContent]="data['PROFILE_PHOTO']"
+                    nzPopoverPlacement="topLeft">
+                    {{
+                    data["PROFILE_PHOTO"] == null
+                    ? "-"
+                    : (data["PROFILE_PHOTO"] | slice : 0 : 36)
+                    }}{{ data["PROFILE_PHOTO"].length > 36 ? "..." : "" }}
+                  </span>
+                  <span *ngIf="data['PROFILE_PHOTO'].length < 36">
+                    {{
+                    data["PROFILE_PHOTO"] == null
+                    ? "-"
+                    : (data["PROFILE_PHOTO"] | slice : 0 : 36)
+                    }}
+                    {{ data["PROFILE_PHOTO"].length > 36 ? "..." : "" }}
+                  </span>
+                </span>
+              </span>
+              &nbsp;&nbsp;
+              <a style="color: blue; margin-right: 9px" (click)="viewImage(data.PROFILE_PHOTO)" nz-tooltip
+                nzTooltipTitle="Click Here To View Uploaded Profile Photo">
+                <span nz-icon nzType="eye" nzTheme="outline"></span>
+              </a>
+              <span *ngIf="data.ID">
+                <span style="cursor: pointer" nz-popconfirm
+                  nzPopconfirmTitle="Are you sure want to delete Profile Photo?" nzPopconfirmPlacement="top"
+                  (nzOnConfirm)="IconDeleteConfirm(data)" (nzOnCancel)="deleteCancel()">
+                  <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                    nzTooltipTitle="Delete"></span>
+                </span>
+              </span>
+              <span *ngIf="!data.ID">
+                <span style="cursor: pointer; margin-left: 10px" nz-popconfirm
+                  nzPopconfirmTitle="Are you sure want to Delete?" nzPopconfirmPlacement="top"
+                  (nzOnConfirm)="removeImage()" (nzOnCancel)="deleteCancel()">
+                  <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                    nzTooltipTitle="Delete"></span>
+                </span>
+              </span>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-row *ngIf="!data.ID">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="is_active" [disabled]="data.ID" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning" (click)="save(false, websitebannerPage)">
+      <span>Save & Close</span>
+    </button>
+
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+          <a style="color: white!important" (click)="save(true, websitebannerPage)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, websitebannerPage)">
+      <span>Update & close</span>
+    </button>
+  </div>
+
+  <nz-modal [nzWidth]="500" [(nzVisible)]="ImageModalVisible" nzMaskClosable="false" nzClosable="false"
+    [nzContent]="content" [nzTitle]="'Profile Photo View'" (nzOnCancel)="ImageModalCancel()"
+    [nzFooter]="ImageModalFooter">
+    <ng-template #content>
+      <nz-spin [nzSpinning]="isSpinning">
+        <div *ngIf="
+            imageshow != undefined &&
+            imageshow != null &&
+            imageshow != '' &&
+            (fileURL == undefined || fileURL == null || fileURL == '')
+          " class="ss" style="align-items: center">
+          <img src="{{ imageshow }}" alt="Preview" style="
+              height: auto;
+              width: auto;
+              overflow: auto;
+              max-width: 600;
+              max-height: 400;
+              align-items: center;
+            " />
+        </div>
+        <div *ngIf="fileURL != undefined && fileURL != null && fileURL != ''" class="ss" style="align-items: center">
+          <img [src]="imagePreview" alt="Preview" style="
+              height: auto;
+              width: auto;
+              overflow: auto;
+              max-width: 600;
+              max-height: 400;
+            " />
+        </div>
+      </nz-spin>
+    </ng-template>
+    <ng-template #ImageModalFooter>
+      <button nz-button nzType="default" (click)="ImageModalCancel()">
+        Close
+      </button>
+    </ng-template>
+  </nz-modal>
+</div>
+<nz-modal [nzWidth]="900" [nzStyle]="{ 'margin-top': '-80px' }" [(nzVisible)]="CropImageModalVisible"
+  nzMaskClosable="false" nzClosable="false" [nzContent]="content2" [nzTitle]="'Crop Image'"
+  (nzOnCancel)="CropImageModalCancel()" [nzFooter]="CropImageModalFooter">
+  <ng-template #content2>
+    <nz-spin [nzSpinning]="isSpinningCrop">
+      <div *ngIf="
+          cropimageshow != undefined &&
+          cropimageshow != null &&
+          cropimageshow != ''
+        " class="ss" style="height: 500px; overflow: scroll">
+        <!-- <iframe
+      [src]="cropimageshow"
+      style="width: 832px; height: 396px"
+      frameborder="0"
+    ></iframe> -->
+        <div *ngIf="croppedImage" style="text-align: center">
+          <p>Cropped Image:</p>
+          <img [src]="croppedImage" width="128" height="128" />
+        </div>
+        <nz-divider [ngStyle]="{ width: imageWidth - 900 + 'px' }" nzPlain nzVariant="solid"></nz-divider>
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" [cropper]="cropperPosition"
+          format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)"
+          (cropperReady)="cropperReady($event)" (loadImageFailed)="loadImageFailed()"
+          [imageQuality]="100"></image-cropper>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #CropImageModalFooter>
+    <button nz-button nzType="default" (click)="CropImageModalCancel()">
+      Close
+    </button>
+    <button nz-button nzType="primary" (click)="onFileSelected(imageChangedEvent)">
+      Upload
+    </button>
+  </ng-template>
+</nz-modal>

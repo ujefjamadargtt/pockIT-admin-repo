@@ -1,0 +1,141 @@
+<!-- <div class="header">
+    <button type="button" nz-button (click)="cancel()" class="ant-btn">
+        <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+</div> -->
+
+<div>
+  <nz-spin [nzSpinning]="isSpinning">
+    <!-- <div *ngIf="!isLast"> -->
+    <div>
+      <div nz-row>
+        <div nz-col nzSpan="1" *ngIf="index > 0">
+          <i (click)="prevData()" nz-icon nzType="caret-left" nzTheme="outline"></i>
+        </div>
+
+        <div nz-col nzSpan="23" *ngIf="ticketQuestion['VALUE'] != null" style="margin-bottom: 5px">
+          <h6>{{ ticketQuestion["VALUE"] }}</h6>
+        </div>
+      </div>
+
+      <div nz-row *ngFor="let group of ticketGroups" style="
+          cursor: pointer;
+          box-shadow: 0px 5px 10px rgb(235 235 235);
+          border: 1px solid rgb(241 241 241);
+          border-radius: 2px;
+          padding: 10px;
+          margin-bottom: 15px;
+        ">
+        <div (click)="nextData(group)" nz-col nzSpan="22">
+          {{ group.VALUE }}
+        </div>
+
+        <div (click)="nextData(group)" nz-col nzSpan="2" style="text-align: center">
+          <i nz-icon nzType="right-circle" nzTheme="fill" style="color: #039ee6; font-size: 20px"></i>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isLast">
+      <h3 style="color: #1c91ff; font-size: 12px; font-weight: 200">
+        We found some similar issues before this. So we have listed some FAQs
+        related to them. Please read FAQs before create ticket.
+      </h3>
+      <!-- {{faqs}}{{isLast}} -->
+      <nz-collapse nzAccordion>
+        <nz-collapse-panel *ngFor="let panel of faqs;" [nzHeader]="panel.QUESTION">
+          <p>{{ panel.ANSWER }}</p>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+      *ngIf="(!isLast && nodata && !ticketQuestion['VALUE'])"
+      style="font-weight: 600; margin-top: 10%; margin-top: 20px">
+      <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+        [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
+        <ng-template #contentTpl>
+          <span> Data Not Found</span>
+        </ng-template>
+        <ng-template #footerTpl> </ng-template>
+      </nz-empty>
+    </div>
+  </nz-spin>
+
+  <div class="footer" *ngIf="isLast">
+    <div nz-row *ngIf="isAddTicket">
+      <div nz-col nzSpan="24" style="text-align: center">
+        <b>Still Not Solve Issue ?</b>
+      </div>
+
+      <div nz-col nzSpan="24" style="text-align: center">
+        <button nz-button nzType="primary" [nzLoading]="myTicketLoading" (click)="backToPrevious()"
+          style="cursor: pointer; margin-right: 10px">
+          Back
+        </button>
+
+        <button nz-button nzType="primary" [nzLoading]="myTicketLoading" nz-popconfirm
+          [nzCondition]="myTicketCount > 0 ? false : true" [nzPopconfirmTitle]="popConfirmTitle"
+          nzPopconfirmPlacement="top" (nzOnConfirm)="openTicketWindow()" (nzOnCancel)="cancel()"
+          style="cursor: pointer">
+          Add Ticket
+        </button>
+
+        <ng-template #popConfirmTitle>
+          <span>There are <b>{{ myTicketCount }} ticket(s)</b> which are not
+            closed, wan't to continue?</span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div nz-row *ngIf="!isAddTicket">
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-control>
+            <textarea nz-input name="question" [(ngModel)]="DESCRIPTION" placeholder="Describe your problem">
+            </textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="24" style="text-align: left">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Any Attachment?&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+              nzTooltipTitle=" Please select an image file (PNG, JPG, JPEG)."></span></nz-form-label>
+
+          <nz-form-control>
+            <div nz-row>
+              <div nz-col nzSpan="22">
+                <button nz-button nzType="primary" (click)="file.click()" nzSize="small" style="margin-right: 10px">
+                  Upload
+                </button>
+                <span *ngIf="
+                    fileDataLOGO_URL != undefined || fileDataLOGO_URL != null
+                  ">
+                  {{ fileDataLOGO_URL.name }}
+                </span>
+              </div>
+
+              <div nz-col nzSpan="2">
+                <i (click)="clearImg()" *ngIf="
+                    fileDataLOGO_URL != undefined || fileDataLOGO_URL != null
+                  " nz-icon nzType="delete" nzTheme="fill" style="color: red"></i>
+              </div>
+            </div>
+
+            <input type="file" #file style="display: none" (change)="onFileSelectedLOGO_URL($event)" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="24" style="text-align: right">
+        <button nz-button nzType="primary" (click)="cancel()" style="cursor: pointer; margin-right: 10px">
+          Cancel
+        </button>
+
+        <button nz-button nzType="primary" (click)="send()" style="cursor: pointer">
+          Create
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

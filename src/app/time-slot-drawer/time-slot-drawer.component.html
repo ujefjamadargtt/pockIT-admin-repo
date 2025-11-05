@@ -1,0 +1,103 @@
+<div style="margin-top: 10px">
+  <form nz-form #Unitmaster="ngForm">
+    <div nz-row nzSpan="24">
+      <div nz-col nzSpan="24" style="width: 100%;"><b><nz-divider nzText="Slot 1"
+            style="margin-top: 5px;margin-bottom: 0px;"></nz-divider></b></div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Start Time</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Start Time">
+            <nz-time-picker name="Slot1StartTime" [nzNowText]="' '" [(ngModel)]="data.SLOT1_START_TIME"
+              [nzFormat]="'HH:mm a'" nzPlaceHolder="Select Time" [nzMinuteStep]="10" style="width: 100%;"
+              [nzDisabledHours]="disabledSlot1Hours" [nzDisabledMinutes]="disabledSlot1Minutes"
+              (ngModelChange)="onTimeChange('SLOT1_START_TIME', $event)">
+            </nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>End Time</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select End Time">
+            <nz-time-picker name="Slot1EndTime" [nzNowText]="' '" [(ngModel)]="data.SLOT1_END_TIME"
+              [nzFormat]="'HH:mm a'" nzPlaceHolder="Select Time" [nzMinuteStep]="10" style="width: 100%;"
+              [nzDisabledHours]="disabledSlot1EndHours" [nzDisabledMinutes]="disabledSlot1EndMinutes"
+              (ngModelChange)="onTimeChange('SLOT1_END_TIME', $event)"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="24" style="width: 100%;"><b><nz-divider nzText="Slot 2"
+            style="margin-top: 10px;margin-bottom: 0px;"></nz-divider></b></div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Start Time</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Slot 2 Start Time">
+            <nz-time-picker name="Slot2StartTime" [nzNowText]="' '" [(ngModel)]="data.SLOT2_START_TIME"
+              [nzFormat]="'HH:mm a'" [nzMinuteStep]="10" nzPlaceHolder="Select Time" style="width: 100%;"
+              [nzDisabledHours]="disabledSlot2Hours" [nzDisabledMinutes]="disabledSlot2Minutes"
+              (ngModelChange)="onTimeChange('SLOT2_START_TIME', $event)"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>End Time</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Slot 2 End Time">
+            <nz-time-picker name="Slot2EndTime" [nzNowText]="' '" [(ngModel)]="data.SLOT2_END_TIME"
+              [nzFormat]="'HH:mm a'" [nzMinuteStep]="10" nzPlaceHolder="Select End Time" style="width: 100%;"
+              [nzDisabledHours]="disabledSlot2EndHours" [nzDisabledMinutes]="disabledSlot2EndMinutes"
+              nzPlaceHolder="Select Time" (ngModelChange)="onTimeChange('SLOT2_END_TIME', $event)"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="24" style="width: 100%;"><b><nz-divider nzText="Slot 3"
+            style="margin-top: 10px;margin-bottom: 0px;"></nz-divider></b></div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Start Time</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Start Time">
+            <nz-time-picker name="Slot3StartTime" [nzNowText]="' '" [(ngModel)]="data.SLOT3_START_TIME"
+              [nzFormat]="'HH:mm a'" [nzMinuteStep]="10" nzPlaceHolder="Select Time" style="width: 100%;"
+              [nzDisabledHours]="disabledSlot3Hours" [nzDisabledMinutes]="disabledSlot3Minutes"
+              nzPlaceHolder="Select Time" (ngModelChange)="onTimeChange('SLOT3_START_TIME', $event)"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>End Time</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select End Time">
+            <nz-time-picker name="Slot3EndTime" [nzNowText]="' '" [(ngModel)]="data.SLOT3_END_TIME"
+              [nzFormat]="'HH:mm a'" [nzMinuteStep]="10" nzPlaceHolder="Select Time" style="width: 100%;"
+              [nzDisabledHours]="disabledSlot3EndHours" [nzDisabledMinutes]="disabledSlot3EndMinutes"
+              nzPlaceHolder="Select Time" (ngModelChange)="onTimeChange('SLOT3_END_TIME', $event)"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div class="footer">
+      <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+        Cancel
+      </button>
+
+      <button nz-button *ngIf="!dataList?.[0]?.ID" nzType="primary" nz-dropdown [nzLoading]="isSpinning"
+        (click)="save(false, Unitmaster)" class="ant-btn ant-btn-primary">
+        Save & Close
+      </button>
+      <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="dataList?.[0]?.ID"
+        (click)="save(false, Unitmaster)">
+        <span>Update & Close</span>
+      </button>
+    </div>
+  </form>
+</div>

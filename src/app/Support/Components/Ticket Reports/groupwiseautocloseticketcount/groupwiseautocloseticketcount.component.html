@@ -1,0 +1,310 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">
+      <span
+        (click)="back()"
+        nz-icon
+        nzType="arrow-left"
+        nzTheme="outline"
+        style="font-weight: bold; cursor: pointer"
+      ></span
+      >&nbsp;&nbsp;{{ formTitle }}
+    </div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <!-- <nz-form-item>
+                <button nz-button nzTooltipTitle="PDF" nzTooltipPlacement="top" nz-tooltip nzType="primary"
+                    (click)="importInPDF(branchName.value)" [nzLoading]="exportInPDFLoading">
+                    <span nz-icon nzType="file-pdf" nzTheme="outline"></span>
+                </button>
+            </nz-form-item> -->
+
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Excel"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzType="primary"
+          (click)="importInExcel()"
+          [nzLoading]="exportLoading"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+          nzType="primary"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            nz-input
+            placeholder="Min 3 chars required."
+            [(ngModel)]="searchText"
+            (keyup)="keyup($event)"
+            autocomplete="off"
+            (keydown.enter)="onEnterKey($event)"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            id="searchBtn"
+            nzType="primary"
+            (click)="search(true)"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="5" style="margin-right: 10px">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Department Name</nz-form-label>
+                <!-- <nz-form-control> -->
+                <nz-select
+                  name="DEPARTMENT_NAME"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  nzPlaceHolder="Select Department Name"
+                  [(ngModel)]="departmentname"
+                  nzMode="multiple"
+                  [nzMaxTagCount]="1"
+                >
+                  <nz-option
+                    *ngFor="let name of departmentdata"
+                    [nzValue]="name.ID"
+                    [nzLabel]="name.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+                <!-- </nz-form-control> -->
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="5" style="margin-right: 10px">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Select Start Date</nz-form-label>
+                <nz-date-picker
+                  name="fromDate"
+                  [(ngModel)]="START_DATE"
+                  style="width: 100%"
+                  (nzOnOpenChange)="handleStartOpenChange($event)"
+                  (ngModelChange)="onStartChange($event)"
+                  nzFormat="dd/MM/yyyy"
+                ></nz-date-picker>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="5" style="margin-right: 10px">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Select End Date</nz-form-label>
+                <nz-date-picker
+                  name="toDate"
+                  [(ngModel)]="END_DATE"
+                  style="width: 100%"
+                  (nzOnOpenChange)="handleEndOpenChange($event)"
+                  [nzDisabledDate]="disabledEndDate"
+                  nzFormat="dd/MM/yyyy"
+                ></nz-date-picker>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="7" style="margin-right: 10px">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item>
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+      [nzScroll]="{ y: '50vh' }"
+      [nzSize]="'small'"
+    >
+      <thead>
+        <tr>
+          <!-- <th
+            nzAlign="center"
+            nzWidth="300px"
+            nzShowSort
+            nzSortKey="DEPARTMENT_NAME"
+          >
+            <b>Department Name</b>
+          </th> -->
+          <th
+            nzWidth="300px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="DEPARTMENT_NAME"
+            [nzSortFn]="true"
+            [nzFilterFn]="true"
+            nzCustomFilter
+          >
+            Department Name
+
+            <nz-filter-trigger
+              [(nzVisible)]="departmentVisible"
+              [nzDropdownMenu]="department"
+            >
+              <span
+                nz-icon
+                nzType="filter"
+                nzTheme="fill"
+                [ngStyle]="{
+                  color: isnameFilterApplied ? '#092B9C' : 'inherit'
+                }"
+              ></span>
+            </nz-filter-trigger>
+          </th>
+          <th
+            style="font-weight: bold; text-align: center"
+            nzWidth="150px"
+            [nzSortFn]="true"
+            [nzFilterFn]="true"
+            nzCustomFilter
+            nzColumnKey="NUMBER_OF_TICKETS"
+          >
+            <b>Number of Tickets</b>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <!-- <td nzAlign="center">{{ data.DEPARTMENT_NAME }}</td> -->
+          <td style="text-align: left !important">
+            <span *ngIf="data['DEPARTMENT_NAME'] != null">
+              <span
+                *ngIf="data['DEPARTMENT_NAME'].length >= 110"
+                nz-popover
+                [nzPopoverContent]="data['DEPARTMENT_NAME']"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["DEPARTMENT_NAME"] == null
+                    ? "-"
+                    : (data["DEPARTMENT_NAME"] | slice : 0 : 110)
+                }}{{ data["DEPARTMENT_NAME"].length > 110 ? "..." : "" }}
+              </span>
+
+              <span *ngIf="data['DEPARTMENT_NAME'].length < 110">
+                {{
+                  data["DEPARTMENT_NAME"] == null
+                    ? "-"
+                    : (data["DEPARTMENT_NAME"] | slice : 0 : 110)
+                }}
+
+                {{ data["DEPARTMENT_NAME"].length > 110 ? "..." : "" }}
+              </span>
+            </span>
+
+            <span *ngIf="data['DEPARTMENT_NAME'] == null">-</span>
+          </td>
+          <td nzAlign="center">{{ data.NUMBER_OF_TICKETS }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-dropdown-menu #department="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <nz-input-group [nzSuffix]="inputClearTpl">
+        <input
+          type="text"
+          nz-input
+          [(ngModel)]="departmentText"
+          (keyup)="onKeyup($event)"
+          placeholder="Search Department Name"
+        />
+      </nz-input-group>
+
+      <ng-template #inputClearTpl>
+        <span
+          nz-icon
+          class="ant-input-clear-icon"
+          nzTheme="fill"
+          nzType="close-circle"
+          *ngIf="departmentText"
+          (click)="reset()"
+        ></span>
+
+        <span
+          nz-icon
+          nzType="search"
+          nzTheme="outline"
+          *ngIf="departmentText == ''"
+        ></span>
+      </ng-template>
+    </div>
+  </div>
+</nz-dropdown-menu>

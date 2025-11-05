@@ -1,0 +1,18 @@
+.mainnam {
+    /* color: #000; */
+    font-size: 14px !important;
+    font-weight: 600;
+  
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .subname {
+    color: #4c4c4ceb;
+    font-size: 12px !important;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

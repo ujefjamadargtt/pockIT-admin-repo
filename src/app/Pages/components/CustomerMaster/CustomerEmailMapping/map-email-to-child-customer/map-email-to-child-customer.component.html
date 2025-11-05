@@ -1,0 +1,154 @@
+<div>
+    <form nz-form #TerritoryMappingForm="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row>
+                <!-- Country Dropdown -->
+                <div nz-col nzSpan="15">
+                    <nz-form-item>
+                        <nz-form-label nzNoColon nzRequired>Email ID</nz-form-label>
+                        <nz-form-control nzErrorTip="Enter Email ID">
+                            <input nz-input name="email" placeholder="Enter Email ID"
+                                [pattern]="commonFunction.emailpattern" [(ngModel)]="addData.EMAIL_ID" required
+                                maxlength="64" #email="ngModel" />
+
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <!-- Territory Dropdown -->
+                <div nz-col nzSpan="6">
+                    <nz-form-item>
+                        <nz-form-label nzNoColon nzRequired>Minimum Part Amount</nz-form-label>
+                        <nz-form-control nzErrorTip="Enter Amount">
+                            <nz-input-group [nzAddOnBefore]="'₹'">
+                                <input nz-input type="text" name="PRICE_RANGE" placeholder="Enter Amount" required
+                                    [(ngModel)]="addData.PRICE_RANGE" #nameField="ngModel" autocomplete="off"
+                                    (keypress)="commonFunction.onlynumdot($event)" maxlength="8" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <!-- Add Button -->
+                <div nz-col nzSpan="3">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <nz-form-label nzNoColon></nz-form-label>
+                            <button nz-button nzType="primary"
+                                style="width: 100%; margin-top: 5px;padding: 0px 10px !important;height: 30px !important;"
+                                [nzLoading]="btnLoading"
+                                (click)="isEditMode ? updateData(TerritoryMappingForm) : add(TerritoryMappingForm)">
+                                {{ isEditMode ? 'Update' : '+ Add' }}
+                            </button>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <hr>
+            <div nz-row>
+                <div nz-col nzSpan="12"></div>
+                <div nz-col nzSpan="12" style="text-align: right;
+        padding-right: 20px;
+        width: 100% !important;">
+                    <!-- <form nz-form [nzLayout]="'inline'" style="display: inline-flex"> -->
+                    <nz-form-item>
+                        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="margin-left: 26px !important">
+                            <input type="text" name="mapsearch" [(ngModel)]="searchmappeddata" autocomplete="off"
+                                (keydown.enter)="handleEnterKey($event)" (keydown.backspace)="handleEnterKey($event)"
+                                nz-input style="height: 32px" placeholder="Min 3 chars required." />
+                        </nz-input-group>
+                        <ng-template #suffixIconButton>
+                            <button nz-button nzType="primary" id="button"
+                                (click)="SearchMappingdata(searchmappeddata)">
+                                <i nz-icon nzType="search"></i>
+                            </button>
+                        </ng-template>
+                    </nz-form-item>
+                    <!-- </form> -->
+                </div>
+            </div>
+        </nz-spin>
+    </form>
+</div>
+
+<!-- Table -->
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" #table [nzData]="dataList" [nzLoading]="loadingRecords" nzBordered
+            [nzSize]="'small'" [nzFrontPagination]="false" (nzQueryParams)="sort($event)">
+            <thead>
+                <tr>
+                    <!-- Is Mapped ? -->
+                    <th nzWidth="15px" style="font-weight: bold; text-align: center">
+                        Action
+                    </th>
+                    <th nzWidth="15px" style="font-weight: bold; text-align: center" nzColumnKey="{{ 'IS_ACTIVE' }}"
+                        [nzSortFn]="true">
+                        Is Mapped ?
+                    </th>
+
+                    <th nzWidth="140px" align="center" nzColumnKey="{{ 'EMAIL_ID' }}" [nzSortFn]="true">
+                        Email ID
+                    </th>
+
+                    <th nzWidth="100px" align="center" nzColumnKey="{{ 'PRICE_RANGE' }}" [nzSortFn]="true">
+                        Amount (₹)
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let data of table.data">
+                    <td align="center">
+                        <nz-tag nzColor="#2db7f5" (click)="editRow(data)" style="cursor: pointer" nz-tooltip
+                            nzTooltipTitle="Edit">
+                            <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 15px">
+                            </span>&nbsp;&nbsp;Edit</nz-tag>
+                    </td>
+                    <td align="center" style="white-space: pre-line">
+                        <nz-switch *ngIf="data['ID']" nzCheckedChildren="Yes"
+                            (ngModelChange)="changestatus(data,$event)" nzUnCheckedChildren="No" name="IS_ACTIVE"
+                            [(ngModel)]="data['IS_ACTIVE']" tabindex="-1"></nz-switch>
+                    </td>
+
+                    <td align="left" tabindex="-1">
+                        <span *ngIf="data['EMAIL_ID'] != null">
+                            <span *ngIf="data['EMAIL_ID'].length >= 35" nz-popover [nzPopoverContent]="data['EMAIL_ID']"
+                                nzPopoverPlacement="topLeft">
+                                {{
+                                data["EMAIL_ID"] == null
+                                ? "-"
+                                : (data["EMAIL_ID"] | slice : 0 : 35)
+                                }}{{ data["EMAIL_ID"].length > 35 ? "..." : "" }}
+                            </span>
+                            <span *ngIf="data['EMAIL_ID'].length < 35">
+                                {{
+                                data["EMAIL_ID"] == null
+                                ? "-"
+                                : (data["EMAIL_ID"] | slice : 0 : 35)
+                                }}
+                                {{ data["EMAIL_ID"].length > 35 ? "..." : "" }}
+                            </span>
+                        </span>
+                        <span *ngIf="data['EMAIL_ID'] == null">-</span>
+                    </td>
+
+                    <td align="right" tabindex="-1">
+                        {{ data["PRICE_RANGE"]| number }}
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+
+<!-- Map and Close  -->
+<div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+        <span>Cancel</span>
+    </button>
+
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" (click)="save()">
+        <span>Map & Close</span>
+    </button>
+</div>

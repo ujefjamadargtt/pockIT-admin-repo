@@ -1,0 +1,274 @@
+body {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.search-box {
+  padding: 8px;
+}
+
+.search-box input {
+  width: 188px;
+  /* margin-bottom: 8px; */
+  display: block;
+}
+
+th {
+  text-align: center !important;
+  font-weight: bold !important;
+}
+.ant-switch-checked{
+  background: #092B9C !important;
+}
+.search-box button {
+  width: 90px;
+}
+
+.search-button {
+  margin-right: 8px;
+}
+.ant-btn-primary {
+  border-color: #092B9C!important;
+  background: #092B9C!important
+}
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  left: 0px;
+  background: #fff;
+  z-index: 10;
+}
+
+.filter {
+  transition: max-height 1s;
+}
+
+.filter-box {
+  margin-top: 8px;
+  padding: 8px;
+  background: #fbfbfb;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+}
+
+.filter-visible {
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.filter-invisible {
+  max-height: 0px;
+  overflow: hidden;
+}
+
+.inline {
+  display: flex;
+}
+
+.formname {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.my-scroll {
+  max-width: calc(100vw - 28em);
+  overflow: auto;
+  padding-top: 8px;
+}
+
+.no-wrap1 {
+  white-space: nowrap;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  left: 0px;
+  background: #fff;
+}
+
+.menuc {
+  text-align: center;
+  border-radius: 4px;
+  background-color: #092B9C!important;
+}
+
+i {
+  cursor: pointer;
+}
+
+.my-box {
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+  padding: 4px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #fafafa;
+}
+
+/* ::-webkit-scrollbar {
+  height: 5px;
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(233, 233, 233);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track:hover {
+  box-shadow: inset 0 0 5px rgb(169, 168, 168);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(131, 131, 131);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  box-shadow: inset 0 0 5px rgb(8, 8, 8);
+} */
+
+svg {
+  vertical-align: baseline !important;
+}
+
+.my-box1 {
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+  /* padding: 8px;
+  margin-top: 12px; */
+  margin-bottom: 12px;
+  background-color: #fafafa;
+}
+nz-form-label,
+table,
+td,
+tr,
+th,
+span,
+nz-tabset nz-select,
+button,
+nz-select,
+nzPlaceHolder,
+nz-option,
+a,
+nz-tab,
+button,
+input,
+label,
+textarea {
+  font-size: 13px !important;
+  font-family: "poppins" !important;
+}
+label {
+  height: max-content !important;
+  margin-top: 5px !important;
+}
+/* td,
+th {
+  padding: 5px !important;
+} */
+
+.ant-spin-dot {
+  font-size: 20px !important;
+}
+/* .ant-input-search-button {
+  height: 25px !important;
+} */
+
+.ant-input-search-button,
+.ant-input[type="color"] {
+  height: 30px !important;
+}
+
+/* nz-form-item {
+ font-size: 10px !important;
+ font-family:'poppins' !important;
+} */
+
+/* ant-form-item-label>label{
+  font-size: 10px !important;
+  font-family:'poppins' !important;
+}
+
+textarea{
+  font-size: 12px !important;
+ font-family:'poppins' !important;
+}
+
+table,td,tr,span,a,nz-tabset{
+ font-family:'poppins' !important;
+} */
+/* 
+
+
+nz-form-item {
+  font-size: 10px !important;
+  font-family: "poppins" !important;
+  padding: 0 5px !important;
+  margin-bottom: 3px !important;
+}
+
+.ant-notification-notice-with-icon .ant-notification-notice-messag {
+  font-size: 16px !important;
+}
+
+.ant-notification-notice-icon {
+  font-size: 24px !important;
+}
+
+.ant-spin-dot {
+  font-size: 20px !important;
+}
+
+ant-input {
+  padding: 4px 7px !important;
+}
+
+.ant-input-search-button {
+  height: 25px !important;
+}
+
+.ant-btn {
+  height: 25.5px !important;
+  padding: 4px 11px !important;
+}
+
+.ant-steps {
+  line-height: 0px !important;
+}
+
+.ant-form-item-label > label {
+  height: 14px !important;
+}
+
+.ant-result-success .ant-result-icon > .anticon {
+  color: #52c41a;
+  font-size: 50px !important;
+}
+
+.ant-divider-horizontal {
+  margin: 10px 0 !important;
+}
+.ant-tag {
+  font-size: 10px !important;
+}
+.formname {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.4;
+} */
+.emoji-mart{
+  width: 100% !important;
+}

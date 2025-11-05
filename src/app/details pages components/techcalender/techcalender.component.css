@@ -1,0 +1,584 @@
+/* Custom styling for the year selection dropdown */
+:host ::ng-deep .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+    margin-top: 5px;
+}
+
+  
+nz-form-item {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+  }
+
+
+  .custom-date-cell {
+    font-size: 12px;
+    padding: 5px;
+    text-align: center;
+    color: #555;
+  }
+  
+  .custom-date-cell br {
+    margin: 2px 0;
+  }
+  
+
+  .nz-calendar-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #333;
+  }
+  
+  .events {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .events .ant-badge-status {
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+  :host::ng-deep .ant-calendar {
+    width: 280px; /* Set the width */
+    height: 280px; /* Set the height */
+  }
+  
+  :host::ng-deep .ant-calendar-header {
+    font-size: 12px; /* Make the header smaller */
+  }
+  
+  :host::ng-deep .ant-calendar-cell {
+    font-size: 10px; /* Make the calendar date text smaller */
+  }
+
+  :host::ng-deep .ant-calendar {
+    height: 280px; /* Adjust the height to fit 5 weeks */
+    overflow: hidden; /* Hide any extra weeks */
+  }
+  
+  :host::ng-deep .ant-calendar-body {
+    max-height: calc(5 * 32px); /* Adjust the height based on the number of rows you want */
+    overflow: hidden;
+  }
+  
+  :host::ng-deep .ant-calendar-row {
+    display: block;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: grey; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: grey; 
+  }
+
+
+  .cardstyle{
+    background-color: #fff;
+      cursor: pointer;
+      padding: 15px;
+      box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+      border: 1px solid #efefef;
+      border-radius: 10px;
+}
+
+
+
+
+.mainnam {
+    color: #000;
+    font-size: 13px !important;
+    font-weight: 600;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .subnamm {
+    color: #6A6A6A;
+    font-size: 12px !important;
+    font-weight: 500;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  ::-webkit-scrollbar {
+    height: 5px;
+    width: 4px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(233, 233, 233);
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-track:hover {
+    box-shadow: inset 0 0 5px rgb(169, 168, 168);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgb(131, 131, 131);
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    box-shadow: inset 0 0 5px rgb(8, 8, 8);
+  }
+
+
+  .ant-drawer-body{
+    padding: 8px 20px !important;
+  }
+
+  .footer { 
+    left: 8px;
+    width: 97% !important;
+    background: white !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+}
+
+.backbbb{
+    background: white !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+}
+
+
+.cardstyle1{
+    background-color: #fff;
+      cursor: pointer;
+      padding: 15px;
+      box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+      border: 1px solid #efefef;
+      border-radius: 10px;
+}
+
+.mainnam1 {
+    color: #000;
+    font-size: 13px !important;
+    font-weight: 600;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .subnamm1 {
+    color: #6A6A6A;
+    font-size: 12px !important;
+    font-weight: 500;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  .nz-form-itemm{
+    display: inline-block !important;
+    margin-bottom: 5px !important;
+    width: -webkit-fill-available !important;
+    padding: 0px 10px !important;
+    font-family: '"Poppins", sans-serif !important';
+  }
+
+
+
+  /* vaishnavi */
+  nz-form-item {
+    margin-top: 0px;
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+  }
+ 
+  .select-container {
+   
+    display: flex;
+    justify-content: center;
+  }
+ 
+  body {
+    font-family: Arial, sans-serif;
+  }
+ 
+ 
+  .chat-container {
+    max-height: 66vh;
+    min-height: 55vh;
+    margin: 0 auto;
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 200px;
+    overflow: hidden;
+   
+  }
+ 
+  .message-box {
+    flex-grow: 1;
+    margin-bottom: 10px;
+    padding-right: 10px;
+   
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f4f4f4;
+  }
+ 
+ 
+  .message-box::-webkit-scrollbar {
+    width: 2px;
+  }
+ 
+  .message-box::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+  }
+ 
+  .message-box::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+    border-radius: 3px;
+  }
+ 
+  .message {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+ 
+  .customer-message {
+    max-width: 70% !important;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word; /* Ensures long words are wrapped */
+    word-break: break-word; /* Breaks words if too long */
+    overflow-wrap: break-word;
+  }
+ 
+  .technician-message {
+    max-width: 70% ;
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    word-wrap: break-word; /* Ensures long words are wrapped */
+    word-break: break-word; /* Breaks words if too long */
+    overflow-wrap: break-word;
+  }
+ 
+  .customer-name,
+  .technician-name {
+    font-weight: bold;
+    font-size: 10px !important;
+  }
+ 
+  .timestamp {
+   
+    font-size: 10px !important;
+    color: gray;
+    margin-top: 5px;
+  }
+ 
+  .message-text {
+   
+    font-size:13px;
+    margin-top: 5px;
+    background-color: #e4e4e4;
+    padding: 5px;
+    border-radius: 5px;
+  }
+ 
+  .technician-message .message-text {
+    background-color: #d3f9d8;
+  }
+ 
+ 
+ 
+  .input-area {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+  bottom: 0;
+  z-index: 10;
+ 
+  }
+ 
+  textarea {
+    width: 80%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    resize: none;
+  }
+ 
+  .whatsapp-send-icon {
+    width: 13%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius:10px;
+    margin-left: 5px;
+    margin-right: 20px;
+    height: 37px;
+    cursor: pointer;
+  }
+ 
+  .whatsapp-send-icon:hover {
+    background-color: #45a049;
+  }
+ 
+ 
+  .paper-clip {
+    margin-right: 2px;
+    background-color: #f4f4f4;
+    border: none;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* Action Log CSS */
+.timeline-container {
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+ 
+h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+ 
+.group-date {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 20px 0 10px;
+  color: #555;
+}
+ 
+.event-details {
+  padding: 10px 0;
+}
+ 
+.event-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+}
+ 
+.event-meta {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #888;
+}
+ 
+.event-meta .time {
+  margin-right: 10px;
+}
+ 
+.event-description {
+  margin-top: 5px;
+  font-size: 10px;
+  color: #666;
+}
+ 
+.icon {
+  font-size: 1.2rem;
+}
+
+
+.invoice-container {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.5;
+  }
+   
+  .invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    border-bottom: 1px solid #ddd;
+  }
+   
+  .company-info h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #092B9C!important;
+  }
+  .company-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+  }
+   
+  .invoice-info {
+    text-align: right;
+  }
+   
+  .invoice-info h3 {
+    margin: 0;
+    font-size: 24px;
+    color: #444;
+  }
+   
+  hr {
+    border: 0;
+    border-top: 1px solid #e4e4e4;
+    margin: 20px 0;
+  }
+   
+  .customer-info h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #444;
+  }
+   
+  .customer-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+   
+  .detail p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+  }
+   
+  .order-details {
+    margin-top: 20px;
+  }
+   
+  .order-details h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #444;
+  }
+   
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+   
+  .invoice-table th, .invoice-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+   
+  .invoice-table th {
+    background-color: #f7f7f7;
+  }
+   
+  .invoice-summary {
+    text-align: right;
+    margin-top: 20px;
+  }
+   
+  .invoice-summary p {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+   
+  .invoice-footer {
+    text-align: center;
+    margin-top: 30px;
+  }
+   
+  .invoice-footer p {
+    font-size: 14px;
+    color: #666;
+  }
+   
+  .invoice-footer .thank-you {
+    font-size: 16px;
+    font-weight: bold;
+    color: #092B9C!important;
+  }  
+
+  .invoice-container {
+    max-height: 600px;  
+    overflow-y: scroll; 
+    padding: 20px;
+    background-color: white;
+    box-sizing: border-box;
+  }
+   
+  .invoice-container::-webkit-scrollbar {
+    width: 0px;  
+    background: transparent;  
+  }
+   
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+   
+  .invoice-table th, .invoice-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+   
+  .invoice-footer {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+   
+  .invoice-header h2, .invoice-info h3 {
+    font-size: 18px;
+  }
+   
+  .nz-modal-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  :host ::ng-deep .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner{
+    background: #e6f7ff !important;
+  }

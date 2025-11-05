@@ -1,0 +1,40 @@
+export class orderMasterData {
+    ID: number;
+    CLIENT_ID: number = 1;
+    CUSTOMER_ID: number = 0;
+    CART_ID: number = 0;
+    ORDER_DATE_TIME: Date = new Date();
+    EXPECTED_DATE_TIME: Date = new Date();
+    ORDER_STATUS: any = 'P';
+    PAYMENT_MODE: any = '';
+    PAYMENT_STATUS: any = '';
+    TOTAL_AMOUNT: any = 0;
+    COUPON_CODE: any = '';
+    COUPON_AMOUNT: any = 0;
+    CUSTOMER_TYPE='I';
+    FINAL_AMOUNT: any = 0;
+    SPECIAL_INSTRUCTIONS: any = '';
+    ORDER_DETAILS_DAT: any = [];
+    TERRITORY_ID: number = 0;
+    TOTAL_TAX = 0;
+    DISCOUNT_CHARGES = 0;
+    TAX_RATE = 0;
+    TOTAL_TAXABLE_AMOUNT = 0;
+    EXPRESS_DELIVERY_CHARGES = 0;
+    IS_EXPRESS = false;
+    TAX_AMOUNT = 0;
+    STATE_ID = 0;
+    IS_SAME_STATE = false;
+    ORDER_MEDIUM_NAME: string = '';
+    ORDER_STATUS_NAME: string = '';
+    PAYMENT_MODE_NAME: string = '';
+    PAYMENT_STATUS_NAME: string = '';
+    SERVICE_ADDRESS: string = '';
+    ORDER_MEDIUM = '';
+    SERVICE_ADDRESS_DATA: any = null;
+    BILLING_ADDRESS_DATA: any = null;
+}
+
+
+
+

@@ -1,0 +1,11 @@
+:host::ng-deep .ant-card-body {
+    padding: 0px;
+  }
+  
+  .truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; /* Adjust as needed */
+    display: inline-block;
+  }

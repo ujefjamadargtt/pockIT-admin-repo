@@ -1,0 +1,193 @@
+<div>
+  <form nz-form #currencymaster="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Currency Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Currency Name">
+              <input nz-input name="CURRENCY_NAME" placeholder="Enter Currency Name" required
+                [(ngModel)]="data.CURRENCY_NAME" (keypress)="validateInput($event)" autocomplete="off" maxlength="128"
+                (focus)="isFocused = 'CURRENCY_NAME'" (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="
+                  isFocused === 'CURRENCY_NAME' ||
+                  (data.CURRENCY_NAME && isFocused === 'CURRENCY_NAME')
+                ">
+                {{ data.CURRENCY_NAME.length }}/128
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Country</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Country Name">
+              <nz-select nzAllowClear="true" nzPlaceHolder="Select Country" name="COUNTRY_ID"
+                [(ngModel)]="data.COUNTRY_ID" nzShowSearch required>
+                <nz-option *ngFor="let data of countryData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <!-- <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Decimal Seperator</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Decimal Seperator">
+              <nz-select nzAllowClear="true" nzPlaceHolder="Decimal Seperator" name="DECIMAL_SEPARATOR"
+                [(ngModel)]="data.DECIMAL_SEPARATOR" nzShowSearch required>
+                <nz-option *ngFor="let data of DECIMAL_SEPARATOR" [nzValue]="data.Id" [nzLabel]="data.Name"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Thousand Seperator</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Thousand Seperator">
+              <nz-select nzAllowClear="true" nzPlaceHolder="Thousand Seperator" name="THOUSAND_SEPERATOR"
+                [(ngModel)]="data.THOUSAND_SEPERATOR" nzShowSearch required>
+                <nz-option *ngFor="let data of THOUSAND_SEPERATOR" [nzValue]="data.Id"
+                  [nzLabel]="data.Name"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div> -->
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Exchange Rate</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Exchange Rate">
+              <nz-input-group [nzAddOnAfter]="'₹'">
+                <input nz-input name="EXCHANGE_RATE" placeholder="Enter Exchange Rate" required
+                  [(ngModel)]="data.EXCHANGE_RATE" autocomplete="off" maxlength="10"
+                  (keypress)="commonFunction.onlynumdot($event)" (focus)="isFocused = 'exchangeRate'"
+                  (blur)="isFocused = ''" />
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                  isFocused === 'exchangeRate' ||
+                  (data.EXCHANGE_RATE && isFocused === 'exchangeRate')
+                ">
+                  {{ data.EXCHANGE_RATE ? data.EXCHANGE_RATE.length : 0 }}/10
+                </h6>
+              </nz-input-group>
+
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Decimal Place</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Decimal Place">
+              <nz-input-number style="width: 100%" [(ngModel)]="data.DECIMAL_SPACE" name="DECIMAL_SPACE" [nzMin]="1"
+                [nzMax]="10" [nzStep]="1" [nzPlaceHolder]="'Enter Decimal Place'"
+                (keypress)="commonFunction.onlynum($event)" required></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </div> -->
+      </div>
+
+      <div nz-row></div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Symbol</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Symbol">
+              <!-- <nz-select
+              nzAllowClear="true"
+              nzPlaceHolder="Select Symbol"
+              name="SYMBOL"
+              [(ngModel)]="data.SYMBOL"
+              nzShowSearch
+              required
+            >
+              <nz-option
+                *ngFor="let data of SYMBOL"
+                [nzValue]="data.Id"
+                [nzLabel]="data.Name"
+              ></nz-option>
+            </nz-select> -->
+              <input nz-input name="SYMBOL" placeholder="Enter Symbol" required [(ngModel)]="data.SYMBOL"
+                autocomplete="off" maxlength="5" (focus)="isFocused = 'symbol'" (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="
+                  isFocused === 'symbol' ||
+                  (data.SYMBOL && isFocused === 'symbol')
+                ">
+                {{ data.SYMBOL ? data.SYMBOL.length : 0 }}/5
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Short Code">
+              <input nz-input placeholder="Enter Short Code" name="SHORT_CODE" required [(ngModel)]="data.SHORT_CODE"
+                required maxlength="8" autocomplete="off" (focus)="isFocused = 'shortCode'" (blur)="isFocused = ''" />
+            </nz-form-control>
+            <span style="color: red; font-size: 10px !important" *ngIf="
+                isFocused === 'shortCode' ||
+                (data.SHORT_CODE && isFocused === 'shortCode')
+              ">{{ data.SHORT_CODE ? data.SYMBOL.length : 0 }}/8</span>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon nzRequired>Sequence No.</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Sequence No.">
+              <input nz-input placeholder="Sequence No." name="SeqNo" required [(ngModel)]="data.SEQ_NO" required
+                #seqNo="ngModel" (keypress)="commonFunction.onlynum($event)" maxlength="8" autocomplete="off" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="IS_ACTIVE" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<div class="footer">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+    Cancel
+  </button>
+
+  <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
+    (click)="save(false, currencymaster)" class="ant-btn ant-btn-primary">
+    Save & Close
+  </button>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important;">
+        <a class="footer-button" style="color: white!important" (click)="save(true, currencymaster)"
+          [class.loading]="isSpinning">
+          <button nz-button [nzLoading]="isSpinning" nzType="primary"
+            style="background: transparent; border: none; padding: 0;color: white !important;">
+            Save & New
+          </button>
+        </a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false, currencymaster)">
+    <span>Update & Close</span>
+  </button>
+</div>

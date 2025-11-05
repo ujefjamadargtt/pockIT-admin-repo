@@ -1,0 +1,138 @@
+<nz-tabset nzCentered>
+  <!-- Technician Review -->
+
+  <nz-tab nzTitle="Technician Reviews">
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <nz-rate [(ngModel)]="averageTechnicianRating" nzDisabled></nz-rate>
+        <span class="ant-rate-text">{{ averageTechnicianRating }} Out Of 5</span>
+        <span class="ant-rate-text">({{ globalTechnicianRating }} global ratings)</span>
+      </div>
+
+      <div nz-col nzSpan="12" style="align-items: end">
+        <div *ngFor="let progTech of progressTechList">
+          <div nz-row>
+            <div nz-col nzSpan="4">{{ progTech.rating }} Star</div>
+
+            <div nz-col nzSpan="20">
+              <nz-progress [nzPercent]="progTech.progress_percentage" [nzStrokeColor]="'Yellow'">
+              </nz-progress>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nz-divider nzText="Technician Reviews" nzOrientation="left"></nz-divider>
+
+      <div nz-col nzSpan="24" style="
+          margin-top: 5px;
+          padding: 5px;
+          max-height: 40vh;
+          overflow: auto;
+          padding-right: 10px;
+        ">
+        <div *ngFor="let data of technicianData">
+          <nz-comment nzAuthor="{{ data['TECHNICIAN_NAME'] }}">
+            <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="assets/img/blueEmpImage.png"></nz-avatar>
+
+            <nz-comment-content>
+              <span>
+                {{ data["COMMENTS"] }}
+              </span>
+              <div style="margin-top: 0px">
+                <nz-rate [(ngModel)]="data.RATING" nzDisabled></nz-rate>
+              </div>
+            </nz-comment-content>
+          </nz-comment>
+        </div>
+      </div>
+
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="technicianData.length == 0"
+        style="font-weight: 600; margin-top: 10%">
+        <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
+          <ng-template #contentTpl>
+            <span> Data Not Found</span>
+          </ng-template>
+          <ng-template #footerTpl> </ng-template>
+        </nz-empty>
+      </div>
+
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="totalRecords > 10">
+        <div style="text-align: center" *ngIf="totalRecords > technicianData.length">
+          <button nz-button nzType="primary" (click)="loadMoreTechnician()">
+            Load More
+          </button>
+        </div>
+      </div>
+    </div>
+  </nz-tab>
+
+  <!-- Customer Review -->
+  <nz-tab nzTitle="Customer Reviews">
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <nz-rate [(ngModel)]="averageRating" nzDisabled></nz-rate>
+        <span class="ant-rate-text">{{ averageRating }} Out Of 5</span>
+        <span class="ant-rate-text">({{ globalRating }} global ratings)</span>
+      </div>
+
+      <div nz-col nzSpan="12" style="align-items: end">
+        <div *ngFor="let prog of progressList">
+          <div nz-row>
+            <div nz-col nzSpan="4">{{ prog.rating }} Star</div>
+
+            <div nz-col nzSpan="20">
+              <nz-progress [nzPercent]="prog.progress_percentage" [nzStrokeColor]="'Yellow'">
+              </nz-progress>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nz-divider nzText="Customer Reviews" nzOrientation="left"></nz-divider>
+
+      <div nz-col nzSpan="24" style="
+          margin-top: 5px;
+          padding: 5px;
+          max-height: 40vh;
+          overflow: auto;
+          padding-right: 10px;
+        ">
+        <div *ngFor="let item of dataList">
+          <nz-comment nzAuthor="{{ item['CUSTOMER_NAME'] }}">
+            <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="assets/img/blueEmpImage.png"></nz-avatar>
+
+            <nz-comment-content>
+              <span>
+                {{ item["COMMENTS"] }}
+              </span>
+              <div style="margin-top: 0px">
+                <nz-rate [(ngModel)]="item.RATING" nzDisabled></nz-rate>
+              </div>
+            </nz-comment-content>
+          </nz-comment>
+        </div>
+      </div>
+
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="dataList.length == 0"
+        style="font-weight: 600; margin-top: 10%">
+        <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
+          <ng-template #contentTpl>
+            <span> Data Not Found</span>
+          </ng-template>
+          <ng-template #footerTpl> </ng-template>
+        </nz-empty>
+      </div>
+
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="totalRecords > 10">
+        <div style="text-align: center" *ngIf="totalRecords > dataList.length">
+          <button nz-button nzType="primary" (click)="loadMore()">
+            Load More
+          </button>
+        </div>
+      </div>
+    </div>
+  </nz-tab>
+</nz-tabset>

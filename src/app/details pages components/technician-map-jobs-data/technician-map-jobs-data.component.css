@@ -1,0 +1,11 @@
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}
+
+.nz-form-itemm{
+  display: inline-block !important;
+  margin-bottom: 5px !important;
+  width: -webkit-fill-available !important;
+  padding: 0px 10px !important;
+  font-family: '"Poppins", sans-serif !important';
+}

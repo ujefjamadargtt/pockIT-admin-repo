@@ -1,0 +1,213 @@
+<div>
+    <form nz-form #customerConfigForm="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+            <div class="my-box">
+                <div nz-row>
+                    <!-- Customer Type -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Customer Type</nz-form-label>
+                            <nz-form-control nzHasFeedback>
+                                <nz-select [(ngModel)]="data.CUSTOMER_TYPE" name="CUSTOMER_TYPE"
+                                    [nzPlaceHolder]="'Select Customer Type'" required>
+                                    <nz-option nzValue="Individual" nzLabel="Individual"></nz-option>
+                                    <nz-option nzValue="Corporate" nzLabel="Corporate"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <!-- Customer Category -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Customer Category</nz-form-label>
+                            <nz-form-control nzHasFeedback>
+                                <nz-select [(ngModel)]="data.CUSTOMER_CATEGORY" name="CUSTOMER_CATEGORY"
+                                    [nzPlaceHolder]="'Select Customer Category'" required>
+                                    <nz-option nzValue="Premium" nzLabel="Premium"></nz-option>
+                                    <nz-option nzValue="Standard" nzLabel="Standard"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+                <div nz-row>
+                    <!-- Default Language -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Default Language</nz-form-label>
+                            <nz-form-control nzHasFeedback>
+                                <nz-select [(ngModel)]="data.DEFAULT_LANGUAGE" name="DEFAULT_LANGUAGE"
+                                    [nzPlaceHolder]="'Select Default Language'" required>
+                                    <nz-option nzValue="English" nzLabel="English"></nz-option>
+                                    <nz-option nzValue="Spanish" nzLabel="Spanish"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <!-- Timezone -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Timezone</nz-form-label>
+                            <nz-form-control nzHasFeedback>
+                                <nz-select [(ngModel)]="data.TIMEZONE" name="TIMEZONE"
+                                    [nzPlaceHolder]="'Select Timezone'" required>
+                                    <nz-option nzValue="GMT" nzLabel="GMT"></nz-option>
+                                    <nz-option nzValue="EST" nzLabel="EST"></nz-option>
+                                    <nz-option nzValue="PST" nzLabel="PST"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+                <div nz-row>
+                    <!-- Notification Preferences -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Notification Preferences</nz-form-label>
+                            <nz-form-control nzHasFeedback>
+                                <nz-select [(ngModel)]="data.NOTIFICATION_PREFERENCES" name="NOTIFICATION_PREFERENCES"
+                                    [nzPlaceHolder]="'Select Preferences'" required>
+                                    <nz-option nzValue="Email" nzLabel="Email"></nz-option>
+                                    <nz-option nzValue="SMS" nzLabel="SMS"></nz-option>
+                                    <nz-option nzValue="Push" nzLabel="Push"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <!-- Enable Push Notifications -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzNoColon>Support Access Level</nz-form-label>
+                            <nz-form-control>
+                                <nz-select [(ngModel)]="data.SUPPORT_ACCESS_LEVEL" name="SUPPORT_ACCESS_LEVEL"
+                                    [nzPlaceHolder]="'Select Access Level'" required>
+                                    <nz-option nzValue="Basic" nzLabel="Basic"></nz-option>
+                                    <nz-option nzValue="Advanced" nzLabel="Advanced"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+
+
+                <div nz-row>
+                    <!-- Preferred Contact Method -->
+                    <div nz-col nzSpan="24">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Preferred Contact Method</nz-form-label>
+                            <nz-form-control>
+                                <nz-radio-group [(ngModel)]="data.PREFERRED_CONTACT_METHOD"
+                                    name="PREFERRED_CONTACT_METHOD" required>
+                                    <label nz-radio nzValue="Phone">Phone</label>
+                                    <label nz-radio nzValue="Email">Email</label>
+                                    <label nz-radio nzValue="In-person">In-person</label>
+                                </nz-radio-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <!-- Default Payment Method -->
+                    <div nz-col nzSpan="24">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Default Payment Method</nz-form-label>
+                            <nz-form-control>
+                                <nz-radio-group [(ngModel)]="data.DEFAULT_PAYMENT_METHOD" name="DEFAULT_PAYMENT_METHOD"
+                                    required>
+                                    <label nz-radio nzValue="Credit Card">Credit Card</label>
+                                    <label nz-radio nzValue="Bank Transfer">Bank Transfer</label>
+                                </nz-radio-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+            </div>
+            <div class="my-box">
+                <div nz-row>
+                    <!-- Enable SMS Notifications -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzNoColon>Enable SMS Notifications</nz-form-label>
+                            <nz-form-control>
+                                <nz-switch [(ngModel)]="data.ENABLE_SMS_NOTIFICATIONS" name="ENABLE_SMS_NOTIFICATIONS"
+                                    nzCheckedChildren="Yes" nzUnCheckedChildren="No" required></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <!-- Enable Email Notifications -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzNoColon>Enable Email Notifications</nz-form-label>
+                            <nz-form-control>
+                                <nz-switch [(ngModel)]="data.ENABLE_EMAIL_NOTIFICATIONS"
+                                    name="ENABLE_EMAIL_NOTIFICATIONS" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                                    required></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+                <div nz-row>
+                    <!-- Support Access Level -->
+
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzNoColon>Enable Push Notifications</nz-form-label>
+                            <nz-form-control>
+                                <nz-switch [(ngModel)]="data.ENABLE_PUSH_NOTIFICATIONS" name="ENABLE_PUSH_NOTIFICATIONS"
+                                    nzCheckedChildren="Yes" nzUnCheckedChildren="No" required></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <!-- Service History Access -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzNoColon>Service History Access</nz-form-label>
+                            <nz-form-control>
+                                <nz-switch [(ngModel)]="data.SERVICE_HISTORY_ACCESS" name="SERVICE_HISTORY_ACCESS"
+                                    nzCheckedChildren="Yes" nzUnCheckedChildren="No" required></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+                <div nz-row>
+                    <!-- Account Status -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzNoColon>Account Status</nz-form-label>
+                            <nz-form-control>
+                                <nz-switch [(ngModel)]="data.ACCOUNT_STATUS" name="ACCOUNT_STATUS"
+                                    nzCheckedChildren="Active" nzUnCheckedChildren="Inactive" required></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+
+
+        </nz-spin>
+    </form>
+    <div class="footer">
+        <button type="button" nz-button (click)="Close()" class="ant-btn" style="margin-right: 8px">
+            <span>Cancel</span>
+        </button>
+        <button type="button" class="ant-btn ant-btn-primary" nz-button nz-dropdown
+            style="border-radius: 4px; color: white;" [nzDropdownMenu]="menu" [nzLoading]="isSpinning">
+            <span>Save & Close</span>
+        </button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+                    <a style="color: white!important;">Save & New</a>
+                </li>
+            </ul>
+        </nz-dropdown-menu>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+<div nz-row>
+  <div nz-col nzSpan="24" style="display: flex; justify-content: right">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item style="margin-right: 0px">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="postsearch"
+            [(ngModel)]="searchText"
+            (ngModelChange)="searchGoods($event)"
+            nz-input
+            placeholder="Search Record"
+            autocomplete="off"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="searchGoods($event)"
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      [nzLoading]="loadForm"
+      nzBordered
+      #table
+      [nzData]="roleDetailsData"
+      [nzSize]="'small'"
+      [nzFrontPagination]="false"
+      style="white-space: pre-line"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="80px">Is Allowed</th>
+          <th nzWidth="100px">Is Show In Menu</th>
+          <th nzWidth="180px">Form Name</th>
+          <th nzWidth="150px">Link</th>
+          <th nzWidth="90px">Seq. No.</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data; let i = index">
+          <td align="center" style="white-space: pre-line">
+            <nz-switch
+              name="IS_ALLOWED"
+              (ngModelChange)="event1($event, i)"
+              [(ngModel)]="data['IS_ALLOWED']"
+            >
+            </nz-switch>
+          </td>
+
+          <td align="center" style="white-space: pre-line">
+            <nz-switch
+              name="SHOW_IN_MENU"
+              (ngModelChange)="event2($event, i)"
+              [(ngModel)]="data.SHOW_IN_MENU"
+            >
+            </nz-switch>
+          </td>
+
+          <td style="white-space: pre-line">{{ data.NAME }}</td>
+          <td style="white-space: pre-line">{{ data.LINK }}</td>
+
+          <td style="white-space: pre-line">
+            <input
+              nz-input
+              name="saq_no"
+              maxlength="10"
+              (ngModelChange)="event3($event, i)"
+              [(ngModel)]="data.SEQ_NO"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    [nzLoading]="isSpinning"
+    *ngIf="data.ID"
+    (click)="save()"
+  >
+    <span>Save & Close</span>
+  </button>
+</div>

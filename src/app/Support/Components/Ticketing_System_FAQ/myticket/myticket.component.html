@@ -1,0 +1,458 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+    <div class="formname">
+      <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
+        style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp;{{ formTitle }}
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+          (click)="showFilter()">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <!-- <nz-form-item>
+                <button nz-button (click)="closeTicket()"><i nz-icon nzType="menu"></i>
+                </button>
+            </nz-form-item> -->
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" (keydown.enter)="searchSet($event)" (keyup)="keyup($event)" name="search" nz-input
+            placeholder="Min 3 chars required." [(ngModel)]="searchText" autocomplete="off" />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button nz-button name="button1" id="button1" nzType="primary" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+
+      <nz-form-item *ngIf="userroleid1!==1 && userroleid1!==8">
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Create Ticket
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 10px">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; justify-content: center">
+    <nz-form-item>
+      <nz-radio-group name="STATUS" [(ngModel)]="STATUS" (ngModelChange)="changeRadioButton($event)"
+        nzButtonStyle="solid">
+        <label nz-radio-button nzValue="U">Un-Answered</label>
+        <label nz-radio-button nzValue="R">Answered</label>
+        <label nz-radio-button nzValue="C">Closed</label>
+      </nz-radio-group>
+    </nz-form-item>
+  </div>
+</div>
+
+<!-- <div nz-row>
+    <div nz-col nzSpan="24">
+        <div class="filter {{filterClass}}">
+            <div class="filter-box">
+                <form nz-form>
+                    <div nz-row nzGutter="8">
+                        <div nz-col nzSpan="6" style="text-align: center;">
+                            <nz-form-item>
+                                <nz-range-picker style="width: 100%" [nzFormat]="dateFormat"
+                                    (nzOnCalendarChange)="changeDate($event)" name="selectedDate"
+                                    [(ngModel)]="selectedDate"></nz-range-picker>
+                            </nz-form-item>
+                        </div>
+
+                        <div nz-col nzSpan="16" style="text-align: center;">
+                            <nz-form-item>
+                                <button style="margin-right: 10px;" nz-button [nzLoading]="isSpinning" nzType="primary"
+                                    (click)="applyFilter()" nzJustify="end">
+                                    <i nz-icon nzType="filter"></i>Apply Filter
+                                </button>
+
+                                <button style="margin-right: 10px;" nz-button [nzLoading]="isSpinning" nzType="primary"
+                                    (click)="clearFilter()" nzJustify="end">
+                                    <i nz-icon nzType="filter"></i>Clear Filter
+                                </button>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row [nzGutter]="24">
+            <div nz-col nzSpan="7">
+              <nz-form-label nzNoColon> From Date To Date</nz-form-label>
+              <nz-range-picker name="datefilter" [nzFormat]="dateFormatMMM" [(ngModel)]="selectedDate"
+                [nzDisabledDate]="disabledDate" [nzPlaceHolder]="['From Date', 'To Date']"
+                style="width: 100%; margin-bottom: 0px"></nz-range-picker>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="display: flex; margin-bottom: 0px">
+                <button style="margin-right: 10px" nz-button [nzLoading]="isSpinning" nzType="primary"
+                  (click)="applyFilter()">
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <!-- nzShowSizeChanger -->
+    <nz-table class="my-scroll no-wrap1" nzBordered #table [nzFrontPagination]="false" [nzData]="dataList"
+      [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()" (nzQueryParams)="sort($event)" (nzPageSizeChange)="search(true)" [nzSize]="'small'"
+      [nzScroll]="{ y: '50vh' }">
+      <thead>
+        <tr>
+          <th nzLeft nzWidth="120px"><b>Mark as Closed</b></th>
+          <th nzLeft nzWidth="130px"><b>View</b></th>
+          <!-- <th
+            *ngFor="let column of columns"
+            nzWidth="100px"
+            [nzSortFn]="true"
+            nzColumnKey="{{ column[0] }}"
+          >
+            <b>{{ column[1] }}</b>
+          </th> -->
+          <th nzLeft nzWidth="300px" style="font-weight: bold; text-align: center" nzColumnKey="NAME" [nzSortFn]="true"
+            [nzFilterFn]="true" nzCustomFilter>
+            Department Name
+
+            <nz-filter-trigger [(nzVisible)]="departmentVisible" [nzDropdownMenu]="department">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isnameFilterApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzLeft nzWidth="200px" style="font-weight: bold; text-align: center" nzColumnKey="TICKET_NO"
+            [nzSortFn]="true" [nzFilterFn]="true" nzCustomFilter>
+            Ticket Number
+
+            <nz-filter-trigger [(nzVisible)]="ticketnoVisible" [nzDropdownMenu]="ticket">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isticketnoFilterApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzWidth="250px" style="font-weight: bold; text-align: center" nzColumnKey="QUESTION" [nzSortFn]="true"
+            [nzFilterFn]="true" nzCustomFilter>
+            Question
+
+            <nz-filter-trigger [(nzVisible)]="questionVisible" [nzDropdownMenu]="question">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isquestionFilterApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+          <th nzShowSort nzColumnKey="{{ 'IS_TAKEN' }}" nzWidth="190px" style="text-align: center" [nzSortFn]="true"
+            [nzFilters]="listOfFilter" [nzFilterFn]="true" [nzFilterMultiple]="false"
+            (nzFilterChange)="onStatusFilterChange($event)">
+            Is Taken Status
+          </th>
+
+          <th nzShowSort nzColumnKey="LAST_RESPONDED" nzWidth="210px" style="text-align: center" [nzSortFn]="true"
+            nzCustomFilter>
+            Last Responded Date
+
+            <nz-filter-trigger [(nzVisible)]="lastrespondedDateVisible" [nzDropdownMenu]="lastrespondedDateFilter">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isscheduleDateFilterApplied ? '#1890ff' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzShowSort nzColumnKey="{{ 'STATUS' }}" nzWidth="110px" style="text-align: center" [nzSortFn]="true">
+            Status
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td nzLeft nzWidth="120px" align="center">
+            <ng-container *ngIf="data.STATUS == 'R'; else noActionTemplate">
+              <i nz-icon nz-popconfirm [nzPopconfirmTitle]="ticketPopConfirm"
+                (nzOnConfirm)="onTicketDeleteConfirm(data)" (nzOnCancel)="onTicketDeleteCancel()"
+                nzPopconfirmPlacement="top" nzType="close-circle" nzTheme="outline" style="color: red"></i>
+
+              <ng-template #ticketPopConfirm>
+                <span>Are you sure to close this ticket?
+                  <b>Ticket No. {{ data.TICKET_NO }}</b></span>
+              </ng-template>
+            </ng-container>
+            <ng-template #noActionTemplate>
+              <span>-</span>
+            </ng-template>
+          </td>
+
+          <td align="center" nzLeft>
+            <!-- <button (click)="ViewDetails(data)">View Details</button> -->
+            <nz-tag nzColor="#2db7f5" (click)="ViewDetails(data)" style="cursor: pointer" nzTooltipTitle="View Details"
+              nz-tooltip>
+              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
+              </span>&nbsp;&nbsp;View Details</nz-tag>
+          </td>
+
+          <!-- <td align="left" nzLeft>
+            <span *ngIf="data['DEPARTMENT_NAME'] != null">
+              <span
+                *ngIf="data['DEPARTMENT_NAME'].length >= 30"
+                nz-popover
+                [nzPopoverContent]="data['DEPARTMENT_NAME']"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["DEPARTMENT_NAME"] == null
+                    ? "-"
+                    : (data["DEPARTMENT_NAME"] | slice : 0 : 30)
+                }}{{ data["DEPARTMENT_NAME"].length > 30 ? "..." : "" }}
+              </span>
+
+              <span *ngIf="data['DEPARTMENT_NAME'].length < 30">
+                {{
+                  data["DEPARTMENT_NAME"] == null
+                    ? "-"
+                    : (data["DEPARTMENT_NAME"] | slice : 0 : 30)
+                }}
+
+                {{ data["DEPARTMENT_NAME"].length > 30 ? "..." : "" }}
+              </span>
+            </span>
+
+            <span *ngIf="data['DEPARTMENT_NAME'] == null">-</span>
+          </td> -->
+          <td align="left" nzLeft [nzTooltipTitle]="isTextOverflow ? data['DEPARTMENT_NAME'] : null"
+            #tooltipRef="nzTooltip" nz-tooltip>
+            <div #textContainer class="truncate-text" (mouseenter)="checkOverflow(textContainer, tooltipRef)">
+              {{ data["DEPARTMENT_NAME"] ? data["DEPARTMENT_NAME"] : "-" }}
+            </div>
+          </td>
+          <td align="left" nzLeft>
+            <span *ngIf="data['TICKET_NO'] != null">
+              {{ data["TICKET_NO"] }}
+            </span>
+
+            <span *ngIf="data['TICKET_NO'] == null">-</span>
+          </td>
+          <!-- <td align="left">
+            <span *ngIf="data['QUESTION'] != null">
+              <span
+                *ngIf="data['QUESTION'].length >= 25"
+                nz-popover
+                [nzPopoverContent]="data['QUESTION']"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["QUESTION"] == null
+                    ? "-"
+                    : (data["QUESTION"] | slice : 0 : 25)
+                }}{{ data["QUESTION"].length > 25 ? "..." : "" }}
+              </span>
+
+              <span *ngIf="data['QUESTION'].length < 25">
+                {{
+                  data["QUESTION"] == null
+                    ? "-"
+                    : (data["QUESTION"] | slice : 0 : 25)
+                }}
+
+                {{ data["QUESTION"].length > 25 ? "..." : "" }}
+              </span>
+            </span>
+
+            <span *ngIf="data['QUESTION'] == null">-</span>
+          </td> -->
+          <td align="left" [nzTooltipTitle]="isTextOverflow ? data['QUESTION'] : null" #tooltipRef1="nzTooltip"
+            nz-tooltip>
+            <div #textContainer1 class="truncate-text" (mouseenter)="checkOverflow(textContainer1, tooltipRef1)">
+              {{ data["QUESTION"] ? data["QUESTION"] : "-" }}
+            </div>
+          </td>
+          <td align="center">
+            <nz-tag *ngIf="data['IS_TAKEN'] == 1" [nzColor]="'green'">Yes</nz-tag>
+
+            <nz-tag *ngIf="data['IS_TAKEN'] == 0" [nzColor]="'red'">No</nz-tag>
+
+            <span *ngIf="data['IS_TAKEN'] != 1 && data['IS_TAKEN'] != 0">-</span>
+          </td>
+
+          <td align="center">
+            {{
+            data?.LAST_RESPONDED
+            ? (data.LAST_RESPONDED | date : "dd/MM/yyyy HH:mm a")
+            : "-"
+            }}
+          </td>
+
+          <td align="center">
+            <span *ngIf="data['STATUS'] == 'P'">
+              <nz-tag [nzColor]="'red'">Pending</nz-tag>
+            </span>
+
+            <span *ngIf="data['STATUS'] == 'C'">
+              <nz-tag [nzColor]="'green'">Closed</nz-tag>
+            </span>
+
+            <span *ngIf="data['STATUS'] == 'S'">
+              <nz-tag [nzColor]="'green'">Assigned</nz-tag>
+            </span>
+
+            <span *ngIf="data['STATUS'] == 'R'">
+              <nz-tag [nzColor]="'green'">Answered</nz-tag>
+            </span>
+
+            <span *ngIf="data['STATUS'] == 'O'">
+              <nz-tag [nzColor]="'green'">Re-Open</nz-tag>
+            </span>
+
+            <span *ngIf="data['STATUS'] == 'B'">
+              <nz-tag [nzColor]="'red'">Banned</nz-tag>
+            </span>
+
+            <span *ngIf="data['STATUS'] == 'H'">
+              <nz-tag [nzColor]="'yellow'">On-Hold</nz-tag>
+            </span>
+
+            <span *ngIf="!data['STATUS']">
+              <nz-tag [nzColor]="'default'">Unknown</nz-tag>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+  <nz-dropdown-menu #department="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <nz-input-group [nzSuffix]="inputClearTpl">
+          <input type="text" nz-input [(ngModel)]="departmentText" (keyup)="onKeyup($event)"
+            placeholder="Search Department Name" />
+        </nz-input-group>
+
+        <ng-template #inputClearTpl>
+          <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="departmentText"
+            (click)="reset()"></span>
+
+          <span nz-icon nzType="search" nzTheme="outline" *ngIf="departmentText == ''"></span>
+        </ng-template>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+
+  <nz-dropdown-menu #ticket="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <nz-input-group [nzSuffix]="inputClearTpl">
+          <input type="text" nz-input [(ngModel)]="ticketnoText" (keyup)="onKeyup($event)"
+            placeholder="Search Ticket Number" />
+        </nz-input-group>
+
+        <ng-template #inputClearTpl>
+          <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="ticketnoText"
+            (click)="reset()"></span>
+
+          <span nz-icon nzType="search" nzTheme="outline" *ngIf="ticketnoText == ''"></span>
+        </ng-template>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+
+  <nz-dropdown-menu #question="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <nz-input-group [nzSuffix]="inputClearTpl">
+          <input type="text" nz-input [(ngModel)]="questionText" (keyup)="onKeyup($event)"
+            placeholder="Search Question" />
+        </nz-input-group>
+
+        <ng-template #inputClearTpl>
+          <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="questionText"
+            (click)="reset()"></span>
+
+          <span nz-icon nzType="search" nzTheme="outline" *ngIf="questionText == ''"></span>
+        </ng-template>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #lastrespondedDateFilter="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <nz-range-picker [(ngModel)]="StartDate" name="StartDate" style="width: 100%"
+          [nzFormat]="commonFunction.dateFormatMMM" (ngModelChange)="onDateRangeChange()">
+        </nz-range-picker>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+</div>
+<div *ngIf="drawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 70px)',
+      overflow: 'auto',
+      'padding-bottom': '180px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="550" [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-viewchatticket [newstr]="newstr" [drawerClose]="closeCallback" [data2]="data1" [data]="drawerData"
+        [isSpinning]="isSpinning">
+      </app-viewchatticket></ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="drawerVisible2">
+  <nz-drawer [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="500" style="overflow-x: hidden"
+    [nzVisible]="drawerVisible2" [nzTitle]="drawerTitle2" (nzOnClose)="drawerClose1()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-createticket [drawerClose]="closeCallback1" [ticketQuestion]="ticketQuestion" [index]="index"
+        [ticketGroups]="ticketGroups" [data]="drawerData2" [isSpinning]="isSpinning">
+      </app-createticket>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<!-- <div *ngIf="drawerVisible2">
+    <nz-drawer [nzBodyStyle]="{
+        height: 'calc(100% - 55px)',
+        overflow: 'auto',
+        'padding-bottom': '53px'
+      }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="600" [nzVisible]="drawerVisible2"
+        [nzTitle]="drawerTitle2" (nzOnClose)="drawerClose1()" (nzKeyboard)="(true)">
+        <ng-container *nzDrawerContent>
+       
+
+            <app-createticket [drawerClose]="closeCallback1" [ticketQuestion]="ticketQuestion" [index]="index"
+                [ticketGroups]='ticketGroups' [data]="drawerData2">
+            </app-createticket>
+
+
+        </ng-container>
+    </nz-drawer>
+</div> -->

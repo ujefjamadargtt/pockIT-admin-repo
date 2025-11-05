@@ -1,0 +1,102 @@
+<div nz-row>
+    <div nz-col nzSpan="24" style="box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;">
+        <div nz-row [nzGutter]="16" style="padding: 0px 0px 20px 0px;">
+            <div nz-col *ngIf="data!=undefined" nzSpan="8" class="mainnam" nz-popover [nzPopoverContent]="data['NAME']"
+                nzPopoverPlacement="topLeft">Contact Person Name : {{data.NAME}}
+                &nbsp;<span *ngIf="data.STATUS == 0"
+                    style="padding: 1px 8px;background-color: rgb(24, 24, 24);color: white;border-radius: 15px;">Inactive</span>
+
+                <span *ngIf="data.STATUS == 1"
+                    style="padding: 1px 8px;background-color: green;color: white;border-radius: 15px;">Active</span>
+            </div>
+            <div nz-col nzSpan="8" class="subname"
+                *ngIf="data!=undefined && data.BUSINESS_NAME!=undefined && data.BUSINESS_NAME!=null && data.BUSINESS_NAME!=''"
+                nz-popover [nzPopoverContent]="data['BUSINESS_NAME']" nzPopoverPlacement="topLeft">Business Name :
+                {{data.BUSINESS_NAME}}</div>
+            <div nz-col nzSpan="8" *ngIf="data!=undefined" class="subname">Mobile No:
+                {{data.COUNTRY_CODE}}&nbsp;{{data.MOBILE_NUMBER}}</div>
+            <div nz-col nzSpan="8" *ngIf="data!=undefined" class="subname" nz-popover [nzPopoverContent]="data['EMAIL']"
+                nzPopoverPlacement="topLeft">Email ID: {{data.EMAIL_ID}}</div>
+            <div nz-col nzSpan="8" *ngIf="data!=undefined" class="subname" nz-popover [nzPopoverContent]="TempAddress"
+                nzPopoverPlacement="topLeft">Address:
+                {{data.ADDRESS_LINE_1}},{{data.COUNTRY_NAME}} {{data.STATE_NAME}} {{data.DISTRICT_NAME}} -
+                {{data.PINCODE}} </div>
+            <ng-template #TempAddress>
+                <div>
+                    <p *ngIf="data!=undefined">
+                        <strong>Address Line:</strong> {{ data.ADDRESS_LINE_1 }}
+                    </p>
+                    <p *ngIf="data!=undefined">
+                        <strong>Country:</strong> {{ data.COUNTRY_NAME }}
+                    </p>
+                    <p *ngIf="data!=undefined">
+                        <strong>State:</strong> {{ data.STATE_NAME }}
+                    </p>
+                    <p *ngIf="data!=undefined">
+                        <strong>District:</strong> {{ data.DISTRICT_NAME }} - {{data.PINCODE}}
+                    </p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+<div nz-row style="padding: 10px;">
+    <div nz-col nzSpan="24">
+
+        <nz-tabset nzCentered (nzSelectedIndexChange)="onSelectedIndexChange($event)">
+
+            <nz-tab [nzTitle]="'Technicians'">
+                <div *ngIf="show==0">
+                    <app-technicainslist [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-technicainslist>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'Jobs'">
+                <div *ngIf=" show==1">
+                    <app-jobcardpage [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-jobcardpage>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'Order Location'">
+                <div *ngIf="show == 2">
+                    <app-location [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-location>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'Technician Locations'">
+                <div *ngIf="show == 3">
+                    <app-multiplelocationpage [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-multiplelocationpage>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'Technician Travel History'">
+                <div *ngIf="show == 4">
+                    <app-technicianlocationsmap [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-technicianlocationsmap>
+                </div>
+            </nz-tab>
+
+            <nz-tab [nzTitle]="'Chats'">
+                <div *ngIf="show==5">
+                    <app-chatoverview-comp [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-chatoverview-comp>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'Technician Ratings for Customers'">
+                <div *ngIf="show==6">
+                    <app-technicianratting [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-technicianratting>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'Customer Ratings for Technicians'">
+                <div *ngIf="show==7">
+                    <app-customerratting [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-customerratting>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'Activity Log'">
+                <div *ngIf="show==8">
+                    <app-actionlogs [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-actionlogs>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'Invoices'">
+                <div *ngIf="show==9">
+                    <app-invoicepage [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-invoicepage>
+                </div>
+            </nz-tab>
+        </nz-tabset>
+    </div>
+</div>

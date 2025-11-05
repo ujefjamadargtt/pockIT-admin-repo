@@ -1,0 +1,149 @@
+nz-form-item {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+  }
+
+  .select-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .customer-message {
+    
+    max-width: 50%; 
+  }
+ 
+  
+  .chat-container {
+    max-height: 400px;
+    width: 450px;
+    margin: 0 auto;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start; 
+    height: 500px; 
+  }
+  
+  .message-box {
+    
+    flex-grow: 1;
+    overflow-y: auto; 
+    margin-bottom: 10px;
+    padding-right: 10px;
+    scrollbar-width: thin; 
+    scrollbar-color: #888 #f4f4f4; 
+    
+  }
+  
+  
+  .message-box::-webkit-scrollbar {
+    width: 2px; 
+  }
+  
+  .message-box::-webkit-scrollbar-thumb {
+    background-color: #888; 
+    border-radius: 3px; 
+  }
+  
+  .message-box::-webkit-scrollbar-track {
+    background-color: #f4f4f4; 
+    border-radius: 3px; 
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .customer-message {
+    max-width: 70%; 
+    align-items: flex-start; 
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .technician-message {
+    max-width: 70%; 
+    align-items: flex-end; 
+    display: flex;
+    flex-direction: column;
+    margin-left: auto; 
+  }
+  
+  .customer-name,
+  .technician-name {
+    font-weight: bold;
+    font-size: 10px !important;
+  }
+  
+  .timestamp {
+    
+    font-size: 10px !important;
+    color: gray;
+    margin-top: 5px;
+  }
+  
+  .message-text {
+    font-size:13px;
+    margin-top: 5px;
+    background-color: #e4e4e4;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .technician-message .message-text {
+    background-color: #d3f9d8; 
+  }
+  
+  .input-area {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  textarea {
+    width: 80%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    resize: none;
+  }
+  
+  .whatsapp-send-icon {
+    width: 13%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius:10px;
+    margin-left: 5px;
+    margin-right: 20px;
+    height: 37px;
+    cursor: pointer;
+  }
+  
+  .whatsapp-send-icon:hover {
+    background-color: #45a049;
+  }
+  
+
+  .paper-clip {
+    margin-right: 2px;
+    background-color: #f4f4f4; 
+    border: none; 
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

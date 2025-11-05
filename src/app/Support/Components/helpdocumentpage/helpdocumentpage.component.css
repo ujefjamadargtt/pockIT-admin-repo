@@ -1,0 +1,361 @@
+.main-layout {
+    height: 100vh;
+    display: flex;
+}
+
+/* Sidebar Styles */
+.custom-sider {
+    background-color: #f5f5f5;
+    /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
+    /* overflow: auto; */
+    /* height: 100vh; */
+    font-size: 12px;
+
+    .logo {
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        padding: 12px 0px 8px 0px;
+        background: #fff;
+        color: #092b9c;
+    }
+
+    .sider-menu {
+        padding: 0;
+    }
+}
+
+/* Content Area */
+.content-layout {
+    flex: 1;
+    overflow: auto;
+}
+
+.header {
+    background: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* .header-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .faq-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .faq-updated {
+            font-size: 12px;
+            color: gray;
+            margin: 2px 0 0;
+        }
+    }
+
+    .header-right {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+
+        .search-bar {
+            width: 220px;
+            font-size: 12px;
+        }
+    } */
+}
+
+.content {
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    width: 100%;
+    height: 100vh; /* Ensure full height */
+  }
+  
+  .pdf-container {
+    width: 100%;
+    height: 100vh; /* Make sure it takes full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .pdf-viewer {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+.select-message {
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+}
+.scroll-container {
+    height: 90vh;
+    /* max-height: 10vh; */
+    overflow-x: hidden;
+    overflow-y: scroll ;
+    white-space: nowrap;
+  }
+  .menu-container {
+    overflow-y: auto;
+    max-height: calc(100vh - 50px); /* Adjust based on header size */
+  }
+  
+  .sider-menu::-webkit-scrollbar {
+    width: 5px; 
+  }
+  
+  .sider-menu::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+  }
+  
+  .sider-menu::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 10px;
+  }
+  
+  .sider-menu::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .sider-menu {
+    max-height: calc(100vh - 50px); 
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin; /* Firefox-specific scrollbar size reduction */
+    scrollbar-color: #888 #f1f1f1; /* Firefox scrollbar color */
+  }
+/* Responsive */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-right {
+        width: 100%;
+        margin-top: 10px;
+
+        .search-bar {
+            width: 100%;
+        }
+    }
+}
+
+:host::ng-deep .ant-menu-item-group-title {
+   display: none;
+  }
+  
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0px;
+    padding: 10px 0;
+    width: 100vw;
+
+    nz-input-group {
+        width: 60%;
+        max-width: 700px;
+        border-radius: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        input {
+            font-size: 14px;
+            border-radius: 20px;
+            padding: 2px 12px;
+        }
+
+        .clear-icon {
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #ff4d4f;
+            }
+        }
+    }
+}
+
+:host::ng-deep .ant-menu-item-group-title {
+    font-size: 13px !important;
+  }
+  :host::ng-deep .ant-collapse-header {
+    /* border-radius: 0 0 2px 2px !important; */
+    font-size: 13px !important;
+  }
+  
+  .faq-panel {
+    margin-bottom: 20px;
+  }
+  .icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumbs-up, .thumbs-down {
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+}
+
+.thumbs-down.active {
+    color: red;
+}
+
+.negative-response {
+    margin-top: 10px;
+}
+
+.negative-response textarea {
+    width: 100%;
+    height: 40px;
+    padding: 5px;
+    font-size: 14px;
+    resize: none;
+}
+
+.negative-response button {
+    margin-top: 5px;
+    background-color: #092b9c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.negative-response button:hover {
+    background-color: #0056b3;
+}
+.faq-header {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%; /* Ensures it does not exceed the parent */
+}
+.faq-answer {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.thumbs-up.disabled, .thumbs-down.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.pdf-viewer {
+    width: 100%;
+    height: 90vh;
+    border: none;
+  }
+  .image-content{
+      display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .document-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+  
+  .card-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .document-card {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 148px; /* Fixed height for equal sizing */
+    border-radius: 6px;
+    background-color: white;
+    transition: box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+    padding: 12px !important;
+    text-align: center;
+  }
+  
+  .document-card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+  }
+  
+  .icon-container {
+    font-size: 24px;
+    color: #1E90FF;
+    margin-bottom: 5px;
+  }
+  
+  .text-container h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  
+  .text-container p {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+  }
+  
+  .card-row {
+    max-height: 450px; 
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .view-btn {
+    width: 120px; /* Set a fixed width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Adds spacing between icon and text */
+    padding-top: 10px;
+
+  }
+  
+  
+ 
+  .border-blue {
+    border: 1.5px solid #c4c4c4 !important;
+  }
+  :host::ng-deep .ant-card-body {
+    padding: 0 !important;
+  }
+    
+
+  .mainnam {
+    /* color: #000; */
+    font-size: 12px !important;
+    font-weight: 600;
+  
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

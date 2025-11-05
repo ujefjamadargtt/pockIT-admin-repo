@@ -1,0 +1,2409 @@
+<form #websitebannerPage="ngForm">
+  <nz-spin [nzSpinning]="isSpinning">
+    <div nz-row>
+      <div nz-col nzSpan="17" style="padding-right: 10px">
+        <div class="my-box">
+          <div nz-row *ngIf="type == 'a'">
+            <div nz-row>
+
+              
+              <div nz-col nzSpan="10">
+                <nz-form-item>
+                  <nz-form-label nzRequired>Customer Type</nz-form-label>
+                  <nz-form-control>
+                    <nz-radio-group
+                      [(ngModel)]="data.CUSTOMER_TYPE"
+                      name="customerType"
+                      class="customer-type-radio"
+                      (ngModelChange)="onCustomerTypeChange($event)"
+                    >
+                      <label nz-radio nzValue="I">
+                        <span style="font-weight: 500">B2C</span>
+                      </label>
+
+                      <label
+                        nz-radio
+                        nzValue="B"
+                        (ngModelChange)="getcompanynames($event)"
+                      >
+                        <span style="font-weight: 500">B2B</span>
+                      </label>
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="1"></div>
+
+              <div nz-col nzSpan="1"></div>
+
+              <div nz-col nzSpan="11" >
+                <nz-form-item *ngIf="data.CUSTOMER_TYPE === 'B'">
+                  <nz-form-label nzNoColon>Organization Name</nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Select Organization Name"
+                  >
+                    <nz-select
+                      nzShowSearch
+                      nzServerSearch
+                      nzAllowClear
+                      style="width: 100%"
+                      nzPlaceHolder="Select Organization Name"
+                      [(ngModel)]="data.ORGANIZATION_NAME"
+                      name="Organizationname"
+                      [nzOptionOverflowSize]="8"
+                      [nzOptionHeightPx]="30"
+                      (nzOnSearch)="searchCompany($event)"
+                      (keyup)="keyupCompany($event)"
+                      [nzDropdownRender]="renderTemplate"
+                      (nzScrollToBottom)="loadMorecompany()"
+                      (ngModelChange)="selectOrgName($event)"
+                        (nzClear)="clearTerritory()"
+
+                    >
+                      <nz-option
+                        *ngFor="let b2b of company"
+                        [nzValue]="b2b.COMPANY_NAME"
+                        [nzLabel]="b2b.COMPANY_NAME"
+                      >
+                        <div nz-row>
+                          <div
+                            nz-col
+                            nzSpan="24"
+                            style="font-size: 14px; font-weight: 500"
+                          >
+                            <svg
+                              height="17px"
+                              viewBox="0 0 48 48"
+                              width="17px"
+                              xml:space="preserve"
+                              xmlns="http://www.w3.org/2000/svg"
+                              style="margin-right: 5px"
+                            >
+                              <path
+                                fill="#3182ce"
+                                clip-rule="evenodd"
+                                d="M6,47V20c0-2.209,1.791-4,4-4v-4c0-1.104,0.896-2,2-2h2V2
+                    c0-0.552,0.447-1,1-1s1,0.448,1,1v8h2c1.104,0,2,0.896,2,2v4
+                    c2.209,0,4,1.791,4,4v8h7v-6h4v-3h6v3h1v25H6z"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+                            {{ b2b.COMPANY_NAME }}
+                          </div>
+                          <!-- <div
+                          nz-col
+                          nzSpan="12"
+                          style="font-size: 12px; color: #4a5568"
+                        >
+                          <i
+                            nz-icon
+                            nzType="phone"
+                            style="color: #38a169; margin-right: 5px"
+                          ></i>
+                          {{ b2b.MOBILE_NO }}
+                        </div> -->
+                        </div>
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="11">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Customer Name</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Select Customer"
+                  >
+                    <nz-select
+                      nzShowSearch
+                      nzServerSearch
+                      nzAllowClear
+                      style="width: 100%"
+                      nzPlaceHolder="Select Customer"
+                      [(ngModel)]="data.CUSTOMER_ID"
+                      name="customerName"
+                      [nzOptionOverflowSize]="8"
+                      [nzOptionHeightPx]="60"
+                      (nzScrollToBottom)="loadMore()"
+                      (nzOnSearch)="search($event)"
+                      (keyup)="keyup($event)"
+                      [nzDropdownRender]="renderTemplate"
+                      (ngModelChange)="getaddress($event)"
+                    >
+                      <ng-template #renderTemplate>
+                        <nz-spin *ngIf="isLoading"></nz-spin>
+                      </ng-template>
+                      <nz-option
+                        nzCustomContent
+                        *ngFor="let customer of customer"
+                        [nzValue]="customer.ID"
+                        [nzLabel]="
+                          customer.NAME + ' ' + (customer.COMPANY_NAME || '')
+                        "
+                      >
+                        <div nz-row>
+                          <div
+                            *ngIf="customer.CUSTOMER_TYPE == 'I'"
+                            nz-col
+                            nzSpan="24"
+                            style="
+                              font-size: 14px;
+                              color: #2d3748;
+                              font-weight: 500;
+                            "
+                          >
+                            <i
+                              nz-icon
+                              nzType="user"
+                              style="color: #3182ce; margin-right: 5px"
+                            ></i>
+                            {{ customer.SALUTATION ? customer.SALUTATION : "" }}
+                            {{ customer.NAME }}
+                          </div>
+                          <div
+                            *ngIf="
+                              customer.CUSTOMER_TYPE == 'B' &&
+                              !customer.IS_PARENT
+                            "
+                            nz-col
+                            nzSpan="24"
+                            style="
+                              font-size: 12px;
+                              color: #2d3748;
+                              font-weight: 500;
+                            "
+                          >
+                            <i
+                              nz-icon
+                              nzType="user"
+                              style="color: #3182ce; margin-right: 5px"
+                            ></i>
+                            {{ customer.SALUTATION ? customer.SALUTATION : "" }}
+                            {{ customer.NAME }}
+                          </div>
+                          <div
+                            *ngIf="customer.CUSTOMER_TYPE == 'B'"
+                            nz-col
+                            nzSpan="24"
+                            style="
+                              font-size: 13px;
+                              color: #2d3748;
+                              font-weight: 500;
+                            "
+                          >
+                            <svg
+                              enable-background="new 0 0 48 48"
+                              height="17px"
+                              id="Layer_1"
+                              version="1.1"
+                              viewBox="0 0 48 48"
+                              width="17px"
+                              xml:space="preserve"
+                              xmlns="http://www.w3.org/2000/svg"
+                              xmlns:xlink="http://www.w3.org/1999/xlink"
+                            >
+                              <path
+                                clip-rule="evenodd"
+                                d="M6,47V20c0-2.209,1.791-4,4-4l0,0v-4c0-1.104,0.896-2,2-2h2V2c0-0.552,0.447-1,1-1  s1,0.448,1,1v8h2c1.104,0,2,0.896,2,2v4l0,0l0,0c2.209,0,4,1.791,4,4v8h7v-6h4v-3h6v3h1v25H6z M18,13c0-0.552-0.447-1-1-1h-4  c-0.553,0-1,0.448-1,1v3h6V13z M22,20c0-1.104-0.896-2-2-2H10c-1.104,0-2,0.896-2,2v25h14V20z M31,30h-7v15h7V30z M40,24h-7v21h7V24  z M36,27h1c0.553,0,1,0.447,1,1v1c0,0.553-0.447,1-1,1h-1c-0.553,0-1-0.447-1-1v-1C35,27.447,35.447,27,36,27z M36,33h1  c0.553,0,1,0.447,1,1v1c0,0.553-0.447,1-1,1h-1c-0.553,0-1-0.447-1-1v-1C35,33.447,35.447,33,36,33z M36,39h1c0.553,0,1,0.447,1,1v1  c0,0.553-0.447,1-1,1h-1c-0.553,0-1-0.447-1-1v-1C35,39.447,35.447,39,36,39z M27,33h1c0.553,0,1,0.447,1,1v1c0,0.553-0.447,1-1,1  h-1c-0.553,0-1-0.447-1-1v-1C26,33.447,26.447,33,27,33z M27,39h1c0.553,0,1,0.447,1,1v1c0,0.553-0.447,1-1,1h-1  c-0.553,0-1-0.447-1-1v-1C26,39.447,26.447,39,27,39z M18,42h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1  v1C19,41.553,18.553,42,18,42z M18,36h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C19,35.553,18.553,36,18,36z M18,30h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C19,29.553,18.553,30,18,30z M18,24h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C19,23.553,18.553,24,18,24z M13,42h-1c-0.553,0-1-0.447-1-1v-1c0-0.553,0.447-1,1-1h1c0.553,0,1,0.447,1,1v1  C14,41.553,13.553,42,13,42z M13,36h-1c-0.553,0-1-0.447-1-1v-1c0-0.553,0.447-1,1-1h1c0.553,0,1,0.447,1,1v1  C14,35.553,13.553,36,13,36z M13,30h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C14,29.553,13.553,30,13,30z M13,24h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C14,23.553,13.553,24,13,24z"
+                                fill-rule="evenodd"
+                              />
+                            </svg>
+
+                            {{ customer.COMPANY_NAME }}
+                          </div>
+                          <div
+                            nz-col
+                            nzSpan="12"
+                            style="font-size: 12px; color: #4a5568"
+                          >
+                            <i
+                              nz-icon
+                              nzType="phone"
+                              style="color: #38a169; margin-right: 5px"
+                            ></i>
+                            {{ customer.MOBILE_NO }}
+                          </div>
+
+                          <div
+                            nz-col
+                            nzSpan="12"
+                            *ngIf="customer.EMAIL"
+                            style="font-size: 12px; color: #718096"
+                          >
+                            <i
+                              nz-icon
+                              nzType="mail"
+                              style="color: #805ad5; margin-right: 5px"
+                            ></i>
+                            {{ customer.EMAIL }}
+                          </div>
+
+                          <div
+                            nz-col
+                            nzSpan="12"
+                            style="font-size: 12px; color: #718096"
+                          >
+                            <i
+                              nz-icon
+                              nzType="idcard"
+                              style="color: #ecc94b; margin-right: 5px"
+                            ></i>
+
+                            Customer Type:
+                            <span *ngIf="customer.CUSTOMER_TYPE == 'I'"
+                              >Individual(B2C)</span
+                            >
+                            <span *ngIf="customer.CUSTOMER_TYPE == 'B'"
+                              >Business(B2B)</span
+                            >
+                          </div>
+                        </div>
+                      </nz-option>
+                      <!-- <nz-option nzCustomContent *ngFor="let customer of customer" [nzValue]="customer.ID"
+                      [nzLabel]="customer.NAME">
+                      <div nz-row>
+                        <div nz-col nzSpan="24" style="
+                            font-size: 14px;
+                            color: #2d3748;
+                            font-weight: 500;
+                          ">
+                          <i nz-icon nzType="user" style="color: #3182ce; margin-right: 5px"></i>
+                          {{ customer.SALUTATION ? customer.SALUTATION : "" }}
+                          {{ customer.NAME }}
+                        </div>
+
+                        <div nz-col nzSpan="12" style="font-size: 12px; color: #4a5568">
+                          <i nz-icon nzType="phone" style="color: #38a169; margin-right: 5px"></i>
+                          {{ customer.MOBILE_NO }}
+                        </div>
+
+                        <div nz-col nzSpan="12" *ngIf="customer.EMAIL" style="font-size: 12px; color: #718096">
+                          <i nz-icon nzType="mail" style="color: #805ad5; margin-right: 5px"></i>
+                          {{ customer.EMAIL }}
+                        </div>
+
+                        <div nz-col nzSpan="12" style="font-size: 12px; color: #718096">
+                          <i nz-icon nzType="idcard" style="color: #ecc94b; margin-right: 5px"></i>
+
+                          Customer Type:
+                          <span *ngIf="customer.CUSTOMER_TYPE == 'I'">Individual</span>
+                          <span *ngIf="customer.CUSTOMER_TYPE == 'B'">Business</span>
+                        </div>
+                      </div>
+                    </nz-option> -->
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="1" *ngIf="decreptedroleId != 7">
+                <div style="margin-top: 26px">
+                  <button
+                    nz-button
+                    nzType="primary"
+                    nzTooltipTitle="Add Customer"
+                    nz-tooltip
+                    (click)="addcustomer()"
+                  >
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                  </button>
+                </div>
+              </div>
+              <div nz-col nzSpan="1" *ngIf="decreptedroleId == 7"></div>
+              <div nz-col nzSpan="11">
+                <div>
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Service Address</nz-form-label
+                    >
+                    <nz-form-control>
+                      <nz-select
+                        nzShowSearch
+                        nzAllowClear
+                        style="width: 100%"
+                        nzPlaceHolder="Select Service Address"
+                        (ngModelChange)="getteritory($event)"
+                        [(ngModel)]="data.ADDRESS_ID"
+                        name="address"
+                        [nzOptionHeightPx]="60"
+                        [nzOptionOverflowSize]="4"
+                      >
+                        <nz-option
+                          nzCustomContent
+                          *ngFor="let address of addresses"
+                          [nzValue]="address.ID"
+                          [nzLabel]="
+                            address.ADDRESS_LINE_1 +
+                            ', ' +
+                            (address.ADDRESS_LINE_2 || '') +
+                            '-' +
+                            (address.PINCODE ? address.PINCODE : '') +
+                            ', ' +
+                            (address.LANDMARK ? address.LANDMARK : '')
+                          "
+                        >
+                          <div nz-row>
+                            <div
+                              nz-col
+                              nzSpan="1"
+                              style="
+                                font-size: 14px;
+                                text-align: left;
+                                color: #2d3748;
+                                font-weight: 500;
+                              "
+                            >
+                              <i
+                                nz-icon
+                                nzType="home"
+                                style="color: #3182ce"
+                              ></i>
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="23"
+                              style="
+                                font-size: 13px;
+                                color: #2d3748;
+                                font-weight: 500;
+                                white-space: pre-line;
+                              "
+                            >
+                              {{ address.ADDRESS_LINE_1 }}
+                              <ng-container *ngIf="address.ADDRESS_LINE_2">
+                                , {{ address.ADDRESS_LINE_2 }}
+                              </ng-container>
+                              -{{ address.PINCODE }}
+                              <ng-container *ngIf="address.TERRITORY_ID > 0">
+                                ({{ address.TERRITORY_NAME }} Territory)
+                              </ng-container>
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              *ngIf="address.LANDMARK"
+                              style="
+                                font-size: 13px;
+                                color: #2d3748;
+                                font-weight: 500;
+                                white-space: pre-line;
+                              "
+                            >
+                              {{ address.LANDMARK ? address.LANDMARK : "" }}
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="12"
+                              style="font-size: 12px; color: #4a5568"
+                            >
+                              <i
+                                nz-icon
+                                nzType="global"
+                                style="color: #2b6cb0; margin-right: 5px"
+                              ></i>
+                              {{ address.STATE_NAME }},
+                              {{ address.COUNTRY_NAME }}
+                            </div>
+
+                            <div
+                              nz-col
+                              nzSpan="12"
+                              style="font-size: 12px; color: #718096"
+                            >
+                              <i
+                                nz-icon
+                                nzType="tag"
+                                style="color: #718096; margin-right: 5px"
+                              ></i>
+                              Address Type:
+                              <span *ngIf="address.TYPE == 'H'">Home</span>
+                              <span *ngIf="address.TYPE == 'F'">Office</span>
+                              <span *ngIf="address.TYPE == 'B'">Branch</span>
+                              <span *ngIf="address.TYPE == 'O'">Other</span>
+                            </div>
+                          </div>
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div nz-col nzSpan="1">
+                <div style="margin-top: 26px">
+                  <button
+                    nz-button
+                    nzType="primary"
+                    nzTooltipTitle="Add Address"
+                    nz-tooltip
+                    (click)="addcustomerAddress()"
+                  >
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                  </button>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="11">
+                <div>
+                  <nz-form-item>
+                    <div style="display: flex; justify-content: space-between">
+                      <div>
+                        <nz-form-label nzRequired nzNoColon
+                          >Billing Address</nz-form-label
+                        >
+                      </div>
+                    </div>
+                    <nz-form-control>
+                      <nz-select
+                        nzShowSearch
+                        nzAllowClear
+                        style="width: 100%"
+                        nzPlaceHolder="Select Billing Address"
+                        (ngModelChange)="getteritory1($event)"
+                        [(ngModel)]="data.ADDRESS_ID1"
+                        name="address22"
+                        [nzOptionHeightPx]="60"
+                        [nzOptionOverflowSize]="4"
+                      >
+                        <nz-option
+                          nzCustomContent
+                          *ngFor="let address of addresses"
+                          [nzValue]="address.ID"
+                          [nzLabel]="
+                            address.ADDRESS_LINE_1 +
+                            ', ' +
+                            (address.ADDRESS_LINE_2 || '') +
+                            '-' +
+                            (address.PINCODE ? address.PINCODE : '') +
+                            ', ' +
+                            (address.LANDMARK ? address.LANDMARK : '')
+                          "
+                        >
+                          <div nz-row>
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              style="
+                                font-size: 14px;
+                                color: #2d3748;
+                                font-weight: 500;
+                                white-space: pre-line;
+                              "
+                            >
+                              <i
+                                nz-icon
+                                nzType="home"
+                                style="color: #3182ce; margin-right: 5px"
+                              ></i>
+                              {{ address.ADDRESS_LINE_1 }}
+                              <ng-container *ngIf="address.ADDRESS_LINE_2">
+                                , {{ address.ADDRESS_LINE_2 }}
+                              </ng-container>
+                              , {{ address.PINCODE }}
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              *ngIf="address.LANDMARK"
+                              style="
+                                font-size: 13px;
+                                color: #2d3748;
+                                font-weight: 500;
+                                white-space: pre-line;
+                              "
+                            >
+                              {{ address.LANDMARK ? address.LANDMARK : "" }}
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="12"
+                              style="font-size: 12px; color: #4a5568"
+                            >
+                              <i
+                                nz-icon
+                                nzType="global"
+                                style="color: #2b6cb0; margin-right: 5px"
+                              ></i>
+                              {{ address.STATE_NAME }},
+                              {{ address.COUNTRY_NAME }}
+                            </div>
+
+                            <div
+                              nz-col
+                              nzSpan="12"
+                              style="font-size: 12px; color: #718096"
+                            >
+                              <i
+                                nz-icon
+                                nzType="tag"
+                                style="color: #718096; margin-right: 5px"
+                              ></i>
+                              Address Type:
+                              <span *ngIf="address.TYPE == 'H'">Home</span>
+                              <span *ngIf="address.TYPE == 'F'">Office</span>
+                              <span *ngIf="address.TYPE == 'B'">Branch</span>
+                              <span *ngIf="address.TYPE == 'O'">Other</span>
+                            </div>
+                          </div>
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div nz-col nzSpan="1">
+                <div style="margin-top: 26px">
+                  <button
+                    nz-button
+                    nzType="primary"
+                    nzTooltipTitle="Add Address"
+                    nz-tooltip
+                    (click)="addcustomerAddress()"
+                  >
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                  </button>
+                </div>
+              </div>
+              <div nz-col nzSpan="4">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Source Of Order</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Select Source Of Order"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select Source Of Order"
+                      [(ngModel)]="data.ORDER_MEDIUM"
+                      name="orderMedium"
+                    >
+                      <nz-option
+                        *ngFor="let medium of orderMediums"
+                        [nzValue]="medium"
+                        [nzLabel]="medium"
+                      >
+                        {{ medium }}
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="8"
+              *ngIf="
+                data.TERRITORY_ID != undefined &&
+                data.TERRITORY_ID != null &&
+                data.TERRITORY_ID != 0
+              "
+            >
+              <div
+                style="
+                  color: darkred;
+                  text-align: center;
+                  padding: 4px 5px;
+                  margin-top: 5px;
+                  background-color: antiquewhite;
+                  font-weight: 500;
+                  width: 100%;
+                  font-size: 14px;
+                "
+              >
+                {{ data.TERRITORY_NAME }} Territory
+                <br />
+                <span style="font-size: 11px !important">
+                  Service Time :
+                  {{ terriotrystarttime1 | date : "HH:mm a" }} To
+                  {{ terriotryendtime1 | date : "HH:mm a" }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div *ngIf="type == 'e'">
+            <div nz-row class="backbbb">
+              <div class="mainnam" nz-col nzSpan="12" style="text-align: start">
+                <span
+                  style="
+                    color: #1d39c4 !important;
+                    background: #f0f5ff !important;
+                    border-color: #adc6ff !important;
+                    padding: 5px;
+                  "
+                  [attr.title]="data['ORDER_NUMBER']"
+                >
+                  {{ data["ORDER_NUMBER"] }}
+                </span>
+              </div>
+
+              <div class="mainnam" nz-col nzSpan="12" style="text-align: end">
+                <span
+                  style="
+                    color: #1d39c4 !important;
+                    background: #f0f5ff !important;
+                    border-color: #adc6ff !important;
+                    padding: 5px;
+                    font-size: 12px !important;
+                  "
+                  [attr.title]="
+                    data['ORDER_DATE_TIME'] | date : 'dd/MM/yyyy HH:mm a'
+                  "
+                >
+                  {{ data["ORDER_DATE_TIME"] | date : "dd/MM/yyyy HH:mm a" }}
+                </span>
+              </div>
+
+              <div
+                class="subnam"
+                nz-col
+                nzSpan="8"
+                style="
+                  font-size: 12px !important;
+                  margin-top: 4px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                "
+              >
+                <div style="margin-right: 5px; overflow: hidden">
+                  <span
+                    nz-icon
+                    nzType="user"
+                    nzTheme="outline"
+                    style="margin-right: 3px"
+                  ></span>
+
+                  {{ data["CUSTOMER_NAME"] }}
+                </div>
+              </div>
+
+              <div
+                class="subnam"
+                nz-col
+                nzSpan="8"
+                style="
+                  font-size: 12px !important;
+                  margin-top: 4px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  padding-right: 5px;
+                "
+              >
+                <span nz-icon nzType="mail" nzTheme="outline"></span>
+                {{ data["EMAIL"] }}
+              </div>
+              <div
+                class="subnam"
+                nz-col
+                nzSpan="3"
+                style="
+                  font-size: 12px !important;
+                  margin-top: 4px;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  padding-right: 5px;
+                "
+              >
+                <span nz-icon nzType="mobile" nzTheme="outline"></span>
+                {{ data["MOBILE_NO"] }}
+              </div>
+              <div
+                class="subnam"
+                nz-col
+                nzSpan="5"
+                style="
+                  font-size: 12px !important;
+                  margin-top: 4px;
+                  text-align: right;
+                  font-weight: 500;
+                "
+              >
+                Source Of Order : {{ data.ORDER_MEDIUM }}
+              </div>
+              <div nz-col nzSpan="16">
+                <div nz-row>
+                  <div
+                    class="subnam"
+                    nz-col
+                    nzSpan="12"
+                    style="
+                      font-size: 12px !important;
+                      text-align: start;
+                      padding-right: 5px;
+                    "
+                  >
+                    <p style="margin-bottom: 0px; font-weight: 600">
+                      <span
+                        nz-icon
+                        nzType="environment"
+                        nzTheme="outline"
+                        style="font-size: 12px !important"
+                      ></span>
+                      Service Address :
+                    </p>
+                    <div style="overflow: hidden">
+                      {{ data["SERVICE_ADDRESS"] }}
+                    </div>
+                  </div>
+
+                  <div
+                    class="subnam"
+                    nz-col
+                    nzSpan="12"
+                    style="
+                      font-size: 12px !important;
+                      text-align: start;
+                      padding-right: 5px;
+                    "
+                  >
+                    <p style="margin-bottom: 0px; font-weight: 600">
+                      <span
+                        nz-icon
+                        nzType="environment"
+                        nzTheme="outline"
+                        style="font-size: 12px !important"
+                      ></span>
+                      Billing Address :
+                    </p>
+                    <div style="overflow: hidden">
+                      {{ data["BILLING_ADDRESS_LINE_1"] }},
+                      {{ data["BILLING_ADDRESS_LINE_2"] }}
+                      {{ data["BILLING_COUNTRY_NAME"] }},
+                      {{ data["BILLING_STATE_NAME"] }},
+                      {{ data["BILLING_PINCODE"] }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                nz-col
+                nzSpan="8"
+                *ngIf="
+                  data.TERRITORY_ID != undefined &&
+                  data.TERRITORY_ID != null &&
+                  data.TERRITORY_ID != 0
+                "
+              >
+                <div
+                  style="
+                    color: darkred;
+                    text-align: center;
+                    padding: 4px 5px;
+                    margin-top: 5px;
+                    background-color: antiquewhite;
+                    font-weight: 500;
+                    width: 100%;
+                    font-size: 14px;
+                  "
+                >
+                  {{ data.TERRITORY_NAME }} Territory
+                  <br />
+                  <span style="font-size: 11px !important">
+                    Service Time :
+                    {{ terriotrystarttime1 | date : "HH:mm a" }} To
+                    {{ terriotryendtime1 | date : "HH:mm a" }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          nz-row
+          class="my-box"
+          *ngIf="
+            data.CUSTOMER_ID != undefined &&
+            data.CUSTOMER_ID != null &&
+            data.ADDRESS_ID != undefined &&
+            data.ADDRESS_ID != null &&
+            data.ADDRESS_ID1 != undefined &&
+            data.ADDRESS_ID1 != null &&
+            data.TERRITORY_ID != undefined &&
+            data.TERRITORY_ID != null &&
+            data.TERRITORY_ID != 0
+          "
+          style="margin-bottom: 0px"
+        >
+          <div nz-col nzSpan="7">
+            <div style="height: 68vh; overflow-y: scroll">
+              <nz-input-group [nzSuffix]="suffixIcon">
+                <input
+                  type="text"
+                  name="searchValue"
+                  nz-input
+                  placeholder="Search"
+                  [(ngModel)]="searchValue"
+                  (keydown.enter)="$event.preventDefault()"
+                />
+                <!-- <input type="text" name="searchValue" nz-input placeholder="Search" [(ngModel)]="searchValue" /> -->
+              </nz-input-group>
+              <ng-template #suffixIcon>
+                <span nz-icon nzType="search"></span>
+              </ng-template>
+              <!-- <nz-tree [nzExpandAll]="false" *ngIf="nodes != undefined && nodes != null && nodes.length > 0"
+                [nzData]="nodes" [nzMultiple]="false" [nzSelectedKeys]="selectedKeys" [nzSearchValue]="searchValue"
+                [nzExpandedKeys]="expandedKeys" (nzClick)="nzEvent($event)" (nzExpandChange)="nzEvent($event)"
+                (nzSearchValueChange)="nzEvent($event)" [nzTreeTemplate]="treeTemplate">
+                <ng-template #treeTemplate let-node>
+                  <div style="
+                      border-radius: 0px;
+                      font-size: 12px !important;
+                      padding: 5px;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    " [ngClass]="{
+                      'selected-node':
+                        node.level == 1 && isNodeSelected(node.key)
+                    }">
+                    {{ node.title }}
+                  </div>
+                </ng-template>
+              </nz-tree> -->
+
+              <nz-tree
+                [nzExpandAll]="false"
+                *ngIf="nodes != undefined && nodes != null && nodes.length > 0"
+                [nzData]="nodes"
+                [nzMultiple]="false"
+                [nzSelectedKeys]="selectedKeys"
+                [nzSearchValue]="searchValue"
+                [nzExpandedKeys]="expandedKeys"
+                (nzClick)="nzEvent($event)"
+                (nzExpandChange)="nzEvent($event)"
+                (nzSearchValueChange)="nzEvent($event)"
+                [nzTreeTemplate]="treeTemplate"
+              >
+                <ng-template #treeTemplate let-node>
+                  <div
+                    style="
+                      border-radius: 0px;
+                      font-size: 12px !important;
+                      padding: 5px;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                    [ngClass]="{
+                      'selected-node':
+                        node.level == 1 && isNodeSelected(node.key)
+                    }"
+                  >
+                    <span
+                      *ngIf="
+                        searchValue != '' &&
+                          node.title
+                            .toLowerCase()
+                            .includes(searchValue.toLowerCase());
+                        else notmatched
+                      "
+                      style="color: red"
+                      >{{ node.title }}</span
+                    >
+                    <ng-template #notmatched>
+                      <span>{{ node.title }}</span>
+                    </ng-template>
+                  </div>
+                </ng-template>
+              </nz-tree>
+
+              <p
+                *ngIf="nodes.length == 0"
+                class="emptyDataTex"
+                style="
+                  margin-top: 50px;
+                  white-space: pre-line;
+                  text-align: center;
+                  font-size: 13px;
+                "
+              >
+                No Category Available.
+              </p>
+            </div>
+          </div>
+          <div nz-col nzSpan="17" style="border-left: 1px solid #dadada">
+            <div>
+              <div nz-row>
+                <div
+                  nz-col
+                  nzSpan="24"
+                  *ngIf="
+                    serviceCatName != undefined &&
+                    serviceSubCatName != undefined &&
+                    serviceCatName != '' &&
+                    serviceSubCatName != ''
+                  "
+                >
+                  <div
+                    style="
+                      margin: 5px 0px 0px 5px;
+                      font-weight: 500;
+                      font-size: 13px;
+                      color: #807e7e;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    {{ serviceCatName }}>{{ serviceSubCatName }}
+                  </div>
+                </div>
+              </div>
+              <div style="height: 64vh; overflow-y: scroll">
+                <nz-spin [nzSpinning]="isSpinning2">
+                  <div nz-row>
+                    <div
+                      nz-col
+                      nzSpan="24"
+                      *ngFor="let item of servicescatalogue; let i = index"
+                    >
+                      <div
+                        nz-row
+                        *ngIf="item.IS_PARENT == 1"
+                        style="
+                          background-color: rgb(255, 238, 238);
+                          border-radius: 5px;
+                          margin: 5px 10px 10px;
+                          padding: 8px;
+                          border: 1px dashed #cbcbcb;
+                        "
+                      >
+                        <div
+                          nz-col
+                          nzSpan="18"
+                          class="subname"
+                          #NAME3
+                          [attr.title]="
+                            isTextOverflowing(NAME3) ? item.NAME : null
+                          "
+                          style="font-size: 13px !important; font-weight: 500"
+                        >
+                          {{ item.NAME }}
+                        </div>
+                        <div
+                          nz-col
+                          nzSpan="6"
+                          style="
+                            font-size: 11px !important;
+                            font-weight: 600;
+                            text-align: right;
+                          "
+                        >
+                          Sub Services : {{ item.CHILD_COUNT }}
+                        </div>
+                        <div
+                          nz-col
+                          nzSpan="24"
+                          *ngIf="
+                            servicescatalogue[i]['IS_OPEN'] == true &&
+                            servicescatalogue[i]['CHILDS'] != undefined
+                          "
+                        >
+                          <div
+                            style="
+                              text-align: center;
+                              padding: 10px;
+                              background-color: white;
+                            "
+                            *ngIf="
+                              servicescatalogue[i]['CHILDS'].length == 0 &&
+                              servicescatalogue[i]['IS_OPEN'] == true
+                            "
+                          >
+                            <p class="emptyDataTex" style="margin-bottom: 0px">
+                              No Service Available.
+                            </p>
+                          </div>
+                          <div
+                            *ngFor="
+                              let item2 of servicescatalogue[i]['CHILDS'];
+                              let k = index
+                            "
+                            nz-row
+                            style="
+                              background-color: rgb(255, 255, 255);
+                              border-radius: 5px;
+                              margin: 10px 0px;
+                              padding: 7px;
+                              border: 1px dashed #cbcbcb;
+                            "
+                          >
+                            <div nz-col nzSpan="3">
+                              <div class="service-image">
+                                <img
+                                  [src]="SERVER_URL + item2.SERVICE_IMAGE"
+                                  width="70px"
+                                  height="70px"
+                                  alt="Service Image"
+                                />
+                              </div>
+                            </div>
+
+                            <div nz-col nzSpan="21" style="padding-left: 5px">
+                              <div nz-row>
+                                <div
+                                  nz-col
+                                  nzSpan="20"
+                                  class="subname"
+                                  #NAME2
+                                  [attr.title]="
+                                    isTextOverflowing(NAME2) ? item.NAME : null
+                                  "
+                                  style="
+                                    font-size: 13px !important;
+                                    font-weight: 500;
+                                  "
+                                >
+                                  {{ item2.NAME }}
+                                </div>
+                                <div
+                                  nz-col
+                                  nzSpan="4"
+                                  style="text-align: right"
+                                >
+                                  <span
+                                    style="
+                                      font-size: 10px !important;
+                                      font-weight: 500;
+                                      color: #ffffff;
+                                      background: #d50087;
+                                      padding: 1px 8px 2px;
+                                      border-radius: 10px;
+                                    "
+                                    *ngIf="
+                                      item2.IS_EXPRESS == 1 &&
+                                      isTerritoryExpress
+                                    "
+                                    >Express
+                                  </span>
+                                </div>
+
+                                <div nz-col nzSpan="24">
+                                  <span
+                                    class="subname truncate-two-lines"
+                                    nz-popover
+                                    style="
+                                      font-size: 11px !important;
+                                      font-weight: 400;
+                                      color: grey;
+                                    "
+                                    *ngIf="
+                                      item2.DESCRIPTION != null &&
+                                      item2.DESCRIPTION != ''
+                                    "
+                                    [nzPopoverContent]="descript"
+                                    nzPopoverPlacement="topLeft"
+                                    [innerHTML]="item2.DESCRIPTION"
+                                  >
+                                  </span>
+                                  <ng-template #descript>
+                                    <span
+                                      [innerHTML]="item2.DESCRIPTION"
+                                    ></span>
+                                  </ng-template>
+                                  <!-- {{ item2.DESCRIPTION }} -->
+                                </div>
+                                <div
+                                  nz-col
+                                  nzSpan="12"
+                                  style="font-size: 11px; font-weight: 400"
+                                >
+                                  Preparation Time :
+                                  {{
+                                    formatTime(
+                                      item2.T_PREPARATION_HOURS,
+                                      item2.T_PREPARATION_MINUTES
+                                    )
+                                  }}
+                                  <small>Hrs.</small>
+                                </div>
+                                <div
+                                  nz-col
+                                  nzSpan="12"
+                                  style="font-size: 11px; font-weight: 400"
+                                >
+                                  Service Time :
+                                  {{
+                                    convertDateTiem(item2.START_TIME)
+                                      | date : "HH:mm a"
+                                  }}
+                                  To
+                                  {{
+                                    convertDateTiem(item2.END_TIME)
+                                      | date : "HH:mm a"
+                                  }}
+                                </div>
+                                <div
+                                  nz-col
+                                  nzSpan="24"
+                                  style="
+                                    font-size: 11px;
+                                    padding-bottom: 3px;
+                                    margin-bottom: 3px;
+                                    font-weight: 400;
+                                    border-bottom: 1px solid #e7e7e7;
+                                  "
+                                >
+                                  <div
+                                    *ngIf="
+                                      item2.IS_EXPRESS == 1 &&
+                                      isTerritoryExpress
+                                    "
+                                  >
+                                    Express Charges : ₹{{
+                                      item2.EXPRESS_COST | number
+                                    }}
+                                  </div>
+                                </div>
+                                <div
+                                  nz-col
+                                  *ngIf="
+                                    servicescatalogue[i]['CHILDS'][k].MAX_QTY >
+                                    1
+                                  "
+                                  nzSpan="6"
+                                  style="display: flex; align-items: center"
+                                >
+                                  <nz-select
+                                    name="quantity{{ i }}"
+                                    (ngModelChange)="
+                                      calculateTotal11($event, 'QUANTITY', i, k)
+                                    "
+                                    [(ngModel)]="
+                                      servicescatalogue[i]['CHILDS'][k].QUANTITY
+                                    "
+                                    [nzSize]="'small'"
+                                    style="
+                                      width: 100%;
+                                      font-size: 12px !important;
+                                    "
+                                    [nzCustomTemplate]="defaultTemplate"
+                                  >
+                                    <nz-option
+                                      *ngFor="
+                                        let itms of servicescatalogue[i][
+                                          'CHILDS'
+                                        ][k].options;
+                                        let i = index
+                                      "
+                                      [nzValue]="itms"
+                                      [nzLabel]="itms"
+                                    ></nz-option>
+
+                                    <ng-template #defaultTemplate let-selected>
+                                      {{ selected.nzLabel }}
+                                      {{ item2.UNIT_NAME }}
+                                    </ng-template>
+                                  </nz-select>
+                                </div>
+                                <div
+                                  nz-col
+                                  *ngIf="
+                                    servicescatalogue[i]['CHILDS'][k].MAX_QTY >
+                                    1
+                                  "
+                                  nzSpan="7"
+                                  style="
+                                    margin-top: 5px;
+                                    padding-top: 3px;
+                                    padding-left: 5px;
+                                    font-size: 11px;
+                                    font-weight: 500;
+                                    color: grey;
+                                  "
+                                >
+                                  X ₹ {{ item2.KEY_PRICE | number }}
+                                  <small>(*Tax Inclusive)</small>
+                                </div>
+                                <div
+                                  nz-col
+                                  nzSpan="13"
+                                  *ngIf="
+                                    servicescatalogue[i]['CHILDS'][k].MAX_QTY ==
+                                    1
+                                  "
+                                  style="
+                                    margin-top: 5px;
+                                    padding-top: 3px;
+                                    padding-left: 5px;
+                                    font-size: 11px;
+                                    font-weight: 500;
+                                    color: grey;
+                                  "
+                                >
+                                  {{ item2.QUANTITY }} {{ item2.UNIT_NAME }} X ₹
+                                  {{ item2.KEY_PRICE | number }}
+                                  <small>(*Tax Inclusive)</small>
+                                </div>
+                                <div
+                                  nz-col
+                                  nzSpan="6"
+                                  style="
+                                    margin-top: 5px;
+                                    padding-top: 3px;
+                                    padding-right: 10px;
+                                    font-size: 12px;
+                                    font-weight: 500;
+                                    text-align: right;
+                                  "
+                                >
+                                  Total : ₹
+                                  {{
+                                    servicescatalogue[i]["CHILDS"][k]
+                                      .TOTAL_AMOUNT | number
+                                  }}
+                                </div>
+                                <div
+                                  nz-col
+                                  nzSpan="5"
+                                  style="margin-top: 5px; text-align: right"
+                                >
+                                  <button
+                                    nz-button
+                                    [nzTooltipTitle]="'Add service into cart'"
+                                    nz-tooltip
+                                    nzType="primary"
+                                    nzShape="round"
+                                    nzSize="small"
+                                    (click)="
+                                      addToTable2(
+                                        servicescatalogue[i]['CHILDS'][k],
+                                        i,
+                                        k
+                                      )
+                                    "
+                                  >
+                                    <span
+                                      style="
+                                        font-size: 9px !important;
+                                        font-weight: 500;
+                                        margin-left: 2px;
+                                        margin-top: 2px;
+                                      "
+                                    >
+                                      <span
+                                        nz-icon
+                                        nzType="shopping-cart"
+                                        nzTheme="outline"
+                                      ></span>
+                                      &nbsp; Add To Cart
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          nz-col
+                          nzSpan="24"
+                          style="
+                            display: flex;
+                            position: relative;
+                            align-items: baseline;
+                            justify-content: center;
+                          "
+                        >
+                          <button
+                            style="
+                              position: absolute;
+                              top: -4px;
+                              border-color: #000000;
+                              background: #000000;
+                            "
+                            nz-button
+                            *ngIf="servicescatalogue[i]['IS_OPEN'] != true"
+                            nzType="primary"
+                            nzShape="round"
+                            nzSize="small"
+                            [nzLoading]="buttonLoading"
+                            (click)="getsubServices(servicescatalogue[i], i)"
+                          >
+                            <span style="font-size: 11px !important"
+                              >View Options</span
+                            >
+                            <span
+                              style="margin: 2px 0px 0px 0px !important"
+                              nz-icon
+                              nzType="caret-down"
+                              nzTheme="outline"
+                            ></span>
+                          </button>
+                          <button
+                            style="
+                              position: absolute;
+                              top: -4px;
+                              border-color: #000000;
+                              background: #000000;
+                            "
+                            *ngIf="servicescatalogue[i]['IS_OPEN'] == true"
+                            nz-button
+                            nzType="primary"
+                            nzShape="round"
+                            nzSize="small"
+                            (click)="hideservices(servicescatalogue[i], i)"
+                          >
+                            <span style="font-size: 11px !important"
+                              >Hide Options</span
+                            >
+                            <span
+                              style="margin: 2px 0px 0px 0px !important"
+                              nz-icon
+                              nzType="caret-up"
+                              nzTheme="outline"
+                            ></span>
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        nz-row
+                        *ngIf="item.IS_PARENT == 0"
+                        style="
+                          background-color: rgb(255, 255, 255);
+                          border-radius: 5px;
+                          margin: 10px;
+                          padding: 7px;
+                          border: 1px dashed #cbcbcb;
+                        "
+                      >
+                        <div nz-col nzSpan="3">
+                          <div class="service-image">
+                            <img
+                              [src]="SERVER_URL + item.SERVICE_IMAGE"
+                              width="70px"
+                              height="70px"
+                              alt="Service Image"
+                            />
+                          </div>
+                        </div>
+                        <div nz-col nzSpan="21" style="padding-left: 5px">
+                          <div nz-row>
+                            <div
+                              nz-col
+                              nzSpan="20"
+                              class="subname"
+                              #NAME
+                              [attr.title]="
+                                isTextOverflowing(NAME) ? item.NAME : null
+                              "
+                              style="
+                                font-size: 13px !important;
+                                font-weight: 500;
+                              "
+                            >
+                              {{ item.NAME }}
+                            </div>
+                            <div nz-col nzSpan="4" style="text-align: right">
+                              <span
+                                style="
+                                  font-size: 10px !important;
+                                  font-weight: 500;
+                                  color: #ffffff;
+                                  background: #d50087;
+                                  padding: 1px 8px 2px;
+                                  border-radius: 10px;
+                                "
+                                *ngIf="
+                                  item.IS_EXPRESS == 1 && isTerritoryExpress
+                                "
+                                >Express
+                              </span>
+                            </div>
+
+                            <div nz-col nzSpan="24">
+                              <span
+                                class="subname truncate-two-lines"
+                                nz-popover
+                                style="
+                                  font-size: 11px !important;
+                                  font-weight: 400;
+                                  color: grey;
+                                "
+                                *ngIf="
+                                  item.DESCRIPTION != null &&
+                                  item.DESCRIPTION != ''
+                                "
+                                [nzPopoverContent]="descript1"
+                                nzPopoverPlacement="topLeft"
+                                [innerHTML]="item.DESCRIPTION"
+                              >
+                              </span>
+                              <ng-template #descript1>
+                                <span [innerHTML]="item.DESCRIPTION"></span>
+                              </ng-template>
+
+                              <!-- {{ item.DESCRIPTION }} -->
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="12"
+                              style="font-size: 11px; font-weight: 400"
+                            >
+                              Preparation Time :
+                              {{
+                                formatTime(
+                                  item.T_PREPARATION_HOURS,
+                                  item.T_PREPARATION_MINUTES
+                                )
+                              }}
+                              <small>Hrs.</small>
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="12"
+                              style="font-size: 11px; font-weight: 400"
+                            >
+                              Service Time :
+                              {{
+                                convertDateTiem(item.START_TIME)
+                                  | date : "HH:mm a"
+                              }}
+                              To
+                              {{
+                                convertDateTiem(item.END_TIME)
+                                  | date : "HH:mm a"
+                              }}
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              style="
+                                font-size: 11px;
+                                padding-bottom: 3px;
+                                margin-bottom: 3px;
+                                font-weight: 400;
+                                border-bottom: 1px solid #e7e7e7;
+                              "
+                            >
+                              <div
+                                *ngIf="
+                                  item.IS_EXPRESS == 1 && isTerritoryExpress
+                                "
+                              >
+                                Express Charges : ₹{{
+                                  item.EXPRESS_COST | number
+                                }}
+                              </div>
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="6"
+                              style="display: flex; align-items: center"
+                              *ngIf="servicescatalogue[i].MAX_QTY > 1"
+                            >
+                              <nz-select
+                                name="quantity{{ i }}"
+                                (ngModelChange)="
+                                  calculateTotal1($event, 'QUANTITY', i)
+                                "
+                                [(ngModel)]="servicescatalogue[i].QUANTITY"
+                                [nzSize]="'small'"
+                                style="width: 100%; font-size: 12px !important"
+                                [nzCustomTemplate]="defaultTemplate2"
+                              >
+                                <nz-option
+                                  *ngFor="
+                                    let items2 of servicescatalogue[i].options;
+                                    let i = index
+                                  "
+                                  [nzValue]="items2"
+                                  [nzLabel]="items2"
+                                ></nz-option>
+
+                                <ng-template #defaultTemplate2 let-selected>
+                                  {{ selected.nzLabel }} {{ item.UNIT_NAME }}
+                                </ng-template>
+                              </nz-select>
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="13"
+                              *ngIf="servicescatalogue[i].MAX_QTY == 1"
+                              style="
+                                margin-top: 5px;
+                                padding-top: 3px;
+                                padding-left: 5px;
+                                font-size: 11px;
+                                font-weight: 500;
+                                color: grey;
+                              "
+                            >
+                              {{ item.QUANTITY }} {{ item.UNIT_NAME }} X ₹
+                              {{ item.KEY_PRICE | number }}
+
+                              <small>(*Tax Inclusive)</small>
+                            </div>
+                            <div
+                              *ngIf="servicescatalogue[i].MAX_QTY > 1"
+                              nz-col
+                              nzSpan="7"
+                              style="
+                                margin-top: 5px;
+                                padding-top: 3px;
+                                padding-left: 5px;
+                                font-size: 11px;
+                                font-weight: 500;
+                                color: grey;
+                              "
+                            >
+                              X ₹ {{ item.KEY_PRICE | number }}
+                              <small>(*Tax Inclusive)</small>
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="6"
+                              style="
+                                margin-top: 5px;
+                                padding-top: 3px;
+                                padding-right: 10px;
+                                font-size: 12px;
+                                font-weight: 500;
+                                text-align: right;
+                              "
+                            >
+                              Total : ₹
+                              {{ servicescatalogue[i].TOTAL_AMOUNT | number }}
+                            </div>
+                            <div
+                              nz-col
+                              nzSpan="5"
+                              style="margin-top: 5px; text-align: right"
+                            >
+                              <button
+                                nz-button
+                                [nzTooltipTitle]="'Add service into cart'"
+                                nz-tooltip
+                                nzType="primary"
+                                nzShape="round"
+                                nzSize="small"
+                                (click)="addToTable(servicescatalogue[i], i)"
+                              >
+                                <span
+                                  style="
+                                    font-size: 9px !important;
+                                    font-weight: 500;
+                                    margin-left: 2px;
+                                    margin-top: 2px;
+                                  "
+                                >
+                                  <span
+                                    nz-icon
+                                    nzType="shopping-cart"
+                                    nzTheme="outline"
+                                  ></span
+                                  >&nbsp; Add To Cart
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      nz-col
+                      nzSpan="24"
+                      style="text-align: center; padding-top: 15vh"
+                      *ngIf="
+                        servicescatalogue == undefined ||
+                        servicescatalogue == null ||
+                        servicescatalogue.length == 0
+                      "
+                    >
+                      <p class="emptyDataTex">No Service Available.</p>
+                    </div>
+                  </div>
+                </nz-spin>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="my-box"
+          style="text-align: center; padding-top: 29vh; height: 67vh"
+          *ngIf="
+            data.CUSTOMER_ID == undefined ||
+            data.CUSTOMER_ID == null ||
+            data.ADDRESS_ID == undefined ||
+            data.ADDRESS_ID == null ||
+            data.ADDRESS_ID1 == undefined ||
+            data.ADDRESS_ID1 == null ||
+            data.TERRITORY_ID == undefined ||
+            data.TERRITORY_ID == null ||
+            data.TERRITORY_ID == 0
+          "
+        >
+          <p class="emptyDataTex" *ngIf="isTerritoryMapped == true">
+            Please select customer and address.
+          </p>
+          <p class="emptyDataTex" *ngIf="isTerritoryMapped == false">
+            You don't have permission to create order for
+            {{ data.TERRITORY_NAME }} territory.
+          </p>
+        </div>
+      </div>
+      <div nz-col nzSpan="7">
+        <div
+          style="
+            margin-top: 5px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px dashed #e9e9e9;
+          "
+        >
+          <nz-form-item>
+            <div style="margin-top: 5px; padding-right: 0px">
+              <span style="font-weight: 600; font-size: 13px">Order Cart</span>
+              <div style="height: 35vh; padding-bottom: 10px; overflow-y: auto">
+                <div
+                  *ngFor="let cartItem of tableData; let g = index"
+                  class="cardstyle"
+                  style="font-size: 11px; padding: 8px 10px 5px"
+                >
+                  <div nz-row>
+                    <div
+                      nz-col
+                      nzSpan="21"
+                      style="
+                        font-weight: 500;
+                        color: #858585;
+                        font-size: 10px !important;
+                      "
+                      class="subname"
+                      #categoryName
+                      [attr.title]="
+                        isTextOverflowing(categoryName)
+                          ? cartItem.CATEGORY_NAME +
+                            '>' +
+                            cartItem.SUB_CATEGORY_NAME
+                          : null
+                      "
+                    >
+                      {{ cartItem.CATEGORY_NAME }} >
+                      {{ cartItem.SUB_CATEGORY_NAME }}
+                    </div>
+                    <div nz-col nzSpan="3" style="text-align: right">
+                      <span
+                        *ngIf="
+                          cartItem.PHOTO_FILE != null &&
+                          cartItem.PHOTO_FILE != ''
+                        "
+                        nz-icon
+                        (click)="viewImage(cartItem.PHOTO_FILE)"
+                        nzType="picture"
+                        nzTheme="outline"
+                        [nzTooltipTitle]="'View Photo'"
+                        nz-tooltip
+                        style="
+                          cursor: pointer;
+                          border: 1px solid grey;
+                          padding: 3px 4px;
+                          border-radius: 50px;
+                          background: white;
+                          margin-top: -5px;
+                          margin-right: 2px;
+                          font-size: 12px !important;
+                        "
+                      ></span>
+
+                      <span
+                        (click)="deleteService(cartItem, g)"
+                        nz-icon
+                        nzType="delete"
+                        nzTheme="outline"
+                        [nzTooltipTitle]="'Remove Service'"
+                        nz-tooltip
+                        style="
+                          cursor: pointer;
+                          border: 1px solid grey;
+                          padding: 3px 4px;
+                          border-radius: 50px;
+                          background: white;
+                          margin-top: -5px;
+                          font-size: 12px !important;
+                        "
+                      ></span>
+                    </div>
+                  </div>
+                  <div nz-row>
+                    <div
+                      nz-col
+                      nzSpan="24"
+                      class="subname"
+                      #serviceItem
+                      [attr.title]="
+                        isTextOverflowing(serviceItem)
+                          ? cartItem.TERRITORY_NAME
+                          : null
+                      "
+                    >
+                      {{ cartItem.SERVICE_NAME }}
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <span
+                        style="
+                          font-size: 10px !important;
+                          font-weight: 400;
+                          color: grey;
+                        "
+                        *ngIf="
+                          cartItem.BRAND_NAME != null &&
+                          cartItem.BRAND_NAME != ''
+                        "
+                        >{{ cartItem.BRAND_NAME }}</span
+                      >
+                      <span
+                        style="
+                          font-size: 10px !important;
+                          font-weight: 400;
+                          color: grey;
+                        "
+                        *ngIf="
+                          cartItem.MODEL_NUMBER != null &&
+                          cartItem.MODEL_NUMBER != ''
+                        "
+                      >
+                        {{ cartItem.MODEL_NUMBER }}</span
+                      >
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <span
+                        style="
+                          font-size: 10px !important;
+                          font-weight: 400;
+                          color: grey;
+                        "
+                        *ngIf="
+                          cartItem.DESCRIPTION != null &&
+                          cartItem.DESCRIPTION != ''
+                        "
+                        >{{ cartItem.DESCRIPTION }}</span
+                      >
+                    </div>
+                    <div
+                      nz-col
+                      nzSpan="11"
+                      style="font-size: 10px; font-weight: 400; color: grey"
+                    >
+                      Preparation Time :
+                      {{
+                        formatTime(
+                          cartItem.PREPARATION_HOURS,
+                          cartItem.PREPARATION_MINUTES
+                        )
+                      }}
+                      <small>Hrs.</small>
+                    </div>
+                    <div
+                      nz-col
+                      nzSpan="13"
+                      style="
+                        font-size: 10px;
+                        font-weight: 400;
+                        color: grey;
+                        text-align: right;
+                      "
+                    >
+                      Service Time :
+                      {{
+                        convertDateTiem(cartItem.START_TIME) | date : "HH:mm a"
+                      }}
+                      To
+                      {{
+                        convertDateTiem(cartItem.END_TIME) | date : "HH:mm a"
+                      }}
+                    </div>
+                  </div>
+                  <div nz-row style="margin-top: 2px">
+                    <div
+                      nz-col
+                      *ngIf="cartItem.MAX_QTY > 1"
+                      nzSpan="6"
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <button
+                        [disabled]="cartItem.QUANTITY == 1"
+                        (click)="decrementQuantityIncart(cartItem, g)"
+                        nz-button
+                        nzSize="small"
+                        [ngStyle]="{
+                          color: cartItem.QUANTITY == 1 ? 'grey' : 'white'
+                        }"
+                        nzType="primary"
+                        nzShape="circle"
+                        style="
+                          padding: 0px;
+                          display: block;
+                          height: 20px;
+                          min-width: 21px;
+                          border-radius: 50%;
+                        "
+                      >
+                        -
+                      </button>
+                      <input
+                        nz-input
+                        name="cartItemquantity{{ g }}"
+                        [(ngModel)]="cartItem.QUANTITY"
+                        [nzSize]="'small'"
+                        style="border-radius: 20px; text-align: center"
+                        readonly
+                      />
+                      <button
+                        [disabled]="cartItem.QUANTITY == cartItem.MAX_QTY"
+                        (click)="incrementQuantityIncart(cartItem, g)"
+                        nz-button
+                        nzSize="small"
+                        nzType="primary"
+                        nzShape="circle"
+                        [ngStyle]="{
+                          color:
+                            cartItem.QUANTITY == cartItem.MAX_QTY
+                              ? 'grey'
+                              : 'white'
+                        }"
+                        style="
+                          padding: 0px;
+                          display: block;
+                          height: 20px;
+                          min-width: 21px;
+                          border-radius: 50%;
+                        "
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div
+                      nz-col
+                      *ngIf="cartItem.MAX_QTY > 1"
+                      nzSpan="8"
+                      style="
+                        text-align: left;
+                        padding-top: 3px;
+                        padding-left: 3px;
+                        font-size: 11px;
+                        font-weight: 500;
+                        color: grey;
+                      "
+                    >
+                      X ₹ {{ cartItem.TAX_EXCLUSIVE_AMOUNT | number }}
+                    </div>
+                    <div nz-col nzSpan="14" *ngIf="cartItem.MAX_QTY == 1">
+                      <small style="font-weight: 500"
+                        >₹ {{ cartItem.TAX_EXCLUSIVE_AMOUNT | number }}
+                        <!-- <small
+                        style="font-size: 10px; font-weight: 400; color: grey"
+                        >(*Tax Exclusive)</small
+                      > -->
+                        X {{ cartItem.QUANTITY }}
+                        <small
+                          style="font-size: 8px; font-weight: 400; color: grey"
+                          >(Qty.)</small
+                        ></small
+                      >
+                    </div>
+                    <div
+                      nz-col
+                      nzSpan="10"
+                      style="
+                        text-align: right;
+                        text-align: right;
+                        padding-top: 3px;
+                      "
+                    >
+                      <b style="font-weight: 600 !important">
+                        ₹ {{ cartItem.TOTAL_TAX_EXCLUSIVE_AMOUNT | number }}
+                      </b>
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: end;
+                      font-size: 10px;
+                      font-weight: 400;
+                      color: grey;
+                      text-align: right;
+                    "
+                  >
+                    <small style="font-size: 10px; font-weight: 500">
+                      <small *ngIf="data.IS_SAME_STATE == 1"
+                        >CGST({{ cartItem.CGST }}%) + SGST({{ cartItem.SGST }}%)
+                      </small>
+                      <small *ngIf="data.IS_SAME_STATE != 1">
+                        IGST ({{ cartItem.IGST }}%)</small
+                      >
+                      <small
+                        *ngIf="cartItem.CESS != null && cartItem.CESS != 0"
+                      >
+                        + CESS({{ cartItem.CESS }}%)</small
+                      >
+                    </small>
+
+                    (+)Tax Amount : ₹ {{ cartItem.TAX_AMOUNT | number }}
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                    "
+                  >
+                    <span
+                      style="
+                        background-color: rgb(245 45 162);
+                        font-size: 10px !important;
+                        font-weight: 500;
+                        padding: 0px 5px;
+                        color: white;
+                        border-radius: 15px;
+                      "
+                      *ngIf="cartItem.IS_EXPRESS && isTerritoryExpress"
+                      >Express</span
+                    >
+                  </div>
+                </div>
+
+                <div
+                  style="text-align: center; padding-top: 15vh"
+                  class="emptyDataTex"
+                  *ngIf="tableData.length == 0"
+                >
+                  <p class="emptyDataTex">Your cart is empty</p>
+                </div>
+              </div>
+            </div>
+          </nz-form-item>
+        </div>
+        <div
+          style="
+            margin-top: 5px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px dashed #e9e9e9;
+          "
+        >
+          <nz-form-item>
+            <div>
+              <div style="margin-top: 5px">
+                <span style="font-weight: 600; font-size: 13px">Summary</span>
+                <div nz-row style="margin-top: -5px; font-size: 11px">
+                  <div nz-col nzSpan="16" style="text-align: right">
+                    Taxable Amount :
+                  </div>
+
+                  <div nz-col nzSpan="8" style="text-align: right">
+                    ₹ {{ data.TOTAL_TAXABLE_AMOUNT | number }}
+                  </div>
+
+                  <div nz-col nzSpan="16" style="text-align: right">
+                    (-) Discount :
+                    <span style="font-size: 9px !important"> </span>
+                  </div>
+
+                  <div nz-col nzSpan="8" style="text-align: right">
+                    ₹ {{ data.DISCOUNT_AMOUNT | number }}
+                  </div>
+
+                  <div nz-col nzSpan="16" style="text-align: right">
+                    (+) Express Delivery :
+                    <span style="font-size: 9px !important"> </span>
+                  </div>
+
+                  <div nz-col nzSpan="8" style="text-align: right">
+                    ₹
+                    {{
+                      data.IS_EXPRESS
+                        ? (data.EXPRESS_DELIVERY_CHARGES | number)
+                        : 0
+                    }}
+                  </div>
+
+                  <div nz-col nzSpan="16" style="text-align: right">
+                    (+) Tax Amount :
+                    <span style="font-size: 9px !important"> </span>
+                  </div>
+
+                  <div nz-col nzSpan="8" style="text-align: right">
+                    ₹ {{ data.TAX_AMOUNT | number }}
+                  </div>
+                </div>
+
+                <div
+                  nz-row
+                  style="
+                    border-bottom: 1px dashed #7e7272;
+                    padding: 1px 0;
+                    font-size: 12px;
+                  "
+                >
+                  <div
+                    nz-col
+                    nzSpan="16"
+                    style="font-weight: 600; text-align: right"
+                  >
+                    Order Total :
+                  </div>
+
+                  <div
+                    nz-col
+                    nzSpan="8"
+                    style="font-weight: bold; text-align: right"
+                  >
+                    ₹ {{ data.TOTAL_AMOUNT | number }}
+                  </div>
+                </div>
+              </div>
+              <div
+                *ngIf="showExpress && isTerritoryExpress"
+                style="border-bottom: 1px dashed #7e7272"
+              >
+                <label
+                  nz-checkbox
+                  name="isExpress"
+                  [(ngModel)]="data.IS_EXPRESS"
+                  (ngModelChange)="expressAvailable($event)"
+                >
+                  Express Service Required</label
+                >
+              </div>
+              <div
+                style="
+                  font-size: 13px;
+                  padding: 5px 0px;
+                  font-weight: 600;
+                  margin-top: 5px;
+                "
+              >
+                Schedule Order
+                <!-- <span
+                  style="font-size: 11px !important; color: rgb(53, 53, 53)"
+                  *ngIf="
+                    data.TERRITORY_ID != undefined &&
+                    data.TERRITORY_ID != null &&
+                    terriotrystarttime1 != undefined &&
+                    terriotrystarttime1 != null &&
+                    terriotryendtime1 != undefined &&
+                    terriotryendtime1 != null
+                  "
+                >
+                  (Territory Time :
+                  {{ terriotrystarttime1 | date : "HH:mm a" }} To
+                  {{ terriotryendtime1 | date : "HH:mm a" }})</span
+                > -->
+              </div>
+              <div nz-row>
+                <div nz-col nzSpan="12">
+                  <nz-form-control>
+                    <nz-date-picker
+                      *ngIf="tableData.length > 0"
+                      style="width: 100%"
+                      [(ngModel)]="expectedDate"
+                      (ngModelChange)="setDate($event)"
+                      nzFormat="dd/MM/yyyy"
+                      [nzDisabledDate]="disabledPastDates"
+                      name="expectedDate"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </div>
+                <div nz-col nzSpan="8" style="padding-left: 10px">
+                  <nz-form-control>
+                    <nz-time-picker
+                      *ngIf="tableData.length > 0"
+                      [(ngModel)]="time"
+                      name="time"
+                      style="width: 100%"
+                      nzFormat="HH:mm a"
+                      [nzMinuteStep]="10"
+                      (ngModelChange)="setTime($event)"
+                      [nzAllowEmpty]="false"
+                      [nzDisabledHours]="getDisabledHours"
+                      [nzDisabledMinutes]="getDisabledMinutes"
+                    ></nz-time-picker>
+                  </nz-form-control>
+                </div>
+                <div nz-col nzSpan="4"></div>
+                <div
+                  nz-col
+                  nzSpan="24"
+                  style="
+                    border-top: 1px dashed #7e7272;
+                    font-size: 13px;
+                    padding: 5px 0px;
+                    margin-top: 5px;
+                    font-weight: 600;
+                  "
+                >
+                  <span>Remark </span>
+                  <span
+                    style="font-size: 16px !important"
+                    *ngIf="!specialInstruction"
+                    nz-icon
+                    nzType="plus-circle"
+                    nzTheme="fill"
+                    [nzTooltipTitle]="
+                      specialInstruction ? 'Edit Remark' : 'Add Remark'
+                    "
+                    nz-tooltip
+                    (click)="addspecialInstruction()"
+                  ></span>
+
+                  <span
+                    style="font-size: 16px !important"
+                    *ngIf="specialInstruction"
+                    nz-icon
+                    nzType="edit"
+                    nzTheme="fill"
+                    [nzTooltipTitle]="
+                      specialInstruction ? 'Edit Remark' : 'Add Remark'
+                    "
+                    nz-tooltip
+                    (click)="editspecialInstruction()"
+                  ></span>
+                </div>
+                <div
+                  style="
+                    font-size: 12px;
+                    padding: 2px 0px;
+                    height: 35px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  "
+                  nz-col
+                  nzSpan="24"
+                >
+                  <span
+                    *ngIf="specialInstruction.length >= 50"
+                    nz-popover
+                    [nzPopoverContent]="specialInstruction"
+                    nzPopoverPlacement="top"
+                  >
+                    {{
+                      specialInstruction == null
+                        ? "-"
+                        : (specialInstruction | slice : 0 : 50)
+                    }}{{ specialInstruction.length > 50 ? "..." : "" }}
+                  </span>
+                  <span *ngIf="specialInstruction.length < 50">
+                    {{
+                      specialInstruction == null
+                        ? "-"
+                        : (specialInstruction | slice : 0 : 50)
+                    }}
+                    {{ specialInstruction.length > 50 ? "..." : "" }}
+                  </span>
+
+                  <!-- {{specialInstruction}} -->
+                </div>
+
+                <div
+                  nz-col
+                  nzSpan="24"
+                  style="
+                    padding: 8px;
+                    text-align: center;
+                    border-top: 2px dashed #7e7272;
+                  "
+                >
+                  <button
+                    type="button"
+                    *ngIf="type == 'a'"
+                    class="ant-btn ant-btn-primary"
+                    nz-button
+                    [nzLoading]="isSpinning"
+                    nz-dropdown
+                    (nzOnConfirm)="save(false, websitebannerPage)"
+                    [nzOkText]="'Yes'"
+                    (nzOnCancel)="deleteCancel()"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure, you want to save information?"
+                    nzPopconfirmPlacement="top"
+                  >
+                    <span>Create Order</span>
+                  </button>
+                  <button
+                    type="button"
+                    *ngIf="type == 'e'"
+                    class="ant-btn ant-btn-primary"
+                    nz-button
+                    [nzLoading]="isSpinning"
+                    nz-dropdown
+                    (nzOnConfirm)="save(false, websitebannerPage)"
+                    [nzOkText]="'Yes'"
+                    (nzOnCancel)="deleteCancel()"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure, you want to update information?"
+                    nzPopconfirmPlacement="top"
+                  >
+                    <span>Update Order</span>
+                  </button>
+                </div>
+                <nz-modal
+                  [(nzVisible)]="isaddInstruction"
+                  [nzTitle]="'Add Remark'"
+                  (nzOnCancel)="handleCancel()"
+                  nzOkText="Save & Close"
+                  (nzOnOk)="handleOk()"
+                  ><ng-container *nzModalContent>
+                    <textarea
+                      nz-input
+                      [(ngModel)]="specialInstruction2"
+                      name="specialInstruction"
+                      rows="3"
+                      (focus)="checkLength()"
+                      (blur)="checkLength()"
+                      maxlength="512"
+                      placeholder="Enter Remark"
+                      style="width: 100%"
+                    ></textarea>
+                    <span
+                      style="color: red; font-size: 10px"
+                      *ngIf="specialInstruction2 && showerror"
+                      >{{ specialInstruction2.length }}/512</span
+                    >
+                  </ng-container>
+                </nz-modal>
+              </div>
+            </div>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </nz-spin>
+</form>
+<nz-modal
+  [nzWidth]="900"
+  [(nzVisible)]="ImageModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="content"
+  [nzTitle]="'Image View'"
+  (nzOnCancel)="ImageModalCancel()"
+  [nzFooter]="ImageModalFooter"
+>
+  <ng-template #content>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div
+        *ngIf="imageshow != undefined && imageshow != null && imageshow != ''"
+        class="ss"
+        style="height: 400px"
+      >
+        <div class="controls">
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="circle"
+            (click)="zoomIn()"
+          >
+            <i nz-icon nzType="zoom-in"></i>
+          </button>
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="circle"
+            (click)="zoomOut()"
+          >
+            <i nz-icon nzType="zoom-out"></i>
+          </button>
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="circle"
+            (click)="rotateLeft()"
+          >
+            <i nz-icon nzType="rotate-left"></i>
+          </button>
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="circle"
+            (click)="rotateRight()"
+          >
+            <i nz-icon nzType="rotate-right"></i>
+          </button>
+          <button nz-button nzType="default" nzShape="circle" (click)="reset()">
+            <i nz-icon nzType="reload"></i>
+          </button>
+        </div>
+        <div class="image-container">
+          <img
+            [src]="imageshow"
+            [style.transform]="
+              'scale(' + zoomLevel + ') rotate(' + rotation + 'deg)'
+            "
+            alt="Zoomable Image"
+          />
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #ImageModalFooter>
+    <button nz-button nzType="default" (click)="ImageModalCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+<div *ngIf="drawerVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="true"
+    [nzWidth]="700"
+    [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-custadd
+        [drawerClose]="closeCallback"
+        [drawerVisible]="drawerVisible"
+        [data]="drawerData"
+      >
+      </app-custadd>
+    </ng-container>
+  </nz-drawer>
+</div>
+<div *ngIf="drawerVisibleAddress">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="true"
+    [nzWidth]="600"
+    [nzVisible]="drawerVisibleAddress"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerAddressClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addressadd
+        [data]="drawerDataaddress"
+        [customerAddData]="customerAddData"
+        [drawerAddressClose]="closeCallbackAddress"
+        [ID]="ID"
+      ></app-addressadd>
+    </ng-container>
+  </nz-drawer>
+</div>

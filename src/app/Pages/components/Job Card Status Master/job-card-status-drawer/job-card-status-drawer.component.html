@@ -1,0 +1,167 @@
+<div>
+  <form nz-form #JobCardStatusmaster="ngForm">
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Status Title</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Enter Status Title">
+            <input nz-input name="name" placeholder="Enter Status Title" required [(ngModel)]="data.NAME"
+              #statusTitleField="ngModel" (focus)="isFocused = 'statusTitle'" (blur)="isFocused = ''"
+              (keypress)="commonFunction.alphaOnly($event)" maxlength="32" autocomplete="off" />
+            <!-- Dynamic Character Count -->
+            <h6 style="color: red; font-size: 10px" *ngIf="
+                isFocused === 'statusTitle' ||
+                (data.NAME != undefined && data.NAME != null && data.NAME != '' && isFocused === 'statusTitle')
+              ">
+              {{ data.NAME.length || 0 }}/32
+            </h6>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+    </div>
+
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Description</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Enter Description">
+            <textarea nz-input name="desc" placeholder="Enter Description" [(ngModel)]="data.DESCRIPTION"
+              #descriptionField="ngModel" (focus)="isFocused = 'description'" (blur)="isFocused = ''"
+              [nzAutosize]="{ minRows: 2, maxRows: 5 }" (keypress)="commonFunction.allowOnly($event)"
+              style="width: 100%" maxlength="512"></textarea>
+            <!-- Dynamic Character Count -->
+            <h6 style="color: red; font-size: 10px" *ngIf="
+                isFocused === 'description' ||
+                (data.DESCRIPTION != undefined && data.DESCRIPTION != null && data.DESCRIPTION != '' && isFocused === 'description')
+              ">
+              {{ data.DESCRIPTION.length || 0 }}/512
+            </h6>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="18">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Job Card Icon
+            &nbsp; <span><i nz-icon nzType="info-circle" nzTheme="twotone" nzTooltipTitle="Please select an image file (PNG, JPG, JPEG) with a size up to
+              1MB." nzTooltipPlacement="top" nz-tooltip>
+              </i>
+            </span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Icon">
+            <button *ngIf="data.ICON == ' ' || data.ICON == null" nz-button style="
+                height: 28px;
+                padding: 0px 7px;
+                font-size: 12px;
+              " (click)="icon.click()">
+              Upload Icon
+              <input #icon name="icon" type="file" accept=".png, .jpg, .jpeg" (change)="onFileSelected($event)"
+                style="display: none" />
+            </button>
+            <div *ngIf="
+                data.ICON != null && data.ICON != undefined && data.ICON != ' '
+              " style="display: flex; justify-content: left">
+              <span>
+                <span *ngIf="data['ICON'] != null">
+                  <span *ngIf="data['ICON'].length >= 20" nz-popover [nzPopoverContent]="data['ICON']"
+                    nzPopoverPlacement="topLeft">
+                    {{
+                    data["ICON"] == null
+                    ? "-"
+                    : (data["ICON"] | slice : 0 : 20)
+                    }}{{ data["ICON"].length > 20 ? "..." : "" }}
+                  </span>
+                  <span *ngIf="data['ICON'].length < 20">
+                    {{
+                    data["ICON"] == null
+                    ? "-"
+                    : (data["ICON"] | slice : 0 : 20)
+                    }}
+                    {{ data["ICON"].length > 20 ? "..." : "" }}
+                  </span>
+                </span></span>
+              &nbsp;&nbsp;
+              <a style="color: blue; margin-right: 9px" (click)="viewImage(data.ICON)" nz-tooltip
+                nzTooltipTitle="Click Here To View Uploaded Job Card Icon">
+                <span nz-icon nzType="eye" nzTheme="outline"></span>
+              </a>
+              <span *ngIf="data.ICON">
+                <span style="cursor: pointer" nz-popconfirm nzPopconfirmTitle="Are you sure want delete Job card Icon?"
+                  nzPopconfirmPlacement="top" (nzOnConfirm)="IconDeleteConfirm(data)" (nzOnCancel)="deleteCancel()">
+                  <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                    nzTooltipTitle="Delete">
+                  </span>
+                </span>
+              </span>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="6">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Status</nz-form-label>
+          <nz-form-control>
+            <nz-switch name="status" [nzDisabled]="data.ID?true:false" nzCheckedChildren="Active"
+              nzUnCheckedChildren="Inactive" [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="footer">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+    Cancel
+  </button>
+
+  <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
+    (click)="save(false, JobCardStatusmaster)" class="ant-btn ant-btn-primary">
+    Save & Close
+  </button>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+        <a class="footer-button" style="color: white!important;" (click)="save(true, JobCardStatusmaster)">Save &
+          New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false, JobCardStatusmaster)">
+    <span>Update & Close</span>
+  </button>
+
+
+
+  <nz-modal [nzWidth]="500" [(nzVisible)]="ImageModalVisible" nzMaskClosable="false" nzClosable="false"
+    [nzContent]="content" [nzTitle]="'Icon View'" (nzOnCancel)="ImageModalCancel()" [nzFooter]="ImageModalFooter">
+    <ng-template #content>
+      <nz-spin [nzSpinning]="isSpinning">
+        <div *ngIf="imageshow != undefined && imageshow != null && imageshow != '' 
+        && (fileURL == undefined || fileURL == null || fileURL == '')" class="ss" style="align-items: center;">
+
+          <img src="{{ imageshow }}" alt="Preview"
+            style="height: auto;width: auto; overflow: auto;max-width:600; max-height: 400;align-items: center;" />
+        </div>
+        <div *ngIf="fileURL != undefined && fileURL != null && fileURL != ''" class="ss" style="align-items: center;">
+
+          <img [src]="imagePreview" alt="Preview"
+            style="height: auto;width: auto; overflow: auto;max-width:600; max-height: 400;" />
+        </div>
+      </nz-spin>
+    </ng-template>
+    <ng-template #ImageModalFooter>
+      <button nz-button nzType="default" (click)="ImageModalCancel()">
+        Close
+      </button>
+    </ng-template>
+  </nz-modal>
+
+</div>

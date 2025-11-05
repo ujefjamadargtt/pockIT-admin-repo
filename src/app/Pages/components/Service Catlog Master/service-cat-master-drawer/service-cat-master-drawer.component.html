@@ -1,0 +1,300 @@
+<div style="margin-top: 10px">
+  <form nz-form #ServiceCatmaster="ngForm">
+    <!-- <span><b>Category Details</b></span> -->
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon nzRequired>Category</nz-form-label>
+          <nz-form-control nzErrorTip="Select Category">
+            <nz-select name="CATEGORY_ID" nzPlaceHolder="Select Category" nzShowSearch style="width: 100%"
+              [(ngModel)]="data.CATEGORY_ID" nzAllowClear="true" required>
+              <nz-option *ngFor="let data of categoryData" [nzValue]="data.ID"
+                [nzLabel]="data.CATEGORY_NAME"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon nzRequired>Sub Category</nz-form-label>
+          <nz-form-control nzErrorTip="Select Sub Category">
+            <nz-select name="SUBCATEGORY_ID" nzPlaceHolder="Select Sub Category" nzShowSearch style="width: 100%"
+              [(ngModel)]="data.SUBCATEGORY_ID" nzAllowClear="true" required>
+              <nz-option *ngFor="let data of subcategoryData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+    </div>
+
+    <!-- <span><b>Basic Details</b></span> -->
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Service Name</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Enter Service Name">
+            <input nz-input name="name" placeholder="Enter Service Name" required autocomplete="off"
+              [(ngModel)]="data.NAME" #nameField="ngModel" (keypress)="commonFunction.alphaOnly($event)"
+              maxlength="128" />
+            <h6 style="color: red; font-size: 10px" *ngIf="
+                data.NAME != undefined && data.NAME != null && data.NAME != ''
+              ">
+              {{ data.NAME.length }}/128
+            </h6>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <nz-form-item>
+        <nz-form-label nzRequired nzNoColon>Service Description</nz-form-label>
+        <nz-form-control nzHasFeedback nzErrorTip="Enter Description">
+          <textarea nz-input name="desc" placeholder="Enter Description" required autocomplete="off"
+            [(ngModel)]="data.DESCRIPTION" #nameField="ngModel" (keypress)="commonFunction.alphaOnly($event)"
+            maxlength="2024" [nzAutosize]="{ minRows: 3, maxRows: 6 }"></textarea>
+          <h6 style="color: red; font-size: 10px" *ngIf="
+                data.DESCRIPTION != undefined &&
+                data.DESCRIPTION != null &&
+                data.DESCRIPTION != ''
+              ">
+            {{ data.DESCRIPTION.length }}/2024
+          </h6>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+
+    <!-- <span><b>Pricing and Currency</b></span> -->
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <span><b>Regular Service</b></span>
+
+        <div nz-row class="my-box">
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Base cost for B2C</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Enter Base cost for B2C">
+                <nz-input-group [nzAddOnAfter]="'₹'">
+                  <input nz-input name="REGULAR_PRICE_B2C" placeholder="Enter Base cost for B2C" required
+                    [(ngModel)]="data.REGULAR_PRICE_B2C" #nameField="ngModel" autocomplete="off"
+                    (keypress)="commonFunction.onlynumdot($event)" maxlength="15" />
+                </nz-input-group>
+                <h6 style="color: red; font-size: 10px" *ngIf="
+              data.REGULAR_PRICE_B2C != undefined &&
+              data.REGULAR_PRICE_B2C != null &&
+              data.REGULAR_PRICE_B2C != ''
+            ">
+                  {{ data.REGULAR_PRICE_B2C.length }}/15
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Base cost for B2B</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Enter Base cost for B2B">
+                <nz-input-group [nzAddOnAfter]="'₹'">
+                  <input nz-input name="REGULAR_PRICE_B2B" placeholder="Enter Base cost for B2B" required
+                    [(ngModel)]="data.REGULAR_PRICE_B2B" autocomplete="off" #nameField="ngModel"
+                    (keypress)="commonFunction.onlynumdot($event)" maxlength="15" />
+                </nz-input-group>
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                data.REGULAR_PRICE_B2B != undefined &&
+                data.REGULAR_PRICE_B2B != null &&
+                data.REGULAR_PRICE_B2B != ''
+              ">
+                  {{ data.REGULAR_PRICE_B2B.length }}/15
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+      </div>
+
+      <div nz-col nzSpan="12" style="padding-left: 7px;">
+        <span><b>Express Service</b></span>
+
+        <div nz-row class="my-box">
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Base cost for B2C</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Enter Base cost for B2C">
+                <nz-input-group [nzAddOnAfter]="'₹'">
+                  <input nz-input name="EXPRESS_PRICE_B2C" placeholder="Enter Base cost for B2C" required
+                    [(ngModel)]="data.EXPRESS_PRICE_B2C" autocomplete="off" #nameField="ngModel"
+                    (keypress)="commonFunction.onlynumdot($event)" maxlength="15" />
+                </nz-input-group>
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                data.EXPRESS_PRICE_B2C != undefined &&
+                data.EXPRESS_PRICE_B2C != null &&
+                data.EXPRESS_PRICE_B2C != ''
+              ">
+                  {{ data.EXPRESS_PRICE_B2C.length }}/15
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Base cost for B2B</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Enter Base cost for RPRICE_B2B">
+                <nz-input-group [nzAddOnAfter]="'₹'">
+                  <input nz-input name="EXPRESS_PRICE_B2B" placeholder="Enter Base cost for B2B" required
+                    [(ngModel)]="data.EXPRESS_PRICE_B2B" autocomplete="off" #nameField="ngModel"
+                    (keypress)="commonFunction.onlynumdot($event)" maxlength="15" />
+                </nz-input-group>
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                data.EXPRESS_PRICE_B2B != undefined &&
+                data.EXPRESS_PRICE_B2B != null &&
+                data.EXPRESS_PRICE_B2B != ''
+              ">
+                  {{ data.EXPRESS_PRICE_B2B.length }}/15
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon nzRequired>Estimation Time</nz-form-label>
+          <nz-form-control nzErrorTip="Enter Estimation Time">
+            <nz-input-group [nzAddOnAfter]="'mins'" style="width: 100%">
+              <input nz-input name="DURATION" placeholder="Enter Estimation Time" required autocomplete="off"
+                [(ngModel)]="data.DURATION" #nameField="ngModel" (keypress)="commonFunction.onlynum($event)"
+                style="width: 100%;" maxlength="3" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Status</nz-form-label>
+          <nz-form-control>
+            <nz-switch name="status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+              [(ngModel)]="data.AVAILABILITY_STATUS"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row>
+
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Catlogue Image</nz-form-label>
+          <span></span>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Select Icon">
+            <button *ngIf="data.SERVICE_IMAGE_URL == ' ' || data.SERVICE_IMAGE_URL == null" nz-button
+              style="height: 28px; padding: 0px 7px; font-size: 10px; width: 30%" (click)="image1.click()">Upload Image
+              <!-- <i nz-icon nzType="upload" nzTheme="outline"></i> -->
+              <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg" (change)="onFileSelected($event)"
+                style="display: none" />
+            </button>
+            <span *ngIf="!data.SERVICE_IMAGE_URL || data.SERVICE_IMAGE_URL.trim() === ''" style="
+                color: red;
+                font-size: 10px !important;
+                display: block;
+                margin-top: 5px;
+              ">
+              Please select an icon file (PNG, JPG, JPEG) with a size up to 1MB.
+            </span>
+            <span
+              *ngIf="data.SERVICE_IMAGE_URL != null && data.SERVICE_IMAGE_URL != undefined && data.SERVICE_IMAGE_URL != ' '">
+              <div *ngIf="progressBarImageOne">
+                <nz-progress [style.width]="percentImageOne + '%'" [nzPercent]="percentImageOne">{{ percentImageOne
+                  }}%</nz-progress>
+              </div>
+
+            </span>
+
+
+            <div
+              *ngIf="data.SERVICE_IMAGE_URL != null && data.SERVICE_IMAGE_URL != undefined && data.SERVICE_IMAGE_URL != ' '">
+              <a style="color: blue; margin-right: 9px" (click)="viewImage(data.SERVICE_IMAGE_URL)">
+                {{ data.SERVICE_IMAGE_URL }}
+              </a>
+
+              <a style="color: blue; margin-right: 9px" (click)="viewImage(data.SERVICE_IMAGE_URL)" nz-tooltip
+                nzTooltipTitle="Click Here To View Uploaded Image">
+                <span nz-icon nzType="eye" nzTheme="outline"></span>
+              </a>
+              <span *ngIf="data.ID">
+                <span style="cursor: pointer" nz-popconfirm nzPopconfirmTitle="Are you sure want delete?"
+                  nzPopconfirmPlacement="top" (nzOnConfirm)="image1DeleteConfirm(data)" (nzOnCancel)="deleteCancel()">
+                  <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                    nzTooltipTitle="Delete">
+                  </span>
+                </span>
+              </span>
+              <span *ngIf="!data.ID">
+                <span style="cursor: pointer; margin-left: 10px" nz-popconfirm
+                  nzPopconfirmTitle="Are you sure want Delete?" nzPopconfirmPlacement="top"
+                  (nzOnConfirm)="removeImage()" (nzOnCancel)="deleteCancel()">
+                  <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                    nzTooltipTitle="Delete">
+                  </span>
+                </span>
+              </span>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+
+    </div>
+  </form>
+</div>
+
+<div class="footer">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+    Cancel
+  </button>
+
+  <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
+    (click)="save(false, ServiceCatmaster)" class="ant-btn ant-btn-primary">
+    Save & Close
+  </button>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+        <a class="footer-button" style="color: white!important" (click)="save(true, ServiceCatmaster)">Save & New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false, ServiceCatmaster)">
+    <span>Update & Close</span>
+  </button>
+
+  <nz-modal [nzWidth]="900" [(nzVisible)]="ImageModalVisible" nzMaskClosable="false" nzClosable="false"
+    [nzContent]="content" [nzTitle]="'Image View'" (nzOnCancel)="ImageModalCancel()" [nzFooter]="ImageModalFooter">
+    <ng-template #content>
+      <nz-spin [nzSpinning]="isSpinning">
+        <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss"
+          style="height: 400px; overflow: auto">
+          <iframe [src]="imageshow" style="width: 832px; height: 396px" frameborder="0"></iframe>
+        </div>
+      </nz-spin>
+    </ng-template>
+    <ng-template #ImageModalFooter>
+      <button nz-button nzType="default" (click)="ImageModalCancel()">
+        Close
+      </button>
+    </ng-template>
+  </nz-modal>
+
+</div>

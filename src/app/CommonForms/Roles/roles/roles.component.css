@@ -1,0 +1,30 @@
+.descreption-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block; /* Ensures it takes up the full width of the containing element */
+  width: 100%; /* Ensures it fills the available column width */
+}
+
+/* Ensure the popover content is fully visible */
+.custom-popover .ant-popover-content {
+  max-width: 400px; /* Set your desired width */
+  width: auto; /* Allow width to adjust */
+  white-space: pre-line; /* Preserve line breaks and whitespace */
+  word-wrap: break-word; /* Ensure long words break */
+}
+
+/* Ensure the popover container adjusts its height automatically */
+.custom-popover .ant-popover-inner {
+  width: 300px; /* Fixed width */
+  max-width: 400px; /* Fixed width */
+  height: auto; /* Adjust height dynamically */
+  overflow: visible; /* Ensure overflow is visible */
+}
+
+/* CSS for content inside the popover with pre-line formatting */
+.custom-popover-content {
+  white-space: pre-line; /* Preserve line breaks and whitespace */
+  display: block; /* Ensure it takes full width of popover */
+  width: 100%; /* Ensure it takes full width of popover */
+}

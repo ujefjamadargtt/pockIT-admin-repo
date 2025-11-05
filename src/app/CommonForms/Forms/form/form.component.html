@@ -1,0 +1,91 @@
+<div>
+  <form nz-form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Parent Form </nz-form-label>
+
+            <nz-input-group>
+              <nz-select name="parent" nzShowSearch style="width: 100%" nzPlaceHolder="Select a Parent Form"
+                [(ngModel)]="data.PARENT_ID">
+                <nz-option *ngFor="let form of forms" [nzValue]="form.ID" [nzLabel]="form.NAME">
+                </nz-option>
+                <nz-option nzValue="0" nzLabel="None"></nz-option>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-item>
+        </div>
+      </div>
+
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter Name">
+              <input nz-input name="name" placeholder="Enter Form Name" [(ngModel)]="data.NAME" maxlength="128" required
+                (focus)="isFocused = 'name'" (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="data.NAME && isFocused === 'name'">
+                {{ data.NAME.length || 0 }}/128
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Link</nz-form-label>
+            <nz-form-control nzErrorTip="Enter Link" nzHasFeedback>
+              <input nz-input placeholder="Enter Link" name="link" [(ngModel)]="data.LINK" required maxlength="128"
+                autocomplete="off" (focus)="isFocused = 'link'" (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="data.LINK && isFocused === 'link'">
+                {{ data.LINK.length || 0 }}/128
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Icon</nz-form-label>
+            <nz-form-control nzErrorTip="Enter Icon" nzHasFeedback>
+              <input nz-input placeholder="Icon" name="icon" required maxlength="64" [(ngModel)]="data.ICON"
+                autocomplete="off" (focus)="isFocused = 'icon'" (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="data.ICON && isFocused === 'icon'">
+
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning" (click)="save(false, websitebannerPage)">
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+          <a style="color: white !important" (click)="save(true, websitebannerPage)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, websitebannerPage)">
+      <span>Update & Close</span>
+    </button>
+  </div>
+</div>

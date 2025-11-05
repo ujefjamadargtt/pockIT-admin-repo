@@ -1,0 +1,121 @@
+<div>
+    <form nz-form #myForm="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row style="color: rgb(45, 128, 223); font-size: 12px; padding-left: 10px">
+                Please select an image file (PNG, JPG, JPEG) with a image dimension
+                325*243 px.
+            </div>
+            <div nz-row>
+                <div nz-col nzSpan="6">
+                    <div class="card" (click)="image1.click()" style="cursor: pointer">
+                        <div class="flex-container">
+                            <span nz-icon nzType="plus-circle" nzTheme="twotone" style="font-size: 30px !important">
+                            </span>
+
+                            <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg"
+                                (change)="onFileSelected($event)" style="display: none" (click)="image1.value = ''" />
+                            <!-- (change)="fileChangeEvent($event)" -->
+                        </div>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="existingImages && existingImages.length > 0">
+                    <div nz-col nzSpan="6" *ngFor="let image of existingImages; let i = index">
+                        <div class="card">
+                            <div class="flex-container">
+                                <span nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete?"
+                                    nzPopconfirmPlacement="top" (nzOnConfirm)="imageDeleteConfirm(image)"
+                                    (nzOnCancel)="deleteCancel()" style="
+                      position: absolute;
+                      top: 10px;
+                      right: 10px;
+                      cursor: pointer;
+                      color: red;
+                      z-index: 10;
+                    ">
+                                    <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'"
+                                        nz-tooltip nzTooltipTitle="Delete">
+                                    </span>
+                                </span>
+
+                                <img nz-image [nzSrc]="image['NAME']" alt="Preview"
+                                    style="max-width: 100%; max-height: 100%; object-fit: cover" />
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <div nz-col nzSpan="6" *ngFor="let image of uploadingImagePreviews; let j = index">
+                    <div class="card">
+                        <div class="flex-container">
+                            <span nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete?"
+                                nzPopconfirmPlacement="top" (nzOnConfirm)="newUploadedImageDeleteConfirm(image, j)"
+                                (nzOnCancel)="deleteCancel()" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    cursor: pointer;
+                    color: red;
+                    z-index: 10;
+                  ">
+                                <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                                    nzTooltipTitle="Delete">
+                                </span>
+                            </span>
+
+                            <img nz-image [nzSrc]="image" alt="Preview"
+                                style="max-width: 100%; max-height: 100%; object-fit: cover" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-spin>
+    </form>
+</div>
+
+<div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+        <span>Cancel</span>
+    </button>
+
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+        (click)="save()">
+        <span>Save & Close</span>
+    </button>
+</div>
+
+<!-- Image crop modal -->
+<nz-modal [nzWidth]="900" [nzStyle]="{ 'margin-top': '-80px' }" [(nzVisible)]="CropImageModalVisible"
+    nzMaskClosable="false" nzClosable="false" [nzContent]="content2" [nzTitle]="'Crop Image'"
+    (nzOnCancel)="CropImageModalCancel()" [nzFooter]="CropImageModalFooter">
+    <ng-template #content2>
+        <nz-spin [nzSpinning]="isSpinningCrop">
+            <div *ngIf="
+            cropimageshow != undefined &&
+            cropimageshow != null &&
+            cropimageshow != ''
+          " class="ss" style="height: 500px; overflow: scroll">
+                <div *ngIf="croppedImage" style="text-align: center">
+                    <p>Cropped Image:</p>
+                    <img nz-image [nzSrc]="croppedImage" width="400" height="320" />
+                </div>
+                <nz-divider [ngStyle]="{ width: imageWidth - 900 + 'px' }" nzPlain nzVariant="solid"></nz-divider>
+                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false"
+                    [cropper]="cropperPosition" format="png" (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded($event)" (cropperReady)="cropperReady($event)" [imageQuality]="100"
+                    (loadImageFailed)="loadImageFailed()">
+                </image-cropper>
+            </div>
+        </nz-spin>
+    </ng-template>
+
+    <ng-template #CropImageModalFooter>
+        <button nz-button nzType="default" (click)="CropImageModalCancel()">
+            Close
+        </button>
+
+        <button nz-button nzType="primary" (click)="onFileSelected(imageChangedEvent)">
+            Crop
+        </button>
+    </ng-template>
+</nz-modal>

@@ -1,0 +1,137 @@
+<div>
+  <form nz-form #StateMasterPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Country</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Country">
+              <nz-select nzAllowClear="true" nzPlaceHolder="Select Country" name="COUNTRY_NAME"
+                [(ngModel)]="data.COUNTRY_ID" (ngModelChange)="onCountryChange($event)" nzShowSearch required
+                [nzLoading]="isCountrySpinning">
+                <nz-option *ngFor="let data of countryData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <!-- <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>State</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter State Name ">
+              <input nz-input name="NAME" [(ngModel)]="data.NAME" placeholder="Enter State Name"
+                (keypress)="validateInput($event)" maxlength="256" required autocomplete="off" />
+            </nz-form-control>
+            <span style="color: red; font-size: 10px" *ngIf="data.NAME">{{ data.NAME.length }}/256</span>
+          </nz-form-item>
+        </div>
+      </div> -->
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>State</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter State Name">
+              <input nz-input name="NAME" [(ngModel)]="data.NAME" placeholder="Enter State Name"
+                (keypress)="validateInput($event)" maxlength="256" required autocomplete="off"
+                (focus)="isFocused = 'state'" (blur)="isFocused = ''" />
+            </nz-form-control>
+            <!-- Dynamic Character Count -->
+            <h6 style="color: red; font-size: 10px" *ngIf="
+                isFocused === 'state' ||
+                (data.NAME && isFocused === 'state')
+              ">
+              {{ data.NAME.length || 0 }}/256
+            </h6>
+          </nz-form-item>
+        </div>
+      </div>
+
+
+      <div nz-row>
+        <!-- <div nz-col nzSpan="14">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Short Code ">
+              <input style="width: 100%" nz-input name="shortName" maxlength="8" autocomplete="off"
+                [(ngModel)]="data.SHORT_CODE" placeholder="Enter Short Code" />
+            </nz-form-control>
+            <span style="color: red; font-size: 10px" *ngIf="data.SHORT_CODE">{{ data.SHORT_CODE.length }}/8</span>
+          </nz-form-item>
+        </div> -->
+        <div nz-col nzSpan="14">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Short Code">
+              <input style="width: 100%" nz-input name="shortName" maxlength="8" autocomplete="off"
+                [(ngModel)]="data.SHORT_CODE" required placeholder="Enter Short Code" (focus)="isFocused = 'shortCode'"
+                (blur)="isFocused = ''" />
+            </nz-form-control>
+            <!-- Dynamic Character Count -->
+            <h6 style="color: red; font-size: 10px" *ngIf="
+                isFocused === 'shortCode' ||
+                (data.SHORT_CODE && isFocused === 'shortCode')
+              ">
+              {{ data.SHORT_CODE?.length || 0 }}/8
+            </h6>
+          </nz-form-item>
+        </div>
+
+
+        <div nz-col nzSpan="10">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Sequence Number">
+              <nz-input-number style="width: 100%" name="seqno" [(ngModel)]="data.SEQ_NO" [nzMin]="1" [nzStep]="1"
+                required>
+              </nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <!-- <div nz-col nzSpan="12">
+                    <nz-form-item>
+                        <nz-form-label nzNoColon>Status</nz-form-label>
+                        <nz-form-control>
+                            <nz-switch name="status" [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div> -->
+        <div nz-col nzSpan="8">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning" (click)="save(false, StateMasterPage)">
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+          <a style="color: white!important" (click)="save(true, StateMasterPage)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, StateMasterPage)">
+      <span>Update & Close</span>
+    </button>
+  </div>
+</div>

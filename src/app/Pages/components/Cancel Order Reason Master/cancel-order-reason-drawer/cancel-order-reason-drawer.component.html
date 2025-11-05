@@ -1,0 +1,91 @@
+<div>
+  <form nz-form #CancelOrderReasonmaster="ngForm" style="margin-top: 10px">
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <!-- <div nz-col nzSpan="12"> -->
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Type</nz-form-label>
+          <nz-form-control nzErrorTip="Select Type">
+            <nz-radio-group name="type" [(ngModel)]="data.TYPE" style="width: 100%">
+              <label nz-radio nzValue="CO">Order Cancellation </label>
+              <label nz-radio nzValue="OR">Order Reschedule</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+        <!-- </div> -->
+      </div>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <!-- <div nz-col nzSpan="12"> -->
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Reason For </nz-form-label>
+          <nz-form-control nzErrorTip="Select Reason For ">
+            <nz-radio-group name="REASON_FOR" [(ngModel)]="data.REASON_FOR" style="width: 100%">
+              <label nz-radio nzValue="S">Service </label>
+              <label nz-radio nzValue="P">Product</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+        <!-- </div> -->
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Reason</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Enter Reason">
+            <textarea nz-input name="desc" required placeholder="Enter Reason" [(ngModel)]="data.REASON"
+              #nameField="ngModel" (keypress)="commonFunction.allowOnly($event)" (focus)="isFocused = 'reason'"
+              (blur)="isFocused = ''" maxlength="512" [nzAutosize]="{ minRows: 3, maxRows: 6 }" autocomplete="off"
+              style="width: 100%"></textarea>
+            <!-- Dynamic Character Count -->
+            <h6 style="color: red; font-size: 10px" *ngIf="
+                isFocused === 'reason' ||
+                (data.REASON != undefined &&
+                  data.REASON != null &&
+                  data.REASON != '' &&
+                  isFocused === 'reason')
+              ">
+              {{ data.REASON.length || 0 }}/512
+            </h6>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Status</nz-form-label>
+          <nz-form-control>
+            <nz-switch name="status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+              [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="footer">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+    Cancel
+  </button>
+
+  <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
+    (click)="save(false, CancelOrderReasonmaster)" class="ant-btn ant-btn-primary">
+    Save & Close
+  </button>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
+        <a class="footer-button" style="color: white !important" (click)="save(true, CancelOrderReasonmaster)">Save &
+          New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false, CancelOrderReasonmaster)">
+    <span>Update & Close</span>
+  </button>
+</div>

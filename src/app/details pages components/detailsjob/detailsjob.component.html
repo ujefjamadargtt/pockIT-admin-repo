@@ -1,0 +1,116 @@
+<div nz-row>
+  <div nz-col nzSpan="24" style="box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px">
+    <div nz-row [nzGutter]="16" style="padding: 20px">
+      <div nz-col nzSpan="8" class="mainnam">
+        Job No : {{ jobdetailsdata.JOB_CARD_NO }}
+      </div>
+      <div nz-col nzSpan="8" class="subname">
+        Order No : {{ jobdetailsdata.ORDER_NO }}
+      </div>
+      <div nz-col nzSpan="8" class="subname">
+        Customer Name : {{ jobdetailsdata.CUSTOMER_NAME }}
+      </div>
+      <div nz-col nzSpan="8" class="subname">
+        Service Name : {{ jobdetailsdata.SERVICE_FULL_NAME }}
+      </div>
+
+      <div nz-col nzSpan="8" class="subname">
+        Amount: ₹ {{ jobdetailsdata.SERVICE_AMOUNT | number }}
+      </div>
+      <div nz-col nzSpan="8" class="subname" nz-popover [nzPopoverContent]="jobdetailsdata['SERVICE_ADDRESS']"
+        nzPopoverPlacement="topLeft">
+        Address: {{ jobdetailsdata.SERVICE_ADDRESS }}
+      </div>
+      <div nz-col nzSpan="8" class="subname">
+        Territory Name : {{ jobdetailsdata.TERRITORY_NAME }}
+      </div>
+      <div nz-col nzSpan="8" class="subname">
+        Expected Date:
+        {{ jobdetailsdata.EXPECTED_DATE_TIME | date : "dd/MM/yyyy HH:mm a" }}
+      </div>
+
+      <div nz-col nzSpan="8" class="subname">
+        Estimated Time: {{ jobdetailsdata.ESTIMATED_TIME_IN_MIN }} min.
+      </div>
+      <div nz-col nzSpan="8" class="subname">
+        Job Card Status :
+        <nz-tag *ngIf="jobdetailsdata.STATUS == 'P'" [nzColor]="'orange'">{{jobdetailsdata.JOB_CARD_STATUS}}</nz-tag>
+        <nz-tag *ngIf="(jobdetailsdata.STATUS == 'AS' || jobdetailsdata.STATUS == 'AC')"
+          [nzColor]="'blue'">Assigned</nz-tag>
+        <!-- <nz-tag *ngIf="jobdetailsdata.STATUS == 'AC'" [nzColor]="'geekblue'">Accepted</nz-tag> -->
+        <nz-tag *ngIf="jobdetailsdata.STATUS == 'CO'" [nzColor]="'green'">{{jobdetailsdata.JOB_CARD_STATUS}}</nz-tag>
+      </div>
+      <div nz-col nzSpan="8" class="subname" *ngIf="jobdetailsdata.STATUS != 'P'">
+        Technician Name : {{ jobdetailsdata.TECHNICIAN_NAME }}
+      </div>
+      <div nz-col nzSpan="8" class="subname" *ngIf="jobdetailsdata.STATUS != 'P'">
+        Service Date:
+        {{ jobdetailsdata.SCHEDULED_DATE_TIME | date : "dd/MM/yyyy" }}
+        &nbsp;&nbsp; Start Time :
+        {{ formatTime(jobdetailsdata.START_TIME) }} &nbsp;&nbsp; End Time :
+        <!-- {{ jobdetailsdata.END_TIME }} -->
+        {{ formatTime(jobdetailsdata.END_TIME) }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row style="padding: 10px">
+  <div nz-col nzSpan="24">
+    <nz-tabset nzCentered (nzSelectedIndexChange)="onSelectedIndexChange($event)">
+      <nz-tab [nzTitle]="'Action/Activity Log'">
+        <div *ngIf="show == 0">
+          <app-actionlogs [TYPE]="'JOB'" [FILTER_ID]="jobdetailsdata.ID"
+            [CUSTOMER_ID]="jobdetailsdata.CUSTOMER_ID"></app-actionlogs>
+        </div>
+      </nz-tab>
+      <nz-tab [nzTitle]="'Chat'">
+        <div *ngIf="show == 1">
+          <app-chatoverview-comp [TYPE]="'JOB'" [FILTER_ID]="jobdetailsdata.ID"></app-chatoverview-comp>
+        </div>
+      </nz-tab>
+      <nz-tab (nzSelect)="setFilter()" [nzTitle]="'Order Location'">
+        <ng-template nz-tab>
+          <div *ngIf="show == 2">
+            <app-location [TYPE]="TYPE" [FILTER_ID]="FILTER_ID"></app-location>
+          </div>
+        </ng-template>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'Technician Travel History'" (nzSelect)="setFilter()">
+        <ng-template nz-tab>
+          <div *ngIf="show == 3">
+            <app-technicianlocationsmap [TYPE]="TYPE" [FILTER_ID]="FILTER_ID"></app-technicianlocationsmap>
+          </div>
+        </ng-template>
+      </nz-tab>
+      <nz-tab (nzSelect)="setFilter()" [nzTitle]="'Technician Locations'">
+        <ng-template nz-tab>
+          <div *ngIf="show == 4">
+            <app-multiplelocationpage [TYPE]="TYPE" [FILTER_ID]="FILTER_ID"></app-multiplelocationpage>
+          </div>
+        </ng-template>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'Customer Ratings for Technicians'">
+        <div *ngIf="show == 5">
+          <app-customerratting [TYPE]="'JOB'" [FILTER_ID]="jobdetailsdata.ID"
+            [customer_id]="jobdetailsdata.CUSTOMER_ID"></app-customerratting>
+        </div>
+      </nz-tab>
+      <nz-tab [nzTitle]="'Technician Ratings for Customers'">
+        <div *ngIf="show == 6">
+          <app-technicianratting [TYPE]="'JOB'" [FILTER_ID]="jobdetailsdata.ID"
+            [customer_id]="jobdetailsdata.CUSTOMER_ID"></app-technicianratting>
+        </div>
+      </nz-tab>
+      <nz-tab [nzTitle]="'Invoice'">
+        <ng-template nz-tab>
+          <div *ngIf="show == 7">
+            <app-invoicepage [TYPE]="'JOB'" [FILTER_ID]="jobdetailsdata.ID"></app-invoicepage>
+          </div>
+        </ng-template>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

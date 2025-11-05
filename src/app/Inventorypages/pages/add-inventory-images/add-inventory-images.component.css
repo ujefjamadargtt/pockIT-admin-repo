@@ -1,0 +1,22 @@
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+nz-divider {
+    border-color: #7cb305 !important;
+  }

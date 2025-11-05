@@ -1,0 +1,96 @@
+<div>
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Category</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Category">
+              <nz-select nzAllowClear="true" nzPlaceHolder="Select Category" name="KNOWLEDGEBASE_CATEGORY_ID"
+                [(ngModel)]="data.KNOWLEDGEBASE_CATEGORY_ID" nzShowSearch (keypress)="commonFunction.numchar($event)"
+                required>
+                <nz-option *ngFor="let data of CategoryData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Subcategory Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Subcategory Name">
+              <!-- Input Field -->
+              <input nz-input name="NAME" placeholder="Enter Subcategory Name" required [(ngModel)]="data.NAME"
+                (focus)="isFocused = 'NAME'" (blur)="isFocused = ''" (keypress)="commonFunction.numchar($event)"
+                autocomplete="off" maxlength="128" />
+
+              <!-- Dynamic Character Count -->
+              <h6 style="color: red; font-size: 10px"
+                *ngIf="isFocused === 'NAME' || (data.NAME && isFocused === 'NAME')">
+                {{ (data.NAME?.length || 0) }}/128
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Description</nz-form-label>
+            <nz-form-control>
+              <!-- Textarea Field -->
+              <textarea nz-input name="desc" placeholder="Enter Description" [(ngModel)]="data.DESCRIPTION"
+                (focus)="isFocused = 'DESCRIPTION'" (blur)="isFocused = ''" maxlength="512"
+                [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+
+              <!-- Dynamic Character Count -->
+              <h6 style="color: red; font-size: 10px"
+                *ngIf="isFocused === 'DESCRIPTION' || (data.DESCRIPTION && isFocused === 'DESCRIPTION')">
+                {{ (data.DESCRIPTION?.length || 0) }}/512
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Status</nz-form-label>
+          <nz-form-control>
+            <nz-switch name="IS_ACTIVE" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+              [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<div class="footer">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+    Cancel
+  </button>
+
+  <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
+    (click)="save(false, websitebannerPage)" class="ant-btn ant-btn-primary">
+    Save & Close
+  </button>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+        <a class="footer-button" style="color: white!important" (click)="save(true, websitebannerPage)">Save & New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false, websitebannerPage)">
+    <span>Update & Close</span>
+  </button>
+
+</div>

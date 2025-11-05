@@ -1,0 +1,75 @@
+<div>
+  <form nz-form #HSN_SAC="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> Code </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter Valid code">
+              <input nz-input name="CODE" autocomplete="off" placeholder="Enter Code" minlength="2" maxlength="32"
+                [(ngModel)]="data.CODE" [pattern]="codepatt" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzXs="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Plese Enter Sequence No">
+              <input nz-input name="SeqNo" placeholder="Enter Sequence No" required [(ngModel)]="data.SEQ_NO"
+                #nameField="ngModel" (keypress)="commonFunction.onlynum($event)" maxlength="8" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Description</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Description">
+              <textarea rows="2" nz-input placeholder="Description" name="description" minlength="2" maxlength="512"
+                [(ngModel)]="data.DESCRIPTION" (focus)="isFocused = 'DESCRIPTION'" (blur)="isFocused = ''"></textarea>
+              <h6 style="
+                  color: red;
+                  font-size: 10px;
+                  margin-bottom: 0px !important;
+                " *ngIf="data.DESCRIPTION && isFocused === 'DESCRIPTION'">
+                {{ data.DESCRIPTION.length || 0 }}/512
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="8">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="status" [(ngModel)]="data.STATUS" nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      (click)="save(false, HSN_SAC)">
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+          <a style="color: white!important" (click)="save(true, HSN_SAC)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, HSN_SAC)">
+      <span>Update & close</span>
+    </button>
+  </div>
+</div>

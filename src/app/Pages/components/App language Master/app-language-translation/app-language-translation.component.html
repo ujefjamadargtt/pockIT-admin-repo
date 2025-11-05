@@ -1,0 +1,94 @@
+<div>
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-col nzSpan="24">
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <nz-table class="my-scroll no-wrap1" nzBordered [nzData]="datalist" #table nzShowSizeChanger
+              [nzShowPagination]="false" [nzFrontPagination]="false" [nzLoading]="loadingRecords" [nzSize]="'small'"
+              [nzScroll]="{ x: '1000px' , y:'500px' }">
+              <thead>
+                <tr>
+                  <th nzWidth="80px" style="text-align: center">Keyword</th>
+                  <th nzWidth="80px" style="text-align: center">English</th>
+                  <th nzWidth="120px" style="text-align: center">
+                    {{ data?.NAME }} Translation
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data1 of datalist; let i = index">
+                  <td nzWidth="80px">{{ data1.KEY }}</td>
+
+                  <!-- Keyword column -->
+
+                  <td nzWidth="80px">
+                    <span *ngIf="datalist2[i]?.TRANSLATION != undefined">
+                      <span *ngIf="datalist2[i]?.TRANSLATION.length >= 50" nz-popover
+                        [nzPopoverContent]="datalist2[i]?.TRANSLATION" nzPopoverPlacement="topLeft">
+                        {{
+                        datalist2[i]?.TRANSLATION == null
+                        ? "-"
+                        : (datalist2[i]?.TRANSLATION | slice : 0 : 50)
+                        }}{{
+                        datalist2[i]?.TRANSLATION.length > 50 ? "..." : ""
+                        }}
+                      </span>
+                      <span *ngIf="datalist2[i]?.TRANSLATION.length < 50">
+                        {{
+                        datalist2[i]?.TRANSLATION == null
+                        ? "-"
+                        : (datalist2[i]?.TRANSLATION | slice : 0 : 50)
+                        }}
+                        {{ datalist2[i]?.TRANSLATION.length > 50 ? "..." : "" }}
+                      </span>
+                    </span>
+                    <span *ngIf="datalist2[i]?.TRANSLATION == null">-</span>
+                    <!-- {{ datalist2[i].TRANSLATION }} -->
+                  </td>
+
+                  <!-- <td
+                    align="left"
+                    [nzTooltipTitle]="isTextOverflow ? datalist2[i].TRANSLATION : null"
+                    #tooltipRef="nzTooltip"
+                    nz-tooltip
+                  >
+                    <div
+                      #textContainer
+                      class="truncate-text"
+                      (mouseenter)="checkOverflow(textContainer, tooltipRef)"
+                    >
+                      {{ datalist2[i].TRANSLATIONs }}
+                    </div>
+                  </td> -->
+                  <!-- English column (value of the keyword) -->
+                  <td nzWidth="120px">
+                    <input nz-input placeholder="Enter Translation" name="translation{{ i }}" required
+                      [(ngModel)]="translationData[data1.KEY]" maxlength="256" autocomplete="off" />
+                  </td>
+                  <!-- Translation column (binds to the value for translation) -->
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<div class="footer">
+  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <span>Cancel</span>
+  </button>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button nz-dropdown [nzLoading]="isSpinning"
+    (click)="save(false, websitebannerPage)" style="margin-right: 8px">
+    <span>Save as a draft</span>
+  </button>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button nz-dropdown [nzLoading]="isSpinning1"
+    (click)="save1(false, websitebannerPage)">
+    <span>Save as a final</span>
+  </button>
+</div>

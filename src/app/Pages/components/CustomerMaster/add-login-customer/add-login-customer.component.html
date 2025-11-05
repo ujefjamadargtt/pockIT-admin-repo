@@ -1,0 +1,854 @@
+<div>
+  <form nz-form #accountMasterPage="ngForm">
+    <nz-tabset [(nzSelectedIndex)]="activeTabIndex">
+      <nz-tab
+        *ngFor="let tab of tabs; let i = index"
+        [nzTitle]="application"
+        nzDisabled
+      >
+        <ng-template #application>
+          {{ tab.name }}
+        </ng-template>
+
+        <div *ngIf="tab.name == 'Personal Details'">
+          <form nz-form #accountMasterPage="ngForm">
+            <nz-spin [nzSpinning]="isSpinning">
+              <div *ngIf="tab.name == 'Personal Details'">
+                <form nz-form #accountMasterPage="ngForm">
+                  <nz-spin [nzSpinning]="isSpinning">
+                    <div class="my-box">
+                      <!-- <div nz-row>
+                        <div nz-col nzSpan="24">
+                          <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon
+                              >Company Name</nz-form-label
+                            >
+                            <nz-form-control
+                              nzHasFeedback
+                              nzErrorTip="Please Enter Valid Company Name"
+                            >
+                              <input
+                                nz-input
+                                name="companyName"
+                                placeholder="Enter Company Name"
+                                maxlength="256"
+                                autocomplete="off"
+                                type="text"
+                                (keypress)="commonFunction.allowOnly($event)"
+                                [(ngModel)]="data.COMPANY_NAME"
+                                [disabled]="true"
+                                required
+                                autocomplete="off"
+                                (focus)="isFocused = 'companyName'"
+                                (blur)="isFocused = ''"
+                              />
+                              <h6
+                                style="color: red; font-size: 10px"
+                                *ngIf="
+                                  isFocused === 'companyName' ||
+                                  (data.COMPANY_NAME != undefined &&
+                                    data.COMPANY_NAME != null &&
+                                    data.COMPANY_NAME != '' &&
+                                    isFocused === 'companyName')
+                                "
+                              >
+                                {{ data.COMPANY_NAME.length || 0 }}/256
+                              </h6>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                      </div> -->
+
+                      <div nz-row>
+                        <div nz-col nzSpan="24">
+                          <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>
+                              Contact Person Name
+                            </nz-form-label>
+                            <nz-form-control
+                              nzHasFeedback
+                              nzErrorTip="Please Enter Customer Name"
+                            >
+                              <nz-input-group
+                                [nzAddOnBefore]="addOnAfterTemplate4"
+                              >
+                                <input
+                                  nz-input
+                                  name="name"
+                                  placeholder="Enter Customer Name"
+                                  maxlength="256"
+                                  autocomplete="off"
+                                  type="text"
+                                  (keypress)="validateInput($event)"
+                                  [(ngModel)]="data.NAME"
+                                  required
+                                  (focus)="isFocused = 'customerName'"
+                                  (blur)="isFocused = ''"
+                                  autocomplete="off"
+                                />
+                              </nz-input-group>
+                              <ng-template #addOnAfterTemplate4>
+                                <nz-select
+                                  style="width: 100px"
+                                  name="discounttype1"
+                                  [(ngModel)]="data.SALUTATION"
+                                >
+                                  <nz-option
+                                    nzLabel="Mrs"
+                                    nzValue="Mrs"
+                                  ></nz-option>
+                                  <nz-option
+                                    nzLabel="Miss"
+                                    nzValue="Miss"
+                                  ></nz-option>
+                                  <nz-option
+                                    nzLabel="Mr"
+                                    nzValue="Mr"
+                                  ></nz-option>
+                                </nz-select>
+                              </ng-template>
+                              <h6
+                                style="color: red; font-size: 10px"
+                                *ngIf="
+                                  isFocused === 'customerName' ||
+                                  (data.NAME != undefined &&
+                                    data.NAME != null &&
+                                    data.NAME != '' &&
+                                    isFocused === 'customerName')
+                                "
+                              >
+                                {{ data.NAME ? data.NAME.length : 0 }}/256
+                              </h6>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                      </div>
+                      <div nz-row>
+                        <div nz-col nzSpan="24">
+                          <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon
+                              >Email ID&nbsp;<span
+                                nz-icon
+                                nzType="info-circle"
+                                nzTheme="twotone"
+                                nz-tooltip
+                                nzTooltipTitle="e.g.: jack@example.com"
+                              ></span
+                            ></nz-form-label>
+                            <nz-form-control
+                              nzHasFeedback
+                              nzErrorTip="Please Enter Email Id"
+                            >
+                              <input
+                                nz-input
+                                name="email"
+                                placeholder="Enter Email"
+                                [pattern]="emailpattern"
+                                [(ngModel)]="data.EMAIL"
+                                required
+                                maxlength="64"
+                                #email="ngModel"
+                                autocomplete="off"
+                                autocomplete="off"
+                                (focus)="isFocused = 'email'"
+                                (blur)="isFocused = ''"
+                              />
+                              <h6
+                                style="color: red; font-size: 10px"
+                                *ngIf="
+                                  isFocused === 'email' ||
+                                  (data.EMAIL != undefined &&
+                                    data.EMAIL != null &&
+                                    data.EMAIL != '' &&
+                                    isFocused === 'email')
+                                "
+                              >
+                                {{ data.EMAIL ? data.EMAIL.length : 0 }}/64
+                              </h6>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="12">
+                          <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon
+                              >Mobile No.</nz-form-label
+                            >
+                            <nz-form-control
+                              nzHasFeedback
+                              nzErrorTip="Please enter a valid Mobile No."
+                              [nzValidateStatus]="mobileNo"
+                            >
+                              <div nz-row>
+                                <div nz-col nzSpan="12">
+                                  <nz-select
+                                    name="countrycode"
+                                    [(ngModel)]="data.COUNTRY_CODE"
+                                    [nzOptionOverflowSize]="5"
+                                    nzShowSearch
+                                    [nzDropdownMatchSelectWidth]="false"
+                                    autocomplete="off"
+                                    nzPlaceHolder="Code"
+                                    required
+                                  >
+                                    <nz-option
+                                      *ngFor="let option of countryCodes"
+                                      [nzValue]="option.value"
+                                      [nzLabel]="option.label"
+                                    ></nz-option>
+                                  </nz-select>
+                                </div>
+                                <div nz-col nzSpan="12">
+                                  <input
+                                    nz-input
+                                    nzHasFeedback
+                                    name="mobileno"
+                                    placeHolder="Enter Mobile No."
+                                    autocomplete="off"
+                                    [(ngModel)]="data.MOBILE_NO"
+                                    #mobileNo="ngModel"
+                                    [pattern]="commonFunction.mobpattern"
+                                    (keypress)="commonFunction.onlynum($event)"
+                                    maxlength="10"
+                                    minlength="10"
+                                    required
+                                    autocomplete="off"
+                                  />
+                                </div>
+                              </div>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                         <div nz-col nzSpan="12" *ngIf="!data.ID">
+                             <nz-form-item
+                            style="
+                              display: inline-block;
+                              width: -webkit-fill-available;
+                              text-align: left;
+                              margin-top: 0px;
+                              margin-bottom: 4px;
+                            "
+                          >
+                            <nz-form-label nzNoColon
+                              >Password&nbsp;<span style="color: red"
+                                >*</span
+                              ></nz-form-label
+                            >
+                            <nz-form-control
+                              style="text-align: left"
+                              nzRequired
+                            >
+                              <nz-input-group
+                                nzPrefixIcon="lock"
+                                [nzSuffix]="suffixTemplate"
+                              >
+                                <input
+                                  nz-input
+                                  [type]="passwordVisible ? 'text' : 'password'"
+                                  name="passwordss"
+                                  maxlength="20"
+                                  [(ngModel)]="data.PASSWORD"
+                                  placeholder="Enter Password"
+                                  required
+                                />
+                              </nz-input-group>
+                              <ng-template #suffixTemplate>
+                                <i
+                                  nz-icon
+                                  [nzType]="
+                                    passwordVisible ? 'eye' : 'eye-invisible'
+                                  "
+                                  (click)="passwordVisible = !passwordVisible"
+                                ></i>
+                              </ng-template>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                         </div>
+                        <div nz-col nzSpan="10">
+                          <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon
+                              >Short Code</nz-form-label
+                            >
+                            <nz-form-control
+                              nzHasFeedback
+                              nzErrorTip="Enter Short Code"
+                            >
+                              <input
+                                style="width: 100%"
+                                nz-input
+                                name="shortName"
+                                maxlength="8"
+                                autocomplete="off"
+                                [(ngModel)]="data.SHORT_CODE"
+                                required
+                                (keypress)="allowAlphanumericAndSymbols($event)"
+                                placeholder="Enter Short Code"
+                                (focus)="isFocused = 'shortCode'"
+                                (blur)="isFocused = ''"
+                              />
+                            </nz-form-control>
+
+                            <h6
+                              style="color: red; font-size: 10px"
+                              *ngIf="
+                                isFocused === 'shortCode' ||
+                                (data.SHORT_CODE && isFocused === 'shortCode')
+                              "
+                            >
+                              {{ data.SHORT_CODE?.length || 0 }}/8
+                            </h6>
+                          </nz-form-item>
+                        </div>
+
+                        <div nz-col nzSpan="8">
+                          <nz-form-item>
+                            <nz-form-label nzNoColon>Status</nz-form-label>
+                            <nz-form-control>
+                              <nz-switch
+                                name="Status"
+                                nzCheckedChildren="Active"
+                                nzUnCheckedChildren="Inactive"
+                                [(ngModel)]="data.ACCOUNT_STATUS"
+                              >
+                              </nz-switch>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                      </div>
+                    </div>
+                  </nz-spin>
+                </form>
+              </div>
+            </nz-spin>
+          </form>
+          <div class="footer">
+            <button
+              type="button"
+              nz-button
+              style="margin-right: 8px"
+              class="ant-btn"
+              (click)="close(accountMasterPage)"
+            >
+              <span>Cancel</span>
+            </button>
+            <button
+              type="button"
+              class="ant-btn ant-btn-primary"
+              nz-button
+              *ngIf="!data.ID"
+              [nzLoading]="isSpinning"
+              (click)="save(false, accountMasterPage)"
+            >
+              <span>Save & Next</span>
+            </button>
+            <button
+              type="button"
+              class="ant-btn ant-btn-primary"
+              nz-button
+              [nzLoading]="isSpinning"
+              *ngIf="data.ID"
+              (click)="save(false, accountMasterPage)"
+              style="margin-right: 8px"
+            >
+              <span>Update </span>
+            </button>
+            <button
+              type="button"
+              class="ant-btn ant-btn-primary"
+              nz-button
+              [nzLoading]="isSpinning"
+              *ngIf="data.ID"
+              (click)="next()"
+            >
+              <span
+                >Next &nbsp;<span
+                  nz-icon
+                  nzType="arrow-right"
+                  nzTheme="outline"
+                ></span
+              ></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- <div *ngIf="tab.name == 'Address Details'"> -->
+        <div *ngIf="tab.name == 'Address Details'">
+          <div nz-row nzType="flex" *ngIf="showsearch">
+            <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8"></div>
+
+            <div
+              nz-col
+              nzXs="24"
+              nzSm="24"
+              nzMd="4"
+              nzLg="6"
+              nzXl="16"
+              style="display: flex; justify-content: flex-end"
+            >
+              <form nz-form [nzLayout]="'inline'">
+                <nz-form-item>
+                  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input
+                      type="text"
+                      name="search"
+                      (keyup)="keyup($event)"
+                      (ngModelChange)="search(searchText)"
+                      autocomplete="off"
+                      [(ngModel)]="searchText"
+                      nz-input
+                      style="width: 250px !important"
+                      placeholder="Search Records."
+                    />
+                  </nz-input-group>
+                  <ng-template #suffixIconButton>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="search(searchText)"
+                      nzSearch
+                    >
+                      <i nz-icon nzType="search"></i>
+                    </button>
+                  </ng-template>
+                </nz-form-item>
+              </form>
+            </div>
+          </div>
+          <div class="hh" id="activityItemFamily" #activityItemFamily>
+            <nz-spin [nzSpinning]="loadingFamilyRecords">
+              <div
+                nz-row
+                [nzGutter]="16"
+                style="flex-wrap: wrap; margin-top: 10px"
+              >
+                <!-- Add Address Card -->
+                <div nz-col [nzSpan]="24" style="margin-bottom: 10px">
+                  <div
+                    class="cardstyle"
+                    (click)="addAddress()"
+                    style="height: 100px !important"
+                  >
+                    <div class="plusCard">
+                      <span
+                        nz-icon
+                        nzType="plus-circle"
+                        nzTheme="outline"
+                        style="
+                          font-size: 50px !important;
+                          color: #092b9c !important;
+                        "
+                      >
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  nz-col
+                  [nzSpan]="24"
+                  *ngFor="let data of addressdata; let i = index"
+                  style="margin-bottom: 10px"
+                >
+                  <div
+                    class="cardstyle"
+                    [ngStyle]="{
+                      'background-color':
+                        data.IS_DEFAULT != 0 ? 'rgb(217 217 217 / 28%)' : '#fff'
+                    }"
+                  >
+                    <div nz-row>
+                      <!-- Default Section -->
+                      <div
+                        class="subnamm"
+                        nz-col
+                        nzSpan="11"
+                        style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          margin-bottom: 5px;
+                          background-color: #092b9c !important;
+                          padding: 5px;
+                          border-radius: 5px;
+                        "
+                      >
+                        <div
+                          style="
+                            font-weight: bold;
+                            margin-right: 5px;
+                            color: #ffffff;
+                          "
+                        >
+                          Default:
+                        </div>
+                        <div
+                          *ngIf="data.IS_DEFAULT == 0"
+                          style="color: #ffffff"
+                        >
+                          No
+                        </div>
+                        <div
+                          *ngIf="data.IS_DEFAULT != 0"
+                          style="color: #ffffff"
+                        >
+                          Yes
+                        </div>
+                      </div>
+
+                      <nz-divider nzType="vertical"></nz-divider>
+
+                      <!-- Type Section -->
+                      <div
+                        class="subnamm"
+                        nz-col
+                        nzSpan="11"
+                        style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          margin-bottom: 5px;
+                          background-color: #092b9c !important;
+                          padding: 5px;
+                          border-radius: 5px;
+                        "
+                      >
+                        <div
+                          style="
+                            font-weight: bold;
+                            margin-right: 5px;
+                            color: #ffffff;
+                          "
+                        >
+                          Type:
+                        </div>
+                        <div *ngIf="data.TYPE == 'H'" style="color: #ffffff">
+                          Home
+                        </div>
+                        <div *ngIf="data.TYPE == 'F'" style="color: #ffffff">
+                          Office
+                        </div>
+                        <div *ngIf="data.TYPE == 'B'" style="color: #ffffff">
+                          Branch
+                        </div>
+                        <div *ngIf="data.TYPE == 'O'" style="color: #ffffff">
+                          Other
+                        </div>
+                      </div>
+
+                      <nz-divider></nz-divider>
+
+                      <div
+                        class="subnamm"
+                        nz-col
+                        nzSpan="24"
+                        style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                          padding-top: 5px;
+                        "
+                      >
+                        <address
+                          style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          "
+                          nz-tooltip
+                          [nzTooltipTitle]="data.ADDRESS_LINE_1"
+                        >
+                          <span
+                            #textContainer1
+                            class="truncate-text"
+                            [nzTooltipTitle]="
+                              isTextOverflow ? data['ADDRESS_LINE_1'] : null
+                            "
+                            #tooltipRef="nzTooltip"
+                            nz-tooltip
+                            (mouseenter)="
+                              checkOverflow(textContainer1, tooltipRef)
+                            "
+                            >{{ data.ADDRESS_LINE_1 }}</span
+                          >
+                        </address>
+                      </div>
+                      <div
+                        class="subnamm"
+                        nz-col
+                        nzSpan="12"
+                        *ngIf="data.COUNTRY_NAME"
+                        style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                        "
+                      >
+                        <address
+                          style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          "
+                          nz-tooltip
+                          [nzTooltipTitle]="data.COUNTRY_NAME"
+                        >
+                          <!-- {{ data.COUNTRY_NAME }} -->
+                          <span
+                            #textContainer2
+                            class="truncate-text"
+                            [nzTooltipTitle]="
+                              isTextOverflow ? data['COUNTRY_NAME'] : null
+                            "
+                            #tooltipRef2="nzTooltip"
+                            nz-tooltip
+                            (mouseenter)="
+                              checkOverflow(textContainer2, tooltipRef2)
+                            "
+                            >{{ data.COUNTRY_NAME }}</span
+                          >
+                        </address>
+                      </div>
+                      <div
+                        class="subnamm"
+                        nz-col
+                        nzSpan="12"
+                        *ngIf="data.STATE_NAME"
+                        style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                        "
+                      >
+                        <address
+                          style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          "
+                          nz-tooltip
+                          [nzTooltipTitle]="data.STATE_NAME"
+                        >
+                          <span
+                            #textContainer3
+                            class="truncate-text"
+                            [nzTooltipTitle]="
+                              isTextOverflow ? data['STATE_NAME'] : null
+                            "
+                            #tooltipRef3="nzTooltip"
+                            nz-tooltip
+                            (mouseenter)="
+                              checkOverflow(textContainer3, tooltipRef3)
+                            "
+                            >{{ data.STATE_NAME }}</span
+                          >
+                        </address>
+                      </div>
+                      <div
+                        class="subnamm"
+                        nz-col
+                        nzSpan="12"
+                        *ngIf="data.DISTRICT_NAME"
+                        style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                        "
+                      >
+                        <address
+                          style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          "
+                          nz-tooltip
+                          [nzTooltipTitle]="data.DISTRICT_NAME"
+                        >
+                          <!-- {{ data.DISTRICT_NAME }} -->
+                          <span
+                            #textContainer4
+                            class="truncate-text"
+                            [nzTooltipTitle]="
+                              isTextOverflow ? data['DISTRICT_NAME'] : null
+                            "
+                            #tooltipRef4="nzTooltip"
+                            nz-tooltip
+                            (mouseenter)="
+                              checkOverflow(textContainer4, tooltipRef4)
+                            "
+                            >{{ data.DISTRICT_NAME }}</span
+                          >
+                        </address>
+                      </div>
+                      <div
+                        class="subnamm"
+                        nz-col
+                        nzSpan="12"
+                        *ngIf="data.PINCODE"
+                        style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                        "
+                      >
+                        <address
+                          style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          "
+                          nz-tooltip
+                          [nzTooltipTitle]="data.PINCODE"
+                        >
+                          <!-- {{ data.PINCODE }} -->
+                          <span
+                            #textContainer6
+                            class="truncate-text"
+                            [nzTooltipTitle]="
+                              isTextOverflow ? data['PINCODE'] : null
+                            "
+                            #tooltipRef5="nzTooltip"
+                            nz-tooltip
+                            (mouseenter)="
+                              checkOverflow(textContainer6, tooltipRef5)
+                            "
+                            >{{ data.PINCODE }}</span
+                          >
+                        </address>
+                      </div>
+                      <div
+                        class="subnamm"
+                        nz-col
+                        nzSpan="24"
+                        style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                          padding-top: 5px;
+                        "
+                      >
+                        <address
+                          style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          "
+                          nz-tooltip
+                          [nzTooltipTitle]="data.LANDMARK"
+                        >
+                          <span
+                            #textContainer9
+                            class="truncate-text"
+                            [nzTooltipTitle]="
+                              isTextOverflow ? data['LANDMARK'] : null
+                            "
+                            #tooltipRef9="nzTooltip"
+                            nz-tooltip
+                            (mouseenter)="
+                              checkOverflow(textContainer9, tooltipRef9)
+                            "
+                            >{{ data.LANDMARK }}</span
+                          >
+                        </address>
+                      </div>
+                    </div>
+
+                    <div class="card-footer">
+                      <button
+                        nz-button
+                        nzType="primary"
+                        (click)="editAddress(data)"
+                      >
+                        Edit
+                      </button>
+                      <nz-divider
+                        nzType="vertical"
+                        *ngIf="data.IS_DEFAULT == 0"
+                      ></nz-divider>
+                      <button
+                        *ngIf="data.IS_DEFAULT == 0"
+                        nz-button
+                        nzType="default"
+                        (click)="confirmSetAsDefault(data)"
+                      >
+                        Set as Default
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nz-spin>
+            <div class="footer">
+              <button
+                type="button"
+                class="ant-btn ant-btn-primary"
+                nz-button
+                [nzLoading]="isSpinning"
+                (click)="back()"
+              >
+                <span
+                  ><span nz-icon nzType="arrow-left" nzTheme="outline"></span
+                  >&nbsp;Back</span
+                >
+              </button>
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </form>
+</div>
+
+<div *ngIf="drawerVisibleCustomerAddLoginsAddress">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="true"
+    [nzWidth]="650"
+    [nzVisible]="drawerVisibleCustomerAddLoginsAddress"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerCustomerAddLoginsAddressClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-add-login-address-details
+        [dataList]="dataList"
+        [data]="drawerData"
+        [drawerCustomerAddLoginsAddressClose]="
+          closeCallbackCustomerAddLoginsAddress
+        "
+        [dataList]="dataList"
+        [mainCustData]="mainCustData"
+        [ID]="ID"
+      ></app-add-login-address-details>
+    </ng-container>
+  </nz-drawer>
+</div>

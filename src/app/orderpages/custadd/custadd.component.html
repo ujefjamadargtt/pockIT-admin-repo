@@ -1,0 +1,371 @@
+<div>
+  <form nz-form #accountMasterPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div class="my-box">
+        <div nz-row>
+          <div nz-col nzSpan="14">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Customer Type</nz-form-label>
+              <nz-form-control nzErrorTip="Select Customer Type">
+                <nz-radio-group name="type" [(ngModel)]="data.CUSTOMER_TYPE" (ngModelChange)="changetype($event)"
+                  style="width: 100%">
+                  <label nz-radio nzValue="I">Individual(B2C) </label>
+                  <label nz-radio nzValue="B">Business(B2B)</label>
+                </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="10">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Customer Category</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Select Customer Category">
+                <nz-select nzShowSearch nzPlaceHolder="Customer Category" name="CustomerCategory"
+                  [(ngModel)]="data.CUSTOMER_CATEGORY_ID">
+                  <nz-option *ngFor="let role of customercategories" [nzValue]="role.ID" [nzLabel]="role.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+      <div class="my-box">
+        <div nz-row *ngIf="data.CUSTOMER_TYPE == 'B'">
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Company Name</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Company Name">
+                <input nz-input name="companyName" placeHolder="Enter Company Name" maxlength="256" type="text"
+                  (keypress)="commonFunction.allowOnly($event)" [(ngModel)]="data.COMPANY_NAME" required
+                  (focus)="isFocused = 'companyName'" (blur)="isFocused = ''" />
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                                  isFocused === 'companyName' ||
+                                  (data.COMPANY_NAME != undefined &&
+                                    data.COMPANY_NAME != null &&
+                                    data.COMPANY_NAME != '' &&
+                                    isFocused === 'companyName')
+                                ">
+                  {{ data.COMPANY_NAME?.length || 0 }}/256
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label *ngIf="data.CUSTOMER_TYPE == 'I'" nzRequired nzNoColon>Customer Name</nz-form-label>
+              <nz-form-label *ngIf="data.CUSTOMER_TYPE == 'B'" nzRequired nzNoColon>Contact Person Name</nz-form-label>
+              <nz-form-control>
+                <nz-input-group [nzAddOnBefore]="addOnAfterTemplate4">
+                  <input nz-input nzHasFeedback name="name" placeHolder="Enter Customer Name" maxlength="256"
+                    type="text" [pattern]="namepatt" (keypress)="alphaOnly($event)" [(ngModel)]="data.NAME" required />
+                </nz-input-group>
+                <ng-template #addOnAfterTemplate4>
+                  <nz-select style="width: 100px" name="discounttype1" [(ngModel)]="data.SALUTATION">
+                    <nz-option nzLabel="Mrs" nzValue="Mrs"></nz-option>
+                    <nz-option nzLabel="Miss" nzValue="Miss"></nz-option>
+                    <nz-option nzLabel="Mr" nzValue="Mr"></nz-option>
+                  </nz-select>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="13">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Email ID </nz-form-label>
+              <nz-form-control nzHasFeedback [nzErrorTip]="
+                  email.invalid && email.touched
+                    ? 'Please Enter Valid Email'
+                    : ''
+                ">
+                <input nz-input name="email" placeholder="Enter Email" [pattern]="emailpattern" [(ngModel)]="data.EMAIL"
+                  required maxlength="64" #email="ngModel" autocomplete="off" autocomplete="off"
+                  (focus)="isFocused = 'email'" (blur)="isFocused = ''" />
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                                  isFocused === 'email' ||
+                                  (data.EMAIL != undefined &&
+                                    data.EMAIL != null &&
+                                    data.EMAIL != '' &&
+                                    isFocused === 'email')
+                                ">
+                  {{ data.EMAIL ? data.EMAIL.length : 0 }}/64
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+            <!-- <nz-form-item>
+                              <nz-form-label nzRequired nzNoColon>Email ID</nz-form-label>
+                              <nz-form-control nzErrorTip="Please Enter Valid Email ID">
+                                <input nz-input name="email" placeHolder="Enter Email ID" maxlength="256"
+                                  [pattern]="emailpattern" [(ngModel)]="data.EMAIL" required />
+                              </nz-form-control>
+                            </nz-form-item> -->
+          </div>
+          <div nz-col nzSpan="11">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Mobile No.</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Enter Mobile No.">
+                <div nz-row>
+                  <div nz-col nzSpan="12">
+                    <nz-select name="countrycode" [(ngModel)]="data.COUNTRY_CODE" [nzOptionOverflowSize]="5"
+                      nzShowSearch [nzDropdownMatchSelectWidth]="false" nzPlaceHolder="Code">
+                      <nz-option *ngFor="let option of countryCodes" [nzValue]="option.value"
+                        [nzLabel]="option.label"></nz-option>
+                    </nz-select>
+                  </div>
+                  <div nz-col nzSpan="12">
+                    <input nz-input name="mobileno" placeHolder="Enter Mobile No." [pattern]="mobpattern"
+                      [(ngModel)]="data.MOBILE_NO" maxlength="10" minlength="10" (keypress)="omit($event)" required />
+                  </div>
+                </div>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="13" *ngIf="data.CUSTOMER_TYPE == 'I'">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Alternate Mobile No.</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Enter Mobile No.">
+                <div nz-row>
+                  <div nz-col nzSpan="10">
+                    <nz-select name="countrycodealt" [(ngModel)]="data.ALTCOUNTRY_CODE" [nzOptionOverflowSize]="5"
+                      nzShowSearch [nzDropdownMatchSelectWidth]="false" nzPlaceHolder="Code">
+                      <nz-option *ngFor="let option of countryCodes" [nzValue]="option.value"
+                        [nzLabel]="option.label"></nz-option>
+                    </nz-select>
+                  </div>
+                  <div nz-col nzSpan="14">
+                    <input nz-input name="ALTERNATE_MOBILE_NO" placeHolder="Enter Mobile No." [pattern]="mobpattern"
+                      [(ngModel)]="data.ALTERNATE_MOBILE_NO" maxlength="10" minlength="10" (keypress)="omit($event)"
+                      required />
+                  </div>
+                </div>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="13" *ngIf="data.CUSTOMER_TYPE == 'B'">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Manager Name</nz-form-label>
+              <nz-form-control>
+                <nz-select nzShowSearch nzPlaceHolder="Select Manager" name="custManager"
+                  [(ngModel)]="data.CUSTOMER_MANAGER_ID" nzAllowClear>
+                  <nz-option *ngFor="let role of CustomerManager" [nzValue]="role.ID" [nzLabel]="role.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="5" *ngIf="data.CUSTOMER_TYPE === 'I'">
+            <nz-form-item>
+              <nz-form-label nzNoColon>GST Invoice?</nz-form-label>
+              <nz-form-control>
+                <nz-switch name="IS_HAVE_GST" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                  [(ngModel)]="data.IS_HAVE_GST" (ngModelChange)="chagegst($event)">
+                </nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="4">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Status</nz-form-label>
+              <nz-form-control>
+                <nz-switch name="Status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                  [(ngModel)]="data.ACCOUNT_STATUS">
+                </nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="7" *ngIf="data.CUSTOMER_TYPE === 'B'">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Enter Short Code">
+                <input style="width: 100%" nz-input name="shortName" maxlength="8" autocomplete="off"
+                  [(ngModel)]="data.SHORT_CODE" required (keypress)="allowAlphanumericAndSymbols($event)"
+                  placeholder="Enter Short Code" (focus)="isFocused = 'shortCode'" (blur)="isFocused = ''" />
+              </nz-form-control>
+
+              <h6 style="color: red; font-size: 10px" *ngIf="
+                  isFocused === 'shortCode' ||
+                  (data.SHORT_CODE && isFocused === 'shortCode')
+                ">
+                {{ data.SHORT_CODE?.length || 0 }}/8
+              </h6>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="9" *ngIf="data.CUSTOMER_TYPE == 'B'">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Is Have Special Catalogue?</nz-form-label>
+              <nz-form-control>
+                <nz-switch name="SplCat" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                  [(ngModel)]="data.IS_SPECIAL_CATALOGUE">
+                </nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="7" *ngIf="data.CUSTOMER_TYPE == 'B'">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>PAN No.&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
+                  nz-tooltip nzTooltipTitle="e.g.: ABCDE1234F"></span></nz-form-label>
+              <nz-form-control nzErrorTip="Please Enter Valid PAN No.">
+                <input nz-input name="PAN1" placeholder="Enter PAN No." pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}$"
+                  [(ngModel)]="data.PAN" maxlength="10" minlength="10" required />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" *ngIf="data.IS_HAVE_GST">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Company Name</nz-form-label>
+              <nz-form-control nzErrorTip="Enter Company Name">
+                <input nz-input name="individualcompanyName" placeholder="Enter Company Name" maxlength="128"
+                  autocomplete="off" type="text" (keypress)="commonFunction.allowOnly($event)"
+                  [(ngModel)]="data.INDIVIDUAL_COMPANY_NAME" required autocomplete="off"
+                  (focus)="isFocused = 'individualcompanyName'" (blur)="isFocused = ''" />
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                                  isFocused === 'individualcompanyName' ||
+                                  (data.INDIVIDUAL_COMPANY_NAME != undefined &&
+                                    data.INDIVIDUAL_COMPANY_NAME != null &&
+                                    data.INDIVIDUAL_COMPANY_NAME != '' &&
+                                    isFocused === 'individualcompanyName')
+                                ">
+                  {{ data.INDIVIDUAL_COMPANY_NAME?.length || 0 }}/128
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" *ngIf="data.IS_HAVE_GST">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Company Address</nz-form-label>
+              <nz-form-control nzErrorTip="Enter Company Address">
+                <textarea nz-input rows="2" name="companyaddress" autocomplete="off" placeholder="Enter Company Address"
+                  maxlength="256" required="required" [(ngModel)]="data.COMPANY_ADDRESS"
+                  (keypress)="commonFunction.allowOnly($event)" (focus)="isFocused = 'companyaddress'"
+                  (blur)="isFocused = ''"></textarea>
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                                  isFocused === 'companyaddress' ||
+                                  (data.COMPANY_ADDRESS != undefined &&
+                                    data.COMPANY_ADDRESS != null &&
+                                    data.COMPANY_ADDRESS != '' &&
+                                    isFocused === 'companyaddress')
+                                ">
+                  {{ data.COMPANY_ADDRESS?.length || 0 }}/256
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="8" *ngIf="data.IS_HAVE_GST || data.CUSTOMER_TYPE == 'B' ">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon *ngIf="data.IS_HAVE_GST">GST No.&nbsp;<span nz-icon
+                  nzType="info-circle" nzTheme="twotone" nz-tooltip
+                  nzTooltipTitle=" e.g.: 22ABCDE1234F1Z5"></span></nz-form-label>
+              <nz-form-label nzNoColon *ngIf="!data.IS_HAVE_GST">GST No.&nbsp;<span nz-icon nzType="info-circle"
+                  nzTheme="twotone" nz-tooltip nzTooltipTitle=" e.g.: 22ABCDE1234F1Z5"></span></nz-form-label>
+              <nz-form-control nzErrorTip="Please Enter Valid GST No.">
+                <input nz-input name="GST" placeholder="Enter GST No."
+                  pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" [(ngModel)]="data.GST_NO"
+                  (ngModelChange)="
+                                  data.GST_NO = data.GST_NO?.toUpperCase()
+                                " maxlength="15" minlength="15" autocomplete="off" (focus)="isFocused = 'gst'"
+                  (blur)="isFocused = ''" />
+                <!-- Character Count -->
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                                  isFocused === 'gst' ||
+                                  (data.GST_NO != undefined &&
+                                    data.GST_NO != null &&
+                                    data.GST_NO != '' &&
+                                    isFocused === 'gst')
+                                ">
+                  {{ data.GST_NO?.length || 0 }}/15
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-col nzSpan="14">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Profile Photo&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                nzTooltipTitle=" Please select an image file (PNG, JPG, JPEG) with a image
+                dimension 128*128."></span>
+              <span *ngIf="
+                  (data.PROFILE_PHOTO && data.PROFILE_PHOTO != ' ') || fileURL
+                " nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete?" nzPopconfirmPlacement="top"
+                (nzOnConfirm)="imageDeleteConfirm(data)" (nzOnCancel)="deleteCancel()"
+                style="cursor: pointer; color: red; margin-left: 10px">
+                <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                  nzTooltipTitle="Delete"></span>
+              </span>
+            </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Profile Photo">
+              <!-- Upload Button -->
+              <button *ngIf="
+                  !fileURL &&
+                  (!data.PROFILE_PHOTO || data.PROFILE_PHOTO.trim() === '')
+                " nz-button style="
+                  height: 28px;
+                  padding: 0px 7px;
+                  font-size: 10px;
+                  width: 40%;
+                " (click)="image1.click()">
+                <span nz-icon nzType="upload"></span>
+                Profie Photo
+                <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg" (change)="onFileSelected($event)"
+                  style="display: none" />
+              </button>
+
+              <div *ngIf="
+                  data.PROFILE_PHOTO &&
+                  data.PROFILE_PHOTO != null &&
+                  data.PROFILE_PHOTO != undefined &&
+                  data.PROFILE_PHOTO != ' ' &&
+                  data.PROFILE_PHOTO != '' &&
+                  (fileURL == undefined || fileURL == null || fileURL == '')
+                " style="margin-top: 10px">
+                <img nz-image [nzSrc]="fullImageUrl" alt="Uploaded Image" style="
+                    width: 120px;
+                    height: auto;
+                    border: 1px solid #ddd;
+                    margin-bottom: 10px;
+                  " />
+              </div>
+              <div *ngIf="
+                  fileURL != undefined &&
+                  fileURL != null &&
+                  fileURL != '' &&
+                  fileURL != ' '
+                " class="ss" style="align-items: center">
+                <img nz-image [nzSrc]="imagePreview" alt="Preview" style="
+                    height: auto;
+                    width: auto;
+                    overflow: auto;
+                    max-width: 600;
+                    max-height: 400;
+                  " />
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button style="margin-right: 8px" class="ant-btn" (click)="close(accountMasterPage)">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button *ngIf="!data.ID" [nzLoading]="isSpinning"
+      (click)="save(false, accountMasterPage)">
+      <span>Save</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, accountMasterPage)" style="margin-right: 8px">
+      <span>Update </span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="next()">
+      <span>Next &nbsp;<span nz-icon nzType="arrow-right" nzTheme="outline"></span></span>
+    </button>
+  </div>
+</div>

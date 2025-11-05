@@ -1,0 +1,140 @@
+<div>
+  <form nz-form>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Parent Role</nz-form-label>
+            <nz-input-group>
+              <nz-select name="PARENT_ID" nzPlaceHolder="Select Parent Role" nzShowSearch style="width: 100%"
+                [(ngModel)]="data.PARENT_ID" (ngModelChange)="onChange($event)">
+                <nz-option [nzValue]="0" [nzLabel]="'None'"></nz-option>
+                <!-- <nz-option *ngFor="let role of roles" [nzValue]="role.ID" [nzLabel]="role.NAME"></nz-option> -->
+              </nz-select>
+            </nz-input-group>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <!-- <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Name </nz-form-label>
+            <nz-form-control nzHasFeedback
+              nzErrorTip="Enter Role Name.Only alphabets, spaces, and underscores are allowed.">
+              <input nz-input name="name" placeholder="Enter Role Name" [(ngModel)]="data.NAME" required maxlength="128"
+                autocomplete="off" (keypress)="commonFunction.allowOnly($event)" />
+              <h6 style="color: red; font-size: 10px" *ngIf="
+                  data.NAME != undefined && data.NAME != null && data.NAME != ''
+                ">
+                {{ data.NAME.length }}/128
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div> -->
+
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Name</nz-form-label>
+            <nz-form-control nzHasFeedback
+              nzErrorTip="Enter Role Name. Only alphabets, spaces, and underscores are allowed.">
+              <input nz-input name="name" placeholder="Enter Role Name" [(ngModel)]="data.NAME" required maxlength="128"
+                autocomplete="off" (keypress)="commonFunction.allowOnly($event)" (focus)="isFocused = 'name'"
+                (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="data.NAME && isFocused === 'name'">
+                {{ data.NAME.length || 0 }}/128
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Type</nz-form-label>
+            <nz-select name="TYPE" nzShowSearch style="width: 100%" [(ngModel)]="data.TYPE" nzPlaceHolder="Select Type">
+              <nz-option nzValue="Super Admin" nzLabel="Super Admin"></nz-option>
+              <!-- <nz-option nzValue="User" nzLabel="User"></nz-option> -->
+              <nz-option nzValue="Back Office" nzLabel="Back Office"></nz-option>
+            </nz-select>
+          </nz-form-item>
+        </div>
+      </div>
+
+
+
+      <!-- <div nz-row>
+        <div nz-col nzSpan="24" nzNoColon>
+          <nz-form-item>
+            <nz-form-label nzNoColon>Description</nz-form-label>
+            <nz-form-control nzErrorTip="Description is required and cannot exceed 512 characters.">
+              <textarea nz-input rows="3" name="description" placeholder="Enter Description"
+                [(ngModel)]="data.DESCRIPTION" maxlength="512" (keyup)="validateDescription()"></textarea>
+              <h6 style="color: red; font-size: 10px" *ngIf="
+                  data.DESCRIPTION != undefined &&
+                  data.DESCRIPTION != null &&
+                  data.DESCRIPTION != ''
+                ">
+                {{ data.DESCRIPTION.length }}/128
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div> -->
+
+
+
+
+
+
+
+
+
+      <!-- <div nz-row>
+        <div nz-col nzSpan="24" nzNoColon>
+          <nz-form-item>
+            <nz-form-label nzNoColon>Description</nz-form-label>
+            <nz-form-control nzErrorTip="Description is required and cannot exceed 512 characters.">
+              <textarea nz-input rows="3" name="description" placeholder="Enter Description"
+                [(ngModel)]="data.DESCRIPTION" maxlength="512" (focus)="isFocused = 'description'"
+                (blur)="isFocused = ''" (keyup)="validateDescription()"></textarea>
+              <h6 style="color: red; font-size: 10px" *ngIf="data.DESCRIPTION && isFocused === 'description'">
+                {{ data.DESCRIPTION.length || 0 }}/512
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div> -->
+
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      (click)="save(false)">
+      <span>Save & Close</span>
+    </button>
+
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+          <a style="color: white!important" (click)="save(true)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false)">
+      <span>Update & close</span>
+    </button>
+  </div>
+</div>

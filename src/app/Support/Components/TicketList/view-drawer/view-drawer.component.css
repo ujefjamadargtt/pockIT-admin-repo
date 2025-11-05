@@ -1,0 +1,111 @@
+.comment-container {
+  margin: 10px 0; /* Space between comments */
+  /* display: flex; Use flexbox for alignment */
+}
+
+/* Chat bubble styling */
+.chat-bubble {
+  padding: 8px 12px; /* Reduced padding for chat bubble */
+  border-radius: 15px; /* Rounded corners for chat bubble */
+  max-width: 400px; /* Set a fixed width for the chat bubble */
+  width: 100%; /* Allow it to take the full width of the container */
+  word-wrap: break-word; /* Allow long words to wrap */
+  overflow-wrap: break-word; /* Ensures long words will break as needed */
+}
+
+/* Own comment styling */
+.own-comment {
+  margin-top: 10px;
+  padding: 5px 10px 27px;
+  border: 1px solid #092B9C!important;
+  border-radius: 20px 0px 20px 20px;
+  background-color: #092B9C!important;
+  color: white;
+}
+
+/* Other comment styling */
+.other-comment {
+  margin-top: 10px;
+  padding: 5px 10px 27px;
+  border: 1px solid #092B9C!important;
+  border-radius: 0px 20px 20px 20px;
+  background-color: white;
+}
+
+.scrollable-textarea {
+  width: 100%;
+  height: 100px; /* Fixed height */
+  margin-right: 8px;
+  overflow-y: auto; /* Enable vertical scroll */
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0px rgba(252, 252, 252, 0.1);
+  background-color: #fdfdfd;
+  box-shadow: inset 0 0 5px rgb(151, 150, 150);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(109, 108, 108);
+}
+
+
+
+.button-28 {
+  appearance: none;
+
+  background-color: #024789;
+  border: 1px solid #024789;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  /* min-height: 60px; */
+  min-width: 0;
+  outline: none;
+  padding: 4px 18px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+}
+
+.button-28:disabled {
+  pointer-events: none;
+}
+
+.button-28:hover {
+  color: #fff;
+  background-color: #006699;
+  border: 1px solid #043046;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-28:active {
+  box-shadow: none;
+  transform: translateY(0);
+}

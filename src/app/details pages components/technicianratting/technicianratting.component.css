@@ -1,0 +1,11 @@
+.custom-progress {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.custom-text {
+  margin-left: 8px; 
+  font-size: 14px; 
+  color: black; 
+}

@@ -1,0 +1,134 @@
+<div nz-row nzType="flex">
+    <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8">
+      <div class="formname">
+        <b> {{ formTitle }} </b>
+      </div>
+    </div>
+    <div
+      nz-col
+      nzXs="24"
+      nzSm="24"
+      nzMd="4"
+      nzLg="6"
+      nzXl="16"
+      style="display: flex; justify-content: flex-end"
+    >
+      <form nz-form [nzLayout]="'inline'">
+        <!-- <nz-form-item style="width: 47px">
+          <button
+            nz-button
+            nzTooltipTitle="Filter"
+            nzTooltipPlacement="top"
+            nz-tooltip
+            
+          >
+            <i nz-icon nzType="filter"></i>
+          </button>
+        </nz-form-item> -->
+        <nz-form-item>
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input
+              type="text"
+              name="search"
+             
+              [(ngModel)]="searchText"
+              nz-input
+              placeholder="Min 3 chars required."
+            />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary"   nzSearch>
+              <i nz-icon nzType="search"></i>
+            </button>
+          </ng-template>
+        </nz-form-item>
+        <nz-form-item style="margin-right: 0px">
+          <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+            <i nz-icon nzType="plus"></i>Add New Payment Gateway
+          </button>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+
+<div nz-row style="margin-top: 10px;">
+    <div nz-col nzSpan="24">
+      <nz-table
+        class="my-scroll no-wrap1"
+        nzBordered
+        #table
+        nzShowSizeChanger
+        [nzFrontPagination]="true"
+        [nzData]="paymentGatewayData"
+        [nzTotal]="totalRecords"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        (nzQueryParams)="sort($event)"
+        [nzSize]="'small'"
+        style="white-space: pre-line"
+        [nzScroll]="{ x: '1500px' }"
+      >
+        <thead>
+          <tr>
+            <th nzWidth="80px" style="text-align: center;" nzAlign="center"><b>Action</b></th>
+            <th nzWidth="150px" nzAlign="center" nzColumnKey="GATEWAY_NAME" [nzSortFn]="true"><b>Gateway Name</b></th>
+            <th nzWidth="150px" nzAlign="center" nzColumnKey="GATEWAY_PROVIDER" [nzSortFn]="true"><b>Gateway Provider</b></th>
+            <th nzWidth="150px" nzAlign="center" nzColumnKey="API_URL" [nzSortFn]="true"><b>API URL</b></th>
+            <th nzWidth="150px" nzAlign="center" nzColumnKey="API_KEY" [nzSortFn]="true"><b>API Key</b></th>
+            <th nzWidth="150px" nzAlign="center" nzColumnKey="CURRENCY" [nzSortFn]="true"><b>Currency</b></th>
+            <th nzWidth="150px" nzAlign="center" nzColumnKey="SUPPORTED_METHODS" [nzSortFn]="true"><b>Supported Methods</b></th>
+            <th nzWidth="150px" nzAlign="center" nzColumnKey="IS_ACTIVE" [nzSortFn]="true"><b>Status</b></th>
+            <th nzWidth="150px" nzAlign="center" nzColumnKey="IS_TEST_MODE" [nzSortFn]="true"><b>Test Mode</b></th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let data of paymentGatewayData">
+            <td style="text-align: center;">
+              <a (click)="edit(data)" nz-tooltip nzTooltipTitle="Edit">
+                <span nz-icon nzType="edit" nzTheme="outline"></span>
+              </a>
+            </td>
+            <td>{{ data.GATEWAY_NAME }}</td>
+            <td>{{ data.GATEWAY_PROVIDER }}</td>
+            <td>{{ data.API_URL }}</td>
+            <td>{{ data.API_KEY }}</td>
+            <td>{{ data.CURRENCY }}</td>
+            <td>{{ data.SUPPORTED_METHODS }}</td>
+            <td>
+              <i nz-icon *ngIf="data['IS_ACTIVE']" [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>
+              <i nz-icon *ngIf="!data['IS_ACTIVE']" [nzType]="'close-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#f50'"></i>
+            </td>
+            <td>
+              <i nz-icon *ngIf="data['IS_TEST_MODE']" [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>
+              <i nz-icon *ngIf="!data['IS_TEST_MODE']" [nzType]="'close-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#f50'"></i>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  <nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="true"
+  [nzWidth]="500"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-paymentgateway
+      [drawerClose]="closeCallback"
+      [drawerVisible]="drawerVisible"
+      [data]="drawerData"
+    >
+    </app-paymentgateway>
+  </ng-container>
+</nz-drawer>

@@ -1,0 +1,10 @@
+<div>
+  <nz-spin [nzSpinning]="isSpinning">
+    <div *ngIf="isnodata == false">
+      <div id="map" style="height: 500px; width: 100%"></div>
+    </div>
+    <div *ngIf="isnodata == true" style="text-align: center; margin-top: 20vh">
+      <p class="emptyDataTex">No Location Data Available</p>
+    </div>
+  </nz-spin>
+</div>

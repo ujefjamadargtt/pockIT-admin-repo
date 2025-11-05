@@ -1,0 +1,115 @@
+<div>
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>App Language Name</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter App Language Name">
+              <input nz-input placeholder="Enter App Language Name" name="name" required [(ngModel)]="data.NAME"
+                (keypress)="validateInput($event)" #name="ngModel" maxlength="256" autocomplete="off"
+                (focus)="isFocused = 'NAME'" (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="
+                  isFocused === 'NAME' || (data.NAME && isFocused === 'NAME')
+                ">
+                {{ data.NAME.length }}/256
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Short Code">
+              <input nz-input placeholder="Enter Short Code" name="ShortCode" required [(ngModel)]="data.SHORT_CODE"
+                #name="ngModel" maxlength="8" autocomplete="off" (focus)="isFocused = 'shortCode'"
+                (blur)="isFocused = ''" />
+              <h6 style="color: red; font-size: 10px" *ngIf="
+                  isFocused === 'shortCode' ||
+                  (data.SHORT_CODE && isFocused === 'shortCode')
+                ">
+                {{ data.SHORT_CODE.length }}/8
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> Sequence No. </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Sequence No.">
+              <input nz-input name="SEQ_NO" [(ngModel)]="data.SEQ_NO" (keypress)="commonFunction.omit($event)"
+                maxlength="11" placeholder="Sequence No." required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Sign</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Sign">
+              <input nz-input name="SIGN" [(ngModel)]="data.SIGN" maxlength="12" placeholder="Sign" required
+                autocomplete="off" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch nzCheckedChildren="Active" nzUnCheckedChildren="Inactive" [(ngModel)]="data['IS_ACTIVE']"
+                [ngModelOptions]="{ standalone: true }"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning" (click)="save(false, websitebannerPage)">
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important;">
+          <a class="footer-button" style="color: white !important;" (click)="save(true, websitebannerPage)"
+            [class.loading]="isSpinning">
+            <button nz-button [nzLoading]="isSpinning" nzType="primary"
+              style="background: transparent; border: none; padding: 0;color: white !important; ">
+              Save & New
+            </button>
+          </a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, websitebannerPage)">
+      <span>Update & close</span>
+    </button>
+  </div>
+  <nz-modal [nzWidth]="900" [(nzVisible)]="ImageModalVisible" nzMaskClosable="false" nzClosable="false"
+    [nzContent]="content" [nzTitle]="'Image View'" (nzOnCancel)="ImageModalCancel()" [nzFooter]="ImageModalFooter">
+    <ng-template #content>
+      <nz-spin [nzSpinning]="isSpinning">
+        <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss"
+          style="height: 400px; overflow: auto">
+          <iframe [src]="imageshow" style="width: 832px; height: 396px" frameborder="0"></iframe>
+        </div>
+      </nz-spin>
+    </ng-template>
+    <ng-template #ImageModalFooter>
+      <button nz-button nzType="default" (click)="ImageModalCancel()">
+        Close
+      </button>
+    </ng-template>
+  </nz-modal>
+</div>

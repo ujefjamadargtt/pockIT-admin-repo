@@ -1,0 +1,235 @@
+<div>
+  <form nz-form #stockmaster="ngForm" [ngStyle]="screenwidth > 500 ? {} : { 'margin-left': '20px' }">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row style="display: inline-block; width: 100%">
+        <div class="my-box">
+          <div nz-row>
+            <div nz-col nzXs="14" nzSm="8" nzMd="8" nzLg="8" nzXl="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon class="nz-form-label">Date</nz-form-label>
+
+                <nz-form-control>
+                  {{ data.DATE | date : "dd/MM/yyyy" }}
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="10" nzSm="8" nzMd="8" nzLg="8" nzXl="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon class="nz-form-label">Movement Request No.</nz-form-label>
+
+                <nz-form-control>
+                  {{ data.MOVEMENT_REQUEST_NO }}
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="12" nzSm="8" nzMd="8" nzLg="8" nzXl="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon class="nz-form-label">Vehicle No.</nz-form-label>
+
+                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Vehicle No.">
+                  <input nz-input name="vehicleNo" autocomplete="off" autofill="off" placeholder="e.g. MH01AB1234"
+                    oninput="this.value = this.value.toUpperCase()" [(ngModel)]="data.VEHICLE_NO"
+                    pattern="[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}" maxlength="10" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzXs="12" nzSm="8" nzMd="8" nzLg="8" nzXl="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon class="nz-form-label">From Godown</nz-form-label>
+
+                <nz-form-control>
+                  {{ data.FROM_GODOWN_NAME }}
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="12" nzSm="8" nzMd="8" nzLg="8" nzXl="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon class="nz-form-label">To Godown</nz-form-label>
+
+                <nz-form-control>
+                  {{ data.TO_GODOWN_NAME }}
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzXs="12" nzSm="8" nzMd="8" nzLg="8" nzXl="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon class="nz-form-label">Requested By</nz-form-label>
+
+                <nz-form-control>
+                  {{ data.REQUESTED_BY_NAME }}
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-box">
+          <form nz-form #addNewItem="ngForm">
+            <div nz-row>
+              <div nz-col nzXs="15" nzSm="15" nzMd="15" nzLg="15" nzXl="15">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Item Name</nz-form-label>
+
+                  <nz-form-control nzErrorTip="Please Select Item Name">
+                    <nz-tree-select name="ITEM_ID" style="width: 100%;" [nzHideUnMatched]="true" [nzDropdownStyle]="{
+                      'min-height': '10px',
+                      'max-height': '300px',
+                      'overflow-x': 'auto'
+                    }" [nzNodes]="Itemdata" nzShowSearch [nzAllowClear]="false" nzPlaceHolder="Please select Item Name"
+                      (ngModelChange)="onItemSelection($event)" [(ngModel)]="newItem.ITEM_ID" required>
+                    </nz-tree-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Quantity</nz-form-label>
+
+                  <nz-form-control>
+                    <nz-input-group [nzAddOnAfter]="addOnAfterTemplate1">
+                      <input nz-input type="text" name="REQUESTED_QTY" autocomplete="off"
+                        (keypress)="commonFunction.numberWithDecimal($event)" placeHolder="Qty"
+                        [(ngModel)]="newItem.REQUESTED_QTY" maxlength="7" />
+                    </nz-input-group>
+
+                    <ng-template #addOnAfterTemplate1>
+                      <nz-select class="custom-select-width" nzShowSearch nzPlaceHolder="Unit"
+                        name="REQUESTED_QTY_UNIT_ID" (ngModelChange)="onUnitSelection($event)"
+                        [(ngModel)]="newItem.REQUESTED_QTY_UNIT_ID">
+                        <nz-option *ngFor="let unit of itemWiseUnitList;" [nzValue]="unit.UNIT_ID"
+                          [nzLabel]="unit.UNIT_CODE">
+                        </nz-option>
+                      </nz-select>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                <nz-form-item>
+                  <nz-form-label [ngStyle]="{'margin-top': screenwidth < 500 ? '-6px' : {}}" nzNoColon></nz-form-label>
+
+                  <nz-form-control>
+                    <button nz-button nzType="primary" nzShape="circle" (click)="addData(addNewItem)">
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </form>
+
+          <div nz-row>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+              <nz-table class="my-scroll no-wrap1" nzBordered #CheckItem nzShowSizeChanger [nzData]="items"
+                [nzBordered]="true" [nzFrontPagination]="false" [nzTotal]="totaldata" [(nzPageIndex)]="pageIndex"
+                [(nzPageSize)]="pageSize" [nzShowPagination]="false" nzSize="small" [nzScroll]="{ y: '290px' }">
+                <thead>
+                  <tr>
+                    <th nzWidth="70px">Action</th>
+                    <th style="width: 300px important;">Item Name</th>
+                    <th style="width: 80px important;">Requested Qty & Unit</th>
+                    <th style="width: 80px important;">Qty & Unit</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let data of CheckItem.data; let i = index">
+                    <td style="text-align: center">
+                      <nz-space>
+                        <a *nzSpaceItem (click)="edit(data, i)" nz-tooltip nzTooltipTitle="Edit">
+                          <span nz-icon nzType="edit" nzTheme="twotone"></span>
+                        </a>
+
+                        <a *nzSpaceItem nz-tooltip nzTooltipTitle="Delete">
+                          <span style="cursor: pointer" nz-popconfirm nzPopconfirmTitle="Are you sure want delete?"
+                            nzPopconfirmPlacement="top" (nzOnConfirm)="delete(data, i)" (nzOnCancel)="cancel()">
+                            <span nz-icon nzType="delete" nzTheme="outline" style="color: red" nz-tooltip
+                              nzTooltipTitle="Delete">
+                            </span>
+                          </span>
+                        </a>
+                      </nz-space>
+                    </td>
+
+                    <td style="text-align: left; width: 300px important;">
+                      {{ data.ITEM_NAME }}
+
+                      <br>
+
+                      <span *ngIf="data.REMARK" style="font-size: 10px; color: red;">
+                        *{{ data.REMARK }}
+                      </span>
+                    </td>
+
+                    <td style="text-align: left; width: 80px important;">
+                      {{ data.REQUESTED_QTY }}
+                      <span style="font-size: 10px;">{{ data.UNIT_NAME }}</span>
+                    </td>
+
+                    <td style="text-align: center; width: 80px important;">
+                      <nz-input-group [nzAddOnAfter]="addOnAfterTemplateGrid">
+                        <input nz-input type="text" style="font-size: 12px;" name="CONFIRMED_QTY{{ i }}"
+                          autocomplete="off" placeHolder="Qty" (keypress)="commonFunction.numberWithDecimal($event)"
+                          [(ngModel)]="data.CONFIRMED_QTY" maxlength="7" />
+                      </nz-input-group>
+
+                      <ng-template #addOnAfterTemplateGrid>
+                        <nz-select class="custom-select-width" style="font-size: 12px;" nzShowSearch
+                          nzPlaceHolder="Unit" name="UNIT_NAME{{ i }}" [(ngModel)]="data.UNIT_NAME">
+                          <nz-option [nzValue]="data.UNIT_NAME" [nzLabel]="data.UNIT_NAME"></nz-option>
+                        </nz-select>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </div>
+
+        <div nz-row class="my-box">
+          <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Reject Remark</nz-form-label>
+
+              <nz-form-control>
+                <textarea nz-input rows="2" name="REJECT_REMARK" autocomplete="off" autofill="off"
+                  placeholder="Enter Reject Remark" [(ngModel)]="REJECT_REMARK" maxlength="500">
+                </textarea>
+
+                <h6 style="color: red; font-size: 10px" *ngIf="REJECT_REMARK != undefined">
+                  {{ REJECT_REMARK.length }}/ 500
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button class="ant-btn" style="margin-right: 8px" (click)="close()">
+      <span>Cancel</span>
+    </button>
+
+    <button type="button" nz-button class="ant-btn" [nzLoading]="isSpinning" style="margin-right: 8px"
+      (click)="save1('R', stockmaster, items)">
+      <span>Reject</span>
+    </button>
+
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning"
+      (click)="save('A', stockmaster, items)">
+      <span>Accept</span>
+    </button>
+  </div>
+</div>

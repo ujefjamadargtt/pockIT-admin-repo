@@ -1,0 +1,26 @@
+.vertical-card {
+  width: 350px;
+  border-radius: 5px;
+  margin: 0;
+  padding: 0;
+  background-image: url('/assets/whatsapp.jpg');
+  /* Replace with your background image URL */
+  background-repeat: repeat;
+  /* You can use 'repeat', 'repeat-x', or 'repeat-y' to create a pattern */
+  background-size: cover;
+  font-family: 'Roboto', sans-serif !important;
+  overflow-y: scroll;
+}
+.vertical{
+  margin-bottom: 10px;
+  /* font-family: Helvetica; */
+  font-family: 'Roboto', sans-serif !important;
+  background-color: rgb(255, 255, 255);
+  border-radius:0px 24px 24px 24px;
+  margin-top: 1px;
+  min-height: 20px;
+  position: relative;
+  overflow-wrap: break-word;
+  padding: 10px;
+
+}

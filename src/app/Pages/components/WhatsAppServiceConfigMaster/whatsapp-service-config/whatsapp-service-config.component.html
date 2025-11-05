@@ -1,0 +1,252 @@
+<div>
+  <form nz-form #whatsappServiceForm="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div class="my-box">
+        <!-- Group 1: API Configuration -->
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Service Provider</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please Enter the service provider">
+                <input nz-input autocomplete="off" placeholder="Enter Service Provider" name="SERVICE_PROVIDER"
+                  (keypress)="commonFunction.allowOnly($event)" [(ngModel)]="data.SERVICE_PROVIDER" required
+                  maxlength="128" (focus)="isFocused = 'SERVICE_PROVIDER'" (blur)="isFocused = ''" />
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                    isFocused === 'SERVICE_PROVIDER' ||
+                    (data.SERVICE_PROVIDER && isFocused === 'SERVICE_PROVIDER')
+                  ">
+                  {{
+                  data.SERVICE_PROVIDER ? data.SERVICE_PROVIDER.length : 0
+                  }}/128
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Authentication Type</nz-form-label>
+              <nz-form-control nzHasFeedback>
+                <nz-select nzPlaceHolder="Select Authentication Type" [(ngModel)]="data.AUTHENTICATION_TYPE"
+                  name="AUTHENTICATION_TYPE" autocomplete="off" required>
+                  <nz-option nzValue="Basic" nzLabel="Basic"></nz-option>
+                  <nz-option nzValue="OAuth2" nzLabel="OAuth2"></nz-option>
+                  <nz-option nzValue="Bearer Token" nzLabel="Bearer Token"></nz-option>
+                  <nz-option nzValue="Basic Authentication" nzLabel="Basic Authentication"></nz-option>
+                  <nz-option nzValue="Other" nzLabel="Other"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <!-- Group 2: API Keys and URLs -->
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>API URL&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
+                  nz-tooltip nzTooltipTitle=" e.g.https://api.myservice.com/data."></span></nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please Enter a valid API URL">
+                <input nz-input autocomplete="off" placeholder="Enter API URL" name="API_URL" [(ngModel)]="data.API_URL"
+                  pattern="https?://.+" required />
+                <!-- <span
+                  style="
+                    color: red;
+                    font-size: 10px !important;
+                    display: block;
+                    margin-top: 5px;
+                  "
+                >
+                  e.g.https://api.myservice.com/data
+                </span> -->
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>API Key&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
+                  nz-tooltip nzTooltipTitle="e.g.abc123XYZ7890."></span></nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please Enter the API Key">
+                <input nz-input autocomplete="off" placeholder="Enter API Key" name="API_KEY" [(ngModel)]="data.API_KEY"
+                  required />
+                <!-- <span
+                  style="
+                    color: red;
+                    font-size: 10px !important;
+                    display: block;
+                    margin-top: 5px;
+                  "
+                >
+                  e.g.abc123XYZ7890
+                </span> -->
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <!-- Group 3: Phone Configuration -->
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzNoColon nzRequired>Phone Number Id</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please Select a Valid Phone Number Id">
+                <input nz-input placeholder="Enter Phone Number Id" name="PHONE_NUMBER_ID" required
+                  (keypress)="commonFunction.onlynum($event)" [(ngModel)]="data.PHONE_NUMBER_ID" #name="ngModel"
+                  maxlength="10" autocomplete="off" (focus)="isFocused = 'PHONE_NUMBER_ID'" (blur)="isFocused = ''" />
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                    isFocused === 'PHONE_NUMBER_ID' ||
+                    (data.PHONE_NUMBER_ID && isFocused === 'PHONE_NUMBER_ID')
+                  ">
+                  {{
+                  data.PHONE_NUMBER_ID ? data.PHONE_NUMBER_ID.length : 0
+                  }}/10
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzNoColon nzRequired>Default Country Code</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please Enter a Valid Country Code">
+                <nz-select [(ngModel)]="data.DEFAULT_COUNTRY_CODE" name="DEFAULT_COUNTRY_CODE"
+                  [nzPlaceHolder]="'Select Country Code'" required>
+                  <nz-option *ngFor="let option of countryCodes" [nzValue]="option.value"
+                    [nzLabel]="option.label"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <!-- Group 4: Country and Retry Configuration -->
+        <div nz-row>
+          <div nz-col nzSpan="6">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Sender Phone Number</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please Enter a Valid Sender Phone Number">
+                <input nz-input placeholder="Enter Phone No." name="SENDER_PHONE_NUMBER" required
+                  [(ngModel)]="data.SENDER_PHONE_NUMBER" #name="ngModel" [pattern]="commonFunction.mobpattern"
+                  (keypress)="commonFunction.onlynum($event)" maxlength="10" autocomplete="off"
+                  (focus)="isFocused = 'SENDER_PHONE_NUMBER'" (blur)="isFocused = ''" />
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                    isFocused === 'SENDER_PHONE_NUMBER' ||
+                    (data.SENDER_PHONE_NUMBER &&
+                      isFocused === 'SENDER_PHONE_NUMBER')
+                  ">
+                  {{
+                  data.SENDER_PHONE_NUMBER
+                  ? data.SENDER_PHONE_NUMBER.length
+                  : 0
+                  }}/10
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Retry Attempts</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please Enter Retry Attempts">
+                <input nz-input type="number" autocomplete="off" placeholder="Enter Retry Attempts"
+                  name="RETRY_ATTEMPTS" [(ngModel)]="data.RETRY_ATTEMPTS" [min]="0" required />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="5">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Timeout (seconds)</nz-form-label>
+              <nz-time-picker name="TIMEOUT_SECONDS" [(ngModel)]="TIMEOUT_DATE" nzFormat="ss" nzPlaceHolder="Time"
+                (ngModelChange)="onTimeChange($event)">
+              </nz-time-picker>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Status</nz-form-label>
+              <nz-form-control>
+                <nz-switch name="IS_ACTIVE" [(ngModel)]="data.IS_ACTIVE" nzCheckedChildren="Active"
+                  nzUnCheckedChildren="Inactive" required></nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Notes</nz-form-label>
+              <nz-form-control>
+                <textarea nz-input rows="2" name="NOTES" [(ngModel)]="data.NOTES" (focus)="isFocused = 'NOTES'"
+                  (blur)="isFocused = ''"></textarea>
+                <h6 style="color: red; font-size: 10px" *ngIf="
+                    isFocused === 'NOTES' ||
+                    (data.NOTES && isFocused === 'NOTES')
+                  ">
+                  {{ data.NOTES ? data.NOTES.length : 0 }}/128
+                </h6>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <!-- <div nz-row>
+          <div nz-col nzSpan="6">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Status</nz-form-label>
+              <nz-form-control>
+                <nz-switch
+                  name="IS_ACTIVE"
+                  [(ngModel)]="data.IS_ACTIVE"
+                  nzCheckedChildren="Active"
+                  nzUnCheckedChildren="Inactive"
+                  required
+                ></nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div> -->
+        <!-- Group 5: Timeout and Status -->
+
+        <!-- Group 6: Timestamps and Notes -->
+      </div>
+    </nz-spin>
+
+    <!-- Footer Buttons -->
+    <div class="footer">
+      <button type="button" nz-button (click)="Close()" class="ant-btn" style="margin-right: 8px">
+        <span>Cancel</span>
+      </button>
+      <button type="button" class="ant-btn ant-btn-primary" nz-button nz-dropdown
+        style="border-radius: 4px; color: white;" [nzDropdownMenu]="menu" [nzLoading]="isSpinning">
+        <span>Save & Close</span>
+      </button>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
+            <a style="color: white" style="color: white!important;">Save & New</a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </form>
+
+  <!-- Footer Buttons -->
+  <div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning" (click)="save(false, whatsappServiceForm)">
+      <span>Save & Close</span>
+    </button>
+
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white;">
+          <a style="color: white" (click)="save(true, whatsappServiceForm)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, whatsappServiceForm)">
+      <span>Update & close</span>
+    </button>
+  </div>
+</div>

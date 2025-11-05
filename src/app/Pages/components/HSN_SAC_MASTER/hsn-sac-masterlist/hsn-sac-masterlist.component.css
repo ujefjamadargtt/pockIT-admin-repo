@@ -1,0 +1,20 @@
+tr td:nth-child(3) {
+   text-align: center;
+}
+
+tr td:nth-child(4) {
+   text-align: center;
+}
+
+.truncate-text {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   max-width: 100%;
+   /* Adjust as needed */
+   display: inline-block;
+}
+
+:host::ng-deep .ant-card-body {
+   padding: 0px;
+}

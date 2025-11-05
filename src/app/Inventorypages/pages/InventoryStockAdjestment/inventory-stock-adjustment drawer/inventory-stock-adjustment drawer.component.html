@@ -1,0 +1,142 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; justify-content: flex-start">
+    <form [nzLayout]="'inline'" nz-form>
+      <nz-form-item>
+        <nz-form-label>Warehouse</nz-form-label>
+
+        <nz-form-control nzErrorTip="Select Warehouse">
+          <nz-select nzShowSearch [(ngModel)]="WAREHOUSE_ID" name="WAREHOUSE_ID" nzPlaceHolder="Select Warehouse"
+            [nzLoading]="iswarehouseLoading" (ngModelChange)="setWareHouse($event)" style="width: 250px">
+            <!-- <nz-option [nzValue]="0" [nzLabel]="'All Warehouses'"> </nz-option> -->
+            <nz-option *ngFor="let item of Loadwarehouse" [nzValue]="item.ID" [nzLabel]="item.NAME">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<!-- <div nz-row nzType="flex">
+  <div nz-col nzXs="6" nzSm="6" nzMd="6" nzLg="6" nzXl="6"></div>
+
+  <div nz-col nzSpan="6"></div>
+
+  <div nz-col nzSpan="5"></div>
+
+  <div nz-col nzSpan="5"></div>
+
+  <div nz-col nzSpan="2"></div>
+</div> -->
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table #table [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [nzSize]="'small'" [(nzPageSize)]="pageSize"
+      [nzScroll]="{ y: '52vh' }" (nzPageIndexChange)="search(false)" (nzPageSizeChange)="search(true)"
+      class="my-scroll no-wrap1" nzBordered nzShowSizeChanger style="white-space: pre-line">
+      <thead>
+        <tr>
+          <th nzWidth="350px" nzShowSort nzColumnKey="{{ 'VARIANT_COMBINATION' }}" [nzSortFn]="true">
+            Item Name
+          </th>
+
+          <th nzWidth="150px" nzShowSort nzColumnKey="{{ 'UNIQUE_NO' }}" [nzSortFn]="true">
+            Serial No./ Batch No.
+          </th>
+
+          <th nzWidth="150px" nzShowSort nzColumnKey="{{ 'CURRENT_STOCK' }}" [nzFilterFn]="true">
+            Current Stock
+          </th>
+
+          <th nzWidth="150px" nzShowSort nzColumnKey="{{ 'QUANTITY' }}" [nzSortFn]="true">
+            Quantity
+          </th>
+
+          <th nzWidth="400px" nzShowSort nzColumnKey="{{ 'REASON' }}" [nzSortFn]="true">
+            Reason
+          </th>
+
+          <th nzRight nzWidth="100px">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data; let i = index">
+          <td nzWidth="350px">
+            {{ data.ITEM_NAME ? data.ITEM_NAME : "-" }} <br />
+            <small style="font-weight: 500">{{
+              data.VARIANT_COMBINATION ? data.VARIANT_COMBINATION : "---"
+              }}</small>
+          </td>
+
+          <td nzWidth="150px">
+            {{ data.UNIQUE_NO }}
+          </td>
+          <td nzWidth="100px" style="text-align: center; color: red; font-size: 14px !important">
+            {{ data.CURRENT_STOCK }}
+            {{ data.ACTUAL_UNIT_NAME }}
+          </td>
+
+          <td nzWidth="150px">
+            <div style="
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              ">
+              <input nz-input nzSize="small" name="QUANTITY{{ i }}" style="
+                  text-align: center;
+
+                  color: blue;
+                  font-size: 14px !important;
+                " [(ngModel)]="data.QUANTITY" (keypress)="omit($event)" autocomplete="off" maxlength="5"
+                placeholder="Enter Quantity" />
+            </div>
+          </td>
+
+          <td nzWidth="400px">
+            <textarea nz-input nzSize="small" name="REASON{{ i }}" type="text" placeholder="Enter Adjestment Reason"
+              autocomplete="off" [(ngModel)]="data.REASON" (keypress)="commonFunction.allowOnly($event)" maxlength="512"
+              [nzAutosize]="{ minRows: 1, maxRows: 2 }">
+            </textarea>
+          </td>
+
+          <td nzRight nzWidth="100px" style="text-align: center">
+            <button nz-button nzSize="small" nzType="primary" (nzOnConfirm)="updateOneRow(data)" [nzOkText]="'Yes'"
+              (nzOnCancel)="deleteCancel()" nz-popconfirm
+              nzPopconfirmTitle="Are you sure, you want to update information?" nzPopconfirmPlacement="top"
+              style="border-radius: 50px 50px; padding: 2px 10px; height: 26px">
+              Update
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div class="footer">
+  <button nz-button [nzLoading]="loadingRecords" type="button" class="ant-btn ant-btn-primary"
+    (nzOnConfirm)="updateAll()" [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
+    nzPopconfirmTitle="Are you sure, you want to update all records?" nzPopconfirmPlacement="top">
+    <span>Update All</span>
+  </button>
+</div>
+
+<!-- Adjestment history drawer -->
+<div *ngIf="inventoryAdjestmentHistoryDrawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'80%'"
+    [nzVisible]="inventoryAdjestmentHistoryDrawerVisible" [nzTitle]="inventoryAdjestmentHistoryDrawerTitle"
+    (nzOnClose)="inventoryAdjestmentHistoryDrawerClose()" (nzKeyboard)="(true)" [nzPlacement]="'right'">
+    <ng-container *nzDrawerContent>
+      <app-inventory-adjestment-history [drawerClose]="inventoryAdjestmentHistoryDrawerCloseCallback"
+        [drawerData]="inventoryAdjestmentHistoryDrawerData">
+      </app-inventory-adjestment-history>
+    </ng-container>
+  </nz-drawer>
+</div>

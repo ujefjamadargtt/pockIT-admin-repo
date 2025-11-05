@@ -1,0 +1,357 @@
+<div *ngIf="drawerfor == 'ADDORUPDATE'">
+    <form nz-form #stockmaster="ngForm" [ngStyle]="screenwidth > 500 ? {} : { 'margin-left': '20px' }">
+        <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row style="display: inline-block; width: 100%">
+                <div class="my-box">
+                    <div nz-row>
+                        <div nz-col nzXs="4" nzSm="4" nzMd="4" nzLg="4" nzXl="4">
+                            <nz-form-item>
+                                <nz-form-label nzRequired nzNoColon>Date</nz-form-label>
+                                <nz-form-control nzHasFeedback nzErrorTip="Please Select Date">
+                                    <nz-date-picker name="date" style="width: 100%"
+                                        [nzFormat]="commonFunction.dateFormatMMM" [(ngModel)]="data.DATE"
+                                        [nzShowToday]="false" required disabled>
+                                    </nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+
+
+
+                        <div nz-col nzSpan="10" *ngIf="data.TRANSFER_MODE == 'W'">
+                            <nz-form-item>
+                                <nz-form-label nzRequired nzNoColon>Customer </nz-form-label>
+                                <nz-form-control nzHasFeedback nzErrorTip="Select Customer">
+                                    <nz-select nzPlaceHolder="Select Customer" name="fromgodown" nzAllowClear="false"
+                                        [nzLoading]="isFromGodownLoading" [(ngModel)]="data.CUSTOMER_ID"
+                                        (ngModelChange)="changeFromGodown($event) ;getTechnician($event);getcustname($event)"
+                                        nzShowSearch required>
+                                        <nz-option *ngFor="let report of LoadGodown" [nzValue]="report.ID"
+                                            [nzLabel]="report.NAME">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="10" *ngIf="data.TRANSFER_MODE == 'W'">
+                            <nz-form-item>
+                                <nz-form-label nzRequired nzNoColon>Technician</nz-form-label>
+
+                                <nz-form-control nzHasFeedback nzErrorTip="Select Technician">
+                                    <nz-select name="Destinationgodown" nzPlaceHolder="Select Technician"
+                                        [nzLoading]="isFromGodownLoading1" [(ngModel)]="data.TECHNICIAN_ID"
+                                        (ngModelChange)="changeFromGodown(data.CUSTOMER_ID);" nzAllowClear="false"
+                                        nzShowSearch required>
+                                        <nz-option *ngFor="let destinationGodown of technicianData"
+                                            [nzValue]="destinationGodown.ID" [nzLabel]="destinationGodown.NAME">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </div>
+
+                <form nz-form #form2="ngForm">
+                    <div class="my-box">
+                        <div nz-row>
+                            <div nz-col nzSpan="12">
+                                <nz-form-item>
+                                    <nz-form-label nzRequired nzNoColon>Part Name</nz-form-label>
+
+                                    <nz-form-control nzHasFeedback nzErrorTip="Please Select Part Name">
+                                        <nz-select nzShowSearch nzAllowClear="false" nzPlaceHolder="Select Part Name"
+                                            name="INVENTORY_ID" [(ngModel)]="INVENTORY_ID" required
+                                            (ngModelChange)="getNamesCatAndSub($event)">
+                                            <nz-option nzCustomContent *ngFor="let data of Itemdata" [nzValue]="data.ID"
+                                                [nzLabel]="data?.VARIANT_COMBINATION? data?.VARIANT_COMBINATION :data.ITEM_NAME">
+                                                <div nz-row>
+                                                    <div nz-col nzSpan="24"
+                                                        style="font-size: 12px; color: #4a5568;white-space: pre-line;">
+                                                        {{ data.INVENTORY_CATEGORY_NAME }} > {{
+                                                        data.INVENTRY_SUB_CATEGORY_NAME }}
+                                                    </div>
+                                                    <div nz-col nzSpan="24"
+                                                        style="font-size: 14px;color: #2d3748;font-weight: 500;white-space: pre-line;">
+                                                        {{data?.VARIANT_COMBINATION? data?.VARIANT_COMBINATION
+                                                        :data.ITEM_NAME }}
+                                                    </div>
+
+                                                </div>
+                                            </nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col nzSpan="3" style="align-self: center !important;">
+                                <nz-form-item style="margin-bottom: 0px !important;">
+                                    <nz-form-label nzNoColon></nz-form-label>
+
+                                    <nz-form-control>
+                                        <button nz-button nzType="primary" (click)="addData(true, form2)">
+                                            <i nz-icon nzType="plus"></i>
+                                            <span *ngIf="index == -1">Add</span>
+                                            <span *ngIf="index != -1">Update</span>
+                                        </button>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col nzSpan="24">
+                                <div nz-row style="margin-top: 10px;margin-bottom: 10px;">
+                                    <div nz-col nzSpan="8"
+                                        *ngIf="data2!=undefined && data2.QUANTITY!=undefined && data2.QUANTITY!=null && data2.QUANTITY>0">
+                                        <nz-form-item>
+                                            <span style="font-weight: 600 !important;"
+                                                *ngIf="data2!=undefined && data2.QUANTITY!=undefined && data2.QUANTITY!=null && data2.QUANTITY>0">Quantity
+                                                : <b style="font-weight: 500 !important;">{{data2.QUANTITY}}
+                                                    &nbsp;{{data2.UNIT_NAME}}</b></span></nz-form-item>
+                                    </div>
+                                    <!-- <div nz-col nzSpan="8"
+                                        *ngIf="data2!=undefined && data2.QUANTITY!=null && data2.QUANTITY!==undefined">
+                                        <nz-form-item>
+                                            <span style="font-weight: 600 !important;"
+                                                *ngIf="data2!=undefined && data2.QUANTITY!=null && data2.QUANTITY!==undefined">Rate
+                                                : <b style="font-weight: 500 !important;">₹
+                                                    {{data2.RATE}}</b></span></nz-form-item>
+                                    </div> -->
+                                    <div nz-col nzSpan="8"
+                                        *ngIf="data2.INVENTORY_TRACKING_TYPE!=undefined && data2.INVENTORY_TRACKING_TYPE=='S'">
+                                        <nz-form-item>
+                                            <span style="font-weight: 600 !important;"
+                                                *ngIf="data2.INVENTORY_TRACKING_TYPE!=undefined && data2.INVENTORY_TRACKING_TYPE=='S'">Serial
+                                                No. : <b
+                                                    style="font-weight: 500 !important;">{{data2.SERIAL_NO}}</b></span></nz-form-item>
+                                    </div>
+                                    <div nz-col nzSpan="8"
+                                        *ngIf="data2.INVENTORY_TRACKING_TYPE!=undefined && data2.INVENTORY_TRACKING_TYPE=='B'">
+                                        <nz-form-item>
+                                            <span style="font-weight: 600 !important;"
+                                                *ngIf="data2.INVENTORY_TRACKING_TYPE!=undefined && data2.INVENTORY_TRACKING_TYPE=='B'">Batch
+                                                No. : <b
+                                                    style="font-weight: 500 !important;">{{data2.BATCH_NO}}</b></span></nz-form-item>
+                                    </div>
+
+                                </div>
+                                <hr>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div nz-row style="padding: 0px 10px">
+                            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+                                <nz-table class="my-scroll no-wrap1" nzBordered #maptrainpoint nzShowSizeChanger
+                                    [nzData]="items" [nzBordered]="true" [nzFrontPagination]="false"
+                                    [nzTotal]="totaldata" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                                    [nzShowPagination]="false" [nzScroll]="{ y: '290px' }" nzSize="small"
+                                    style="white-space: pre-line">
+                                    <thead>
+                                        <tr>
+                                            <th nzWidth="40px">Action</th>
+                                            <th nzWidth="100px">Part Name</th>
+                                            <th nzWidth="50px">Serial No.</th>
+                                            <th nzWidth="50px">Batch No.</th>
+                                            <!-- <th nzWidth="50px">Rate (₹)</th> -->
+                                            <th nzWidth="60px">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of maptrainpoint.data; let i = index">
+                                            <td style="text-align: center">
+                                                <nz-space>
+                                                    <a *nzSpaceItem (click)="edit(data, i)" nz-tooltip
+                                                        nzTooltipTitle="Edit">
+                                                        <span nz-icon nzType="edit" nzTheme="twotone"></span>
+                                                    </a>
+
+                                                    <a *nzSpaceItem nz-tooltip nzTooltipTitle="Delete">
+                                                        <span *ngIf="index == -1" style="cursor: pointer" nz-popconfirm
+                                                            nzPopconfirmTitle="Are you sure, you want to delete?"
+                                                            nzPopconfirmPlacement="top" (nzOnConfirm)="delete(data, i)"
+                                                            (nzOnCancel)="cancel()">
+                                                            <span nz-icon nzType="delete" nzTheme="outline"
+                                                                style="color: red" nz-tooltip nzTooltipTitle="Delete">
+                                                            </span>
+                                                        </span>
+                                                    </a>
+                                                </nz-space>
+                                            </td>
+                                            <td nz-tooltip [nzTooltipTitle]="data['INVENTORY_NAME']"
+                                                style="white-space: pre-line; text-align: left">
+                                                <span [attr.title]='data["INVENTORY_NAME"]'
+                                                    style="display: inline-block; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                                    {{ data["INVENTORY_NAME"] }}
+                                                    <span>{{data?.VARIANT_NAME}}</span></span>
+                                            </td>
+                                            <td style="white-space: pre-line; text-align: left">
+                                                {{ data["SERIAL_NO"] }}
+                                            </td>
+                                            <td style="white-space: pre-line; text-align: left">
+                                                {{ data["BATCH_NO"] }}
+                                            </td>
+                                            <!-- <td style="white-space: pre-line; text-align: right">
+                                                {{ data["RATE"] }}
+                                            </td> -->
+                                            <td style="white-space: pre-line; text-align: left">
+                                                {{ data["QUANTITY"] }} {{ data["UNIT_NAME"] }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </nz-table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </nz-spin>
+    </form>
+
+    <div class="footer">
+        <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+            <span>Cancel</span>
+        </button>
+
+        <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" [nzLoading]="isSpinning" nz-button
+            (click)="save(false, stockmaster)">
+            <span>Save & Close</span>
+        </button>
+
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
+                    <a style="color: white !important" (click)="save(true, stockmaster)">
+                        Save & New
+                    </a>
+                </li>
+            </ul>
+        </nz-dropdown-menu>
+
+        <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+            (click)="save(false, stockmaster)">
+            <span>Update & Close</span>
+        </button>
+    </div>
+</div>
+
+<div *ngIf="drawerfor == 'VIEW' || drawerfor == 'APPROVE'">
+    <div nz-row style="padding: 10px 20px">
+        <div nz-col nzSpan="8">
+            <b>Date :</b> {{ data.DATE | date : "dd/MM/yyyy HH:mm a" }}
+        </div>
+        <div nz-col nzSpan="8" class="mainnam">
+            <b>Customer Name : </b>
+            <span nz-popover [nzPopoverTitle]="data.CUSTOMER_NAME">{{
+                data.CUSTOMER_NAME
+                }}</span>
+        </div>
+        <div nz-col nzSpan="8" class="mainnam">
+            <b>Technician Name : </b>
+            <span nz-popover [nzPopoverTitle]="data.TECHNICIAN_NAME">{{
+                data.TECHNICIAN_NAME
+                }}</span>
+        </div>
+    </div>
+
+    <div nz-row style="padding: 0px 10px">
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+            <nz-table class="my-scroll no-wrap1" nzBordered #maptrainpoint nzShowSizeChanger [nzData]="items"
+                [nzBordered]="true" [nzFrontPagination]="false" [nzTotal]="totaldata" [nzShowPagination]="false"
+                [nzScroll]="{ y: '290px' }" nzSize="small" style="white-space: pre-line">
+                <thead>
+                    <tr>
+                        <th nzWidth="120px">Item Name</th>
+                        <th nzWidth="120px">Serial No.</th>
+                        <th nzWidth="120px">Batch No.</th>
+                        <th nzWidth="60px">Quantity</th>
+                        <!-- <th nzWidth="60px">Rate (₹)</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of maptrainpoint.data; let i = index">
+                        <td style="white-space: pre-line; text-align: left">
+                            <span [attr.title]='data["INVENTORY_NAME"]'
+                                style="display: inline-block; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                {{ data["INVENTORY_NAME"] }}</span>
+                        </td>
+                        <td style="white-space: pre-line; text-align: left">
+                            {{ data["SERIAL_NO"] ? data["SERIAL_NO"] : "-" }}
+                        </td>
+                        <td style="white-space: pre-line; text-align: left">
+                            {{ data["BATCH_NO"] ? data["BATCH_NO"] : "-" }}
+                        </td>
+                        <td style="white-space: pre-line; text-align: left">
+                            {{ data["QUANTITY"] }} &nbsp;{{ data["UNIT_NAME"] }}
+                        </td>
+                        <!-- <td style="white-space: pre-line; text-align: left">
+                            {{ data["SELLING_PRICE"] }}
+                        </td> -->
+
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+            <span>Cancel</span>
+        </button>
+
+        <!-- <button
+        type="button"
+        class="ant-btn ant-btn-primary"
+        nz-button
+        [nzLoading]="isSpinning"
+        *ngIf="data.ID"
+        (click)="reject111()"
+        style="margin-right: 8px"
+      >
+        <span>Reject</span>
+      </button>
+      <button
+        type="button"
+        class="ant-btn ant-btn-primary"
+        nz-button
+        [nzLoading]="isSpinning"
+        *ngIf="data.ID"
+        (click)="approve()"
+      >
+        <span>Approve</span>
+      </button> -->
+    </div>
+</div>
+<!-- </div> -->
+
+<nz-modal [nzWidth]="500" [(nzVisible)]="showreject" nzMaskClosable="false" nzClosable="false" [nzContent]="content"
+    [nzTitle]="'Profile Photo View'" [nzFooter]="ImageModalFooter">
+    <ng-template #content>
+        <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row>
+                <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+                    <nz-form-item>
+                        <nz-form-label nzNoColon>Reject Remark</nz-form-label>
+
+                        <nz-form-control>
+                            <textarea nz-input rows="2" name="data.REASON" autocomplete="off" autofill="off"
+                                placeholder="Enter Reject Remark" [(ngModel)]="data.REASON" maxlength="500">
+              </textarea>
+
+                            <h6 style="color: red; font-size: 10px" *ngIf="data.REASON != undefined">
+                                {{ data.REASON.length }}/ 500
+                            </h6>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </nz-spin>
+    </ng-template>
+    <ng-template #ImageModalFooter>
+        <button nz-button nzType="default" [nzLoading]="isSpinning" (click)="closereject()">
+            Close</button>&nbsp;
+        <button nz-button nzType="primary" [nzLoading]="isSpinning" (click)="reject()">
+            Reject
+        </button>
+    </ng-template>
+</nz-modal>

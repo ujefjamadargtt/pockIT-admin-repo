@@ -1,0 +1,120 @@
+<div style="border: 1px solid #ccc; padding: 5px">
+  <div *ngIf="loading" class="calendar-loading-overlay">
+    <nz-spin [nzSpinning]="loading" nzSimple></nz-spin>
+  </div>
+
+  <nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"
+    (nzSelectChange)="selectChange($event)">
+    <ul *nzDateCell="let date" class="events">
+      <!-- Iterate through calenderdata and show time-related information based on the date -->
+      <ng-container *ngFor="let item of calenderdata">
+        <ng-container *ngIf="isSameDate(date, item.DATE_OF_MONTH)">
+          <li *ngIf="item.IS_SERIVCE_AVAILABLE !== null">
+            <nz-badge [nzSize]="'small'" [ngStyle]="{
+                'background-color':
+                  item.IS_SERIVCE_AVAILABLE === true ? '#87CEEB' : '#FF6347'
+              }" [nzStatus]="
+                item.IS_SERIVCE_AVAILABLE === true ? 'success' : 'error'
+              " [nzText]="
+                item.IS_SERIVCE_AVAILABLE === true ? 'Available' : 'Not Available'
+              "></nz-badge>
+            <div *ngIf="item.IS_SERIVCE_AVAILABLE === 1">
+              <small><b style="font-size: 11px"> Available</b> </small>
+            </div>
+
+            <!-- Display time details -->
+            <div *ngIf="item.DAY_START_TIME && item.DAY_END_TIME && item.IS_SERIVCE_AVAILABLE">
+              <small><small><b style="font-size: 10px">Work Time:</b> </small>
+                {{ item.DAY_START_TIME }} To {{ item.DAY_END_TIME }}</small>
+            </div>
+            <div *ngIf="item.BREAK_START_TIME && item.BREAK_END_TIME && item.IS_SERIVCE_AVAILABLE">
+              <small><small><b style="font-size: 10px">Break Time:</b> </small>
+                {{ item.BREAK_START_TIME }} To {{ item.BREAK_END_TIME }}</small>
+            </div>
+          </li>
+        </ng-container>
+      </ng-container>
+    </ul>
+  </nz-calendar>
+</div>
+
+<!-- Modal -->
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Schedule'" (nzOnCancel)="closeModal()" (nzOnOk)="save()"
+  [nzOkLoading]="loading" [nzWidth]="400" [nzMaskClosable]="false">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item style="
+            display: inline-block;
+            margin-bottom: 5px;
+            width: -webkit-fill-available;
+            padding: 0px 10px;
+          ">
+          <nz-form-label nzRequired nzNoColon>Technician Available ?</nz-form-label>
+          <nz-form-control nzErrorTip="Select Technician Availability ?">
+            <nz-switch name="IsServiceAvailable" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+              [(ngModel)]="saveData.IS_SERIVCE_AVAILABLE">
+            </nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12" *ngIf="saveData.IS_SERIVCE_AVAILABLE">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Day Start Time</nz-form-label>
+          <nz-form-control nzErrorTip="Select Day Start Time">
+            <nz-time-picker name="DayStartTime" [nzNowText]="' '" [nzMinuteStep]="10"
+              [(ngModel)]="saveData.DAY_START_TIME" (ngModelChange)="updateStartTime($event)" [nzFormat]="'HH:mm a'"
+              nzPlaceHolder="Select Time"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12" *ngIf="saveData.IS_SERIVCE_AVAILABLE">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Day End Time</nz-form-label>
+          <nz-form-control nzErrorTip="Select Day End Time">
+            <nz-time-picker name="DayEndTime" [nzNowText]="' '" [nzMinuteStep]="10" [(ngModel)]="saveData.DAY_END_TIME"
+              (ngModelChange)="updateEndTime($event)" [nzFormat]="'HH:mm a'" nzPlaceHolder="Select Time"
+              [nzDisabledHours]="disableEndHours" [nzDisabledMinutes]="disableEndMinutes"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12" *ngIf="saveData.IS_SERIVCE_AVAILABLE">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Break Start Time</nz-form-label>
+          <nz-form-control nzErrorTip="Please Select Break Start Time">
+            <nz-time-picker name="BreakStartTime" [nzNowText]="' '" [nzMinuteStep]="10"
+              [(ngModel)]="saveData.BREAK_START_TIME" (ngModelChange)="updateBreakStartTime($event)"
+              [nzFormat]="'HH:mm a'" nzPlaceHolder="Select Time" [nzDisabledHours]="disableBreakStartHours"
+              [nzDisabledMinutes]="disableBreakStartMinutes"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12" *ngIf="saveData.IS_SERIVCE_AVAILABLE">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Break End Time</nz-form-label>
+          <nz-form-control nzErrorTip="Please Select Break End Time">
+            <nz-time-picker name="BreakEndTime" [nzNowText]="' '" [nzMinuteStep]="10"
+              [(ngModel)]="saveData.BREAK_END_TIME" (ngModelChange)="updateBreakEndTime($event)" [nzFormat]="'HH:mm a'"
+              nzPlaceHolder="Select Time" [nzDisabledHours]="disableBreakEndHours"
+              [nzDisabledMinutes]="disableBreakEndMinutes"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div *ngIf="!saveData.IS_SERIVCE_AVAILABLE" nz-col nzSpan="24" style="text-align: center">
+        <nz-tag nzColor="error" style="
+            height: 30px;
+            width: 150px;
+            font-size: 16px;
+            padding-top: 5px;
+            font-weight: bolder;
+          ">
+          Not Available
+        </nz-tag>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

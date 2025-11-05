@@ -1,0 +1,11 @@
+export class invetoryAdjustments {
+  ID;
+  ITEM_ID;
+  ITEM_NAME;
+  OLD_QTY;
+  ADJUSTMENT_QUANTITY;
+  NEW_QTY;
+  ADJUSTMENT_REASON;
+  LOCATION;
+  ADJUSTED_BY;
+}

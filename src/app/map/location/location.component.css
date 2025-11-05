@@ -1,0 +1,71 @@
+#map {
+  height: 500px;
+  width: 100%;
+}
+
+
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 6px;
+  /* Customize close button size */
+  /* font-weight: bold; */
+  color: #333;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: red;
+  /* Highlight on hover */
+}
+
+/* Add style for the popover content */
+.popover-content {
+ 
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+}
+
+
+.subnamm {
+  color: #6A6A6A;
+  font-size: 12px !important;
+  font-weight: 500;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gm-ui-hover-effect {
+  width: 15px !important;
+  /* Adjust width */
+  height: 15px !important;
+  /* Adjust height */
+  top: 5px !important;
+  /* Adjust positioning */
+  right: 5px !important;
+  /* Adjust positioning */
+}
+
+.gm-ui-hover-effect {
+  width: 100% !important;
+  /* Scale the icon */
+  height: 100% !important;
+}
+
+:host::ng-deep .gm-ui-hover-effect {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.emptyDataTex{
+  color: grey;
+  font-weight: 500;
+  font-size: 20px;
+}

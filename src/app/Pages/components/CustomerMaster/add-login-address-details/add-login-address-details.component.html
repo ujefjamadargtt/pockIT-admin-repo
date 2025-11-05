@@ -1,0 +1,266 @@
+<div>
+  <form nz-form #accountMasterPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div class="hh">
+        <div class="my-box" style="margin-bottom: 0px !important">
+          <div nz-row>
+            <nz-form-item>
+              <nz-form-label style="margin-top: 5px" nzNoColon nzRequired>
+                Select Location </nz-form-label><i nz-tooltip nzTooltipTitle="Select Location" nz-icon
+                style="cursor: pointer" (click)="openmapModal()"><img src="assets/loc.png" height="30px"
+                  width="30px" /></i>
+            </nz-form-item>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-control>
+                  <input nz-input name="latitudes" placeholder="Enter Latitude" [(ngModel)]="latitude"
+                    (keypress)="commonFunction.numberWithDecimal($event)" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-control>
+                  <input nz-input name="longitudes" placeholder="Enter Longitude" [(ngModel)]="longitude"
+                    (keypress)="commonFunction.numberWithDecimal($event)" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="10">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Address Type</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Select Address Type">
+                  <nz-select nzPlaceHolder="Select Type" [(ngModel)]="data.TYPE" name="Type" autocomplete="off" required
+                    nzAllowClear>
+                    <nz-option nzValue="H" nzLabel="Home"></nz-option>
+                    <nz-option nzValue="F" nzLabel="Work"></nz-option>
+                    <nz-option nzValue="O" nzLabel="Other"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="14">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>House No./Flat No./Floor No.
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Enter House No./Flat No./Floor No.">
+                  <input nz-input name="address1" autocomplete="off" placeholder="Enter House No./Flat No./Floor No."
+                    maxlength="64" required="required" [(ngModel)]="data.ADDRESS_LINE_1"
+                    (focus)="isFocused = 'ADDRESS_LINE_1'" (blur)="isFocused = ''" />
+                  <small style="color: red" *ngIf="
+                      isFocused === 'ADDRESS_LINE_1' ||
+                      (data.ADDRESS_LINE_1 && isFocused === 'ADDRESS_LINE_1')
+                    ">{{ data.ADDRESS_LINE_1?.length }}/64</small>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Building Name / Area Name</nz-form-label>
+                <nz-form-control>
+                  <input nz-input name="hpuseno" autocomplete="off" placeholder="Building Name / Area Name"
+                    maxlength="128" [(ngModel)]="data.ADDRESS_LINE_2" (focus)="isFocused = 'ADDRESS_LINE_2'"
+                    (blur)="isFocused = ''" />
+                  <small style="color: red" *ngIf="
+                      isFocused === 'ADDRESS_LINE_2' ||
+                      (data.ADDRESS_LINE_2 && isFocused === 'ADDRESS_LINE_2')
+                    ">{{ data.ADDRESS_LINE_2?.length }}/256</small>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Landmark </nz-form-label>
+                <nz-form-control>
+                  <input nz-input name="landmark" autocomplete="off" placeholder="Enter Landmark" maxlength="256"
+                    [(ngModel)]="data.LANDMARK" (focus)="isFocused = 'LANDMARK'" (blur)="isFocused = ''" />
+                  <small style="color: red" *ngIf="
+                      isFocused === 'LANDMARK' ||
+                      (data.LANDMARK && isFocused === 'LANDMARK')
+                    ">
+                    {{ data.LANDMARK ? data.LANDMARK.length : 0 }}/256
+                  </small>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Country</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Select Country Name">
+                  <nz-select name="countryId" nzPlaceHolder="Select Country Name" nzShowSearch style="width: 100%"
+                    [(ngModel)]="data.COUNTRY_ID" [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="getStatesByCountry(data.COUNTRY_ID, true)" required nzAllowClear="">
+                    <nz-option *ngFor="let data of CountryData" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>State</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Select State Name">
+                  <nz-select name="stateId" nzPlaceHolder="Select State Name" nzShowSearch style="width: 100%"
+                    [(ngModel)]="data.STATE_ID" [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="getDistrictByState(data.STATE_ID, true)" required nzAllowClear=""
+                    [nzLoading]="isStateSpinning">
+                    <nz-option *ngFor="let data of StateData" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>District</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Select District Name">
+                  <nz-select name="DistrictId" nzPlaceHolder="Select District Name" nzShowSearch style="width: 100%"
+                    [(ngModel)]="data.DISTRICT_ID" [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="getStateandPincode(data.DISTRICT_ID, true)" required nzAllowClear=""
+                    [nzLoading]="isDistrictSpinning">
+                    <nz-option *ngFor="let data of DistrictData" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>City</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Enter City Name">
+                  <input nz-input name="cityname" autocomplete="off" required placeholder="Enter City" maxlength="128"
+                    [(ngModel)]="data.CITY_NAME" (focus)="isFocused = 'CITY_NAME'" (blur)="isFocused = ''" />
+                  <small style="color: red" *ngIf="
+                      isFocused === 'CITY_NAME' ||
+                      (data.CITY_NAME && isFocused === 'CITY_NAME')
+                    ">
+                    {{ data.CITY_NAME ? data.CITY_NAME.length : 0 }}/128
+                  </small>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Pincode </nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Select Pincode ">
+                  <nz-select name="pincode" nzPlaceHolder="Select Pincode" nzShowSearch style="width: 100%"
+                    [(ngModel)]="data.PINCODE_ID" [ngModelOptions]="{ standalone: true }" required nzAllowClear=""
+                    [nzLoading]="isPincodeSpinning" (ngModelChange)="getpincodename($event)">
+                    <nz-option *ngFor="let data of PincodeData" [nzValue]="data.ID" [nzLabel]="data.PINCODE_NUMBER">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Contact Person Name</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Enter Contact Person Name">
+                  <input nz-input name="Personname" autocomplete="off" placeholder="Enter Contact Person Name"
+                    maxlength="256" [(ngModel)]="data.CONTACT_PERSON_NAME" (focus)="isFocused = 'CONTACT_PERSON_NAME'"
+                    (blur)="isFocused = ''" required />
+                  <small style="color: red" *ngIf="
+                      isFocused === 'CONTACT_PERSON_NAME' ||
+                      (data.CONTACT_PERSON_NAME &&
+                        isFocused === 'CONTACT_PERSON_NAME')
+                    ">
+                    {{
+                    data.CONTACT_PERSON_NAME
+                    ? data.CONTACT_PERSON_NAME.length
+                    : 0
+                    }}/256</small>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Mobile No.</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Enter a valid Mobile No.">
+                  <input nz-input name="mobileno" placeHolder="Enter Mobile No." autocomplete="off"
+                    [(ngModel)]="data.MOBILE_NO" [pattern]="commonFunction.mobpattern"
+                    (keypress)="commonFunction.onlynum($event)" maxlength="10" minlength="10" required
+                    autocomplete="off" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row *ngIf="data.ID">
+            <div nz-col nzSpan="9">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Set as Default Address</nz-form-label>
+                <nz-form-control>
+                  <nz-switch name="Status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                    [(ngModel)]="data.IS_DEFAULT">
+                  </nz-switch>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+  <div class="footer">
+    <button type="button" nz-button style="margin-right: 8px" class="ant-btn" style="margin-right: 8px"
+      (click)="close(accountMasterPage)">
+      <span>Cancel</span>
+    </button>
+    <button *ngIf="!data.ID" type="button" (click)="save(accountMasterPage)" class="ant-btn ant-btn-primary"
+      [nzLoading]="isSpinning" nz-button nz-dropdown>
+      <span>Save & Close</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(accountMasterPage)">
+      <span>Update & close</span>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="mapDraweVisible">
+  <nz-modal [(nzVisible)]="mapDraweVisible" nzClosable="false" nzMask="true" nzMaskClosable="false" nzWidth="1000px"
+    [nzFooter]="modalFooter" [nzStyle]="{ height: '40vh' }" [nzTitle]="customHeader" (nzOnCancel)="clearSearchBox()">
+    <ng-template #customHeader>
+      <div class="custom-header">
+        <!-- Close icon and text aligned to the left -->
+        <div class="left-section">
+          <span class="close-icon" (click)="clearSearchBox()">✖</span>
+          <span class="search-text">Set Location</span>
+        </div>
+
+        <!-- Search input aligned to the right -->
+        <div class="search-container">
+          <input id="searchBox" type="text" placeholder="Search location..." (keyup)="handleSearch1($event)" />
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-container *nzModalContent>
+      <div id="map" style="height: 300px; width: 100%"></div>
+    </ng-container>
+  </nz-modal>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="clearSearchBox()">Save</button>
+  </ng-template>
+</div>

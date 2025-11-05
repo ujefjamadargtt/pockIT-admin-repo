@@ -1,0 +1,363 @@
+<div nz-row nzType="flex">
+  <div nz-col nzSpan="8"></div>
+  <div nz-col nzSpan="16" style="display: flex; justify-content: flex-end">
+    <form nz-form nzLayout="inline">
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Excel" nzTooltipPlacement="top" nz-tooltip style="color: white"
+          nzType="primary" (click)="importInExcel()" [nzLoading]="exportLoading">
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item style="width: 47px">
+        <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip
+          [nzType]="isfilterapply ? 'primary' : 'default'" [style.backgroundColor]="isfilterapply ? 'default' : ''"
+          (click)="showMainFilter()">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="search" nz-input placeholder="Min 3 chars required." [(ngModel)]="searchText"
+            autocomplete="off" (keyup)="onKeyupS($event)" (keydown.enter)="onEnterKey($event)" />
+        </nz-input-group>
+      </nz-form-item>
+
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="searchopen()">
+          <i nz-icon nzType="search"></i>
+        </button>
+      </ng-template>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="8">
+              <nz-form-item style="margin-right: 10px !important">
+                <nz-form-label nzNoColon>Date</nz-form-label>
+                <nz-range-picker style="width: 100%" [nzFormat]="'dd/MM/yyyy'" nzAllowClear="false" [nzRanges]="ranges"
+                  (nzOnCalendarChange)="changeDate($event)" name="selectedDate" [(ngModel)]="selectedDate">
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item style="margin-right: 10px !important">
+                <nz-form-label nzNoColon>Service</nz-form-label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Service" [nzShowArrow]="true"
+                  style="width: 100%; font-weight: 100 !important" name="Service" [(ngModel)]="Service"
+                  nzMode="multiple">
+                  <nz-option *ngFor="let list of ServiceData" [nzValue]="list.ID" [nzLabel]="list.NAME"></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item style="margin-right: 10px !important">
+                <nz-form-label nzNoColon>Technician</nz-form-label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Technician" [nzShowArrow]="true"
+                  style="width: 100%; font-weight: 100 !important" name="Technicians" [(ngModel)]="Technician"
+                  nzMode="multiple">
+                  <nz-option *ngFor="let list of TechData" [nzValue]="list.ID" [nzLabel]="list.NAME"></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8" *ngIf="decreptedroleId !== 9">
+              <nz-form-item style="margin-right: 10px !important">
+                <nz-form-label nzNoColon>Vendor</nz-form-label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Vendor" [nzShowArrow]="true"
+                  style="width: 100%; font-weight: 100 !important" name="Vendor" [(ngModel)]="Vendor" nzMode="multiple">
+                  <nz-option *ngFor="let list of VendorData" [nzValue]="list.ID" [nzLabel]="list.NAME"></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item style="margin-right: 10px !important">
+                <nz-form-label nzNoColon>job No.</nz-form-label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Job No." [nzShowArrow]="true"
+                  style="width: 100%; font-weight: 100 !important" name="JobCardNo" [(ngModel)]="JobCardNo"
+                  nzMode="multiple">
+                  <nz-option *ngFor="let list of JobCardNoData" [nzValue]="list.JOB_CARD_NO"
+                    [nzLabel]="list.JOB_CARD_NO"></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="7" style="margin-right: 10px">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item>
+                <button style="margin-right: 10px" nz-button [nzLoading]="isSpinning" nzType="primary"
+                  (click)="applyFilter()" nzJustify="end">
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 10px">
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" [nzData]="Country" #requestTable nzBordered nzShowSizeChanger ngSkipHydration
+      [nzShowPagination]="true" [nzFrontPagination]="false" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)" [nzSize]="'small'"
+      [nzScroll]="{ x: '600px', y: '55vh' }">
+      <!--Table heading -->
+      <thead nzSingleSort>
+        <tr>
+          <th *ngIf="decreptedroleId !== 9" nzShowSort nzColumnKey="VENDOR_NAME" nzWidth="100px"
+            style="text-align: left" [nzSortFn]="true" nzCustomFilter>
+            Vendor Name
+            <nz-filter-trigger [(nzVisible)]="nameVisible" [nzDropdownMenu]="nameFilter">
+              <span nz-icon nzType="filter" nzTheme="fill"
+                [ngStyle]="{ color: isNameApplied ? '#092B9C' : 'inherit' }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzShowSort nzColumnKey="SERVICE_NAME" nzWidth="100px" style="text-align: center" [nzSortFn]="true"
+            nzCustomFilter>
+            Service Name
+            <nz-filter-trigger [(nzVisible)]="servicenameVisible" [nzDropdownMenu]="servicenameFilter">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isServiceNameApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzShowSort nzColumnKey="JOB_CARD_NO" nzWidth="80px" style="text-align: center" [nzSortFn]="true"
+            nzCustomFilter>
+            Job No.
+            <nz-filter-trigger [(nzVisible)]="jobcardnoVisible" [nzDropdownMenu]="jobcardnoFilter">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isJobCardNoApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzShowSort nzColumnKey="ORDER_NO" nzWidth="80px" style="text-align: center" [nzSortFn]="true"
+            nzCustomFilter>
+            Order No.
+            <nz-filter-trigger [(nzVisible)]="ordernoVisible" [nzDropdownMenu]="ordernoFilter">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isOrderNoApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzShowSort nzColumnKey="JOB_COMPLETED_DATETIME" nzWidth="70px" style="text-align: center"
+            [nzSortFn]="true" nzCustomFilter>
+            Completed Date
+            <nz-filter-trigger [(nzVisible)]="jobdateVisible" [nzDropdownMenu]="jobdateFilter" nzCustomFilter>
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isJobCompletedDateApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzShowSort nzColumnKey="VENDOR_COST" nzWidth="70px" style="text-align: center" [nzSortFn]="true"
+            nzCustomFilter>
+            Vendor Cost
+            <nz-filter-trigger [(nzVisible)]="vendorcostVisible" [nzDropdownMenu]="vendorcostFilter">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isVendorCostApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzShowSort nzColumnKey="TECHNICIAN_COST" nzWidth="70px" style="text-align: center" [nzSortFn]="true"
+            nzCustomFilter>
+            Technician Cost
+            <nz-filter-trigger [(nzVisible)]="techniciancostVisible" [nzDropdownMenu]="techniciancostFilter">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isTechnicianCostApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+
+          <th nzShowSort nzColumnKey="TECHNICIAN_NAME" nzWidth="70px" style="text-align: center" [nzSortFn]="true"
+            nzCustomFilter>
+            Technician Name
+            <nz-filter-trigger [(nzVisible)]="techniciannameVisible" [nzDropdownMenu]="techniciannameFilter">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isTechnicianNameApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+        </tr>
+      </thead>
+
+      <!-- Table Body -->
+      <tbody>
+        <tr *ngFor="let data of requestTable.data">
+          <td *ngIf="decreptedroleId !== 9" align="left" style="white-space: pre-line"
+            [nzTooltipTitle]="isTextOverflow ? data['VENDOR_NAME'] : null" #tooltipRef1="nzTooltip" nz-tooltip>
+            <div #textContainer1 class="truncate-text" (mouseenter)="checkOverflow(textContainer1, tooltipRef1)">
+              {{ data["VENDOR_NAME"] ? data["VENDOR_NAME"] : "-" }}
+            </div>
+          </td>
+          <td align="left" style="white-space: pre-line" [nzTooltipTitle]="isTextOverflow ? data['SERVICE_NAME'] : null"
+            #tooltipRef2="nzTooltip" nz-tooltip>
+            <div #textContainer2 class="truncate-text" (mouseenter)="checkOverflow(textContainer2, tooltipRef2)">
+              {{ data["SERVICE_NAME"] ? data["SERVICE_NAME"] : "-" }}
+            </div>
+          </td>
+
+          <td align="center">{{ data["JOB_CARD_NO"] ?? "-" }}</td>
+          <td align="center">{{ data["ORDER_NO"] ?? "-" }}</td>
+          <td align="center">
+            {{
+            data?.JOB_COMPLETED_DATETIME
+            ? (data.JOB_COMPLETED_DATETIME | date : "dd/MM/yyyy hh:mm")
+            : "-"
+            }}
+          </td>
+          <td align="center">{{ data["VENDOR_COST"] ?? "-" }}</td>
+          <td align="center">{{ data["TECHNICIAN_COST"] ?? "-" }}</td>
+          <td align="left" style="white-space: pre-line"
+            [nzTooltipTitle]="isTextOverflow ? data['TECHNICIAN_NAME'] : null" #tooltipRef3="nzTooltip" nz-tooltip>
+            <div #textContainer3 class="truncate-text" (mouseenter)="checkOverflow(textContainer3, tooltipRef3)">
+              {{ data["TECHNICIAN_NAME"] ? data["TECHNICIAN_NAME"] : "-" }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    <nz-dropdown-menu #nameFilter="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-input-group [nzSuffix]="inputClearTpl2">
+            <input type="text" nz-input [(ngModel)]="nameText" (keyup)="onKeyup($event)" placeholder="Search Name" />
+          </nz-input-group>
+          <ng-template #inputClearTpl2>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="nameText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="nameText == ''"></span>
+          </ng-template>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+
+    <nz-dropdown-menu #servicenameFilter="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-input-group [nzSuffix]="inputClearTpl2">
+            <input type="text" nz-input [(ngModel)]="servicenameText" (keyup)="onKeyup($event)"
+              placeholder="Search Service Name" />
+          </nz-input-group>
+          <ng-template #inputClearTpl2>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="servicenameText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="servicenameText == ''"></span>
+          </ng-template>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+
+    <nz-dropdown-menu #jobcardnoFilter="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-input-group [nzSuffix]="inputClearTpl2">
+            <input type="text" nz-input [(ngModel)]="jobcardnoText" (keyup)="onKeyup($event)"
+              placeholder="Search Job No." />
+          </nz-input-group>
+          <ng-template #inputClearTpl2>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="jobcardnoText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="jobcardnoText == ''"></span>
+          </ng-template>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+
+    <nz-dropdown-menu #ordernoFilter="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-input-group [nzSuffix]="inputClearTpl2">
+            <input type="text" nz-input [(ngModel)]="ordernoText" (keyup)="onKeyup($event)"
+              placeholder="Search Order No." />
+          </nz-input-group>
+          <ng-template #inputClearTpl2>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="ordernoText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="ordernoText == ''"></span>
+          </ng-template>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+
+    <nz-dropdown-menu #jobdateFilter="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="select">
+          <nz-range-picker [(ngModel)]="StartDate" name="StartDate" style="width: 100%"
+            [nzFormat]="commonFunction.dateFormatMMM" (ngModelChange)="onDateRangeChange()">
+          </nz-range-picker>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+
+    <nz-dropdown-menu #vendorcostFilter="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-input-group [nzSuffix]="inputClearTpl2">
+            <input type="text" nz-input [(ngModel)]="vendorcostText" (keyup)="onKeyup($event)"
+              placeholder="Search Vendor Cost" />
+          </nz-input-group>
+          <ng-template #inputClearTpl2>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="vendorcostText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="vendorcostText == ''"></span>
+          </ng-template>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+
+    <nz-dropdown-menu #techniciannameFilter="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-input-group [nzSuffix]="inputClearTpl2">
+            <input type="text" nz-input [(ngModel)]="techniciannameText" (keyup)="onKeyup($event)"
+              placeholder="Search Technician Name" />
+          </nz-input-group>
+          <ng-template #inputClearTpl2>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="techniciannameText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="techniciannameText == ''"></span>
+          </ng-template>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+
+    <nz-dropdown-menu #techniciancostFilter="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-input-group [nzSuffix]="inputClearTpl2">
+            <input type="text" nz-input [(ngModel)]="techniciancostText" (keyup)="onKeyup($event)"
+              placeholder="Search Technician Cost" />
+          </nz-input-group>
+          <ng-template #inputClearTpl2>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="techniciancostText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="techniciancostText == ''"></span>
+          </ng-template>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+  </div>
+</div>

@@ -1,0 +1,188 @@
+<div nz-row>
+  <div nz-col nzSpan="3"></div>
+  <div nz-col nzSpan="18">
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <div class="formname" *ngIf="TYPE === ''">
+          <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
+            style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp;Activity Logs
+        </div>
+        <!-- <div class="formname" *ngIf="TYPE==''">
+          Activity Logs
+        </div> -->
+      </div>
+      <div nz-col nzSpan="12">
+        <div style="display: flex; justify-content: flex-end; align-items: center">
+          <button *ngIf="TYPE != 'SHOP_ORDER'" nz-button style="margin-right: 10px" nzTooltipTitle="Filter"
+            [nzType]="isFilterApplied" nzTooltipPlacement="top" nz-tooltip (click)="showFilter()">
+            <i nz-icon nzType="filter"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <div class="filter {{ filterClass }}">
+          <div class="filter-box">
+            <form nz-form>
+              <div nz-row>
+                <div nz-col nzSpan="8">
+                  <nz-form-item style="margin-right: 10px !important">
+                    <nz-form-label nzNoColon>Date</nz-form-label>
+                    <nz-range-picker style="width: 100%" [nzFormat]="'dd/MM/yyyy'" nzAllowClear="false"
+                      [nzRanges]="ranges" (nzOnCalendarChange)="changeDate($event)" name="selectedDate"
+                      [(ngModel)]="selectedDate">
+                    </nz-range-picker>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8"
+                  *ngIf="TYPE != 'CUSTOMER' && TYPE != 'VENDOR' && TYPE != 'JOB' && TYPE != 'ORDER'">
+                  <nz-form-item style="margin-right: 10px !important">
+                    <nz-form-label nzNoColon>Customers</nz-form-label>
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Customers" [nzShowArrow]="true"
+                      style="width: 100%; font-weight: 100 !important" name="Customerss" [(ngModel)]="Customers">
+                      <nz-option *ngFor="let list of CustomersData" [nzValue]="list.ID"
+                        [nzLabel]="list.NAME"></nz-option>
+                    </nz-select>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8" *ngIf="TYPE != 'TECHNICIAN'">
+                  <nz-form-item style="margin-right: 10px !important">
+                    <nz-form-label nzNoColon>Technician</nz-form-label>
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Technician" [nzShowArrow]="true"
+                      style="width: 100%; font-weight: 100 !important" name="Technicians" [(ngModel)]="Technician">
+                      <nz-option *ngFor="let list of TechData" [nzValue]="list.ID" [nzLabel]="list.NAME"></nz-option>
+                    </nz-select>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8" *ngIf="TYPE != 'JOB'">
+                  <nz-form-item style="margin-right: 10px !important">
+                    <nz-form-label nzNoColon>Job</nz-form-label>
+                    <nz-select nzShowSearch nzAllowClear style="width: 100%" nzPlaceHolder="Select Job"
+                      [(ngModel)]="JOB" [nzOptionHeightPx]="80" name="customerName">
+                      <nz-option nzCustomContent *ngFor="let customer of dataListOrder" [nzValue]="customer.ID"
+                        [nzLabel]="
+                          customer.JOB_CARD_NO +
+                          ' ' +
+                          customer.SERVICE_FULL_NAME
+                        ">
+                        <div nz-row>
+                          <div nz-col nzSpan="12" style="
+                              font-size: 14px;
+                              color: #2d3748;
+                              font-weight: 500;
+                            ">
+                            Service Name : {{ customer.SERVICE_FULL_NAME }}
+                          </div>
+                          <div nz-col nzSpan="24" style="font-size: 12px; color: #4a5568">
+                            Job No.: {{ customer.JOB_CARD_NO }}
+                          </div>
+                        </div>
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8" *ngIf="TYPE == ''">
+                  <nz-form-item style="margin-right: 10px !important">
+                    <nz-form-label nzNoColon>Action Log Type</nz-form-label>
+                    <nz-select nzShowSearch nzAllowClear nzMode="multiple" nzPlaceHolder="Select Customers"
+                      [nzShowArrow]="true" style="width: 100%; font-weight: 100 !important" [nzMaxTagCount]="2"
+                      name="actionlog" [(ngModel)]="Actiontyoe">
+                      <nz-option nzValue="Order" nzLabel="Order" *ngIf="TYPE != 'ORDER'"></nz-option>
+                      <nz-option nzValue="Job" nzLabel="Job" *ngIf="TYPE != 'JOB'"></nz-option>
+                      <nz-option nzValue="Technician" nzLabel="Technician" *ngIf="TYPE != 'TECHNICIAN'"></nz-option>
+                      <nz-option nzValue="User" nzLabel="User" *ngIf="TYPE != 'TECHNICIAN'"></nz-option>
+                      <nz-option nzValue="System" nzLabel="System"></nz-option>
+                    </nz-select>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8" style="
+                    display: flex;
+                    gap: 10px;
+                    padding: 0px 0px 0px 10px;
+                    align-self: center;
+                    margin-top: 20px;
+                  ">
+                  <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons" (click)="applyFilter()">
+                    <i nz-icon nzType="filter"></i>Apply Filter
+                  </button>
+                  <button nz-button nzType="default" class="flexicons" (click)="clearFilter()">
+                    <i nz-icon nzType="delete"></i>Clear filter
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+    <nz-spin [nzSpinning]="loadactionlogs">
+      <div class="timeline-container" style="padding-top: 0px">
+        <ng-container>
+          <div *ngFor="let group of timelineData">
+            <!-- Group Date -->
+            <h3 class="group-date">{{ group.date | date : "dd/MM/yyyy" }}</h3>
+
+            <!-- Timeline for each event -->
+            <nz-timeline>
+              <nz-timeline-item *ngFor="let event of group.events">
+                <div class="event-details">
+                  <!-- Icon and Title -->
+                  <div class="event-title">
+                    <span class="icon">{{ event.icon }}</span>
+                    <span>{{ event.title }}</span>
+                  </div>
+                  <!-- Time and User -->
+                  <div class="event-meta">
+                    <span class="time">{{ event.time }}</span>
+                    <span class="user">By {{ event.user }}&nbsp;
+                      <span style="font-weight: 500; font-size: 9px !important">(<span *ngIf="
+                            event.ACTION_LOG_TYPE == 'O' ||
+                            event.ACTION_LOG_TYPE == 'Order' || event.ACTION_LOG_TYPE == 'order'
+                          " style="font-weight: 500; font-size: 9px !important">Order Log</span><span
+                          style="font-weight: 500; font-size: 9px !important" *ngIf="
+                            event.ACTION_LOG_TYPE == 'J' ||
+                            event.ACTION_LOG_TYPE == 'Job'
+                          ">Job Log</span>
+                        <span *ngIf="
+                            event.ACTION_LOG_TYPE == 'T' ||
+                            event.ACTION_LOG_TYPE == 'Technician' ||
+                            event.ACTION_LOG_TYPE == 'Skill Request'
+                          " style="font-weight: 500; font-size: 9px !important">Technician Log</span><span *ngIf="
+                            event.ACTION_LOG_TYPE == 'C' ||
+                            event.ACTION_LOG_TYPE == 'Customer'
+                          " style="font-weight: 500; font-size: 9px !important">Customer Log</span>
+                        <span *ngIf="event.ACTION_LOG_TYPE == 'User' || event.ACTION_LOG_TYPE == 'user'"
+                          style="font-weight: 500; font-size: 9px !important">User Log</span><span
+                          *ngIf="event.ACTION_LOG_TYPE == 'System'"
+                          style="font-weight: 500; font-size: 9px !important">System Log</span>)</span></span>
+                  </div>
+                  <!-- Description -->
+                  <!-- <div *ngIf="event.description" class="event-description">
+                  {{ event.description }}
+                </div> -->
+                </div>
+              </nz-timeline-item>
+            </nz-timeline>
+          </div>
+        </ng-container>
+        <ng-template #loadingTemplate>
+          <nz-spin>Loading timeline data...</nz-spin>
+        </ng-template>
+
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="timelineData.length == 0"
+          style="font-weight: 600; margin-top: 10%">
+          <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
+            <ng-template #contentTpl>
+              <span> Data Not Found</span>
+            </ng-template>
+            <ng-template #footerTpl> </ng-template>
+          </nz-empty>
+        </div>
+      </div>
+    </nz-spin>
+    <div nz-col nzSpan="3"></div>
+  </div>
+</div>

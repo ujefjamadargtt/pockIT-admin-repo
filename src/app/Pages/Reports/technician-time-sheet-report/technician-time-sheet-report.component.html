@@ -1,0 +1,561 @@
+<div nz-row nzType="flex">
+    <div nz-col nzSpan="8">
+        <div class="formname">
+            <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
+                style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp;{{ formTitle }}
+        </div>
+    </div>
+
+    <div nz-col nzSpan="16" style="display: flex; justify-content: flex-end">
+        <form nz-form nzLayout="inline">
+            <nz-form-item>
+                <button nz-button nzTooltipTitle="Excel" nzTooltipPlacement="top" nz-tooltip style="color: white"
+                    nzType="primary" (click)="importInExcel()" [nzLoading]="exportLoading">
+                    <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+                </button>
+            </nz-form-item>
+            <!-- <nz-form-item style="width: 47px">
+          <button
+            nz-button
+            nzTooltipTitle="Filter"
+            nzTooltipPlacement="top"
+            nz-tooltip
+            [nzType]="isfilterapply ? 'primary' : 'default'"
+            (click)="showMainFilter()"
+          >
+            <i nz-icon nzType="filter"></i>
+          </button>
+        </nz-form-item> -->
+            <nz-form-item>
+                <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+                    (click)="showFilter()">
+                    <i nz-icon nzType="filter"></i>
+                </button>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" name="search" (keyup)="keyup($event)" (keydown.enter)="onEnterKey($event)"
+                        id="button" nz-input placeholder="Min 3 chars required. " [(ngModel)]="searchText"
+                        (onkeypress)="search()" autocomplete="off" />
+                </nz-input-group>
+            </nz-form-item>
+
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="primary" nzSearch (click)="search()">
+                    <i nz-icon nzType="search"></i>
+                </button>
+            </ng-template>
+        </form>
+    </div>
+</div>
+
+<!-- Main Filter New  -->
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <div class="filter {{ filterClass }}">
+            <div class="filter-box">
+                <div nz-row nzGutter="10ox">
+                    <div nz-col nzSpan="8">
+                        <div nz-row>
+                            <div nz-col nzSpan="24">
+                                <nz-form-item>
+                                    <nz-form-label nzNoColon>Scheduled Date</nz-form-label>
+                                    <div nz-row>
+                                        <div nz-col nzSpan="24">
+                                            <nz-date-picker style="width: 40%; margin-right: 5px"
+                                                [(ngModel)]="startdate" [nzFormat]="'dd/MM/yyyy'"
+                                                nzAllowClear="false"></nz-date-picker>
+                                            <nz-date-picker style="width: 40%" [(ngModel)]="enddate"
+                                                [nzFormat]="'dd/MM/yyyy'" nzAllowClear="false"></nz-date-picker>
+                                        </div>
+                                    </div>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+                    <div nz-col nzSpan="16">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Technician Name</nz-form-label>
+                            <nz-form-control nzErrorTip="Please Enter Technician Name">
+                                <nz-select name="technName" style="width: 98%" nzShowSearch nzAllowClear
+                                    nzPlaceHolder="Select Technician" nzMode="multiple"
+                                    [nzCustomTemplate]="multipleTemplate" [(ngModel)]="selectedTechnician"
+                                    [nzMaxTagCount]="3" (nzOnSearch)="searchTechnician($event)"
+                                    (ngModelChange)="onTechnicianChange()">
+                                    <nz-option *ngFor="let data of distinctData" [nzValue]="data.ID"
+                                        [nzLabel]="data.NAME"></nz-option>
+                                </nz-select>
+                                <ng-template #multipleTemplate let-selected>
+                                    <div class="ant-select-selection-item-content">
+                                        <span nz-icon [nzType]="selected.nzValue"></span>
+                                        {{ selected.nzLabel }}
+                                    </div>
+                                </ng-template>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+                <div nz-row nzGutter="10">
+                    <div nz-col nzSpan="8">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Type</nz-form-label>
+                            <nz-form-control nzErrorTip="Select Type">
+                                <nz-radio-group [(ngModel)]="selectedType" (ngModelChange)="onTypeChange($event)">
+                                    <label nz-radio nzValue="Job">Job</label>
+                                    <label nz-radio nzValue="Order">Order</label>
+                                </nz-radio-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="16" *ngIf="selectedType === 'Job'">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Job </nz-form-label>
+
+                            <nz-form-control nzErrorTip="Please Select Job">
+                                <nz-select name="jobName" style="width: 98%" nzShowSearch nzAllowClear nzServerSearch
+                                    nzPlaceHolder="Select Job" nzMode="multiple" [nzMaxTagCount]="4"
+                                    [(ngModel)]="selectedjob" [nzOptionOverflowSize]="7"
+                                    (nzScrollToBottom)="loadMore1()" (nzOnSearch)="gejob($event)"
+                                    (keyup)="keyup4($event)">
+                                    <ng-template #renderTemplate>
+                                        <nz-spin *ngIf="isLoading1"></nz-spin>
+                                    </ng-template>
+                                    <nz-option *ngFor="let data of jobcardData" [nzValue]="data.ID"
+                                        [nzLabel]="data.JOB_CARD_NO">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="16" *ngIf="selectedType === 'Order'">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon> Order</nz-form-label>
+
+                            <nz-form-control nzErrorTip="Please Select Order">
+                                <nz-select name="orderName" style="width: 98%" nzShowSearch nzAllowClear nzServerSearch
+                                    nzPlaceHolder="Select Order" nzMode="multiple" [nzMaxTagCount]="4"
+                                    [(ngModel)]="selectedorder" [nzOptionOverflowSize]="7"
+                                    (nzScrollToBottom)="loadMore()" (nzOnSearch)="getord($event)"
+                                    (keyup)="keyup3($event)" [nzDropdownRender]="renderTemplate1">
+                                    <ng-template #renderTemplate1>
+                                        <nz-spin *ngIf="isLoading"></nz-spin>
+                                    </ng-template>
+
+                                    <nz-option *ngFor="let data of orderData" [nzValue]="data.ORDER_NUMBER"
+                                        [nzLabel]="data.ORDER_NUMBER">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div nz-row>
+                    <div nz-col nzSpan="8" style="
+                display: flex;
+                gap: 10px;
+                padding: 0px 0px 0px 10px;
+                align-self: center;
+                margin-top: 20px;
+              ">
+                        <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons"
+                            (click)="applyFilter()">
+                            <i nz-icon nzType="filter"></i>Apply Filter
+                        </button>
+                        <button nz-button nzType="default" class="flexicons" (click)="clearFilter()">
+                            <i nz-icon nzType="delete"></i>Clear filter
+                        </button>
+                    </div>
+                </div>
+                <div nz-row nzGutter="10ox"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End New Main Filter -->
+
+<!-- Table -->
+<div nz-row style="margin-top: 8px">
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" #table [nzData]="dataList" [nzLoading]="loadingRecords"
+            [nzTotal]="totalRecords" nzBordered [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)"
+            [nzSize]="'small'" nzShowSizeChanger [nzFrontPagination]="false" [nzScroll]="{ y: '50vh', x: '100vw' }">
+            <thead>
+                <tr>
+                    <th nzWidth="300px" nzLeft nzShowSort align="center" nzColumnKey="{{ 'TECHNICIAN_NAME' }}"
+                        [nzSortFn]="true" [nzFilterFn]="true" nzCustomFilter>
+                        Technician Name
+
+                        <nz-filter-trigger [(nzVisible)]="techniciannameVisible"
+                            [nzDropdownMenu]="techniciannamedropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: istechniciannameFilterApplied ? '#092B9C' : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                    </th>
+
+                    <th nzWidth="200px" nzShowSort align="center" nzColumnKey="{{ 'EXPECTED_DATE_TIME' }}"
+                        [nzSortFn]="true" nzCustomFilter>
+                        Expected Date Time
+                        <nz-filter-trigger [(nzVisible)]="expectedDateVisible" [nzDropdownMenu]="expectedDatedropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: isexpectedDateFilterApplied ? '#092B9C' : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                    </th>
+
+                    <th nzWidth="200px" nzShowSort align="center" nzColumnKey="{{ 'ORDER_NO' }}" [nzSortFn]="true"
+                        nzCustomFilter>
+                        Order Number
+                        <nz-filter-trigger [(nzVisible)]="ordernumberVisible" [nzDropdownMenu]="ordernumberdropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: isordernumberFilterApplied ? '#092B9C' : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                    </th>
+
+                    <th nzWidth="200px" nzShowSort align="center" nzColumnKey="{{ 'JOB_CARD_NO' }}" [nzSortFn]="true"
+                        nzCustomFilter>
+                        Job Number
+                        <nz-filter-trigger [(nzVisible)]="jobcardnumberVisible"
+                            [nzDropdownMenu]="jobcardnumberdropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: isjobcardnumberFilterApplied ? '#092B9C' : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                    </th>
+
+                    <th nzWidth="300px" nzShowSort align="center" nzColumnKey="{{ 'SERVICE_NAME' }}" [nzSortFn]="true"
+                        nzCustomFilter>
+                        Service Name
+                        <nz-filter-trigger [(nzVisible)]="servicenameVisible" [nzDropdownMenu]="servicenamedropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: isservicenameFilterApplied ? '#092B9C' : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                    </th>
+
+                    <th nzWidth="150px" nzShowSort nzColumnKey="{{ 'START_TIME' }}" [nzSortFn]="true" nzCustomFilter>
+                        <nz-filter-trigger [(nzVisible)]="starttimeVisible" [nzDropdownMenu]="starttimedropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: isstarttimeFilterApplied ? '#092B9C' : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                        Start Time
+                    </th>
+
+                    <th nzWidth="150px" nzShowSort nzColumnKey="{{ 'END_TIME' }}" [nzSortFn]="true" nzCustomFilter>
+                        <nz-filter-trigger [(nzVisible)]="endtimeVisible" [nzDropdownMenu]="endtimedropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: isendtimeFilterApplied ? '#092B9C' : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                        End Time
+                    </th>
+
+                    <th nzWidth="200px" nzShowSort align="center" nzColumnKey="{{ 'SCHEDULED_DATE_TIME' }}"
+                        [nzSortFn]="true" nzCustomFilter>
+                        Scheduled Date Time
+                        <nz-filter-trigger [(nzVisible)]="scheduledDateTimeVisible"
+                            [nzDropdownMenu]="scheduledDateTimedropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: isscheduledDateTimeFilterApplied
+                      ? '#092B9C'
+                      : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                    </th>
+
+                    <th nzWidth="200px" nzShowSort align="center" nzColumnKey="{{ 'END_DATE_TIME' }}" [nzSortFn]="true"
+                        nzCustomFilter>
+                        End Date Time
+                        <nz-filter-trigger [(nzVisible)]="enddDateTimeVisible" [nzDropdownMenu]="endDateTimedropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: isendDateTimeFilterApplied ? '#092B9C' : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                    </th>
+
+                    <th nzWidth="240px" nzShowSort align="center" nzColumnKey="{{ 'JOB_COMPLETED_DATETIME' }}"
+                        [nzSortFn]="true" nzCustomFilter>
+                        Job Completed Date Time
+                        <nz-filter-trigger [(nzVisible)]="jobcompleteDateVisible"
+                            [nzDropdownMenu]="jobcompleteDatedropdown">
+                            <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                    color: isjobcompleteDateFilterApplied ? '#092B9C' : 'inherit'
+                  }"></span>
+                        </nz-filter-trigger>
+                    </th>
+
+                    <th nzWidth="120px" nzShowSort align="center" nzColumnKey="{{ 'TOTAL_TIME' }}" [nzSortFn]="true">
+                        Total time
+                    </th>
+
+                    <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'IS_EARLY_OR_LATE' }}"
+                        [nzSortFn]="true">
+                        Is Early Or Late
+                    </th>
+
+                    <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'WORK_DEVIATION' }}"
+                        [nzSortFn]="true">
+                        Work Deviation
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let data of table.data">
+                    <td nzLeft align="left" [nzTooltipTitle]="isTextOverflow ? data['TECHNICIAN_NAME'] : null"
+                        #tooltipRef1="nzTooltip" nz-tooltip>
+                        <div #textContainer1 class="truncate-text"
+                            (mouseenter)="checkOverflow(textContainer1, tooltipRef1)">
+                            {{ data["TECHNICIAN_NAME"] ? data["TECHNICIAN_NAME"] : "-" }}
+                        </div>
+                    </td>
+
+                    <td align="center">
+                        {{
+                        data?.EXPECTED_DATE_TIME
+                        ? (data.EXPECTED_DATE_TIME | date : "dd/MM/yyyy HH:mm a")
+                        : "-"
+                        }}
+                    </td>
+
+                    <td align="left" [nzTooltipTitle]="isTextOverflow ? data['ORDER_NO'] : null" #tooltipRef="nzTooltip"
+                        nz-tooltip>
+                        <div #textContainer class="truncate-text"
+                            (mouseenter)="checkOverflow(textContainer, tooltipRef)">
+                            {{ data["ORDER_NO"] ? data["ORDER_NO"] : "-" }}
+                        </div>
+                    </td>
+
+                    <td align="left" [nzTooltipTitle]="isTextOverflow ? data['JOB_CARD_NO'] : null"
+                        #tooltipRef2="nzTooltip" nz-tooltip>
+                        <div #textContainer2 class="truncate-text"
+                            (mouseenter)="checkOverflow(textContainer2, tooltipRef2)">
+                            {{ data["JOB_CARD_NO"] ? data["JOB_CARD_NO"] : "-" }}
+                        </div>
+                    </td>
+
+                    <td align="left" [nzTooltipTitle]="isTextOverflow ? data['SERVICE_NAME'] : null"
+                        #tooltipRef3="nzTooltip" nz-tooltip>
+                        <div #textContainer3 class="truncate-text"
+                            (mouseenter)="checkOverflow(textContainer3, tooltipRef3)">
+                            {{ data["SERVICE_NAME"] ? data["SERVICE_NAME"] : "-" }}
+                        </div>
+                    </td>
+
+                    <td align="center">
+                        {{
+                        formatTime(data.START_TIME) ? formatTime(data.START_TIME) : "-"
+                        }}
+                    </td>
+
+                    <td align="center">
+                        {{ formatTime(data.END_TIME) ? formatTime(data.END_TIME) : "-" }}
+                    </td>
+
+                    <td align="center">
+                        {{
+                        data?.SCHEDULED_DATE_TIME
+                        ? (data.SCHEDULED_DATE_TIME | date : "dd/MM/yyyy HH:mm a")
+                        : "-"
+                        }}
+                    </td>
+
+                    <td align="center">
+                        {{
+                        data?.END_DATE_TIME
+                        ? (data.END_DATE_TIME | date : "dd/MM/yyyy HH:mm a")
+                        : "-"
+                        }}
+                    </td>
+
+                    <td align="center">
+                        {{
+                        data?.JOB_COMPLETED_DATETIME
+                        ? (data.JOB_COMPLETED_DATETIME | date : "dd/MM/yyyy HH:mm a")
+                        : "-"
+                        }}
+                    </td>
+
+                    <td align="left">
+                        <span *ngIf="data['TOTAL_TIME'] != null">
+                            {{ data["TOTAL_TIME"] }}
+                        </span>
+
+                        <span *ngIf="data['TOTAL_TIME'] == null">-</span>
+                    </td>
+
+                    <td align="left">
+                        <span *ngIf="data['IS_EARLY_OR_LATE'] != null"></span>
+                        <span *ngIf="data['IS_EARLY_OR_LATE']">
+                            {{ data["IS_EARLY_OR_LATE"] === "E" ? "Early" : "Late" }}
+                        </span>
+
+                        <span *ngIf="data['IS_EARLY_OR_LATE'] == null">-</span>
+                    </td>
+
+                    <td align="center">
+                        <span *ngIf="data['WORK_DEVIATION']">
+                            {{ data["WORK_DEVIATION"] ? data["WORK_DEVIATION"] : "-" }}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <!-- DropDown For Name -->
+
+        <!-- Technician Name -->
+        <nz-dropdown-menu #techniciannamedropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="select">
+                    <nz-select style="width: 100%" nzShowSearch nzAllowClear nzPlaceHolder="Select Technician"
+                        nzMode="multiple" [nzCustomTemplate]="multipleTemplate" [(ngModel)]="selectedTechnician1"
+                        (ngModelChange)="onTechnicianChange1()">
+                        <nz-option *ngFor="let data of distinctData" [nzValue]="data.ID"
+                            [nzLabel]="data.NAME"></nz-option>
+                    </nz-select>
+                    <ng-template #multipleTemplate let-selected>
+                        <div class="ant-select-selection-item-content">
+                            <span nz-icon [nzType]="selected.nzValue"></span>
+                            {{ selected.nzLabel }}
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+
+        <!-- Expected Date -->
+        <nz-dropdown-menu #expectedDatedropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="search-box">
+                    <nz-range-picker [(ngModel)]="StartDate" name="StartDate" style="width: 100%"
+                        [nzFormat]="commonFunction.dateFormatMMM" (ngModelChange)="onDateRangeChange()">
+                    </nz-range-picker>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+
+        <!-- Order Number  -->
+        <nz-dropdown-menu #ordernumberdropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="search-box">
+                    <nz-input-group [nzSuffix]="inputClearTpl">
+                        <input type="text" nz-input [(ngModel)]="ordernumbertext" (keyup)="onKeyup($event)"
+                            placeholder="Search Order Number" />
+                    </nz-input-group>
+                    <ng-template #inputClearTpl>
+                        <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
+                            *ngIf="ordernumbertext" (click)="reset()"></span>
+                        <span nz-icon nzType="search" nzTheme="outline" *ngIf="ordernumbertext == ''"></span>
+                    </ng-template>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+
+        <!-- Job Card  -->
+        <nz-dropdown-menu #jobcardnumberdropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="search-box">
+                    <nz-input-group [nzSuffix]="inputClearTpl">
+                        <input type="text" nz-input [(ngModel)]="jobcardnumbertext" (keyup)="onKeyup($event)"
+                            placeholder="Search Job Number" />
+                    </nz-input-group>
+                    <ng-template #inputClearTpl>
+                        <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
+                            *ngIf="jobcardnumbertext" (click)="reset()"></span>
+                        <span nz-icon nzType="search" nzTheme="outline" *ngIf="jobcardnumbertext == ''"></span>
+                    </ng-template>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+
+        <!-- Service Name  -->
+        <nz-dropdown-menu #servicenamedropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="search-box">
+                    <nz-input-group [nzSuffix]="inputClearTpl">
+                        <input type="text" nz-input [(ngModel)]="servicenametext" (keyup)="onKeyup($event)"
+                            placeholder="Search Service Name" />
+                    </nz-input-group>
+                    <ng-template #inputClearTpl>
+                        <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"
+                            *ngIf="servicenametext" (click)="reset()"></span>
+                        <span nz-icon nzType="search" nzTheme="outline" *ngIf="servicenametext == ''"></span>
+                    </ng-template>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+
+        <!-- Start time  -->
+        <nz-dropdown-menu #starttimedropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div style="display: flex; align-items: center; padding: 8px">
+                    <nz-time-picker [(ngModel)]="fromTime" [nzFormat]="'HH:mm a'" [nzAllowEmpty]="true"
+                        style="width: 100%; margin-right: 8px" (ngModelChange)="updateStartFromTime($event)"
+                        nzPlaceHolder="From Time"></nz-time-picker>
+                    To:
+                    <nz-time-picker [(ngModel)]="toTime" [nzFormat]="'HH:mm a'" [nzAllowEmpty]="true"
+                        (ngModelChange)="onTimeFilterChange()" style="width: 100%; margin-left: 8px"
+                        nzPlaceHolder="To Time"></nz-time-picker>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+
+        <!--End Time Dropdown -->
+        <nz-dropdown-menu #endtimedropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div style="display: flex; align-items: center; padding: 8px">
+                    <nz-time-picker [(ngModel)]="endfromTime" [nzFormat]="'HH:mm a'" [nzAllowEmpty]="true"
+                        style="width: 100%; margin-right: 8px" (ngModelChange)="updateStartFromTime($event)"
+                        nzPlaceHolder="From Time"></nz-time-picker>
+                    To:
+                    <nz-time-picker [(ngModel)]="endtoTime" [nzFormat]="'HH:mm a'" [nzAllowEmpty]="true"
+                        (ngModelChange)="onendTimeFilterChange()" style="width: 100%; margin-left: 8px"
+                        nzPlaceHolder="To Time"></nz-time-picker>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+
+        <!-- Scheduled date Time  -->
+        <nz-dropdown-menu #scheduledDateTimedropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="search-box">
+                    <nz-range-picker [(ngModel)]="StartDate1" name="StartDate" style="width: 100%"
+                        [nzFormat]="commonFunction.dateFormatMMM" (ngModelChange)="onDateRangeChange1()">
+                    </nz-range-picker>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+
+        <!-- End date Time  -->
+        <nz-dropdown-menu #endDateTimedropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="search-box">
+                    <nz-range-picker [(ngModel)]="StartDate2" name="StartDate" style="width: 100%"
+                        [nzFormat]="commonFunction.dateFormatMMM" (ngModelChange)="onDateRangeChange2()">
+                    </nz-range-picker>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+
+        <!-- Job completed Date  -->
+        <nz-dropdown-menu #jobcompleteDatedropdown="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="search-box">
+                    <nz-range-picker [(ngModel)]="StartDate3" name="StartDate2" style="width: 100%"
+                        [nzFormat]="commonFunction.dateFormatMMM" (ngModelChange)="onDateRangeChange3()">
+                    </nz-range-picker>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+    </div>
+</div>

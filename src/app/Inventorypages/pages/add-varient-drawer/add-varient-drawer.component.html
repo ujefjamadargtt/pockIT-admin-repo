@@ -1,0 +1,1101 @@
+<div>
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-tabset [(nzSelectedIndex)]="activeTabIndex">
+      <nz-tab *ngFor="let tab of tabs; let i = index" [nzTitle]="application" [nzDisabled]="tab.disabled">
+        <ng-template #application>
+          {{ tab.name }}
+        </ng-template>
+
+        <div *ngIf="tab.name == 'Add Variant'">
+          <form nz-form #websitebannerPage1="ngForm" *ngIf="decreptedroleId != 23">
+            <nz-spin [nzSpinning]="isSpinning">
+              <div nz-row>
+                <div nz-col nzSpan="19" class="my-box">
+                  <div nz-row>
+                    <div nz-col nzSpan="11">
+                      <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Variant Name</nz-form-label>
+
+                        <nz-form-control nzErrorTip="Please Enter Variant Name">
+                          <input nz-input placeholder="Enter Variant Name" name="name" required [(ngModel)]="data.NAME"
+                            (keypress)="validateInput($event)" #name="ngModel" maxlength="64" autocomplete="off"
+                            (focus)="isFocused = 'NAME'" (blur)="isFocused = ''" />
+                          <h6 style="color: red; font-size: 10px" *ngIf="
+                              isFocused === 'NAME' ||
+                              (data.NAME && isFocused === 'NAME')
+                            ">
+                            {{ data?.NAME?.length }}/64
+                          </h6>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="11">
+                      <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Values</nz-form-label>
+
+                        <nz-form-control nzErrorTip="Please Enter Values">
+                          <nz-select nzMode="tags" nzPlaceHolder="Enter Values" name="tag1"
+                            [(ngModel)]="data.VARIENT_VALUES" (keypress)="validateVariantValues($event)"
+                            (ngModelChange)="handleVariantChange()" required [nzMaxTagCount]="4">
+                            <nz-option *ngFor="let option of inputValuess1" [nzLabel]="option"
+                              [nzValue]="option"></nz-option>
+                          </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="2" style="margin-top: 26px">
+                      <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID && !isnext" nz-button
+                        [nzLoading]="isSpinning" (click)="addvarient(false, websitebannerPage1)">
+                        <span>Add</span>
+                      </button>
+
+                      <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID && isnext" nz-button
+                        [nzLoading]="isSpinning" nz-popconfirm [nzPopconfirmTitle]="popConfirmTemplate"
+                        nzPopconfirmPlacement="top" (nzOnConfirm)="addvarient(false, websitebannerPage1)"
+                        (nzOnCancel)="cancel()">
+                        <span>Add</span>
+                      </button>
+
+                      <ng-template #popConfirmTemplate>
+                        Are you sure you want to add a new variant?
+                        <br />
+                        New variant combinations may be created <br />
+                        for the newly added variant.
+                      </ng-template>
+
+                      <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning"
+                        *ngIf="data.ID" (click)="addvarient(false, websitebannerPage1)">
+                        <span>Update</span>
+                      </button>
+
+                      <nz-popconfirm *ngIf="isnext" nzTitle="Are you sure you want to proceed with the action?"
+                        (nzOnConfirm)="addvarient(false, websitebannerPage1)">
+                        <ng-template #confirmTemplate>
+                          <span>Are you sure you want to add or update this
+                            variant?
+                          </span>
+                        </ng-template>
+                      </nz-popconfirm>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div nz-row nzType="flex"> -->
+                <div nz-col nzSpan="5" style="margin-top: 37px">
+                  <form nz-form [nzLayout]="'inline'">
+                    <nz-form-item>
+                      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                        <input style="height: 33px" type="text" name="search" autocomplete="off" (keyup)="keyup($event)"
+                          (keydown.enter)="onEnterKey($event)" [(ngModel)]="searchText" nz-input
+                          placeholder="Min 3 chars required." />
+                      </nz-input-group>
+
+                      <ng-template #suffixIconButton>
+                        <button nz-button nzType="primary" (click)="search(true)" nzSearch
+                          style="height: 33px !important">
+                          <i nz-icon nzType="search"></i>
+                        </button>
+                      </ng-template>
+                    </nz-form-item>
+                  </form>
+                </div>
+                <!-- </div> -->
+              </div>
+            </nz-spin>
+          </form>
+
+          <div nz-row style="margin-top: 10px">
+            <div nz-col nzSpan="24">
+              <nz-table class="my-scroll no-wrap1" [nzData]="AddVarientData" #table nzBordered nzShowSizeChanger
+                ngSkipHydration [nzPageSize]="10" [nzShowPagination]="true" [nzFrontPagination]="false"
+                [nzLoading]="loadingRecordss" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
+                [(nzPageSize)]="pageSize" (nzQueryParams)="sort($event)" [nzSize]="'small'" nzShowSizeChanger
+                [nzScroll]="{ y: '50vh' }">
+                <!--Table heading -->
+                <thead nzSingleSort>
+                  <tr>
+                    <th nzWidth="40px" style="text-align: center" *ngIf="decreptedroleId != 23">
+                      Action
+                    </th>
+
+                    <th nzShowSort nzColumnKey="{{ 'NAME' }}" nzWidth="150px" style="text-align: center"
+                      [nzSortFn]="true">
+                      Variant Name
+                    </th>
+
+                    <th nzShowSort nzColumnKey="{{ 'VARIENT_VALUES' }}" nzWidth="300px" style="text-align: center"
+                      [nzSortFn]="true">
+                      Values
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let data of table.data">
+                    <td align="center" nzLeft *ngIf="decreptedroleId != 23">
+                      <nz-tag nzColor="#2db7f5" (click)="edit(data)" style="cursor: pointer">
+                        <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 15px">
+                        </span>&nbsp;&nbsp;Edit</nz-tag>
+                    </td>
+
+                    <td align="left">
+                      <span *ngIf="data['NAME'] != null">
+                        <span *ngIf="data['NAME'].length >= 50" nz-popover [nzPopoverContent]="data['NAME']"
+                          nzPopoverPlacement="topLeft">
+                          {{
+                          data["NAME"] == null
+                          ? "-"
+                          : (data["NAME"] | slice : 0 : 50)
+                          }}{{ data["NAME"].length > 50 ? "..." : "" }}
+                        </span>
+
+                        <span *ngIf="data['NAME'].length < 50">
+                          {{
+                          data["NAME"] == null
+                          ? "-"
+                          : (data["NAME"] | slice : 0 : 50)
+                          }}
+                          {{ data["NAME"].length > 50 ? "..." : "" }}
+                        </span>
+                      </span>
+
+                      <span *ngIf="data['NAME'] == null">-</span>
+                    </td>
+
+                    <td align="left">
+                      <span *ngIf="data['VARIENT_VALUES'] != null">
+                        <span *ngIf="data['VARIENT_VALUES'].length >= 120" nz-popover
+                          [nzPopoverContent]="data['VARIENT_VALUES']" nzPopoverPlacement="topLeft">
+                          {{
+                          data["VARIENT_VALUES"] == null
+                          ? "-"
+                          : (data["VARIENT_VALUES"] | slice : 0 : 120)
+                          }}{{
+                          data["VARIENT_VALUES"].length > 120 ? "..." : ""
+                          }}
+                        </span>
+
+                        <span *ngIf="data['VARIENT_VALUES'].length < 120">
+                          {{
+                          data["VARIENT_VALUES"] == null
+                          ? "-"
+                          : (data["VARIENT_VALUES"] | slice : 0 : 120)
+                          }}
+                          {{ data["VARIENT_VALUES"].length > 120 ? "..." : "" }}
+                        </span>
+                      </span>
+
+                      <span *ngIf="data['VARIENT_VALUES'] == null">-</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+
+          <div class="footer">
+            <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+              <span>Cancel</span>
+            </button>
+
+            <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" (click)="next()"
+              nz-popconfirm [nzOkText]="'Yes'"
+              nzPopconfirmTitle="Are you sure save or update variant combinations details"
+              [nzCondition]="decreptedroleId != 23 ? switchValue : true" (nzOnConfirm)="saveNextFinal()"
+              (nzOnCancel)="cancelNextFinal()">
+              <span>Next &nbsp;
+                <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="tab.name == 'Add Variant Details'">
+          <form nz-form #websitebannerPage1="ngForm">
+            <nz-spin [nzSpinning]="isSpinning">
+              <!-- <div nz-row>
+                <div nz-col nzSpan="12"></div>
+                <div nz-col nzSpan="10">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>Combination value</nz-form-label>
+                    <nz-form-control>
+                      <nz-select nzMode="multiple" nzPlaceHolder="Select Combination Values" name="tag11111111"
+                        [(ngModel)]="Combination_valuesss" required>
+                        <nz-option *ngFor="let option of previousVariantCombinations"
+                          [nzLabel]="option.VARIANT_COMBINATION" [nzValue]="option.VARIANT_COMBINATION"></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="2" style="margin-top: 26px">
+                  <button type="button" class="ant-btn ant-btn-primary" nz-button (click)="addcombinationvalues()"
+                    [nzLoading]="isSpinning">
+                    <span>Add</span>
+                  </button>
+                </div>
+              </div> -->
+
+              <div nz-row>
+                <div nz-col nzSpan="24">
+                  <nz-table #tableeeeeeee [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords11"
+                    [nzSize]="'small'" [nzScroll]="{ y: '60vh' }" nzShowSizeChanger="false" class="my-scroll no-wrap1"
+                    nzBordered style="white-space: pre-line">
+                    <thead>
+                      <tr>
+                        <th *ngIf="decreptedroleId != 23" nzWidth="100px" nzLeft
+                          style="font-weight: bold; text-align: center">
+                          Map Units
+                        </th>
+                        <th nzLeft nzWidth="150px" style="font-weight: bold; text-align: center">
+                          Add Image(s)
+                        </th>
+                        <th nzLeft nzWidth="200px" style="font-weight: bold; text-align: center" nzColumnKey="ITEM_NAME"
+                          nzCustomFilter>
+                          Name
+                        </th>
+
+                        <th nzWidth="200px" style="font-weight: bold; text-align: center" nzColumnKey="CATEGORY_NAME"
+                          nzCustomFilter>
+                          Base Unit
+                          <nz-select nzShowSearch nzSize="small" style="width: 100%; font-weight: 500" nzAllowClear
+                            (ngModelChange)="onGlobalUnitChange($event)" nzPlaceHolder="Select Base Unit "
+                            name="UnitNames" [(ngModel)]="BASE_UNIT_ID" required>
+                            <nz-option *ngFor="let data of UnitList" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                            </nz-option>
+                          </nz-select>
+                        </th>
+
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="BASE_QUANTITY"
+                          nzCustomFilter [class.disabled-row]="data.ID">
+                          Quantity Per Unit
+
+                          <input style="width: 100%" nz-input name="BASE_QUANTITYs" (ngModelChange)="
+                              onGlobalBASE_QUANTITYChange($event)
+                            " maxlength="8" nzSize="small" (keypress)="commonFunction.onlynum($event)"
+                            [(ngModel)]="BASE_QUANTITY" placeholder="Enter Quantity Per Unit" autocomplete="off"
+                            type="text" required (blur)="setDefaultBaseQuantity(i)" />
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="BASE_PRICE"
+                          nzCustomFilter>
+                          Base Price(₹)
+                          <input style="width: 100%" nz-input name="BASE_PRICE"
+                            (keypress)="commonFunction.forCostFunction($event)"
+                            (paste)="commonFunction.handlePaste($event)"
+                            (ngModelChange)="onGlobalBASE_PRICEChange($event)" maxlength="32" nzSize="small"
+                            [(ngModel)]="BASE_PRICE" placeholder="Enter Base Price" autocomplete="off" type="text"
+                            required />
+                        </th>
+                        <th nzWidth="180px" style="font-weight: bold; text-align: center" nzColumnKey="TAX_PREFERENCE"
+                          nzCustomFilter>
+                          Tax Preference
+
+                          <nz-select nzShowSearch style="width: 80%; font-weight: 500" nzAllowClear
+                            nzPlaceHolder="Select Tax Preference" name="TaxPreferences"
+                            (ngModelChange)="onGlobalTaxableChange($event)" nzSize="small" [(ngModel)]="TAX_PREFERENCE"
+                            required>
+                            <nz-option [nzValue]="'T'" [nzLabel]="'Taxable'"></nz-option>
+                            <nz-option [nzValue]="'NT'" [nzLabel]="'Non Taxable'"></nz-option>
+                          </nz-select>
+                        </th>
+
+                        <th nzWidth="180px" style="font-weight: bold; text-align: center" nzColumnKey="TAX_ID"
+                          nzCustomFilter>
+                          Tax Slab
+                          <nz-select style="width: 100%" nzShowSearch [disabled]="TAX_PREFERENCE != 'T'" nzAllowClear
+                            nzPlaceHolder="Select Tax Slab" name="TAX_IDs" nzSize="small" [(ngModel)]="TAX_ID" required
+                            (ngModelChange)="onGlobalTaxChange($event)">
+                            <nz-option *ngFor="let data of taxData" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                            </nz-option>
+                          </nz-select>
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="PURCHASE_PRICE"
+                          nzCustomFilter>
+                          Selling Price(₹)
+                          <input style="width: 100%" nz-input name="PURCHASE_PRICEs"
+                            (keypress)="commonFunction.forCostFunction($event)"
+                            (paste)="commonFunction.handlePaste($event)" (ngModelChange)="
+                              onGlobalPURCHASE_PRICEChange($event)
+                            " maxlength="32" nzSize="small" [(ngModel)]="PURCHASE_PRICE"
+                            placeholder="Enter Selling Price" autocomplete="off" type="text" required />
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="DISCOUNT_ALLOWED"
+                          nzCustomFilter>
+                          Discount Allowed ?
+                          <br />
+                          <nz-switch nzSize="small" name="IS_DISCOUNT_ALLOWED_ALL" nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No" [(ngModel)]="IS_DISCOUNT_ALLOWED_ALL" (ngModelChange)="
+                              onGlobaldiscountAllowdedChange($event)
+                            ">
+                          </nz-switch>
+                        </th>
+
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="DISCOUNTED_PRICE"
+                          nzCustomFilter>
+                          Discounted Price(₹)
+                          <input style="width: 100%" nz-input name="DISCOUNT_PRICE_ALL" nzAllowClear="false"
+                            maxlength="8" (keypress)="commonFunction.forCostFunction($event)"
+                            (paste)="commonFunction.handlePaste($event)" [(ngModel)]="DISCOUNT_PRICE_ALL"
+                            (ngModelChange)="
+                              onGlobalDiscountPriceChange($event)
+                            " placeholder="Discounted Price" autocomplete="off" type="text" nzSize="small" [disabled]="
+                              IS_DISCOUNT_ALLOWED_ALL ? 'false' : 'true'
+                            " />
+                        </th>
+                        <!-- <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="HEIGHT"
+                          nzCustomFilter>
+                          Height (In CM)
+                          <input style="width: 100%" nz-input name="HEIGHT"
+                            (ngModelChange)="onGlobalHEIGHTChange($event)"
+                            (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
+                            (paste)="commonFunction.handlePaste($event)" nzSize="small" [(ngModel)]="HEIGHT"
+                            placeholder="Enter Height" autocomplete="off" type="text" required />
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="WEIGHT"
+                          nzCustomFilter>
+                          Weight (In KG)
+                          <input style="width: 100%" nz-input name="WEIGHT"
+                            (ngModelChange)="onGlobalWEIGHTChange($event)"
+                            (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
+                            (paste)="commonFunction.handlePaste($event)" nzSize="small" [(ngModel)]="WEIGHT"
+                            placeholder="Enter Weight" autocomplete="off" type="text" required />
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="LENGTH"
+                          nzCustomFilter>
+                          Length (In CM)
+                          <input style="width: 100%" nz-input name="LENGTH"
+                            (ngModelChange)="onGlobalLENGTHChange($event)"
+                            (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
+                            (paste)="commonFunction.handlePaste($event)" nzSize="small" [(ngModel)]="LENGTH"
+                            placeholder="Enter Length" autocomplete="off" type="text" required />
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="BREADTH"
+                          nzCustomFilter>
+                          Breadth (In CM)
+                          <input style="width: 100%" nz-input name="BREADTH"
+                            (ngModelChange)="onGlobalBREADTHChange($event)"
+                            (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
+                            (paste)="commonFunction.handlePaste($event)" nzSize="small" [(ngModel)]="BREADTH"
+                            placeholder="Enter Breadth" autocomplete="off" type="text" required />
+                        </th> -->
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="NAME"
+                          nzCustomFilter>
+                          Average Level
+
+                          <input style="width: 100%" nz-input name="AVG_LEVELs"
+                            (ngModelChange)="onGlobalAVG_LEVELChange($event)" maxlength="8"
+                            (keypress)="commonFunction.onlynumdot($event)" nzSize="small" [(ngModel)]="AVG_LEVEL"
+                            placeholder="Enter Average Level" autocomplete="off" type="text" required />
+                        </th>
+
+                        <th nzWidth="170px" style="font-weight: bold; text-align: center" nzColumnKey="DATE_OF_ENTRY"
+                          nzCustomFilter>
+                          Re-Order Level
+                          <input style="width: 100%" nz-input name="REORDER_STOCK_LEVELs" (ngModelChange)="
+                              onGlobalREORDER_STOCK_LEVELChange($event)
+                            " maxlength="8" (keypress)="commonFunction.onlynumdot($event)" nzSize="small"
+                            [(ngModel)]="REORDER_STOCK_LEVEL" placeholder="Enter Re-Order Level" autocomplete="off"
+                            type="text" required />
+                        </th>
+
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="REMARKS"
+                          nzCustomFilter>
+                          Alert Level
+                          <input style="width: 100%" nz-input name="ALERT_STOCK_LEVELs" (ngModelChange)="
+                              onGlobalALERT_STOCK_LEVELChange($event)
+                            " (keypress)="commonFunction.onlynumdot($event)" maxlength="8" nzSize="small"
+                            [(ngModel)]="ALERT_STOCK_LEVEL" placeholder="Enter Alert Level" autocomplete="off"
+                            type="text" required />
+                        </th>
+
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="SKU_CODE"
+                          nzCustomFilter>
+                          SKU Code
+                          <input style="width: 100%" nz-input name="SKU_CODEs"
+                            (ngModelChange)="onGlobalSKUChange($event)" maxlength="32" nzSize="small"
+                            [(ngModel)]="SKU_CODE" placeholder="Enter SKU Code" autocomplete="off" type="text"
+                            required />
+                        </th>
+
+                        <th nzWidth="270px" style="font-weight: bold; text-align: center"
+                          nzColumnKey="INVENTORY_TRACKING_TYPE" nzCustomFilter>
+                          Inventory Tracking Type
+                          <nz-select nzShowSearch style="width: 100%; font-weight: 500" nzAllowClear
+                            nzPlaceHolder="Select Inventory Tracking Type" name="INVENTORY_TRACKING_TYPEs"
+                            (ngModelChange)="onGlobaltrackingtypeChange($event)" nzSize="small"
+                            [(ngModel)]="INVENTORY_TRACKING_TYPE" required>
+                            <nz-option nzValue="N" nzLabel="None"></nz-option>
+
+                            <nz-option [nzValue]="'S'" [nzLabel]="'Serial No. Wise'"></nz-option>
+                            <nz-option [nzValue]="'B'" [nzLabel]="'Batch Wise'"></nz-option>
+                          </nz-select>
+                        </th>
+
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="WARRANTY_ALLOWED"
+                          nzCustomFilter>
+                          Warranty Allowed ? <br />
+                          <nz-switch [disabled]="
+                              INVENTORY_TRACKING_TYPE != 'B' &&
+                              INVENTORY_TRACKING_TYPE != 'S'
+                            " nzSize="small" name="WARRANTY_ALLOWED_ALL" nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No" [(ngModel)]="WARRANTY_ALLOWED_ALL" (ngModelChange)="
+                              onGlobalWarrantyAllowdedChange($event)
+                            " [disabled]="INVENTORY_TRACKING_TYPE != 'S'">
+                          </nz-switch>
+                        </th>
+
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="WARRANTY_PERIOD"
+                          nzCustomFilter>
+                          Warranty Period(days)
+                          <input style="width: 100%" nz-input name="AllWarrantyPeriods" (ngModelChange)="
+                              onGlobalWarrantyPeriodChange($event)
+                            " maxlength="8" nzSize="small" [(ngModel)]="WARRANTY_PERIOD_ALL"
+                            (keypress)="commonFunction.omit($event)" placeholder="Enter Warranty Period"
+                            autocomplete="off" type="text" [disabled]="
+                              INVENTORY_TRACKING_TYPE != 'S' ||
+                              !WARRANTY_ALLOWED_ALL
+                            " required />
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center">
+                          Warranty Card&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                            nzTooltipTitle=" Please select an image or pdf file (PNG, JPG, JPEG, pdf) with 1mb file size"></span>
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center"
+                          nzColumnKey="GUARANTEE_ALLOWED" nzCustomFilter>
+                          Guarantee Allowed ?
+                          <br />
+                          <nz-switch [disabled]="INVENTORY_TRACKING_TYPE != 'S'" nzSize="small"
+                            name="GUARANTEE_ALLOWED_ALL" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                            [(ngModel)]="GUARANTEE_ALLOWED_ALL" (ngModelChange)="
+                              onGlobalGuarnteeAllowdedChange($event)
+                            ">
+                          </nz-switch>
+                        </th>
+
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="GUARANTEE_PERIOD"
+                          nzCustomFilter>
+                          Guarantee Period(days)
+                          <input style="width: 100%" nz-input name="GUARANTEE_PERIOD_ALL" nzAllowClear="false"
+                            maxlength="8" (keypress)="commonFunction.omit($event)" [(ngModel)]="GUARANTEE_PERIOD_ALL"
+                            (ngModelChange)="
+                              globalguaranteePeriodChange($event)
+                            " placeholder="Guarantee Period" autocomplete="off" type="text" nzSize="small" [disabled]="
+                              INVENTORY_TRACKING_TYPE != 'S' ||
+                              !GUARANTEE_ALLOWED_ALL
+                            " />
+                        </th>
+
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center"
+                          nzColumnKey="EXPIRY_DATE_ALLOWED" nzCustomFilter>
+                          Expiry Allowed ?
+                          <br />
+                          <nz-switch [disabled]="
+                              INVENTORY_TRACKING_TYPE !== 'B' &&
+                              INVENTORY_TRACKING_TYPE !== 'S'
+                            " nzSize="small" name="EXPIRY_DATE_ALLOWED" nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No" [(ngModel)]="EXPIRY_DATE_ALLOWED" (ngModelChange)="
+                              onGlobalExpiryAllowdedChange($event)
+                            ">
+                          </nz-switch>
+                        </th>
+
+                        <!-- <th
+                          nzWidth="150px"
+                          style="font-weight: bold; text-align: center"
+                          nzColumnKey="RETURN_ALOW"
+                          nzCustomFilter
+                        >
+                          Return Allowed ?
+                          <br />
+                          <nz-switch
+                            nzSize="small"
+                            name="IS_RETURN_ALOW_ALL"
+                            nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No"
+                            [(ngModel)]="IS_RETURN_ALOW_ALL"
+                            (ngModelChange)="
+                              onGlobalreturnAllowdedChange($event)
+                            "
+                          >
+                          </nz-switch>
+                        </th> -->
+
+                        <!-- <th
+                          nzWidth="150px"
+                          style="font-weight: bold; text-align: center"
+                          nzColumnKey="RETURN_ALLOW_PERIOD"
+                          nzCustomFilter
+                        >
+                          Returning Period(days)
+                          <br />
+                          <input
+                            style="width: 100%"
+                            nz-input
+                            name="RETURN_ALLOW_PERIOD_ALL"
+                            nzAllowClear="false"
+                            maxlength="8"
+                            (keypress)="commonFunction.omit($event)"
+                            [(ngModel)]="RETURN_ALLOW_PERIOD_ALL"
+                            (ngModelChange)="onGlobalReturnPeriodChange($event)"
+                            placeholder="Returning Period"
+                            autocomplete="off"
+                            type="text"
+                            nzSize="small"
+                            [disabled]="IS_RETURN_ALOW_ALL ? 'false' : 'true'"
+                          />
+                        </th> -->
+
+                        <!-- <th
+                          nzWidth="150px"
+                          style="font-weight: bold; text-align: center"
+                          nzColumnKey="REPLACEMENT_ALLOW"
+                          nzCustomFilter
+                        >
+                          Replacement Allowed ?
+                          <br />
+                          <nz-switch
+                            nzSize="small"
+                            name="IS_REPLACEMENT_ALLOW_ALL"
+                            nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No"
+                            [(ngModel)]="IS_REPLACEMENT_ALLOW_ALL"
+                            (ngModelChange)="
+                              onGlobalReplacementAllowdedChange($event)
+                            "
+                          >
+                          </nz-switch>
+                        </th> -->
+
+                        <!-- <th
+                          nzWidth="150px"
+                          style="font-weight: bold; text-align: center"
+                          nzColumnKey="REPLACEMENT_PERIOD"
+                          nzCustomFilter
+                        >
+                          Replacement Period(days)
+                          <input
+                            style="width: 100%"
+                            nz-input
+                            name="REPLACEMENT_PERIOD_ALL"
+                            nzAllowClear="false"
+                            maxlength="8"
+                            (keypress)="commonFunction.omit($event)"
+                            [(ngModel)]="REPLACEMENT_PERIOD_ALL"
+                            (ngModelChange)="
+                              onGlobalreplacemenrPriceChange($event)
+                            "
+                            placeholder="Replacement Period"
+                            autocomplete="off"
+                            type="text"
+                            nzSize="small"
+                            [disabled]="
+                              IS_REPLACEMENT_ALLOW_ALL ? 'false' : 'true'
+                            "
+                          />
+                        </th> -->
+
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center"
+                          nzColumnKey="EXPECTED_DELIVERY_IN_DAYS" nzCustomFilter>
+                          Expected Delivery Day(s)
+                          <input style="width: 100%" nz-input name="IS_ALL_EXPECTED" nzAllowClear="false" maxlength="8"
+                            (keypress)="commonFunction.omit($event)" [(ngModel)]="IS_ALL_EXPECTED"
+                            (ngModelChange)="onGlobalExpectedChange($event)" placeholder="Expected Days"
+                            autocomplete="off" type="text" nzSize="small" />
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center"
+                          nzColumnKey="EXPECTED_DELIVERY_CHARGES" nzCustomFilter>
+                          Expected Delivery Charges(₹)
+                          <input style="width: 100%" nz-input name="EXPECTED_DELIVERY_CHARGES" nzAllowClear="false"
+                            maxlength="8" (keypress)="commonFunction.omit($event)"
+                            [(ngModel)]="EXPECTED_DELIVERY_CHARGES" (ngModelChange)="
+                              onGlobalExpectedChargeChange($event)
+                            " placeholder="Expected Charges" autocomplete="off" type="text" nzSize="small" />
+                        </th>
+
+
+                        <th nzWidth="250px" style="font-weight: bold; text-align: center">
+                          Add Inventory Details Image
+                        </th>
+                        <th nzWidth="150px" style="font-weight: bold; text-align: center">
+                          Short Code
+                        </th>
+                        <th nzRight nzWidth="120px" style="font-weight: bold; text-align: center" nzColumnKey="STATUS"
+                          nzCustomFilter>
+                          Status
+                          <br />
+                          <nz-switch nzSize="small" name="STATUS" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                            [(ngModel)]="STATUS" (ngModelChange)="
+                              onGlobalstatusAllowdedChange($event)
+                            ">
+                          </nz-switch>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr *ngFor="let data of tableeeeeeee.data; let i = index" style="text-align: center">
+                        <td nzLeft style="text-align: center" *ngIf="decreptedroleId != 23">
+                          <nz-tag nzColor="#2db7f5" *ngIf="data['ID']; else MapUnitblock" (click)="ItemMapping(data, i)"
+                            nz-tooltip nzTooltipTitle="Unit Mapping" style="cursor: pointer">
+                            <span nz-icon nzType="link" nzTheme="outline" style="font-size: 15px">
+                            </span>&nbsp;&nbsp;Map
+                          </nz-tag>
+
+                          <ng-template #MapUnitblock>-</ng-template>
+                        </td>
+                        <td nzLeft style="text-align: center">
+                          <nz-tag nzColor="#2db7f5" (click)="openItemImagesDrawer(data)" nzTooltipTitle="Add Image(s)"
+                            *ngIf="data['ID']; else MapUnitblock" nz-tooltip style="cursor: pointer">
+                            <span nz-icon nzType="plus" nzTheme="outline" style="font-size: 15px">
+                            </span>&nbsp;&nbsp;Image(s)
+                          </nz-tag>
+                          <ng-template #MapUnitblock>-</ng-template>
+                        </td>
+                        <td nzLeft align="left" [class.disabled-row]="data.IS_DISABLED">
+                          <span *ngIf="data['VARIANT_COMBINATION']">
+                            {{
+                            data["VARIANT_COMBINATION"].length > 18
+                            ? (data["VARIANT_COMBINATION"]
+                            | slice : 0 : 18) + "..."
+                            : data["VARIANT_COMBINATION"]
+                            }}
+                          </span>
+
+                          <span *ngIf="!data['VARIANT_COMBINATION']">-</span>
+                        </td>
+
+                        <td align="center" [class.disabled-row]="data.ID">
+                          <nz-select nzShowSearch nzSize="small" style="width: 100%" nzAllowClear
+                            nzPlaceHolder="Select Base Unit " name="Unit Name{{ i }}" [(ngModel)]="data.BASE_UNIT_ID"
+                            required>
+                            <nz-option *ngFor="let data of UnitList" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                            </nz-option>
+                          </nz-select>
+                        </td>
+
+                        <td [class.disabled-row]="data.ID">
+                          <input style="width: 100%; text-align: right" nz-input name="BASE_QUANTITY{{ i }}"
+                            maxlength="8" (keypress)="commonFunction.onlynum($event)" [(ngModel)]="data.BASE_QUANTITY"
+                            placeholder="Quantity Per Unit" autocomplete="off" type="text" nzSize="small" required
+                            (blur)="setDefaultBaseQuantity(i)" />
+                        </td>
+
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%; text-align: right" nz-input name="BASE_PRICE{{ i }}" maxlength="8"
+                            (keypress)="commonFunction.forCostFunction($event)"
+                            (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.BASE_PRICE"
+                            placeholder="Base Price" autocomplete="off" (ngModelChange)="onBasePriceChange($event, i)"
+                            type="text" nzSize="small" required />
+                        </td>
+
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <nz-select nzShowSearch style="width: 100%" nzAllowClear nzPlaceHolder="Select Tax Preference"
+                            name="TaxPreference{{ i }}" (ngModelChange)="onTaxPreferenceChange($event, i)"
+                            nzSize="small" [(ngModel)]="data.TAX_PREFERENCE" required>
+                            <nz-option [nzValue]="'T'" [nzLabel]="'Taxable'"></nz-option>
+                            <nz-option [nzValue]="'NT'" [nzLabel]="'Non Taxable'"></nz-option>
+                          </nz-select>
+                        </td>
+
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <nz-select style="width: 100%" nzShowSearch [disabled]="data.TAX_PREFERENCE != 'T'"
+                            nzAllowClear nzPlaceHolder="Select Tax" name="TAX_ID{{ i }}" nzSize="small"
+                            [(ngModel)]="data.TAX_ID" (ngModelChange)="onTaxChange($event, i)" required>
+                            <nz-option *ngFor="let data of taxData" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                            </nz-option>
+                          </nz-select>
+                        </td>
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%; text-align: right" nz-input name="SELLING_PRICE{{ i }}"
+                            maxlength="8" (keypress)="commonFunction.forCostFunction($event)"
+                            (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.SELLING_PRICE"
+                            placeholder="Selling Price" [disabled]="data.TAX_PREFERENCE == 'T'" autocomplete="off"
+                            (ngModelChange)="onTaxChange($event, i)" type="text" nzSize="small" required />
+                        </td>
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <nz-switch nzSize="small" name="DISCOUNT_ALLOWED{{ i }}" nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No" [(ngModel)]="data.DISCOUNT_ALLOWED"
+                            (ngModelChange)="onChangeDiscountAllowed($event, i)">
+                          </nz-switch>
+                        </td>
+
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%" nz-input name="DISCOUNTED_PRICE{{ i }}" nzAllowClear="false"
+                            maxlength="8" (keypress)="commonFunction.forCostFunction($event)"
+                            (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.DISCOUNTED_PRICE"
+                            placeholder="Discount Price" autocomplete="off" type="text" [disabled]="
+                              data.DISCOUNT_ALLOWED ? 'false' : 'true'
+                            " />
+                        </td>
+                        <!-- <td [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%; text-align: right" nz-input name="HEIGHT{{ i }}" maxlength="8"
+                            (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
+                            (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.HEIGHT" placeholder="Height"
+                            autocomplete="off" type="text" nzSize="small" required />
+                        </td>
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%; text-align: right" nz-input name="WEIGHT{{ i }}" maxlength="8"
+                            (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
+                            (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.WEIGHT" placeholder="Weight"
+                            autocomplete="off" type="text" nzSize="small" required />
+                        </td>
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%; text-align: right" nz-input name="LENGTH{{ i }}" maxlength="8"
+                            (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
+                            (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.LENGTH" placeholder="Length"
+                            autocomplete="off" type="text" nzSize="small" required />
+                        </td>
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%; text-align: right" nz-input name="BREADTH{{ i }}" maxlength="8"
+                            (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
+                            (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.BREADTH"
+                            placeholder="Breadth" autocomplete="off" type="text" nzSize="small" required />
+                        </td> -->
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%" nz-input name="AVG_LEVEL{{ i }}" maxlength="8"
+                            (keypress)="commonFunction.onlynumdot($event)" [(ngModel)]="data.AVG_LEVEL"
+                            placeholder="Average Level" autocomplete="off" type="text" required nzSize="small" />
+                        </td>
+
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <input nzSize="small" style="width: 100%" nz-input name="REORDER_STOCK_LEVEL{{ i }}"
+                            maxlength="8" (keypress)="commonFunction.onlynumdot($event)"
+                            [(ngModel)]="data.REORDER_STOCK_LEVEL" placeholder="Re-Order Stock Level" autocomplete="off"
+                            type="text" required />
+                        </td>
+
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%" nz-input name="ALERT_STOCK_LEVEL{{ i }}" maxlength="8"
+                            nzSize="small" (keypress)="commonFunction.onlynumdot($event)"
+                            [(ngModel)]="data.ALERT_STOCK_LEVEL" placeholder="Alert Stock Level" autocomplete="off"
+                            type="text" required />
+                        </td>
+
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%" nz-input name="SKU_CODE{{ i }}" maxlength="32" nzSize="small"
+                            [(ngModel)]="data.SKU_CODE" placeholder="Enter SKU Code" autocomplete="off" type="text"
+                            required />
+                        </td>
+
+                        <td [class.disabled-row]="data.IS_DISABLED">
+                          <nz-select nzAllowClear="false" nzSize="small" style="width: 100%"
+                            [(ngModel)]="data.INVENTORY_TRACKING_TYPE"
+                            (ngModelChange)="changeTrackingType($event, data)" name="trackingtype{{ i }}"
+                            nzPlaceHolder="Select Inventory Tracking Type">
+                            <nz-option nzValue="N" nzLabel="None"></nz-option>
+                            <nz-option nzValue="S" nzLabel="Serial No. Wise"></nz-option>
+                            <nz-option nzValue="B" nzLabel="Batch Wise"></nz-option>
+                          </nz-select>
+                        </td>
+
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <nz-switch nzSize="small" name="WARRANTY_ALLOWED{{ i }}" nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No" [disabled]="data.INVENTORY_TRACKING_TYPE != 'S'"
+                            [(ngModel)]="data.WARRANTY_ALLOWED" (ngModelChange)="warrantyAllowChange($event, i)">
+                          </nz-switch>
+                        </td>
+
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%" nz-input name="WARRANTY_PERIOD{{ i }}" nzAllowClear="false"
+                            maxlength="8" (keypress)="commonFunction.omit($event)" [(ngModel)]="data.WARRANTY_PERIOD"
+                            placeholder="Warranty Period" autocomplete="off" type="text" [disabled]="
+                              data.INVENTORY_TRACKING_TYPE != 'S' ||
+                              !data.WARRANTY_ALLOWED
+                            " />
+                        </td>
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <!-- Upload Button -->
+                          <button *ngIf="
+                              !dataList[i]['fileURL'] &&
+                              data.WARRANTY_ALLOWED &&
+                              (!data.WARRANTY_CARD ||
+                                data.WARRANTY_CARD.trim() === '')
+                            " nz-button style="
+                              height: 28px;
+                              padding: 0px 7px;
+                              font-size: 10px;
+                              width: 100%;
+                            " (click)="image1.click()">
+                            Upload
+                            <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg, .pdf, .doc, .docx"
+                              (change)="onFileSelected($event, i)" style="display: none" />
+                          </button>
+                          <nz-spin [nzSpinning]="dataList[i]['loading']">
+                            <div style="
+                                color: blue;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                              " #NAME [attr.title]="isTextOverflowing(NAME)? data.WARRANTY_CARD: null">
+                              {{ data.WARRANTY_CARD }}
+                            </div>
+                            <div>
+                              <a *ngIf="
+                                  data.WARRANTY_CARD &&
+                                  data.WARRANTY_CARD.trim() !== '' &&
+                                  data.WARRANTY_ALLOWED
+                                " style="color: blue; margin-right: 9px" [href]="
+                                  retriveimgUrl +
+                                  'WarrantyCard/' +
+                                  data.WARRANTY_CARD
+                                " target="_blank" nz-tooltip nzTooltipTitle="Click Here To View Uploaded file">
+                                <span nz-icon nzType="eye" nzTheme="outline"></span>
+                              </a>
+                              <span *ngIf="
+                                  ((data.WARRANTY_CARD &&
+                                    data.WARRANTY_CARD.trim() !== '') ||
+                                    dataList[i]['fileURL']) &&
+                                  data.WARRANTY_ALLOWED
+                                " nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete?"
+                                nzPopconfirmPlacement="top" (nzOnConfirm)="image1DeleteConfirm(data, i)"
+                                (nzOnCancel)="deleteCancel()" style="
+                                  cursor: pointer;
+                                  color: red;
+                                  margin-left: 10px;
+                                ">
+                                <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                                  nzTooltipTitle="Delete"></span>
+                              </span>
+                            </div>
+                          </nz-spin>
+                        </td>
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <nz-switch [disabled]="data.INVENTORY_TRACKING_TYPE != 'S'" nzSize="small"
+                            name="GUARANTEE_ALLOWED{{ i }}" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                            [(ngModel)]="data.GUARANTEE_ALLOWED" (ngModelChange)="guaranteeAllowChange($event, i)">
+                          </nz-switch>
+                        </td>
+
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%" nz-input name="GUARANTEE_PERIOD{{ i }}" nzAllowClear="false"
+                            maxlength="8" (keypress)="commonFunction.omit($event)" [(ngModel)]="data.GUARANTEE_PERIOD"
+                            placeholder="Guarantee Period" autocomplete="off" type="text" [disabled]="
+                              data.INVENTORY_TRACKING_TYPE != 'S' ||
+                              !data.GUARANTEE_ALLOWED
+                            " />
+                        </td>
+
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <nz-switch nzSize="small" [disabled]="
+                              data.INVENTORY_TRACKING_TYPE !== 'B' &&
+                              data.INVENTORY_TRACKING_TYPE !== 'S'
+                            " name="EXPIRY_DATE_ALLOWED{{ i }}" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                            [(ngModel)]="data.EXPIRY_DATE_ALLOWED">
+                          </nz-switch>
+                        </td>
+
+                        <!-- <td
+                          align="center"
+                          [class.disabled-row]="data.IS_DISABLED"
+                        >
+                          <nz-switch
+                            nzSize="small"
+                            name="RETURN_ALOW{{ i }}"
+                            nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No"
+                            [(ngModel)]="data.RETURN_ALOW"
+                            (ngModelChange)="returnStatusChange($event, i)"
+                          >
+                          </nz-switch>
+                        </td>
+
+                        <td
+                          align="center"
+                          [class.disabled-row]="data.IS_DISABLED"
+                        >
+                          <input
+                            style="width: 100%"
+                            nz-input
+                            name="RETURN_ALLOW_PERIOD{{ i }}"
+                            nzAllowClear="false"
+                            maxlength="8"
+                            (keypress)="commonFunction.omit($event)"
+                            [(ngModel)]="data.RETURN_ALLOW_PERIOD"
+                            placeholder="Returning Period"
+                            autocomplete="off"
+                            type="text"
+                            [disabled]="data.RETURN_ALOW ? 'false' : 'true'"
+                          />
+                        </td> -->
+
+                        <!-- <td
+                          align="center"
+                          [class.disabled-row]="data.IS_DISABLED"
+                        >
+                          <nz-switch
+                            nzSize="small"
+                            name="REPLACEMENT_ALLOW{{ i }}"
+                            nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No"
+                            [(ngModel)]="data.REPLACEMENT_ALLOW"
+                            (ngModelChange)="onReplacementChange($event, i)"
+                          >
+                          </nz-switch>
+                        </td>
+
+                        <td
+                          align="center"
+                          [class.disabled-row]="data.IS_DISABLED"
+                        >
+                          <input
+                            style="width: 100%"
+                            nz-input
+                            name="REPLACEMENT_PERIOD{{ i }}"
+                            nzAllowClear="false"
+                            maxlength="8"
+                            (keypress)="commonFunction.omit($event)"
+                            [(ngModel)]="data.REPLACEMENT_PERIOD"
+                            placeholder="Replacement Period"
+                            autocomplete="off"
+                            type="text"
+                            [disabled]="
+                              data.REPLACEMENT_ALLOW ? 'false' : 'true'
+                            "
+                          />
+                        </td> -->
+
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%" nz-input name="EXPECTED_DELIVERY_IN_DAYS{{ i }}"
+                            nzAllowClear="false" maxlength="8" (keypress)="commonFunction.omit($event)"
+                            [(ngModel)]="data.EXPECTED_DELIVERY_IN_DAYS" placeholder="Expected Delivery Day(s)"
+                            autocomplete="off" type="text" />
+                        </td>
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%" nz-input name="EXPECTED_DELIVERY_CHARGES{{ i }}"
+                            nzAllowClear="false" maxlength="8" (keypress)="commonFunction.omit($event)"
+                            [(ngModel)]="data.EXPECTED_DELIVERY_CHARGES" placeholder="Expected Delivery Charges"
+                            autocomplete="off" type="text" />
+                        </td>
+
+
+                        <td align="center">
+                          <button *ngIf="
+                              !dataList[i]['fileURL1'] &&
+                              (!data.INVENTORY_DETAILS_IMAGE ||
+                                data.INVENTORY_DETAILS_IMAGE.trim() === '')
+                            " nz-button style="
+                              height: 28px;
+                              padding: 0px 7px;
+                              font-size: 10px;
+                              width: 100%;
+                            " (click)="image2.click()">
+                            Upload
+                            <input #image2 name="image2" type="file" accept=".png, .jpg, .jpeg"
+                              (change)="onFileSelected1($event, i)" style="display: none" />
+                          </button>
+                          <nz-spin [nzSpinning]="dataList[i]['loading']">
+                            <div style="
+                                color: blue;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                              " #NAME1 [attr.title]="isTextOverflowing(NAME1)? data.INVENTORY_DETAILS_IMAGE: null">
+                              {{ data.INVENTORY_DETAILS_IMAGE }}
+                            </div>
+                            <div>
+                              <a *ngIf="
+                                  data.INVENTORY_DETAILS_IMAGE &&
+                                  data.INVENTORY_DETAILS_IMAGE.trim() !== ''
+                                " style="color: blue; margin-right: 9px" [href]="
+                                  retriveimgUrl +
+                                  'InventoryDetailsImage/' +
+                                  data.INVENTORY_DETAILS_IMAGE
+                                " target="_blank" nz-tooltip nzTooltipTitle="Click Here To View Uploaded Image">
+                                <span nz-icon nzType="eye" nzTheme="outline"></span>
+                              </a>
+                              <span *ngIf="
+                                  (data.INVENTORY_DETAILS_IMAGE &&
+                                    data.INVENTORY_DETAILS_IMAGE.trim() !==
+                                      '') ||
+                                  dataList[i]['fileURL1']
+                                " nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete?"
+                                nzPopconfirmPlacement="top" (nzOnConfirm)="image1DeleteConfirm1(data, i)"
+                                (nzOnCancel)="deleteCancel1()" style="
+                                  cursor: pointer;
+                                  color: red;
+                                  margin-left: 10px;
+                                ">
+                                <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                                  nzTooltipTitle="Delete"></span>
+                              </span>
+                            </div>
+                          </nz-spin>
+                        </td>
+                        <td align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <input style="width: 100%" nz-input name="SHORT_CODE{{ i }}" nzAllowClear="false"
+                            maxlength="8" (keypress)="commonFunction.allowOnly($event)" [(ngModel)]="data.SHORT_CODE"
+                            placeholder="Short Code" autocomplete="off" type="text" />
+                        </td>
+                        <td nzRight align="center" [class.disabled-row]="data.IS_DISABLED">
+                          <nz-switch nzSize="small" name="STATUS{{ i }}" nzCheckedChildren="Yes"
+                            nzUnCheckedChildren="No" [(ngModel)]="data.STATUS">
+                          </nz-switch>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </nz-table>
+                </div>
+              </div>
+            </nz-spin>
+          </form>
+
+          <div class="footer">
+            <button type="button" class="ant-btn ant-btn-primary" nz-button (click)="back()" style="margin-right: 8px">
+              <span><span nz-icon nzType="arrow-left" nzTheme="outline"></span>&nbsp;Previous</span>
+            </button>
+
+            <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+              <span>Cancel</span>
+            </button>
+
+            <button type="button" [nzLoading]="isSpinning" class="ant-btn ant-btn-primary" nz-button [nzOkText]="'Yes'"
+              (click)="Savealldata()" nz-popconfirm nzPopconfirmTitle="Are you sure save or update Variant Details?"
+              [nzCondition]="switchValue" (nzOnConfirm)="saveFinal()" (nzOnCancel)="cancelFinal()"
+              style="margin-right: 8px">
+              Save & Close
+            </button>
+          </div>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </form>
+</div>
+
+<!-- Unit mapping drawer -->
+<div *ngIf="ItemMappingDrawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '10px',
+      'padding-left': '15px',
+      'padding-right': '15px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="900"
+    [nzVisible]="ItemMappingDrawerVisible" [nzTitle]="ItemMappingDrawerTitle" (nzOnClose)="ItemMappingDrawerClose()"
+    (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-item-mapping [drawerClose]="ItemMappingCloseCallback" [drawerVisible]="ItemMappingDrawerVisible"
+        [data]="drawerData" [UnitName]="Unitname" [UnitId]="Unitid" [itemcategoryis]="itemcategoryis" [itemId]="ItemId">
+      </app-item-mapping>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<!-- Add Image Drawer -->
+<div *ngIf="itemImagesDrawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="900"
+    [nzVisible]="itemImagesDrawerVisible" [nzTitle]="itemImagesDrawerTitle" (nzOnClose)="itemImagesDrawerClose()"
+    (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-add-inventory-images [drawerClose]="itemImagesDrawerCloseCallback" [drawerVisible]="itemImagesDrawerVisible"
+        [data]="addImageDrawerData">
+      </app-add-inventory-images>
+    </ng-container>
+  </nz-drawer>
+</div>

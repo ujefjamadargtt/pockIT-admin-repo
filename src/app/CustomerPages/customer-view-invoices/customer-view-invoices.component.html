@@ -1,0 +1,49 @@
+<div>
+    <form nz-form #websitebannerPage="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row>
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Rate The Technician</nz-form-label>
+                        <nz-form-control>
+                            <nz-rate [(ngModel)]="datalist.RATING" name="rates"></nz-rate>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzNoColon>Write a Review</nz-form-label>
+                        <nz-form-control>
+                            <textarea nz-input rows="3" name="description" placeholder="Write a Review"
+                                [(ngModel)]="datalist.COMMENTS" maxlength="512" (focus)="isFocused = 'COMMENTS'"
+                                (blur)="isFocused = ''"></textarea>
+
+                            <h6 style="color: red; font-size: 10px" *ngIf="
+                    isFocused === 'COMMENTS' ||
+                    (datalist.COMMENTS && isFocused === 'COMMENTS')
+                  ">
+                                {{ datalist.COMMENTS?.length || 0 }}/128
+                            </h6>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </nz-spin>
+    </form>
+
+    <div class="footer">
+        <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+            <span>Cancel</span>
+        </button>
+
+        <button type="button" class="ant-btn ant-btn-primary" *ngIf="datalistCount == 0" nz-button
+            [nzLoading]="isSpinning" (click)="save(false)">
+            <span>Save & Close</span>
+        </button>
+
+        <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning"
+            *ngIf="datalistCount > 0" (click)="save(false)">
+            <span>Update & close</span>
+        </button>
+    </div>
+</div>

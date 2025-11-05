@@ -1,0 +1,12 @@
+export class TimeSlotData {
+    ID;
+    ORG_ID;
+    DAY_START_TIME;
+    DAY_END_TIME;
+    SLOT1_START_TIME;
+    SLOT1_END_TIME;
+    SLOT2_START_TIME;
+    SLOT2_END_TIME;
+    SLOT3_START_TIME;
+    SLOT3_END_TIME;
+}

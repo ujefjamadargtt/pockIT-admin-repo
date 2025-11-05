@@ -1,0 +1,131 @@
+<div>
+  <div nz-row style="padding: 10px 20px">
+    <div nz-col nzSpan="12" class="mainnam">
+      <!-- Date : {{ data.DATE | date : "dd/MM/yyyy  HH:mm a" }} -->
+    </div>
+    <div nz-col nzSpan="12" class="mainnam">
+      <!-- Movement Request No. : {{ data.MOVEMENT_REQUEST_NO }} -->
+    </div>
+    <div nz-col nzSpan="12" class="mainnam">
+      <!-- Source Godown : {{ data.SOURCE_WAREHOUSE_NAME }} -->
+    </div>
+    <div nz-col nzSpan="12" class="mainnam">
+      <!-- Destination Godown : {{ data.DESTINATION_WAREHOUSE_NAME }} -->
+    </div>
+  </div>
+
+  <div nz-row style="padding: 0px 10px">
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <nz-table
+        class="my-scroll no-wrap1"
+        nzBordered
+        #maptrainpoint
+        nzShowSizeChanger
+        [nzData]="items"
+        [nzBordered]="true"
+        [nzFrontPagination]="false"
+        [nzTotal]="totaldata"
+        [nzShowPagination]="false"
+        [nzScroll]="{ y: '290px' }"
+        nzSize="small"
+        style="white-space: pre-line"
+      >
+        <thead>
+          <tr>
+            <th nzWidth="120px">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of maptrainpoint.data; let i = index">
+            <td style="white-space: pre-line; text-align: left"></td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <!-- <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID"
+      (click)="reject111()"
+      style="margin-right: 8px"
+    >
+      <span>Reject</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID"
+      (click)="approve()"
+    >
+      <span>Approve</span>
+    </button> -->
+</div>
+
+<!-- <nz-modal
+  [nzWidth]="500"
+  [(nzVisible)]="showreject"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="content"
+  [nzTitle]="'Profile Photo View'"
+  [nzFooter]="ImageModalFooter"
+>
+  <ng-template #content>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Reject Remark</nz-form-label>
+
+            <nz-form-control>
+              <textarea
+                nz-input
+                rows="2"
+                name="data.REASON"
+                autocomplete="off"
+                autofill="off"
+                placeholder="Enter Reject Remark"
+                [(ngModel)]="data.REASON"
+                maxlength="500"
+              >
+              </textarea>
+
+              <h6
+                style="color: red; font-size: 10px"
+                *ngIf="data.REASON != undefined"
+              >
+                {{ data.REASON.length }}/ 500
+              </h6>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #ImageModalFooter>
+    <button nz-button nzType="default"   [nzLoading]="isSpinning" (click)="closereject()">
+      Close
+    </button>&nbsp;
+    <button nz-button nzType="primary"   [nzLoading]="isSpinning" (click)="reject()">
+      Reject
+    </button>
+  </ng-template>
+</nz-modal> -->

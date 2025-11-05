@@ -1,0 +1,141 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8">
+    <div class="formname">
+      <b>
+        <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
+          style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp; {{ formTitle }}
+      </b>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="4" nzXl="16" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 270px">
+          <input type="text" name="search" nz-input (keyup)="keyup($event)" placeholder="Min 3 chars required."
+            [(ngModel)]="searchText" autocomplete="off" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search(true)" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item style="margin-right: 0px">
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>New Role
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+<div nz-row style="padding-top: 10px">
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)" [nzSize]="'small'" [nzScroll]="{ y: '50vh' }">
+      <thead nzSingleSort>
+        <tr>
+          <th nzWidth="30px" nzLeft>Action</th>
+          <th nzWidth="30px" nzLeft>Forms</th>
+          <th nzWidth="200px" nzShowSort align="center" nzColumnKey="PARENT_ROLE_NAME" [nzSortFn]="true">
+            Parent
+          </th>
+          <th nzWidth="200px" nzColumnKey="NAME" [nzSortFn]="true">Name</th>
+          <!-- <th nzWidth="320px" nzColumnKey="DESCRIPTION" [nzSortFn]="true">
+            Description
+          </th> -->
+          <th nzWidth="60px" nzShowSort align="center" nzColumnKey="TYPE" [nzSortFn]="true">
+            Type
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td align="center">
+            <a (click)="edit(data)">
+              <span nz-icon nzType="edit" nzTheme="twotone" style="font-size: 15px" nzTooltipTitle="Edit"
+                nz-tooltip></span>
+            </a>
+          </td>
+
+          <td align="center">
+            <a (click)="MapForms(data)">
+              <span nz-icon nzType="form" nzTheme="outline" style="font-size: 15px; color: #0d6efd"
+                nzTooltipTitle="Form Mapping" nz-tooltip></span>
+            </a>
+          </td>
+          <td align="left" style="white-space: pre-line">
+            <span *ngIf="data.PARENT_ID != 0">{{ data.PARENT_ROLE_NAME }}</span>
+            <span *ngIf="data.PARENT_ID == 0">None</span>
+          </td>
+
+          <td align="left">
+            <span *ngIf="data['NAME'] != null">
+              <span *ngIf="data['NAME'].length >= 40" nz-popover [nzPopoverContent]="data['NAME']"
+                nzPopoverPlacement="topLeft">
+                {{ data["NAME"] == null ? "-" : (data["NAME"] | slice : 0 : 40)
+                }}{{ data["NAME"].length > 40 ? "..." : "" }}
+              </span>
+              <span *ngIf="data['NAME'].length < 40">
+                {{
+                data["NAME"] == null ? "-" : (data["NAME"] | slice : 0 : 40)
+                }}
+                {{ data["NAME"].length > 40 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data['NAME'] == null">-</span>
+          </td>
+          <!-- <td align="left">{{ data.NAME }}</td> -->
+
+          <!-- <td align="left">
+            <span
+              nzPopoverPlacement="top"
+              nz-popover
+              [nzPopoverContent]="popoverContent"
+              nzPopoverOverlayClassName="custom-popover"
+              class="descreption-ellipsis"
+            >
+              {{ data.DESCRIPTION }}
+            </span>
+          </td> -->
+          <td align="left">{{ data.TYPE }}</td>
+          <!-- Popover Content Template -->
+          <ng-template #popoverContent>
+            <span class="custom-popover-content">{{ data.DESCRIPTION }}</span>
+          </ng-template>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div *ngIf="drawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="320" [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-role [drawerClose]="closeCallback" [data]="drawerData"></app-role>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="drawerVisible1">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1000" [nzVisible]="drawerVisible1"
+    [nzTitle]="drawerTitle1" (nzOnClose)="drawerClose1()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-roledetails [drawerClose]="closeCallback1" [data]="drawerData1" [MapData]="MapData" [loadForm]="loadForm"
+        [roleDetailsData]="drawerData2">
+      </app-roledetails>
+    </ng-container>
+  </nz-drawer>
+</div>

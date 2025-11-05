@@ -1,0 +1,52 @@
+nz-form-item {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+  }
+
+  .custom-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Pushes items to edges */
+    width: 100%;
+    
+    }
+    
+    .left-section {
+    display: flex;
+    align-items: center;
+    }
+    
+    .close-icon {
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    margin-right: 10px;
+    }
+    
+    .search-text {
+      font-size: 16px !important;
+      font-weight: 500;
+      color: #333;
+      }
+    
+    .search-container {
+    flex-grow: 1;
+    max-width: 280px;
+    }
+    
+    .search-container input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+    }
+    
+    
+    :host::ng-deep .ant-modal-header {
+    padding: 9px 19px;
+    }
+    

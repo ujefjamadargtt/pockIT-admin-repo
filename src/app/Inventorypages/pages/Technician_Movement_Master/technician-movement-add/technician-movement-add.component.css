@@ -1,0 +1,43 @@
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+  width: 100%;
+}
+
+.custom-select-width {
+  width: 100px;
+}
+
+tr:nth-child(even) td {
+  background-color: #f4f3f3;
+}
+
+tr:nth-child(odd) td {
+  background-color: #ebeaea;
+}
+
+td {
+  font-size: 12px;
+}
+
+
+.mainnam {
+  /* color: #000; */
+  font-size: 14px !important;
+  /* font-weight: 600; */
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subname {
+  color: #4c4c4ceb;
+  font-size: 11px !important;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

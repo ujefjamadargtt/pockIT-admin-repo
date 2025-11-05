@@ -1,0 +1,18 @@
+th {
+    text-align: center !important;
+    vertical-align: middle !important;
+    /* font-weight: bold; */
+}
+
+.truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    /* Adjust as needed */
+    display: inline-block;
+}
+
+:host::ng-deep .ant-card-body {
+    padding: 0px;
+}

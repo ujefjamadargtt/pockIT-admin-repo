@@ -1,0 +1,49 @@
+<div>
+  <nz-spin [nzSpinning]="isSpinning">
+    <div *ngIf="isnodata == false">
+      <div id="map" style="height: 68vh; width: 100%"></div>
+      <!-- <div  class="popover-content" *ngIf="TYPE == 'ORDER' || TYPE == 'JOB'">
+        <div nz-row>
+          <div nz-col nzSpan="1" style="text-align: start">
+            <svg
+              viewBox="0 0 450 450"
+              xml:space="preserve"
+              xmlns="http://www.w3.org/2000/svg"
+              enable-background="new 0 0 450 450"
+              width="18"
+              height="18"
+            >
+              <path
+                d="M256.08 54.999c84.87 0 153.81 68.94 153.81 153.96 0 77.059-87.02 195.03-153.2 246.04-85.33-69.24-154.58-167.75-154.58-246.04 0-85.021 68.94-153.96 153.97-153.96zm74.79 150.799c0-41.34-33.521-74.86-74.87-74.86-41.35 0-74.86 33.52-74.86 74.86 0 41.35 33.51 74.87 74.86 74.87s74.87-33.52 74.87-74.87z"
+                fill="#ff1612"
+                class="fill-ff7979"
+              ></path>
+            </svg>
+          </div>
+          <div
+            class="subnam"
+            nz-col
+            nzSpan="23"
+            style="font-size: 15px !important; text-align: start"
+          >
+            <b>{{ Location_name }}</b>
+          </div>
+          <div
+            class="subnam"
+            nz-col
+            nzSpan="24"
+            style="font-size: 13px !important; text-align: start"
+          >
+            {{ Location_Details }}
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <div
+      *ngIf="isnodata == true"
+      style="text-align: center; margin-top: 20vh"
+    >
+      <p class="emptyDataTex">No Location Data Available</p>
+    </div>
+  </nz-spin>
+</div>

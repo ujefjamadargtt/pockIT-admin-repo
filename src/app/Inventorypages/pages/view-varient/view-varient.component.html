@@ -1,0 +1,260 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table #tableeeeeeee [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords"
+      [nzSize]="'small'" [nzScroll]="{ x: '1400px', y: '60vh' }" nzShowSizeChanger="false" class="my-scroll no-wrap1"
+      nzBordered style="white-space: pre-line">
+      <thead>
+        <tr>
+          <th *ngIf="decreptedroleId != 23" nzWidth="100px" nzLeft style="font-weight: bold; text-align: center">
+            Units
+          </th>
+          <th nzLeft nzWidth="100px" style="font-weight: bold; text-align: center">
+            Image(s)
+          </th>
+          <th nzLeft nzWidth="100px" style="font-weight: bold; text-align: center">
+            Stock
+          </th>
+          <th nzLeft nzWidth="100px" style="font-weight: bold; text-align: center">
+            Logs
+          </th>
+          <th nzLeft [nzSortFn]="true" [nzFilterFn]="true" nzWidth="300px" style="font-weight: bold; text-align: center"
+            nzColumnKey="ITEM_NAME" nzCustomFilter>
+            Item Name
+            <nz-filter-trigger [(nzVisible)]="itemNameVisible" [nzDropdownMenu]="itemName">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isitemnameFilterApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+          <th [nzSortFn]="true" [nzFilterFn]="true" nzWidth="200px" style="font-weight: bold; text-align: center"
+            nzColumnKey="HSN_NAME" nzCustomFilter>
+            HSN Code
+            <nz-filter-trigger [(nzVisible)]="hsncodevisible" [nzDropdownMenu]="hsncodedrop">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: ishsncodeFilterApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+          <th [nzSortFn]="true" [nzFilterFn]="true" nzWidth="200px" style="font-weight: bold; text-align: center"
+            nzColumnKey="SKU_CODE" nzCustomFilter>
+            SKU Code
+            <nz-filter-trigger [(nzVisible)]="barcodevisible" [nzDropdownMenu]="barcodedrop">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isbarcodeFilterApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+          <th nzWidth="150px" nzShowSort nzColumnKey="{{ 'INVENTORY_TRACKING_TYPE' }}" [nzSortFn]="true"
+            [nzFilters]="listOftackingType" [nzFilterFn]="true" [nzFilterMultiple]="false"
+            (nzFilterChange)="ontackingTypeFilterChange($event)">
+            Tracking Type
+          </th>
+          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="ALERT_STOCK_LEVEL"
+            nzCustomFilter>
+            Alert Level
+          </th>
+          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="AVG_LEVEL" nzCustomFilter>
+            Avg. Level
+          </th>
+          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="REORDER_STOCK_LEVEL"
+            nzCustomFilter>
+            Re-Order Level
+          </th>
+          <th nzWidth="100px" nzShowSort nzColumnKey="{{ 'STATUS' }}" [nzSortFn]="true" [nzFilters]="listOfFilter"
+            [nzFilterFn]="true" [nzFilterMultiple]="false" (nzFilterChange)="onStatusFilterChange($event)">
+            Status
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of tableeeeeeee.data; let i = index" style="text-align: center">
+          <td nzLeft style="text-align: center" *ngIf="decreptedroleId != 23">
+            <nz-tag nzColor="#2db7f5" *ngIf="data['ID']; else MapUnitblock" (click)="ItemMapping(data, i)" nz-tooltip
+              nzTooltipTitle="Unit Mapping" style="cursor: pointer">
+              <span nz-icon nzType="link" nzTheme="outline" style="font-size: 15px">
+              </span>&nbsp;&nbsp;Map
+            </nz-tag>
+
+            <ng-template #MapUnitblock>-</ng-template>
+          </td>
+          <td nzLeft style="text-align: center">
+            <nz-tag nzColor="#2db7f5" (click)="openItemImagesDrawer(data)" nzTooltipTitle="Add Image(s)"
+              *ngIf="data['ID']; else MapUnitblock" nz-tooltip style="cursor: pointer">
+              <span nz-icon nzType="plus" nzTheme="outline" style="font-size: 15px">
+              </span>&nbsp;&nbsp;Add
+            </nz-tag>
+            <ng-template #MapUnitblock>-</ng-template>
+          </td>
+          <td nzLeft align="center">
+            <nz-tag nzColor="#2db7f5" (click)="ViewStockDetails(data)" nzTooltipTitle="View Stock Details" nz-tooltip
+              style="cursor: pointer">
+              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 11px !important">
+              </span>&nbsp;&nbsp;View
+            </nz-tag>
+          </td>
+          <td nzLeft align="center">
+            <nz-tag nzColor="#2db7f5" (click)="Viewinventorylogs(data)" nzTooltipTitle="View Inventory Logs" nz-tooltip
+              style="cursor: pointer">
+              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 11px !important">
+              </span>&nbsp;&nbsp;View
+            </nz-tag>
+          </td>
+          <td nzLeft align="left">
+            {{ data.ITEM_NAME }} <br />
+            <span *ngIf="data['VARIANT_NAME']" style="font-size: 11px !important">
+              {{
+              data["VARIANT_NAME"].length > 18
+              ? (data["VARIANT_NAME"] | slice : 0 : 18) + "..."
+              : data["VARIANT_NAME"]
+              }}
+            </span>
+
+            <span *ngIf="!data['VARIANT_NAME']">-</span>
+          </td>
+          <td align="center">
+            {{ data.HSN_NAME }}
+          </td>
+          <td align="center">
+            {{ data.SKU_CODE }}
+          </td>
+          <td align="center">
+            {{
+            data.INVENTORY_TRACKING_TYPE == "B"
+            ? "Batch Wise"
+            : data.INVENTORY_TRACKING_TYPE == "S"
+            ? "Serial Wise"
+            : "None"
+            }}
+          </td>
+          <td align="right">
+            {{ data.ALERT_STOCK_LEVEL }} ({{ data.BASE_UNIT_NAME }})
+          </td>
+          <td align="right">
+            {{ data.AVG_LEVEL }} ({{ data.BASE_UNIT_NAME }})
+          </td>
+          <td align="right">
+            {{ data.REORDER_STOCK_LEVEL }} ({{ data.BASE_UNIT_NAME }})
+          </td>
+          <td align="center">
+            <i nz-icon *ngIf="data.STATUS" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+            <i nz-icon *ngIf="!data.STATUS" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<!-- Item Name -->
+<nz-dropdown-menu #itemName="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <nz-input-group [nzSuffix]="inputClearTpl">
+        <input [(ngModel)]="itemNametext" (keyup)="onKeyup($event)" type="text" nz-input
+          placeholder="Search Item Name" />
+      </nz-input-group>
+      <ng-template #inputClearTpl>
+        <span *ngIf="itemNametext" (click)="reset()" nz-icon class="ant-input-clear-icon" nzTheme="fill"
+          nzType="close-circle"></span>
+        <span *ngIf="itemNametext == ''" nz-icon nzType="search" nzTheme="outline"></span>
+      </ng-template>
+    </div>
+  </div>
+</nz-dropdown-menu>
+<nz-dropdown-menu #barcodedrop="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <nz-input-group [nzSuffix]="inputClearTpl">
+        <input [(ngModel)]="barcodetext" (keyup)="onKeyup($event)" (keypress)="omit($event)" type="text" nz-input
+          placeholder="Search SKU Code" />
+      </nz-input-group>
+      <ng-template #inputClearTpl>
+        <span *ngIf="barcodetext" (click)="reset()" nz-icon class="ant-input-clear-icon" nzTheme="fill"
+          nzType="close-circle"></span>
+        <span *ngIf="barcodetext == ''" nz-icon nzType="search" nzTheme="outline"></span>
+      </ng-template>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #hsncodedrop="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <nz-input-group [nzSuffix]="inputClearTpl">
+        <input [(ngModel)]="hsncodetext" (keyup)="onKeyup($event)" (keypress)="omit($event)" type="text" nz-input
+          placeholder="Search HSN Code" />
+      </nz-input-group>
+      <ng-template #inputClearTpl>
+        <span *ngIf="hsncodetext" (click)="reset()" nz-icon class="ant-input-clear-icon" nzTheme="fill"
+          nzType="close-circle"></span>
+        <span *ngIf="hsncodetext == ''" nz-icon nzType="search" nzTheme="outline"></span>
+      </ng-template>
+    </div>
+  </div>
+</nz-dropdown-menu>
+<div *ngIf="drawerinventorylogs">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(105% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1000" [nzVisible]="drawerinventorylogs"
+    [nzTitle]="drawerTitleinventorylogs" (nzOnClose)="drawerCloseinventorylogs()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-inventorylogs [drawerCloset]="closeCallbackinventorylogs" [FILTER_ID]="serviceid" [ITEM_NAME]="ITEM_NAME"
+        [TYPE]="'V'"></app-inventorylogs>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="drawerStockDetails">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(105% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'80%'" [nzVisible]="drawerStockDetails"
+    [nzTitle]="drawerTitleStockDetails" (nzOnClose)="drawerCloseStockDetails()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-view-varientstock [drawerClose]="closeCallbackStockDetails" [Inventorydata]="viewdrawerData"
+        [ITEM_NAME]="ITEM_NAME" [TYPE]="'V'"></app-view-varientstock>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<!-- Add Image Drawer -->
+<div *ngIf="itemImagesDrawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="900"
+    [nzVisible]="itemImagesDrawerVisible" [nzTitle]="itemImagesDrawerTitle" (nzOnClose)="itemImagesDrawerClose()"
+    (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-add-inventory-images [drawerClose]="itemImagesDrawerCloseCallback" [drawerVisible]="itemImagesDrawerVisible"
+        [data]="addImageDrawerData">
+      </app-add-inventory-images>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<!-- Unit mapping drawer -->
+<div *ngIf="ItemMappingDrawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '10px',
+      'padding-left': '15px',
+      'padding-right': '15px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="900"
+    [nzVisible]="ItemMappingDrawerVisible" [nzTitle]="ItemMappingDrawerTitle" (nzOnClose)="ItemMappingDrawerClose()"
+    (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-item-mapping [drawerClose]="ItemMappingCloseCallback" [drawerVisible]="ItemMappingDrawerVisible"
+        [data]="drawerData" [UnitName]="Unitname" [UnitId]="Unitid" [itemcategoryis]="itemcategoryis" [itemId]="ItemId">
+      </app-item-mapping>
+    </ng-container>
+  </nz-drawer>
+</div>

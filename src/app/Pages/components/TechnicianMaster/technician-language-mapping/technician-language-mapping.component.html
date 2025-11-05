@@ -1,0 +1,104 @@
+<div>
+  <form nz-form #Languagemaster="ngForm">
+    <div nz-row class="my-box">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Languages</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Select Language">
+            <nz-select nzMode="multiple" nzAllowClear="true" nzPlaceHolder="Select Language" name="LANGUAGE_ID"
+              [(ngModel)]="saveData.LANGUAGE_ID" style="width: 100%" nzShowSearch required
+              [nzLoading]="isSkillSpinning">
+              <nz-option *ngFor="let data of getFilteredLanguageData()" [nzValue]="data.ID"
+                [nzLabel]="data.NAME"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="5">
+        <button style="margin-top: 29px" nz-button nzType="primary" [nzLoading]="issaveSpinning"
+          (click)="add(Languagemaster)">
+          Add Language
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div style="position: relative">
+      <nz-table class="my-scroll no-wrap1" nzBordered #table [nzData]="LanguagessMappingdata" [nzSize]="'small'"
+        [nzFrontPagination]="false" style="white-space: pre-line" [nzLoading]="isLoading">
+        <thead>
+          <tr>
+            <th nzWidth="400px">Language Name</th>
+            <th nzWidth="140px">Proficiency Level</th>
+            <th nzWidth="100px">Is Primary</th>
+            <th nzWidth="100px">Is Mapped</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let data of table.data; let i = index">
+            <td align="left">
+              <span *ngIf="data['LANGUAGE_NAME'] != null">
+                <span *ngIf="data['LANGUAGE_NAME'].length >= 25" nz-popover [nzPopoverContent]="data['LANGUAGE_NAME']"
+                  nzPopoverPlacement="topLeft">
+                  {{
+                  data["LANGUAGE_NAME"] == null
+                  ? "-"
+                  : (data["LANGUAGE_NAME"] | slice : 0 : 25)
+                  }}{{ data["LANGUAGE_NAME"].length > 25 ? "..." : "" }}
+                </span>
+                <span *ngIf="data['LANGUAGE_NAME'].length < 25">
+                  {{
+                  data["LANGUAGE_NAME"] == null
+                  ? "-"
+                  : (data["LANGUAGE_NAME"] | slice : 0 : 25)
+                  }}
+                  {{ data["LANGUAGE_NAME"].length > 25 ? "..." : "" }}
+                </span>
+              </span>
+              <span *ngIf="data['LANGUAGE_NAME'] == null">-</span>
+            </td>
+            <td>
+              <nz-select name="PROFICIENCY_LEVEL" nzPlaceHolder="Select Experience Level" nzShowSearch
+                style="width: 100%" [(ngModel)]="data.PROFICIENCY_LEVEL" [ngModelOptions]="{ standalone: true }"
+                required nzAllowClear>
+                <nz-option *ngFor="let Profieiency of LANGUAGE_PROFICIENCY_LEVEL" [nzValue]="Profieiency.Id"
+                  [nzLabel]="Profieiency.Name">
+                </nz-option>
+              </nz-select>
+            </td>
+            <td align="center" style="white-space: pre-line">
+              <nz-switch name="primary" [(ngModel)]="data['IS_PRIMARY']"
+                (ngModelChange)="onPrimaryChange(data)"></nz-switch>
+            </td>
+            <!-- End Date Column with Date Picker and Date Format -->
+
+            <!-- Status Switch Column -->
+            <td align="center" style="white-space: pre-line">
+              <nz-switch name="status" [(ngModel)]="data['IS_ACTIVE']"></nz-switch>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+
+      <!-- Loading Message -->
+      <div *ngIf="isSpinning" class="loading-overlay">
+        <nz-spin nzTip="Please wait, processing right now..."></nz-spin>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <span>Cancel</span>
+  </button>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" (click)="save()">
+    <span>Map & Close</span>
+  </button>
+</div>

@@ -1,0 +1,169 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; justify-content: flex-end">
+    <form [nzLayout]="'inline'" nz-form>
+      <!-- <nz-form-item style="width: 47px">
+                <button [nzType]="isfilterapply ? 'primary' : 'default'" (click)="showMainFilter()" nz-button
+                    nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip>
+                    <i nz-icon nzType="filter"></i>
+                </button>
+            </nz-form-item> -->
+
+      <!-- <nz-form-item>
+                <nz-input-group [nzAddOnAfter]="suffixIconButton" nzSearch>
+                    <input [(ngModel)]="searchText" (keyup)="search()" (keydown.enter)="onEnterKey($event)" type="text"
+                        name="search" nz-input autocomplete="off" placeholder="Min 3 chars required." />
+                </nz-input-group>
+
+                <ng-template #suffixIconButton>
+                    <button (click)="search(true)" nz-button nzType="primary" nzSearch>
+                        <i nz-icon nzType="search"></i>
+                    </button>
+                </ng-template>
+            </nz-form-item> -->
+
+      <nz-form-item>
+        <nz-range-picker name="ADJESTMENT_DATE" [(ngModel)]="ADJESTMENT_DATE" nzFormat="dd/MM/yyyy"
+          (ngModelChange)="search()" [nzAllowClear]="false">
+        </nz-range-picker>
+      </nz-form-item>
+      <nz-form-item *ngIf="roleID == 23">
+        <button [nzType]="'primary'" (click)="inventoryAdjustmentDrawerOpen()" nz-button nzTooltipTitle="Filter"
+          nzTooltipPlacement="top" nz-tooltip>
+          <i nz-icon nzType="plus"></i> Adjust Quantity
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 10px">
+  <div nz-col nzSpan="24">
+    <nz-table #table [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [nzSize]="'small'" [(nzPageSize)]="pageSize"
+      [nzScroll]="{ y: '60vh' }" (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)" class="my-scroll no-wrap1" nzBordered nzShowSizeChanger
+      style="white-space: pre-line">
+      <thead>
+        <tr>
+          <th nzWidth="100px" nzShowSort nzColumnKey="{{ 'ADJUSTED_DATETIME' }}" [nzSortFn]="true" [nzFilterFn]="true">
+            Date
+          </th>
+
+          <th nzWidth="130px" nzShowSort nzColumnKey="{{ 'USER_NAME' }}" [nzSortFn]="true" [nzFilterFn]="true">
+            Adjusted By
+          </th>
+          <th nzWidth="150px" nzShowSort nzColumnKey="{{ 'ITEM_NAME' }}" [nzSortFn]="true" [nzFilterFn]="true">
+            Inventory Name
+          </th>
+          <th nzWidth="150px" nzShowSort nzColumnKey="{{ 'VARIANT_NAME' }}" [nzSortFn]="true" [nzFilterFn]="true">
+            Varient Name
+          </th>
+          <th nzWidth="150px" nzShowSort nzColumnKey="{{ 'UNIQUE_NO' }}" [nzSortFn]="true" [nzFilterFn]="true">
+            Serial No./ Batch No.
+          </th>
+          <th nzWidth="130px" nzShowSort nzColumnKey="{{ 'WAREHOUSE_NAME' }}" [nzSortFn]="true" [nzFilterFn]="true">
+            Warehouse Name
+          </th>
+
+          <th nzWidth="100px" nzShowSort nzColumnKey="{{ 'OLD_QTY' }}" [nzSortFn]="true" [nzFilterFn]="true">
+            Old Stock
+          </th>
+
+          <th nzWidth="100px" nzShowSort nzColumnKey="{{ 'ADJUSTMENT_QUANTITY' }}" [nzSortFn]="true"
+            [nzFilterFn]="true">
+            Adjusted Qty
+          </th>
+
+          <th nzWidth="100px">Updated Stock</th>
+          <th nzWidth="350px" nzShowSort nzColumnKey="{{ 'REMARK' }}" [nzSortFn]="true" [nzFilterFn]="true">
+            Adjustment Reason
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td nzWidth="100px" style="text-align: center">
+            {{ data.ADJUSTED_DATETIME | date : "dd/MM/yyyy" }}
+          </td>
+
+          <td nzWidth="130px" style="text-align: center">
+            {{ data.USER_NAME }}
+          </td>
+          <td nzWidth="150px" style="text-align: center">
+            {{ data.ITEM_NAME }}
+          </td>
+          <td nzWidth="150px" style="text-align: center">
+            <span *ngIf="
+                data.VARIANT_NAME != undefined && data.VARIANT_NAME != null
+              ">{{ data.VARIANT_NAME.split("-").join("/") }}</span>
+            <span *ngIf="
+                data.VARIANT_NAME == undefined || data.VARIANT_NAME == null
+              ">-</span>
+          </td>
+          <td nzWidth="130px" style="text-align: center">
+            {{ data.UNIQUE_NO }}
+          </td>
+          <td nzWidth="130px" style="text-align: center">
+            {{ data.WAREHOUSE_NAME }}
+          </td>
+
+          <td nzWidth="350px" style="text-align: right">
+            {{ data.OLD_QTY }}
+          </td>
+
+          <td nzWidth="100px" style="text-align: right">
+            <div [ngStyle]="{
+                color: data.ADJUSTMENT_TYPE == 'P' ? 'green' : 'red'
+              }">
+              {{ data.ADJUSTMENT_TYPE == "P" ? "+" : "-"
+              }}{{ data.ADJUSTMENT_QUANTITY }}
+            </div>
+          </td>
+
+          <td nzWidth="100px" style="text-align: right; color: blue">
+            {{
+            calulateAfterAdjestment(
+            data.OLD_QTY,
+            data.ADJUSTMENT_QUANTITY,
+            data.ADJUSTMENT_TYPE
+            )
+            }}
+          </td>
+          <td nzWidth="350px" style="
+              white-space: nowrap;
+              width: 350px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            " nz-popover nzPopoverTitle="Adjestment Reason" [nzPopoverContent]="REMARKTemplate"
+            nzPopoverPlacement="top">
+            {{ data.REMARK }}
+          </td>
+
+          <ng-template #REMARKTemplate>
+            <div style="width: 50vw; white-space: pre-line; text-align: left">
+              {{ data.REMARK }}
+            </div>
+          </ng-template>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<!-- Adjestment history drawer -->
+<div *ngIf="inventoryAdjustmentDrawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'80%'"
+    [nzVisible]="inventoryAdjustmentDrawerVisible" [nzTitle]="inventoryAdjustmentDrawerTitle"
+    (nzOnClose)="inventoryAdjustmentDrawerClose()" (nzKeyboard)="(true)" [nzPlacement]="'right'">
+    <ng-container *nzDrawerContent>
+      <app-inventory-stock-adjustmentdrawer [drawerClose]="inventoryAdjustmentDrawerCloseCallback"
+        [drawerData]="inventoryAdjustmentDrawerData" [WAREHOUSE_ID]="WAREHOUSE_ID" [Loadwarehouse]="Loadwarehouse">
+      </app-inventory-stock-adjustmentdrawer>
+    </ng-container>
+  </nz-drawer>
+</div>

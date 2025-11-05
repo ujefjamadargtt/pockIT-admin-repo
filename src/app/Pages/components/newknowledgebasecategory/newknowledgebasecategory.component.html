@@ -1,0 +1,118 @@
+<nz-layout class="main-layout">
+  <!-- Sidebar Navigation -->
+  <nz-sider nzWidth="220px" nzTheme="light" [nzReverseArrow]="false" (nzCollapsedChange)="isCollapsed = $event"
+    class="custom-sider" style="background: white !important">
+    <div class="logo" style="display: flex; border-bottom: 1px solid #d9d9d9">
+      <!-- <div>
+        <nz-avatar
+          nzIcon="question"
+          style="
+            height: 37px;
+            width: 37px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            color: #092b9c;
+            border: 2px solid #092b9c;
+          "
+        ></nz-avatar>
+      </div> -->
+      <div style="text-align: left; align-self: center !important">
+        <span style="font-size: 19px !important; padding-left: 10px">Knowledge Base</span><br />
+        <!-- <span style="font-size: 15px;padding-left: 10px;">Explore Solutions</span> -->
+      </div>
+    </div>
+    <!-- <ul nz-menu nzMode="inline" class="sider-menu" style="border-right: none">
+            <li style="font-size: 13px; font-weight: 700" *ngFor="let menu of menuItems" nz-submenu
+                [nzTitle]="menu.title" [(nzOpen)]="menu.open">
+                <ul style="font-size: 12px">
+                    <li style="padding-top: 0px !important" *ngFor="let group of menu.children" nz-menu-group>
+                        <ul>
+                            <li *ngFor="let item of group.items" style="font-weight: 500" nz-menu-item
+                                [nzSelected]="ItemID?.id === item.id" (click)="onMenuItemClick(item)">
+                                {{ item.title }}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul> -->
+
+    <ul nz-menu nzMode="inline" class="sider-menu" style="border-right: none">
+      <li *ngFor="let menu of menuItems" nz-submenu [nzTitle]="
+          menu.title?.length > 20 ? menu.title.slice(0, 20) + '...' : menu.title
+        " nzTooltipPlacement="top" nz-tooltip [nzTooltipTitle]="menu.title" [(nzOpen)]="menu.open"
+        style="font-size: 13px; font-weight: 600">
+        <ul style="font-size: 12px">
+          <li nz-menu-group *ngIf="menu.children.length > 0">
+            <ul>
+              <li *ngFor="let item of menu.children[0].items" nz-menu-item [nzSelected]="ItemID?.id === item.id"
+                nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="item.title?.length > 20 ? item.title : ''"
+                (click)="onMenuItemClick(item)" style="font-weight: 500">
+                <span *ngIf="item.title?.length >= 20" style="
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                  ">
+                  {{ item.title.slice(0, 20) + "..." }}
+                </span>
+                <span *ngIf="item.title?.length < 20">{{ item.title }}</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+
+  <!-- Main Content -->
+  <nz-layout class="content-layout">
+    <nz-header class="header">
+      <div class="search-container">
+        <nz-input-group nzSize="large" [nzPrefix]="prefixIcon" [nzSuffix]="searchQuery ? clearIcon : undefined">
+          <input nz-input placeholder="Search ..." name="skillesearch" [(ngModel)]="searchQuery"
+            (ngModelChange)="SearchSkill($event)" />
+        </nz-input-group>
+      </div>
+      <ng-template #prefixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+
+      <ng-template #clearIcon>
+        <i nz-icon nzType="close-circle" class="clear-icon" (click)="clearSearch()"></i>
+      </ng-template>
+
+      <!-- </div> -->
+    </nz-header>
+    <nz-content class="content" style="background: white !important">
+      <nz-spin [nzSpinning]="isSpinning">
+        <nz-collapse *ngIf="selectedContent?.length" [nzExpandIconPosition]="'right'" [nzAccordion]="true">
+          <nz-collapse-panel *ngFor="let faq of selectedContent; let i = index" [nzHeader]="faq.TITLE"
+            [nzShowArrow]="true" [nzActive]="i === 0">
+            <div class="faq-header" style="white-space: pre-line">
+              <!-- <p class="faq-answer" style="font-weight: 400">
+                
+              </p> -->
+              <div [innerHTML]="faq.DESCRIPTION"></div>
+              <div *ngIf="faq.DOCUMENT && faq.TYPE == 'D'">
+                <a (click)="openattachemnt(faq.DOCUMENT)">view document</a>
+              </div>
+              <div *ngIf="faq.TYPE == 'L'">
+                <a href="{{ faq.LINK }}" target="_blank">Open link</a>
+              </div>
+            </div>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </nz-spin>
+
+      <div *ngIf="!selectedContent?.length" class="select-message">
+        <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl43" [nzNotFoundFooter]="footerTpl43" style="margin-top: 38px">
+          <ng-template #contentTpl43>
+            <span> Data Not Found</span>
+          </ng-template>
+          <ng-template #footerTpl43> </ng-template>
+        </nz-empty>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
