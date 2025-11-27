@@ -208,7 +208,31 @@
             </div>
           </div>
 
-          <div nz-row *ngIf="data.ID">
+            <div nz-row >
+            <div nz-col nzSpan="12" *ngIf="data.ID">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Set as Default Address</nz-form-label>
+                <nz-form-control>
+                  <nz-switch name="Status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                    [(ngModel)]="data.IS_DEFAULT">
+                  </nz-switch>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="12" *ngIf="customer?.CUSTOMER_TYPE === 'B'">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Is address for child logins</nz-form-label>
+                <nz-form-control>
+                  <nz-switch name="Status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                    [(ngModel)]="data.IS_FOR_CHILD">
+                  </nz-switch>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          
+          <!-- <div nz-row *ngIf="data.ID">
             <div nz-col nzSpan="9">
               <nz-form-item>
                 <nz-form-label nzNoColon>Set as Default Address</nz-form-label>
@@ -219,7 +243,7 @@
                 </nz-form-control>
               </nz-form-item>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </nz-spin>

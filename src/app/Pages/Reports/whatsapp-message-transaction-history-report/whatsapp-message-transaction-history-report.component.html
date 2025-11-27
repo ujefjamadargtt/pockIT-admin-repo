@@ -8,6 +8,9 @@
   <div nz-col nzSpan="16" style="display: flex; justify-content: flex-end">
     <form nz-form nzLayout="inline">
       <nz-form-item>
+        <nz-range-picker name="range" [(ngModel)]="date" (ngModelChange)="search(true)"></nz-range-picker>
+      </nz-form-item>
+      <nz-form-item>
         <button nz-button nzTooltipTitle="Excel" nzTooltipPlacement="top" nz-tooltip style="color: white"
           nzType="primary" (click)="importInExcel()" [nzLoading]="exportLoading">
           <i nz-icon nzType="file-excel" nzTheme="outline"></i>

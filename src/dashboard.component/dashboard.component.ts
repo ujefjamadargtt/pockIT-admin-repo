@@ -34,8 +34,10 @@ export class DashboardComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) { }
   ngOnInit() {
+    // const unsafeUrl =
+    //   'http://localhost:3000/dashboard/snapshot/4yrnlZwN1mtAinuLDHAmcQ5oOu4TrpeR?theme=light&fullscreen=true&kiosk=1';
     const unsafeUrl =
-      'http://localhost:3000/dashboard/snapshot/4yrnlZwN1mtAinuLDHAmcQ5oOu4TrpeR?theme=light&fullscreen=true&kiosk=1';
+      'http://localhost:3000/dashboard/snapshot/4yrnlZwN1mtAinuLDHAmcQ5oOu4TrpeR?theme=light&fullscreen=true&kiosk';
     this.grafanaUrl = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
 
     if (

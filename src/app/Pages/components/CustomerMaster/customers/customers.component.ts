@@ -1348,7 +1348,8 @@ export class CustomersComponent {
   widthsss: any = '100%';
   drawerserviceVisibleMap: boolean = false;
   ServiceMapping(data: any): void {
-    this.drawerTitleMa = `${data.NAME} Customer Wise Service Change Management`;
+    this.drawerTitleMa = `${data.COMPANY_NAME} Customer Wise Service Change Management`;
+    // this.drawerTitleMa = `${data.NAME} Customer Wise Service Change Management`;
     this.drawerDataMap = Object.assign({}, data);
     this.drawerserviceVisibleMap = true;
   }
@@ -1490,7 +1491,8 @@ export class CustomersComponent {
   }
 
   MapTimeSLots(data: any): void {
-    this.drawerTitleSlots = ` Map Time Slots to the ${data.NAME} Customer`;
+    // this.drawerTitleSlots = ` Map Time Slots to the ${data.NAME} Customer`;
+    this.drawerTitleSlots = ` Map Time Slots to the ${data.COMPANY_NAME} Customer`;
     this.drawerDataSlots = Object.assign({}, data);
     this.drawerSlotsVisible = true;
   }
@@ -1624,7 +1626,8 @@ export class CustomersComponent {
 
   viewLogs(data: customer): void {
     this.CUSTOMER_MASTER_ID = data.CUSTOMER_MASTER_ID;
-    this.drawerTitleCustomersLogs = `View Address Logs of ${data.NAME}`;
+    // this.drawerTitleCustomersLogs = `View Address Logs of ${data.NAME}`;
+    this.drawerTitleCustomersLogs = `View Address Logs of ${data.COMPANY_NAME}`;
     this.drawerDataCustomersLogs = Object.assign({}, data);
     this.drawerVisibleCustomersLogs = true;
     this.custmoerid = data.CUSTOMER_MASTER_ID;

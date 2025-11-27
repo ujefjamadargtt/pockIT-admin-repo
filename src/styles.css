@@ -272,3 +272,9 @@ ant-input {
 .emoji-mart{
   width: 100% !important;
 }
+/* for dashbord filters */
+iframe {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 1 !important;
+}

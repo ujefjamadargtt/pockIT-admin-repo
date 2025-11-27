@@ -224,8 +224,8 @@
 
       <div nz-col nzSpan="4">
         <nz-form-item>
-          <nz-form-label nzNoColon>Is Having Sub Service?</nz-form-label>
-          <nz-form-control>
+          <nz-form-label nzNoColon>Job Created Directly?</nz-form-label>
+           <nz-form-control>
             <nz-switch name="statusex" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
               (ngModelChange)="subServiceAvailable($event)" [(ngModel)]="data.IS_PARENT"></nz-switch>
           </nz-form-control>
@@ -603,7 +603,7 @@
                     </div>
                     <div nz-col nzSpan="8">
                       <nz-form-item>
-                        <nz-form-label nzNoColon>Is Job Created Directly?</nz-form-label>
+                        <nz-form-label nzNoColon>Job Created Directly?</nz-form-label>
                         <nz-form-control>
                           <nz-switch name="JobCreateDirect" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                             [(ngModel)]="data.IS_JOB_CREATED_DIRECTLY"></nz-switch>

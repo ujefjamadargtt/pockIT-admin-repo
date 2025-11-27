@@ -15,7 +15,7 @@ export class saveOrderData {
   ID: number;
   REMARK: any = '';
   ACCEPTANCE_REMARK: any = '';
-  ASSING_TO: number=0
+  ASSING_TO: number = 0
 }
 
 @Component({
@@ -66,7 +66,7 @@ export class OrderdetailsdrawerComponent {
     private datePipe: DatePipe,
     private router: Router,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
   @Input()
   drawerClose!: Function;
   @Input() vieworderdata: any;
@@ -224,7 +224,13 @@ export class OrderdetailsdrawerComponent {
             this.openModal = false;
             this.jobdetails = '';
             this.estimatetime = '';
-          } else {
+          }
+          else if (successCode.code == '400') {
+            this.message.error('Job already generated.', '');
+            this.getorderDetails();
+            this.isSpinning = false;
+          }
+          else {
             this.message.error('Failed to generated job.', '');
             this.isSpinning = false;
           }
@@ -337,27 +343,27 @@ export class OrderdetailsdrawerComponent {
         );
       }
 
-    // this.orderData.ASSIGNED_TO = this.vendors
- 
+      // this.orderData.ASSIGNED_TO = this.vendors
 
 
-//   if (this.decreptedroleId === 8) {
-//   this.orderData.ASSING_TO = 
-//     (this.STATUS === 'R' || this.STATUS === 'Res') ? 0 : this.vendors;
-// }
 
-if (this.decreptedroleId === 8) {
-  if (this.STATUS === 'R' || this.STATUS === 'Res') {
-    this.orderData.ASSING_TO = 0;
-  } else {
-    // जर vendors array असेल आणि length == 0 असेल तर 0 पाठवा
-    if (Array.isArray(this.vendors) && this.vendors.length === 0) {
-      this.orderData.ASSING_TO = 0;
-    } else {
-      this.orderData.ASSING_TO = this.vendors || 0;
-    }
-  }
-}
+      //   if (this.decreptedroleId === 8) {
+      //   this.orderData.ASSING_TO = 
+      //     (this.STATUS === 'R' || this.STATUS === 'Res') ? 0 : this.vendors;
+      // }
+
+      if (this.decreptedroleId === 8) {
+        if (this.STATUS === 'R' || this.STATUS === 'Res') {
+          this.orderData.ASSING_TO = 0;
+        } else {
+          // जर vendors array असेल आणि length == 0 असेल तर 0 पाठवा
+          if (Array.isArray(this.vendors) && this.vendors.length === 0) {
+            this.orderData.ASSING_TO = 0;
+          } else {
+            this.orderData.ASSING_TO = this.vendors || 0;
+          }
+        }
+      }
 
 
 
@@ -406,7 +412,7 @@ if (this.decreptedroleId === 8) {
       this.message.error('Please Select Order Status', '');
     }
   }
-  deleteCancel() {}
+  deleteCancel() { }
 
   drawerCloseRating(): void {
     this.drawerCustomerRatingVisible = false;
@@ -657,7 +663,7 @@ if (this.decreptedroleId === 8) {
             this.jobdetailsdata = {};
           }
         },
-        () => {}
+        () => { }
       );
   }
   drawersize = '100%';
@@ -1044,13 +1050,13 @@ if (this.decreptedroleId === 8) {
 
       this.MIN_T_END_TIME2 =
         this.vieworderdata.orderData[0].MAX_T_END_TIME <
-        this.vieworderdata.orderData[0].END_TIME
+          this.vieworderdata.orderData[0].END_TIME
           ? this.vieworderdata.orderData[0].MAX_T_END_TIME
           : this.vieworderdata.orderData[0].END_TIME;
 
       this.MAX_T_START_TIME2 =
         this.vieworderdata.orderData[0].MAX_T_START_TIME >
-        this.vieworderdata.orderData[0].START_TIME
+          this.vieworderdata.orderData[0].START_TIME
           ? this.vieworderdata.orderData[0].MAX_T_START_TIME
           : this.vieworderdata.orderData[0].START_TIME;
 
@@ -1062,7 +1068,7 @@ if (this.decreptedroleId === 8) {
           '',
           '',
           ' AND IS_ACTIVE =1 AND ID=' +
-            this.vieworderdata.orderData[0].TERRITORY_ID
+          this.vieworderdata.orderData[0].TERRITORY_ID
         )
         .subscribe((data3) => {
           this.teritoryData = data3['data'][0];
@@ -1337,7 +1343,7 @@ if (this.decreptedroleId === 8) {
             this.parts = [];
           }
         },
-        () => {}
+        () => { }
       );
   }
 

@@ -218,8 +218,8 @@
                             </nz-form-control>
                           </nz-form-item>
                         </div>
-                         <div nz-col nzSpan="12" *ngIf="!data.ID">
-                             <nz-form-item
+                        <div nz-col nzSpan="12" *ngIf="!data.ID">
+                          <nz-form-item
                             style="
                               display: inline-block;
                               width: -webkit-fill-available;
@@ -262,8 +262,7 @@
                               </ng-template>
                             </nz-form-control>
                           </nz-form-item>
-
-                         </div>
+                        </div>
                         <div nz-col nzSpan="10">
                           <nz-form-item>
                             <nz-form-label nzRequired nzNoColon
@@ -373,6 +372,7 @@
 
         <!-- <div *ngIf="tab.name == 'Address Details'"> -->
         <div *ngIf="tab.name == 'Address Details'">
+      
           <div nz-row nzType="flex" *ngIf="showsearch">
             <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8"></div>
 
@@ -414,15 +414,77 @@
               </form>
             </div>
           </div>
+                <!-- <nz-spin [nzSpinning]="isSpining">  -->
           <div class="hh" id="activityItemFamily" #activityItemFamily>
-            <nz-spin [nzSpinning]="loadingFamilyRecords">
+            <nz-spin [nzSpinning]="isSpining">
+              <div nz-row nzJustify="start" style="margin-bottom: 10px">
+                <div nz-col>
+                  <span style="margin-right: 8px; font-weight: 500"
+                    >Show Saved Parent Addresses</span
+                  >
+                  <nz-switch
+                    [(ngModel)]="showParentAddress"
+                    name="showParentAddress11"
+                    (ngModelChange)="AddressTypeChange($event)"
+                    nzCheckedChildren="Parent"
+                    nzUnCheckedChildren="Own"
+                  >
+                  </nz-switch>
+                </div>
+              </div>
               <div
                 nz-row
                 [nzGutter]="16"
                 style="flex-wrap: wrap; margin-top: 10px"
               >
+                <div
+                  nz-col
+                  [nzSpan]="24"
+                  *ngIf="showParentAddress"
+                  style="margin-bottom: 10px"
+                >
+                  <div>
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: start;
+                        height: 100%;
+                        padding: 5px;
+                      "
+                    >
+                      <nz-select
+                        [(ngModel)]="selectedAddress"
+                        name="selectedAddress"
+                        nzPlaceHolder="Select Parent Address"
+                        nzAllowClear
+                        nzShowSearch
+                        (ngModelChange)="onAddressSelect($event)"
+                        (nzOnClear)="onClearAddress()"
+                        style="width: 100%"
+                        [nzLoading]="isLoadingAddresses"
+                      >
+                        <nz-option 
+                          *ngFor="let address of addressdata2"
+                          [nzValue]="address.ID"
+                          [nzLabel]="
+                            address.ADDRESS_LINE_2 + ',' + address.DISTRICT_NAME
+                          "
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- Add Address Card -->
-                <div nz-col [nzSpan]="24" style="margin-bottom: 10px">
+                <div
+                  nz-col
+                  [nzSpan]="24"
+                  *ngIf="!showParentAddress"
+                  style="margin-bottom: 10px"
+                >
                   <div
                     class="cardstyle"
                     (click)="addAddress()"
@@ -443,6 +505,216 @@
                   </div>
                 </div>
 
+                <!-- <div *ngIf="showParentAddress">
+                  <div nz-col [nzSpan]="24" *ngFor="let data of addressdata2; let i = index"
+                    style="margin-bottom: 10px">
+                    <div class="cardstyle" [ngStyle]="{
+                      'background-color':
+                        data.IS_DEFAULT != 0 ? 'rgb(217 217 217 / 28%)' : '#fff'
+                    }">
+                      <div nz-row>
+                        <div class="subnamm" nz-col nzSpan="11" style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          margin-bottom: 5px;
+                          background-color: #092b9c !important;
+                          padding: 5px;
+                          border-radius: 5px;
+                        ">
+                          <div style="
+                            font-weight: bold;
+                            margin-right: 5px;
+                            color: #ffffff;
+                          ">
+                            Default:
+                          </div>
+                          <div *ngIf="data.IS_DEFAULT == 0" style="color: #ffffff">
+                            No
+                          </div>
+                          <div *ngIf="data.IS_DEFAULT != 0" style="color: #ffffff">
+                            Yes
+                          </div>
+                        </div>
+
+                        <nz-divider nzType="vertical"></nz-divider>
+
+                        <div class="subnamm" nz-col nzSpan="11" style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          margin-bottom: 5px;
+                          background-color: #092b9c !important;
+                          padding: 5px;
+                          border-radius: 5px;
+                        ">
+                          <div style="
+                            font-weight: bold;
+                            margin-right: 5px;
+                            color: #ffffff;
+                          ">
+                            Type:
+                          </div>
+                          <div *ngIf="data.TYPE == 'H'" style="color: #ffffff">
+                            Home
+                          </div>
+                          <div *ngIf="data.TYPE == 'F'" style="color: #ffffff">
+                            Office
+                          </div>
+                          <div *ngIf="data.TYPE == 'B'" style="color: #ffffff">
+                            Branch
+                          </div>
+                          <div *ngIf="data.TYPE == 'O'" style="color: #ffffff">
+                            Other
+                          </div>
+                        </div>
+
+                        <nz-divider></nz-divider>
+
+                        <div class="subnamm" nz-col nzSpan="24" style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                          padding-top: 5px;
+                        ">
+                          <address style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          " nz-tooltip [nzTooltipTitle]="data.ADDRESS_LINE_1">
+                            <span #textContainer1 class="truncate-text" [nzTooltipTitle]="
+                              isTextOverflow ? data['ADDRESS_LINE_1'] : null
+                            " #tooltipRef="nzTooltip" nz-tooltip (mouseenter)="
+                              checkOverflow(textContainer1, tooltipRef)
+                            ">{{ data.ADDRESS_LINE_1 }}</span>
+                          </address>
+                        </div>
+                        <div class="subnamm" nz-col nzSpan="12" *ngIf="data.COUNTRY_NAME" style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                        ">
+                          <address style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          " nz-tooltip [nzTooltipTitle]="data.COUNTRY_NAME">
+                            <span #textContainer2 class="truncate-text" [nzTooltipTitle]="
+                              isTextOverflow ? data['COUNTRY_NAME'] : null
+                            " #tooltipRef2="nzTooltip" nz-tooltip (mouseenter)="
+                              checkOverflow(textContainer2, tooltipRef2)
+                            ">{{ data.COUNTRY_NAME }}</span>
+                          </address>
+                        </div>
+                        <div class="subnamm" nz-col nzSpan="12" *ngIf="data.STATE_NAME" style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                        ">
+                          <address style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          " nz-tooltip [nzTooltipTitle]="data.STATE_NAME">
+                            <span #textContainer3 class="truncate-text" [nzTooltipTitle]="
+                              isTextOverflow ? data['STATE_NAME'] : null
+                            " #tooltipRef3="nzTooltip" nz-tooltip (mouseenter)="
+                              checkOverflow(textContainer3, tooltipRef3)
+                            ">{{ data.STATE_NAME }}</span>
+                          </address>
+                        </div>
+                        <div class="subnamm" nz-col nzSpan="12" *ngIf="data.DISTRICT_NAME" style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                        ">
+                          <address style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          " nz-tooltip [nzTooltipTitle]="data.DISTRICT_NAME">
+                            <span #textContainer4 class="truncate-text" [nzTooltipTitle]="
+                              isTextOverflow ? data['DISTRICT_NAME'] : null
+                            " #tooltipRef4="nzTooltip" nz-tooltip (mouseenter)="
+                              checkOverflow(textContainer4, tooltipRef4)
+                            ">{{ data.DISTRICT_NAME }}</span>
+                          </address> 
+                        </div>
+                        <div class="subnamm" nz-col nzSpan="12" *ngIf="data.PINCODE" style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                        ">
+                          <address style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          " nz-tooltip [nzTooltipTitle]="data.PINCODE">
+                            <span #textContainer6 class="truncate-text" [nzTooltipTitle]="
+                              isTextOverflow ? data['PINCODE'] : null
+                            " #tooltipRef5="nzTooltip" nz-tooltip (mouseenter)="
+                              checkOverflow(textContainer6, tooltipRef5)
+                            ">{{ data.PINCODE }}</span>
+                          </address>
+                        </div>
+                        <div class="subnamm" nz-col nzSpan="24" style="
+                          display: flex;
+                          align-items: baseline;
+                          white-space: pre-line;
+                          padding-top: 5px;
+                        ">
+                          <address style="
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            text-align: justify;
+                          " nz-tooltip [nzTooltipTitle]="data.LANDMARK">
+                            <span #textContainer9 class="truncate-text" [nzTooltipTitle]="
+                              isTextOverflow ? data['LANDMARK'] : null
+                            " #tooltipRef9="nzTooltip" nz-tooltip (mouseenter)="
+                              checkOverflow(textContainer9, tooltipRef9)
+                            ">{{ data.LANDMARK }}</span>
+                          </address>
+                        </div>
+                      </div>
+
+                      <div class="card-footer">
+                        <button nz-button nzType="primary" *ngIf="data.IS_FOR_CHILD == 0" (click)="editAddress(data)">
+                          Edit
+                        </button>
+                        <nz-divider nzType="vertical" *ngIf="data.IS_DEFAULT == 0 || data.IS_FOR_CHILD==0"></nz-divider>
+                        <button *ngIf="data.IS_DEFAULT == 0" nz-button nzType="default"
+                          (click)="confirmSetAsDefault(data)">
+                          Set as Default
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div> -->
                 <div
                   nz-col
                   [nzSpan]="24"
@@ -540,7 +812,7 @@
                       <div
                         class="subnamm"
                         nz-col
-                        nzSpan="24"
+                        nzSpan="18"
                         style="
                           display: flex;
                           align-items: baseline;
@@ -575,6 +847,16 @@
                             >{{ data.ADDRESS_LINE_1 }}</span
                           >
                         </address>
+                      </div>
+                      <div
+                        nz-col
+                        nzSpan="6"
+                        style="align-items: baseline; padding-top: 5px"
+                        *ngIf="data.PARENT_ADDRESS_ID"
+                      >
+                        <nz-tag [nzColor]="'cyan'" style="float: right"
+                          >Parent Address</nz-tag
+                        >
                       </div>
                       <div
                         class="subnamm"
@@ -780,7 +1062,7 @@
                       <button
                         nz-button
                         nzType="primary"
-                        (click)="editAddress(data)"
+                        (click)="editAddress(data, 'Edit')"
                       >
                         Edit
                       </button>
@@ -799,6 +1081,7 @@
                     </div>
                   </div>
                 </div>
+                <!-- </div> -->
               </div>
             </nz-spin>
             <div class="footer">
@@ -816,6 +1099,7 @@
               </button>
             </div>
           </div>
+          <!-- </nz-spin> -->
         </div>
       </nz-tab>
     </nz-tabset>
@@ -848,6 +1132,12 @@
         [dataList]="dataList"
         [mainCustData]="mainCustData"
         [ID]="ID"
+        [isReadOnly]="isAddressReadOnly"
+        [addressdata2]="addressdata2"
+        [selectedAddressData]="selectedAddressData"
+        [tempCustID]="tempCustID"
+        [secondDrawerData]="secondDrawerData"
+        [whosAddress]="whosAddress"
       ></app-add-login-address-details>
     </ng-container>
   </nz-drawer>

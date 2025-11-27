@@ -21,6 +21,7 @@ export class AddLoginCustomerListComponent {
   @Input() mainCustData: customer = new customer();
 
   drawerDataAddLogin: any;
+  isparentId: any;
 
   drawerCustomerAddLoginVisible = false;
   widthCustomerAddLogin: string = '50%';
@@ -45,8 +46,7 @@ export class AddLoginCustomerListComponent {
     ['MOBILE_NO', 'Mobile No.'],
     ['CUSTOMER_TYPE', 'Customer Type'],
     ['ACCOUNT_STATUS', 'Status'],
-    ['SHORT_CODE', "SHORT_CODE"]
-
+    ['SHORT_CODE', 'SHORT_CODE'],
   ];
 
   drawerTitleMap: string;
@@ -136,7 +136,7 @@ export class AddLoginCustomerListComponent {
     private message: NzNotificationService,
     public router: Router,
     private sanitizer: DomSanitizer
-  ) { }
+  ) {}
 
   userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
   USER_ID: number; // Declare USER_ID as a number
@@ -201,7 +201,8 @@ export class AddLoginCustomerListComponent {
 
     this.drawerTitle = 'Update Customer';
     this.drawerDataAddLogin = Object.assign({}, data);
-
+    this.isparentId = data.PARENT_ID;
+    this.mainCustData = this.mainCustData;
     this.drawerCustomerAddLoginVisible = true;
   }
 
@@ -245,9 +246,9 @@ export class AddLoginCustomerListComponent {
         this.sortKey,
         sort,
         likeQuery +
-        this.filterQuery +
-        ' AND IS_DELETED_BY_CUSTOMER=0 AND IS_PARENT=0 AND CUSTOMER_DETAILS_ID=' +
-        this.mainCustData.ID
+          this.filterQuery +
+          ' AND IS_DELETED_BY_CUSTOMER=0 AND IS_PARENT=0 AND CUSTOMER_DETAILS_ID=' +
+          this.mainCustData.ID
       )
       .subscribe(
         (data) => {
@@ -303,6 +304,9 @@ export class AddLoginCustomerListComponent {
   add(): void {
     this.drawerTitle = 'Create New Logins';
     this.drawerDataAddLogin = new customerAddLogin();
+    this.isparentId = this.data.CUSTOMER_MASTER_ID;
+    this.custid = '';
+    this.mainCustData = this.mainCustData;
     this.drawerCustomerAddLoginVisible = true;
   }
 
@@ -361,8 +365,6 @@ export class AddLoginCustomerListComponent {
       this.isShortCodeFilterApplied = false;
     }
   }
-
-
 
   drawerDataEmail: customerAddLogin = new customerAddLogin();
   drawerCustomerEmailVisible: boolean = false;

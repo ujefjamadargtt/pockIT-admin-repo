@@ -1,5 +1,5 @@
 export class customerAddLoginsAddress {
-  ID: number;
+  ID: any;
   CLIENT_ID: number = 1;
   CUSTOMER_ID: number;
   STATE_ID: any;
@@ -24,4 +24,7 @@ export class customerAddLoginsAddress {
   CUSTOMER_NAME: any;
   STATUS: boolean = true;
   CUSTOMER_DETAILS_ID: any;
+  IS_PARENT_ADDRESS: any;
+  IS_FOR_CHILD: boolean = false;
+  PARENT_ADDRESS_ID: any
 }

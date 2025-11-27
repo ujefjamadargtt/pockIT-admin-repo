@@ -203,7 +203,7 @@
           <th nzWidth="110px" nzLeft>Map Service</th>
 
           <th nzWidth="110px" nzLeft>View Services</th>
-          <!-- <th nzWidth="110px" nzLeft>Calender</th> -->
+          <th nzWidth="110px" nzLeft>Calender</th>
           <th nzLeft nzWidth="300px" nzShowSort align="center" nzColumnKey="{{ 'NAME' }}" [nzSortFn]="true"
             nzCustomFilter>
             Territory Name
@@ -315,12 +315,12 @@
               <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
               </span>&nbsp;&nbsp;View</nz-tag>
           </td>
-          <!-- <td align="center" nzLeft>
+          <td align="center" nzLeft>
             <nz-tag nzColor="#2db7f5" (click)="ServiceCalender(data)" style="cursor: pointer"
               nzTooltipTitle="Map Calender" nz-tooltip>
               <span nz-icon nzType="calendar" nzTheme="outline" style="font-size: 15px">
               </span>&nbsp;&nbsp;Map</nz-tag>
-          </td> -->
+          </td>
           <td align="left" [nzTooltipTitle]="isTextOverflow ? data['NAME'] : null" #tooltipRef1="nzTooltip" nz-tooltip
             nzLeft>
             <div #textContainer1 class="truncate-text" (mouseenter)="checkOverflow(textContainer1, tooltipRef1)">
@@ -578,7 +578,7 @@
     </ng-container>
   </nz-drawer>
 </div>
-<!-- <div *ngIf="drawerServiceCalenderVisible">
+<div *ngIf="drawerServiceCalenderVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(105% - 55px)',
       overflow: 'auto',
@@ -589,4 +589,4 @@
     <ng-container *nzDrawerContent>
       <app-territory-calendar [drawerClose]="closeCallback" [drawerVisible]="drawerServiceCalenderVisible"
         [data]="drawerData"></app-territory-calendar> </ng-container></nz-drawer>
-</div> -->
+</div>

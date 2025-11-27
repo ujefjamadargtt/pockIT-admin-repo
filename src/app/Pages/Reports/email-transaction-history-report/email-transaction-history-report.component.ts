@@ -103,6 +103,7 @@ export class EmailTransactionHistoryReportComponent {
     ['RESPONSE_DATA', 'RESPONSE_DATA'],
     ['STATUS', 'STATUS'],
   ];
+  date: Date[] = [];
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -313,7 +314,16 @@ export class EmailTransactionHistoryReportComponent {
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
+    let dateQuery = '';
 
+    if (this.date && this.date.length === 2) {
+      const [startDate, endDate] = this.date;
+      const start = startDate.toISOString().split('T')[0];
+      const end = endDate.toISOString().split('T')[0];
+
+      // if(dateQuery!=='') dateQuery+=' AND ';
+      dateQuery += ` AND  DATE(CREATED_MODIFIED_DATE) BETWEEN '${start}' AND '${end}' `
+    }
     this.loadingRecords = true;
 
     let sort: string;
@@ -325,7 +335,6 @@ export class EmailTransactionHistoryReportComponent {
 
     let likeQuery = '';
     let globalSearchQuery = '';
-
     // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -391,7 +400,7 @@ export class EmailTransactionHistoryReportComponent {
           this.pageSize,
           this.sortKey,
           sort,
-          likeQuery + this.filterQuery
+          likeQuery + this.filterQuery + dateQuery
         )
         .subscribe(
           (data) => {
@@ -434,7 +443,7 @@ export class EmailTransactionHistoryReportComponent {
           0,
           this.sortKey,
           sort,
-          likeQuery + this.filterQuery
+          likeQuery + this.filterQuery + dateQuery
         )
         .subscribe(
           (data) => {

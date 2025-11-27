@@ -31,6 +31,7 @@ export class customer {
   INDIVIDUAL_COMPANY_NAME: any;
   COMPANY_ADDRESS: any;
   PASSWORD:any
+  PARENT_ID:any
 }
 
 export class SlotsMappingToCustomer {

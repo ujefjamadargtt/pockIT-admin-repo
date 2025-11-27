@@ -19,8 +19,15 @@ export class AddLoginAddressDetailsComponent {
   @Input() data: customerAddLoginsAddress = new customerAddLoginsAddress();
   @Input() dataList;
   @Input() mainCustData: customer = new customer();
+  @Input() isReadOnly: boolean = false;
+  @Input() addressdata2: any;
+  @Input() whosAddress: any;
 
   @Input() ID;
+  @Input() isAddressReadOnly;
+  @Input() selectedAddressData;
+  @Input() tempCustID;
+  @Input() secondDrawerData;
 
   Branch: any = [];
   public commonFunction = new CommonFunctionService();
@@ -35,7 +42,7 @@ export class AddLoginAddressDetailsComponent {
     private api: ApiServiceService,
     private datePipe: DatePipe,
     private message: NzNotificationService
-  ) { }
+  ) {}
 
   isStateSpinning: boolean = false;
   isDistrictSpinning: boolean = false;
@@ -46,22 +53,79 @@ export class AddLoginAddressDetailsComponent {
   ismobnoRequired = false;
 
   ngOnInit() {
-    this.api
-      .getAllCustomer(0, 0, '', '', ' AND IS_PARENT=0 AND ID =' + this.ID)
-      .subscribe((data) => {
-        this.custaddress = data['data'];
-        const customer = this.custaddress[0];
-
-        if (this.data.ID) {
-          this.data.MOBILE_NO = this.data.MOBILE_NO;
-          this.data.CUSTOMER_ID = customer.ID;
-          this.data.CONTACT_PERSON_NAME = this.data.CONTACT_PERSON_NAME;
+    if (
+      this.selectedAddressData &&
+      this.selectedAddressData != undefined &&
+      this.selectedAddressData != null &&
+      this.selectedAddressData != ''
+    ) {
+      if (this.data.ID) {
+        this.data.MOBILE_NO = this.selectedAddressData.MOBILE_NO;
+        // this.data.CUSTOMER_ID = this.selectedAddressData.CUSTOMER_ID;
+        // this.data.CONTACT_PERSON_NAME =  this.selectedAddressData.CONTACT_PERSON_NAME;
+        if (
+          this.data.ID &&
+          this.data.ID != null &&
+          this.data.ID != undefined &&
+          this.data.ID != ''
+        ) {
+          this.data.CUSTOMER_ID = this.data.CUSTOMER_ID;
         } else {
-          this.data.MOBILE_NO = customer.MOBILE_NO;
-          this.data.CONTACT_PERSON_NAME = customer.NAME;
-          this.data.CUSTOMER_ID = customer.ID;
+          this.data.CUSTOMER_ID = this.selectedAddressData.CUSTOMER_ID;
         }
-      });
+      } else {
+        this.data.MOBILE_NO = this.selectedAddressData.MOBILE_NO;
+        this.data.CONTACT_PERSON_NAME = this.selectedAddressData.CUSTOMER_NAME;
+        // this.data.CUSTOMER_ID = this.selectedAddressData.CUSTOMER_ID;
+        // this.data.CUSTOMER_ID = this.tempCustID;
+        if (
+          this.data.ID &&
+          this.data.ID != null &&
+          this.data.ID != undefined &&
+          this.data.ID != ''
+        ) {
+          this.data.CUSTOMER_ID = this.data.CUSTOMER_ID;
+        } else {
+          this.data.CUSTOMER_ID = this.tempCustID;
+        }
+      }
+    } else {
+      if (
+        this.data.ID &&
+        this.data.ID != null &&
+        this.data.ID != undefined &&
+        this.data.ID != ''
+      ) {
+        this.data.CUSTOMER_ID = this.data.CUSTOMER_ID;
+      } else {
+        if (
+          this.secondDrawerData.ID &&
+          this.secondDrawerData.ID != null &&
+          this.secondDrawerData.ID != undefined &&
+          this.secondDrawerData.ID != ''
+        ) {
+          this.data.CUSTOMER_ID = this.secondDrawerData.ID;
+        } else {
+          this.data.CUSTOMER_ID = this.tempCustID;
+        }
+      }
+    }
+    // this.api
+    //   .getAllCustomer(0, 0, '', '', ' AND IS_PARENT=0 AND ID =' + this.ID)
+    //   .subscribe((data) => {
+    //     this.custaddress = data['data'];
+    //     const customer = this.custaddress[0];
+
+    //     if (this.data.ID) {
+    //       this.data.MOBILE_NO = this.data.MOBILE_NO;
+    //       this.data.CUSTOMER_ID = customer.ID;
+    //       this.data.CONTACT_PERSON_NAME = this.data.CONTACT_PERSON_NAME;
+    //     } else {
+    //       this.data.MOBILE_NO = customer.MOBILE_NO;
+    //       this.data.CONTACT_PERSON_NAME = customer.NAME;
+    //       this.data.CUSTOMER_ID = customer.ID;
+    //     }
+    //   });
 
     this.getallCountry();
     if (this.data?.COUNTRY_ID) {
@@ -307,8 +371,10 @@ export class AddLoginAddressDetailsComponent {
   City1: any = [];
 
   close(accountMasterPage: NgForm) {
+    this.isSpinning = true;
     this.drawerCustomerAddLoginsAddressClose();
     this.resetDrawer(accountMasterPage);
+    this.isSpinning = false;
   }
 
   resetDrawer(accountMasterPage: NgForm) {
@@ -320,6 +386,38 @@ export class AddLoginAddressDetailsComponent {
   isOk: boolean = true;
 
   save(accountMasterPage: NgForm): void {
+    if (this.whosAddress === 'ParentAddress') {
+      if (
+        this.data.ID &&
+        this.data.ID != null &&
+        this.data.ID != undefined &&
+        this.data.ID != ''
+      ) {
+        this.data.PARENT_ADDRESS_ID = this.data.PARENT_ADDRESS_ID;
+      } else {
+        this.data.PARENT_ADDRESS_ID = this.addressdata2?.[0]['ID'];
+      }
+    } else {
+      if (
+        this.data.ID &&
+        this.data.ID != null &&
+        this.data.ID != undefined &&
+        this.data.ID != ''
+      ) {
+        this.data.PARENT_ADDRESS_ID = this.data.PARENT_ADDRESS_ID;
+      } else {
+        this.data.PARENT_ADDRESS_ID = null;
+      }
+    }
+    // if (this.isReadOnly) {
+    //   this.data.PARENT_ADDRESS_ID = this.data.PARENT_ADDRESS_ID
+    //     ? this.data.PARENT_ADDRESS_ID
+    //     : this.addressdata2?.[0]['ID'];
+    //   // this.data.PARENT_ADDRESS_ID = this.data.PARENT_ADDRESS_ID ?this.data.PARENT_ADDRESS_ID :this.addressdata2[0]['ID']
+    // } else {
+    //   this.data.PARENT_ADDRESS_ID = null;
+    // }
+
     // this.isSpinning=true;
     this.isOk = true;
 
@@ -439,7 +537,8 @@ export class AddLoginAddressDetailsComponent {
     if (this.isOk) {
       this.data.GEO_LOCATION = `${this.latitude},${this.longitude}`;
 
-      if (this.custaddress && this.custaddress.length > 0) {
+      if (this.selectedAddressData && this.selectedAddressData.length > 0) {
+        // if (this.custaddress && this.custaddress.length > 0) {
         // Avoid overriding MOBILE_NO if it has been cleared
         if (
           !this.data.MOBILE_NO ||
@@ -461,7 +560,8 @@ export class AddLoginAddressDetailsComponent {
           this.data.LANDMARK = null;
         }
         this.isSpinning = true;
-        this.data.CUSTOMER_NAME = this.custaddress[0]['CUSTOMER_NAME'];
+        this.data.CUSTOMER_NAME = this.selectedAddressData.CUSTOMER_NAME;
+        // this.data.CUSTOMER_NAME = this.custaddress[0]['CUSTOMER_NAME'];
         if (this.data.IS_DEFAULT) {
           this.api.updateCustomerAddressNew(this.data).subscribe(
             (successCode: any) => {
@@ -575,9 +675,10 @@ export class AddLoginAddressDetailsComponent {
         }
       } else {
         this.isSpinning = true;
-        this.data.CUSTOMER_NAME = this.custaddress[0]['CUSTOMER_NAME'];
+        this.data.CUSTOMER_NAME = this.selectedAddressData.CUSTOMER_NAME;
+        // this.data.CUSTOMER_NAME = this.custaddress[0]['CUSTOMER_NAME'];
         if (this.data.IS_DEFAULT) {
-          this.data.IS_DEFAULT = true;
+          // this.data.IS_DEFAULT = true;
           this.api.createCustomerAddress(this.data).subscribe(
             (successCode: any) => {
               if (successCode.code == '200') {
@@ -622,7 +723,7 @@ export class AddLoginAddressDetailsComponent {
                   addressdata !== undefined &&
                   addressdata !== ''
                 ) {
-                  this.data.IS_DEFAULT = true;
+                  // this.data.IS_DEFAULT = true;
                   this.api.createCustomerAddress(this.data).subscribe(
                     (successCode: any) => {
                       if (successCode.code == '200') {
@@ -663,7 +764,7 @@ export class AddLoginAddressDetailsComponent {
                     ''
                   );
                 } else {
-                  this.data.IS_DEFAULT = true;
+                  // this.data.IS_DEFAULT = true;
                   this.api.createCustomerAddress(this.data).subscribe(
                     (successCode: any) => {
                       if (successCode.code == '200') {
@@ -700,10 +801,12 @@ export class AddLoginAddressDetailsComponent {
   createChannelData() {
     var data: any = {
       CHANNEL_NAME: this.pincodeChannel,
-      USER_ID: this.custaddress[0]['ID'],
+      USER_ID: this.selectedAddressData.ID,
+      // USER_ID: this.custaddress[0]['ID'],
       STATUS: true,
       CLIENT_ID: 1,
-      USER_NAME: this.custaddress[0]['CUSTOMER_NAME'],
+      USER_NAME: this.selectedAddressData.CUSTOMER_NAME,
+      // USER_NAME: this.custaddress[0]['CUSTOMER_NAME'],
       TYPE: 'C',
       DATE: this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
     };
@@ -726,10 +829,12 @@ export class AddLoginAddressDetailsComponent {
     var data: any = {
       CHANNEL_NAME: this.pincodeChannel,
       OLD_CHANNEL_NAME: this.pincodeChannelOld,
-      USER_ID: this.custaddress[0]['ID'],
+      USER_ID: this.selectedAddressData.ID,
+      // USER_ID: this.custaddress[0]['ID'],
       STATUS: true,
       CLIENT_ID: 1,
-      USER_NAME: this.custaddress[0]['CUSTOMER_NAME'],
+      USER_NAME: this.selectedAddressData.CUSTOMER_NAME,
+      // USER_NAME: this.custaddress[0]['CUSTOMER_NAME'],
       TYPE: 'C',
       DATE: this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
     };
@@ -761,20 +866,20 @@ export class AddLoginAddressDetailsComponent {
   mapss: any;
   markers: any;
   varm: any;
-  citySearch: any = ''
-  stateSearch: any = ''
-  countrySearch: any = ''
-  locality1Search: any = ''
-  locality2Search: any = ''
-  buildingSearch: any = ''
-  landmarkSearch: any = ''
-  building1Search: any = ''
-  postcodeSearch: any = ''
+  citySearch: any = '';
+  stateSearch: any = '';
+  countrySearch: any = '';
+  locality1Search: any = '';
+  locality2Search: any = '';
+  buildingSearch: any = '';
+  landmarkSearch: any = '';
+  building1Search: any = '';
+  postcodeSearch: any = '';
   districtSearch: any = '';
   street_number: any = '';
   subpremise: any = '';
   floor: any = '';
-  placeName: any = ''
+  placeName: any = '';
 
   openmapModal() {
     // if (!this.data.ADDRESS_LINE_2) {
@@ -844,11 +949,24 @@ export class AddLoginAddressDetailsComponent {
     }
 
     // Final Address String
-    if ((Number(this.latitude) && Number(this.longitude)) || (this.data.LANDMARK !== null && this.data.LANDMARK !== undefined && this.data.LANDMARK !== '') ||
-      (this.data.ADDRESS_LINE_2 !== null && this.data.ADDRESS_LINE_2 !== undefined && this.data.ADDRESS_LINE_2 !== '') ||
-      (this.data.ADDRESS_LINE_1 !== null && this.data.ADDRESS_LINE_1 !== undefined && this.data.ADDRESS_LINE_1 !== '') ||
-      (this.data.COUNTRY_ID !== null && this.data.COUNTRY_ID !== undefined && this.data.COUNTRY_ID !== '') ||
-      (this.data.CITY_NAME !== null && this.data.CITY_NAME !== undefined && this.data.CITY_NAME !== '')) {
+    if (
+      (Number(this.latitude) && Number(this.longitude)) ||
+      (this.data.LANDMARK !== null &&
+        this.data.LANDMARK !== undefined &&
+        this.data.LANDMARK !== '') ||
+      (this.data.ADDRESS_LINE_2 !== null &&
+        this.data.ADDRESS_LINE_2 !== undefined &&
+        this.data.ADDRESS_LINE_2 !== '') ||
+      (this.data.ADDRESS_LINE_1 !== null &&
+        this.data.ADDRESS_LINE_1 !== undefined &&
+        this.data.ADDRESS_LINE_1 !== '') ||
+      (this.data.COUNTRY_ID !== null &&
+        this.data.COUNTRY_ID !== undefined &&
+        this.data.COUNTRY_ID !== '') ||
+      (this.data.CITY_NAME !== null &&
+        this.data.CITY_NAME !== undefined &&
+        this.data.CITY_NAME !== '')
+    ) {
       this.selectedLocation = addressParts.join(', ');
     } else {
       this.selectedLocation = '';
@@ -861,7 +979,11 @@ export class AddLoginAddressDetailsComponent {
         'searchBox'
       ) as HTMLInputElement;
       if (searchBox) {
-        if (this.selectedLocation !== '' && this.selectedLocation !== null && this.selectedLocation !== undefined) {
+        if (
+          this.selectedLocation !== '' &&
+          this.selectedLocation !== null &&
+          this.selectedLocation !== undefined
+        ) {
           searchBox.value = this.selectedLocation || '';
         } else {
           searchBox.value = '';
@@ -919,8 +1041,6 @@ export class AddLoginAddressDetailsComponent {
 
     const input = document.getElementById('searchBox') as HTMLInputElement;
     if (input) {
-
-
       const autocomplete = new google.maps.places.Autocomplete(input);
 
       autocomplete.addListener('place_changed', () => {
@@ -930,7 +1050,6 @@ export class AddLoginAddressDetailsComponent {
         lng = place.geometry.location.lng();
 
         this.placeName = place?.name || '';
-
 
         this.getAddress(lat, lng, place); // Still use OSM for better address sometimes
 
@@ -943,7 +1062,6 @@ export class AddLoginAddressDetailsComponent {
     }
 
     if (query !== null && query !== undefined && query !== '') {
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ address: query }, (results, status) => {
         if (status === 'OK' && results[0]) {
@@ -962,12 +1080,11 @@ export class AddLoginAddressDetailsComponent {
       });
     }
 
-
     this.map2.addListener('click', (event: any) => {
       lat = event.latLng.lat();
       lng = event.latLng.lng();
       this.marker.setPosition({ lat, lng });
-      var formattedaddress1: any = ''
+      var formattedaddress1: any = '';
       formattedaddress1 = '';
       this.selectedLocation = formattedaddress1;
 
@@ -978,14 +1095,17 @@ export class AddLoginAddressDetailsComponent {
 
           // Get full place details using placeId
           const service = new google.maps.places.PlacesService(this.map2);
-          service.getDetails({ placeId: placeId }, (placeResult, placeStatus) => {
-            if (placeStatus === 'OK' && placeResult) {
-              this.placeName = placeResult.name || ''; // <- Now you get name too
-              this.getAddress(lat, lng, placeResult);  // Call your function with place
-            } else {
-              this.getAddress(lat, lng, null);
+          service.getDetails(
+            { placeId: placeId },
+            (placeResult, placeStatus) => {
+              if (placeStatus === 'OK' && placeResult) {
+                this.placeName = placeResult.name || ''; // <- Now you get name too
+                this.getAddress(lat, lng, placeResult); // Call your function with place
+              } else {
+                this.getAddress(lat, lng, null);
+              }
             }
-          });
+          );
         } else {
           // fallback if geocoding fails
           console.warn('Geocoder failed:', status);
@@ -1015,8 +1135,6 @@ export class AddLoginAddressDetailsComponent {
 
     const input = document.getElementById('searchBox') as HTMLInputElement;
     if (input) {
-
-
       const autocomplete = new google.maps.places.Autocomplete(input);
 
       autocomplete.addListener('place_changed', () => {
@@ -1026,7 +1144,6 @@ export class AddLoginAddressDetailsComponent {
         lng = place.geometry.location.lng();
 
         this.placeName = place?.name || '';
-
 
         this.getAddress(lat, lng, place); // Still use OSM for better address sometimes
 
@@ -1039,7 +1156,6 @@ export class AddLoginAddressDetailsComponent {
     }
 
     if (query !== null && query !== undefined && query !== '') {
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ address: query }, (results, status) => {
         if (status === 'OK' && results[0]) {
@@ -1058,12 +1174,11 @@ export class AddLoginAddressDetailsComponent {
       });
     }
 
-
     this.map2.addListener('click', (event: any) => {
       lat = event.latLng.lat();
       lng = event.latLng.lng();
       this.marker.setPosition({ lat, lng });
-      var formattedaddress11: any = ''
+      var formattedaddress11: any = '';
       formattedaddress11 = '';
       this.selectedLocation = formattedaddress11;
 
@@ -1074,14 +1189,17 @@ export class AddLoginAddressDetailsComponent {
 
           // Get full place details using placeId
           const service = new google.maps.places.PlacesService(this.map2);
-          service.getDetails({ placeId: placeId }, (placeResult, placeStatus) => {
-            if (placeStatus === 'OK' && placeResult) {
-              this.placeName = placeResult.name || ''; // <- Now you get name too
-              this.getAddress(lat, lng, placeResult);  // Call your function with place
-            } else {
-              this.getAddress(lat, lng, null);
+          service.getDetails(
+            { placeId: placeId },
+            (placeResult, placeStatus) => {
+              if (placeStatus === 'OK' && placeResult) {
+                this.placeName = placeResult.name || ''; // <- Now you get name too
+                this.getAddress(lat, lng, placeResult); // Call your function with place
+              } else {
+                this.getAddress(lat, lng, null);
+              }
             }
-          });
+          );
         } else {
           // fallback if geocoding fails
           console.warn('Geocoder failed:', status);
@@ -1104,8 +1222,6 @@ export class AddLoginAddressDetailsComponent {
     });
 
     if (!isNaN(lat) && !isNaN(lng)) {
-
-
       this.marker = new google.maps.Marker({
         position: { lat, lng },
         map: this.map2,
@@ -1128,7 +1244,7 @@ export class AddLoginAddressDetailsComponent {
       const lat = place.geometry?.location?.lat() || 0;
       const lng = place.geometry?.location?.lng() || 0;
       this.placeName = place?.name;
-      var formattedaddress: any = ''
+      var formattedaddress: any = '';
       formattedaddress = place?.formatted_address || '';
       this.selectedLocation = formattedaddress;
 
@@ -1136,7 +1252,6 @@ export class AddLoginAddressDetailsComponent {
       setTimeout(() => {
         this.map2.setZoom(19); // Try 19–21
       }, 100);
-
 
       if (this.marker) {
         this.marker.setMap(null);
@@ -1151,11 +1266,9 @@ export class AddLoginAddressDetailsComponent {
       this.getAddress(lat, lng, place);
     });
 
-
     this.map2.addListener('click', (event: any) => {
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
-
 
       if (this.marker) {
         this.marker.setMap(null);
@@ -1166,7 +1279,7 @@ export class AddLoginAddressDetailsComponent {
         position: { lat, lng },
         map: this.map2,
       });
-      var formattedaddress1: any = ''
+      var formattedaddress1: any = '';
       formattedaddress1 = '';
       this.selectedLocation = formattedaddress1;
       this.getAddress(lat, lng);
@@ -1174,15 +1287,33 @@ export class AddLoginAddressDetailsComponent {
   }
   StateDataValues(country: any, state: any, postcode: any, distt: any) {
     if (country) {
-      var countryDatas: any = this.CountryData.find((c: any) => c.NAME === country)?.ID;
-      if (countryDatas !== null && countryDatas !== undefined && countryDatas !== '') {
+      var countryDatas: any = this.CountryData.find(
+        (c: any) => c.NAME === country
+      )?.ID;
+      if (
+        countryDatas !== null &&
+        countryDatas !== undefined &&
+        countryDatas !== ''
+      ) {
         this.data.COUNTRY_ID = Number(countryDatas);
-        this.getStatesByLocationFetch(this.data.COUNTRY_ID, true, state, postcode, distt)
+        this.getStatesByLocationFetch(
+          this.data.COUNTRY_ID,
+          true,
+          state,
+          postcode,
+          distt
+        );
       }
     }
   }
 
-  getStatesByLocationFetch(countryId: any, value: boolean, state: any, postcode: any, distt: any) {
+  getStatesByLocationFetch(
+    countryId: any,
+    value: boolean,
+    state: any,
+    postcode: any,
+    distt: any
+  ) {
     this.isStateSpinning = true;
     if (value == true) {
       this.data.STATE_ID = null;
@@ -1210,10 +1341,21 @@ export class AddLoginAddressDetailsComponent {
             this.StateData = data['data'];
 
             if (state) {
-              var stateDatas: any = this.StateData.find((c: any) => c.NAME === state)?.ID;
-              if (stateDatas !== null && stateDatas !== undefined && stateDatas !== '') {
+              var stateDatas: any = this.StateData.find(
+                (c: any) => c.NAME === state
+              )?.ID;
+              if (
+                stateDatas !== null &&
+                stateDatas !== undefined &&
+                stateDatas !== ''
+              ) {
                 this.data.STATE_ID = Number(stateDatas);
-                this.getDistrictByLocationFetch(this.data.STATE_ID, true, postcode, distt)
+                this.getDistrictByLocationFetch(
+                  this.data.STATE_ID,
+                  true,
+                  postcode,
+                  distt
+                );
               }
             }
             this.isStateSpinning = false;
@@ -1229,7 +1371,12 @@ export class AddLoginAddressDetailsComponent {
       );
   }
 
-  getDistrictByLocationFetch(stateId: any, value: boolean, postcode: any, distt: any) {
+  getDistrictByLocationFetch(
+    stateId: any,
+    value: boolean,
+    postcode: any,
+    distt: any
+  ) {
     this.isDistrictSpinning = true;
 
     if (value == true) {
@@ -1257,10 +1404,20 @@ export class AddLoginAddressDetailsComponent {
             this.DistrictData = data['data'];
 
             if (distt) {
-              var DistrictDatas: any = this.DistrictData.find((c: any) => c.NAME === distt)?.ID;
-              if (DistrictDatas !== null && DistrictDatas !== undefined && DistrictDatas !== '') {
+              var DistrictDatas: any = this.DistrictData.find(
+                (c: any) => c.NAME === distt
+              )?.ID;
+              if (
+                DistrictDatas !== null &&
+                DistrictDatas !== undefined &&
+                DistrictDatas !== ''
+              ) {
                 this.data.DISTRICT_ID = Number(DistrictDatas);
-                this.getPincodeByLocation(this.data.DISTRICT_ID, true, postcode)
+                this.getPincodeByLocation(
+                  this.data.DISTRICT_ID,
+                  true,
+                  postcode
+                );
               }
             }
           } else {
@@ -1297,8 +1454,14 @@ export class AddLoginAddressDetailsComponent {
           if (data['code'] === 200) {
             this.PincodeData = data['data'];
             if (postcode) {
-              var PincodeDatas: any = this.PincodeData.find((c: any) => c.PINCODE_NUMBER === postcode)?.ID;
-              if (PincodeDatas !== null && PincodeDatas !== undefined && PincodeDatas !== '') {
+              var PincodeDatas: any = this.PincodeData.find(
+                (c: any) => c.PINCODE_NUMBER === postcode
+              )?.ID;
+              if (
+                PincodeDatas !== null &&
+                PincodeDatas !== undefined &&
+                PincodeDatas !== ''
+              ) {
                 this.data.PINCODE_ID = Number(PincodeDatas);
                 this.getpincodename1(this.data.PINCODE_ID);
               }
@@ -1389,8 +1552,9 @@ export class AddLoginAddressDetailsComponent {
     this.subpremise = '';
     // this.placeName = '';
     this.floor = '';
-    const geocodeRequest = placeId?.place_id ? { placeId: placeId.place_id } : { location: latlng };
-
+    const geocodeRequest = placeId?.place_id
+      ? { placeId: placeId.place_id }
+      : { location: latlng };
 
     geocoder.geocode(geocodeRequest, (results, status) => {
       if (status === 'OK' && results[0]) {
@@ -1408,15 +1572,25 @@ export class AddLoginAddressDetailsComponent {
               this.countrySearch = component?.long_name || '';
             }
 
-            if (types.some((type: any) => ['sublocality_level_2', 'neighborhood'].includes(type))) {
+            if (
+              types.some((type: any) =>
+                ['sublocality_level_2', 'neighborhood'].includes(type)
+              )
+            ) {
               this.locality1Search = component.long_name || '';
             }
-            if (types.some((type: any) => ['sublocality_level_1', 'neighborhood'].includes(type))) {
+            if (
+              types.some((type: any) =>
+                ['sublocality_level_1', 'neighborhood'].includes(type)
+              )
+            ) {
               this.locality2Search = component.long_name || '';
             }
             if (types.includes('premise')) {
               // this.buildingSearch = component?.long_name || '';
-              this.buildingSearch += (this.buildingSearch ? ', ' : '') + (component?.long_name || '');
+              this.buildingSearch +=
+                (this.buildingSearch ? ', ' : '') +
+                (component?.long_name || '');
             }
             if (types.includes('landmark')) {
               this.landmarkSearch = component?.long_name || '';
@@ -1427,7 +1601,11 @@ export class AddLoginAddressDetailsComponent {
             // if (types.includes('street_number')) {
             //   this.street_number = component?.long_name || '';
             // }
-            if (types.some((type: any) => ['plus_code', 'street_number'].includes(type))) {
+            if (
+              types.some((type: any) =>
+                ['plus_code', 'street_number'].includes(type)
+              )
+            ) {
               this.street_number = component.long_name || '';
             }
             if (types.includes('floor')) {
@@ -1443,13 +1621,37 @@ export class AddLoginAddressDetailsComponent {
               this.districtSearch = component?.long_name || '';
             }
           });
-          this.data.CITY_NAME = this.citySearch ? this.citySearch : this.districtSearch;
-          this.data.LANDMARK = [this.landmarkSearch, this.building1Search, this.locality2Search].filter(part => !!part && part.trim() !== '').join(', ');
-          this.data.ADDRESS_LINE_2 = [this.placeName, this.buildingSearch, this.locality1Search].filter(parts => !!parts && parts.trim() !== '').join(', ');
-          if (this.data.ADDRESS_LINE_2 === '' || this.data.ADDRESS_LINE_2 === null || this.data.ADDRESS_LINE_2 === undefined) {
+          this.data.CITY_NAME = this.citySearch
+            ? this.citySearch
+            : this.districtSearch;
+          this.data.LANDMARK = [
+            this.landmarkSearch,
+            this.building1Search,
+            this.locality2Search,
+          ]
+            .filter((part) => !!part && part.trim() !== '')
+            .join(', ');
+          this.data.ADDRESS_LINE_2 = [
+            this.placeName,
+            this.buildingSearch,
+            this.locality1Search,
+          ]
+            .filter((parts) => !!parts && parts.trim() !== '')
+            .join(', ');
+          if (
+            this.data.ADDRESS_LINE_2 === '' ||
+            this.data.ADDRESS_LINE_2 === null ||
+            this.data.ADDRESS_LINE_2 === undefined
+          ) {
             this.data.ADDRESS_LINE_2 = this.data?.LANDMARK;
           }
-          this.data.ADDRESS_LINE_1 = [this.floor, this.street_number, this.subpremise].filter(partad => !!partad && partad.trim() !== '').join(', ');
+          this.data.ADDRESS_LINE_1 = [
+            this.floor,
+            this.street_number,
+            this.subpremise,
+          ]
+            .filter((partad) => !!partad && partad.trim() !== '')
+            .join(', ');
 
           // this.data.ADDRESS_LINE_1 = this.street_number;
           // if (this.countrySearch !== '' && this.countrySearch !== undefined && this.countrySearch !== null) {
@@ -1465,7 +1667,7 @@ export class AddLoginAddressDetailsComponent {
         if (!this.noaddress) {
           this.data.ADDRESS_LINE_2 = this.data.ADDRESS_LINE_2;
         } else {
-          this.address1 = this.data.ADDRESS_LINE_2
+          this.address1 = this.data.ADDRESS_LINE_2;
         }
 
         if (!this.nolandmark) {
@@ -1477,7 +1679,7 @@ export class AddLoginAddressDetailsComponent {
         if (typeof this.selectedLocation !== 'object') {
           this.selectedLocation = '';
         }
-        this.selectedLocation = this.address2
+        this.selectedLocation = this.address2;
       } else {
         // this.selectedLocation = this.selectedLocation || {};
         this.selectedLocation = '';
@@ -1488,8 +1690,17 @@ export class AddLoginAddressDetailsComponent {
 
   closemapModal() {
     this.mapDraweVisible = false;
-    if (this.countrySearch !== '' && this.countrySearch !== undefined && this.countrySearch !== null) {
-      this.StateDataValues(this.countrySearch, this.stateSearch, this.postcodeSearch, this.districtSearch)
+    if (
+      this.countrySearch !== '' &&
+      this.countrySearch !== undefined &&
+      this.countrySearch !== null
+    ) {
+      this.StateDataValues(
+        this.countrySearch,
+        this.stateSearch,
+        this.postcodeSearch,
+        this.districtSearch
+      );
     }
   }
 

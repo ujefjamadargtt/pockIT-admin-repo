@@ -16,6 +16,12 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
   styleUrls: ['./shoporderdetails.component.css'],
 })
 export class ShoporderdetailsComponent {
+  sortKey1: string = 'ID'
+
+  newdataList: any = [{ id: 1 }];
+
+  value1: any = '';
+  value2: any = '';
   @Input() TYPE_FOR_LOCAL = '';
   @Input() FILTER_ID_FOR_LOCAL: any = null;
   roleId = sessionStorage.getItem('roleId');
@@ -163,6 +169,18 @@ export class ShoporderdetailsComponent {
         this.vieworderdata.orderData[0]['COURIER_DETAILS']
       );
     }
+    const now = new Date();
+    this.value1 = this.datePipe.transform(new Date(now.getFullYear(), now.getMonth(), 1), 'yyyy-MM-dd');
+    this.value2 = this.datePipe.transform(new Date(now.getFullYear(), now.getMonth() + 1, 0), 'yyyy-MM-dd');
+    const today = new Date();
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    // Format the dates using DatePipe
+    const formattedStartDate: any = this.datePipe.transform(startOfMonth, 'yyyy-MM-dd');
+    const formattedEndDate: any = this.datePipe.transform(endOfMonth, 'yyyy-MM-dd');
+
+    this.selectedDate = [formattedStartDate, formattedEndDate];
   }
   close(): void {
     this.drawerClose();
@@ -2245,4 +2263,97 @@ export class ShoporderdetailsComponent {
       this.getlistofstock();
     }
   }
+  filterQuery: string = '';
+  filterQuery1: any = '';
+  searchText: string = '';
+  custType: any = '';
+  columns: string[][] = [
+    ['INVOICE_DATE', 'INVOICE_DATE'],
+    ['CUSTOMER_NAME', 'CUSTOMER_NAME'],
+    ['CUSTOMER_TYPE', 'CUSTOMER_TYPE'],
+    ['MOBILE_NO', 'MOBILE_NO'],
+    ['EMAIL', 'EMAIL'],
+    ['EMAIL', 'EMAIL'],
+    ['TOTAL_AMOUNT', 'TOTAL_AMOUNT'],
+    ['TAX_AMOUNT', 'TAX_AMOUNT'],
+    ['FINAL_AMOUNT', 'FINAL_AMOUNT']
+  ];
+  selectedDate: Date[] = [];
+  Customers: any = [];
+  InvoiceClick() {
+    this.getshopOrderData();
+  }
+
+  getshopOrderData(reset: boolean = false) {
+    if (reset) {
+      this.pageIndex = 1;
+      this.sortKey1 = 'id';
+      this.sortValue = 'desc';
+    }
+    var sort: string;
+    try {
+      sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
+    } catch (error) {
+      sort = '';
+    }
+    var likeQuery = '';
+    if (this.searchText != '' && this.searchText.length > 0) {
+      likeQuery = ' AND(';
+      this.columns.forEach((column) => {
+        likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
+      });
+      likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ') ';
+
+    }
+    if ((this.Customers != undefined) && (this.Customers != null) && (this.Customers.length > 0)) {
+      this.filterQuery = " AND CUSTOMER_ID IN(" + this.Customers + ")";
+    } else {
+      this.filterQuery = '';
+    }
+    this.filterQuery1 = '';
+    if (this.custType != undefined && this.custType != null && this.custType != '') {
+      this.filterQuery1 = " AND CUSTOMER_TYPE IN('" + this.custType + "')";
+    } else {
+      this.filterQuery1 = '';
+    }
+
+    if (this.orderDetails.CUSTOMER_ID) {
+      this.filterQuery = `AND CUSTOMER_ID = ${this.orderDetails.CUSTOMER_ID}`;
+    }
+    if (this.orderDetails.ORDER_NUMBER) {
+      this.filterQuery1 = ` AND ORDER_NUMBER = '${this.orderDetails.ORDER_NUMBER}'`;
+    }
+    likeQuery = this.filterQuery + this.filterQuery1;
+    this.api
+      .getshopOrdersData1(
+        this.pageIndex,
+        this.pageSize,
+        this.sortKey1,
+        this.sortValue,
+        likeQuery
+      )
+      .subscribe(
+        (data) => {
+          if (data['status'] == 200) {
+            this.loadingRecords = false;
+            this.totalRecords = data['body']['count'];
+            this.newdataList = data['body']['data'];
+            // this.TabId = data['body']['TAB_ID'];
+            this.isSpinning = false;
+          } else if (data['status'] == 400) {
+            this.loadingRecords = false;
+            this.newdataList = [];
+            this.isSpinning = false;
+            this.message.error('Invalid filter parameter', '');
+          } else {
+            this.loadingRecords = false;
+            this.newdataList = [];
+            this.message.error('Something Went Wrong ...', '');
+            this.isSpinning = false;
+          }
+        });
+
+  }
+
+
 }

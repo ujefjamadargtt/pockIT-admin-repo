@@ -54,9 +54,12 @@ export class DashboardComponent implements OnInit {
                 data['body']['data'][0] != undefined
               ) {
                 this.is_show = true;
+                // const unsafeUrl =
+                //   data['body']['data'][0]['SNAPSHOT_LINK'] +
+                //   '?theme=light&fullscreen=true&kiosk=1';
                 const unsafeUrl =
                   data['body']['data'][0]['SNAPSHOT_LINK'] +
-                  '?theme=light&fullscreen=true&kiosk=1';
+                  '?theme=light&fullscreen=true&kiosk';
                 // 'http://localhost:3000/dashboard/snapshot/4yrnlZwN1mtAinuLDHAmcQ5oOu4TrpeR?theme=light&fullscreen=true&kiosk=1';
                 this.grafanaUrl =
                   this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);

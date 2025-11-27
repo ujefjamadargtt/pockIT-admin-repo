@@ -3755,14 +3755,16 @@ export class ApiServiceService {
     pageSize: number,
     sortKey: string,
     sortValue: string,
-    filter: any, IS_C_MANGER: any, CUSTOMER_MANAGER_ID: any, TERRITORY_ID: any
+    filter: any, IS_C_MANGER: any, CUSTOMER_MANAGER_ID: any, TERRITORY_ID: any,
+    VENDOR_ID: any
   ): Observable<any> {
     var data = {
       pageIndex: pageIndex,
       pageSize: pageSize,
       sortKey: sortKey,
       sortValue: sortValue,
-      filter: filter, IS_C_MANGER: IS_C_MANGER, CUSTOMER_MANAGER_ID: CUSTOMER_MANAGER_ID, TERRITORY_ID: TERRITORY_ID
+      filter: filter, IS_C_MANGER: IS_C_MANGER, CUSTOMER_MANAGER_ID: CUSTOMER_MANAGER_ID, TERRITORY_ID: TERRITORY_ID,
+      VENDOR_ID: VENDOR_ID
     };
     return this.httpClient.post<any>(
       this.baseUrl + 'api/technicianJobSchedule/get',
@@ -10523,7 +10525,47 @@ export class ApiServiceService {
     );
   }
  
+cancelorderByAdmin(
+    orderId: string,
+    customerId: string,
+    cancellationReason: string,
+    jobCardIds: string[],
+    cancellationCharge: number | null,
+    technicianId: number
+  ): Observable<any> {
+    var data = {
+      ORDER_ID: orderId,
+      CUSTOMER_ID: customerId,
+      CANCELLATION_REASON: cancellationReason,
+      JOB_CARD_IDS: jobCardIds,
+      CANCELLATION_CHARGE: cancellationCharge,
+      TECHNICIAN_ID: technicianId
+    };
+    return this.httpClient.post<any>(
+      this.url + 'order/cancelorderByAdmin',
+      JSON.stringify(data),
+      this.options
+    );
+  }
 
-
-
+  getshopOrdersData1(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/shopOrder/get',
+      JSON.stringify(data),
+      { headers: this.httpHeaders, observe: 'response' }
+    );
+  }
 }

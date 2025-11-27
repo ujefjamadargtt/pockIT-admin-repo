@@ -179,7 +179,7 @@ export class WhatsappMessageTransactionHistoryReportComponent {
   filterQuery: string = '';
 
   // Search function to apply filters and fetch data
-
+  date: Date[] = [];
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -198,6 +198,7 @@ export class WhatsappMessageTransactionHistoryReportComponent {
     }
 
     let likeQuery = '';
+    let dateQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -225,6 +226,14 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       likeQuery += `STATUS = '${this.statusFilter}'`;
     }
 
+    if (this.date && this.date.length === 2) {
+      const [startDate, endDate] = this.date;
+      const start = startDate.toISOString().split('T')[0];
+      const end = endDate.toISOString().split('T')[0];
+
+      // if(dateQuery!=='') dateQuery+=' AND ';
+      dateQuery += ` AND  DATE(CREATED_MODIFIED_DATE) BETWEEN '${start}' AND '${end}' `
+    }
     this.loadingRecords = true;
     // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
@@ -238,7 +247,7 @@ export class WhatsappMessageTransactionHistoryReportComponent {
           this.pageSize,
           this.sortKey,
           sort,
-          likeQuery + this.filterQuery
+          likeQuery + this.filterQuery + dateQuery
         )
         .subscribe(
           (data) => {
@@ -275,7 +284,7 @@ export class WhatsappMessageTransactionHistoryReportComponent {
           0,
           this.sortKey,
           sort,
-          likeQuery + this.filterQuery
+          likeQuery + this.filterQuery + dateQuery
         )
         .subscribe(
           (data) => {

@@ -29,7 +29,7 @@ export class ListTechnicainMapComponent implements OnInit {
   roleids: any;
   backofficeId = sessionStorage.getItem('backofficeId');
   decreptedbackofficeId = 0;
-  decreptedvendorId = 0;
+  decreptedvendorId = sessionStorage.getItem('Vid');
   roleID = sessionStorage.getItem('roleId');
   decreptedroleIDString = '';
   decreptedroleID = 0;
@@ -51,6 +51,11 @@ export class ListTechnicainMapComponent implements OnInit {
     var roleid = this.commonFunction.decryptdata(
       sessionStorage.getItem('roleId') || ''
     );
+    var vidd = this.commonFunction.decryptdata(
+      sessionStorage.getItem('Vid') || ''
+    );
+    this.decreptedvendorId = vidd;
+
     this.decreptedroleIDString = this.roleID
       ? this.commonFunction.decryptdata(this.roleID)
       : '';
@@ -874,9 +879,8 @@ export class ListTechnicainMapComponent implements OnInit {
     );
 
     if (filterterritory.length > 0) {
-      this.terriotrystarttime = filterterritory[0].START_TIME;
-
-      this.terriotryendtime = filterterritory[0].END_TIME;
+      this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
+      this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
 
       const currentDate = new Date(this.todaydate);
       const year = currentDate.getFullYear();
@@ -950,9 +954,11 @@ export class ListTechnicainMapComponent implements OnInit {
         (x: any) => x.ID == Number(this.selectedterritory)
       );
       if (filterterritory.length > 0) {
-        this.terriotrystarttime = filterterritory[0].START_TIME;
+        // this.terriotrystarttime = filterterritory[0].START_TIME;
 
-        this.terriotryendtime = filterterritory[0].END_TIME;
+        // this.terriotryendtime = filterterritory[0].END_TIME;
+         this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
+        this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
 
         const currentDate = new Date(this.todaydate);
         const year = currentDate.getFullYear();
@@ -1012,6 +1018,10 @@ export class ListTechnicainMapComponent implements OnInit {
         this.territorydata.forEach((element) => {
           trIds.push(element.ID);
         });
+        var vendorfilter = ''
+        if (this.decreptedroleID == 9) {
+          vendorfilter = " AND ASSING_TO=" + this.decreptedvendorId
+        }
         this.api
           .getJobCardsForSchedular(
             this.pageindexxx,
@@ -1022,7 +1032,7 @@ export class ListTechnicainMapComponent implements OnInit {
             trIds.toString() +
             ") AND STATUS='P' AND ORDER_STATUS !='CA'" +
             likeQuery +
-            filterdateee + this.customerMangeer
+            filterdateee + this.customerMangeer + vendorfilter
           )
           .subscribe(
             (data) => {
@@ -1055,9 +1065,11 @@ export class ListTechnicainMapComponent implements OnInit {
       );
 
       if (filterterritory.length > 0) {
-        this.terriotrystarttime = filterterritory[0].START_TIME;
+        // this.terriotrystarttime = filterterritory[0].START_TIME;
 
-        this.terriotryendtime = filterterritory[0].END_TIME;
+        // this.terriotryendtime = filterterritory[0].END_TIME;
+         this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
+        this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
 
         const currentDate = new Date(this.todaydate);
         const year = currentDate.getFullYear();
@@ -1355,8 +1367,8 @@ export class ListTechnicainMapComponent implements OnInit {
         ...filterterritory[0].END_TIME.split(':').map(Number)
       );
 
-      this.terriotrystarttime = filterterritory[0].START_TIME;
-      this.terriotryendtime = filterterritory[0].END_TIME;
+      this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
+      this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
 
       var terriotryendtime = new Date(dateWithTime1);
       var terriotrystarttime = new Date(dateWithTime);
@@ -1408,7 +1420,11 @@ export class ListTechnicainMapComponent implements OnInit {
       "' AND TERRITORY_ID=" +
       id;
     var filterQuery11 = ' AND TERRITORY_ID=' + id;
-    this.api.gettechnicianjobshedule(0, 0, '', '', filterQuery, this.decreptedroleID === 7 ? 1 : 0, this.decreptedroleID === 7 ? this.decreptedbackofficeId : 0, id).subscribe(
+    var VENDOR_IDfilter: any = null;
+    if (this.decreptedroleID == 9) {
+      VENDOR_IDfilter = this.decreptedvendorId
+    }
+    this.api.gettechnicianjobshedule(0, 0, '', '', filterQuery, this.decreptedroleID === 7 ? 1 : 0, this.decreptedroleID === 7 ? this.decreptedbackofficeId : 0, id, VENDOR_IDfilter).subscribe(
       (data) => {
         if (data['code'] == 200) {
           this.sheduledata = data['data'];
@@ -1870,7 +1886,10 @@ export class ListTechnicainMapComponent implements OnInit {
   tempCount: any;
   getpendingjobdatafilter11(event: any) {
     this.spinnnnnnn = true;
-
+    var vendorfilter = ''
+    if (this.decreptedroleID == 9) {
+      vendorfilter = " AND ASSING_TO=" + this.decreptedvendorId
+    }
     if (event != '' && event != null && event != undefined) {
       this.filterdate = '';
       var likeQuery = '';
@@ -1902,7 +1921,7 @@ export class ListTechnicainMapComponent implements OnInit {
           event +
           " AND STATUS='P' AND ORDER_STATUS !='CA'" +
           likeQuery +
-          filterdateee + this.customerMangeer
+          filterdateee + this.customerMangeer + vendorfilter
         )
         .subscribe(
           (data) => {

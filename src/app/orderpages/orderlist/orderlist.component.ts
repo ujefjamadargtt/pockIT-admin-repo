@@ -126,7 +126,7 @@ export class OrderlistComponent implements OnInit {
     }
     this.getDatas();
 
-    console.log('1234', this.decreptedroleId);
+  
   }
   back() {
     this.router.navigate(['/masters/menu']);

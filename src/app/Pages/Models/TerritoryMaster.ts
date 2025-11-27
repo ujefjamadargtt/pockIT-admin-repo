@@ -12,7 +12,7 @@ export class TerritoryMaster {
     START_TIME: any;
     SUPPORT_COUNTRY_CODE: any = "+91";
     SUPPORT_CONTACT_NUMBER: any;
-    // WEEKLY_OFFS: any;
+    WEEKLY_OFFS: any;
 }
 
 

@@ -36,6 +36,8 @@ export class CustomerCouponSummaryReportComponent {
     ['EMAIL', 'Email Id'],
     ['TOTAL_COUPON_USED', 'Total Coupons Used'],
   ];
+  date: Date[] = [];
+
   isExportloading = false;
   coursesNodes = [];
   VIDEO_ID = '';
@@ -185,7 +187,15 @@ export class CustomerCouponSummaryReportComponent {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
     }
+    let dateQuery = '';
+    if (this.date && this.date.length === 2) {
+      const [startDate, endDate] = this.date;
+      const start = startDate.toISOString().split('T')[0];
+      const end = endDate.toISOString().split('T')[0];
 
+      // if(dateQuery!=='') dateQuery+=' AND ';
+      dateQuery += ` AND  DATE(CREATED_MODIFIED_DATE) BETWEEN '${start}' AND '${end}' `
+    }
     this.loadingRecords = true;
     var sort: string;
     try {
@@ -294,7 +304,7 @@ export class CustomerCouponSummaryReportComponent {
           this.pageSize,
           this.sortKey,
           sort,
-          likeQuery + this.filterQuery
+          likeQuery + this.filterQuery + dateQuery
         )
         .subscribe(
           (data) => {
@@ -340,7 +350,7 @@ export class CustomerCouponSummaryReportComponent {
           0,
           this.sortKey,
           sort,
-          likeQuery + this.filterQuery
+          likeQuery + this.filterQuery + dateQuery
         )
         .subscribe(
           (data) => {

@@ -23,7 +23,7 @@ export class AddLoginCustomerComponent {
   customers: any = [];
 
   @Input() drawerClose: Function;
-  @Input() data: customerAddLogin = new customerAddLogin();
+  @Input() data: any = new customerAddLogin();
   @Input() mainCustData: customer = new customer();
 
   @Input() drawerVisible: boolean;
@@ -45,6 +45,7 @@ export class AddLoginCustomerComponent {
   public commonFunction = new CommonFunctionService();
   isTextOverflow = false;
   passwordVisible: boolean = false;
+  isSpining: boolean = false;
 
   imgUrl;
   tabs = [
@@ -77,7 +78,7 @@ export class AddLoginCustomerComponent {
     private message: NzNotificationService,
     private modal: NzModalService,
     private sanitizer: DomSanitizer
-  ) { }
+  ) {}
 
   ngOnInit() {
     // this.getCustomerCategoryData();
@@ -223,7 +224,9 @@ export class AddLoginCustomerComponent {
       this.data.ALTCOUNTRY_CODE = this.mainCustData.ALTCOUNTRY_CODE;
       this.data.IS_SPECIAL_CATALOGUE = this.mainCustData.IS_SPECIAL_CATALOGUE;
       if (!this.data.ID) {
-        this.data.PASSWORD = this.data.PASSWORD ? this.data.PASSWORD : this.mainCustData.PASSWORD;
+        this.data.PASSWORD = this.data.PASSWORD
+          ? this.data.PASSWORD
+          : this.mainCustData.PASSWORD;
       }
 
       this.data.IS_HAVE_GST = false;
@@ -279,7 +282,7 @@ export class AddLoginCustomerComponent {
                     '',
                     '',
                     ' AND IS_PARENT=0 AND ID =' +
-                    successCode.CUSTOMER_DETAILS_ID
+                      successCode.CUSTOMER_DETAILS_ID
                   )
                   .subscribe((data) => {
                     this.loadingRecords = false;
@@ -328,65 +331,98 @@ export class AddLoginCustomerComponent {
 
   drawerData: customerAddLoginsAddress = new customerAddLoginsAddress();
 
+  tempCustID: any;
+  secondDrawerData: any = '';
   addAddress() {
     this.drawerTitle = 'Add Address Details';
-    this.drawerVisibleCustomerAddLoginsAddress = true;
+    this.selectedAddressData = '';
+    this.secondDrawerData = '';
+    this.whosAddress = '';
+    if (
+      this.custid &&
+      this.custid != undefined &&
+      this.custid != null &&
+      this.custid != ''
+    ) {
+      // this.ID = this.mainCustData.CUSTOMER_MASTER_ID;
+      this.tempCustID = this.custid;
+    } else {
+      this.tempCustID = this.ID;
+    }
+
     this.drawerData = new customerAddLoginsAddress();
+    if (this.addressdata.length === 0) {
+      this.drawerData.IS_DEFAULT = true;
+    } else {
+      this.drawerData.IS_DEFAULT = false;
+    }
+    if (
+      this.drawerData.PARENT_ADDRESS_ID != null &&
+      this.drawerData.PARENT_ADDRESS_ID != undefined &&
+      this.drawerData.PARENT_ADDRESS_ID != ''
+    ) {
+      this.isAddressReadOnly = true;
+    }
+    this.mainCustData = this.mainCustData;
+    this.secondDrawerData = this.data;
+    this.whosAddress = 'OwnAddress';
+    this.drawerVisibleCustomerAddLoginsAddress = true;
   }
 
-  editAddress(data: customerAddLoginsAddress) {
-    this.drawerTitle = 'Update Address Details';
-    this.drawerData = Object.assign({}, data);
-    this.drawerVisibleCustomerAddLoginsAddress = true;
-  }
+  // editAddress(data: customerAddLoginsAddress) {
+  //   this.drawerTitle = 'Update Address Details';
+  //   this.drawerData = Object.assign({}, data);
+  //   this.drawerVisibleCustomerAddLoginsAddress = true;
+  // }
 
   fullAddress: any;
   addressdata: any = [];
-  drawerCustomerAddLoginsAddressClose(): void {
-    if (this.originalAddressData.length > 2) {
-      this.showsearch = true;
-    } else {
-      this.showsearch = false;
-    }
-    this.api
-      .getAllCustomerAddress(
-        0,
-        0,
-        'IS_DEFAULT',
-        'desc',
-        ' AND STATUS = 1 AND CUSTOMER_ID= ' + this.ID
-      )
-      .subscribe((data) => {
-        this.addressdata = data['data'];
-        this.originalAddressData = [...this.addressdata];
-        if (this.originalAddressData.length > 2) {
-          this.showsearch = true;
-        } else {
-          this.showsearch = false;
-        }
-        if (this.addressdata && this.addressdata.length > 0) {
-          // Loop through each address and add FULL_ADDRESS key
-          this.addressdata = this.addressdata.map((address) => {
-            this.fullAddress = [
-              address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
-              address.ADDRESS_LINE_2 || '',
-              address.CITY_NAME || '',
-              address.STATE_NAME || '',
-              address.COUNTRY_NAME || '',
-              address.PINCODE || '',
-            ]
-              .filter((part) => part.trim() !== '') // Remove empty parts
-              .join(', '); // Combine with commas
+  // drawerCustomerAddLoginsAddressClose(): void {
+  //   if (this.originalAddressData.length > 2) {
+  //     this.showsearch = true;
+  //   } else {
+  //     this.showsearch = false;
+  //   }
+  //   this.api
+  //     .getAllCustomerAddress(
+  //       0,
+  //       0,
+  //       'IS_DEFAULT',
+  //       'desc',
+  //       ' AND STATUS = 1 AND CUSTOMER_ID= ' + this.ID
+  //     )
+  //     .subscribe((data) => {
+  //       this.addressdata = data['data'];
+  //       this.originalAddressData = [...this.addressdata];
+  //       if (this.originalAddressData.length > 2) {
+  //         this.showsearch = true;
+  //       } else {
+  //         this.showsearch = false;
+  //       }
+  //       if (this.addressdata && this.addressdata.length > 0) {
+  //         // Loop through each address and add FULL_ADDRESS key
+  //         this.addressdata = this.addressdata.map((address) => {
+  //           this.fullAddress = [
+  //             address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+  //             address.ADDRESS_LINE_2 || '',
+  //             address.CITY_NAME || '',
+  //             address.STATE_NAME || '',
+  //             address.COUNTRY_NAME || '',
+  //             address.PINCODE || '',
+  //           ]
+  //             .filter((part) => part.trim() !== '') // Remove empty parts
+  //             .join(', '); // Combine with commas
 
-            return {
-              ...address,
-              FULL_ADDRESS: this.fullAddress, // Add the concatenated address
-            };
-          });
-        }
-      });
-    this.drawerVisibleCustomerAddLoginsAddress = false;
-  }
+  //           return {
+  //             ...address,
+  //             FULL_ADDRESS: this.fullAddress, // Add the concatenated address
+  //           };
+  //         });
+  //       }
+  //     });
+
+  //   this.drawerVisibleCustomerAddLoginsAddress = false;
+  // }
 
   get closeCallbackCustomerAddLoginsAddress() {
     return this.drawerCustomerAddLoginsAddressClose.bind(this);
@@ -401,47 +437,115 @@ export class AddLoginCustomerComponent {
     }
     this.activeTabIndex = 1;
     if (this.data.ID) {
+      // this.ID = this.mainCustData.CUSTOMER_MASTER_ID;
       this.ID = this.custid;
     } else {
       this.ID = this.ID;
     }
+    this.isSpining = true;
     this.api
       .getAllCustomerAddress(
         0,
         0,
         'IS_DEFAULT',
         'desc',
-        ' AND STATUS = 1 AND CUSTOMER_ID= ' + this.ID
+        ' AND CUSTOMER_ID= ' + this.ID
       )
       .subscribe((data) => {
-        this.addressdata = data['data']; // Get the address data
-        this.originalAddressData = [...this.addressdata];
-        if (this.originalAddressData.length > 2) {
-          this.showsearch = true;
-        } else {
-          this.showsearch = false;
-        }
-        if (this.addressdata && this.addressdata.length > 0) {
-          // Loop through each address and add FULL_ADDRESS key
-          this.addressdata = this.addressdata.map((address) => {
-            // Concatenate the full address for each address object
-            const fullAddress = [
-              address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
-              address.ADDRESS_LINE_2 || '',
-              address.CITY_NAME || '',
-              address.STATE_NAME || '',
-              address.COUNTRY_NAME || '',
-              address.PINCODE || '',
-            ]
-              .filter((part) => part.trim() !== '') // Remove empty parts
-              .join(', '); // Combine with commas
+        if (data['code'] === 200) {
+          this.isSpining = false;
 
-            // Return the address object with the FULL_ADDRESS
-            return {
-              ...address,
-              FULL_ADDRESS: fullAddress, // Add the concatenated address as FULL_ADDRESS
-            };
-          });
+          this.addressdata = data['data']; // Get the address data
+          this.originalAddressData = [...this.addressdata];
+          if (this.originalAddressData.length > 2) {
+            this.showsearch = true;
+          } else {
+            this.showsearch = false;
+          }
+          if (this.addressdata && this.addressdata.length > 0) {
+            // Loop through each address and add FULL_ADDRESS key
+            this.addressdata = this.addressdata.map((address) => {
+              // Concatenate the full address for each address object
+              const fullAddress = [
+                address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+                address.ADDRESS_LINE_2 || '',
+                address.CITY_NAME || '',
+                address.STATE_NAME || '',
+                address.COUNTRY_NAME || '',
+                address.PINCODE || '',
+              ]
+                .filter((part) => part.trim() !== '') // Remove empty parts
+                .join(', '); // Combine with commas
+
+              // Return the address object with the FULL_ADDRESS
+              return {
+                ...address,
+                FULL_ADDRESS: fullAddress, // Add the concatenated address as FULL_ADDRESS
+              };
+            });
+
+            const parentIds = this.addressdata
+              .map((addr) => addr.PARENT_ADDRESS_ID)
+              .filter((id) => id != null);
+            // Get unique PARENT_ADDRESS_ID values
+            this.uniqueParentAddressIds = [...new Set(parentIds)];
+          }
+        } else {
+          this.isSpining = false;
+        }
+      });
+
+    // this.isSpining = true;
+    let filter;
+    var customerid = '';
+    if (this.data.ID) {
+      customerid = this.data.ID;
+    } else {
+      customerid = this.ID;
+    }
+    if (
+      this.uniqueParentAddressIds != null &&
+      this.uniqueParentAddressIds != undefined &&
+      this.uniqueParentAddressIds.length > 0
+    ) {
+      filter =
+        ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + //+customerid+
+        this.mainCustData.CUSTOMER_MASTER_ID +
+        // ' AND CUSTOMER_DETAILS_ID!=' +
+        ' AND ID!=' +
+        this.uniqueParentAddressIds;
+      // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid + " AND CUSTOMER_DETAILS_ID!=" + this.uniqueParentAddressIds
+    } else {
+      filter =
+        ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
+        this.mainCustData.CUSTOMER_MASTER_ID;
+      // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
+    }
+    this.isLoadingAddresses = true;
+
+    this.api
+      .getAllCustomerAddress(
+        0,
+        0,
+        'IS_DEFAULT',
+        'desc',
+        // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
+        filter
+
+        // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.isParentId
+      )
+      .subscribe((data) => {
+        if (data['code'] === 200) {
+          this.isSpining = false;
+          this.addressdata2 = [];
+          this.selectedAddress = null;
+          this.addressdata2 = data['data'];
+          this.isLoadingAddresses = false;
+        } else {
+          this.isSpining = false;
+          this.addressdata2 = [];
+          this.selectedAddress = null;
+          this.isLoadingAddresses = false;
         }
       });
   }
@@ -783,5 +887,447 @@ export class AddLoginCustomerComponent {
     if (!allowedRegex.test(event.key)) {
       event.preventDefault(); // Block the character if it doesn't match the pattern
     }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
+  addressdata2: any = [];
+  showParentAddress: boolean = false;
+  isLoadingAddresses: boolean = false;
+  isAddressReadOnly: boolean = false;
+  selectedParentAddress: any = null;
+  isparentId: number = 0;
+  ownAddress: any[] = [];
+  @Input() isParentId: number;
+  uniqueParentAddressIds: any[] = [];
+
+  AddressTypeChange(value: boolean) {
+    this.showParentAddress = value;
+
+    this.isparentId = this.isParentId;
+    if (value) {
+      this.selectedAddress = null;
+      let filter;
+
+      var customerid = '';
+      if (this.data.ID) {
+        customerid = this.data.ID;
+      } else {
+        customerid = this.ID;
+      }
+      if (
+        this.uniqueParentAddressIds != null &&
+        this.uniqueParentAddressIds != undefined &&
+        this.uniqueParentAddressIds.length > 0
+      ) {
+        filter =
+          ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + //+customerid+
+          this.mainCustData.CUSTOMER_MASTER_ID +
+          // ' AND CUSTOMER_DETAILS_ID!=' +
+          ' AND  ID!=' +
+          this.uniqueParentAddressIds;
+        // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid + " AND CUSTOMER_DETAILS_ID!=" + this.uniqueParentAddressIds
+      } else {
+        filter =
+          ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + // +customerid
+          this.mainCustData.CUSTOMER_MASTER_ID;
+        // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
+      }
+      this.isLoadingAddresses = true;
+      this.api
+        .getAllCustomerAddress(
+          0,
+          0,
+          'IS_DEFAULT',
+          'desc',
+          // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
+          filter
+
+          // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.isParentId
+        )
+        .subscribe((data) => {
+          if (data['code'] === 200) {
+            this.addressdata2 = [];
+            this.addressdata2 = data['data'];
+
+            const childAddress = this.addressdata2?.find(
+              (addr) => addr.IS_FOR_CHILD === 1
+            );
+            const parentAddress = this.addressdata2?.find(
+              (addr) => addr.PARENT_ADDRESS_ID
+            );
+
+            if (childAddress) {
+              // Found child address - make readonly
+              this.selectedParentAddress = childAddress;
+              this.isAddressReadOnly = true;
+            } else if (this.addressdata2?.length > 0) {
+              // Use default parent address - also readonly
+              this.selectedParentAddress = this.addressdata2[0];
+              this.isAddressReadOnly = true;
+            } else {
+              // No parent address found
+              this.selectedParentAddress = null;
+              this.isAddressReadOnly = false;
+            }
+            // this.originalAddressData = [...this.addressdata];
+            // if (this.originalAddressData.length > 2) {
+            //   this.showsearch = true;
+            // } else {
+            //   this.showsearch = false;
+            // }
+            // if (this.addressdata && this.addressdata.length > 0) {
+            //   // Loop through each address and add FULL_ADDRESS key
+            //   this.addressdata = this.addressdata.map((address) => {
+            //     this.fullAddress = [
+            //       address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+            //       address.ADDRESS_LINE_2 || '',
+            //       address.CITY_NAME || '',
+            //       address.STATE_NAME || '',
+            //       address.COUNTRY_NAME || '',
+            //       address.PINCODE || '',
+            //     ]
+            //       .filter((part) => part.trim() !== '') // Remove empty parts
+            //       .join(', '); // Combine with commas
+
+            //     return {
+            //       ...address,
+            //       FULL_ADDRESS: this.fullAddress, // Add the concatenated address
+            //     };
+            //   });
+            // }
+            this.isLoadingAddresses = false;
+          } else {
+            this.addressdata2 = [];
+            this.selectedAddress = null;
+            this.isLoadingAddresses = false;
+          }
+        });
+    } else {
+      // Own mode selected - enable editing
+      this.isAddressReadOnly = false;
+      this.selectedParentAddress = null;
+    }
+  }
+  selectedAddress: number | null = null;
+
+  selectedAddressData: any = '';
+  onAddressSelect(addressId: number) {
+    if (!addressId || addressId === null || addressId === undefined) {
+      this.selectedAddress = null;
+      return;
+    }
+
+    this.selectedAddressData = '';
+    if (addressId) {
+      const selectedAddr = this.addressdata2.find(
+        (addr) => addr.ID === addressId
+      );
+
+      this.selectedAddressData = selectedAddr;
+
+      if (selectedAddr) {
+        this.editAddress(selectedAddr, 'Create');
+      }
+    }
+  }
+  onClearAddress(): void {
+    this.selectedAddress = null;
+  }
+  whosAddress: any = '';
+
+  editAddress(data: customerAddLoginsAddress, mode: any) {
+    this.ID = this.ID;
+    this.whosAddress = '';
+    this.selectedAddressData = this.selectedAddressData;
+
+    this.mainCustData = this.mainCustData;
+    this.isAddressReadOnly = false;
+    this.secondDrawerData = '';
+    if (mode != 'Edit') {
+      this.whosAddress = 'ParentAddress';
+      // data['IS_PARENT_ADDRESS'] = true
+      this.drawerTitle = 'Add Address Details';
+      this.drawerData = new customerAddLoginsAddress();
+      this.drawerData = Object.assign({}, data);
+      this.drawerData.ID = null;
+      if (
+        this.custid &&
+        this.custid != undefined &&
+        this.custid != null &&
+        this.custid != ''
+      ) {
+        // this.ID = this.mainCustData.CUSTOMER_MASTER_ID;
+        this.tempCustID = this.custid;
+      } else {
+        this.tempCustID = this.ID;
+      }
+
+      if (this.addressdata.length === 0) {
+        this.drawerData.IS_DEFAULT = true;
+      } else {
+        this.drawerData.IS_DEFAULT = false;
+      }
+      // this.drawerData.PARENT_ADDRESS_ID = this.data.PARENT_ID;
+      this.drawerData.PARENT_ADDRESS_ID = this.selectedAddressData.ID;
+
+      // this.drawerData.PARENT_ADDRESS_ID = this.isParentId;
+      if (
+        this.drawerData.PARENT_ADDRESS_ID != null &&
+        this.drawerData.PARENT_ADDRESS_ID != undefined &&
+        this.drawerData.PARENT_ADDRESS_ID != ''
+      ) {
+        this.isAddressReadOnly = true;
+      }
+
+      this.drawerVisibleCustomerAddLoginsAddress = true;
+      this.drawerData.IS_PARENT_ADDRESS = true;
+      this.drawerData.IS_FOR_CHILD = false;
+    } else {
+      this.whosAddress = '';
+      this.drawerTitle = 'Update Address Details';
+      this.drawerData = Object.assign({}, data);
+      this.drawerData.ID = this.drawerData.ID;
+      this.drawerData.PARENT_ADDRESS_ID = this.drawerData.PARENT_ADDRESS_ID;
+
+      if (
+        this.drawerData.PARENT_ADDRESS_ID != null &&
+        this.drawerData.PARENT_ADDRESS_ID != undefined &&
+        this.drawerData.PARENT_ADDRESS_ID != ''
+      ) {
+        this.isAddressReadOnly = true;
+      }
+      this.drawerVisibleCustomerAddLoginsAddress = true;
+    }
+    // if (this.showParentAddress == true) {
+    //   data.ID = null;
+    //   this.drawerTitle = 'Add Address Details';
+    //   this.drawerData = new customerAddLoginsAddress()
+    //   this.drawerData = Object.assign({}, data);
+    //   this.drawerVisibleCustomerAddLoginsAddress = true;
+    // } else {
+    //   this.drawerTitle = 'Update Address Details';
+    //   this.drawerData = Object.assign({}, data);
+    //   this.drawerVisibleCustomerAddLoginsAddress = true;
+    // }
+  }
+
+  drawerCustomerAddLoginsAddressClose(): void {
+    if (this.originalAddressData.length > 2) {
+      this.showsearch = true;
+    } else {
+      this.showsearch = false;
+    }
+    this.isSpining = true;
+    this.addressdata2 = [];
+    this.selectedAddress = null;
+    this.showParentAddress = false;
+    var tempCustID = '';
+    if (
+      this.custid &&
+      this.custid != undefined &&
+      this.custid != null &&
+      this.custid != ''
+    ) {
+      // this.ID = this.mainCustData.CUSTOMER_MASTER_ID;
+      tempCustID = this.custid;
+    } else {
+      tempCustID = this.ID;
+    }
+
+    this.api
+      .getAllCustomerAddress(
+        0,
+        0,
+        'IS_DEFAULT',
+        'desc',
+        ' AND CUSTOMER_ID= ' + tempCustID
+        // ' AND CUSTOMER_ID= '  +this.custid //+this.mainCustData.CUSTOMER_MASTER_ID
+        // ' AND CUSTOMER_ID= ' + this.ID
+      )
+      .subscribe((data) => {
+        if (data['code'] === 200) {
+          this.addressdata = data['data'];
+
+          const parentIds = this.addressdata
+            .map((addr) => addr.PARENT_ADDRESS_ID)
+            .filter((id) => id != null);
+          // Get unique PARENT_ADDRESS_ID values
+          this.uniqueParentAddressIds = [...new Set(parentIds)];
+
+          if (
+            this.uniqueParentAddressIds != null &&
+            this.uniqueParentAddressIds != undefined &&
+            this.uniqueParentAddressIds.length > 0
+          ) {
+            this.selectedAddress = null;
+            // this.AddressTypeChange(true)
+          }
+
+          this.ownAddress = this.addressdata;
+          this.originalAddressData = [...this.addressdata];
+          if (this.originalAddressData.length > 2) {
+            this.showsearch = true;
+          } else {
+            this.showsearch = false;
+          }
+          if (this.addressdata && this.addressdata.length > 0) {
+            // Loop through each address and add FULL_ADDRESS key
+            this.addressdata = this.addressdata.map((address) => {
+              this.fullAddress = [
+                address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+                address.ADDRESS_LINE_2 || '',
+                address.CITY_NAME || '',
+                address.STATE_NAME || '',
+                address.COUNTRY_NAME || '',
+                address.PINCODE || '',
+              ]
+                .filter((part) => part.trim() !== '') // Remove empty parts
+                .join(', '); // Combine with commas
+
+              return {
+                ...address,
+                FULL_ADDRESS: this.fullAddress, // Add the concatenated address
+              };
+            });
+          }
+
+          let filter;
+
+          if (
+            this.uniqueParentAddressIds != null &&
+            this.uniqueParentAddressIds != undefined &&
+            this.uniqueParentAddressIds.length > 0
+          ) {
+            filter =
+              ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
+              this.mainCustData.CUSTOMER_MASTER_ID +
+              ' AND ID!=' +
+              this.uniqueParentAddressIds;
+            // ' AND CUSTOMER_DETAILS_ID!=' +
+            // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid + " AND CUSTOMER_DETAILS_ID!=" + this.uniqueParentAddressIds
+          } else {
+            filter =
+              ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
+              this.mainCustData.CUSTOMER_MASTER_ID;
+            // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
+          }
+          this.isLoadingAddresses = true;
+
+          this.api
+            .getAllCustomerAddress(
+              0,
+              0,
+              'IS_DEFAULT',
+              'desc',
+              // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
+              filter
+
+              // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.isParentId
+            )
+            .subscribe((data) => {
+              if (data['data'] === 200) {
+                this.isSpining = false;
+
+                this.addressdata2 = data['data'];
+                this.whosAddress = '';
+                this.drawerVisibleCustomerAddLoginsAddress = false;
+                this.selectedAddressData = '';
+                this.isLoadingAddresses = false;
+              } else {
+                this.isSpining = false;
+                this.whosAddress = '';
+
+                this.drawerVisibleCustomerAddLoginsAddress = false;
+                this.selectedAddressData = '';
+                this.isLoadingAddresses = false;
+              }
+            });
+        } else {
+          this.addressdata2 = [];
+          this.selectedAddress = null;
+          this.showParentAddress = false;
+          this.whosAddress = '';
+
+          this.drawerVisibleCustomerAddLoginsAddress = false;
+          this.selectedAddressData = '';
+          this.isSpining = false;
+        }
+      });
+  }
+
+  loadCustAddress() {
+    let filter;
+    if (
+      this.uniqueParentAddressIds != null &&
+      this.uniqueParentAddressIds != undefined &&
+      this.uniqueParentAddressIds.length > 0
+    ) {
+      var customerid = '';
+      if (this.data.ID) {
+        customerid = this.data.ID;
+      } else {
+        customerid = this.ID;
+      }
+      filter =
+        ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
+        this.mainCustData.CUSTOMER_MASTER_ID +
+        ' AND  ID!=' +
+        this.uniqueParentAddressIds;
+      //+customerid// + this.custid   // this.custid
+
+      // ' AND CUSTOMER_DETAILS_ID!=' +
+    } else {
+      filter =
+        ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
+        this.mainCustData.CUSTOMER_MASTER_ID;
+      // + this.custid;
+    }
+    this.isLoadingAddresses = true;
+    this.api
+      .getAllCustomerAddress(
+        0,
+        0,
+        'IS_DEFAULT',
+        'desc',
+        // filter
+        ' AND STATUS = 1 AND CUSTOMER_ID= ' +
+          this.mainCustData.CUSTOMER_MASTER_ID
+        // ' AND STATUS = 1 AND CUSTOMER_ID= ' + this.isParentId
+      )
+      .subscribe((data) => {
+        if (data['code'] === 200) {
+          this.addressdata2 = [];
+          this.addressdata2 = data['data'];
+
+          const parentAddress = this.addressdata2.find(
+            (addr) => addr.IS_PARENT_ADDRESS === true || addr.IS_FOR_CHILD === 0
+          );
+          const childAddress = this.addressdata2.find(
+            (addr) => addr.IS_FOR_CHILD === true || addr.IS_FOR_CHILD === 1
+          );
+
+          if (childAddress) {
+            // Found child address - make readonly
+            this.selectedParentAddress = childAddress;
+            this.isAddressReadOnly = false;
+          } else if (parentAddress) {
+            this.selectedParentAddress = parentAddress;
+            this.isAddressReadOnly = true;
+          } else if (this.addressdata2.length > 0) {
+            // Use default parent address - also readonly
+            this.selectedParentAddress = this.addressdata2[0];
+            this.isAddressReadOnly = true;
+          } else {
+            // No parent address found
+            this.selectedParentAddress = null;
+            this.isAddressReadOnly = false;
+          }
+          this.isLoadingAddresses = false;
+        } else {
+          this.addressdata2 = [];
+          this.selectedAddress = null;
+          this.isLoadingAddresses = false;
+        }
+      });
   }
 }

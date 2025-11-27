@@ -91,7 +91,7 @@ export class OrdercreatedrawerComponent {
     private api: ApiServiceService,
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
   showcbutton: boolean = false;
   @Input() isTerritoryExpress: boolean = false;
   ngOnInit() {
@@ -203,14 +203,14 @@ export class OrdercreatedrawerComponent {
       event =
         event != '' && event != undefined && event != null
           ? ' AND (NAME like "%' +
-            event +
-            '%" OR EMAIL like "%' +
-            event +
-            '%" OR COMPANY_NAME like "%' +
-            event +
-            '%" OR  MOBILE_NO like "%' +
-            event +
-            '%" ) '
+          event +
+          '%" OR EMAIL like "%' +
+          event +
+          '%" OR COMPANY_NAME like "%' +
+          event +
+          '%" OR  MOBILE_NO like "%' +
+          event +
+          '%" ) '
           : '';
 
       let orgFilter = '';
@@ -231,10 +231,10 @@ export class OrdercreatedrawerComponent {
           '',
           '',
           ' AND ACCOUNT_STATUS = 1' +
-            event +
-            ' AND CUSTOMER_MANAGER_ID=' +
-            this.decreptedbackofficeId +
-            orgFilter
+          event +
+          ' AND CUSTOMER_MANAGER_ID=' +
+          this.decreptedbackofficeId +
+          orgFilter
         )
         .subscribe((data) => {
           if (data['code'] == 200 && data['data'].length > 0) {
@@ -249,14 +249,14 @@ export class OrdercreatedrawerComponent {
       event =
         event != '' && event != undefined && event != null
           ? ' AND (NAME like "%' +
-            event +
-            '%" OR EMAIL like "%' +
-            event +
-            '%" OR COMPANY_NAME like "%' +
-            event +
-            '%" OR  MOBILE_NO like "%' +
-            event +
-            '%" ) '
+          event +
+          '%" OR EMAIL like "%' +
+          event +
+          '%" OR COMPANY_NAME like "%' +
+          event +
+          '%" OR  MOBILE_NO like "%' +
+          event +
+          '%" ) '
           : '';
 
       let orgFilter = '';
@@ -337,8 +337,8 @@ export class OrdercreatedrawerComponent {
           'IS_DEFAULT',
           'desc',
           ' AND STATUS = 1 AND CUSTOMER_ID= ' +
-            this.data.CUSTOMER_ID +
-            " AND (PINCODE_FOR='B' OR PINCODE_FOR='S')"
+          this.data.CUSTOMER_ID +
+          " AND (PINCODE_FOR='B' OR PINCODE_FOR='S')"
         )
         .subscribe((data) => {
           if (data['code'] == 200) {
@@ -796,7 +796,7 @@ export class OrdercreatedrawerComponent {
     // this.getServiceNameAndItem(serviceKey)
   }
 
-  cancel() {}
+  cancel() { }
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -851,8 +851,8 @@ export class OrdercreatedrawerComponent {
         'IS_DEFAULT',
         'desc',
         ' AND STATUS = 1 AND CUSTOMER_ID= ' +
-          this.data.CUSTOMER_ID +
-          " AND (PINCODE_FOR='B' OR PINCODE_FOR='S')"
+        this.data.CUSTOMER_ID +
+        " AND (PINCODE_FOR='B' OR PINCODE_FOR='S')"
       )
       .subscribe((data) => {
         if (data['code'] == 200) {
@@ -962,18 +962,18 @@ export class OrdercreatedrawerComponent {
             Math.round(
               (Number(this.tableData[ind].TAX_AMOUNT) +
                 Number(this.servicescatalogue[i].TAX_AMOUNT)) *
-                100
+              100
             ) / 100,
           IS_EXPRESS: this.servicescatalogue[i].IS_EXPRESS,
           TOTAL_TAX_EXCLUSIVE_AMOUNT:
             Math.round(
               (Number(this.tableData[ind].TOTAL_TAX_EXCLUSIVE_AMOUNT) +
                 Number(this.servicescatalogue[i].TOTAL_TAX_EXCLUSIVE_AMOUNT)) *
-                100
+              100
             ) / 100,
           EXPRESS_DELIVERY_CHARGES:
             this.servicescatalogue[i].EXPRESS_COST != undefined &&
-            this.servicescatalogue[i].EXPRESS_COST != null
+              this.servicescatalogue[i].EXPRESS_COST != null
               ? parseFloat(this.servicescatalogue[i].EXPRESS_COST)
               : 0,
           TAX_EXCLUSIVE_AMOUNT: this.servicescatalogue[i].TAX_EXCLUSIVE_AMOUNT,
@@ -995,20 +995,20 @@ export class OrdercreatedrawerComponent {
           TOTAL_DURARTION_MIN:
             Number(this.servicescatalogue[i].T_PREPARATION_HOURS) * 60 +
             Number(this.servicescatalogue[i].T_PREPARATION_MINUTES),
-          IGST: this.servicescatalogue[i].IGST,
-          CGST: this.servicescatalogue[i].CGST,
-          SGST: this.servicescatalogue[i].SGST,
+          IGST: this.data.IS_SAME_STATE ? 0 : this.servicescatalogue[i].IGST,
+          CGST: this.data.IS_SAME_STATE ? this.servicescatalogue[i].CGST : 0,
+          SGST: this.data.IS_SAME_STATE ? this.servicescatalogue[i].SGST : 0,
           CESS: this.servicescatalogue[i].CESS,
         };
       } else {
         this.message.error(
           'You have already added ' +
-            this.tableData[ind].QUANTITY +
-            ' quantity of this service. The maximum allowed quantity per order is ' +
-            this.servicescatalogue[i].MAX_QTY +
-            '. You can only add ' +
-            (this.servicescatalogue[i].MAX_QTY - this.tableData[ind].QUANTITY) +
-            ' more quantity.',
+          this.tableData[ind].QUANTITY +
+          ' quantity of this service. The maximum allowed quantity per order is ' +
+          this.servicescatalogue[i].MAX_QTY +
+          '. You can only add ' +
+          (this.servicescatalogue[i].MAX_QTY - this.tableData[ind].QUANTITY) +
+          ' more quantity.',
           ''
         );
       }
@@ -1042,7 +1042,7 @@ export class OrdercreatedrawerComponent {
           ) / 100,
         EXPRESS_DELIVERY_CHARGES:
           this.servicescatalogue[i].EXPRESS_COST != undefined &&
-          this.servicescatalogue[i].EXPRESS_COST != null
+            this.servicescatalogue[i].EXPRESS_COST != null
             ? parseFloat(this.servicescatalogue[i].EXPRESS_COST)
             : 0,
         TAX_EXCLUSIVE_AMOUNT: this.servicescatalogue[i].TAX_EXCLUSIVE_AMOUNT,
@@ -1062,9 +1062,9 @@ export class OrdercreatedrawerComponent {
         TOTAL_DURARTION_MIN:
           Number(this.servicescatalogue[i].T_PREPARATION_HOURS) * 60 +
           Number(this.servicescatalogue[i].T_PREPARATION_MINUTES),
-        IGST: this.servicescatalogue[i].IGST,
-        CGST: this.servicescatalogue[i].CGST,
-        SGST: this.servicescatalogue[i].SGST,
+        IGST: this.data.IS_SAME_STATE ? 0 : this.servicescatalogue[i].IGST,
+        CGST: this.data.IS_SAME_STATE ? this.servicescatalogue[i].CGST : 0,
+        SGST: this.data.IS_SAME_STATE ? this.servicescatalogue[i].SGST : 0,
         CESS: this.servicescatalogue[i].CESS,
       });
     }
@@ -1190,7 +1190,7 @@ export class OrdercreatedrawerComponent {
             Math.round(
               (Number(this.tableData[ind].TAX_AMOUNT) +
                 Number(this.servicescatalogue[i]['CHILDS'][k].TAX_AMOUNT)) *
-                100
+              100
             ) / 100,
           IS_EXPRESS: this.servicescatalogue[i]['CHILDS'][k].IS_EXPRESS,
           TOTAL_TAX_EXCLUSIVE_AMOUNT:
@@ -1200,11 +1200,11 @@ export class OrdercreatedrawerComponent {
                   this.servicescatalogue[i]['CHILDS'][k]
                     .TOTAL_TAX_EXCLUSIVE_AMOUNT
                 )) *
-                100
+              100
             ) / 100,
           EXPRESS_DELIVERY_CHARGES:
             this.servicescatalogue[i]['CHILDS'][k].EXPRESS_COST != undefined &&
-            this.servicescatalogue[i]['CHILDS'][k].EXPRESS_COST != null
+              this.servicescatalogue[i]['CHILDS'][k].EXPRESS_COST != null
               ? parseFloat(this.servicescatalogue[i]['CHILDS'][k].EXPRESS_COST)
               : 0,
           TAX_EXCLUSIVE_AMOUNT:
@@ -1228,20 +1228,20 @@ export class OrdercreatedrawerComponent {
           ),
           TOTAL_DURARTION_MIN:
             Number(this.servicescatalogue[i]['CHILDS'][k].T_PREPARATION_HOURS) *
-              60 +
+            60 +
             Number(
               this.servicescatalogue[i]['CHILDS'][k].T_PREPARATION_MINUTES
             ),
-          IGST: this.servicescatalogue[i]['CHILDS'][k].IGST,
-          CGST: this.servicescatalogue[i]['CHILDS'][k].CGST,
-          SGST: this.servicescatalogue[i]['CHILDS'][k].SGST,
+          IGST: this.data.IS_SAME_STATE ? 0 : this.servicescatalogue[i]['CHILDS'][k].IGST,
+          CGST: this.data.IS_SAME_STATE ? this.servicescatalogue[i]['CHILDS'][k].CGST : 0,
+          SGST: this.data.IS_SAME_STATE ? this.servicescatalogue[i]['CHILDS'][k].SGST : 0,
           CESS: this.servicescatalogue[i]['CHILDS'][k].CESS,
         };
       } else {
         this.message.error(
           'This service item already available in cart with ' +
-            this.servicescatalogue[i].MAX_QTY +
-            ' quantity',
+          this.servicescatalogue[i].MAX_QTY +
+          ' quantity',
           ''
         );
       }
@@ -1278,7 +1278,7 @@ export class OrdercreatedrawerComponent {
           this.servicescatalogue[i]['CHILDS'][k].TOTAL_TAX_EXCLUSIVE_AMOUNT,
         EXPRESS_DELIVERY_CHARGES:
           this.servicescatalogue[i]['CHILDS'][k].EXPRESS_COST != undefined &&
-          this.servicescatalogue[i]['CHILDS'][k].EXPRESS_COST != null
+            this.servicescatalogue[i]['CHILDS'][k].EXPRESS_COST != null
             ? parseFloat(this.servicescatalogue[i]['CHILDS'][k].EXPRESS_COST)
             : 0,
         TAX_EXCLUSIVE_AMOUNT:
@@ -1302,11 +1302,11 @@ export class OrdercreatedrawerComponent {
         ),
         TOTAL_DURARTION_MIN:
           Number(this.servicescatalogue[i]['CHILDS'][k].T_PREPARATION_HOURS) *
-            60 +
+          60 +
           Number(this.servicescatalogue[i]['CHILDS'][k].T_PREPARATION_MINUTES),
-        IGST: this.servicescatalogue[i]['CHILDS'][k].IGST,
-        CGST: this.servicescatalogue[i]['CHILDS'][k].CGST,
-        SGST: this.servicescatalogue[i]['CHILDS'][k].SGST,
+        IGST: this.data.IS_SAME_STATE ? 0 : this.servicescatalogue[i]['CHILDS'][k].IGST,
+        CGST: this.data.IS_SAME_STATE ? this.servicescatalogue[i]['CHILDS'][k].CGST : 0,
+        SGST: this.data.IS_SAME_STATE ? this.servicescatalogue[i]['CHILDS'][k].SGST : 0,
         CESS: this.servicescatalogue[i]['CHILDS'][k].CESS,
       });
     }
@@ -1427,7 +1427,7 @@ export class OrdercreatedrawerComponent {
     orderDrawer.form.markAsPristine();
     orderDrawer.form.markAsUntouched();
   }
-  deleteCancel() {}
+  deleteCancel() { }
 
   save(addNew: boolean, orderDrawer: NgForm): void {
     this.isSpinning = false;
@@ -2617,9 +2617,9 @@ export class OrdercreatedrawerComponent {
   }
 
   selectOrgName(orgName: string | null): void {
-     if (!orgName) {
-    this.clearTerritory();
-  }
+    if (!orgName) {
+      this.clearTerritory();
+    }
 
     this.pageIndex = 1;
 
@@ -2634,20 +2634,20 @@ export class OrdercreatedrawerComponent {
 
 
   clearTerritory() {
-  this.data.TERRITORY_ID = null;
-  this.data.TERRITORY_NAME = '';
-  this.terriotrystarttime1 = null;
-  this.terriotryendtime1 = null;
+    this.data.TERRITORY_ID = null;
+    this.data.TERRITORY_NAME = '';
+    this.terriotrystarttime1 = null;
+    this.terriotryendtime1 = null;
 
 
 
-   this.data.CUSTOMER_ID = undefined;
+    this.data.CUSTOMER_ID = undefined;
     this.customer = [];
     this.addresses = [];
     this.data.ADDRESS_ID = undefined;
     this.data.ADDRESS_ID1 = undefined;
     this.data.ORDER_MEDIUM = undefined
     // this.orderMediums=[];
-}
+  }
 
 }

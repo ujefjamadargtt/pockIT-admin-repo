@@ -16,7 +16,8 @@ import { endOfMonth, startOfYear, endOfYear, startOfMonth } from 'date-fns';
 export class InvoicepageComponent {
   @Input() FILTER_ID: any
   @Input() TYPE: any = '';
-
+  @Input() tableData: any[] = [];
+  @Input() showMinimal: boolean = false;
   loadingRecords: boolean = false;
   pageIndex = 1;
   pageSize = 10;
@@ -546,6 +547,17 @@ export class InvoicepageComponent {
       this.message.error('Invoice URL not available', '');
     }
   }
+  showInvoiceModalz(data: any): void {
+    const a = this.api.retriveimgUrl + 'Invoices' + '/' + data.INVOICE_NUMBER;
+    if (data?.INVOICE_NUMBER) {
+      setTimeout(()=>{
+          this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(a);
+          this.isModalVisible = true;
+      },500)
+    } else {
+      this.message.error('Invoice URL not available', '');
+    }
+  }
   downloadPDF(): void {
     // Extract the original URL from the sanitized URL (without breaking security)
     const urlString = this.pdfUrl.changingThisBreaksApplicationSecurity || '';
@@ -683,7 +695,4 @@ export class InvoicepageComponent {
       }
     }
   }
-
-
-
 }

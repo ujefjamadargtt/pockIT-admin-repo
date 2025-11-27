@@ -42,9 +42,9 @@ export class TerritoryMasterAddComponent {
     } else {
       this.populateWeeklySchedule();
     }
-    // if (this.data.ID) {
-    //   this.selectedDays = this.data.WEEKLY_OFFS?.split(',');
-    // }
+    if (this.data.ID) {
+      this.selectedDays = this.data.WEEKLY_OFFS?.split(',');
+    }
   }
   // ngOnChanges(changes: SimpleChanges): void {
   //   if (changes['data'] && changes['data'].currentValue) {
@@ -212,7 +212,7 @@ export class TerritoryMasterAddComponent {
     }
 
     if (this.isOk) {
-      // this.data.WEEKLY_OFFS = this.selectedDays.toString();
+      this.data.WEEKLY_OFFS = this.selectedDays.toString();
       if (
         this.data.START_TIME != undefined &&
         this.data.START_TIME != null &&
@@ -673,16 +673,16 @@ export class TerritoryMasterAddComponent {
     { label: 'Uzbekistan (+998)', value: '+998' },
   ];
 
-  // weekdata: any[] = [
-  //   { name: 'Monday', shortCode: 'Mon' },
-  //   { name: 'Tuesday', shortCode: 'Tue' },
-  //   { name: 'Wednesday', shortCode: 'Wed' },
-  //   { name: 'Thursday', shortCode: 'Thu' },
-  //   { name: 'Friday', shortCode: 'Fri' },
-  //   { name: 'Saturday', shortCode: 'Sat' },
-  //   { name: 'Sunday', shortCode: 'Sun' },
-  // ];
+  weekdata: any[] = [
+    { name: 'Monday', shortCode: 'Mon' },
+    { name: 'Tuesday', shortCode: 'Tue' },
+    { name: 'Wednesday', shortCode: 'Wed' },
+    { name: 'Thursday', shortCode: 'Thu' },
+    { name: 'Friday', shortCode: 'Fri' },
+    { name: 'Saturday', shortCode: 'Sat' },
+    { name: 'Sunday', shortCode: 'Sun' },
+  ];
 
-  // selectedDays: string[] = [];
+  selectedDays: string[] = [];
 
 }

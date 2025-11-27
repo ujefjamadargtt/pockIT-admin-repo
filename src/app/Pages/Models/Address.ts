@@ -23,4 +23,5 @@ export class Address {
     MOBILE_NO: any;
     CUSTOMER_NAME: any;
     STATUS: boolean = true;
+    IS_FOR_CHILD: boolean = true;
 }

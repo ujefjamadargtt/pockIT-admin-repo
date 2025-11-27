@@ -11,11 +11,11 @@
       </button> -->
 
       <button nz-button style="margin-right: 10px" nzTooltipTitle="Filter" [nzType]="isFilterApplied"
-        nzTooltipPlacement="top" nz-tooltip (click)="showFilter()">
+        nzTooltipPlacement="top" nz-tooltip (click)="showFilter()" *ngIf="!showMinimal">
         <i nz-icon nzType="filter"></i>
       </button>
 
-      <form nz-form [nzLayout]="'inline'">
+      <form nz-form [nzLayout]="'inline'" *ngIf="!showMinimal">
         <nz-form-item class="Changeformitm" style="margin-right: -6px">
           <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
             <input type="text" name="webbannersearch" (keydown.enter)="onKeypressEvent($event)" [(ngModel)]="searchText"
@@ -86,14 +86,15 @@
 </div>
 <div nz-row style="margin-top: 18px">
   <div nz-col nzSpan="24">
-    <nz-table #basicTable [nzBordered]="true" [nzSize]="'middle'" [nzShowPagination]="true" [nzData]="invoiceData"
-      [nzLoading]="loadingRecords" [nzScroll]="{ x: '1200px', y: '60vh' }" (nzQueryParams)="sort($event)">
+    <nz-table #basictablez [nzBordered]="true" [nzSize]="'middle'" [nzShowPagination]="true" [nzData]="tableData"
+      [nzLoading]="loadingRecords" [nzScroll]="{ x: '1200px', y: '60vh' }" (nzQueryParams)="sort($event)"
+      *ngIf="showMinimal">
       <thead>
         <tr>
-          <th nzWidth="70px" nzLeft>View</th>
-          <th nzWidth="150px" nzLeft [nzSortFn]="true" nzColumnKey="INVOICE_DATE">
+          <th nzWidth="100px" nzLeft>View</th>
+          <!-- <th nzWidth="150px" nzLeft [nzSortFn]="true" nzColumnKey="INVOICE_DATE">
             Invoice Date
-          </th>
+          </th> -->
           <th nzWidth="300px" nzLeft [nzSortFn]="true" nzColumnKey="CUSTOMER_NAME" *ngIf="TYPE != 'CUSTOMER'">
             Customer Name
             <!-- <nz-filter-trigger [(nzVisible)]="skillVisible" [nzDropdownMenu]="skill">
@@ -119,13 +120,13 @@
           <th nzWidth="170px" [nzSortFn]="true" nzColumnKey="DISCOUNT_AMOUNT">
             Discount Amount
           </th>
-          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="FINAL_AMOUNT">
+          <!-- <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="FINAL_AMOUNT">
             Net Amount
-          </th>
+          </th> -->
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of basicTable.data">
+        <tr *ngFor="let data of basictablez.data">
           <td nzLeft style="text-align: center; white-space: pre-line">
             <!-- <a
               nz-tooltip
@@ -135,12 +136,12 @@
             >
               <span nz-icon nzType="eye" nzTheme="outline"></span>
             </a> -->
-            <nz-tag nzColor="#2db7f5" nzTooltipTitle="View Invoice" (click)="showInvoiceModal(data)"
-              style="cursor: pointer" nz-tooltip>
+            <nz-tag nzColor="#2db7f5" nzTooltipTitle="View Invoice" (click)="showInvoiceModalz(data)"
+              style="cursor: pointer" nz-tooltip class="view-bth">
               <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
               </span>&nbsp;&nbsp;View</nz-tag>
           </td>
-          <td nzLeft style="text-align: center; white-space: pre-line">
+          <td nzLeft style="text-align: center; white-space: pre-line" *ngIf="!showMinimal">
             {{ data.INVOICE_DATE | date : "dd/MM/yyyy" }}
           </td>
           <!-- <td *ngIf="data.CUSTOMER_NAME">
@@ -200,7 +201,236 @@
           <td align="right" style="white-space: pre-line">
             {{ data.DISCOUNT_AMOUNT ? data.DISCOUNT_AMOUNT : "0" }}
           </td>
+          <td align="right" style="white-space: pre-line" *ngIf="!showMinimal">
+            {{ data.FINAL_AMOUNT ? data.FINAL_AMOUNT : "0" }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    <!-- <nz-table #basicTable [nzBordered]="true" [nzSize]="'middle'" [nzShowPagination]="true" [nzData]="invoiceData"
+      [nzLoading]="loadingRecords" [nzScroll]="{ x: '1200px', y: '60vh' }" (nzQueryParams)="sort($event)">
+      <thead>
+        <tr>
+          <th nzWidth="70px" nzLeft>View</th>
+          <th nzWidth="150px" nzLeft [nzSortFn]="true" nzColumnKey="INVOICE_DATE">
+            Invoice Date
+          </th>
+          <th nzWidth="300px" nzLeft [nzSortFn]="true" nzColumnKey="CUSTOMER_NAME" *ngIf="TYPE != 'CUSTOMER'">
+            Customer Name
+
+          </th>
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="CUSTOMER_TYPE" *ngIf="TYPE != 'CUSTOMER'">
+            Customer Type
+          </th>
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="MOBILE_NO">
+            Mobile No
+          </th>
+          <th nzWidth="250px" [nzSortFn]="true" nzColumnKey="EMAIL">Email</th>
+
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="TOTAL_AMOUNT">
+            Total Amount
+          </th>
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="TAX_AMOUNT">
+            Tax Amount
+          </th>
+          <th nzWidth="170px" [nzSortFn]="true" nzColumnKey="DISCOUNT_AMOUNT">
+            Discount Amount
+          </th>
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="FINAL_AMOUNT">
+            Net Amount
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td nzLeft style="text-align: center; white-space: pre-line">
+
+            <nz-tag nzColor="#2db7f5" nzTooltipTitle="View Invoice" (click)="showInvoiceModal(data)"
+              style="cursor: pointer" nz-tooltip>
+              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
+              </span>&nbsp;&nbsp;View</nz-tag>
+          </td>
+          <td nzLeft style="text-align: center; white-space: pre-line">
+            {{ data.INVOICE_DATE | date : "dd/MM/yyyy" }}
+          </td>
+
+          <td nzLeft align="left" *ngIf="TYPE != 'CUSTOMER'">
+            <span *ngIf="data['CUSTOMER_NAME'] != null">
+              <span *ngIf="data['CUSTOMER_NAME'].length >= 30" nz-popover [nzPopoverContent]="
+                  data['SALUTATION'] + ' ' + data['CUSTOMER_NAME']
+                " nzPopoverPlacement="topLeft">
+                {{ data["SALUTATION"] }}
+                {{ data["CUSTOMER_NAME"] | slice : 0 : 30
+                }}{{ data["CUSTOMER_NAME"].length > 30 ? "..." : "" }}
+              </span>
+              <span *ngIf="data['CUSTOMER_NAME'].length < 30">
+                {{ data["SALUTATION"] }} {{ data["CUSTOMER_NAME"] }}
+              </span>
+            </span>
+            <span *ngIf="data['CUSTOMER_NAME'] == null">-</span>
+          </td>
+
+          <td align="center" style="white-space: pre-line" *ngIf="TYPE != 'CUSTOMER'">
+            <span *ngIf="data.CUSTOMER_TYPE == 'I'">Individual(B2C)</span>
+            <span *ngIf="data.CUSTOMER_TYPE == 'B'">Buisiness(B2B)</span>
+          </td>
+
+          <td align="center" style="white-space: pre-line">
+            {{ data.MOBILE_NO || "-" }}
+          </td>
+          <td align="left">
+            <span *ngIf="data['EMAIL'] != null">
+              <span *ngIf="data['EMAIL'].length >= 27" nz-popover [nzPopoverContent]="data['EMAIL']"
+                nzPopoverPlacement="topLeft">
+                {{
+                data["EMAIL"] == null
+                ? "-"
+                : (data["EMAIL"] | slice : 0 : 27)
+                }}{{ data["EMAIL"].length > 27 ? "..." : "" }}
+              </span>
+              <span *ngIf="data['EMAIL'].length < 27">
+                {{
+                data["EMAIL"] == null ? "-" : (data["EMAIL"] | slice : 0 : 27)
+                }}
+                {{ data["EMAIL"].length > 27 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data['EMAIL'] == null">-</span>
+          </td>
+
           <td align="right" style="white-space: pre-line">
+            {{ data.TOTAL_AMOUNT ? data.TOTAL_AMOUNT : "0" }}
+          </td>
+          <td align="right" style="white-space: pre-line">
+            {{ data.TAX_AMOUNT ? data.TAX_AMOUNT : "0" }}
+          </td>
+          <td align="right" style="white-space: pre-line">
+            {{ data.DISCOUNT_AMOUNT ? data.DISCOUNT_AMOUNT : "0" }}
+          </td>
+          <td align="right" style="white-space: pre-line">
+            {{ data.FINAL_AMOUNT ? data.FINAL_AMOUNT : "0" }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table> -->
+
+    <nz-table #basicTable *ngIf="!showMinimal" [nzBordered]="true" [nzSize]="'middle'" [nzShowPagination]="true"
+      [nzData]="invoiceData" [nzLoading]="loadingRecords" [nzScroll]="{ x: '1200px', y: '60vh' }"
+      (nzQueryParams)="sort($event)">
+      <thead>
+        <tr>
+          <th nzWidth="70px" nzLeft>View</th>
+          <th nzWidth="150px" nzLeft [nzSortFn]="true" nzColumnKey="INVOICE_DATE">
+            Invoice Date
+          </th>
+          <th nzWidth="300px" nzLeft [nzSortFn]="true" nzColumnKey="CUSTOMER_NAME" *ngIf="TYPE != 'CUSTOMER'">
+            Customer Name
+            <!-- <nz-filter-trigger [(nzVisible)]="skillVisible" [nzDropdownMenu]="skill">
+              <span nz-icon nzType="filter" nzTheme="fill"></span>
+            </nz-filter-trigger> -->
+          </th>
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="CUSTOMER_TYPE" *ngIf="TYPE != 'CUSTOMER'">
+            Customer Type
+          </th>
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="MOBILE_NO">
+            Mobile No
+          </th>
+          <th nzWidth="250px" [nzSortFn]="true" nzColumnKey="EMAIL">Email</th>
+          <!-- <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="PAYMENT_STATUS">
+            Payment Status
+          </th> -->
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="TOTAL_AMOUNT">
+            Total Amount
+          </th>
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="TAX_AMOUNT">
+            Tax Amount
+          </th>
+          <th nzWidth="170px" [nzSortFn]="true" nzColumnKey="DISCOUNT_AMOUNT">
+            Discount Amount
+          </th>
+          <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="FINAL_AMOUNT">
+            Net Amount
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td nzLeft style="text-align: center; white-space: pre-line">
+            <!-- <a
+              nz-tooltip
+              nzTooltipTitle="View Invoice"
+              (click)="showInvoiceModal(data)"
+              style="color: blue"
+            >
+              <span nz-icon nzType="eye" nzTheme="outline"></span>
+            </a> -->
+            <nz-tag nzColor="#2db7f5" nzTooltipTitle="View Invoice" (click)="showInvoiceModal(data)"
+              style="cursor: pointer" nz-tooltip>
+              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
+              </span>&nbsp;&nbsp;View</nz-tag>
+          </td>
+          <td nzLeft style="text-align: center; white-space: pre-line" *ngIf="!showMinimal">
+            {{ data.INVOICE_DATE | date : "dd/MM/yyyy" }}
+          </td>
+          <!-- <td *ngIf="data.CUSTOMER_NAME">
+            {{ data.SALUTATION }}.{{ data.CUSTOMER_NAME }}
+          </td> -->
+          <td nzLeft align="left" *ngIf="TYPE != 'CUSTOMER'">
+            <span *ngIf="data['CUSTOMER_NAME'] != null">
+              <span *ngIf="data['CUSTOMER_NAME'].length >= 30" nz-popover [nzPopoverContent]="
+                  data['SALUTATION'] + ' ' + data['CUSTOMER_NAME']
+                " nzPopoverPlacement="topLeft">
+                {{ data["SALUTATION"] }}
+                {{ data["CUSTOMER_NAME"] | slice : 0 : 30
+                }}{{ data["CUSTOMER_NAME"].length > 30 ? "..." : "" }}
+              </span>
+              <span *ngIf="data['CUSTOMER_NAME'].length < 30">
+                {{ data["SALUTATION"] }} {{ data["CUSTOMER_NAME"] }}
+              </span>
+            </span>
+            <span *ngIf="data['CUSTOMER_NAME'] == null">-</span>
+          </td>
+
+          <td align="center" style="white-space: pre-line" *ngIf="TYPE != 'CUSTOMER'">
+            <span *ngIf="data.CUSTOMER_TYPE == 'I'">Individual(B2C)</span>
+            <span *ngIf="data.CUSTOMER_TYPE == 'B'">Buisiness(B2B)</span>
+          </td>
+
+          <td align="center" style="white-space: pre-line">
+            {{ data.MOBILE_NO || "-" }}
+          </td>
+          <td align="left">
+            <span *ngIf="data['EMAIL'] != null">
+              <span *ngIf="data['EMAIL'].length >= 27" nz-popover [nzPopoverContent]="data['EMAIL']"
+                nzPopoverPlacement="topLeft">
+                {{
+                data["EMAIL"] == null
+                ? "-"
+                : (data["EMAIL"] | slice : 0 : 27)
+                }}{{ data["EMAIL"].length > 27 ? "..." : "" }}
+              </span>
+              <span *ngIf="data['EMAIL'].length < 27">
+                {{
+                data["EMAIL"] == null ? "-" : (data["EMAIL"] | slice : 0 : 27)
+                }}
+                {{ data["EMAIL"].length > 27 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data['EMAIL'] == null">-</span>
+          </td>
+          <!-- <td align="right" style="white-space: pre-line;">{{ data.PAYMENT_STATUS? data.PAYMENT_STATUS:"-" }}</td> -->
+
+          <td align="right" style="white-space: pre-line">
+            {{ data.TOTAL_AMOUNT ? data.TOTAL_AMOUNT : "0" }}
+          </td>
+          <td align="right" style="white-space: pre-line">
+            {{ data.TAX_AMOUNT ? data.TAX_AMOUNT : "0" }}
+          </td>
+          <td align="right" style="white-space: pre-line">
+            {{ data.DISCOUNT_AMOUNT ? data.DISCOUNT_AMOUNT : "0" }}
+          </td>
+          <td align="right" style="white-space: pre-line" *ngIf="!showMinimal">
             {{ data.FINAL_AMOUNT ? data.FINAL_AMOUNT : "0" }}
           </td>
         </tr>

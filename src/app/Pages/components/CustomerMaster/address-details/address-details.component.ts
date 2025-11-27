@@ -42,12 +42,14 @@ export class AddressDetailsComponent {
   custaddress: any = [];
   isContactPersonNameRequired = false;
   ismobnoRequired = false;
+  customer: any;
   ngOnInit() {
     this.api
       .getCustomerDetails(0, 0, '', '', ' AND ID =' + this.CUSTOMER_MASTER_ID)
       .subscribe((data) => {
         this.custaddress = data['data'];
         const customer = this.custaddress[0];
+        this.customer = customer;
 
         if (this.data.ID) {
           this.data.MOBILE_NO = this.data.MOBILE_NO;

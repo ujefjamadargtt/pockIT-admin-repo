@@ -57,7 +57,12 @@ export class JobcardpageComponent {
     ['PINCODE', 'PINCODE'],
   ];
   filterData: any;
-
+  public commonFunction = new CommonFunctionService();
+  vId = sessionStorage.getItem('Vid');
+  decreptedvIdString = this.vId
+    ? this.commonFunction.decryptdata(this.vId)
+    : '';
+  decreptedvID = parseInt(this.decreptedvIdString, 10);
   filterGroups: any = [
     {
       operator: 'AND',
@@ -112,7 +117,7 @@ export class JobcardpageComponent {
   decreptedroleID = 0;
   backofficeId = sessionStorage.getItem('backofficeId');
   decreptedbackofficeId = 0;
-  public commonFunction = new CommonFunctionService();
+  // public commonFunction = new CommonFunctionService();
   ngOnInit(): void {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -204,9 +209,11 @@ export class JobcardpageComponent {
       }
 
       if (this.filterOfTerritory.length > 0 && this.isall == false) {
+
         likeQuery += ' AND TERRITORY_ID =' + this.filterOfTerritory;
       } else {
         if (
+
           this.TYPE == 'VENDOR' ||
           this.decreptedroleID == 9 ||
           (this.decreptedroleID != 1 &&
@@ -214,7 +221,9 @@ export class JobcardpageComponent {
             this.decreptedroleID != 8 &&
             this.decreptedroleID != 9)
         ) {
-          likeQuery += ' TERRITORY_ID in (' + this.teritoryIds.toString() + ')';
+
+          likeQuery += ' TERRITORY_ID in (' + this.teritoryIds.toString() + ') AND ASSING_TO = ' + this.decreptedvID;
+
         }
         this.filterOfTerritory = [];
         this.filterOfTerritory.push(0);
@@ -249,6 +258,7 @@ export class JobcardpageComponent {
       ) {
         // likeQuery =
         //   ' AND TERRITORY_ID in (' + this.teritoryIds.toString() + ')';
+        likeQuery += " AND ASSING_TO = " + this.decreptedvID
         this.dataGet(sort, likeQuery);
       } else {
         this.dataGet(sort, likeQuery);
@@ -410,6 +420,7 @@ export class JobcardpageComponent {
       // likeQuery = ' AND TERRITORY_ID in (' + this.teritoryIds.toString() + ')';
       // alert(this.teritoryIds.length + ' ' + likeQuery);
       if (this.teritoryIds.length > 0) {
+        likeQuery += " AND ASSING_TO =  " + this.decreptedvendorId
         this.getData(sort, likeQuery);
       } else {
         this.jobdatss = [];

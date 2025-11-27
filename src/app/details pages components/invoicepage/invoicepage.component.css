@@ -5,3 +5,32 @@ nz-form-item.filtclass {
     width: -webkit-fill-available;
     padding: 0px 10px;
 }
+
+.ant-table-cell-fix-left {
+  background: #fff !important;
+  z-index: 10 !important;
+}
+ 
+.view-btn {
+  white-space: nowrap !important;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+}
+
+@media (max-width: 768px) {
+  th[nzLeft], td[nzLeft] {
+    min-width: 90px !important;
+  }
+ 
+  .ant-table-cell {
+    padding: 6px !important;
+  }
+ 
+  .view-btn .text {
+    display: none;
+  }
+}
+ 

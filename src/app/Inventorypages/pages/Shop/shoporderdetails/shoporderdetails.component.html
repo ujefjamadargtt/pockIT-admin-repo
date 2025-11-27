@@ -1422,7 +1422,25 @@
               </div>
             </ng-template>
           </nz-tab>
-
+          <nz-tab (nzSelect)="setFilter()" [nzDisabled]="
+              vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' ||
+              vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR' ||
+              vieworderdata.orderData[0]['ORDER_STATUS'] == 'C' ||
+              vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
+            " [nzTitle]="'Invoice'" style="margin-left:10px !important" (nzClick)="InvoiceClick()">
+            <ng-template nz-tab>
+              <div style="
+                  max-height: 78vh;
+                  min-height: 76vh;
+                  overflow-y: auto;
+                  overflow-x: hidden;
+                  padding-right: 10px;
+                ">
+                <app-invoicepage [TYPE]="'ORDER'" [FILTER_ID]="orderDetails.ID" [showMinimal]="true"
+                  [tableData]="newdataList"></app-invoicepage>
+              </div>
+            </ng-template>
+          </nz-tab>
         </nz-tabset>
       </nz-spin>
     </div>

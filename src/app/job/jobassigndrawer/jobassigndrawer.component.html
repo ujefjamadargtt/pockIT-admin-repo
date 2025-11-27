@@ -249,6 +249,16 @@
                   <div nz-col nzSpan="14" class="subname" style="text-align: end">
                     Day Start & End : {{ tech['TECHNICIAN_STATUS'] ? tech.DAY_START_END :'' }}
                   </div>
+                  <div nz-col nzSpan="24" class="subname" *ngIf="tech.TYPE == 'V'">
+                    Vendor Name :
+                    <span *ngIf="tech.VENDOR_NAME?.length > 50" nz-tooltip [nzTooltipTitle]="tech.VENDOR_NAME"
+                      nzTooltipPlacement="topLeft" class=" subname">
+                      {{ tech.VENDOR_NAME }}
+                    </span>
+                    <span *ngIf="tech.VENDOR_NAME?.length <= 50" class="subname">
+                      {{ tech.VENDOR_NAME }}
+                    </span>
+                  </div>
                   <div nz-col nzSpan="12" style="text-align: start">
                     <span class="subname">
                       Is Available :
@@ -454,12 +464,13 @@
             <nz-form-item style="margin-bottom: 4px !important" class="nz-form-item">
               <nz-form-label nzRequired nzNoColon> Shedule Date </nz-form-label>
               <nz-form-control>
-                <nz-date-picker style="width: 100%" [(ngModel)]="sheduledate" name="sheduledate" disabled
-                  (ngModelChange)="getbetweendata($event)" [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>
+                <nz-date-picker style="width: 100%" [(ngModel)]="sheduledate" name="sheduledate"
+                  (ngModelChange)="getbetweendata($event)" [nzFormat]="'dd/MM/yyyy'"
+                  [nzDisabledDate]="disablePastDates"></nz-date-picker>
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div nz-col nzSpan="10">
+          <!-- <div nz-col nzSpan="10">
             <nz-form-item style="margin-bottom: 4px !important" class="nz-form-item">
               <nz-form-label nzRequired nzNoColon> Start Time </nz-form-label>
               <nz-form-control>
@@ -467,6 +478,17 @@
                   [(ngModel)]="STARTTIME" [disabled]="disstrue" nzFormat="HH:mm a"
                   (ngModelChange)="getbetweendatastart($event)" [nzDisabledHours]="disabledHours"
                   [nzDisabledMinutes]="disabledMinutes"></nz-time-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div> -->
+          <div nz-col nzSpan="10">
+            <nz-form-item style="margin-bottom: 4px !important" class="nz-form-item">
+              <nz-form-label nzRequired nzNoColon> Start Time </nz-form-label>
+              <nz-form-control>
+                <nz-time-picker [nzAllowEmpty]="false" [nzAutoFocus]="false" name="STARTTIME" [nzMinuteStep]="10"
+                  [(ngModel)]="STARTTIME" [disabled]="disstrue" nzFormat="HH:mm a"
+                  (ngModelChange)="getbetweendatastart($event)" [nzDisabledHours]="disabledHoursNew"
+                  [nzDisabledMinutes]="disabledMinutesNew"></nz-time-picker>
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -478,6 +500,29 @@
             To
           </div>
           <div nz-col nzSpan="10" *ngIf="IS_ORDER_JOB == 'P'">
+            <nz-form-item style="margin-bottom: 4px !important" class="nz-form-item">
+              <nz-form-label nzRequired nzNoColon> End Time </nz-form-label>
+              <nz-form-control>
+                <nz-time-picker nzHideNow="true" [nzAllowEmpty]="false" [nzAutoFocus]="false" [nzMinuteStep]="10"
+                  name="ENDTIME" [(ngModel)]="ENDTIME" nzFormat="HH:mm a" [disabled]="disstrue"
+                  (ngModelChange)="getbetweendataend($event)" [nzDisabledHours]="disabledHours1New"
+                  [nzDisabledMinutes]="disabledMinutes1New"></nz-time-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="10" *ngIf="IS_ORDER_JOB == 'O'">
+            <nz-form-item style="margin-bottom: 4px !important" class="nz-form-item">
+              <nz-form-label nzRequired nzNoColon> End Time </nz-form-label>
+              <nz-form-control>
+                <nz-time-picker nzHideNow="true" [nzAllowEmpty]="false" [nzAutoFocus]="false" [nzMinuteStep]="10"
+                  name="ENDTIME" [(ngModel)]="ENDTIME" nzFormat="HH:mm a" [disabled]="true"
+                  (ngModelChange)="getbetweendataend($event)" [nzDisabledHours]="disabledHours1New"
+                  [nzDisabledMinutes]="disabledMinutes1New"></nz-time-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- <div nz-col nzSpan="10" *ngIf="IS_ORDER_JOB == 'P'">
             <nz-form-item style="margin-bottom: 4px !important" class="nz-form-item">
               <nz-form-label nzRequired nzNoColon> End Time </nz-form-label>
               <nz-form-control>
@@ -498,7 +543,7 @@
                   [nzDisabledMinutes]="disabledMinutes1"></nz-time-picker>
               </nz-form-control>
             </nz-form-item>
-          </div>
+          </div> -->
         </div>
       </div>
       <div nz-col nzSpan="12">
