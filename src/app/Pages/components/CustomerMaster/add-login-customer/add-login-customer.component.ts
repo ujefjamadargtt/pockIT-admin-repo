@@ -512,8 +512,8 @@ export class AddLoginCustomerComponent {
         ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + //+customerid+
         this.mainCustData.CUSTOMER_MASTER_ID +
         // ' AND CUSTOMER_DETAILS_ID!=' +
-        ' AND ID!=' +
-        this.uniqueParentAddressIds;
+        ' AND ID NOT IN (' +
+        this.uniqueParentAddressIds +')';
       // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid + " AND CUSTOMER_DETAILS_ID!=" + this.uniqueParentAddressIds
     } else {
       filter =
@@ -923,8 +923,8 @@ export class AddLoginCustomerComponent {
           ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + //+customerid+
           this.mainCustData.CUSTOMER_MASTER_ID +
           // ' AND CUSTOMER_DETAILS_ID!=' +
-          ' AND  ID!=' +
-          this.uniqueParentAddressIds;
+          ' AND  ID NOT IN (' +
+          this.uniqueParentAddressIds +')';
         // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid + " AND CUSTOMER_DETAILS_ID!=" + this.uniqueParentAddressIds
       } else {
         filter =
@@ -1201,8 +1201,8 @@ export class AddLoginCustomerComponent {
             filter =
               ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
               this.mainCustData.CUSTOMER_MASTER_ID +
-              ' AND ID!=' +
-              this.uniqueParentAddressIds;
+              ' AND ID NOT IN (' +
+              this.uniqueParentAddressIds + ')';
             // ' AND CUSTOMER_DETAILS_ID!=' +
             // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid + " AND CUSTOMER_DETAILS_ID!=" + this.uniqueParentAddressIds
           } else {
@@ -1271,8 +1271,8 @@ export class AddLoginCustomerComponent {
       filter =
         ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
         this.mainCustData.CUSTOMER_MASTER_ID +
-        ' AND  ID!=' +
-        this.uniqueParentAddressIds;
+        ' AND  ID NOT IN (' +
+        this.uniqueParentAddressIds + ')'
       //+customerid// + this.custid   // this.custid
 
       // ' AND CUSTOMER_DETAILS_ID!=' +
