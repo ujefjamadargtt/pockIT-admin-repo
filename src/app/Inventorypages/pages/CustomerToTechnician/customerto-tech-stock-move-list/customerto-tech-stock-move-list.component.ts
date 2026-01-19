@@ -8,7 +8,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { differenceInCalendarDays } from 'date-fns';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-customerto-tech-stock-move-list',
   templateUrl: './customerto-tech-stock-move-list.component.html',
@@ -36,22 +35,17 @@ export class CustomertoTechStockMoveListComponent {
     ['USER_NAME'],
   ];
   public commonFunction = new CommonFunctionService();
-
   disabledDate1 = (current: Date): boolean =>
     differenceInCalendarDays(current, new Date(this.startValue)) < 0;
-
   disabledStartDate2 = (current: Date): boolean =>
     differenceInCalendarDays(current, this.endValue) > 0;
-
   drawerData: TechnicianRequestMovementCust = new TechnicianRequestMovementCust();
   current: number = 1;
   rejectRemarkExpand: boolean[] = [];
   godownID: number;
   roleID: any = sessionStorage.getItem('roleId');
   useriddd: any = sessionStorage.getItem('userId');
-
   showRejectionRemarkModal: boolean = false;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -60,20 +54,31 @@ export class CustomertoTechStockMoveListComponent {
   ) { }
   fromDate
   toDate
+public drawerBodyStyle = {
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '60px',
+    'padding-left': '0px',
+    'padding-top': '8px',
+    'padding-right': '21px'
+};
+public filterDrawerBodyStyle = {
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+};
   ngOnInit(): void {
     const decryptedUserId = this.useriddd
       ? this.commonFunction.decryptdata(this.useriddd)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.useriddd = Number(decryptedUserId);
-
     const decryptedUserId1 = this.roleID
       ? this.commonFunction.decryptdata(this.roleID)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.roleID = Number(decryptedUserId1);
     this.GodownMaster();
     this.getTechnician()
     this.screenwidth = window.innerWidth;
-
     this.currentDate = new Date();
     if (this.currentDate) {
       this.currentDate = new Date(this.currentDate);
@@ -87,14 +92,12 @@ export class CustomertoTechStockMoveListComponent {
       '-01'
     );
     this.endValue = new Date();
-    // this.GetGodown();
     this.fromDate = this.currentDate.getFullYear() +
       '-' +
       (this.currentDate.getMonth() + 1) +
       '-01'
     this.toDate = new Date()
   }
-
   formatDate(date: Date): string {
     return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
   }
@@ -106,17 +109,11 @@ export class CustomertoTechStockMoveListComponent {
   warehouseList: any = [];
   loadWarehouse = false;
   onWarehousechange(data: any) {
-    //  ;
-
     if (data.length <= 0) {
       this.selectedWarehouses = this.warehouseList.map(
         (warehouse) => warehouse.ID
       );
-      // this.warehouseList2 = this.warehouseList.filter(filterdData =>
-      //   !data.includes(filterdData.ID)
-      // );
     }
-
   }
   onWarehousechange2(data: any) {
     if (data.length <= 0) {
@@ -130,29 +127,21 @@ export class CustomertoTechStockMoveListComponent {
       this.pageIndex = 1;
       this.pageSize = 10;
     }
-
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-
     if (this.searchText != '') {
       likeQuery = ' AND';
-
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
     }
-
     this.loadingRecords = true;
-
     var filterrrrr = '';
     if (this.roleID == 1 || this.roleID == 8) {
     } else {
@@ -160,25 +149,14 @@ export class CustomertoTechStockMoveListComponent {
         filterrrrr = ' AND USER_ID=' + this.useriddd;
       } else {
         var dd: any = [];
-
         this.LoadGodown.forEach((element: any) => {
           dd.push(element.ID);
         });
-
         filterrrrr =
           ' AND USER_ID<>' +
           this.useriddd;
       }
     }
-    // if (this.selectedWarehouses.length > 0) {
-    //   let quotedData = this.selectedWarehouses
-    //     .map((data) => `'${data}'`)
-    //     .join(',');
-    //   let sourceFilter = ` AND WAREHOUSE_ID IN (${quotedData})`;
-    //   likeQuery += sourceFilter;
-    //   this.isfilterapply = true
-
-    // }
     if (this.selectedTechnicians.length > 0) {
       let quotedData = this.selectedTechnicians
         .map((data) => `'${data}'`)
@@ -210,13 +188,11 @@ export class CustomertoTechStockMoveListComponent {
             this.dataList = data['body']['data'];
             this.rejectRemarkExpand = new Array(this.totalRecords).fill(false);
             this.loadingRecords = false;
-
             if (this.totalRecords == 0) {
               this.drawerData.MOVEMENT_NUMBER = '0001';
             } else {
               let finalreq =
                 parseInt(data['body']['data'][0]['MOVEMENT_NUMBER']) + 1;
-
               this.drawerData.MOVEMENT_NUMBER = finalreq
                 .toString()
                 .padStart(4, '0');
@@ -249,7 +225,6 @@ export class CustomertoTechStockMoveListComponent {
         }
       );
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -257,11 +232,9 @@ export class CustomertoTechStockMoveListComponent {
       this.filterClass = 'filter-visible';
     }
   }
-
   Godownlist: any = [];
   RequestBy: any;
   dispatchedBy: any;
-
   GetGodown() {
     this.Godown1 = 1;
     this.Godown2 = 2;
@@ -276,7 +249,6 @@ export class CustomertoTechStockMoveListComponent {
   }
   Godownone(data: any) { }
   StorageLocation(data: any) { }
-
   applyFilter() {
     if (this.Godown1 || this.Godown2 || this.RequestBy) {
       this.isfilterapply = true;
@@ -286,82 +258,19 @@ export class CustomertoTechStockMoveListComponent {
     this.search(true);
     this.filterClass = 'filter-invisible';
   }
-
   add(): void {
     this.drawerfor = 'ADDORUPDATE';
     this.category = '';
     this.drawerTitle = 'Customer to technician stock transfer';
     this.drawerData = new TechnicianRequestMovementCust();
-    // this.api.TechnicianstockMovementRequestnewCust(1, 1, 'ID', 'DESC', '').subscribe(
-    //   (data) => {
-    //     if (data['status'] == 200) {
-    //       if (data['body']['data'].length > 0) {
-    //         let lastYear =
-    //           data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')[
-    //           data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')
-    //             .length - 2
-    //           ];
-    //         let currentYear = new Date().getFullYear();
-    //         let previousID =
-    //           data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')[
-    //           data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')
-    //             .length - 3
-    //           ];
-    //         let lastID = 0;
-    //         if (!previousID) {
-    //           lastID = 1;
-    //         } else {
-    //           lastID =
-    //             Number(
-    //               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')[
-    //               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')
-    //                 .length - 3
-    //               ]
-    //             ) + 1;
-    //         }
-
-    //         if (lastYear === currentYear) {
-    //           this.drawerData.MOVEMENT_NUMBER =
-    //             'TREQ/' +
-    //             lastID.toString().padStart(4, '0') +
-    //             '/' +
-    //             lastYear.toString().slice(-2) +
-    //             '/' +
-    //             'A';
-    //         } else {
-    //           this.drawerData.MOVEMENT_NUMBER =
-    //             'TREQ/' +
-    //             lastID.toString().padStart(4, '0') +
-    //             '/' +
-    //             currentYear.toString().slice(-2) +
-    //             '/' +
-    //             'A';
-    //         }
-    //       } else {
-    //         let currentYear = new Date().getFullYear();
-    //         let lastID = 1;
-    //         this.drawerData.MOVEMENT_NUMBER =
-    //           'TREQ/' +
-    //           lastID.toString().padStart(4, '0') +
-    //           '/' +
-    //           currentYear.toString().slice(-2) +
-    //           '/' +
-    //           'A';
-    //       }
-    //     }
-    //   },
-    //   (err) => { }
-    // );
     this.items1 = [];
     this.items = [];
     this.editdata = false;
     this.drawerVisible = true;
   }
-
   items: any = [];
   items1: any = [];
   item2: any = [];
-
   index = -1;
   data2 = new InnerTable();
   datacount = 0;
@@ -383,17 +292,14 @@ export class CustomertoTechStockMoveListComponent {
     this.drawerTitle = 'Update customer to technician stock transfer';
     this.drawerData = Object.assign({}, data0);
     this.loadingRecords = true;
-
     this.api
       .getAllInnerStockMovementItemDetailsTableeeecust(0, 0, '', '', data0.ID)
       .subscribe(
         (data) => {
-          // alert(data['status']);
           if (data['status'] == 200) {
             this.loadingRecords = false;
             this.drawerVisible = true;
             this.item2 = data['body']['data'];
-
             if (data['body']['data'].length > 0) {
               for (let i = 0; i < data['body']['data'].length; i++) {
                 this.INNERTABLEDATA[i] = {
@@ -402,7 +308,6 @@ export class CustomertoTechStockMoveListComponent {
                 this.items1.push(this.INNERTABLEDATA[i]);
                 this.items = this.items1;
               }
-
               this.category = this.INNERTABLEDATA[0]['ITEM_CATEGORY_ID'];
             } else {
               this.items = [];
@@ -419,28 +324,21 @@ export class CustomertoTechStockMoveListComponent {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   drawerClose(): void {
     this.search(false);
     this.drawerVisible = false;
   }
-
   loadMore(): void {
     this.pageSize += 10;
     this.search(false);
   }
-
-  // filterClass: string = 'filter-invisible';
   isFilterApplied: any = 'default';
-  // isfilterapply: boolean = false;
   startValue: any;
   endValue: any;
   currentDate: any;
-
   getStatusWiseCurrentStage(status: string): number {
     if (status == 'P') {
       return 1;
@@ -452,20 +350,16 @@ export class CustomertoTechStockMoveListComponent {
       return 1;
     }
   }
-
   requestDrawerVisible: boolean = false;
   requestDrawerTitle: string;
   requestDrawerData: any[] = [];
-
   get closeCallbackRequestDrawer() {
     return this.requestDrawerClose.bind(this);
   }
-
   requestDrawerClose(): void {
     this.search(false);
     this.requestDrawerVisible = false;
   }
-
   openRequestCheckDrawer(data: any): void {
     this.update = true;
     this.disabled = true;
@@ -475,7 +369,6 @@ export class CustomertoTechStockMoveListComponent {
     this.requestDrawerData = Object.assign({}, data);
     this.loadingRecords = true;
     const status = this.requestDrawerData['STATUS'];
-
     this.api
       .getAllInnerStockMovementItemDetailsTablecust(
         0,
@@ -489,7 +382,6 @@ export class CustomertoTechStockMoveListComponent {
           if (data['code'] == 200) {
             this.loadingRecords = false;
             this.requestDrawerVisible = true;
-
             if (data['data'].length > 0) {
               for (let i = 0; i < data['data'].length; i++) {
                 this.INNERTABLEDATA[i] = {
@@ -498,9 +390,7 @@ export class CustomertoTechStockMoveListComponent {
                   ITEM_NAME: data['data'][i]['ITEM_NAME'],
                   REQUESTED_QTY: data['data'][i]['REQUESTED_QTY'],
                   REQUESTED_LOOSE_QTY: data['data'][i]['REQUESTED_LOOSE_QTY'],
-
                   ITEM_CATEGORY_ID: data['data'][i]['ITEM_CATEGORY_ID'],
-
                   REQUESTED_QTY_UNIT_ID:
                     data['data'][i]['REQUESTED_QTY_UNIT_ID'],
                   CONFIRMED_QTY:
@@ -539,38 +429,27 @@ export class CustomertoTechStockMoveListComponent {
         }
       );
   }
-
   isShowConfirmedQtyColumn: boolean = false;
-
-
   switchValue: boolean = false;
-
   closeModel() {
     this.switchValue = false;
   }
   radioValue = 'M';
-
   onChangeRadioButton(event: any) {
-    // this.radioValue = event;
     this.search();
   }
   onEnterBtnDown(): void {
     document.getElementById('searchBtn')?.focus();
   }
-
   Itemdata: any = [];
   tempRejectionRemark: string;
-
   onRejectedBtnClick(index: number, data: any): void {
-    // this.rejectRemarkExpand[index] = !this.rejectRemarkExpand[index];
     this.showRejectionRemarkModal = true;
     this.tempRejectionRemark = data['REJECT_REMARK'];
   }
-
   closeRejectionRemarkModel(): void {
     this.showRejectionRemarkModal = false;
   }
-
   approve(data0: TechnicianRequestMovementCust): void {
     this.drawerfor = 'APPROVE';
     this.item2 = [];
@@ -581,17 +460,14 @@ export class CustomertoTechStockMoveListComponent {
     this.drawerTitle = 'Approve / Reject Stock Movement Request';
     this.drawerData = Object.assign({}, data0);
     this.loadingRecords = true;
-
     this.api
       .getAllInnerStockMovementItemDetailsTableeee22cust(0, 0, '', '', data0.ID)
       .subscribe(
         (data) => {
-          // alert(data['status']);
           if (data['status'] == 200) {
             this.loadingRecords = false;
             this.drawerVisible = true;
             this.item2 = data['body']['data'];
-
             if (data['body']['data'].length > 0) {
               for (let i = 0; i < data['body']['data'].length; i++) {
                 this.INNERTABLEDATA[i] = {
@@ -600,7 +476,6 @@ export class CustomertoTechStockMoveListComponent {
                 this.items1.push(this.INNERTABLEDATA[i]);
                 this.items = this.items1;
               }
-
               this.category = this.INNERTABLEDATA[0]['ITEM_CATEGORY_ID'];
             } else {
               this.items = [];
@@ -617,7 +492,6 @@ export class CustomertoTechStockMoveListComponent {
         }
       );
   }
-
   viewdata(data0: TechnicianRequestMovementCust): void {
     this.drawerfor = 'VIEW';
     this.item2 = [];
@@ -628,17 +502,14 @@ export class CustomertoTechStockMoveListComponent {
     this.drawerTitle = 'View customer to technician stock transfer';
     this.drawerData = Object.assign({}, data0);
     this.loadingRecords = true;
-
     this.api
       .getAllInnerTechnicianStockMovementItemDetailsTableeeecust(0, 0, '', '', data0.ID)
       .subscribe(
         (data) => {
-          // alert(data['status']);
           if (data['status'] == 200) {
             this.loadingRecords = false;
             this.drawerVisible = true;
             this.item2 = data['body']['data'];
-
             if (data['body']['data'].length > 0) {
               for (let i = 0; i < data['body']['data'].length; i++) {
                 this.INNERTABLEDATA[i] = {
@@ -647,7 +518,6 @@ export class CustomertoTechStockMoveListComponent {
                 this.items1.push(this.INNERTABLEDATA[i]);
                 this.items = this.items1;
               }
-
               this.category = this.INNERTABLEDATA[0]['ITEM_CATEGORY_ID'];
             } else {
               this.items = [];
@@ -664,18 +534,15 @@ export class CustomertoTechStockMoveListComponent {
         }
       );
   }
-
   drawerfor: any = 'ADDORUPDATE';
   LoadGodownmain: any = [];
   isFromGodownLoading: boolean = false;
   LoadGodown: any = [];
   LoadGodownforfilter: any = [];
   LoadGodownmainforfilter: any = [];
-
   GodownMaster(): void {
     this.LoadGodown = [];
     var userMainId = '';
-
     if (
       this.useriddd != null &&
       this.useriddd != undefined &&
@@ -685,144 +552,24 @@ export class CustomertoTechStockMoveListComponent {
     } else {
       userMainId = '';
     }
-
     if (this.roleID == 1 || this.roleID == 8) {
       this.isFromGodownLoading = true;
-      // this.api.getWarehouses(0, 0, 'ID', 'desc', ' AND STATUS=1').subscribe(
-      //   (data) => {
-      // if (data['code'] == 200) {
-      //   this.isFromGodownLoading = false;
-      //   this.LoadGodown = data['data'];
-      //   this.LoadGodownmain = data['data'];
-      //   this.LoadGodownforfilter = data['data'];
-      //   this.LoadGodownmainforfilter = data['data'];
-      //   this.warehouseList = data['data']
-      //   this.selectedWarehouses = this.warehouseList.map(data => data.ID)
-      //   data['data'].forEach((element) => {
-      //     this.LoadGodownmainforfilter.push({
-      //       value: element.ID,
-      //       display: element.NAME,
-      //     });
-      //   });
-      //   data['data'].forEach((element) => {
-      //     this.LoadGodownforfilter.push({
-      //       value: element.ID,
-      //       display: element.NAME,
-      //     });
-      //   });
-
-      //   this.search(true);
-      // } else {
-      //   this.isFromGodownLoading = false;
-      // }
-      // },
-      // (err) => {
-      //   this.LoadGodown = [];
-      //   this.isFromGodownLoading = false;
-      //   this.message.error('Server Not Found', '');
-      // }
-      // );
       this.search(true);
-
     } else {
       this.search(true);
-
-      // this.api
-      //   .getBackOfficeData(0, 0, '', 'desc', ' AND IS_ACTIVE=1' + userMainId)
-      //   .subscribe(
-      //     (datat) => {
-      //       if (datat['code'] == 200) {
-      //         if (datat['count'] > 0) {
-      //           // this.isFromGodownLoading = true;
-      //           this.api
-      //             .getWarehouses(
-      //               0,
-      //               0,
-      //               'ID',
-      //               'desc',
-      //               ' AND STATUS=1 AND WAREHOUSE_MANAGER_ID=' +
-      //               datat['data'][0]['ID']
-      //             )
-      //             .subscribe(
-      //               (data) => {
-      //                 if (data['code'] == 200) {
-      //                   this.isFromGodownLoading = false;
-      //                   this.LoadGodown = data['data'];
-      //                   this.warehouseList = data['data']
-      //                   this.selectedWarehouses = this.warehouseList.map(data => data.ID)
-      //                   data['data'].forEach((element) => {
-      //                     this.LoadGodownforfilter.push({
-      //                       value: element.ID,
-      //                       display: element.NAME,
-      //                     });
-      //                   });
-
-      //                   this.search(true);
-      //                 } else {
-      //                   this.isFromGodownLoading = false;
-      //                   this.LoadGodown = [];
-      //                 }
-      //               },
-      //               (err) => {
-      //                 this.isFromGodownLoading = false;
-      //                 this.message.error('Server Not Found', '');
-      //               }
-      //             );
-      //         } else {
-      //           this.isFromGodownLoading = false;
-      //           this.LoadGodown = [];
-      //         }
-      //       } else {
-      //         this.isFromGodownLoading = false;
-      //         this.LoadGodown = [];
-      //       }
-      //     },
-      //     (err: HttpErrorResponse) => {
-      //       this.isFromGodownLoading = false;
-      //       this.LoadGodown = [];
-      //     }
-      //   );
-
-      // this.api.getWarehouses(0, 0, 'ID', 'desc', ' AND STATUS=1').subscribe(
-      //   (data) => {
-      //     if (data['code'] == 200) {
-      //       this.isFromGodownLoading = false;
-      //       this.LoadGodownmain = data['data'];
-
-      //       data['data'].forEach((element) => {
-      //         this.LoadGodownmainforfilter.push({
-      //           value: element.ID,
-      //           display: element.NAME,
-      //         });
-      //       });
-      //       // this.search(true);
-      //     } else {
-      //       this.isFromGodownLoading = false;
-      //     }
-      //   },
-      //   (err) => {
-      //     this.LoadGodownmain = [];
-      //     this.isFromGodownLoading = false;
-      //     this.message.error('Server Not Found', '');
-      //   }
-      // );
     }
   }
-
-  // New main filter
   TabId: number;
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
-
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
   filterQuery: string = '';
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -832,38 +579,8 @@ export class CustomertoTechStockMoveListComponent {
     }
   }
   filterloading: boolean = false;
-  // loadFilters() {
-  //   this.filterloading = true;
-  //   this.api
-  //     .getFilterData1(
-  //       0,
-  //       0,
-  //       '',
-  //       '',
-  //       ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-  //     ) // Use USER_ID as a number
-  //     .subscribe(
-  //       (response) => {
-  //         if (response.code === 200) {
-  //           this.savedFilters = response.data;
-  //           this.filterQuery = '';
-  //           this.filterloading = false;
-  //         } else {
-  //           this.message.error('Failed to load filters.', '');
-  //           this.filterloading = false;
-  //         }
-  //       },
-  //       (error) => {
-  //         this.message.error('An error occurred while loading filters.', '');
-  //         this.filterloading = false;
-  //       }
-  //     );
-  //   this.filterQuery = '';
-  // }
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -871,16 +588,12 @@ export class CustomertoTechStockMoveListComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -895,22 +608,15 @@ export class CustomertoTechStockMoveListComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -924,15 +630,6 @@ export class CustomertoTechStockMoveListComponent {
       );
     this.filterQuery = '';
   }
-
-  // Clearfilter() {
-  //   this.filterClass = 'filter-invisible';
-  //   this.selectedFilter = '';
-  //   this.isfilterapply = false;
-  //   this.filterQuery = '';
-  //   this.search();
-  // }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -941,14 +638,8 @@ export class CustomertoTechStockMoveListComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
-
   isDeleting: boolean = false;
-
-
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -964,14 +655,10 @@ export class CustomertoTechStockMoveListComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           }
         } else {
           this.message.error('Failed to delete filter.', '');
@@ -1008,7 +695,6 @@ export class CustomertoTechStockMoveListComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -1025,8 +711,6 @@ export class CustomertoTechStockMoveListComponent {
       groups: [],
     },
   ];
-
-
   loadWarehouse2 = false
   technicianData: any = [];
   getTechnician() {
@@ -1035,7 +719,6 @@ export class CustomertoTechStockMoveListComponent {
       .subscribe((data) => {
         if (data['code'] == 200) {
           this.technicianData = data['data'];
-          // this.selectedTechnicians=this.technicianData.map(data=>data.ID)
         }
       });
   }
@@ -1058,55 +741,13 @@ export class CustomertoTechStockMoveListComponent {
     this.filterClass = 'filter-invisible';
   }
   clearFilter2() {
-    // this.selectedWarehouses=[]
-    // this.selectedDestinationWarehouses=[]
     this.filterClass = 'filter-invisible';
     this.search(true);
   }
-  // openfilter() {
-  //   this.drawerTitle = 'Technician Wise Stock Transfer Filter';
-  //   this.drawerFilterVisible = true;
-
-  //   // Edit code 2
-
-  //   this.editButton = 'N';
-  //   this.FILTER_NAME = '';
-  //   this.EditQueryData = [];
-  //   this.filterFields[0]['options'] = this.LoadGodownmainforfilter;
-  //   let techiciandropdown: any = []
-  //   this.technicianData.forEach(data => {
-  //     techiciandropdown.push({
-  //       display: data.NAME,
-  //       value: data.ID
-  //     })
-  //   })
-  //   this.filterFields[1]['options'] = techiciandropdown;
-  //   this.filterGroups = [
-  //     {
-  //       operator: 'AND',
-  //       conditions: [
-  //         {
-  //           condition: {
-  //             field: '',
-  //             comparator: '',
-  //             value: '',
-  //           },
-  //           operator: 'AND',
-  //         },
-  //       ],
-  //       groups: [],
-  //     },
-  //   ];
-  // }
-
   filterData: any;
   currentClientId = 1
   openfilter() {
-    //   this.drawerTitle = 'Technician Wise Stock Transfer Filter';
-    //   this.drawerFilterVisible = true;
-
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1115,13 +756,9 @@ export class CustomertoTechStockMoveListComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1138,10 +775,6 @@ export class CustomertoTechStockMoveListComponent {
         groups: [],
       },
     ];
-
-
-
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1163,23 +796,7 @@ export class CustomertoTechStockMoveListComponent {
     this.drawerFilterVisible = false;
     this.loadFilters();
   }
-
-  // get closefilterCallback() {
-  //   return this.drawerflterClose.bind(this);
-  // }
-
   filterFields: any[] = [
-    // {
-    //   key: 'WAREHOUSE_ID',
-    //   label: 'Warehouse',
-    //   type: 'select',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //   ],
-    //   options: this.LoadGodownmainforfilter,
-    //   placeholder: 'Select Warehouse',
-    // },
     {
       key: 'TECHNICIAN_ID',
       label: 'Technician',
@@ -1191,21 +808,6 @@ export class CustomertoTechStockMoveListComponent {
       options: [],
       placeholder: 'Select Technician',
     },
-    // {
-    //   key: 'MOVEMENT_NUMBER',
-    //   label: 'Movement Request No',
-    //   type: 'text',
-    //   comparators: [
-    //     '=',
-    //     '!=',
-    //     'Contains',
-    //     'Does Not Contains',
-    //     'Starts With',
-    //     'Ends With',
-    //   ],
-    //   placeholder: 'Enter Movement Request No',
-    // },
-
     {
       key: 'DATE',
       label: 'Date',
@@ -1222,11 +824,8 @@ export class CustomertoTechStockMoveListComponent {
       placeholder: 'Select Date',
     },
   ];
-
   oldFilter: any[] = [];
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -1234,30 +833,23 @@ export class CustomertoTechStockMoveListComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
-    // this.filterGroups = JSON.parse(data.FILTER_JSON);
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.FILTER_NAME = data.FILTER_NAME;
-
     this.EditQueryData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Filter';
@@ -1272,49 +864,17 @@ export class CustomertoTechStockMoveListComponent {
     })
     this.filterFields[1]['options'] = techiciandropdown;
   }
-
-
-  // editQuery(data: any) {
-
-  //   this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
-  //   this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
-  //   this.FILTER_NAME = data.FILTER_NAME;
-  //   this.filterData = data;
-  //   this.EditQueryData = data;
-  //   this.editButton = 'Y';
-  //   this.drawerTitle = 'Edit Filter';
-  //   this.drawerFilterVisible = true;
-  // }
-
-
-  // drawerfilterClose() {
-  //   this.drawerFilterVisible = false;
-  //   this.loadFilters();
-  // }
-
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
-
   drawerfilterClose(buttontype, updateButton): void {
-
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
-
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-
       this.loadFilters();
     }
   }
@@ -1322,11 +882,9 @@ export class CustomertoTechStockMoveListComponent {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   get filtercloseCallback() {
     return this.drawerfilterClose.bind(this);
   }

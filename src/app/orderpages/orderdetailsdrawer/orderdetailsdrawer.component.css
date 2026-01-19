@@ -1,29 +1,25 @@
 .cardstyle {
   background-color: #fff;
-
   padding: 15px;
   box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid #efefef;
   border-radius: 10px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
-
 .truncate-two-lines {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* Limit to 3 lines */
+  -webkit-line-clamp: 2;
   line-clamp: 2;
-  max-height: calc(1.5em * 2); /* Adjust line height (e.g., 1.5em) */
+  max-height: calc(1.5em * 2);
   cursor: pointer;
   line-height: 1.5em;
 }
@@ -31,60 +27,49 @@
   color: #000;
   font-size: 13px !important;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .subnamm {
   color: #6A6A6A;
   font-size: 12px !important;
   font-weight: 500;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .subnamhover {
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Show max 2 lines */
+  -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  cursor: pointer; /* Show pointer to indicate hover */
+  cursor: pointer;
 }
-
 ::-webkit-scrollbar {
   height: 5px;
   width: 4px;
 }
-
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px rgb(233, 233, 233);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-track:hover {
   box-shadow: inset 0 0 5px rgb(169, 168, 168);
 }
-
 ::-webkit-scrollbar-thumb {
   background: rgb(131, 131, 131);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   box-shadow: inset 0 0 5px rgb(8, 8, 8);
 }
-
-
 .ant-drawer-body {
   padding: 8px 20px !important;
 }
-
 .footer {
   left: 8px;
   width: 97% !important;
@@ -92,14 +77,11 @@
   padding: 10px !important;
   border-radius: 5px !important;
 }
-
 .backbbb {
   background: white !important;
   padding: 10px !important;
   border-radius: 5px !important;
 }
-
-
 .cardstyle1 {
   background-color: #fff;
   cursor: pointer;
@@ -108,28 +90,22 @@
   border: 1px solid #efefef;
   border-radius: 10px;
 }
-
 .mainnam1 {
   color: #000;
   font-size: 13px !important;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .subnamm1 {
   color: #6A6A6A;
   font-size: 12px !important;
   font-weight: 500;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-
 .nz-form-itemm {
   display: inline-block !important;
   margin-bottom: 5px !important;
@@ -137,10 +113,6 @@
   padding: 0px 10px !important;
   font-family: '"Poppins", sans-serif !important';
 }
-
-
-
-/* vaishnavi */
 nz-form-item {
   margin-top: 5px;
   display: inline-block;
@@ -148,18 +120,13 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 .select-container {
-
   display: flex;
   justify-content: center;
 }
-
 body {
   font-family: Arial, sans-serif;
 }
-
-
 .chat-container {
   max-height: 66vh;
   min-height: 55vh;
@@ -173,52 +140,40 @@ body {
   justify-content: flex-start;
   height: 200px;
   overflow: hidden;
-
 }
-
 .message-box {
   flex-grow: 1;
   margin-bottom: 10px;
   padding-right: 10px;
-
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #888 #f4f4f4;
 }
-
-
 .message-box::-webkit-scrollbar {
   width: 2px;
 }
-
 .message-box::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 3px;
 }
-
 .message-box::-webkit-scrollbar-track {
   background-color: #f4f4f4;
   border-radius: 3px;
 }
-
 .message {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
 }
-
 .customer-message {
   max-width: 70% !important;
   align-items: flex-start;
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
-  /* Ensures long words are wrapped */
   word-break: break-word;
-  /* Breaks words if too long */
   overflow-wrap: break-word;
 }
-
 .technician-message {
   max-width: 70%;
   align-items: flex-end;
@@ -226,49 +181,36 @@ body {
   flex-direction: column;
   margin-left: auto;
   word-wrap: break-word;
-  /* Ensures long words are wrapped */
   word-break: break-word;
-  /* Breaks words if too long */
   overflow-wrap: break-word;
 }
-
 .customer-name,
 .technician-name {
   font-weight: bold;
   font-size: 10px !important;
 }
-
 .timestamp {
-
   font-size: 10px !important;
   color: gray;
   margin-top: 5px;
 }
-
 .message-text {
-
   font-size: 13px;
   margin-top: 5px;
   background-color: #e4e4e4;
   padding: 5px;
   border-radius: 5px;
 }
-
 .technician-message .message-text {
   background-color: #d3f9d8;
 }
-
-
-
 .input-area {
   display: flex;
   justify-content: space-between;
   position: sticky;
   bottom: 0;
   z-index: 10;
-
 }
-
 textarea {
   width: 80%;
   padding: 8px;
@@ -277,7 +219,6 @@ textarea {
   border: 1px solid #ddd;
   resize: none;
 }
-
 .whatsapp-send-icon {
   width: 13%;
   background-color: #4CAF50;
@@ -290,12 +231,9 @@ textarea {
   height: 37px;
   cursor: pointer;
 }
-
 .whatsapp-send-icon:hover {
   background-color: #45a049;
 }
-
-
 .paper-clip {
   margin-right: 2px;
   background-color: #f4f4f4;
@@ -305,68 +243,53 @@ textarea {
   align-items: center;
   justify-content: center;
 }
-
-
-
-/* Action Log CSS */
 .timeline-container {
   padding: 20px;
   border-radius: 8px;
   max-width: 800px;
   margin: 0 auto;
 }
-
 h2 {
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
-
 .group-date {
   font-size: 12px;
   font-weight: bold;
   margin: 20px 0 10px;
   color: #555;
 }
-
 .event-details {
   padding: 10px 0;
 }
-
 .event-title {
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 1rem;
 }
-
 .event-meta {
   margin-top: 4px;
   font-size: 0.85rem;
   color: #888;
 }
-
 .event-meta .time {
   margin-right: 10px;
 }
-
 .event-description {
   margin-top: 5px;
   font-size: 10px;
   color: #666;
 }
-
 .icon {
   font-size: 1.2rem;
 }
-
-
 .invoice-container {
   font-family: 'Arial', sans-serif;
   color: #333;
   line-height: 1.5;
 }
-
 .invoice-header {
   display: flex;
   justify-content: space-between;
@@ -375,69 +298,57 @@ h2 {
   padding: 0 20px;
   border-bottom: 1px solid #ddd;
 }
-
 .company-info h2 {
   margin: 0;
   font-size: 22px;
   color: #092B9C !important;
 }
-
 .company-info p {
   margin: 5px 0;
   font-size: 14px;
   color: #666;
 }
-
 .invoice-info {
   text-align: right;
 }
-
 .invoice-info h3 {
   margin: 0;
   font-size: 24px;
   color: #444;
 }
-
 hr {
   border: 0;
   border-top: 1px solid #e4e4e4;
   margin: 20px 0;
 }
-
 .customer-info h3 {
   margin: 0;
   font-size: 20px;
   color: #444;
 }
-
 .customer-details {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
-
 .detail p {
   margin: 5px 0;
   font-size: 14px;
   color: #666;
 }
-
 .order-details {
   margin-top: 20px;
 }
-
 .order-details h3 {
   margin: 0;
   font-size: 20px;
   color: #444;
 }
-
 .invoice-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
 }
-
 .invoice-table th,
 .invoice-table td {
   padding: 10px;
@@ -445,37 +356,30 @@ hr {
   border: 1px solid #ddd;
   font-size: 14px;
 }
-
 .invoice-table th {
   background-color: #f7f7f7;
 }
-
 .invoice-summary {
   text-align: right;
   margin-top: 20px;
 }
-
 .invoice-summary p {
   margin: 5px 0;
   font-size: 16px;
 }
-
 .invoice-footer {
   text-align: center;
   margin-top: 30px;
 }
-
 .invoice-footer p {
   font-size: 14px;
   color: #666;
 }
-
 .invoice-footer .thank-you {
   font-size: 16px;
   font-weight: bold;
   color: #092B9C !important;
 }
-
 .invoice-container {
   max-height: 600px;
   overflow-y: scroll;
@@ -483,39 +387,32 @@ hr {
   background-color: white;
   box-sizing: border-box;
 }
-
 .invoice-container::-webkit-scrollbar {
   width: 0px;
   background: transparent;
 }
-
 .invoice-table {
   width: 100%;
   border-collapse: collapse;
 }
-
 .invoice-table th,
 .invoice-table td {
   padding: 10px;
   border: 1px solid #ddd;
   text-align: center;
 }
-
 .invoice-footer {
   margin-top: 20px;
   font-size: 14px;
 }
-
 .invoice-header h2,
 .invoice-info h3 {
   font-size: 18px;
 }
-
 .nz-modal-title {
   font-size: 20px;
   font-weight: bold;
 }
-
 .subname {
   color: #4c4c4ceb;
   font-size: 12px !important;
@@ -524,8 +421,6 @@ hr {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-
 .image-container {
   display: flex;
   justify-content: center;
@@ -533,23 +428,571 @@ hr {
   height: 350px;
   overflow: auto;
 }
-
 .image-container img {
   transition: transform 0.3s ease-in-out;
   max-width: 100%;
   max-height: 100%;
 }
-
 .controls {
   display: flex;
   justify-content: end;
 }
-
 .controls button {
   margin-left: 5px;
   cursor: pointer;
 }
-
 .controls button:hover {
   background-color: #0056b3;
+}
+.unique-overflow-auto {
+  min-height: 88vh;
+  max-height: 88vh;
+  overflow: auto;
+}
+.order-number-col {
+  text-align: start;
+}
+.order-number-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+  font-size: 11px !important;
+}
+.order-align-end {
+  text-align: end;
+}
+.order-datetime-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+  font-size: 10px !important;
+}
+.order-edit-icon {
+  margin-left: 5px;
+  font-size: 11px !important;
+  cursor: pointer;
+}
+.order-edit-text {
+  margin-left: 2px;
+  font-size: 11px !important;
+  font-weight: 500;
+  cursor: pointer;
+}
+.order-subname-container {
+  font-size: 12px !important;
+  margin-top: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-start;
+}
+.order-customer-icon {
+  margin-right: 3px;
+}
+.order-address-text {
+  font-size: 12px !important;
+  text-align: start;
+}
+.order-contact-phone {
+  font-size: 11px !important;
+  text-align: start;
+}
+.order-call-link {
+  margin-right: 3px;
+  color: #262626;
+  cursor: pointer;
+}
+.order-call-icon {
+  color: #262626 !important;
+}
+.order-contact-email {
+  font-size: 11px !important;
+  text-align: end;
+}
+.order-email-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #262626 !important;
+  cursor: pointer;
+  font-size: 11px !important;
+}
+.order-email-icon {
+  color: #262626 !important;
+}
+.order-slot-info {
+  font-size: 11px !important;
+  text-align: start;
+}
+.order-slot-tooltip {
+  margin-right: 3px;
+  color: #262626;
+  cursor: pointer;
+}
+.order-slot-icon {
+  color: #262626 !important;
+}
+.order-service-date-container {
+  font-size: 11px !important;
+  text-align: end;
+}
+.order-service-date-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #262626 !important;
+  cursor: pointer;
+  font-size: 11px !important;
+  margin-left: 47px;
+}
+.order-service-date-icon {
+  color: #262626 !important;
+}
+.order-contact-row {
+  margin-top: 10px;
+}
+.order-contact-actions {
+  display: flex;
+  justify-content: space-between !important;
+  width: 100%;
+}
+.order-cart-root {
+  margin-top: 10px;
+  display: block;
+  overflow: auto;
+}
+.order-cart-scroll {
+  max-height: 30vh;
+  overflow: auto;
+}
+.order-cart-card {
+  font-size: 11px;
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  padding: 10px;
+  margin-bottom: 4px;
+}
+.order-cart-image-col {
+  text-align: right;
+}
+.order-cart-image-icon {
+  cursor: pointer;
+  border: 1px solid grey;
+  padding: 3px 4px;
+  border-radius: 50px;
+  background: white;
+  margin-top: -5px;
+  font-size: 12px !important;
+}
+.order-service-name {
+  border-bottom: 1px solid #ebebeb;
+}
+.order-brand-block {
+  margin-top: 7px;
+}
+.order-meta-text {
+  font-size: 10px !important;
+  font-weight: 400;
+  margin-bottom: 2px;
+  color: grey;
+  white-space: pre-line;
+}
+.order-description-text {
+  font-size: 10px !important;
+  font-weight: 400;
+  color: grey;
+}
+.order-time-left {
+  font-size: 10px;
+  font-weight: 400;
+  color: grey;
+  margin-top: 8px;
+}
+.order-time-right {
+  font-size: 10px;
+  font-weight: 400;
+  color: grey;
+  text-align: right;
+  margin-top: 8px;
+}
+.order-price-multiply {
+  font-weight: 500;
+  font-size: 11px !important;
+}
+.order-total-amount {
+  text-align: right;
+  font-weight: 500;
+  font-size: 12px !important;
+}
+.order-tax-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  font-size: 10px;
+  font-weight: 400;
+  color: grey;
+  text-align: right;
+}
+.order-express-col {
+  text-align: right;
+}
+.order-express-badge {
+  background-color: rgb(245 45 162);
+  font-size: 10px !important;
+  font-weight: 500;
+  padding: 0px 5px;
+  color: white;
+  border-radius: 15px;
+}
+.order-summary-row {
+  font-size: 12px;
+}
+.order-summary-right {
+  text-align: right;
+}
+.order-summary-total {
+  border-top: 1px dashed #7e7272;
+  padding: 1px 0;
+  font-size: 12px;
+}
+.order-summary-total-label {
+  font-weight: 600;
+  text-align: right;
+}
+.order-summary-total-value {
+  font-weight: bold;
+  text-align: right;
+}
+.order-other-text {
+  font-size: 12px;
+}
+.order-other-strong {
+  font-weight: 500;
+}
+.order-remark {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.order-remark-text {
+  font-size: 10px !important;
+  font-weight: 400;
+  color: grey;
+}
+.order-footer-container {
+  position: sticky !important;
+  width: 100% !important;
+}
+.order-status-tag {
+  width: 100% !important;
+  text-align: center;
+  font-size: 14px !important;
+}
+.order-verification-warning-icon {
+  color: orange;
+}
+.order-verification-success-icon {
+  color: green;
+}
+.order-tab-scroll {
+  max-height: 78vh;
+  min-height: 76vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+}
+.order-verify-title {
+  text-align: center;
+  padding: 10px;
+  font-size: 20px;
+}
+.order-radio-wrapper {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.order-radio-group {
+  display: inline-block;
+}
+.order-radio-accept {
+  color: green;
+  margin-right: 20px;
+  font-weight: 600;
+}
+.order-radio-reject {
+  color: red;
+  margin-right: 20px;
+  font-weight: 600;
+}
+.order-radio-reschedule {
+  color: #0c21af;
+  font-weight: 600;
+}
+.order-radio-text {
+  font-size: 16px !important;
+  margin-right: 4px;
+}
+.order-radio-icon {
+  font-size: 18px !important;
+}
+.order-center-align {
+  text-align: center;
+}
+.order-box-padding {
+  padding: 10px;
+}
+.order-text-left {
+  text-align: left;
+}
+.order-textarea-full {
+  width: 100%;
+}
+.order-remark-count {
+  color: red;
+  font-size: 10px;
+  text-align: left;
+}
+.order-action-btn {
+  margin-top: 5px;
+}
+.order-state-warning {
+  text-align: center;
+  padding-top: 30vh;
+  font-size: 20px;
+  font-weight: 500;
+  color: orangered;
+}
+.order-state-success {
+  text-align: center;
+  padding-top: 30vh;
+  font-size: 20px;
+  font-weight: 500;
+  color: green;
+}
+.order-state-error {
+  text-align: center;
+  padding-top: 30vh;
+  font-size: 20px;
+  font-weight: 500;
+  color: red;
+}
+.job-tab-scroll {
+  max-height: 78vh;
+  min-height: 76vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+}
+.job-card-wrapper {
+  padding: 10px;
+}
+.job-card-root {
+  height: 100%;
+}
+.job-align-start {
+  text-align: start;
+}
+.job-align-center {
+  text-align: center;
+}
+.job-align-end {
+  text-align: end;
+}
+.job-order-badge,
+.job-jobcard-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+  font-size: 12px !important;
+}
+.job-jobcard-badge {
+  cursor: pointer;
+}
+.job-customer-row {
+  font-size: 11px !important;
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-start;
+}
+.job-amount-text {
+  font-size: 11px !important;
+  margin-top: 4px;
+  text-align: end;
+  font-weight: 600;
+}
+.job-express-text {
+  font-size: 10px !important;
+  text-align: end;
+  font-weight: 600;
+}
+.job-pincode-text,
+.job-territory-text,
+.job-service-text {
+  font-size: 11px !important;
+}
+.job-territory-text {
+  text-align: end;
+}
+.job-schedule-col {
+  text-align: start;
+}
+.job-estimate-col {
+  text-align: end;
+}
+.job-center-button {
+  text-align: center;
+  cursor: pointer;
+}
+.common-tab-scroll,
+.parts-tab-scroll {
+  max-height: 78vh;
+  min-height: 76vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+}
+.parts-card-wrapper {
+  padding: 10px;
+}
+.parts-card-root {
+  height: 130px;
+}
+.parts-align-start {
+  text-align: start;
+}
+.parts-align-end {
+  text-align: end;
+}
+.parts-jobcard-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+  font-size: 12px !important;
+  cursor: pointer;
+}
+.parts-date-text,
+.parts-meta-text,
+.parts-meta-row {
+  font-size: 11px !important;
+}
+.parts-item-name {
+  font-size: 12px !important;
+}
+.parts-status-col {
+  font-size: 11px !important;
+}
+.parts-status-tag {
+  width: 100% !important;
+  text-align: center;
+  font-size: 11px !important;
+}
+.parts-empty-state {
+  margin-top: 50px;
+}
+.order-common-tab-scroll {
+  max-height: 78vh;
+  min-height: 76vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+}
+.image-preview-container {
+  height: 400px;
+}
+.job-action-box {
+  padding: 10px;
+}
+.job-textarea-full {
+  width: 100%;
+}
+.job-char-counter-small {
+  color: red;
+  font-size: 10px;
+}
+.job-reschedule-title {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 10px;
+}
+.job-input-full {
+  width: 100%;
+}
+.job-timepicker-wrapper {
+  margin-top: 3px;
+}
+.job-action-footer {
+  text-align: center;
+  padding-bottom: 20px;
+}
+.job-action-button {
+  margin-top: 10px;
+}
+.service-address-container {
+  font-size: 11px !important;
+}
+.service-address-text {
+  font-size: 11px !important;
+}
+.job-express-container {
+  text-align: end;
+  font-weight: 600;
+}
+.job-express-text {
+  font-size: 10px !important;
+}
+.job-pincode-container,
+.job-territory-container,
+.job-service-container {
+  font-size: 11px !important;
+}
+.job-territory-container {
+  text-align: end;
+}
+.job-service-container {
+  text-align: start;
+}
+.job-schedule-container {
+  text-align: start;
+}
+.job-schedule-text {
+  font-size: 11px !important;
+}
+.job-schedule-btn {
+  margin-top: 5px;
+}
+.job-estimate-container {
+  text-align: end;
+}
+.job-estimate-text {
+  font-size: 11px !important;
+}
+.job-empty-left {
+  font-size: 11px !important;
+  text-align: start;
+  margin-top: 5px;
+}
+.job-center-action {
+  text-align: center;
+  cursor: pointer;
+}
+.job-empty-right {
+  font-size: 12px !important;
+  text-align: end;
+  margin-top: 5px;
+}
+.new13 {
+  text-align: center;
+  padding: 10px;
+  font-size: 20px
+}
+.order-ver-status {
+  text-align: center;
+  padding-top: 30vh;
+  font-size: 20px;
+  font-weight: 500;
+  color: orangered;
 }

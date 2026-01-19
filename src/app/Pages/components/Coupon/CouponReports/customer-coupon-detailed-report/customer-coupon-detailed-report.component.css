@@ -1,11 +1,134 @@
 :host::ng-deep .ant-card-body {
     padding: 0px;
 }
-
 .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
+    max-width: 100%; 
     display: inline-block;
   }
+.header-back-arrow {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions-flex {
+  display: flex;
+  justify-content: flex-end;
+}
+.header-excel-btn {
+  color: white;
+}
+.filter-row-no-padding {
+  padding-top: 0px;
+}
+.filter-loading-center {
+  text-align: center;
+}
+.filter-item-margin {
+  margin-bottom: 8px;
+}
+.filter-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-card-footer {
+  margin-top: 7px;
+}
+.filter-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-icon {
+  font-size: 10px !important;
+}
+.filter-view-tag {
+  margin-right: 0px;
+}
+.filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-bottom-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.filter-bottom-btn {
+  margin-right: 10px;
+}
+.filter-row-no-padding { padding-top: 0px; }
+.filter-loading-center { text-align: center; }
+.filter-item-margin { margin-bottom: 8px; }
+.filter-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-card-footer { margin-top: 7px; }
+.filter-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag { cursor: pointer; font-size: 10px !important; }
+.filter-action-icon { font-size: 10px !important; }
+.filter-view-tag { margin-right: 0px; }
+.filter-no-data { text-align: center; color: red; font-weight: bold; }
+.filter-bottom-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.filter-bottom-btn { margin-right: 10px; }

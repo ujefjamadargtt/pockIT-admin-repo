@@ -1,18 +1,24 @@
 .mainnam {
-    /* color: #000; */
-    font-size: 14px !important;
-    font-weight: 600;
-  
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .subname {
-    color: #4c4c4ceb;
-    font-size: 12px !important;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  font-size: 14px !important;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.subname {
+  color: #4c4c4ceb;
+  font-size: 12px !important;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.order-shadow-divider {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+.order-row-padding-md {
+  padding: 20px;
+}
+.order-row-padding {
+  padding: 10px;
+}

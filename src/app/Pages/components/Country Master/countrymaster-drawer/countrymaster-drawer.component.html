@@ -1,23 +1,6 @@
 <div>
   <form nz-form #websitebannerPage="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
-      <!-- <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon>Country Name</nz-form-label>
-            <nz-form-control nzErrorTip="Please Enter Country Name">
-              <input nz-input placeholder="Enter Country Name" name="name" required [(ngModel)]="data.NAME"
-                (keypress)="validateInput($event)" #name="ngModel" maxlength="128" autocomplete="off" />
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  data.NAME != undefined && data.NAME != null && data.NAME != ''
-                ">
-                {{ data.NAME.length }}/128
-              </h6>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div> -->
-
       <div nz-row>
         <div nz-col nzSpan="24">
           <nz-form-item>
@@ -26,8 +9,7 @@
               <input nz-input placeholder="Enter Country Name" name="name" required [(ngModel)]="data.NAME"
                 (keypress)="validateInput($event)" #name="ngModel" maxlength="128" autocomplete="off"
                 (focus)="isFocused = 'countryName'" (blur)="isFocused = ''" />
-              <!-- Dynamic Character Count -->
-              <h6 style="color: red; font-size: 10px" *ngIf="
+              <h6 class="cm-char-count" *ngIf="
                   isFocused === 'countryName' ||
                   (data.NAME && isFocused === 'countryName')
                 ">
@@ -37,27 +19,7 @@
           </nz-form-item>
         </div>
       </div>
-
-
       <div nz-row>
-        <!-- <div nz-col nzSpan="12">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
-            <nz-form-control nzErrorTip="Please Enter Short Code">
-              <input nz-input placeholder="Enter Short Code" name="ShortCode" required [(ngModel)]="data.SHORT_CODE"
-                #name="ngModel" maxlength="8" autocomplete="off" />
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  data.SHORT_CODE != undefined &&
-                  data.SHORT_CODE != null &&
-                  data.SHORT_CODE != ''
-                ">
-                {{ data.SHORT_CODE.length }}/8
-              </h6>
-            </nz-form-control>
-          </nz-form-item>
-        </div> -->
-
-
         <div nz-col nzSpan="12">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
@@ -65,8 +27,7 @@
               <input nz-input placeholder="Enter Short Code" name="ShortCode" required [(ngModel)]="data.SHORT_CODE"
                 #name="ngModel" maxlength="8" autocomplete="off" (focus)="isFocused = 'shortCode'"
                 (blur)="isFocused = ''" />
-              <!-- Dynamic Character Count -->
-              <h6 style="color: red; font-size: 10px" *ngIf="
+              <h6 class="cm-char-count" *ngIf="
                   isFocused === 'shortCode' ||
                   (data.SHORT_CODE && isFocused === 'shortCode')
                 ">
@@ -75,12 +36,11 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="12">
           <nz-form-item>
             <nz-form-label nzNoColon nzRequired>Sequence No.</nz-form-label>
             <nz-form-control nzHasFeedback nzErrorTip="Please Enter Sequence No.">
-              <input nz-input placeholder="Sequence No." name="SeqNo" required [(ngModel)]="data.SEQ_NO" required
+              <input nz-input placeholder="Sequence No." name="SeqNo" required [(ngModel)]="data.SEQ_NO"
                 (keypress)="commonFunction.onlynum($event)" maxlength="8" autocomplete="off" />
             </nz-form-control>
           </nz-form-item>
@@ -97,25 +57,23 @@
       </div>
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close()" class="ant-btn cm-btn-margin-right">
       <span>Cancel</span>
     </button>
-
     <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
       [nzLoading]="isSpinning" (click)="save(false, websitebannerPage)">
       <span>Save & Close</span>
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
-          <a style="color: white!important" (click)="save(true, websitebannerPage)">Save & New</a>
+        <li nz-menu-item class="menuc cm-dropdown-item">
+          <a class="cm-dropdown-link" (click)="save(true, websitebannerPage)">
+            Save & New
+          </a>
         </li>
       </ul>
     </nz-dropdown-menu>
-
     <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
       (click)="save(false, websitebannerPage)">
       <span>Update & close</span>

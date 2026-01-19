@@ -16,13 +16,4 @@ export class Ticket {
     DATE: any = null
     SUBJECT = ''
     TRANSFER_USER_ID:any
-
-
-
-
-
-
-
-
-
 }

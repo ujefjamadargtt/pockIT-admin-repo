@@ -8,8 +8,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
 import { Router } from '@angular/router';
-// import * as moment from 'moment';
-
 @Component({
   selector: 'app-coupon-summary-reports',
   templateUrl: './coupon-summary-reports.component.html',
@@ -18,7 +16,6 @@ import { Router } from '@angular/router';
 export class CouponSummaryReportsComponent implements OnInit {
   drawerVisible!: boolean;
   drawerTitle!: string;
-  // drawerData: MapAssesment = new MapAssesment();
   formTitle = ' Coupon Summary Report';
   dataList: any = [];
   loadingRecords = true;
@@ -67,7 +64,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -84,7 +80,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       groups: [],
     },
   ];
-  // assessment:any;
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -95,10 +90,8 @@ export class CouponSummaryReportsComponent implements OnInit {
     ['EXPIRY_DATE', '  End Date Time '],
     ['COUPON_VALUE', ' Coupon Value '],
     ['MAX_USES_COUNT', ' Max Uses'],
-    // ["PLATEFORM"," Plateform  "],
     ['COUPON_CODE', ' Coupon Code '],
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -106,29 +99,14 @@ export class CouponSummaryReportsComponent implements OnInit {
     private _exportService: ExportService,
     private router: Router
   ) { }
-
   ngOnInit(): void {
-    // this.loadingRecords = false;
-    // this.loadassessment();
-    // this.search()
     this.changeDate(this.selectedDate);
   }
-
   changeDate(value: any) {
     this.value1 = this.datePipe.transform(value[0], 'yyyy-MM-dd');
     this.value2 = this.datePipe.transform(value[1], 'yyyy-MM-dd');
   }
-
-  //   loadassessment(){
-  //   this.api.getAllgamifiedregisteredreport(0,0,'','',' ').subscribe(data =>{
-  //     this.assessment=data['data'];
-  //   },err => {
-  //
-  //     this.isSpinning=false;
-  //   });
-  // }
   keyup(keys: any) {
-    // this.search();
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
@@ -138,9 +116,7 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.search(true);
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -149,14 +125,12 @@ export class CouponSummaryReportsComponent implements OnInit {
       tooltip.hide();
     }
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
     }
@@ -168,17 +142,8 @@ export class CouponSummaryReportsComponent implements OnInit {
       sort = '';
     }
     var likeQuery = '';
-
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND (';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
-    // }
     var likeQuery = '';
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -189,7 +154,6 @@ export class CouponSummaryReportsComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (
       this.CouponNametext !== '' &&
       this.CouponNametext !== undefined &&
@@ -202,7 +166,6 @@ export class CouponSummaryReportsComponent implements OnInit {
     } else {
       this.isCouponNameFilterApplied = false;
     }
-
     if (
       this.CouponUsedCounttext !== '' &&
       this.CouponUsedCounttext !== undefined &&
@@ -215,7 +178,6 @@ export class CouponSummaryReportsComponent implements OnInit {
     } else {
       this.isCouponUsedCountVisibleFilterApplied = false;
     }
-
     if (
       this.MaxUsedCounttext !== '' &&
       this.MaxUsedCounttext !== undefined &&
@@ -228,7 +190,6 @@ export class CouponSummaryReportsComponent implements OnInit {
     } else {
       this.isMaxUsedCountVisibleFilterApplied = false;
     }
-
     if (
       this.CouponCodetext !== '' &&
       this.CouponCodetext !== undefined &&
@@ -241,7 +202,6 @@ export class CouponSummaryReportsComponent implements OnInit {
     } else {
       this.isCouponCodeVisibleFilterApplied = false;
     }
-
     if (
       this.CouponValuetext !== '' &&
       this.CouponValuetext !== undefined &&
@@ -254,46 +214,35 @@ export class CouponSummaryReportsComponent implements OnInit {
     } else {
       this.isCouponValueVisibleFilterApplied = false;
     }
-
     if (this.StartDateText?.length === 2) {
       const [start, end] = this.StartDateText;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `START_DATE BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00'`;
       }
     }
-
     if (this.ExpiryDateText?.length === 2) {
       const [start, end] = this.ExpiryDateText;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `EXPIRY_DATE BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00'`;
       }
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.api
         .getAllcouponsummaryreport(
@@ -318,7 +267,6 @@ export class CouponSummaryReportsComponent implements OnInit {
     } else {
       this.exportLoading = true;
       this.loadingRecords = true;
-
       this.api
         .getAllcouponsummaryreport(
           0,
@@ -344,33 +292,9 @@ export class CouponSummaryReportsComponent implements OnInit {
         );
     }
   }
-
-  //Drawer Methods
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-  // add(): void {
-  //   this.drawerTitle = "Add Assessment";
-  //   this.drawerData = new GuravMaster();
-  //   this.api.getAllgamifiedregisteredreport(1,1,'SEQUENCE_NO','desc','').subscribe (data =>{
-  //     if (data['count']==0){
-  //       this.drawerData.SEQUENCE_NO=1;
-  //     }else
-  //     {
-  //       this.drawerData.SEQUENCE_NO=data['data'][0]['SEQUENCE_NO']+1;
-  //     }
-  //   },err=>{
-  //
-  //   })
-  //   this.drawerVisible = true;
-  // }
-  // edit(data: MapAssesment): void {
-  //   this.drawerTitle = "Map Assessment";
-  //   this.drawerData = Object.assign({}, data);
-  //
-  //   // this.drawerData.TIME= new Date('01-01-1970 '+this.drawerData.TIME)
-  //   this.drawerVisible = true;
-  // }
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
@@ -380,60 +304,33 @@ export class CouponSummaryReportsComponent implements OnInit {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
-  // showFilter(): void {
-  //   if (this.filterClass === 'filter-visible')
-  //     this.filterClass = 'filter-invisible';
-  //   else this.filterClass = 'filter-visible';
-  // }
-
   onKeyDownEvent(event) {
     if (event.key == 'Enter') {
       event.preventDefault();
     }
     this.search(true);
   }
-
   dates: any = [];
-
   disabledEndDate2 = (current: Date): any => {
-    // if (!endValue || !this.startValue) {
-    //   return false;
-    // }
-    // // return endValue.getTime() <= this.startValue.getTime();
-    // return (
-    //   endValue.getTime() < this.startValue.getTime() ||
-    //   endValue.getTime() >= this.current.getTime()
-    // );
-    // let index = this.dates.findIndex(
-    //   (date: any) => date === moment(current).format('YYYY-MM-DD')
-    // );
-    // return index === -1 && true;
   };
-
   startDateChange() {
     var startDate = this.datePipe.transform(this.startValue, 'yyyy-MM-dd');
     var endDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   }
-
   getDaysArray(start: any, end: any) {
     for (
       var arr: any = [], dt = new Date(start);
@@ -445,94 +342,68 @@ export class CouponSummaryReportsComponent implements OnInit {
     }
     return arr;
   }
-
   timeDefaultValue = setHours(new Date(), 0);
-
   disabledStartDate2 = (current: Date): boolean =>
     differenceInCalendarDays(current, this.current) > 0;
-  /////////
-  //Date picker move to next date picker
+  /////
   onStartChange(date: Date): void {
     this.startValue = new Date(date);
   }
-
   onEndChange(date: Date): void {
     this.endValue = date;
   }
-
   handleStartOpenChange(open: boolean): void {
     if (!open) {
       this.endOpen = true;
     }
   }
-
   handleEndOpenChange(open: boolean): void {
     this.endOpen = open;
     this.startOpen = open;
   }
-
   moduleStartDateHandle(open: boolean) {
-    //
-
     if (!open) {
       this.endOpen = true;
-
-      // this.endValue = this.startValue;
     }
   }
-
-  //disable date
   disabledStartDate = (startValue: Date): boolean => {
     if (!startValue || !this.endValue) {
-      // return false;
       return startValue.getTime() >= this.current.getTime();
     }
     return startValue.getTime() > this.endValue.getTime();
   };
-
   disabledEndDate = (endValue: Date): boolean => {
     if (!endValue || !this.startValue) {
       return false;
     }
-    // return endValue.getTime() <= this.startValue.getTime();
     return (
       endValue.getTime() < this.startValue.getTime() ||
       endValue.getTime() >= this.current.getTime()
     );
   };
-
   disabledDate = (selected: Date): boolean =>
-    // Can not select days before today and today
     differenceInCalendarDays(selected, this.current) > 0;
-
   CouponNametext;
   CouponNameVisible: boolean = false;
   isCouponNameFilterApplied = false;
-
   CouponUsedCounttext;
   CouponUsedCountVisible: boolean = false;
   isCouponUsedCountVisibleFilterApplied = false;
-
   MaxUsedCounttext;
   MaxUsedCountVisible: boolean = false;
   isMaxUsedCountVisibleFilterApplied = false;
-
   CouponCodetext: string = '';
   CouponCodeVisible: boolean = false;
   isCouponCodeVisibleFilterApplied = false;
-
   CouponValuetext: string = '';
   CouponValueVisible: boolean = false;
   isCouponValueVisibleFilterApplied = false;
-
   StartDateText;
   StartDateVisible: boolean = false;
   isStartDateVisibleFilterApplied = false;
-
   ExpiryDateText;
   ExpiryDateVisible: boolean = false;
   isExpiryDateVisibleFilterApplied = false;
-
   reset(): void {
     this.searchText = '';
     this.CouponNametext = '';
@@ -544,13 +415,10 @@ export class CouponSummaryReportsComponent implements OnInit {
     this.ExpiryDateText = '';
     this.search();
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.CouponNametext?.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -559,7 +427,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.search();
       this.isCouponNameFilterApplied = false;
     }
-
     if (this.CouponCodetext.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isCouponCodeVisibleFilterApplied = true;
@@ -567,7 +434,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.search();
       this.isCouponCodeVisibleFilterApplied = false;
     }
-
     if (this.CouponUsedCounttext?.length > 0 && event.key === 'Enter') {
       this.search();
       this.isCouponUsedCountVisibleFilterApplied = true;
@@ -578,7 +444,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.search();
       this.isCouponUsedCountVisibleFilterApplied = false;
     }
-
     if (this.MaxUsedCounttext.length > 0 && event.key === 'Enter') {
       this.search();
       this.isMaxUsedCountVisibleFilterApplied = true;
@@ -586,7 +451,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.search();
       this.isMaxUsedCountVisibleFilterApplied = false;
     }
-
     if (this.CouponValuetext.length > 0 && event.key === 'Enter') {
       this.search();
       this.isCouponValueVisibleFilterApplied = true;
@@ -595,10 +459,8 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.isCouponValueVisibleFilterApplied = false;
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
@@ -606,7 +468,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.search(true);
     }
   }
-
   onStartDateChange(selectedDate: any): void {
     if (this.StartDateText && this.StartDateText.length === 2) {
       this.search();
@@ -617,7 +478,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.isStartDateVisibleFilterApplied = false;
     }
   }
-
   onExpiryDateChange(selectedDate: any): void {
     if (this.ExpiryDateText && this.ExpiryDateText.length === 2) {
       this.search();
@@ -628,8 +488,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.isExpiryDateVisibleFilterApplied = false;
     }
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -639,10 +497,7 @@ export class CouponSummaryReportsComponent implements OnInit {
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
-  //  filterQuery: string = "";
-  //  filterClass: string = "filter-invisible";
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -651,13 +506,10 @@ export class CouponSummaryReportsComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   isDeleting: boolean = false;
   filterloading: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -665,13 +517,12 @@ export class CouponSummaryReportsComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -686,21 +537,15 @@ export class CouponSummaryReportsComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -714,7 +559,6 @@ export class CouponSummaryReportsComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -723,7 +567,6 @@ export class CouponSummaryReportsComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -740,9 +583,7 @@ export class CouponSummaryReportsComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -768,14 +609,11 @@ export class CouponSummaryReportsComponent implements OnInit {
       }
     );
   }
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
-    this.drawerTitle = 'Coupon Summary Report Filter'; // this.applyCondition = "";
-
+    this.drawerTitle = 'Coupon Summary Report Filter'; 
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -784,13 +622,9 @@ export class CouponSummaryReportsComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -807,7 +641,6 @@ export class CouponSummaryReportsComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -825,29 +658,23 @@ export class CouponSummaryReportsComponent implements OnInit {
       },
     ];
   }
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'NAME',
@@ -948,16 +775,12 @@ export class CouponSummaryReportsComponent implements OnInit {
       placeholder: 'Enter Coupon Value',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     this.isfilterapply = true;
     this.filterClass = 'filter-invisible';
@@ -966,24 +789,18 @@ export class CouponSummaryReportsComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -991,16 +808,13 @@ export class CouponSummaryReportsComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -1023,7 +837,6 @@ export class CouponSummaryReportsComponent implements OnInit {
           )
           : '-';
         obj1['Coupon Value'] = this.excelData[i]['COUPON_VALUE'];
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(

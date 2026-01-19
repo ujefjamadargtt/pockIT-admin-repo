@@ -10,7 +10,6 @@ import { appkeys } from 'src/app/app.constant';
 import { ServiceCatMasterDataNew } from 'src/app/Pages/Models/ServiceCatMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-sub-service-list',
   templateUrl: './sub-service-list.component.html',
@@ -34,23 +33,18 @@ export class SubServiceListComponent implements OnInit {
   @Input() sername: any;
   @Input() drawerVisible1: boolean = false;
   @Input() closeCallbacksubservice: any = Function;
-  //Mapping
   drawerMappigVisible: boolean = false;
   drawerMappingTitle!: string;
-
   columns: string[][] = [
     ['DESCRIPTION', 'DESCRIPTION'],
     ['NAME', 'NAME'],
     ['SERVICE_NAME', 'SERVICE_NAME'],
   ];
-
   loadingRecords = false;
   totalRecords = 0;
   dataList: any = [];
   drawerTitle!: string;
-
   statusFilter: string | undefined = undefined;
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
@@ -58,34 +52,24 @@ export class SubServiceListComponent implements OnInit {
   showcloumnVisible: boolean = false;
   servicecattext: string = '';
   sercatnameVisible: boolean = false;
-
   servicecatdesctext: string = '';
   sercatdescVisible: boolean = false;
-
   B2Btext: string = '';
   b2bVisible: boolean = false;
-
   B2Ctext: string = '';
   b2cVisible: boolean = false;
-
   expresspriceb2b: string = '';
   expressb2bVisible: boolean = false;
-
   expresspriceb2c: string = '';
   expressb2cVisible: boolean = false;
-
   estimationTimemins: string = '';
   estimationTimeVisible: boolean = false;
-
   widths: string = '90%';
   widths1: string = '100%';
-
   selectedCategories: number[] = [];
   categoryVisible = false;
-
   selectedSubCategories: number[] = [];
   subcategoryVisible = false;
-
   showcolumn = [
     { label: 'Category', key: 'CATEGORY_ID', visible: true },
     { label: 'Subcategory', key: 'SUB_CATEGORY_ID', visible: true },
@@ -96,13 +80,8 @@ export class SubServiceListComponent implements OnInit {
     { label: 'Express Price For B2B', key: 'EXPRESS_COST', visible: true },
     { label: 'Estimation Time', key: 'DURATION', visible: true },
     { label: 'Catlogue Image', key: 'SERVICE_IMAGE', visible: true },
-
-    // { label: 'Image Url', key: 'SERVICE_IMAGE', visible: false },
-
     { label: 'Status', key: 'STATUS', visible: true },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -119,11 +98,7 @@ export class SubServiceListComponent implements OnInit {
       groups: [],
     },
   ];
-
-  //New Advance Filter
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -140,7 +115,6 @@ export class SubServiceListComponent implements OnInit {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -148,41 +122,28 @@ export class SubServiceListComponent implements OnInit {
     private router: Router,
     public datepipe: DatePipe
   ) { }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   onCategoryChange(): void {
     this.search();
   }
   onSubCategoryChange(): void {
     this.search();
   }
-  // Check if the column is visible
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
   public commonFunction = new CommonFunctionService();
-
   ngOnInit() {
-    // this.getcategoryData();
-    // this.getsubcategoryData();
     this.search(true);
     this.getTaxData();
-
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
-
-  // drawerMappigVisible: boolean = false
-  // drawerMappingTitle!: string;
-
   draweMappingClose(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -190,7 +151,6 @@ export class SubServiceListComponent implements OnInit {
     this.search();
     this.drawerMappigVisible = false;
   }
-
   mapSkill(data: any) {
     this.dataList = [];
     this.pageIndex = 1;
@@ -214,11 +174,9 @@ export class SubServiceListComponent implements OnInit {
         }
       },
       () => {
-        // this.message.error("Something Went Wrong", "");
       }
     );
   }
-
   SubCategoryData: any = [];
   getsubcategoryData() {
     this.api.getSubCategoryData(0, 0, 'SEQ_NO', 'asc', ' AND STATUS=1').subscribe(
@@ -231,11 +189,9 @@ export class SubServiceListComponent implements OnInit {
         }
       },
       () => {
-        // this.message.error("Something Went Wrong", "");
       }
     );
   }
-
   keyup(event: KeyboardEvent): void {
     if (this.searchText.length > 3 && event.key === 'Enter') {
       this.search(true);
@@ -243,25 +199,18 @@ export class SubServiceListComponent implements OnInit {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   onKeypressEvent(keys: KeyboardEvent) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
-
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length == 0 && keys.key == 'Backspace') {
-      // this.dataList = []
       this.search(true);
     }
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -269,7 +218,6 @@ export class SubServiceListComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
@@ -277,25 +225,14 @@ export class SubServiceListComponent implements OnInit {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-    // if (this.searchText != "") {
-    //   likeQuery = " AND";
-    //   this.columns.forEach((column) => {
-    //     likeQuery += " " + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    // }
-
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -306,48 +243,41 @@ export class SubServiceListComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     this.loadingRecords = true;
     if (this.servicecattext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.servicecattext.trim()}%'`;
     }
-    // category Filter
     if (this.selectedCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; 
     }
-
-    // subcategory Filter
     if (this.selectedSubCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `SUB_CATEGORY_ID IN (${this.selectedSubCategories.join(
         ','
-      )})`; // Update with actual field name in the DB
+      )})`; 
     }
     if (this.servicecatdesctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DESCRIPTION LIKE '%${this.servicecatdesctext.trim()}%'`;
     }
-
     if (this.B2Btext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2B_PRICE LIKE '%${this.B2Btext.trim()}%'`;
     }
-
     if (this.B2Ctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2C_PRICE LIKE '%${this.B2Ctext.trim()}%'`;
     }
-
     if (this.expresspriceb2b !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -358,19 +288,14 @@ export class SubServiceListComponent implements OnInit {
         (likeQuery ? ' AND ' : '') +
         `DURATION LIKE '%${this.estimationTimemins.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS= ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     this.loadingRecords = true;
-
     this.api
       .getServiceItem(
         this.pageIndex,
@@ -392,7 +317,6 @@ export class SubServiceListComponent implements OnInit {
               item.SERVICE_IMAGE = `${item.SERVICE_IMAGE
                 }?t=${new Date().getTime()}`;
             });
-            // this.dataList = data['data'];
             this.TabId = data['TAB_ID'];
           } else if (data['code'] == 400) {
             this.loadingRecords = false;
@@ -423,7 +347,6 @@ export class SubServiceListComponent implements OnInit {
         }
       );
   }
-
   loadMore() {
     this.pageIndex += 1;
     this.search();
@@ -436,22 +359,18 @@ export class SubServiceListComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   parentId: any;
   dataMain: any = [];
   add(): void {
@@ -464,7 +383,6 @@ export class SubServiceListComponent implements OnInit {
     this.drawerData = new ServiceCatMasterDataNew();
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -472,27 +390,22 @@ export class SubServiceListComponent implements OnInit {
     this.search(true);
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   close() {
     this.dataList = [];
     this.pageIndex = 1;
     this.searchText = '';
     this.closeCallbacksubservice();
   }
-
   edit(data: ServiceCatMasterDataNew): void {
     this.drawerTitle = 'Update Sub Service';
     this.parentId = this.parentSerId;
     this.dataMain = this.data;
-
     this.dataList = [];
     this.pageIndex = 1;
     this.searchText = '';
-
     this.drawerData = Object.assign({}, data);
     if (
       this.drawerData.START_TIME != undefined &&
@@ -500,7 +413,7 @@ export class SubServiceListComponent implements OnInit {
       this.drawerData.START_TIME != ''
     ) {
       const today = new Date();
-      const timeParts = this.drawerData.START_TIME.split(':'); // Split "HH:mm:ss"
+      const timeParts = this.drawerData.START_TIME.split(':'); 
       if (timeParts.length > 1) {
         today.setHours(+timeParts[0], +timeParts[1], 0);
         this.drawerData.START_TIME = new Date(today);
@@ -511,22 +424,15 @@ export class SubServiceListComponent implements OnInit {
       this.drawerData.END_TIME != null &&
       this.drawerData.END_TIME != ''
     ) {
-      // this.drawerData.END_TIME = this.datepipe.transform(
-      //   new Date(),
-      //   'yyyy-MM-dd' + 'T' + this.drawerData.END_TIME
-      // );
       const today = new Date();
-      const timeParts = this.drawerData.END_TIME.split(':'); // Split "HH:mm:ss"
+      const timeParts = this.drawerData.END_TIME.split(':'); 
       if (timeParts.length > 1) {
         today.setHours(+timeParts[0], +timeParts[1], 0);
         this.drawerData.END_TIME = new Date(today);
       }
     }
-
     this.drawerVisible = true;
-    // this.drawerData.DURATION = "";
   }
-
   reset(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -538,13 +444,10 @@ export class SubServiceListComponent implements OnInit {
     this.expresspriceb2c = '';
     this.search();
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
-  // Main Filter code
   isfilterapply: boolean = false;
   filterQuery: string = '';
   visible = false;
@@ -563,7 +466,6 @@ export class SubServiceListComponent implements OnInit {
     'Start With',
     'End With',
   ];
-
   getComparisonOptions(selectedColumn: string): string[] {
     if (
       selectedColumn === 'CATEGORY_ID' ||
@@ -585,9 +487,7 @@ export class SubServiceListComponent implements OnInit {
       'End With',
     ];
   }
-
   columns2: string[][] = [['AND'], ['OR']];
-
   columns1: { label: string; value: string }[] = [
     { label: 'Category', value: 'CATEGORY_ID' },
     { label: 'Sub Category', value: 'SUB_CATEGORY_ID' },
@@ -599,70 +499,43 @@ export class SubServiceListComponent implements OnInit {
     { label: 'Estimation Time (mins)', value: 'DURATION' },
     { label: 'Status', value: 'STATUS' },
   ];
-
   filterClass: string = 'filter-invisible';
-
   SELECTCOLOUM_NAME: any;
   TABLE_VALUE: any;
   COMPARISION_VALUE: any;
-
   conditions: any[] = [];
-
   operators: string[] = ['AND', 'OR'];
-  // QUERY_NAME: string = '';
   showQueriesArray = [];
-
   public visiblesave = false;
-
   QUERY_NAME: string = '';
   name1: any;
   name2: any;
   INSERT_NAMES: any[] = [];
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
-  // Insertname() {
-  //   if (this.QUERY_NAME.trim()) {
-  //     this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
-  //
-  //     this.visiblesave = false;
-  //     this.QUERY_NAME = ""; // Clear input after adding
-  //   } else {
-  //
-  //   }
-  // }
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   ViewImage: any;
   ImageModalVisible = false;
   imageshow;
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + 'ServiceCatalog/' + link;
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   drawerVisibleDesigner: boolean = false;
   dataDesigner: ServiceCatMasterDataNew = new ServiceCatMasterDataNew();
   drawerTitleDesigner!: string;
   widths11: string = '60%';
   widthsSkill: string = '100%';
-
   opendetailsDrawer(data: ServiceCatMasterDataNew) {
     this.dataList = [];
     this.pageIndex = 1;
@@ -671,7 +544,6 @@ export class SubServiceListComponent implements OnInit {
     this.drawerVisibleDesigner = true;
     this.dataDesigner = Object.assign({}, data);
   }
-
   drawerClosedesigner(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -679,14 +551,11 @@ export class SubServiceListComponent implements OnInit {
     this.search();
     this.drawerVisibleDesigner = false;
   }
-
   get closeCallbacksubDesigner() {
     return this.drawerClosedesigner.bind(this);
   }
-
   drawerMappigVisibleHelp: boolean = false;
   drawerMappingTitleHelp!: string;
-
   draweMappingCloseHelp(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -706,7 +575,6 @@ export class SubServiceListComponent implements OnInit {
   get HelpcloseCallbackMapping() {
     return this.draweMappingCloseHelp.bind(this);
   }
-
   drawerserviceVisibleMaped: boolean = false;
   drawerDataMaped: ServiceCatMasterDataNew = new ServiceCatMasterDataNew();
   drawerTitleMaped!: string;
@@ -718,7 +586,6 @@ export class SubServiceListComponent implements OnInit {
     this.drawerDataMaped = Object.assign({}, data);
     this.drawerserviceVisibleMaped = true;
   }
-
   drawerServiceMappingCloseMaped(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -729,8 +596,6 @@ export class SubServiceListComponent implements OnInit {
   get closeServiceMappingCallbackMaped() {
     return this.drawerServiceMappingCloseMaped.bind(this);
   }
-
-  // new filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -742,7 +607,6 @@ export class SubServiceListComponent implements OnInit {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
   taxData: any = [];
   getTaxData() {
@@ -761,18 +625,11 @@ export class SubServiceListComponent implements OnInit {
         }
       });
   }
-
   openfilter() {
     this.drawerTitle = 'Subservice Filter';
     this.applyCondition = '';
-    // this.filterFields[0]['options'] = this.categories1;
-    // this.filterFields[1]['options'] = this.subcategories1;
     this.filterFields[1]['options'] = this.taxData;
-
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -781,11 +638,9 @@ export class SubServiceListComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -802,7 +657,6 @@ export class SubServiceListComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -820,12 +674,9 @@ export class SubServiceListComponent implements OnInit {
       },
     ];
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
@@ -840,11 +691,9 @@ export class SubServiceListComponent implements OnInit {
   drawerflterClose(): void {
     this.drawerFilterVisible = false;
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'SERVICE_TYPE',
@@ -872,7 +721,6 @@ export class SubServiceListComponent implements OnInit {
       options: [],
       placeholder: 'Select Tax Slab',
     },
-
     {
       key: 'IS_EXPRESS',
       label: 'Is Express Service Available?',
@@ -958,7 +806,6 @@ export class SubServiceListComponent implements OnInit {
       placeholder: 'Select Status',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose();
@@ -967,8 +814,7 @@ export class SubServiceListComponent implements OnInit {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -982,33 +828,22 @@ export class SubServiceListComponent implements OnInit {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
-
-  // isModalVisible = false; // Controls modal visibility
-  // selectedQuery: string = ''; // Holds the query to display
-
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1017,10 +852,7 @@ export class SubServiceListComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -1029,26 +861,20 @@ export class SubServiceListComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  //TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
   TabId: number;
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   drawerfilterClose(buttontype, updateButton) {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
@@ -1058,15 +884,12 @@ export class SubServiceListComponent implements OnInit {
   get filtercloseCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterloading: boolean = false;
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1074,13 +897,12 @@ export class SubServiceListComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1095,21 +917,15 @@ export class SubServiceListComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1123,12 +939,8 @@ export class SubServiceListComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -1144,14 +956,10 @@ export class SubServiceListComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           } else {
             this.isfilterapply = true;
           }
@@ -1174,7 +982,6 @@ export class SubServiceListComponent implements OnInit {
       }
     );
   }
-
   drawerratingVisible = false;
   viewratings(data): void {
     this.drawerTitle = 'View Ratings';
@@ -1191,7 +998,6 @@ export class SubServiceListComponent implements OnInit {
     this.search();
     this.drawerratingVisible = false;
   }
-
   get ratingcloseCallback() {
     return this.ratingdrawerClose.bind(this);
   }

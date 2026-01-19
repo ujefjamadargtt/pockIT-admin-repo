@@ -7,7 +7,6 @@ export class InventoryInwardMasterData {
     WAREHOUSE_ID: any;
     WAREHOUSE_NAME: any;
     IS_VARIANT: boolean = false;
-
     INWARD_ITEM_NAME: any;
     INVENTORY_CATEGORY_ID: any;
     INVENTRY_SUB_CATEGORY_ID: any;
@@ -22,10 +21,4 @@ export class InventoryInwardMasterData {
     SKU_CODE: any;
     INWARD_VARIANT_ID: any;
     INWARD_VARIANT_NAME: any
-    // // Details
-    // INWARD_MASTER_ID
-    // UNIQUE_NO
-    // GUARANTTEE_IN_DAYS
-    // WARANTEE_IN_DAYS
-    // EXPIRY_DATE
 }

@@ -3,12 +3,12 @@
     <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8">
       <div class="formname">
         <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
-          style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp;{{ formTitle }}
+          class="back-icon-bold-pointer-rs01"></span>&nbsp;&nbsp;{{ formTitle }}
       </div>
     </div>
-    <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="16" style="display: flex; justify-content: flex-end">
+    <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="16" class="header-flex-end-rs02">
       <form nz-form [nzLayout]="'inline'">
-        <nz-form-item style="width: 47px">
+        <nz-form-item class="filter-item-width-rs03">
           <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip
             [nzType]="isfilterapply ? 'primary' : 'default'" [style.backgroundColor]="isfilterapply ? 'default' : ''"
             (click)="showMainFilter()">
@@ -26,7 +26,7 @@
             </button>
           </ng-template>
         </nz-form-item>
-        <nz-form-item style="margin-right: 0px">
+        <nz-form-item class="new-btn-no-margin-rs04">
           <button nz-button nzType="primary" (click)="add()" nzJustify="end">
             <i nz-icon nzType="plus"></i>New Category
           </button>
@@ -34,79 +34,29 @@
       </form>
     </div>
   </div>
-
-  <!-- New Advance Filter Code -->
-  <!-- Main Filter -->
   <div nz-row>
     <div nz-col nzSpan="24">
       <div class="filter {{ filterClass }}">
         <div class="filter-box">
-          <div nz-row style="padding-top: 0px">
+          <div nz-row class="filter-row-pt-mz01">
             <div nz-col [nzSpan]="24">
               <ng-container *ngIf="filterloading; else filtersContent">
-                <div style="text-align: center">
+                <div class="text-center-mz02">
                   <nz-spin nzSimple></nz-spin>
                 </div>
               </ng-container>
               <ng-template #filtersContent>
                 <ng-container *ngIf="savedFilters && savedFilters.length > 0; else noData">
-                  <!-- <ng-container *ngFor="let item of savedFilters">
-                    <nz-tag [style.backgroundColor]="
-                        selectedFilter === item.ID ? '#e6f7ff' : 'white'
-                      " style="
-                        margin: 5px;
-                        display: inline-flex;
-                        align-items: center;
-
-                        background-color: white;
-                      ">
-                      <span style="color: black; margin-right: 10px">{{
-                        item.FILTER_NAME
-                        }}</span>
-                      <span>
-                        <i nz-icon nzType="search" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'Apply Filter'"
-                          (click)="applyfilter(item)" style="color: #01ac5c; margin-right: 8px"></i>
-                        <i nz-icon nzType="edit" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'Edit Query'"
-                          (click)="editQuery(item)" style="color: rgb(0, 0, 0); margin-right: 8px"></i>
-                        <i nz-icon nzType="delete" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'Delete'"
-                          style="color: red; margin-right: 8px" nz-popconfirm
-                          nzPopconfirmTitle="Are you sure to delete this record?" nzPopconfirmPlacement="top"
-                          (nzOnConfirm)="deleteItem(item)">
-                        </i>
-                        <i nz-icon nzType="eye" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'Show Query'"
-                          (click)="toggleLiveDemo(item)" style="color: blue"></i>
-                      </span>
-                    </nz-tag>
-                  </ng-container> -->
-
                   <div nz-row nzGutter="8">
-                    <div nz-col nzSpan="6" *ngFor="let item of savedFilters" style="margin-bottom: 8px">
-                      <nz-card style="
-                          align-items: center;
-                          border: 1px solid #a8a8a8;
-                          padding: 5px 10px;
-                          border-radius: 7px;
-                          align-items: center;
-                        ">
-                        <div style="
-                            display: flex;
-                            align-items: center;
-                            gap: 5px;
-                            flex-grow: 1;
-                          ">
-                          <span style="
-                              color: black;
-                              text-align: center;
-                              font-size: 25px;
-                              white-space: nowrap;
-                            ">
+                    <div nz-col nzSpan="6" *ngFor="let item of savedFilters" class="filter-item-mb-mz03">
+                      <nz-card class="filter-card-mz04">
+                        <div class="filter-card-header-mz05">
+                          <span class="filter-card-title-mz06">
                             <span *ngIf="item.FILTER_NAME != null">
                               <span *ngIf="item.FILTER_NAME.length >= 25" nz-popover
                                 [nzPopoverContent]="item.FILTER_NAME" nzPopoverPlacement="topLeft">
                                 {{ item.FILTER_NAME | slice : 0 : 25
-                                }}{{
-                                item.FILTER_NAME.length > 25 ? "..." : ""
-                                }}
+                                }}{{ item.FILTER_NAME.length > 25 ? "..." : "" }}
                               </span>
                               <span *ngIf="item.FILTER_NAME.length < 25">
                                 {{ item.FILTER_NAME }}
@@ -114,170 +64,61 @@
                             </span>
                             <span *ngIf="item.FILTER_NAME == null">-</span>
                           </span>
-
                           <i *ngIf="selectedFilter === item.ID" nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'"
-                            [nzTwotoneColor]="'#52c41a'" nz-tooltip [nzTooltipTitle]="
-                              'This filter is applied on current data'
-                            " style="
-                              position: absolute;
-                              top: 5px;
-                              right: 5px;
-                              font-size: 20px;
-                              cursor: pointer;
-                            "></i>
+                            [nzTwotoneColor]="'#52c41a'" nz-tooltip
+                            [nzTooltipTitle]="'This filter is applied on current data'"
+                            class="filter-applied-icon-mz07"></i>
                         </div>
-                        <div nz-row style="margin-top: 7px">
-                          <div nz-col nzSpan="24" style="display: flex; justify-content: space-between">
-                            <nz-tag nzColor="#2db7f5" (click)="editQuery(item)"
-                              style="cursor: pointer;font-size: 10px !important;;" nz-tooltip
-                              nzTooltipTitle="Edit Filter">
-                              <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 10px !important;">
-                              </span>&nbsp;&nbsp;Edit</nz-tag>
+                        <div nz-row class="filter-card-footer-row-mz08">
+                          <div nz-col nzSpan="24" class="filter-card-actions-mz09">
+                            <nz-tag nzColor="#2db7f5" (click)="editQuery(item)" class="filter-tag-action-mz10"
+                              nz-tooltip nzTooltipTitle="Edit Filter">
+                              <span nz-icon nzType="edit" nzTheme="outline"
+                                class="filter-tag-icon-mz11"></span>&nbsp;&nbsp;Edit
+                            </nz-tag>
                             <nz-tag *ngIf="selectedFilter !== item.ID" nzColor="#87d068" (click)="applyfilter(item)"
-                              style="cursor: pointer;font-size: 10px !important;" nz-tooltip
-                              nzTooltipTitle="Apply Filter">
-                              <span nz-icon nzType="search" nzTheme="outline" style="font-size: 10px !important;">
-                              </span>&nbsp;&nbsp;Apply</nz-tag>
+                              class="filter-tag-action-mz10" nz-tooltip nzTooltipTitle="Apply Filter">
+                              <span nz-icon nzType="search" nzTheme="outline"
+                                class="filter-tag-icon-mz11"></span>&nbsp;&nbsp;Apply
+                            </nz-tag>
                             <nz-tag *ngIf="selectedFilter === item.ID" nzColor="#faad14" (click)="Clearfilter()"
-                              style="cursor: pointer;font-size: 10px !important;" nz-tooltip
-                              nzTooltipTitle="Clear this Filter">
-                              <span nz-icon nzType="close" nzTheme="outline" style="font-size: 10px !important;">
-                              </span>&nbsp;&nbsp;Clear</nz-tag>
-
+                              class="filter-tag-action-mz10" nz-tooltip nzTooltipTitle="Clear this Filter">
+                              <span nz-icon nzType="close" nzTheme="outline"
+                                class="filter-tag-icon-mz11"></span>&nbsp;&nbsp;Clear
+                            </nz-tag>
                             <nz-tag nzColor="#cd201f" nz-popconfirm
                               nzPopconfirmTitle="Are you sure to delete this record?" nzPopconfirmPlacement="top"
-                              (nzOnConfirm)="deleteItem(item)" style="cursor: pointer;font-size: 10px !important;"
-                              nz-tooltip nzTooltipTitle="Delete Filter">
-                              <span nz-icon nzType="delete" nzTheme="outline" style="font-size: 10px !important;">
-                              </span>&nbsp;&nbsp;Delete</nz-tag>
-                            <nz-tag nzColor="#3b5999"
-                              style="cursor: pointer;font-size: 10px !important; margin-right: 0px" nz-tooltip
+                              (nzOnConfirm)="deleteItem(item)" class="filter-tag-action-mz10" nz-tooltip
+                              nzTooltipTitle="Delete Filter">
+                              <span nz-icon nzType="delete" nzTheme="outline"
+                                class="filter-tag-icon-mz11"></span>&nbsp;&nbsp;Delete
+                            </nz-tag>
+                            <nz-tag nzColor="#3b5999" class="filter-tag-view-mz12" nz-tooltip
                               nzTooltipTitle="View Filter Text" (click)="toggleLiveDemo(item)">
-                              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 10px !important;">
-                              </span>&nbsp;&nbsp;View</nz-tag>
+                              <span nz-icon nzType="eye" nzTheme="outline"
+                                class="filter-tag-icon-mz11"></span>&nbsp;&nbsp;View
+                            </nz-tag>
                           </div>
                         </div>
-                        <!-- <div nz-row style="margin-top: 7px">
-                          <div
-                            nz-col
-                            nzSpan="24"
-                            style="
-                              display: flex;
-                              justify-content: space-between;
-                            "
-                          >
-                            <nz-tag
-                              nzColor="#2db7f5"
-                              (click)="editQuery(item)"
-                              style="cursor: pointer"
-                              nz-tooltip
-                              nzTooltipTitle="Edit Filter"
-                            >
-                              <span
-                                nz-icon
-                                nzType="edit"
-                                nzTheme="outline"
-                                style="font-size: 15px"
-                              >
-                              </span
-                              >&nbsp;&nbsp;Edit</nz-tag
-                            >
-                            <nz-tag
-                              *ngIf="selectedFilter !== item.ID"
-                              nzColor="#87d068"
-                              (click)="applyfilter(item)"
-                              style="cursor: pointer"
-                              nz-tooltip
-                              nzTooltipTitle="Apply Filter"
-                            >
-                              <span
-                                nz-icon
-                                nzType="search"
-                                nzTheme="outline"
-                                style="font-size: 15px"
-                              >
-                              </span
-                              >&nbsp;&nbsp;Apply</nz-tag
-                            >
-                            <nz-tag
-                              *ngIf="selectedFilter === item.ID"
-                              nzColor="#faad14"
-                              (click)="Clearfilter()"
-                              style="cursor: pointer"
-                              nz-tooltip
-                              nzTooltipTitle="Clear this Filter"
-                            >
-                              <span
-                                nz-icon
-                                nzType="close"
-                                nzTheme="outline"
-                                style="font-size: 15px"
-                              >
-                              </span
-                              >&nbsp;&nbsp;Clear</nz-tag
-                            >
-
-                            <nz-tag
-                              nzColor="#cd201f"
-                              nz-popconfirm
-                              nzPopconfirmTitle="Are you sure to delete this record?"
-                              nzPopconfirmPlacement="top"
-                              (nzOnConfirm)="deleteItem(item)"
-                              style="cursor: pointer"
-                              nz-tooltip
-                              nzTooltipTitle="Delete Filter"
-                            >
-                              <span
-                                nz-icon
-                                nzType="delete"
-                                nzTheme="outline"
-                                style="font-size: 15px"
-                              >
-                              </span
-                              >&nbsp;&nbsp;Delete</nz-tag
-                            >
-                            <nz-tag
-                              nzColor="#3b5999"
-                              style="cursor: pointer; margin-right: 0px"
-                              nz-tooltip
-                              nzTooltipTitle="View Filter Text"
-                              (click)="toggleLiveDemo(item)"
-                            >
-                              <span
-                                nz-icon
-                                nzType="eye"
-                                nzTheme="outline"
-                                style="font-size: 15px"
-                              >
-                              </span
-                              >&nbsp;&nbsp;View</nz-tag
-                            >
-                          </div>
-                        </div> -->
                       </nz-card>
                     </div>
                   </div>
                 </ng-container>
               </ng-template>
               <ng-template #noData>
-                <div style="text-align: center; color: red; font-weight: bold">
+                <div class="no-data-text-mz13">
                   No Previous Filters Are Found
                 </div>
               </ng-template>
-              <!-- </div> -->
             </div>
-            <div nz-col [nzSpan]="24" style="
-                display: flex;
-                justify-content: flex-end;
-                align-items: left;
-                margin-top: 10px;
-              ">
+            <div nz-col [nzSpan]="24" class="filter-footer-actions-mz14">
               <button *ngIf="savedFilters && savedFilters.length > 0" nz-button nzType="primary" nzSize="small"
-                (click)="Clearfilter()" style="margin-right: 10px">
+                (click)="Clearfilter()" class="filter-footer-btn-mr-mz15">
                 <span nz-icon nzType="reload" nzTheme="outline"></span>
                 Reset Filter
               </button>
-              <button nz-button nzType="primary" nzSize="small" (click)="openfilter()" style="margin-right: 10px">
+              <button nz-button nzType="primary" nzSize="small" (click)="openfilter()"
+                class="filter-footer-btn-mr-mz15">
                 <span nz-icon nzType="plus"></span>
                 New Filter
               </button>
@@ -287,63 +128,53 @@
       </div>
     </div>
   </div>
-  <!-- End Main Filter -->
-
-  <div nz-row style="padding-top: 10px">
+  <div nz-row class="table-wrapper-pt-kx01">
     <div nz-col nzSpan="24">
-      <nz-table class="my-scroll no-wrap1" nzBordered #organizationTable nzShowSizeChanger [nzFrontPagination]="false"
-        [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
-        [nzSize]="'small'" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)"
-        (nzQueryParams)="sort($event)" style="white-space: pre-line" [nzScroll]="{ y: '55vh' }">
+      <nz-table class="my-scroll no-wrap1 table-preline-kx02" nzBordered #organizationTable nzShowSizeChanger
+        [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+        [(nzPageIndex)]="pageIndex" [nzSize]="'small'" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+        (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)" [nzScroll]="{ y: '55vh' }">
         <thead nzSingleSort>
           <tr>
-            <th nzWidth="60px" style="font-weight: bold; text-align: center">
+            <th nzWidth="60px" class="th-center-bold-kx03">
               Action
             </th>
-            <th *ngIf="isColumnVisible('NAME')" nzWidth="500px" style="font-weight: bold; text-align: center"
-              nzColumnKey="NAME" [nzSortFn]="true" [nzFilterFn]="true" nzCustomFilter>
+            <th *ngIf="isColumnVisible('NAME')" nzWidth="500px" class="th-center-bold-kx03" nzColumnKey="NAME"
+              [nzSortFn]="true" [nzFilterFn]="true" nzCustomFilter>
               Category Name
               <nz-filter-trigger [(nzVisible)]="categoryvisible" [nzDropdownMenu]="categorydropdown">
                 <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                    color: isFilterApplied ? '#092B9C' : 'inherit'
-                  }"></span>
+                  color: isFilterApplied ? '#092B9C' : 'inherit'
+                }"></span>
               </nz-filter-trigger>
             </th>
-            <th nzShowSort nzColumnKey="{{ 'SEQ_NO' }}" nzWidth="90px" style="text-align: center" [nzSortFn]="true"
+            <th nzShowSort nzColumnKey="{{ 'SEQ_NO' }}" nzWidth="90px" class="th-center-kx04" [nzSortFn]="true"
               nzCustomFilter>
               Sequence No.
               <nz-filter-trigger [(nzVisible)]="Seqvisible" [nzDropdownMenu]="Seq">
                 <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                    color: isSeqApplied ? '#092B9C' : 'inherit'
-                  }"></span>
+                  color: isSeqApplied ? '#092B9C' : 'inherit'
+                }"></span>
               </nz-filter-trigger>
             </th>
-            <th *ngIf="isColumnVisible('IS_NEW')" nzWidth="70px" style="font-weight: bold; text-align: center"
-              nzColumnKey="IS_NEW" [nzSortFn]="true" [nzFilters]="listOfFilterisnew" [nzFilterFn]="true"
-              [nzFilterMultiple]="false" (nzFilterChange)="onISNEWFilterChange($event)">
+            <th *ngIf="isColumnVisible('IS_NEW')" nzWidth="70px" class="th-center-bold-kx03" nzColumnKey="IS_NEW"
+              [nzSortFn]="true" [nzFilters]="listOfFilterisnew" [nzFilterFn]="true" [nzFilterMultiple]="false"
+              (nzFilterChange)="onISNEWFilterChange($event)">
               Is New ?
             </th>
-            <th *ngIf="isColumnVisible('STATUS')" nzWidth="70px" style="font-weight: bold; text-align: center"
-              nzColumnKey="STATUS" [nzSortFn]="true" [nzFilters]="listOfFilter" [nzFilterFn]="true"
-              [nzFilterMultiple]="false" (nzFilterChange)="onStatusFilterChange($event)">
+            <th *ngIf="isColumnVisible('STATUS')" nzWidth="70px" class="th-center-bold-kx03" nzColumnKey="STATUS"
+              [nzSortFn]="true" [nzFilters]="listOfFilter" [nzFilterFn]="true" [nzFilterMultiple]="false"
+              (nzFilterChange)="onStatusFilterChange($event)">
               Status
             </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of organizationTable.data">
-            <td nzLeft style="text-align: center">
-              <!-- <a (click)="edit(data)" nz-tooltip nzTooltipTitle="Edit">
-                <span
-                  nz-icon
-                  nzType="edit"
-                  nzTheme="twotone"
-                  style="font-size: 15px"
-                ></span>
-              </a> -->
-              <nz-tag nzColor="#2db7f5" (click)="edit(data)" style="cursor: pointer">
-                <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 15px">
-                </span>&nbsp;&nbsp;Edit</nz-tag>
+            <td nzLeft class="td-center-kx05">
+              <nz-tag nzColor="#2db7f5" (click)="edit(data)" class="table-edit-tag-kx06">
+                <span nz-icon nzType="edit" nzTheme="outline" class="table-edit-icon-kx07"></span>&nbsp;&nbsp;Edit
+              </nz-tag>
             </td>
             <td align="left" [nzTooltipTitle]="isTextOverflow ? data['NAME'] : null" #tooltipRef1="nzTooltip"
               nz-tooltip>
@@ -351,7 +182,6 @@
                 {{ data["NAME"] ? data["NAME"] : "-" }}
               </div>
             </td>
-
             <td align="center" *ngIf="isColumnVisible('SEQ_NO')">
               {{ data.SEQ_NO }}
             </td>
@@ -367,8 +197,6 @@
           </tr>
         </tbody>
       </nz-table>
-
-      <!-- category Name -->
       <nz-dropdown-menu #categorydropdown="nzDropdownMenu">
         <div class="ant-table-filter-dropdown">
           <div class="search-box">
@@ -384,8 +212,6 @@
           </div>
         </div>
       </nz-dropdown-menu>
-
-      <!--  sequence no cost -->
       <nz-dropdown-menu #Seq="nzDropdownMenu">
         <div class="ant-table-filter-dropdown">
           <div class="search-box">
@@ -425,7 +251,6 @@
     </app-category>
   </ng-container>
 </nz-drawer>
-
 <div *ngIf="drawerFilterVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -442,10 +267,10 @@
     </ng-container>
   </nz-drawer>
 </div>
-
-<!-- Query Model -->
-<nz-modal [(nzVisible)]="isModalVisible" [nzTitle]="'Filter Text'" [nzFooter]="null"
-  (nzOnCancel)="handleCancel()"><ng-container *nzModalContent>
-    <h6 style="text-align: center">{{ selectedQuery }}</h6>
+<nz-modal [(nzVisible)]="isModalVisible" [nzTitle]="'Filter Text'" [nzFooter]="null" (nzOnCancel)="handleCancel()">
+  <ng-container *nzModalContent>
+    <h6 class="filter-text-center-vx91">
+      {{ selectedQuery }}
+    </h6>
   </ng-container>
 </nz-modal>

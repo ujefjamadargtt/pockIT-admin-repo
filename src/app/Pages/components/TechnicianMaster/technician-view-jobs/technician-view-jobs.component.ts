@@ -5,7 +5,6 @@ import { NzNotificationService } from "ng-zorro-antd/notification";
 import { NzTableQueryParams } from "ng-zorro-antd/table";
 import { ApiServiceService } from "src/app/Service/api-service.service";
 import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
-
 @Component({
   selector: "app-technician-view-jobs",
   templateUrl: "./technician-view-jobs.component.html",
@@ -17,7 +16,6 @@ export class TechnicianViewJobsComponent {
   @Input() drawerVisible: boolean = false;
   @Input() viewjobsdata: any;
   @Input() technicianId: any;
-
   sortValue: string = "desc";
   sortKey: string = "";
   pageIndex = 1;
@@ -48,7 +46,6 @@ export class TechnicianViewJobsComponent {
   totalRecords = 1;
   dataList: any = [];
   filterClass: string = "filter-invisible";
-
   showMainFilter() {
     if (this.filterClass === "filter-visible") {
       this.filterClass = "filter-invisible";
@@ -57,74 +54,56 @@ export class TechnicianViewJobsComponent {
       this.loadFilters();
     }
   }
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private datePipe: DatePipe
   ) { }
-
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
       : "0";
     this.USER_ID = Number(decryptedUserId);
-
-
   }
-
-  // filters
   JobCreatedDateVisible;
   isJobCreatedDateFilterApplied: boolean = false;
   JobCreatedDatetext: string = "";
   selectedJobCreatedDate: any;
-
   JobCardNoVisible;
   isJobCardNoFilterApplied: boolean = false;
   JobCardNotext: string = "";
-
   OrderNoVisible;
   isOrderNoFilterApplied: boolean = false;
   OrderNotext: string = "";
-
   AssignedDateVisible;
   isAssignedDateFilterApplied: boolean = false;
   AssignedDatetext: string = "";
   selectedAssignedDate: any;
-
   ScheduledDateVisible;
   isSchedulaedDateFilterApplied: boolean = false;
   ScheduledDatetext: string = "";
   selectedScheduledDate: any;
-
   ServiceNameVisible;
   isServiceNameFilterApplied: boolean = false;
   ServiceNametext: string = "";
-
   ServiceAddVisible;
   isServiceAddFilterApplied: boolean = false;
   ServiceAddtext: string = "";
-
   CustNameVisible;
   isCustNameFilterApplied: boolean = false;
   custNametext: string = "";
-
   CustMobVisible;
   isCustMobFilterApplied: boolean = false;
   custMobtext: string = "";
-
   CustTypeFilter: string | undefined = undefined;
-
   listofCustType: any[] = [
     { text: "Individiual", value: "I" },
     { text: "Business", value: "B" },
   ];
-
   onCustTypeFilterChange(selectedStatus: string) {
     this.CustTypeFilter = selectedStatus;
     this.search(true);
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -133,22 +112,18 @@ export class TechnicianViewJobsComponent {
     const sortOrder = (currentSort && currentSort.value) || "desc";
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   onDateRangeChange(): void {
     if (
       this.selectedJobCreatedDate &&
@@ -160,12 +135,11 @@ export class TechnicianViewJobsComponent {
         this.isJobCreatedDateFilterApplied = true;
       }
     } else {
-      this.selectedJobCreatedDate = null; // or [] if you prefer
+      this.selectedJobCreatedDate = null; 
       this.search();
       this.isJobCreatedDateFilterApplied = false;
     }
   }
-
   onAssignedDateRangeChange(): void {
     if (this.selectedAssignedDate && this.selectedAssignedDate.length === 2) {
       const [start, end] = this.selectedAssignedDate;
@@ -174,12 +148,11 @@ export class TechnicianViewJobsComponent {
         this.isAssignedDateFilterApplied = true;
       }
     } else {
-      this.selectedAssignedDate = null; // or [] if you prefer
+      this.selectedAssignedDate = null; 
       this.search();
       this.isAssignedDateFilterApplied = false;
     }
   }
-
   onScheduledDateRangeChange(): void {
     if (this.selectedScheduledDate && this.selectedScheduledDate.length === 2) {
       const [start, end] = this.selectedScheduledDate;
@@ -188,29 +161,25 @@ export class TechnicianViewJobsComponent {
         this.isSchedulaedDateFilterApplied = true;
       }
     } else {
-      this.selectedScheduledDate = null; // or [] if you prefer
+      this.selectedScheduledDate = null; 
       this.search();
       this.isSchedulaedDateFilterApplied = false;
     }
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = "id";
       this.sortValue = "desc";
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith("a") ? "asc" : "desc";
     } catch (error) {
       sort = "";
     }
-
     var likeQuery = "";
     var globalSearchQuery = "";
-    // Global Search (using searchText)
     if (this.searchText !== "") {
       globalSearchQuery =
         " AND (" +
@@ -221,20 +190,9 @@ export class TechnicianViewJobsComponent {
           .join(" OR ") +
         ")";
     }
-
     this.loadingRecords = true;
-
-    //   if (this.selectedJobCreatedDate) {
-    //   const selectedJobCreatedDate = this.datePipe.transform(this.selectedJobCreatedDate, 'yyyy-MM-dd HH:mm:00'); // Ensure the format is dd.MM.yyyy
-    //   this.isJobCreatedDateFilterApplied = true;
-    //   likeQuery += `${likeQuery ? ' AND ' : ''} JOB_CREATED_DATE = '${selectedJobCreatedDate}'`;
-    // } else {
-    //   this.isJobCreatedDateFilterApplied = false;
-    // }
-
     if (this.selectedJobCreatedDate?.length === 2) {
       const [start, end] = this.selectedJobCreatedDate;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -249,16 +207,13 @@ export class TechnicianViewJobsComponent {
                   .getMinutes()
                   .toString()
                   .padStart(2, "0")}:00`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? " AND " : "") +
           `(JOB_CREATED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}')`;
       }
     }
-
     if (this.JobCardNotext !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") +
@@ -267,7 +222,6 @@ export class TechnicianViewJobsComponent {
     } else {
       this.isJobCardNoFilterApplied = false;
     }
-
     if (this.OrderNotext !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") +
@@ -276,10 +230,8 @@ export class TechnicianViewJobsComponent {
     } else {
       this.isOrderNoFilterApplied = false;
     }
-
     if (this.selectedAssignedDate?.length === 2) {
       const [start, end] = this.selectedAssignedDate;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -294,19 +246,15 @@ export class TechnicianViewJobsComponent {
                   .getMinutes()
                   .toString()
                   .padStart(2, "0")}:00`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? " AND " : "") +
           `(ASSIGNED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}')`;
       }
     }
-
     if (this.selectedScheduledDate?.length === 2) {
       const [start, end] = this.selectedScheduledDate;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -321,16 +269,13 @@ export class TechnicianViewJobsComponent {
                   .getMinutes()
                   .toString()
                   .padStart(2, "0")}:00`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? " AND " : "") +
           `(SCHEDULED_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}')`;
       }
     }
-
     if (this.ServiceNametext !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") +
@@ -339,7 +284,6 @@ export class TechnicianViewJobsComponent {
     } else {
       this.isServiceNameFilterApplied = false;
     }
-
     if (this.ServiceAddtext !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") +
@@ -348,7 +292,6 @@ export class TechnicianViewJobsComponent {
     } else {
       this.isServiceAddFilterApplied = false;
     }
-
     if (this.custNametext !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") +
@@ -357,7 +300,6 @@ export class TechnicianViewJobsComponent {
     } else {
       this.isCustNameFilterApplied = false;
     }
-
     if (this.custMobtext !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") +
@@ -366,17 +308,13 @@ export class TechnicianViewJobsComponent {
     } else {
       this.isCustMobFilterApplied = false;
     }
-
     if (this.CustTypeFilter) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
       }
       likeQuery += `CUSTOMER_TYPE = '${this.CustTypeFilter}'`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? " AND " + likeQuery : "");
-
     this.api
       .getpendinjobsdataa(
         this.pageIndex,
@@ -421,12 +359,11 @@ export class TechnicianViewJobsComponent {
         }
       );
   }
-
-  userId = sessionStorage.getItem("userId"); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem("userId"); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
+  TabId: number; 
   public commonFunction = new CommonFunctionService();
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
@@ -434,9 +371,7 @@ export class TechnicianViewJobsComponent {
   isModalVisible: any;
   drawerTitle: string;
   isFilterApplied: boolean = false;
-
   filterloading: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
     this.api
@@ -446,14 +381,13 @@ export class TechnicianViewJobsComponent {
         "",
         "",
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
             this.filterQuery = "";
-
           } else {
             this.filterloading = false;
             this.message.error("Failed to load filters.", "");
@@ -466,9 +400,7 @@ export class TechnicianViewJobsComponent {
       );
     this.filterQuery = "";
   }
-
   deleteItem(item: any): void {
-
     this.filterloading = true;
     this.api.deleteFilterById(item.ID).subscribe(
       (data) => {
@@ -480,7 +412,6 @@ export class TechnicianViewJobsComponent {
           this.filterloading = false;
           this.isfilterapply = false;
           this.filterClass = "filter-invisible";
-
           this.loadFilters();
           this.filterQuery = "";
           this.search(true);
@@ -510,8 +441,6 @@ export class TechnicianViewJobsComponent {
     this.search();
   }
   selectedFilter: string | null = null;
-
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = "filter-invisible";
     this.selectedFilter = item.ID;
@@ -519,28 +448,21 @@ export class TechnicianViewJobsComponent {
     this.filterQuery = " AND (" + item.FILTER_QUERY + ")";
     this.search(true);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   applyCondition: any;
   openfilter() {
     this.drawerTitle = "View Jobs Filter";
     this.applyCondition = "";
-    // this.filterFields[5]['options'] = this.VendorData;
-
     this.drawerFilterVisible = true;
   }
-
   oldFilter: any[] = [];
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose();
   }
-
   drawerflterClose() {
     this.drawerFilterVisible = false;
     this.loadFilters();
@@ -548,7 +470,6 @@ export class TechnicianViewJobsComponent {
   get filtercloseCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: "JOB_CREATED_DATE",
@@ -571,7 +492,6 @@ export class TechnicianViewJobsComponent {
       ],
       placeholder: "Enter Job Number",
     },
-
     {
       key: "ORDER_NO",
       label: "Order Number",
@@ -593,7 +513,6 @@ export class TechnicianViewJobsComponent {
       comparators: ["=", "!=", ">", "<", ">=", "<="],
       placeholder: "Select Scheduled Date",
     },
-
     {
       key: "ASSIGNED_DATE",
       label: "Assigned Date Time",
@@ -669,20 +588,16 @@ export class TechnicianViewJobsComponent {
       placeholder: "Select Customer Type",
     },
   ];
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.searchText.length >= 3 && event.key === "Enter") {
       this.search(true);
     } else if (this.searchText.length == 0 && event.key === "Backspace") {
       this.search(true);
     }
-
     if (this.JobCreatedDatetext.length >= 3 && event.key === "Enter") {
       this.search();
       this.isFilterApplied = true;
@@ -693,7 +608,6 @@ export class TechnicianViewJobsComponent {
       this.search();
       this.isFilterApplied = false;
     }
-
     if (this.JobCardNotext.length >= 3 && event.key === "Enter") {
       this.search();
       this.isFilterApplied = true;
@@ -701,7 +615,6 @@ export class TechnicianViewJobsComponent {
       this.search();
       this.isFilterApplied = false;
     }
-
     if (this.OrderNotext.length >= 3 && event.key === "Enter") {
       this.search();
       this.isFilterApplied = true;
@@ -709,7 +622,6 @@ export class TechnicianViewJobsComponent {
       this.search();
       this.isFilterApplied = false;
     }
-
     if (this.OrderNotext.length >= 3 && event.key === "Enter") {
       this.search();
       this.isFilterApplied = true;
@@ -717,7 +629,6 @@ export class TechnicianViewJobsComponent {
       this.search();
       this.isFilterApplied = false;
     }
-
     if (this.ServiceNametext.length >= 3 && event.key === "Enter") {
       this.search();
       this.isFilterApplied = true;
@@ -725,7 +636,6 @@ export class TechnicianViewJobsComponent {
       this.search();
       this.isFilterApplied = false;
     }
-
     if (this.ServiceAddtext.length >= 3 && event.key === "Enter") {
       this.search();
       this.isFilterApplied = true;
@@ -733,7 +643,6 @@ export class TechnicianViewJobsComponent {
       this.search();
       this.isFilterApplied = false;
     }
-
     if (this.custNametext.length >= 3 && event.key === "Enter") {
       this.search();
       this.isFilterApplied = true;
@@ -741,7 +650,6 @@ export class TechnicianViewJobsComponent {
       this.search();
       this.isFilterApplied = false;
     }
-
     if (this.custMobtext.length >= 3 && event.key === "Enter") {
       this.search();
       this.isFilterApplied = true;
@@ -750,7 +658,6 @@ export class TechnicianViewJobsComponent {
       this.isFilterApplied = false;
     }
   }
-
   reset(): void {
     this.searchText = "";
     this.JobCreatedDatetext = "";
@@ -762,7 +669,6 @@ export class TechnicianViewJobsComponent {
     this.custMobtext = "";
     this.search();
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -770,7 +676,6 @@ export class TechnicianViewJobsComponent {
       this.message.info("Please enter atleast 3 characters to search", "");
     }
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = "";

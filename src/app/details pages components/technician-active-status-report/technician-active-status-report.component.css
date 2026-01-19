@@ -1,40 +1,134 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-.select{
-width: 200px;
-padding: 8px;
-display: block;
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-.ant-drawer{
+.ant-drawer {
   z-index: 999 !important;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.hdr-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.hdr-actions-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.hdr-filter-item {
+  width: 47px;
+}
+.flt-row-no-padding {
+  padding-top: 0px;
+}
+.flt-center-align {
+  text-align: center;
+}
+.flt-item-spacing {
+  margin-bottom: 8px;
+}
+.flt-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.flt-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.flt-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.flt-selected-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.flt-action-row {
+  margin-top: 7px;
+}
+.flt-action-container {
+  display: flex;
+  justify-content: space-between;
+}
+.flt-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.flt-action-icon {
+  font-size: 10px !important;
+}
+.flt-view-tag {
+  margin-right: 0px;
+}
+.flt-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.flt-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.flt-footer-btn {
+  margin-right: 10px;
+}
+.tbl-preline {
+  white-space: pre-line;
+}
+.row-margin-top {
+  margin-top: 10px;
+}
+.tbl-th-center {
+  text-align: center;
+}
+.tbl-th-left {
+  text-align: left;
+}
+.flt-select-fullwidth {
+  width: 100%;
+}
+.qry-title-center {
+  text-align: center;
+}
+.tbl-view-tag-uid {
+  cursor: pointer;
+}
+.tbl-view-icon-uid {
+  font-size: 15px;
+}
+.tbl-text-left-uid {
+  text-align: left;
 }

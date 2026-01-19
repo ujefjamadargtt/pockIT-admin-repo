@@ -4,5 +4,141 @@ nz-form-item  {
     width: -webkit-fill-available;
     padding: 0px 5px;
   }
-  
-  
+  .form-top-margin {
+  margin-top: 10px;
+}
+.form-section-hidden {
+  display: none;
+}
+.display-none {
+  display: none;
+}
+.tree-select-full-width {
+  width: 100%;
+}
+.character-count-red {
+  color: red;
+  font-size: 10px;
+}
+.upload-image-btn-small {
+  padding: 0px 7px;
+  font-size: 10px;
+}
+.file-input-hidden {
+  display: none;
+}
+.image-upload-hint {
+  color: red;
+  font-size: 10px !important;
+  display: block;
+  margin-top: 5px;
+}
+.image-link-blue {
+  color: blue;
+  margin-right: 9px;
+}
+.delete-icon-cursor {
+  cursor: pointer;
+}
+.delete-icon-margin {
+  margin-left: 0px;
+}
+.service-cost-wrapper {
+  padding-right: 5px;
+}
+.select-full-width {
+  width: 100%;
+}
+.service-operation-box {
+  padding-left: 5px;
+}
+.time-picker-full {
+  width: 100%;
+}
+.preparation-time-container {
+  display: flex;
+}
+.preparation-hour-container {
+  margin-right: 10px;
+}
+.preparation-hour-input {
+  width: 100px;
+}
+.minutes-container {
+  display: flex;
+}
+.custom-select-width {
+  width: 100px !important;
+}
+.minutes-select {
+  width: 100px !important;
+}
+.min-btn-styled {
+  padding: 0px 11px !important;
+  background: #fafafa !important;
+  color: #393d39 !important;
+  border-color: #d9d9d9 !important;
+  border-left: none !important;
+  border-top-left-radius: 0px !important;
+  cursor: none !important;
+  border-bottom-left-radius: 0px !important;
+  box-shadow: none;
+}
+.service-details-hidden {
+  padding-left: 5px;
+  margin-right: 5px;
+}
+.quantity-input-width {
+  width: 40%;
+}
+.unit-select-width {
+  width: 60%;
+}
+.duration-minute-label {
+  margin-bottom: 5px;
+}
+.footer-cancel-btn {
+  margin-right: 12px;
+}
+.footer-save-btn,
+.footer-update-btn {
+  margin-right: 8px;
+}
+.image-modal-preview {
+  height: 400px;
+  overflow: auto;
+}
+.image-modal-iframe {
+  width: 832px;
+  height: 396px;
+  border: none;
+}
+.modal-close-btn {
+  margin-right: 8px;
+}
+.my-box {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 16px;
+  background: #fff;
+  margin-bottom: 16px;
+}
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 0;
+  border-top: 1px solid #e8e8e8;
+  margin-top: 20px;
+}
+.ant-btn {
+  margin-right: 8px;
+}
+.ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: white;
+}
+.ant-btn-primary:hover {
+  background-color: #40a9ff;
+  border-color: #40a9ff;
+}

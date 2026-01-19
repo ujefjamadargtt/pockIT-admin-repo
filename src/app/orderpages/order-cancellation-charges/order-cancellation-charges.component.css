@@ -1,0 +1,113 @@
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+.form-back-icon-uid {
+  font-weight: bold;
+  cursor: pointer;
+}
+.form-filter-wrapper-uid {
+  display: flex;
+  justify-content: flex-end;
+}
+.form-filter-btn-item-uid {
+  width: 47px;
+}
+.flt2-row-top-uid {
+  padding-top: 0px;
+}
+.flt2-loading-center-uid {
+  text-align: center;
+}
+.flt2-card-wrapper-uid {
+  margin-bottom: 8px;
+}
+.flt2-card-uid {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.flt2-card-header-uid {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.flt2-name-text-uid {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.flt2-applied-icon-uid {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.flt2-actions-row-uid {
+  margin-top: 7px;
+}
+.flt2-actions-uid {
+  display: flex;
+  justify-content: space-between;
+}
+.flt2-action-tag-uid {
+  cursor: pointer;
+}
+.flt2-action-icon-uid {
+  font-size: 15px;
+}
+.flt2-no-data-uid {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.flt2-footer-actions-uid {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+.flt2-footer-btn-uid {
+  margin-right: 10px;
+}
+.cncl-th-center-uid {
+  text-align: center;
+}
+.cncl-th-center-bold-uid {
+  text-align: center;
+  font-weight: bold;
+}
+.cncl-action-tag-uid {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.cncl-action-icon-uid {
+  font-size: 18px;
+  color: #1677ff;
+}
+.cncl-question-icon-uid {
+  color: red;
+}
+.ord-date-dropdown-uid {
+  width: 300px;
+}
+.ord-date-searchbox-uid {
+  width: 280px;
+}
+.flwidth{
+  width: 100%;
+}
+.mrt10{
+  margin-top: 10px;
+}

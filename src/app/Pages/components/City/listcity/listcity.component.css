@@ -1,50 +1,182 @@
-th {
+.city-form-title {
+  font-weight: bold;
+}
+.city-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.city-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.city-filter-btn {
+  width: 47px;
+}
+.city-new-btn {
+  margin-right: 0;
+}
+.filter-loader-center {
+  text-align: center;
+}
+.filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.city-filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.city-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.city-filter-name {
+  color: black;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.city-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.city-filter-actions {
+  margin-top: 7px;
+}
+.city-filter-actions-row {
+  display: flex;
+  justify-content: space-between;
+}
+.city-table th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select {
   width: 200px;
   padding: 8px;
-  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
-.search-button {
-  margin-right: 8px;
-}
-
 nz-select {
   width: 100%;
 }
-
-.margin-row {
-  margin: 10px 0px;
-}
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
-
-
-:host::ng-deep .ant-card-body {
+.city-drawer ::ng-deep .ant-drawer-body {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.city-query-text {
+  text-align: center;
+}
+:host ::ng-deep .ant-card-body {
   padding: 0px;
+}
+.city-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.city-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.city-filter-padding {
+  padding-top: 0px;
+}
+.city-filter-margin {
+  margin-bottom: 8px;
+}
+.city-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.city-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.city-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.city-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.city-filter-actions {
+  margin-top: 7px;
+}
+.city-filter-actions-row {
+  display: flex;
+  justify-content: space-between;
+}
+.city-tag-style {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.city-tag-style-last {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.city-tag-icon {
+  font-size: 10px !important;
+}
+.city-bottom-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.city-btn-margin {
+  margin-right: 10px;
+}
+.city-table-padding {
+  padding-top: 0px;
+}
+.city-th-center {
+  font-weight: bold;
+  text-align: center;
+}
+.city-tr-center {
+  text-align: center;
+}
+.city-edit-tag {
+  cursor: pointer;
+}
+.city-edit-icon {
+  font-size: 15px;
+}
+.city-select-width {
+  width: 100%;
+}
+.city-query-text {
+  text-align: center;
 }

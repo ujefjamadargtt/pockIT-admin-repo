@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-order-detailed-report',
   templateUrl: './order-detailed-report.component.html',
@@ -21,7 +20,6 @@ export class OrderDetailedReportComponent {
     private datepipe: DatePipe,
     private _exportService: ExportService
   ) { }
-
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -62,21 +60,10 @@ export class OrderDetailedReportComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // keyup(event) {
-  //   if (this.searchText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.searchText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  // }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -85,23 +72,18 @@ export class OrderDetailedReportComponent {
   isOrderDateApplied = false;
   isFinalAmountApplied = false;
   isOrderStatusApplied = false;
-
   grossAmountText = '';
   isGrossAmountApplied = false;
   GrossAmountVisible = false;
-
   taxrateText = '';
   istaxrateApplied = false;
   taxrateVisible = false;
-
   couponchargesText = '';
   iscouponchargesApplied = false;
   couponchargesVisible = false;
-
   discountchargesText = '';
   isdiscountchargesApplied = false;
   discountchargesVisible = false;
-
   onKeyup(event: KeyboardEvent): void {
     if (this.countrytext.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -117,13 +99,6 @@ export class OrderDetailedReportComponent {
       this.search();
       this.isOrderNumberApplied = false;
     }
-    // if (this.orderDateText != null && event.key === 'Enter') {
-    //   this.search();
-    //   this.isOrderDateApplied = true;
-    // } else if (this.orderDateText == null && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isOrderDateApplied = false;
-    // }
     if (this.finalAmountText.length > 0 && event.key === 'Enter') {
       this.search();
       this.isFinalAmountApplied = true;
@@ -131,7 +106,6 @@ export class OrderDetailedReportComponent {
       this.search();
       this.isFinalAmountApplied = false;
     }
-
     if (this.grossAmountText.length > 0 && event.key === 'Enter') {
       this.search();
       this.isGrossAmountApplied = true;
@@ -139,7 +113,6 @@ export class OrderDetailedReportComponent {
       this.search();
       this.isGrossAmountApplied = false;
     }
-
     if (this.taxrateText.length > 0 && event.key === 'Enter') {
       this.search();
       this.istaxrateApplied = true;
@@ -147,7 +120,6 @@ export class OrderDetailedReportComponent {
       this.search();
       this.istaxrateApplied = false;
     }
-
     if (this.couponchargesText.length > 0 && event.key === 'Enter') {
       this.search();
       this.iscouponchargesApplied = true;
@@ -158,7 +130,6 @@ export class OrderDetailedReportComponent {
       this.search();
       this.iscouponchargesApplied = false;
     }
-
     if (this.discountchargesText.length > 0 && event.key === 'Enter') {
       this.search();
       this.isdiscountchargesApplied = true;
@@ -169,7 +140,6 @@ export class OrderDetailedReportComponent {
       this.search();
       this.isdiscountchargesApplied = false;
     }
-
     if (this.orderStatusText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isOrderStatusApplied = true;
@@ -179,7 +149,6 @@ export class OrderDetailedReportComponent {
     }
   }
   filterQuery: string = '';
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -187,17 +156,14 @@ export class OrderDetailedReportComponent {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = '';
-      //this.sortKey = 'CUSTOMER_ID';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -210,8 +176,6 @@ export class OrderDetailedReportComponent {
           .join(' OR ') +
         ')';
     }
-
-    // Country Filter
     if (this.countrytext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -224,16 +188,13 @@ export class OrderDetailedReportComponent {
     }
     if (this.orderDateText?.length === 2) {
       const [start, end] = this.orderDateText;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `ORDER_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -244,13 +205,11 @@ export class OrderDetailedReportComponent {
         (likeQuery ? ' AND ' : '') +
         `NET_AMOUNT LIKE '%${this.finalAmountText.trim()}%'`;
     }
-
     if (this.grossAmountText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `GROSS_AMOUNT LIKE '%${this.grossAmountText.trim()}%'`;
     }
-
     if (this.taxrateText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -261,18 +220,11 @@ export class OrderDetailedReportComponent {
         (likeQuery ? ' AND ' : '') +
         `COUPON_CHARGES LIKE '%${this.couponchargesText.trim()}%'`;
     }
-
     if (this.discountchargesText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SERVICE_CHARGES LIKE '%${this.discountchargesText.trim()}%'`;
     }
-
-    // if (this.orderStatusText !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') + `ORDER_STATUS_NAME LIKE '%${this.orderStatusText.trim()}%'`;
-    // }
-
     if (this.orderStatusText?.length) {
       const categories = this.orderStatusText.join(',');
       likeQuery +=
@@ -281,14 +233,11 @@ export class OrderDetailedReportComponent {
     } else {
       this.isOrderStatusApplied = false;
     }
-
     if (this.Seqtext && this.Seqtext.toString().trim() !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SEQ_NO LIKE '%${this.Seqtext.toString().trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -296,10 +245,7 @@ export class OrderDetailedReportComponent {
       likeQuery += `ORDER_STATUS_NAME = '${this.statusFilter}'`;
     }
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // this.sortKey = 'NAME';
-    // sort = 'asc';
     if (exportInExcel == false) {
       this.api
         .getOrderDetailedReport(
@@ -367,7 +313,6 @@ export class OrderDetailedReportComponent {
           (err: HttpErrorResponse) => {
             this.loadingRecords = false;
             this.exportLoading = false;
-
             if (err.status === 0) {
               this.message.error(
                 'Unable to connect. Please check your internet or server connection and try again shortly.',
@@ -389,37 +334,29 @@ export class OrderDetailedReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   close() {
     this.drawervisible = false;
   }
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
-  //For Input
   countrytext: string = '';
   orderNumberText: string = '';
-  // orderDateText: string = '';
   finalAmountText: string = '';
   orderStatusText: any;
   Countryvisible = false;
@@ -444,15 +381,7 @@ export class OrderDetailedReportComponent {
     this.search();
   }
   orderDateText: any;
-
   onDateChange(selectedDate: any): void {
-    // this.orderDateText = selectedDate;
-    // if (selectedDate) {
-    //   this.search();  // Call the search function when the date is selected
-    //   this.isOrderDateApplied = true;
-    // } else {
-    //   this.isOrderDateApplied = false;
-    // }
     if (this.orderDateText && this.orderDateText.length === 2) {
       const [start, end] = this.orderDateText;
       if (start && end) {
@@ -460,18 +389,16 @@ export class OrderDetailedReportComponent {
         this.isOrderDateApplied = true;
       }
     } else {
-      this.orderDateText = null; // or [] if you prefer
+      this.orderDateText = null; 
       this.search();
       this.isOrderDateApplied = false;
     }
   }
-
   resetDateFilter(): void {
     this.orderDateText = '';
     this.isOrderDateApplied = false;
-    this.search(); // Reset the search results
+    this.search(); 
   }
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -487,33 +414,18 @@ export class OrderDetailedReportComponent {
   ];
   dataList: any = [];
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Customer Name', value: 'CUSTOMER_NAME' },
-    // { label: 'Short Code', value: 'SHORT_CODE' },
   ];
-
-  // new filter
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   isLoading = false;
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  //TabId: number; // Ensure TabId is defined and initialized
-
-  // new  Main filter
-
-  //Edit Code 3
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
+  savedFilters: any; 
+  currentClientId = 1; 
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -530,16 +442,13 @@ export class OrderDetailedReportComponent {
       groups: [],
     },
   ];
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
-
   filterClass: string = 'filter-invisible';
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -554,7 +463,6 @@ export class OrderDetailedReportComponent {
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -562,13 +470,12 @@ export class OrderDetailedReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -583,21 +490,15 @@ export class OrderDetailedReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -611,7 +512,6 @@ export class OrderDetailedReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -620,7 +520,6 @@ export class OrderDetailedReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -637,18 +536,13 @@ export class OrderDetailedReportComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   openfilter() {
     this.drawerTitle = 'Order Detailed Filter';
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -665,7 +559,6 @@ export class OrderDetailedReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -682,7 +575,6 @@ export class OrderDetailedReportComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -692,21 +584,17 @@ export class OrderDetailedReportComponent {
       FILTER_JSON: {},
     };
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -739,7 +627,6 @@ export class OrderDetailedReportComponent {
       ],
       placeholder: 'Enter Customer Name',
     },
-
     {
       key: 'GROSS_AMOUNT',
       label: 'Gross Amount',
@@ -768,7 +655,6 @@ export class OrderDetailedReportComponent {
       ],
       placeholder: 'Enter Tax Rate',
     },
-
     {
       key: 'COUPON_CHARGES',
       label: 'Coupon Charges',
@@ -783,7 +669,6 @@ export class OrderDetailedReportComponent {
       ],
       placeholder: 'Enter Coupon Charges',
     },
-
     {
       key: 'SERVICE_CHARGES',
       label: 'Service Charges',
@@ -831,16 +716,12 @@ export class OrderDetailedReportComponent {
       placeholder: 'Select Order Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -857,9 +738,7 @@ export class OrderDetailedReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -885,9 +764,7 @@ export class OrderDetailedReportComponent {
       }
     );
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -897,9 +774,7 @@ export class OrderDetailedReportComponent {
     }
   }
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -907,26 +782,21 @@ export class OrderDetailedReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
   drawerTitle;
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -934,14 +804,11 @@ export class OrderDetailedReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   excelData: any = [];
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -957,7 +824,6 @@ export class OrderDetailedReportComponent {
         obj1['Total Tax'] = this.excelData[i]['TOTAL_TAX'];
         obj1['Service Charges'] = this.excelData[i]['SERVICE_CHARGES'];
         obj1['Order Status'] = this.excelData[i]['ORDER_STATUS_NAME'];
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -971,26 +837,20 @@ export class OrderDetailedReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   jobdetaildrawerTitle = '';
   jobdetailsshow = false;
   jobdetailsdata: any;
   invoicefilter = '';
   ratingfilter = '';
-
   orderwisejobcardreport(data: any) {
     this.jobdetailsdata = data;
     this.getTechniciansJobs(data);
-    //  this.jobdetaildrawerTitle = `View details of ${data.NAME}`;
     this.jobdetaildrawerTitle = `View Order wise job detailed report`;
-    //  this.jobdetailsshow = true;
   }
-
   drawersize = '100%';
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
   }
-  //Drawer Methods
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }

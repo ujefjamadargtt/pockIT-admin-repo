@@ -1,3 +1,154 @@
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
+  .back-arrow-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-controls-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-export-btn {
+  color: white;
+}
+.filter-btn-container {
+  width: 47px;
+}
+.filters-top-row {
+  padding-top: 0px;
+}
+.loading-center {
+  text-align: center;
+}
+.filter-item-col {
+  margin-bottom: 8px;
+}
+.saved-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-header-flex {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-display {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.active-filter-check {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions-container {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag-edit,
+.filter-action-tag-apply,
+.filter-action-tag-clear,
+.filter-action-tag-delete {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-tag-view {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.filter-action-icon {
+  font-size: 10px !important;
+}
+.no-filters-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-all-btn,
+.create-new-btn {
+  margin-right: 10px;
+}
+.main-table-container {
+  margin-top: 10px;
+}
+.action-header-cell,
+.date-header-cell,
+.source-wh-header-cell,
+.dest-wh-header-cell,
+.user-header-cell {
+  text-align: center;
+}
+.view-details-tag {
+  cursor: pointer;
+}
+.view-icon-large {
+  font-size: 15px;
+}
+.source-wh-cell,
+.dest-wh-cell,
+.user-name-cell {
+  text-align: left;
+  white-space: pre-line;
+}
+.date-range-full-width {
+  width: 100%;
+}
+.order-date-dropdown {
+  width: 300px;
+}
+.order-date-searchbox {
+  width: 280px;
+}
+.transfer-mode-select-full {
+  width: 100%;
+}
+.query-details-center {
+  text-align: center;
+}
+.jobdetails-header-controls {
+  display: flex;
+  justify-content: flex-end;
+}
+.jobdetails-excel-btn {
+  color: white;
+}
+.jobdetails-info-row {
+  padding: 10px 20px;
+}
+.jobdetails-info-label {
+  text-align: left;
+}
+.jobdetails-items-table-container {
+  padding: 0px 10px;
+}
+.items-table-whitespace {
+  white-space: pre-line;
+}
+.items-table-cell {
+  white-space: pre-line;
+  text-align: left;
+}
+.jobdetails-footer {
+  text-align: right;
+}
+.jobdetails-cancel-btn {
+  margin-right: 8px;
+}

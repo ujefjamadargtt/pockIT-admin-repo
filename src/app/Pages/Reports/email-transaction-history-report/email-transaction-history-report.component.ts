@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-email-transaction-history-report',
   templateUrl: './email-transaction-history-report.component.html',
@@ -30,12 +29,8 @@ export class EmailTransactionHistoryReportComponent {
       groups: [],
     },
   ];
-
-  //New Advance Filter
-
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -52,7 +47,6 @@ export class EmailTransactionHistoryReportComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -60,7 +54,6 @@ export class EmailTransactionHistoryReportComponent {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   formTitle = 'Email Transaction History Report';
   excelData: any = [];
   exportLoading: boolean = false;
@@ -80,7 +73,6 @@ export class EmailTransactionHistoryReportComponent {
   savedFilters: any[] = [];
   TabId: number;
   isDeleting: boolean = false;
-
   drawerTitle!: string;
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
@@ -93,7 +85,6 @@ export class EmailTransactionHistoryReportComponent {
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   totalRecords = 1;
-
   columns: string[][] = [
     ['SENT_TO', 'SENT_TO'],
     ['PARAMS', 'PARAMS'],
@@ -107,43 +98,26 @@ export class EmailTransactionHistoryReportComponent {
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
-  // importInExcel() {
-  //   this.search(true, true);
-  // }
-
   senttoText: string = '';
   issenttoFilterApplied: boolean = false;
   senttoVisible = false;
-
   templatenameText: string = '';
   istemplatenameFilterApplied: boolean = false;
   templatenamevisible = false;
-
   subjectText: string = '';
   issubjectFilterApplied: boolean = false;
   subjectvisible = false;
-
   bodyText: string = '';
   isbodyFilterApplied: boolean = false;
   bodyvisible = false;
-
-  // attachmentText: string = '';
-  // isattachmentFilterApplied: boolean = false;
-  // attachmentvisible = false;
-
   reset(): void {
     this.searchText = '';
     this.senttoText = '';
-    // this.paramsText = "";
-    // this.medialinkText = "";
-    // this.responsedataText = "";
     this.templatenameText = '';
     this.subjectText = '';
     this.bodyText = '';
     this.search();
   }
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
@@ -153,17 +127,14 @@ export class EmailTransactionHistoryReportComponent {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
     if (this.senttoText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.issenttoFilterApplied = true;
@@ -171,31 +142,6 @@ export class EmailTransactionHistoryReportComponent {
       this.search();
       this.issenttoFilterApplied = false;
     }
-
-    // if (this.paramsText.length >= 3 && keys.key === "Enter") {
-    //   this.search();
-    //   this.isparamsApplied = true;
-    // } else if (this.paramsText.length == 0 && keys.key === "Backspace") {
-    //   this.search();
-    //   this.isparamsApplied = false;
-    // }
-
-    // if (this.medialinkText.length >= 3 && keys.key === "Enter") {
-    //   this.search();
-    //   this.ismedialinkFilterApplied = true;
-    // } else if (this.medialinkText.length == 0 && keys.key === "Backspace") {
-    //   this.search();
-    //   this.ismedialinkFilterApplied = false;
-    // }
-
-    // if (this.responsedataText.length >= 3 && keys.key === "Enter") {
-    //   this.search();
-    //   this.isresponsedataApplied = true;
-    // } else if (this.responsedataText.length == 0 && keys.key === "Backspace") {
-    //   this.search();
-    //   this.isresponsedataApplied = false;
-    // }
-
     if (this.templatenameText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.istemplatenameFilterApplied = true;
@@ -203,7 +149,6 @@ export class EmailTransactionHistoryReportComponent {
       this.search();
       this.istemplatenameFilterApplied = false;
     }
-
     if (this.subjectText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.issubjectFilterApplied = true;
@@ -211,7 +156,6 @@ export class EmailTransactionHistoryReportComponent {
       this.search();
       this.issubjectFilterApplied = false;
     }
-
     if (this.bodyText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isbodyFilterApplied = true;
@@ -220,13 +164,10 @@ export class EmailTransactionHistoryReportComponent {
       this.isbodyFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -235,16 +176,12 @@ export class EmailTransactionHistoryReportComponent {
       this.loadFilters();
     }
   }
-
   filterloading: boolean = false;
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -252,13 +189,12 @@ export class EmailTransactionHistoryReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -273,21 +209,15 @@ export class EmailTransactionHistoryReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -301,7 +231,6 @@ export class EmailTransactionHistoryReportComponent {
       );
     this.filterQuery = '';
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -315,27 +244,21 @@ export class EmailTransactionHistoryReportComponent {
       this.sortValue = 'desc';
     }
     let dateQuery = '';
-
     if (this.date && this.date.length === 2) {
       const [startDate, endDate] = this.date;
       const start = startDate.toISOString().split('T')[0];
       const end = endDate.toISOString().split('T')[0];
-
-      // if(dateQuery!=='') dateQuery+=' AND ';
       dateQuery += ` AND  DATE(CREATED_MODIFIED_DATE) BETWEEN '${start}' AND '${end}' `
     }
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -346,7 +269,6 @@ export class EmailTransactionHistoryReportComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.senttoText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -355,7 +277,6 @@ export class EmailTransactionHistoryReportComponent {
     } else {
       this.issenttoFilterApplied = false;
     }
-
     if (this.templatenameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -364,7 +285,6 @@ export class EmailTransactionHistoryReportComponent {
     } else {
       this.istemplatenameFilterApplied = false;
     }
-
     if (this.subjectText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -373,7 +293,6 @@ export class EmailTransactionHistoryReportComponent {
     } else {
       this.issubjectFilterApplied = false;
     }
-
     if (this.bodyText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `BODY LIKE '%${this.bodyText.trim()}%'`;
@@ -381,15 +300,12 @@ export class EmailTransactionHistoryReportComponent {
     } else {
       this.isbodyFilterApplied = false;
     }
-
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS = '${this.statusFilter}'`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     const finalDataList =
       this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
@@ -470,7 +386,6 @@ export class EmailTransactionHistoryReportComponent {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -479,22 +394,18 @@ export class EmailTransactionHistoryReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -503,11 +414,9 @@ export class EmailTransactionHistoryReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   openfilter() {
     this.drawerTitle = 'Email Transaction History Filter';
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -516,13 +425,9 @@ export class EmailTransactionHistoryReportComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -539,7 +444,6 @@ export class EmailTransactionHistoryReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -557,7 +461,6 @@ export class EmailTransactionHistoryReportComponent {
       },
     ];
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -590,10 +493,8 @@ export class EmailTransactionHistoryReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
-
     this.isDeleting = true;
     this.api.deleteFilterById(item.ID).subscribe(
       (data) => {
@@ -605,7 +506,6 @@ export class EmailTransactionHistoryReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           this.filterQuery = '';
           this.search(true);
@@ -627,9 +527,7 @@ export class EmailTransactionHistoryReportComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     sessionStorage.setItem('ID', item.ID);
     this.filterClass = 'filter-invisible';
@@ -638,21 +536,16 @@ export class EmailTransactionHistoryReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
@@ -660,39 +553,29 @@ export class EmailTransactionHistoryReportComponent {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.FILTER_NAME = data.FILTER_NAME;
-    //
     this.filterData = data;
     this.EditQueryData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-  // excelData: any = [];
-  // exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'SENT_TO',
@@ -722,7 +605,6 @@ export class EmailTransactionHistoryReportComponent {
       ],
       placeholder: 'Enter Template Name',
     },
-
     {
       key: 'SUBJECT ',
       label: 'Subject',
@@ -737,7 +619,6 @@ export class EmailTransactionHistoryReportComponent {
       ],
       placeholder: 'Enter Subject',
     },
-
     {
       key: 'BODY',
       label: 'Body',
@@ -752,7 +633,6 @@ export class EmailTransactionHistoryReportComponent {
       ],
       placeholder: 'Enter Body',
     },
-
     {
       key: 'STATUS ',
       label: 'Status',
@@ -768,16 +648,12 @@ export class EmailTransactionHistoryReportComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

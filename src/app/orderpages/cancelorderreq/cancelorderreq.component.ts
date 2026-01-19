@@ -6,7 +6,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-cancelorderreq',
   templateUrl: './cancelorderreq.component.html',
@@ -22,8 +21,6 @@ export class CancelorderreqComponent {
   sortValue: string = 'desc';
   sortKey: string = 'id';
   searchText: string = '';
-  // filterQuery: string = "";
-
   columns: string[][] = [
     ['ORDER_NUMBER', 'ORDER_NUMBER'],
     ['CUSTOMER_NAME', 'CUSTOMER_NAME'],
@@ -35,7 +32,6 @@ export class CancelorderreqComponent {
   visible1 = false;
   drawerVisible: boolean;
   drawerTitle: string;
-
   drawerVisible1: boolean;
   drawerTitle1: string;
   ROLES = [];
@@ -74,7 +70,6 @@ export class CancelorderreqComponent {
     this.isnewFilter = selectedStatus;
     this.search(true);
   }
-
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   filterQuery: string = '';
@@ -89,8 +84,6 @@ export class CancelorderreqComponent {
     { label: 'Territory Name', value: 'TERRITORY_NAME' },
   ];
   isFilterApplied: boolean = false;
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -107,7 +100,6 @@ export class CancelorderreqComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -115,29 +107,12 @@ export class CancelorderreqComponent {
   ) { }
   public commonFunction = new CommonFunctionService();
   ngOnInit() {
-    // this.search();
-    // this.columns1 = [
-    //   { label: 'Category Name', value: 'NAME' },
-    //   // add more columns if needed
-    // ];
-    // if (this.VERIFIED_STATUS == 'P') {
-    //   this.ExtraQuery =
-    //     " AND IS_APPROVED_BY_ADMIN = '" +
-    //     "P'"
-    // } else {
-    //   this.ExtraQuery =
-    //     " AND VERIFICATION_STATUS = '" +
-    //     this.VERIFIED_STATUS +
-    //     "'"
-    // }
     this.getTeritory();
     this.getTeritory1();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
       : '0';
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
-
     this.getcounts();
   }
   VERIFIED_STATUS: any = 'P';
@@ -165,7 +140,7 @@ export class CancelorderreqComponent {
         this.isSubmittedDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isSubmittedDateFilterApplied = false;
     }
@@ -175,20 +150,16 @@ export class CancelorderreqComponent {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
@@ -203,7 +174,6 @@ export class CancelorderreqComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
     var sort: string;
     try {
@@ -212,7 +182,6 @@ export class CancelorderreqComponent {
       sort = '';
     }
     var likeQuery = '';
-
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -225,18 +194,16 @@ export class CancelorderreqComponent {
         ')';
     }
     this.loadingRecords = true;
-    // Date Range Filter
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `REQUESTED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-    // category Filter
     if (this.orderrno !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -257,12 +224,10 @@ export class CancelorderreqComponent {
         (likeQuery ? ' AND ' : '') +
         `SERVICE_ADDRESS LIKE '%${this.addressss.trim()}%'`;
     }
-
     if (this.reason !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `REASON LIKE '%${this.reason.trim()}%'`;
     }
-
     if (this.remark !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `REMARK LIKE '%${this.remark.trim()}%'`;
@@ -271,13 +236,10 @@ export class CancelorderreqComponent {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; 
     }
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.ExtraQuery = " AND REFUND_STATUS='" + this.VERIFIED_STATUS + "'";
-
     this.api
       .getcancelorderreq(
         this.pageIndex,
@@ -293,7 +255,6 @@ export class CancelorderreqComponent {
             this.totalRecords = data['count'];
             this.dataList = data['data'];
             this.TabId = data['TAB_ID'];
-
             this.api
               .getcancelorderreqcount(
                 this.pageIndex,
@@ -311,7 +272,6 @@ export class CancelorderreqComponent {
                     this.rejectedCount = dataaa['data'][0]['REJECTED'];
                   } else {
                     this.loadingRecords = false;
-
                     this.message.error(
                       'Failed to get Data. please try again later.',
                       ''
@@ -321,14 +281,11 @@ export class CancelorderreqComponent {
                 (err: HttpErrorResponse) => {
                   this.loadingRecords = false;
                   if (err.status === 0) {
-                    // Network error
                     this.message.error(
                       'Unable to connect. Please check your internet or server connection and try again shortly.',
                       ''
                     );
-                    // this.dataList = [];
                   } else {
-                    // Other errors
                     this.message.error('Server error: ' + err.message, '');
                   }
                 }
@@ -359,7 +316,6 @@ export class CancelorderreqComponent {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
@@ -381,7 +337,6 @@ export class CancelorderreqComponent {
   isterritorynameFilterApplied = false;
   territoryVisible = false;
   selectedterritory: any[] = [];
-
   onKeyup(event: KeyboardEvent, field: string): void {
     if (
       this.orderrno.length >= 3 &&
@@ -443,7 +398,6 @@ export class CancelorderreqComponent {
       this.search();
       this.isaddFilterApplied = false;
     }
-
     if (this.reason.length >= 3 && event.key === 'Enter' && field == 'REA') {
       this.search();
       this.isreasonFilterApplied = true;
@@ -455,7 +409,6 @@ export class CancelorderreqComponent {
       this.search();
       this.isreasonFilterApplied = false;
     }
-
     if (this.remark.length >= 3 && event.key === 'Enter' && field == 'REM') {
       this.search();
       this.isremarkFilterApplied = true;
@@ -471,16 +424,13 @@ export class CancelorderreqComponent {
   onCountryChange(): void {
     if (this.selectedterritory?.length) {
       this.search();
-      this.isterritorynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isterritorynameFilterApplied = true; 
     } else {
       this.search();
-      this.isterritorynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isterritorynameFilterApplied = false; 
     }
-    // this.search();
   }
-
   territoryData: any = [];
-
   getTeritory() {
     this.api.getTeritory(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -496,7 +446,6 @@ export class CancelorderreqComponent {
       }
     );
   }
-
   territoryData1: any = [];
   getTeritory1() {
     this.api
@@ -517,25 +466,20 @@ export class CancelorderreqComponent {
   navigateToMastersMenu(): void {
     this.router.navigate(['/masters/menu']);
   }
-
   close(): void {
     this.visible1 = false;
   }
-
   close1(accountMasterPage: NgForm) {
     this.drawerVisible1 = false;
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
@@ -552,10 +496,7 @@ export class CancelorderreqComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // Main Filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -564,31 +505,26 @@ export class CancelorderreqComponent {
       this.loadFilters();
     }
   }
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
   currentClientId = 1;
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -596,14 +532,11 @@ export class CancelorderreqComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   oldFilter: any[] = [];
   isLoading = false;
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
   filterGroups2: any = [
     {
@@ -621,21 +554,14 @@ export class CancelorderreqComponent {
       groups: [],
     },
   ];
-
   filterData: any;
-  // currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Cancel Order Request Filter';
-    // this.applyCondition = "";
     this.filterFields[6]['options'] = this.territoryData1;
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -652,7 +578,6 @@ export class CancelorderreqComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -669,7 +594,6 @@ export class CancelorderreqComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -679,7 +603,6 @@ export class CancelorderreqComponent {
       FILTER_JSON: {},
     };
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -688,7 +611,6 @@ export class CancelorderreqComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   whichbutton: any;
   filterloading: boolean = false;
   updateButton: any;
@@ -696,10 +618,8 @@ export class CancelorderreqComponent {
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
@@ -713,9 +633,6 @@ export class CancelorderreqComponent {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-  // drawerflterClose(): void {
-  //   this.drawerFilterVisible = false;
-  // }
   filterFields: any[] = [
     {
       key: 'REQUESTED_DATE',
@@ -818,12 +735,8 @@ export class CancelorderreqComponent {
       placeholder: 'Enter Territory Name',
     },
   ];
-
-  // filterloading: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -831,16 +744,12 @@ export class CancelorderreqComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -855,22 +764,15 @@ export class CancelorderreqComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -884,11 +786,8 @@ export class CancelorderreqComponent {
       );
     this.filterQuery = '';
   }
-
   isDeleting: boolean = false;
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -904,14 +803,10 @@ export class CancelorderreqComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           } else {
             this.isfilterapply = true;
           }
@@ -934,12 +829,9 @@ export class CancelorderreqComponent {
       }
     );
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
@@ -951,43 +843,6 @@ export class CancelorderreqComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-  // selectStatus(status) {
-  //   this.VERIFIED_STATUS = status;
-  //   if (status == 'A') {
-  //     this.STATUS = 'A';
-  //   } else {
-  //     this.STATUS = 'I';
-  //   }
-  //   this.ExtraQuery = '';
-  //   if (status == 'P') {
-  //     this.ExtraQuery =
-  //       " AND IS_APPROVED_BY_ADMIN = '" +
-  //       "P'" +
-  //       " AND STATUS ='" +
-  //       this.STATUS +
-  //       "'";
-  //   } else if (status == 'R') {
-  //     this.ExtraQuery =
-  //       " AND IS_APPROVED_BY_ADMIN = '" +
-  //       "R'" +
-  //       " AND STATUS ='" +
-  //       this.STATUS +
-  //       "'";
-  //   } else if (status == 'A') {
-  //     this.ExtraQuery =
-  //       " AND IS_REGISTERED = '" + "1'" + " AND STATUS ='" + this.STATUS + "'";
-  //   } else {
-  //     this.ExtraQuery =
-  //       " AND VERIFICATION_STATUS = '" +
-  //       this.VERIFIED_STATUS +
-  //       "'" +
-  //       " AND STATUS ='" +
-  //       this.STATUS +
-  //       "'";
-  //   }
-  //   this.dataList = [];
-  //   this.search(true);
-  // }
   rejectreason: any = '';
   appreorder(data: any, action: any) {
     this.isspinnnnnnn = true;
@@ -1009,7 +864,6 @@ export class CancelorderreqComponent {
         ORDER_STATUS: data.ORDER_STATUS,
         PAYMENT_MODE: data.PAYMENT_MODE,
       };
-
       this.api.approverejectorder(dataaa).subscribe(
         (successCode: any) => {
           if (successCode.code == 200) {
@@ -1042,11 +896,9 @@ export class CancelorderreqComponent {
       );
     }
   }
-
   isspinnnnnnn: boolean = false;
   openmodell: boolean = false;
   openmodellRefund: boolean = false;
-
   cancelorderdata: any;
   action: any;
   opencancelmodal(event: any, action: any) {
@@ -1056,10 +908,8 @@ export class CancelorderreqComponent {
     this.rejectreason = '';
     this.cancelorderdata = event;
   }
-
   opencancelmodalRefunc(event: any) {
     this.openmodellRefund = true;
-    // this.action = action;
     this.cancelorderdata = '';
     this.cancelorderdata = event;
   }
@@ -1073,17 +923,14 @@ export class CancelorderreqComponent {
     this.isspinnnnnnn = false;
     this.cancelorderdata = '';
   }
-
   rejectedCount: any = 0;
   pendingCount: any = 0;
   approvedCount: any = 0;
   getcounts() { }
-
   selectStatus(event) {
     this.VERIFIED_STATUS = event;
     this.search(true);
   }
-
   appreorderRef(data: any) {
     this.isspinnnnnnn = true;
     var dataaa = {
@@ -1096,12 +943,10 @@ export class CancelorderreqComponent {
       PAYMENT_REFUND_STATUS: 'RF',
       PAYMENT_MODE: data.PAYMENT_MODE,
     };
-
     this.api.Refundorder(dataaa).subscribe(
       (successCode: any) => {
         if (successCode.code == 200) {
           this.message.success('Refund status updated successfully', '');
-
           this.openmodellRefund = false;
           this.isspinnnnnnn = false;
           this.search();

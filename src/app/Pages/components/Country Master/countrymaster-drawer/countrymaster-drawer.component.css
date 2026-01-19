@@ -1,6 +1,20 @@
+.cm-char-count {
+  color: red;
+  font-size: 10px;
+}
+.cm-btn-margin-right {
+  margin-right: 8px;
+}
+.cm-dropdown-item {
+  border-radius: 4px;
+  color: white !important;
+}
+.cm-dropdown-link {
+  color: white !important;
+}
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}

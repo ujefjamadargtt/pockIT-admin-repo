@@ -5,17 +5,16 @@
                 <nz-form-item>
                     <nz-form-label nzRequired nzNoColon>Role</nz-form-label>
                     <nz-form-control nzHasFeedback nzErrorTip="Select Role">
-                        <nz-select name="role" nzPlaceHolder="Select Role" nzShowSearch style="width: 100%"
+                        <nz-select name="role" nzPlaceHolder="Select Role" nzShowSearch class="tm-role-select-width"
                             [(ngModel)]="data.ROLE_ID" [ngModelOptions]="{ standalone: true }" required nzAllowClear=""
                             [nzLoading]="isroleSpinning">
-                            <nz-option *ngFor="let data of roleData" [nzValue]="data.ID" [nzLabel]="data.NAME">
-                            </nz-option>
+                            <nz-option *ngFor="let data of roleData" [nzValue]="data.ID"
+                                [nzLabel]="data.NAME"></nz-option>
                         </nz-select>
                     </nz-form-control>
                 </nz-form-item>
             </div>
         </div>
-        <!-- Name Field -->
         <div nz-row>
             <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
                 <nz-form-item>
@@ -24,18 +23,16 @@
                         <input nz-input name="TITLE" placeholder="Enter Title" required [(ngModel)]="data.TITLE"
                             (keypress)="validateInput($event)" #nameField="ngModel" maxlength="128" autocomplete="off"
                             (focus)="isFocused = 'districtName'" (blur)="isFocused = ''" />
-                        <h6 style="color: red; font-size: 10px" *ngIf="
-                            isFocused === 'districtName' ||
-                            (data.TITLE && isFocused === 'districtName')
-                        ">
+                        <h6 class="tm-char-counter" *ngIf="
+                                isFocused === 'districtName' ||
+                                (data.TITLE && isFocused === 'districtName')
+                            ">
                             {{ data.TITLE?.length || 0 }}/128
                         </h6>
                     </nz-form-control>
                 </nz-form-item>
             </div>
         </div>
-
-        <!-- Description Field -->
         <div nz-row>
             <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
                 <nz-form-item>
@@ -45,21 +42,17 @@
                             [(ngModel)]="data.SNAPSHOT_LINK" (keypress)="commonFunction.allowOnly($event)"
                             maxlength="1024" [nzAutosize]="{ minRows: 2, maxRows: 4 }"
                             (focus)="isFocused = 'SNAPSHOT_LINK'" (blur)="isFocused = ''"></textarea>
-                        <h6 style="color: red; font-size: 10px" *ngIf="
-                          isFocused === 'SNAPSHOT_LINK' ||
-                          (data.SNAPSHOT_LINK && isFocused === 'SNAPSHOT_LINK')
-                        ">
+                        <h6 class="tm-char-counter" *ngIf="
+                                isFocused === 'SNAPSHOT_LINK' ||
+                                (data.SNAPSHOT_LINK && isFocused === 'SNAPSHOT_LINK')
+                            ">
                             {{ data.SNAPSHOT_LINK?.length || 0 }}/1024
                         </h6>
                     </nz-form-control>
                 </nz-form-item>
             </div>
         </div>
-
-        <!-- Sequence No Field -->
         <div nz-row>
-
-            <!-- Status Field -->
             <div nz-col nzSpan="8">
                 <nz-form-item>
                     <nz-form-label nzNoColon>Status</nz-form-label>
@@ -72,26 +65,23 @@
         </div>
     </form>
 </div>
-
 <div class="footer">
-    <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+    <button nz-button nzType="default" (click)="close()" class="ant-btn tm-footer-cancel-margin">
         Cancel
     </button>
-
     <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
         (click)="save(false, teritorymaster)" class="ant-btn ant-btn-primary">
         Save & Close
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu>
-            <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
-                <a class="footer-button" style="color: white!important" (click)="save(true, teritorymaster)">Save &
-                    New</a>
+            <li nz-menu-item class="tm-dropdown-menu-item">
+                <a class="footer-button tm-dropdown-menu-link" (click)="save(true, teritorymaster)">
+                    Save & New
+                </a>
             </li>
         </ul>
     </nz-dropdown-menu>
-
     <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
         (click)="save(false, teritorymaster)">
         <span>Update & Close</span>

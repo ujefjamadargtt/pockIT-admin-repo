@@ -2,7 +2,7 @@
   <form nz-form #websitebannerPage="ngForm">
     <div nz-row nzGutter="24">
       <div nz-col nzSpan="12">
-        <div nz-col nzSpan="24" class="my-box" style="margin-top: 0px">
+        <div nz-col nzSpan="24" class="my-box my-box-top-margin">
           <div nz-row>
             <div nz-col nzSpan="24">
               <nz-form-item>
@@ -13,8 +13,7 @@
                     (focus)="isFocused = 'TEMPLATE_NAME'" (blur)="isFocused = ''" (keypress)="validateInput($event)"
                     (input)="replaceSpacesWithUnderscores()" placeholder="Enter SMS Template Name" required
                     maxlength="128" />
-                  <!-- Character Counter -->
-                  <h6 style="color: red; font-size: 10px" *ngIf="
+                  <h6 class="character-count" *ngIf="
                       isFocused === 'TEMPLATE_NAME' ||
                       (data.TEMPLATE_NAME && isFocused === 'TEMPLATE_NAME')
                     ">
@@ -24,12 +23,10 @@
               </nz-form-item>
             </div>
           </div>
-
           <div nz-row>
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon> Category </nz-form-label>
-
                 <nz-form-control nzHasFeedback nzErrorTip="Please Select Template Category">
                   <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Template Category" name="agent12"
                     [(ngModel)]="data.CATEGORY" required>
@@ -48,11 +45,9 @@
                 </nz-form-control>
               </nz-form-item>
             </div>
-
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon> Language </nz-form-label>
-
                 <nz-form-control nzHasFeedback nzErrorTip="Please Select Language">
                   <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Language" name="LANGUAGE_CODE"
                     [(ngModel)]="data.LANGUAGE_CODE" required>
@@ -63,74 +58,6 @@
               </nz-form-item>
             </div>
           </div>
-          <!-- <div nz-row>
-            <div nz-col nzSpan="24">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Body</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Body is required">
-                  <button
-                      nz-button
-                      style="color: #efefef; width: 40px"
-                      (click)="convertB()"
-                    >
-                      <span style="color: black"><b>B</b></span>
-                    </button>
-                    <button
-                      nz-button
-                      style="color: #efefef; width: 40px"
-                      (click)="convertI()"
-                    >
-                      <span style="color: black"><i>I</i></span>
-                    </button>
-                  <button
-                    nz-button
-                    style="font-size: 15px; color: #efefef; width: 38px"
-                    iconClass="fa fa-smile-o"
-                    (click)="showEmojiPicker = !showEmojiPicker"
-                  >
-                    <span
-                      style="color: black"
-                      nz-icon
-                      nzType="smile"
-                      nzTheme="outline"
-                    ></span>
-                  </button>
-                  <textarea
-                    #textArea
-                    id="messages2"
-                    style="margin-top: 5px"
-                    nz-input
-                    rows="2"
-                    name="description"
-                    [(ngModel)]="data.TEMPLATE_BODY"
-                    required
-                  ></textarea>
-              </nz-form-item>
-              <span *ngIf="showDynamicInput1">
-                <nz-form-item>
-                  <nz-form-label nzRequired nzNoColon
-                    >Sample Values For Body Content</nz-form-label
-                  >
-                  <nz-form-control>
-                    <nz-select
-                      style="width: 100%"
-                      nzMode="tags"
-                      nzPlaceHolder="Enter Sample Values"
-                      name="tag1"
-                      [(ngModel)]="data.BODY_VALUES"
-                    >
-                      <nz-option
-                        *ngFor="let option of inputValuess1"
-                        [nzLabel]="option"
-                        [nzValue]="option"
-                      ></nz-option>
-                    </nz-select>
-                  </nz-form-control>
-                </nz-form-item>
-              </span>
-            </div>
-          </div> -->
-
           <div nz-row>
             <div nz-col nzSpan="24">
               <nz-form-item>
@@ -141,8 +68,7 @@
                       data.DESCRIPTION = data.DESCRIPTION?.trim()
                     " (focus)="isFocused = 'DESCRIPTION'" (blur)="isFocused = ''"
                     placeholder="Enter Description"></textarea>
-                  <!-- Character Counter -->
-                  <h6 style="color: red; font-size: 10px" *ngIf="
+                  <h6 class="character-count" *ngIf="
                       isFocused === 'DESCRIPTION' ||
                       (data.DESCRIPTION && isFocused === 'DESCRIPTION')
                     ">
@@ -152,12 +78,10 @@
               </nz-form-item>
             </div>
           </div>
-
           <div nz-row>
             <div nz-col nzSpan="4">
               <nz-form-item>
                 <nz-form-label nzNoColon>Status</nz-form-label>
-
                 <nz-form-control>
                   <nz-switch name="Status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
                     [(ngModel)]="data.IS_ACTIVE">
@@ -168,42 +92,23 @@
           </div>
         </div>
       </div>
-      <!-- <div nz-col nzSpan="1"></div> -->
-
-      <!-- <div nz-row> -->
-      <div nz-col nzSpan="12" class="my-box" style="margin-top: 0px">
+      <div nz-col nzSpan="12" class="my-box my-box-top-margin">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Body &nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
               nzTooltipTitle="To add a custom variable, please add a variable in double curly
             brackets like:{{ abc }}"></span></nz-form-label>
           <br />
-
           <nz-form-control nzHasFeedback nzErrorTip="Please Enter Body">
-            <button nz-button style="color: #efefef; width: 40px" (click)="convertB()">
-              <span style="color: black"><b>B</b></span>
+            <button nz-button class="format-button-bold" (click)="convertB()">
+              <span class="bold-text"><b>B</b></span>
             </button>
-            <button nz-button style="color: #efefef; width: 40px" (click)="convertI()">
-              <span style="color: black"><i>I</i></span>
+            <button nz-button class="format-button-italic" (click)="convertI()">
+              <span class="italic-text"><i>I</i></span>
             </button>
-            <!-- <button
-                nz-button
-                style="font-size: 15px; color: #efefef; width: 38px"
-                iconClass="fa fa-smile-o"
-                (click)="showEmojiPicker = !showEmojiPicker"
-              >
-                <span
-                  style="color: black"
-                  nz-icon
-                  nzType="smile"
-                  nzTheme="outline"
-                ></span>
-              </button> -->
-            <textarea #textArea id="messages2" style="margin-top: 5px" nz-input rows="8" name="templatebody"
-              [(ngModel)]="data.TEMPLATE_BODY" style="width: 100%; height: 155px" required autocomplete="off"
+            <textarea #textArea id="messages2" class="template-textarea" nz-input rows="8" name="templatebody"
+              [(ngModel)]="data.TEMPLATE_BODY" required autocomplete="off"
               (input)="checkInput1()"></textarea>
-            <!-- <emoji-mart *ngIf="showEmojiPicker" (emojiSelect)="onEmojiSelect($event)" ></emoji-mart> -->
-            <h6 style="color: red; font-size: 10px" *ngIf="inputBody != undefined">
-              <!-- {{inputBody.length}}/1020 -->
+            <h6 class="character-count" *ngIf="inputBody != undefined">
             </h6>
           </nz-form-control>
         </nz-form-item>
@@ -211,7 +116,7 @@
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Sample Values For Body Content</nz-form-label>
             <nz-form-control>
-              <nz-select style="width: 100%" nzMode="tags" nzPlaceHolder="Enter Sample Values" name="tag1"
+              <nz-select class="full-width-select" nzMode="tags" nzPlaceHolder="Enter Sample Values" name="tag1"
                 [(ngModel)]="data.BODY_VALUES">
                 <nz-option *ngFor="let option of inputValuess1" [nzLabel]="option" [nzValue]="option"></nz-option>
               </nz-select>
@@ -219,61 +124,12 @@
           </nz-form-item>
         </span>
       </div>
-      <!-- </div> -->
-      <!-- <div nz-col nzSpan="8" class="vertical-card">
-        <div
-          style="
-            margin-top: 10px;
-            margin-left: 12px;
-            margin-bottom: 10px;
-            color: #2e2e2e;
-          "
-        >
-          <span><b>Template Preview</b></span>
-        </div>
-
-        <div nz-row>
-          <div nz-col nzSpan="1"></div>
-          <div nz-col nzSpan="22">
-            <nz-card class="vertical">
-              <nz-form-item>
-                <br />
-                <span style="font-size: 13px" [innerHTML]="inputBody"></span>
-                <br />
-
-                <hr />
-
-                <span
-                  style="
-                    font-size: 11px;
-                    font-weight: lighter;
-                    color: #0a0a09b0;
-                    float: right;
-                  "
-                  >{{ Date | date : "HH:mm:a" }}
-                </span>
-              </nz-form-item>
-            </nz-card>
-          </div>
-          <div nz-col nzSpan="1"></div>
-        </div>
-      </div> -->
     </div>
   </form>
   <div class="footer">
-    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close()" class="ant-btn footer-cancel-btn">
       <span>Cancel</span>
     </button>
-    <!-- <button
-      type="button"
-      class="ant-btn ant-btn-primary"
-      style="border-radius: 4px; vmargin-right: 8px"
-      nz-button
-      [nzLoading]="isSpinning"
-      (click)="save1(false)"
-    >
-      <span>Save as Draft</span>
-    </button> -->
     <button *ngIf="!data.ID" type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning"
       (click)="save(false, websitebannerPage)">
       <span>Save & Close</span>

@@ -28,7 +28,6 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
   searchText: string = '';
   filterQuery: string = '';
   isFilterApplied: any = 'default';
-
   columns: string[][] = [['CREATER_NAME', 'Creator Name']];
   isDeleting: boolean = false;
   BRANCH = [];
@@ -42,23 +41,18 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
   dateFormat = 'dd-MM-yyyy';
   date: Date[] = [];
   data1 = [];
-  // ticketGroups: Ticketgroup[] = [];
   index = 0;
   ticketQuestion = {};
   value1: string = '';
   value2: string = '';
   leaves = [];
   supportusers = [];
-  // userId = Number(this.cookie.get('userId'));
   roleId = Number(this.cookie.get('roleId'));
   orgId = Number(this.cookie.get('orgId'));
-
-  // orgName: string = this.api.ORGANIZATION_NAME;
   isButtonSpinning: boolean = false;
   FROM_DATE: any = new Date();
   TO_DATE: any = new Date();
   endOpen = false;
-  // startOpen = false;
   employees = [];
   EXECUTIVE_ID: any = [];
   DATE: any;
@@ -68,10 +62,10 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
   dateQuery: string = '';
   START_DATE: any = new Date();
   END_DATE: any = new Date();
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  TabId: number; // Ensure TabId is defined and initialized
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
+  TabId: number; 
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
@@ -80,26 +74,22 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   ngOnInit(): void {
-    // this.search(true);
     let rawUserId = sessionStorage.getItem('userId');
     this.USER_ID = rawUserId
       ? Number(this.commonFunction.decryptdata(rawUserId))
       : 0;
   }
-
   onKeypressEvent(reset: any) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
     this.search(true);
   }
-
   keyup(event: any) {
     this.search(true);
   }
   mainsearchkeyup(event: KeyboardEvent) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault(); 
     if (
       this.searchText.length === 0 ||
       (event.key === 'Enter' && this.searchText.length >= 3)
@@ -108,50 +98,40 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
     }
   }
   @ViewChild('searchInput') searchInput!: ElementRef;
-
   preventDefault(event: Event) {
     event.preventDefault();
     this.searchInput.nativeElement.focus();
   }
   startOpen: boolean = false;
-
   onStartChange(date: Date): void {
     this.START_DATE = date;
   }
   onEndChange(date: Date): void {
     this.END_DATE = date;
   }
-
   handleStartOpenChange(open: boolean): void {
     if (!open) {
       this.endOpen = true;
     }
   }
-
   handleEndOpenChange(open: boolean): void {
     this.endOpen = open;
   }
-
   disabledStartDate = (START_DATE: Date): boolean => {
     if (!START_DATE || !this.END_DATE) {
       return false;
     }
     return START_DATE.getTime() > this.END_DATE;
   };
-
   current = new Date();
-
   disabledEndDate = (END_DATE: Date): boolean => {
     if (!END_DATE) {
       return false;
     }
-
     var previousDate = new Date(this.START_DATE);
     previousDate.setDate(previousDate.getDate() + -1);
-
     return END_DATE <= new Date(previousDate);
   };
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
@@ -165,9 +145,7 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
@@ -182,12 +160,10 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   visible = false;
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   filterFields: any[] = [
     {
       key: 'CREATER_NAME',
@@ -201,46 +177,17 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
         { value: 'Starts With', display: 'Starts With' },
         { value: 'Ends With', display: 'Ends With' },
       ],
-      // options: [],
       placeholder: 'Enter Creator Name',
     },
-
-    // {
-    //   key: 'NUMBER_OF_TICKETS',
-    //   label: 'No Of tickets',
-    //   type: 'text',
-    //   comparators: [
-    //     '=',
-    //     '!=',
-    //     'Contains',
-    //     'Does Not Contains',
-    //     'Starts With',
-    //     'Ends With',
-    //   ],
-    //   placeholder: 'Enter No Of tickets',
-    // }
   ];
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
   oldFilter: any[] = [];
-
-  // filterQuery = '';
-
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   drawerTitle;
-  // openfilter() {
-  //   this.drawerTitle = 'Creator Wise Auto Close Report Filter';
-  //   this.applyCondition = '';
-  //   // this.filterFields[0]['options'] = this.categorydate1;
-  //   // this.filterFields[1]['options'] = this.subcategorydate1;
-
-  //   this.drawerFilterVisible = true;
-  // }
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -257,19 +204,14 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
       groups: [],
     },
   ];
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-
+  userId = sessionStorage.getItem('userId'); 
   filterData: any;
   openfilter() {
     this.drawerTitle = 'Creator Wise Auto Close Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -286,7 +228,6 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -303,7 +244,6 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -320,27 +260,22 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -358,19 +293,16 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
       case 'column2text':
         this.column2applied = value;
         break;
-
       default:
         break;
     }
   }
   onKeyup(event: KeyboardEvent, field: string): void {
-    const fieldValue = this[field]; // Dynamically access the field value
-
+    const fieldValue = this[field]; 
     if (event.key === 'Enter') {
       if (fieldValue.length >= 3) {
         this.search();
         this.setFilterApplied(field, true);
-        // this.column1applied = true;
       }
     } else if (event.key === 'Backspace' && fieldValue.length === 0) {
       this.search();
@@ -378,8 +310,6 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
     }
   }
   reset(): void {
-    // this.column1applied= false;
-
     this.search();
   }
   Clearfilter() {
@@ -395,7 +325,6 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
   }
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -403,16 +332,12 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -427,22 +352,15 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -456,11 +374,9 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   EditQueryData = [];
   editButton: any = 'N';
   FILTER_NAME: any;
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -477,11 +393,9 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
       groups: [],
     },
   ];
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -489,7 +403,6 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-  // isDeleting: boolean = false;
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -500,16 +413,13 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
           this.savedFilters = this.savedFilters.filter(
             (filter) => filter.ID !== item.ID
           );
-
           this.message.success('Filter deleted successfully.', '');
           sessionStorage.removeItem('ID');
           this.filterloading = true;
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -539,27 +449,18 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-    // this.loadingRecords = true;
     var sort: string = '';
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
-    //
-    //
-
     var likeQuery = '';
-
     if (this.searchText != '') {
       likeQuery = ' AND (';
-
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
     }
     if (this.column1text != '') {
@@ -574,7 +475,6 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
     }
     this.START_DATE = this.datePipe.transform(this.START_DATE, 'yyyy-MM-dd');
     this.END_DATE = this.datePipe.transform(this.END_DATE, 'yyyy-MM-dd');
-
     if (exportInExcel == false) {
       this.loadingRecords = true;
       this.isSpinning = true;
@@ -624,14 +524,12 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
             if (data['status'] == 200) {
               this.loadingRecords = false;
               this.isSpinning = false;
-              // this.totalRecords = data.body['count'];
               this.dataList2 = data.body['data'];
               this.convertInExcel();
             } else {
               this.message.error('Failed To Get Records', '');
               this.loadingRecords = false;
               this.isSpinning = false;
-              // this.totalRecords = 0;
               this.dataList2 = [];
             }
           },
@@ -645,7 +543,6 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -654,22 +551,18 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   clearFilter() {
     this.filterQuery = '';
     this.START_DATE = new Date();
@@ -678,14 +571,12 @@ export class CreaterWiseAutoCloseTicketReportComponent implements OnInit {
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
     for (var i = 0; i < this.dataList2.length; i++) {
       obj1['Creator Name'] = this.dataList2[i]['CREATER_NAME'];
       obj1['Number Of Tickets'] = this.dataList2[i]['NUMBER_OF_TICKETS'];
-
       arry1.push(Object.assign({}, obj1));
       if (i == this.dataList2.length - 1) {
         this._exportService.exportExcel1(

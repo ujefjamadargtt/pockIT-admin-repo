@@ -2,22 +2,11 @@
   <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8">
     <div class="formname">
       <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
-        style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp;{{ formTitle }}
+        class="back-arrow-icon"></span>&nbsp;&nbsp;{{ formTitle }}
     </div>
   </div>
-  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="16" style="display: flex; justify-content: flex-end">
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="16"  class="header-flex-end">
     <form nz-form [nzLayout]="'inline'">
-      <!-- <nz-form-item style="width: 47px">
-          <button
-            nz-button
-            nzTooltipTitle="Filter"
-            nzTooltipPlacement="top"
-            nz-tooltip
-            
-          >
-            <i nz-icon nzType="filter"></i>
-          </button>
-        </nz-form-item> -->
       <nz-form-item>
         <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
           <input type="text" name="search" [(ngModel)]="searchText" nz-input placeholder="Min 3 chars required." />
@@ -28,7 +17,7 @@
           </button>
         </ng-template>
       </nz-form-item>
-      <nz-form-item style="margin-right: 0px">
+      <nz-form-item class="no-right-margin">
         <button nz-button nzType="primary" (click)="add()" nzJustify="end">
           <i nz-icon nzType="plus"></i>Add New Customer Config
         </button>
@@ -36,14 +25,14 @@
     </form>
   </div>
 </div>
-<div nz-row style="margin-top: 10px;">
+<div nz-row class="row-top-space">
   <div nz-col nzSpan="24">
-    <nz-table class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger [nzFrontPagination]="true"
+    <nz-table class="my-scroll no-wrap1 table-preline" nzBordered #table nzShowSizeChanger [nzFrontPagination]="true"
       [nzData]="emailServiceConfigData" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
-      (nzQueryParams)="sort($event)" [nzSize]="'small'" style="white-space: pre-line" [nzScroll]="{ x: '1500px' }">
+      (nzQueryParams)="sort($event)" [nzSize]="'small'" >
       <thead>
         <tr>
-          <th nzWidth="80px" style="text-align: center;" nzAlign="center"><b>Action</b></th>
+          <th nzWidth="80px" class="th-bold-center" nzAlign="center"><b>Action</b></th>
           <th nzWidth="150px" nzAlign="center" nzColumnKey="CUSTOMER_TYPE" [nzSortFn]="true"><b>Customer Type</b></th>
           <th nzWidth="150px" nzAlign="center" nzColumnKey="CUSTOMER_CATEGORY" [nzSortFn]="true"><b>Customer
               Category</b></th>
@@ -69,10 +58,9 @@
           <th nzWidth="150px" nzAlign="center" nzColumnKey="ACCOUNT_STATUS" [nzSortFn]="true"><b>Account Status</b></th>
         </tr>
       </thead>
-
       <tbody>
         <tr *ngFor="let data of emailServiceConfigData">
-          <td style="text-align: center;">
+          <td class="th-bold-center">
             <a (click)="edit(data)" nz-tooltip nzTooltipTitle="Edit">
               <span nz-icon nzType="edit" nzTheme="outline"></span>
             </a>
@@ -100,8 +88,6 @@
     </nz-table>
   </div>
 </div>
-
-
 <nz-drawer [nzBodyStyle]="{
     height: 'calc(100% - 55px)',
     overflow: 'auto',

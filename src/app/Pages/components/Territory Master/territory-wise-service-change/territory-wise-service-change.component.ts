@@ -10,7 +10,6 @@ import { ServiceCatMasterDataNew } from 'src/app/Pages/Models/ServiceCatMasterDa
 import { TerritoryMaster } from 'src/app/Pages/Models/TerritoryMaster';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-territory-wise-service-change',
   templateUrl: './territory-wise-service-change.component.html',
@@ -29,8 +28,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   isOk: boolean = false;
   updatedRecords: any[] = [];
   organizationid: any = sessionStorage.getItem('orgId');
-
-  // Disable hours before the current hour for START_TIME
   disableBeforeCurrentHour = (): any[] => {
     const hours: any[] = [];
     for (let i = 0; i < this.currentHour; i++) {
@@ -38,7 +35,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     }
     return hours;
   };
-
   changeAmount(event: any, datas: any) {
     if (event == 'B') {
       datas.B2C_PRICE = null;
@@ -46,21 +42,20 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       datas.B2B_PRICE = null;
     }
   }
-
   restrictMinutes(event: any, datas: any): void {
     const input = event.target.value;
     if (input > 59) {
-      event.target.value = 59; // Prevent values greater than 59
-      datas.PREPARATION_MINUTES = 59; // Update the model value
+      event.target.value = 59; 
+      datas.PREPARATION_MINUTES = 59; 
     } else if (input < 0) {
-      event.target.value = ''; // Prevent negative values
+      event.target.value = ''; 
       datas.PREPARATION_MINUTES = null;
     } else {
-      datas.PREPARATION_MINUTES = input; // Update model for valid input
+      datas.PREPARATION_MINUTES = input; 
     }
   }
   disableBeforeStartMinutes(i: number, selectedHour: number): number[] {
-    const datas = this.dataListBulk[i]; // Reference the current row's data
+    const datas = this.dataListBulk[i]; 
     if (!datas.START_TIME) {
       return [];
     }
@@ -80,7 +75,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     this.searchText = '';
   }
   disableBeforeStartHour(i: number): number[] {
-    const datas = this.dataListBulk[i]; // Reference the current row's data
+    const datas = this.dataListBulk[i]; 
     if (!datas.START_TIME) {
       return [];
     }
@@ -91,7 +86,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     }
     return hours;
   }
-
   formTitle = 'Territory Wise Service Change Management';
   pageIndex = 1;
   pageSize = 9;
@@ -99,7 +93,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   sortKey: string = '';
   chapters: any = [];
   GLOBAL_TABLE_CARD: string = 'C';
-
   isLoading = true;
   SERVER_URL = appkeys.retriveimgUrl + 'Item/';
   @Input() data: any = TerritoryMaster;
@@ -111,28 +104,20 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     ['CATEGORY_NAME', 'CATEGORY_NAME'],
     ['SUB_CATEGORY_NAME', 'SUB_CATEGORY_NAME'],
   ];
-
   columnsBulk: string[][] = [['NAME', 'NAME']];
-
   columns11: string[][] = [
     ['NAME', 'NAME'],
-    // ["B2B_PRICE", "B2B_PRICE"],
-    // ["B2C_PRICE", "B2C_PRICE"],
-    // ["EXPRESS_COST", "EXPRESS_COST"],
   ];
-
   loadingRecordsBulk: boolean = false;
   totalRecordsBulk: any = 0;
   dataListBulk: any = [];
   dataListBulk1: any = [];
-
   loadingRecords = false;
   totalRecords = 0;
   dataList: any = [];
   drawerTitle!: string;
   servicename: any;
   statusFilter: string | undefined = undefined;
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
@@ -140,43 +125,32 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   showcloumnVisible: boolean = false;
   servicecattext: string = '';
   sercatnameVisible: boolean = false;
-
   servicecatdesctext: string = '';
   sercatdescVisible: boolean = false;
-
   B2Btext: string = '';
   b2bVisible: boolean = false;
-
   B2Ctext: string = '';
   b2cVisible: boolean = false;
-
   expresspriceb2b: string = '';
   expressb2bVisible: boolean = false;
-
   expresspriceb2c: string = '';
   expressb2cVisible: boolean = false;
-
   estimationTimemins: string = '';
   estimationTimeVisible: boolean = false;
-
   widths: string = '35%';
   widths1: string = '100%';
   widths11: string = '60%';
-
   ServiceData: any = [];
   day_start_time: any;
   day_end_time: any;
-
   ServiceData1: any = [];
   ServiceDataMulti: any = [];
   isSpinningMulti: boolean = false;
   selectedLeafKeys: any = [];
   selectedCategories: number[] = [];
   categoryVisible = false;
-
   selectedSubCategories: number[] = [];
   subcategoryVisible = false;
-
   showcolumn = [
     { label: 'Price B2B', key: 'B2B_PRICE', visible: true },
     { label: 'Price B2C', key: 'B2C_PRICE', visible: true },
@@ -184,7 +158,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     { label: 'Estimation Time', key: 'DURATION', visible: true },
     { label: 'Catlogue Image', key: 'SERVICE_IMAGE', visible: true },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -192,12 +165,9 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     private router: Router,
     public datepipe: DatePipe
   ) { }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
-  // Check if the column is visible
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
@@ -205,7 +175,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   keyup(keys: KeyboardEvent) {
     const element = window.document.getElementById('button1');
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
-      // this.search(true);
     } else if (this.searchText.length == 0 && keys.key === 'Backspace') {
       this.dataList = [];
       this.search(true);
@@ -227,13 +196,11 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     this.CAN_CHANGE_SERVICE_PRICE_STATUS = this.CAN_CHANGE_SERVICE_PRICE1
       ? this.commonFunction.decryptdata(this.CAN_CHANGE_SERVICE_PRICE1)
       : 0;
-
     this.getcategoryData();
     this.getsubcategoryData();
     this.search(true);
     this.getorgData();
   }
-
   getcategoryData() {
     this.api.getCategoryData(0, 0, 'SEQ_NO', 'asc', ' AND STATUS=1').subscribe(
       (data) => {
@@ -244,10 +211,8 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         }
       },
       () => {
-        // this.message.error("Something Went Wrong", "");
       }
     );
-
     this.api
       .getAllOrganizations(1, 1, '', 'desc', ' AND ID= 1')
       .subscribe((data) => {
@@ -256,8 +221,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
             if (data['body']['data'][0].DAY_START_TIME) {
               this.day_start_time = data['body']['data'][0].DAY_START_TIME;
             }
-
-            // Parse organization end time
             if (data['body']['data'][0].DAY_END_TIME) {
               this.day_end_time = data['body']['data'][0].DAY_END_TIME;
             }
@@ -267,7 +230,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   }
   isSpinningMulti1: boolean = false;
   getServiceHierarchyget() {
-    // this.isSpinningMulti = true;
     this.isSpinningMulti1 = true;
     this.api.getMultiServiceHierarchy(this.data.ID).subscribe(
       (data) => {
@@ -291,7 +253,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         this.ServiceDataMulti = [];
         this.isSpinningMulti = false;
         this.isSpinningMulti1 = false;
-        // this.message.error("Something Went Wrong", "");
       }
     );
   }
@@ -321,19 +282,15 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         () => {
           this.ServiceData1 = [];
           this.isSpinningMulti = false;
-          // this.message.error("Something Went Wrong", "");
         }
       );
   }
-
   isSelectAll: boolean = false;
-
   allSelected1: any;
   selectedPincode111: any;
   allSelected: boolean = false;
   tableIndeterminate: boolean = false;
   selectedPincode: any[] = [];
-
   SubCategoryData: any = [];
   getsubcategoryData() {
     this.api.getSubCategoryData(0, 0, 'SEQ_NO', 'asc', ' AND STATUS=1').subscribe(
@@ -346,7 +303,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         }
       },
       () => {
-        // this.message.error("Something Went Wrong", "");
       }
     );
   }
@@ -358,26 +314,15 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-    // if (this.searchText != "") {
-    //   likeQuery = " AND";
-    //   this.columns.forEach((column) => {
-    //     likeQuery += " " + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    // }
     this.loadingRecords = true;
-
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -388,48 +333,41 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     this.loadingRecords = true;
     if (this.servicecattext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.servicecattext.trim()}%'`;
     }
-    // category Filter
     if (this.selectedCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; 
     }
-
-    // subcategory Filter
     if (this.selectedSubCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `SUB_CATEGORY_ID IN (${this.selectedSubCategories.join(
         ','
-      )})`; // Update with actual field name in the DB
+      )})`; 
     }
     if (this.servicecatdesctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DESCRIPTION LIKE '%${this.servicecatdesctext.trim()}%'`;
     }
-
     if (this.B2Btext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2B_PRICE LIKE '%${this.B2Btext.trim()}%'`;
     }
-
     if (this.B2Ctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2C_PRICE LIKE '%${this.B2Ctext.trim()}%'`;
     }
-
     if (this.expresspriceb2b !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -440,18 +378,13 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         (likeQuery ? ' AND ' : '') +
         `DURATION LIKE '%${this.estimationTimemins.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ADDED= ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getServiceTerritoryNonget(
         this.pageIndex,
@@ -465,7 +398,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
           if (data['code'] == 200) {
             this.loadingRecords = false;
             this.totalRecords = data['count'];
-            // this.dataList = data["data"];
             this.dataList = [...this.dataList, ...data['data']];
           } else if (data['code'] == 400) {
             this.loadingRecords = false;
@@ -476,7 +408,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
             this.loadingRecords = false;
             this.totalRecords = 0;
             this.dataList = [];
-            // this.message.error("Something Went Wrong ...", "");
           }
         },
         (err: HttpErrorResponse) => {
@@ -496,17 +427,14 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         }
       );
   }
-
   onKeypressEvent1(keys: KeyboardEvent) {
     const element = window.document.getElementById('button1');
     if (this.searchTextBulk.length >= 3 && keys.key === 'Enter') {
       this.addmultiple(true);
     } else if (this.searchTextBulk.length == 0 && keys.key == 'Backspace') {
-      // this.dataList = []
       this.addmultiple(true);
     }
   }
-
   searchopenBulk() {
     if (this.searchTextBulk.length >= 3) {
       this.addmultiple(true);
@@ -520,19 +448,15 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.sortKeyBulk = 'ID';
       this.sortValueBulk = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValueBulk.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     this.loadingRecordsBulk = true;
-
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchTextBulk !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -543,48 +467,41 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     this.loadingRecordsBulk = true;
     if (this.servicecattext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.servicecattext.trim()}%'`;
     }
-    // category Filter
     if (this.selectedCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; 
     }
-
-    // subcategory Filter
     if (this.selectedSubCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `SUB_CATEGORY_ID IN (${this.selectedSubCategories.join(
         ','
-      )})`; // Update with actual field name in the DB
+      )})`; 
     }
     if (this.servicecatdesctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DESCRIPTION LIKE '%${this.servicecatdesctext.trim()}%'`;
     }
-
     if (this.B2Btext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2B_PRICE LIKE '%${this.B2Btext.trim()}%'`;
     }
-
     if (this.B2Ctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2C_PRICE LIKE '%${this.B2Ctext.trim()}%'`;
     }
-
     if (this.expresspriceb2b !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -595,18 +512,13 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         (likeQuery ? ' AND ' : '') +
         `DURATION LIKE '%${this.estimationTimemins.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ADDED= ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getServiceTerritoryNonget(
         0,
@@ -622,36 +534,32 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
             this.totalRecordsBulk = data['count'];
             this.dataListBulk = data['data'];
             this.dataListBulk.forEach((record) => {
-              // Check and update START_TIME
               if (
                 record.START_TIME != undefined &&
                 record.START_TIME != null &&
                 record.START_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = record.START_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = record.START_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
-                  record.START_TIME = new Date(today); // Update START_TIME for the current record
+                  record.START_TIME = new Date(today); 
                 }
               }
-
-              // Check and update END_TIME
               if (
                 record.END_TIME != undefined &&
                 record.END_TIME != null &&
                 record.END_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = record.END_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = record.END_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
-                  record.END_TIME = new Date(today); // Update END_TIME for the current record
+                  record.END_TIME = new Date(today); 
                 }
               }
-
               if (record.IS_EXPRESS && this.data.IS_EXPRESS_SERVICE_AVAILABLE) {
-                record.EXPRESS_COST = record.EXPRESS_COST; // Clear the value
+                record.EXPRESS_COST = record.EXPRESS_COST; 
               } else {
                 record.EXPRESS_COST = null;
               }
@@ -666,7 +574,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
             this.loadingRecordsBulk = false;
             this.totalRecordsBulk = 0;
             this.dataListBulk = [];
-            // this.message.error("Something Went Wrong ...", "");
           }
         },
         (err: HttpErrorResponse) => {
@@ -686,7 +593,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         }
       );
   }
-
   index = -1;
   setIndex(i) {
     this.index = i;
@@ -695,39 +601,31 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     var disabledMinutes: number[] = [];
     const endHour = Number(this.day_end_time.split(':')[0]);
     const endMinute = Number(this.day_end_time.split(':')[1]);
-
-    const minuteStep = 10; // Matches [nzMinuteStep]
+    const minuteStep = 10; 
     const allMinutes = Array.from(
       { length: 60 / minuteStep },
       (_, i) => i * minuteStep
     );
     var selectedStartHour: any;
     var selectedStartMinute: any;
-
     selectedStartHour = this.extractHour(
       this.dataListBulk[this.index]?.START_TIME
     );
     selectedStartMinute = this.extractMinute(
       this.dataListBulk[this.index]?.START_TIME
     );
-
     if (hour === selectedStartHour) {
-      // If END_TIME hour matches START_TIME hour, disable minutes less than START_TIME minutes
       return allMinutes.filter((m) => m <= selectedStartMinute);
     } else if (hour === endHour) {
-      // If the hour matches the organization's endHour, disable minutes greater than endMinute
       return allMinutes.filter((m) => m > endMinute);
     }
     return disabledMinutes;
   };
-
   getDisabledHours(type: string, index: number): () => number[] {
     return () => {
       let startHour = Number(this.day_start_time.split(':')[0]);
       let endHour = Number(this.day_end_time.split(':')[0]);
-
       if (type === 'START_TIME') {
-        // Disable hours outside organization start and end hours
         return Array.from({ length: 24 }, (_, h) => h).filter(
           (h) => h < startHour || h > endHour
         );
@@ -747,15 +645,13 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       return [];
     };
   }
-
   getDisabledMinutes(type: string, index: number): () => number[] {
     return () => {
       const startHour = Number(this.day_start_time.split(':')[0]);
       const startMinute = Number(this.day_start_time.split(':')[1]);
       const endHour = Number(this.day_end_time.split(':')[0]);
       const endMinute = Number(this.day_end_time.split(':')[1]);
-
-      const minuteStep = 10; // Matches [nzMinuteStep]
+      const minuteStep = 10; 
       const allMinutes = Array.from(
         { length: 60 / minuteStep },
         (_, i) => i * minuteStep
@@ -763,13 +659,11 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       var selectedStartHour: any;
       var selectedEndHour: any;
       var selectedStartMinute: any;
-
       if (type === 'START_TIME') {
         selectedStartHour = this.extractHour(
           this.dataListBulk[index]?.START_TIME || this.day_start_time
         );
         if (selectedStartHour === startHour) {
-          // Disable minutes before the organization startMinute
           return allMinutes.filter((m) => m < startMinute);
         }
       } else if (type === 'END_TIME') {
@@ -780,20 +674,15 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
           this.dataListBulk[index]?.START_TIME
         );
         selectedEndHour = this.extractHour(this.dataListBulk[index]?.END_TIME);
-
         if (selectedEndHour === selectedStartHour) {
-          // If END_TIME hour matches START_TIME hour, disable minutes less than START_TIME minutes
           return allMinutes.filter((m) => m < selectedStartMinute);
         } else if (selectedEndHour === endHour) {
-          // If the hour matches the organization's endHour, disable minutes greater than endMinute
           return allMinutes.filter((m) => m > endMinute);
         }
       }
       return [];
     };
   }
-
-  // Helper functions to extract hour and minute
   extractHour(time: any): number {
     if (typeof time === 'string') {
       return Number(time.split(':')[0]);
@@ -805,7 +694,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     }
     return 0;
   }
-
   extractMinute(time: any): number {
     if (typeof time === 'string') {
       return Number(time.split(':')[1]);
@@ -819,10 +707,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   }
   onStartTimeChange(rowIndex: number, selectedTime: Date): void {
     if (selectedTime) {
-      // Round the time to the nearest 10 minutes
-      // this.dataListBulk[rowIndex].START_TIME = this.roundToNearestTenMinutes(new Date(selectedTime));
-
-      // Reset END_TIME if it's earlier than the new START_TIME
       if (
         this.dataListBulk[rowIndex].END_TIME &&
         this.dataListBulk[rowIndex].END_TIME <
@@ -832,13 +716,8 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       }
     }
   }
-
   OnendTimeChange(rowIndex: number, selectedTime: Date): void {
     if (selectedTime) {
-      // Round the time to the nearest 10 minutes
-      // this.dataListBulk[rowIndex].START_TIME = this.roundToNearestTenMinutes(new Date(selectedTime));
-
-      // Reset END_TIME if it's earlier than the new START_TIME
       if (
         this.dataListBulk[rowIndex].END_TIME &&
         this.dataListBulk[rowIndex].END_TIME <
@@ -848,7 +727,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       }
     }
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -856,7 +734,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   sortBulk(params: NzTableQueryParams) {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
@@ -864,17 +741,14 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndexBulk = pageIndex;
     this.pageSizeBulk = pageSize;
-
     if (this.pageSizeBulk != pageSize) {
       this.pageIndexBulk = 1;
       this.pageSizeBulk = pageSize;
     }
-
     if (this.sortKeyBulk != sortField) {
       this.pageIndexBulk = 1;
       this.pageSizeBulk = pageSize;
     }
-
     if (sortOrder == 'descend') {
       this.sortValueBulk = 'desc';
     } else if (sortOrder == 'ascend') {
@@ -887,70 +761,49 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.addmultiple();
     }
   }
-
   add(): void {
     this.servicename = null;
-    // this.dataList = [];
-    // this.pageIndex = 1;
-    // this.searchText = '';
-    // this.addbulkservice = false;
     this.getServiceTerritoryget();
   }
   ModalVisibleMultiple: boolean = false;
   addMultiService(): void {
     this.Service_HEI_DATA1 = [];
     this.Service_HEI_DATA = [];
-
     this.getServiceHierarchyget();
   }
-
   closeMultiSerModal() {
-    // this.dataList = [];
-    // this.pageIndex = 1;
-    // this.searchText = '';
     this.ModalVisibleMultiple = false;
   }
-
   Service_HEI_DATA: any = [];
   Service_HEI_DATA1: any = [];
   onChange(selectedValue: any): void {
     this.Service_HEI_DATA = [];
-    // Loop through each selected value (key)
     selectedValue.forEach((key: string) => {
-      this.findAndProcessItem(this.ServiceDataMulti, key); // Call recursive function
+      this.findAndProcessItem(this.ServiceDataMulti, key); 
     });
   }
-
   findAndProcessItem(data: any[], key: string): boolean {
     for (let item of data) {
       if (item.key === key) {
-        // If the current item matches the selected key
         this.extractServiceIds(item);
-        return true; // Stop further recursion for this key
+        return true; 
       }
-
-      // If the item has children, continue searching recursively
       if (item.children && this.findAndProcessItem(item.children, key)) {
         return true;
       }
     }
-
-    return false; // Return false if the key is not found in the current data
+    return false; 
   }
-
   extractServiceIds(item: any): void {
     if (item.isLeaf) {
-      // If it's a service (leaf node), extract its ID
-      const serviceId = item.key.split('-').pop(); // Get last part of the key
+      const serviceId = item.key.split('-').pop(); 
       if (!this.Service_HEI_DATA.includes(serviceId)) {
         this.Service_HEI_DATA.push(serviceId);
       }
     } else if (item.children) {
-      // If it's a category or subcategory, process its children
       item.children.forEach((child: any) => this.extractServiceIds(child));
     }
   }
-
   saveserviceMulti() {
     if (
       this.Service_HEI_DATA == null ||
@@ -993,7 +846,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       );
     }
   }
-
   drawerClose(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -1002,14 +854,11 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     this.addmultiple();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   parentSerId: any;
   sername: any;
-
   editclick: any = 'N';
   edit(data: ServiceCatMasterDataNew): void {
     this.drawerTitle = 'Update Service';
@@ -1024,7 +873,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.drawerData.START_TIME != ''
     ) {
       const today = new Date();
-      const timeParts = this.drawerData.START_TIME.split(':'); // Split "HH:mm:ss"
+      const timeParts = this.drawerData.START_TIME.split(':'); 
       if (timeParts.length > 1) {
         today.setHours(+timeParts[0], +timeParts[1], 0);
         this.drawerData.START_TIME = new Date(today);
@@ -1035,22 +884,15 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.drawerData.END_TIME != null &&
       this.drawerData.END_TIME != ''
     ) {
-      // this.drawerData.END_TIME = this.datepipe.transform(
-      //   new Date(),
-      //   'yyyy-MM-dd' + 'T' + this.drawerData.END_TIME
-      // );
       const today = new Date();
-      const timeParts = this.drawerData.END_TIME.split(':'); // Split "HH:mm:ss"
+      const timeParts = this.drawerData.END_TIME.split(':'); 
       if (timeParts.length > 1) {
         today.setHours(+timeParts[0], +timeParts[1], 0);
         this.drawerData.END_TIME = new Date(today);
       }
     }
-
     this.drawerVisible = true;
-    // this.drawerData.DURATION = "";
   }
-  // Main Filter code
   isfilterapply: boolean = false;
   filterQuery: string = '';
   visible = false;
@@ -1069,7 +911,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     'Start With',
     'End With',
   ];
-
   getComparisonOptions(selectedColumn: string): string[] {
     if (
       selectedColumn === 'CATEGORY_ID' ||
@@ -1091,9 +932,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       'End With',
     ];
   }
-
   columns2: string[][] = [['AND'], ['OR']];
-
   columns1: { label: string; value: string }[] = [
     { label: 'Category', value: 'CATEGORY_ID' },
     { label: 'Sub Category', value: 'SUB_CATEGORY_ID' },
@@ -1105,7 +944,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     { label: 'Estimation Time (mins)', value: 'DURATION' },
     { label: 'Status', value: 'IS_ADDED' },
   ];
-
   filterClass: string = 'filter-invisible';
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
@@ -1114,23 +952,18 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.filterClass = 'filter-visible';
     }
   }
-
   showFilter = false;
   toggleFilter() {
     this.showFilter = !this.showFilter;
   }
-
   showSortFilter = false;
   toggleSortFilter() {
     this.showSortFilter = !this.showSortFilter;
   }
-
   SELECTCOLOUM_NAME: any;
   TABLE_VALUE: any;
   COMPARISION_VALUE: any;
-
   conditions: any[] = [];
-
   InsertNewCondition() {
     this.conditions.push({
       SELECTCOLOUM_NAME: '',
@@ -1138,15 +971,11 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       TABLE_VALUE: '',
     });
   }
-
   deleteCondition(index: number) {
     this.conditions.splice(index, 1);
   }
-
   operators: string[] = ['AND', 'OR'];
-  // QUERY_NAME: string = '';
   showQueriesArray = [];
-
   filterBox = [
     {
       CONDITION: '',
@@ -1160,7 +989,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       ],
     },
   ];
-
   addCondition() {
     this.filterBox.push({
       CONDITION: '',
@@ -1174,16 +1002,13 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       ],
     });
   }
-
   removeCondition(index: number) {
     this.filterBox.splice(index, 1);
   }
-
   insertSubCondition(conditionIndex: number, subConditionIndex: number) {
     const lastFilterIndex = this.filterBox.length - 1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1196,7 +1021,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION3'
       ];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1216,12 +1040,10 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       });
     }
   }
-
   removeSubCondition(conditionIndex: number, subConditionIndex: number) {
     this.hide = true;
     this.filterBox[conditionIndex].FILTER.splice(subConditionIndex, 1);
   }
-
   generateQuery() {
     var isOk = true;
     var i = this.filterBox.length - 1;
@@ -1247,7 +1069,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       isOk = false;
       this.message.error('Please select operator.', '');
     }
-
     if (isOk) {
       this.filterBox.push({
         CONDITION: '',
@@ -1262,8 +1083,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       });
     }
   }
-
-  /*******  Create filter query***********/
   query = '';
   query2 = '';
   showquery: any;
@@ -1273,7 +1092,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1287,7 +1105,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       'SELECTION3'
       ];
     const selection4 = this.filterBox[lastFilterIndex]['CONDITION'];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1301,17 +1118,14 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.message.error('Please Select the Operator', '');
     } else {
       this.isSpinner = true;
-
       for (let i = 0; i < this.filterBox.length; i++) {
         if (i != 0) {
           this.query += ') ' + this.filterBox[i]['CONDITION'] + ' (';
         } else this.query = '(';
-
         this.query2 = '';
         for (let j = 0; j < this.filterBox[i]['FILTER'].length; j++) {
           const filter = this.filterBox[i]['FILTER'][j];
           if (j == 0) {
-            //this.query2 += '(';
           } else {
             if (filter['CONDITION'] == 'AND') {
               this.query2 = this.query2 + ' AND ';
@@ -1319,11 +1133,9 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
               this.query2 = this.query2 + ' OR ';
             }
           }
-
           let selection1 = filter['SELECTION1'];
           let selection2 = filter['SELECTION2'];
           let selection3 = filter['SELECTION3'];
-
           if (selection2 == 'Contains') {
             this.query2 += `${selection1} LIKE '%${selection3}%'`;
           } else if (selection2 == 'End With') {
@@ -1334,23 +1146,17 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
             this.query2 += `${selection1} ${selection2} '${selection3}'`;
           }
           if (j + 1 == this.filterBox[i]['FILTER'].length) {
-            //this.query2 += ') ';
             this.query += this.query2;
           }
         }
-
         if (i + 1 == this.filterBox.length) {
           this.query += ')';
         }
       }
-
       this.showquery = this.query;
-
       var newQuery = ' AND ' + this.query;
-
       this.filterQuery1 = newQuery;
-
-      let sort = ''; // Assign a default value to sort
+      let sort = ''; 
       let filterQuery = '';
       this.api
         .getServiceTerritoryNonget(
@@ -1378,11 +1184,9 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
             if (err['ok'] === false) this.message.error('Server Not Found', '');
           }
         );
-
       this.QUERY_NAME = '';
     }
   }
-
   restrictedKeywords = [
     'SELECT',
     'INSERT',
@@ -1405,23 +1209,18 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     'COMMIT',
     '--',
     ';',
-    '/*',
-    '*/',
+    '',
   ];
-
   isValidInput(input: string): boolean {
     return !this.restrictedKeywords.some((keyword) =>
       input.toUpperCase().includes(keyword)
     );
   }
-
   applyFilter(i, j) {
     const inputValue = this.filterBox[i].FILTER[j].SELECTION3;
-
     const lastFilterIndex = this.filterBox.length - 1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1434,7 +1233,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION3'
       ];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1448,20 +1246,15 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       typeof inputValue === 'string' &&
       !this.isValidInput(inputValue)
     ) {
-      // Show error message
       this.message.error(`Invalid Input: ${inputValue} is not allowed.`, '');
     } else {
-      // var DemoData:any = this.filterBox
       let sort: string;
       let filterQuery = '';
-
       try {
         sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
       } catch (error) {
         sort = '';
       }
-      // Define a function to get the comparison value filter
-
       this.isSpinner = true;
       const getComparisonFilter = (
         comparisonValue: any,
@@ -1488,7 +1281,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
             return '';
         }
       };
-
       const FILDATA = this.filterBox[i]['FILTER']
         .map((item) => {
           const filterCondition = getComparisonFilter(
@@ -1499,7 +1291,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
           return `AND (${filterCondition})`;
         })
         .join(' ');
-
       this.api
         .getServiceTerritoryNonget(
           0,
@@ -1528,7 +1319,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         );
     }
   }
-
   resetValues(): void {
     this.filterBox = [
       {
@@ -1543,83 +1333,54 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         ],
       },
     ];
-    // this.searchTable();
   }
-
   public visiblesave = false;
-
   saveQuery() {
     this.visiblesave = !this.visiblesave;
   }
-
   QUERY_NAME: string = '';
   name1: any;
   name2: any;
   INSERT_NAMES: any[] = [];
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
-  // Insertname() {
-  //   if (this.QUERY_NAME.trim()) {
-  //     this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
-  //
-  //     this.visiblesave = false;
-  //     this.QUERY_NAME = ""; // Clear input after adding
-  //   } else {
-  //
-  //   }
-  // }
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(query: string, name: string): void {
     this.selectedQuery = query;
-
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   deleteItem(item: any) {
     this.INSERT_NAMES = this.INSERT_NAMES.filter((i) => i !== item);
   }
-
   handleLiveDemoChange(event: any) {
     this.visible = event;
   }
   toggleLiveDemo1() {
     this.visible = false;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
   SerModalVisible: boolean = false;
   imageshow;
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + 'Item/' + link;
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
   loadingRecordsservice: boolean = false;
-
   closeser() {
     this.SerModalVisible = false;
     this.servicename = null;
   }
-
   saveservice() {
     if (
       this.servicename == null ||
@@ -1645,7 +1406,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
                   this.drawerData.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.drawerData.START_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.drawerData.START_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.drawerData.START_TIME = new Date(today);
@@ -1657,7 +1418,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
                   this.drawerData.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.drawerData.END_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.drawerData.END_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.drawerData.END_TIME = new Date(today);
@@ -1684,13 +1445,11 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         );
     }
   }
-
   handleOkTop(): void {
     const lastFilterIndex = this.filterBox.length - 1;
     1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1704,7 +1463,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       'SELECTION3'
       ];
     const selection4 = this.filterBox[lastFilterIndex]['CONDITION'];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1718,17 +1476,14 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.message.error('Please Select the Operator', '');
     } else {
       this.isSpinner = true;
-
       for (let i = 0; i < this.filterBox.length; i++) {
         if (i != 0) {
           this.query += ') ' + this.filterBox[i]['CONDITION'] + ' (';
         } else this.query = '(';
-
         this.query2 = '';
         for (let j = 0; j < this.filterBox[i]['FILTER'].length; j++) {
           const filter = this.filterBox[i]['FILTER'][j];
           if (j == 0) {
-            //this.query2 += '(';
           } else {
             if (filter['CONDITION'] == 'AND') {
               this.query2 = this.query2 + ' AND ';
@@ -1736,11 +1491,9 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
               this.query2 = this.query2 + ' OR ';
             }
           }
-
           let selection1 = filter['SELECTION1'];
           let selection2 = filter['SELECTION2'];
           let selection3 = filter['SELECTION3'];
-
           if (selection2 == 'Contains') {
             this.query2 += `${selection1} LIKE '%${selection3}%'`;
           } else if (selection2 == 'End With') {
@@ -1751,39 +1504,31 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
             this.query2 += `${selection1} ${selection2} '${selection3}'`;
           }
           if (j + 1 == this.filterBox[i]['FILTER'].length) {
-            //this.query2 += ') ';
             this.query += this.query2;
           }
         }
-
         if (i + 1 == this.filterBox.length) {
           this.query += ')';
         }
       }
-
       this.showquery = this.query;
     }
-
     if (this.QUERY_NAME == '' || this.QUERY_NAME.trim() == '') {
       this.message.error('Please Enter Query Name', '');
     } else {
       this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
       this.visiblesave = false;
-      this.QUERY_NAME = ''; // Clear input after adding
+      this.QUERY_NAME = ''; 
     }
     this.visiblesave = false;
   }
-
   handleCancelTop(): void {
     this.visiblesave = false;
   }
-
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   onViewReference(imageUrl: string): void {
     if (imageUrl) {
       window.open(appkeys.retriveimgUrl + 'Item/' + '/' + imageUrl, '_blank');
@@ -1816,10 +1561,8 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   seqvisible = false;
   selectedServices: number[] = [];
   selectedServicessub: number[] = [];
-
   serviceVisible = false;
   subserviceVisible = false;
-
   datalistforTable: any = [];
   loadtable: boolean = false;
   totalREcordTable: any = 0;
@@ -1831,7 +1574,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   pageSizeBulk: any = 0;
   sortValueBulk: string = 'desc';
   sortKeyBulk: any = '';
-
   addbulkservice: boolean = false;
   add1() {
     this.dataList = [];
@@ -1849,31 +1591,19 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   updateValue(index: number, key: string, value: any) {
-    // Get the original item from the duplicate array
     const originalItem = this.dublcatearray[index];
-
-    // Check if the value has actually changed
     if (originalItem[key] !== value) {
-      // Update the value in the main data array
       this.dataListBulk[index][key] = value;
-
-      // Check if the record is already in updatedRecords
       const existingRecordIndex = this.updatedRecords.findIndex((item) => {
-        return item.SERVICE_ID === originalItem.SERVICE_ID; // Explicit return
+        return item.SERVICE_ID === originalItem.SERVICE_ID; 
       });
-
       if (existingRecordIndex !== -1) {
-        // If the record is already in updatedRecords, update the specific field
         this.updatedRecords[existingRecordIndex][key] = value;
       } else {
         const newRecord = { ...originalItem, [key]: value };
         this.updatedRecords.push(newRecord);
-        // If the record is not in updatedRecords, add a copy of it with the updated field
-        // this.updatedRecords.push({ ...originalItem });
       }
-
       const selectedTime = new Date(value);
       if (key == 'START_TIME' || key == 'END_TIME') {
         this.dataListBulk[index][key] =
@@ -1882,21 +1612,11 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     } else {
     }
   }
-
   save(): void {
     if (this.updatedRecords.length > 0) {
-      let isValid = true; // Flag to track if the validation passes
+      let isValid = true; 
       let commonErrorMessage = '';
       this.updatedRecords.forEach((data, i) => {
-        // Check if required fields are empty or invalid for each row
-
-        // if (!commonErrorMessage && (
-        //   data.SERVICE_TYPE == null ||
-        //   data.SERVICE_TYPE == undefined ||
-        //   data.SERVICE_TYPE == '')) {
-        //   commonErrorMessage = 'Please select service type for updated records.';
-        //   isValid = false;
-        // } else
         if (
           !commonErrorMessage &&
           (data.SERVICE_TYPE == 'B' || data.SERVICE_TYPE == 'O') &&
@@ -1994,7 +1714,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
           isValid = false;
         }
       });
-
       if (isValid) {
         this.updatedRecords.forEach((data, i) => {
           if (data.START_TIME) {
@@ -2040,21 +1759,16 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       );
     }
   }
-
   formatTimeToHHmm(time: any): string {
-    const date = new Date(time); // Assuming time is a valid timestamp or ISO string
+    const date = new Date(time); 
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
   }
-
-  // singlerow
   loadingRecordsreceipt: { [key: number]: boolean } = {};
-
   updateSingleRow(rowData: any): void {
-    let isValid = true; // Flag to track if validation passes
-    let commonErrorMessage = ''; // Variable to store the common error message
-
+    let isValid = true; 
+    let commonErrorMessage = ''; 
     if (
       (rowData.SERVICE_TYPE == 'B' || rowData.SERVICE_TYPE == 'O') &&
       (rowData.B2B_PRICE == null ||
@@ -2137,10 +1851,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       commonErrorMessage = 'Service preparation time must be greater than 0';
       isValid = false;
     }
-
-    // If valid, process the row
     if (isValid) {
-      // Convert START_TIME and END_TIME to HH:mm format
       if (rowData.START_TIME) {
         rowData.START_TIME = this.formatTimeToHHmm(rowData.START_TIME);
       }
@@ -2155,9 +1866,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       }
       rowData.PREPARATION_MINUTES = Number(rowData.PREPARATION_MINUTES);
       rowData.PREPARATION_HOURS = Number(rowData.PREPARATION_HOURS);
-
       this.loadingRecordsreceipt[rowData.ID] = true;
-
       this.isSpinning = true;
       this.api.BulkServiceUpdate(this.data.ID, [rowData]).subscribe(
         (successCode: any) => {
@@ -2186,7 +1895,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         }
       );
     } else {
-      // Show error message if validation fails
       this.message.error(commonErrorMessage, '');
       return;
     }
@@ -2195,7 +1903,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     this.pageIndex += 1;
     this.search();
   }
-
   drawerserviceVisibleMaped: boolean = false;
   drawerDataMaped: ServiceCatMasterDataNew = new ServiceCatMasterDataNew();
   drawerTitleMaped!: string;
@@ -2207,7 +1914,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     this.drawerDataMaped = Object.assign({}, data);
     this.drawerserviceVisibleMaped = true;
   }
-
   drawerServiceMappingCloseMaped(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -2218,11 +1924,8 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   get closeServiceMappingCallbackMaped() {
     return this.drawerServiceMappingCloseMaped.bind(this);
   }
-
-  //Mapping
   drawerMappigVisible: boolean = false;
   drawerMappingTitle!: string;
-
   draweMappingClose(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -2230,9 +1933,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     this.search();
     this.drawerMappigVisible = false;
   }
-
   mapSkill(data: any) {
-    // this.dataList = [];
     this.pageIndex = 1;
     this.searchText = '';
     this.drawerMappingTitle = `Map Skills to ${data.NAME} Service`;
@@ -2242,10 +1943,8 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   get closeCallbackMapping() {
     return this.draweMappingClose.bind(this);
   }
-
   drawerMappigVisibleHelp: boolean = false;
   drawerMappingTitleHelp!: string;
-
   draweMappingCloseHelp(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -2265,8 +1964,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   get HelpcloseCallbackMapping() {
     return this.draweMappingCloseHelp.bind(this);
   }
-
-  // vaishnavi
   bulkupdatebutton = false;
   StartDate: any;
   submittedDateVisible: boolean = false;
@@ -2285,33 +1982,19 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     } else if (typeof value === 'string') {
       timeString = value;
     } else {
-
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
     date.setHours(hours, minutes, 0);
     const formattedStartTime = date.toISOString();
-
-    // this.dataListBulk.forEach((item) => {
-    //   item.START_TIME = formattedStartTime;
-    //   const endTime = new Date(item.END_TIME);
-
-    //   if (endTime < date) {
-    //     item.END_TIME = null;
-    //   }
-    // });
-
     this.dataListBulk.forEach((item, index) => {
       const endTime = new Date(item.END_TIME);
       if (endTime < date) {
@@ -2319,12 +2002,10 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       }
       this.updateValue(index, 'START_TIME', formattedStartTime);
     });
-
     this.bulkupdatebutton = true;
     this.submittedDateVisible = false;
     this.updateEndTimeRestrictions();
   }
-
   EndDate: any;
   endDateVisible: boolean = false;
   isendDateFilterApplied: boolean = false;
@@ -2342,35 +2023,24 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
     } else if (typeof value === 'string') {
       timeString = value;
     } else {
-
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
     date.setHours(hours, minutes, 0);
     const formattedStartTime = date.toISOString();
-
-    // this.dataListBulk.forEach((item) => {
-    //   item.END_TIME = formattedStartTime;
-    // });
-
     this.dataListBulk.forEach((item, index) => {
       this.updateValue(index, 'END_TIME', formattedStartTime);
     });
-
     this.endDateVisible = false;
   }
-
   disableStartHours: () => number[] = () => [];
   disableStartMinutes: (hour: number) => number[] = () => [];
   disableEndHours: () => number[] = () => [];
@@ -2379,7 +2049,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   orgStartMinute: any = 0;
   orgEndHour: any = 23;
   orgEndMinute: any = 59;
-
   getorgData() {
     this.api
       .getAllOrganizations(1, 1, '', 'desc', ' AND ID=1')
@@ -2398,7 +2067,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
                 );
               }
             }
-
             if (data['body']['data'][0].DAY_END_TIME) {
               const endParts = data['body']['data'][0].DAY_END_TIME.split(':');
               this.orgEndHour = +endParts[0];
@@ -2411,9 +2079,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
                 );
               }
             }
-
             this.initializeTimeRestrictions();
-
             if (data['body'].count > 0 && !this.data.ID) {
               if (
                 data['body']['data'][0].DAY_START_TIME != undefined &&
@@ -2421,7 +2087,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
                 data['body']['data'][0].DAY_START_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = data['body']['data'][0].DAY_START_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = data['body']['data'][0].DAY_START_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.StartDate = new Date(today);
@@ -2433,7 +2099,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
                 data['body']['data'][0].DAY_END_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = data['body']['data'][0].DAY_END_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = data['body']['data'][0].DAY_END_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.EndDate = new Date(today);
@@ -2449,7 +2115,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < this.orgStartHour || hour > this.orgEndHour
       );
-
     this.disableStartMinutes = (hour: number) =>
       hour === this.orgStartHour
         ? Array.from({ length: 60 }, (_, i) => i).filter(
@@ -2460,18 +2125,15 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
             (minute) => minute > this.orgEndMinute
           )
           : [];
-
     this.disableEndHours = () => {
       const startHour = this.getStartHour();
       return Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < startHour || hour > this.orgEndHour
       );
     };
-
     this.disableEndMinutes = (hour: number) => {
       const startHour = this.getStartHour();
       const startMinute = this.getStartMinute();
-
       if (hour === startHour) {
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute <= startMinute
@@ -2485,32 +2147,25 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       }
     };
   }
-
   getStartHour() {
     return this.StartDate
       ? new Date(this.StartDate).getHours()
       : this.orgStartHour;
   }
-
   getStartMinute() {
     return this.StartDate
       ? new Date(this.StartDate).getMinutes()
       : this.orgStartMinute;
   }
-
   onStartTimeChange1() {
     const selectedTime = new Date(this.StartDate);
     this.StartDate = this.roundMinutesToNearestInterval(selectedTime);
-
     this.initializeTimeRestrictions();
-    // this.updateEndTimeRestrictions();
   }
   updateEndTimeRestrictions() {
     if (!this.StartDate) return;
-
     const startHour = this.StartDate.getHours();
     const startMinute = this.StartDate.getMinutes();
-
     this.getDisabledHours = (type: string, index: number) => {
       return () => {
         if (type === 'END_TIME') {
@@ -2519,7 +2174,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         return [];
       };
     };
-
     this.getDisabledMinutes2 = (hour: number) => {
       if (hour === startHour) {
         return [...Array(startMinute + 1).keys()];
@@ -2527,7 +2181,6 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
       return [];
     };
   }
-
   onendTimeChange1() {
     const selectedTime = new Date(this.EndDate);
     this.EndDate = this.roundMinutesToNearestInterval(selectedTime);
@@ -2535,27 +2188,21 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   roundMinutesToNearestInterval(date: Date): Date {
     const minutes = date.getMinutes();
     const roundedMinutes = Math.round(minutes / 10) * 10;
-
     let finalHour = date.getHours();
     let finalMinutes = roundedMinutes;
-
     if (roundedMinutes >= 60) {
       finalMinutes = 0;
       finalHour = (finalHour + 1) % 24;
     }
-
     const roundedDate = new Date(date);
     roundedDate.setHours(finalHour);
     roundedDate.setMinutes(finalMinutes);
     roundedDate.setSeconds(0);
-
     return roundedDate;
   }
-
   bulkupdate() {
     let isValid = true;
     let commonErrorMessage = '';
-
     for (const rowData of this.dataListBulk) {
       if (
         (rowData.SERVICE_TYPE == 'C' || rowData.SERVICE_TYPE == 'O') &&
@@ -2650,36 +2297,16 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         break;
       }
     }
-
-    // If validation fails, show error and return
     if (!isValid) {
       this.message.error(commonErrorMessage, '');
       return;
     }
-    // const hasNullEndTime = this.dataListBulk.some(
-    //   (item) => item.END_TIME === null
-    // );
-
-    // if (hasNullEndTime) {
-    //   this.message.error('Please Select End Time.', '');
-    //   return;
-    // }
-    // const hasNullStartTime = this.dataListBulk.some(
-    //   (item) => item.START_TIME === null
-    // );
-
-    // if (hasNullStartTime) {
-    //   this.message.error('Please Select Start Time.', '');
-    //   return;
-    // }
-
     const updatedDataList = this.dataListBulk.map((item) => {
       const formatedstarttime = this.formatTimeToHHmm(item.START_TIME);
       const formatedendtime = this.formatTimeToHHmm(item.END_TIME);
       const updatedItem = this.updatedRecords.find(
         (record) => record.ID === item.ID
       );
-
       return {
         ...item,
         ...updatedItem,
@@ -2689,9 +2316,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
         ORG_ID: 1,
       };
     });
-
     this.isSpinning = true;
-
     this.api.BulkServiceUpdate(this.data.ID, updatedDataList).subscribe(
       (successCode: any) => {
         if (successCode.code === 200) {

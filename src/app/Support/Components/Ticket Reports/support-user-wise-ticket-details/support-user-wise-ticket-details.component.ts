@@ -12,7 +12,6 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Router } from '@angular/router';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-support-user-wise-ticket-details',
   templateUrl: './support-user-wise-ticket-details.component.html',
@@ -62,7 +61,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
   drawerData: Ticket = new Ticket();
   uniqueDateArry: any = [];
   newData2: any = [];
-  // userId = Number(this.cookie.get('userId'));
   roleId = Number(this.cookie.get('roleId'));
   orgId = Number(this.cookie.get('orgId'));
   deptId = Number(this.cookie.get('deptId'));
@@ -71,10 +69,8 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
   CREATION_DATE1 = new Date();
   CREATION_DATE2 = new Date();
   today = new Date();
-  // orgName: string = this.api.ORGANIZATION_NAME;
   orgName: any = '';
   public commonFunction = new CommonFunctionService();
-
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
@@ -83,18 +79,15 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   disabledToDate = (current: Date): boolean =>
     differenceInCalendarDays(
       current,
       this.CREATION_DATE1 == null ? this.today : this.CREATION_DATE1
     ) < 0;
-
   onFromDateChange(fromDate) {
     if (fromDate == null) this.CREATION_DATE2 = new Date();
     else this.CREATION_DATE2 = new Date(fromDate);
   }
-
   setDateForDeptWiseFilter() {
     this.CREATION_DATE = [];
     let currentDate = new Date();
@@ -102,31 +95,19 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     this.CREATION_DATE1 = new Date(previous6thDayDate);
     this.CREATION_DATE2 = new Date();
   }
-
   ngOnInit() {
     this.setDateForDeptWiseFilter();
-    // this.getSupportUsers();
-    // this.getSupportAgents();
-
     if (this.roleId == 6) this.getDepartmentToShowReport();
-
-    // if (this.roleId == 4) this.getDepartmentSupportAgentWise();
-
-    // if (this.roleId != 4 && this.roleId != 6) this.search(true);
-
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
-
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -140,39 +121,29 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   createdbyVisible: boolean = false;
   iscreatedbyFilterApplied: boolean = false;
   createdbyText: string = '';
-
   takenbyVisible: boolean = false;
   istakenbyFilterApplied: boolean = false;
   takenbyText: string = '';
-
   ticketnoVisible: boolean = false;
   isticketnoFilterApplied: boolean = false;
   ticketnoText: string = '';
-
   questionVisible: boolean = false;
   isquestionFilterApplied: boolean = false;
   questionText: string = '';
-
   istakenVisible: boolean = false;
   istakenstatusFilterApplied: boolean = false;
-  // questionText: string = '';
-
   lastrespondedDateVisible: boolean = false;
   isscheduleDateFilterApplied: boolean = false;
   lastDateText: string = '';
   StartDate: any = [];
   EndDate: any = [];
-
   iscreatedDateFilterApplied: boolean = false;
   createdStartDate: any = [];
   createdDateVisible = false;
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -181,12 +152,11 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
         this.isscheduleDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isscheduleDateFilterApplied = false;
     }
   }
-
   oncreatedDateRangeChange(): void {
     if (this.createdStartDate && this.createdStartDate.length === 2) {
       const [start, end] = this.createdStartDate;
@@ -195,12 +165,11 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
         this.iscreatedDateFilterApplied = true;
       }
     } else {
-      this.createdStartDate = null; // or [] if you prefer
+      this.createdStartDate = null; 
       this.search();
       this.iscreatedDateFilterApplied = false;
     }
   }
-
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -210,7 +179,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     { text: 'Yes', value: 'Yes' },
     { text: 'No', value: 'No' },
   ];
-
   statusFilter1: string | undefined = undefined;
   onStatusFilterChange1(selectedStatus: string) {
     this.statusFilter1 = selectedStatus;
@@ -225,7 +193,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     { text: 'Banned', value: 'B' },
     { text: 'On-Hold', value: 'H' },
   ];
-
   statusFilter2: string | undefined = undefined;
   onpriorityFilterChange1(selectedStatus: string) {
     this.statusFilter2 = selectedStatus;
@@ -238,7 +205,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     { text: 'Low', value: 'L' },
     { text: 'Very Low', value: 'O' },
   ];
-
   onKeyup(event: KeyboardEvent): void {
     if (this.createdbyText.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -247,7 +213,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       this.search();
       this.iscreatedbyFilterApplied = false;
     }
-
     if (this.takenbyText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.istakenbyFilterApplied = true;
@@ -255,7 +220,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       this.search();
       this.istakenbyFilterApplied = false;
     }
-
     if (this.ticketnoText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isticketnoFilterApplied = true;
@@ -263,7 +227,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       this.search();
       this.isticketnoFilterApplied = false;
     }
-
     if (this.questionText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isquestionFilterApplied = true;
@@ -272,19 +235,15 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       this.isquestionFilterApplied = false;
     }
   }
-
   reset() {
     this.ticketnoText = '';
     this.questionText = '';
     this.createdbyText = '';
     this.takenbyText = '';
   }
-
   deptWiseReport: any = [];
-
   getDepartmentToShowReport() {
     this.deptWiseReport = [];
-
     this.api
       .gettickdeskDepartmentAdminMapping(
         0,
@@ -296,18 +255,15 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       .subscribe((data) => {
         if (data['code'] == 200) {
           var departments = data['data'];
-
           for (var i = 0; i < departments.length; i++) {
             this.deptWiseReport.push(departments[i]['DEPARTMENT_ID']);
           }
-
           if (this.roleId == 6) {
             this.search(true);
           }
         }
       });
   }
-
   exportexcel(): void {
     let element = document.getElementById('summer');
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
@@ -315,26 +271,21 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, this.fileName);
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   search(
     reset: boolean = false,
     exportToExcel: boolean = false,
@@ -346,33 +297,21 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     if (this.searchText != '') {
       likeQuery = ' AND (';
-
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
     }
-
     var supportAgentWiseDept = '';
-    // if (this.roleId == 4) {
-    //   if (this.supportAgentWiseDeptArray.length > 0)
-    //     supportAgentWiseDept =
-    //       ' AND DEPARTMENT_ID IN (' + this.supportAgentWiseDeptArray + ')';
-    //   else supportAgentWiseDept = '';
-    // }
-
     var deptAdminWiseDept = '';
     if (this.roleId == 6) {
       if (this.deptWiseReport.length > 0)
@@ -380,7 +319,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
           ' AND DEPARTMENT_ID IN (' + this.deptWiseReport + ')';
       else deptAdminWiseDept = '';
     }
-
     var creationDateFilter = '';
     if (this.CREATION_DATE1 != undefined && this.CREATION_DATE2 != undefined) {
       creationDateFilter =
@@ -390,30 +328,23 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
         this.datePipe.transform(this.CREATION_DATE2, 'yyyy-MM-dd 23:59:59') +
         "')";
     }
-
     var supportUserFilter = '';
     if (this.SUPPORT_USERS.length > 0)
       supportUserFilter =
         ' AND CREATOR_EMPLOYEE_ID IN (' + this.SUPPORT_USERS + ')';
-
     var supportAgentFilter = '';
     if (this.SUPPORT_AGENTS.length > 0)
       supportAgentFilter =
         ' AND TAKEN_BY_USER_ID IN (' + this.SUPPORT_AGENTS + ')';
-
     var statusFilter = '';
     if (this.STATUS.length > 0)
       statusFilter = ' AND STATUS IN (' + this.STATUS + ')';
-
-    // column filters
     var filterQuery5 = '';
-
     if (this.createdbyText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `CREATOR_EMPLOYEE_NAME LIKE '%${this.createdbyText.trim()}%'`;
     }
-
     if (this.takenbyText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
@@ -424,39 +355,34 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
         (filterQuery5 ? ' AND ' : '') +
         `TICKET_NO LIKE '%${this.ticketnoText.trim()}%'`;
     }
-
     if (this.questionText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `QUESTION LIKE '%${this.questionText.trim()}%'`;
     }
-
     if (this.statusFilter) {
       if (filterQuery5 !== '') {
         filterQuery5 += ' AND ';
       }
       filterQuery5 += `IS_TAKEN_STATUS = "${this.statusFilter}"`;
     }
-
     if (this.statusFilter1) {
       if (filterQuery5 !== '') {
         filterQuery5 += ' AND ';
       }
       filterQuery5 += `STATUS = "${this.statusFilter1}"`;
     }
-
     if (this.statusFilter2) {
       if (filterQuery5 !== '') {
         filterQuery5 += ' AND ';
       }
       filterQuery5 += `PRIORITY = "${this.statusFilter2}"`;
     }
-
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         filterQuery5 +=
           (filterQuery5 ? ' AND ' : '') +
           `LAST_RESPONDED BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -465,12 +391,11 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     } else {
       this.isscheduleDateFilterApplied = false;
     }
-
     if (this.createdStartDate && this.createdStartDate.length === 2) {
       const [start, end] = this.createdStartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         filterQuery5 +=
           (filterQuery5 ? ' AND ' : '') +
           `DATE BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -479,12 +404,9 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     } else {
       this.iscreatedDateFilterApplied = false;
     }
-
     filterQuery5 = filterQuery5 ? ' AND ' + filterQuery5 : '';
-
     if (exportToExcel) {
       this.exportLoading = true;
-
       this.api
         .getAllTickets(
           0,
@@ -500,7 +422,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
               this.dataListForExport = data.body['data'];
               this.TabId = data.body['TAB_ID'];
               this.exportLoading = false;
-
               this.convertInExcel();
             }
           },
@@ -510,41 +431,8 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
           }
         );
     }
-    // else if (exportToPDF) {
-    //   this.exportInPDFLoading = true;
-
-    //   this.api
-    //     .getSupportAgentWiseTicketDetails(
-    //       0,
-    //       0,
-    //       this.sortKey,
-    //       sort,
-    //       likeQuery +
-    //         creationDateFilter +
-    //         supportUserFilter +
-    //         supportAgentFilter +
-    //         supportAgentWiseDept +
-    //         deptAdminWiseDept +
-    //         statusFilter +
-    //         ' AND ORG_ID=' +
-    //         this.cookie.get('orgId')
-    //     )
-    //     .subscribe(
-    //       (data) => {
-    //         if (data['code'] == 200) {
-    //           this.exportInPDFLoading = false;
-    //           this.dataListForExport = data['data'];
-    //           this.isPDFModalVisible = true;
-    //         }
-    //       },
-    //       (err) => {
-    //         if (err['ok'] == false) this.message.error('Server Not Found', '');
-    //       }
-    //     );
-    // }
     else {
       this.loadingRecords = true;
-
       this.api
         .getAllTickets(
           this.pageIndex,
@@ -570,7 +458,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
         );
     }
   }
-
   applyFilter() {
     if (
       (this.CREATION_DATE1 != null && this.CREATION_DATE2 != null) ||
@@ -579,11 +466,9 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     )
       this.isFilterApplied = 'primary';
     else this.isFilterApplied = 'default';
-
     this.search(true);
     this.filterClass = 'filter-invisible';
   }
-
   clearFilter() {
     this.SUPPORT_USERS = [];
     this.SUPPORT_AGENTS = [];
@@ -595,7 +480,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
   }
-
   @ViewChild(ChattdetailsicketComponent, { static: false })
   ChattdetailsicketComponentVar: ChattdetailsicketComponent;
   grpid = 0;
@@ -605,28 +489,21 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
   isloading = false;
   viewTicketData(data: Ticket) {
     this.isloading = true;
-
     this.newData2 = [];
     this.data1 = [];
-    // this.ChattdetailsicketComponentVar.loading = true;
     this.drawerTitle = 'Ticket No. ' + data.TICKET_NO;
     this.drawerData = Object.assign({}, data);
     var filterQuery1 = ' AND TICKET_MASTER_ID = ' + data.ID + '';
-
     this.api
       .getAllTicketDetails(0, 0, 'CREATED_MODIFIED_DATE', 'asc', filterQuery1)
       .subscribe(
         (data: HttpResponse<any>) => {
           if (data.status == 200) {
             data = data.body;
-            // this.ViewchatticketComponentVar.isSpinning = false;
             this.totalRecords = data['count'];
             this.data1 = data['data'];
             this.isloading = false;
-
             this.grpid = this.data1[0]['TICKET_GROUP_ID'];
-
-            // Getting Unique dates
             for (var i = 0; i < this.data1.length; i++) {
               this.uniqueDateArry.push(
                 this.datePipe.transform(
@@ -635,10 +512,8 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
                 )
               );
             }
-
             this.uniqueDateArry = [...new Set(this.uniqueDateArry)];
             this.uniqueDateArry.sort();
-
             this.uniqueDateArry.forEach((d1) => {
               this.newData2.push({
                 key: d1,
@@ -651,10 +526,7 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
                 ),
               });
             });
-
             this.data1 = this.newData2;
-            // this.ViewchatticketComponentVar.scrollIntoViewFunction();
-
             this.api
               .getBreadInChat(0, 0, 'ID', 'desc', '', '', this.grpid)
               .subscribe(
@@ -662,10 +534,8 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
                   if (data.status == 200) {
                     data = data.body;
                     this.bread = data['data'];
-
                     this.newstr = '';
                     this.GRPNAME = '';
-
                     for (var i = 0; i < this.bread.length; i++) {
                       this.GRPNAME =
                         this.GRPNAME + '>' + this.bread[i]['VALUE'];
@@ -681,29 +551,22 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
         },
         (err) => { }
       );
-
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
-
     for (var i = 0; i < this.dataListForExport.length; i++) {
       obj1['Created By'] = this.dataListForExport[i]['CREATOR_EMPLOYEE_NAME']
         ? this.dataListForExport[i]['CREATOR_EMPLOYEE_NAME']
@@ -747,7 +610,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       } else {
         obj1['Priority'] = '-';
       }
-
       if (this.dataListForExport[i]['STATUS'] == 'P') {
         obj1['Status'] = 'Pending';
       } else if (this.dataListForExport[i]['STATUS'] == 'C') {
@@ -763,9 +625,7 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       } else if (this.dataListForExport[i]['STATUS'] == 'H') {
         obj1['Status'] = 'On Hold';
       }
-
       arry1.push(Object.assign({}, obj1));
-
       if (i == this.dataListForExport.length - 1) {
         this._exportService.exportExcel(
           arry1,
@@ -775,97 +635,35 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       }
     }
   }
-
   isPDFModalVisible: boolean = false;
   PDFModalTitle: string = 'Export in PDF';
   exportInPDFLoading: boolean = false;
   employeeNameToPrint: string = '';
   supportAgentNameToPrint: string = '';
   statusToPrint: string = '';
-
-  // importInPDF(employeeID, supportAgentID, status) {
-  //   this.employeeNameToPrint = '';
-  //   this.supportAgentNameToPrint = '';
-  //   this.statusToPrint = '';
-  //   this.search(false, false, true);
-  //   let tempEmployeeName = '';
-  //   let tempSupportAgentName = '';
-  //   let tempStatus = '';
-
-  //   for (var i = 0; i < employeeID.length; i++) {
-  //     let supportUser = this.supportUsers.filter((obj1) => {
-  //       return obj1.ID == employeeID[i];
-  //     });
-
-  //     tempEmployeeName = tempEmployeeName + supportUser[0]['NAME'] + ', ';
-  //   }
-
-  //   for (var i = 0; i < supportAgentID.length; i++) {
-  //     let supportAgent = this.supportAgents.filter((obj1) => {
-  //       return obj1.ID == supportAgentID[i];
-  //     });
-
-  //     tempSupportAgentName =
-  //       tempSupportAgentName + supportAgent[0]['NAME'] + ', ';
-  //   }
-
-  //   for (var i = 0; i < status.length; i++) {
-  //     let a = '';
-  //     if (status[i] == "'P'") a = 'Pending';
-  //     else if (status[i] == "'C'") a = 'Closed';
-  //     else if (status[i] == "'S'") a = 'Assigned';
-  //     else if (status[i] == "'R'") a = 'Answered';
-  //     else if (status[i] == "'O'") a = 'Re-Open';
-  //     else if (status[i] == "'B'") a = 'Banned';
-  //     else if (status[i] == "'H'") a = 'On-Hold';
-
-  //     tempStatus = tempStatus + a + ', ';
-  //   }
-
-  //   this.employeeNameToPrint = tempEmployeeName.substring(
-  //     0,
-  //     tempEmployeeName.length - 2
-  //   );
-  //   this.supportAgentNameToPrint = tempSupportAgentName.substring(
-  //     0,
-  //     tempSupportAgentName.length - 2
-  //   );
-  //   this.statusToPrint = tempStatus.substring(0, tempStatus.length - 2);
-  // }
-
   handlePDFModalCancel() {
     this.isPDFModalVisible = false;
   }
-
   getCurrentDateTime() {
     return new Date();
   }
-
   getUserName() {
     return this.api.userName;
   }
-
   getEmployeeToShow() {
     if (this.employeeNameToPrint == '') return 'All';
     else return this.employeeNameToPrint;
   }
-
   getSupportAgentToShow() {
     if (this.supportAgentNameToPrint == '') return 'All';
     else return this.supportAgentNameToPrint;
   }
-
   getStatusToShow() {
     if (this.statusToPrint == '') return 'All';
     else return this.statusToPrint;
   }
-
-  // main filter
-
   isfilterapply: boolean = false;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-
-  // Edit Code 3
+  userId = sessionStorage.getItem('userId'); 
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -882,7 +680,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       groups: [],
     },
   ];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -894,9 +691,7 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -913,19 +708,14 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Employee Wise Details Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -942,7 +732,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -959,7 +748,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -969,30 +757,24 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       FILTER_JSON: {},
     };
   }
-
   whichbutton: any;
   filterloading: boolean = false;
   updateButton: any;
   updateBtn: any;
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'CREATOR_EMPLOYEE_NAME',
@@ -1022,7 +804,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       ],
       placeholder: 'Enter Ticket No.',
     },
-
     {
       key: 'DATE',
       label: 'Created Date',
@@ -1037,7 +818,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       ],
       placeholder: 'Select Created Date',
     },
-
     {
       key: 'QUESTION',
       label: 'Question',
@@ -1080,7 +860,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       ],
       placeholder: 'Enter Taken By/ Transfer To',
     },
-
     {
       key: 'LAST_RESPONDED',
       label: 'Last Responded Date',
@@ -1132,25 +911,19 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       placeholder: 'Select Status',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
   isLoading = false;
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1158,25 +931,21 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  TabId: number; // Ensure TabId is defined and initialized
-
+  USER_ID: number; 
+  savedFilters: any; 
+  TabId: number; 
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1184,13 +953,12 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1205,21 +973,15 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1233,7 +995,6 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   isDeleting: boolean = false;
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
@@ -1251,9 +1012,7 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -1287,20 +1046,15 @@ export class SupportUserWiseTicketDetailsComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   get filtercloseCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;

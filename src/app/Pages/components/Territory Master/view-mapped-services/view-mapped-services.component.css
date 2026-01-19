@@ -1,17 +1,36 @@
+.table-header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-item {
+  width: 47px;
+}
+.search-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-.select{
-width: 200px;
-padding: 8px;
-display: block;
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
 .search-box {
   padding: 8px;
+}
+.search-box input {
+  width: 188px;
+  display: block;
+}
+.search-box button {
+  width: 90px;
+}
+.search-button {
+  margin-right: 8px;
 }
 .inputsize {
   font-size: 11px !important;
@@ -22,178 +41,214 @@ display: block;
 .inputgroup>span>span {
   font-size: 11px !important;
 }
-
 .optiongroup>div {
   font-size: 11px !important;
 }
-.search-box input {
-  width: 188px;
-  display: block;
-}
-
-.search-box button {
-  width: 90px;
-}
-
-.search-button {
-  margin-right: 8px;
-}
-
 nz-select {
   width: 100%;
 }
-
-
-
-/* new css */
 .card {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 100%;
-  margin: 15px 0px 0px 0px;
-  padding: 0px;
+  margin-top: 15px;
+  padding: 0;
 }
-
 .card-header {
-  /* display: flex; */
   justify-content: space-between;
-  align-items:center;
-      margin-bottom: 0px;
-      padding: 0px !important;
-  background-color: white!important;
-  border-radius: 8px 8px 0px 0px!important;
+  align-items: center;
+  margin-bottom: 0;
+  padding: 0 !important;
+  background-color: white !important;
+  border-radius: 8px 8px 0 0 !important;
   height: 28px;
 }
-
 .category-name {
   font-weight: bold;
   color: #333;
 }
-
 .subcategory-name {
   font-weight: bold;
   color: #555;
 }
-
 .tag {
-font-size: 12px;
-font-weight: bold;
-padding: 3px 12px;
-border-radius: 0px 8px 0px 8px;
-position: relative;
-display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 3px 12px;
+  border-radius: 0 8px 0 8px;
+  display: inline-block;
 }
-
 .card-body {
-/* display: flex;
-justify-content: space-between; */
-align-items: flex-start; /* Align items at the start */
-gap: 20px;
+  align-items: flex-start;
+  gap: 20px;
 }
-
 .details {
-flex: 1; /* Take up remaining space */
+  flex: 1;
 }
-
 .service-image {
-flex-shrink: 0; /* Prevent shrinking */
-text-align: right;
+  flex-shrink: 0;
+  text-align: right;
 }
-
 .name {
   margin: 0 0 5px;
   font-size: 16px;
   font-weight: bold;
   color: #333;
 }
-.truncate-one-line {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* Limit to 3 lines */
-  line-clamp: 1;
-  max-height: calc(1.5em * 1); /* Adjust line height (e.g., 1.5em) */
-  cursor: pointer;
-  line-height: 1.5em;
-}
-
+.truncate-one-line,
 .truncate-three-lines {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Limit to 3 lines */
-  line-clamp: 3;
-  max-height: calc(1.5em * 3); /* Adjust line height (e.g., 1.5em) */
   cursor: pointer;
   line-height: 1.5em;
 }
-
+.truncate-one-line {
+  -webkit-line-clamp: 1;
+  max-height: calc(1.5em * 1);
+}
+.truncate-three-lines {
+  -webkit-line-clamp: 3;
+  max-height: calc(1.5em * 3);
+}
 .description {
   margin: 0;
   color: #555;
   font-size: 14px;
 }
-
-.service-image {
-  flex: 1;
-  text-align: right;
-}
-
 .service-image img {
-  /* max-width: 120px;
-  max-height: 120px; */
-  padding: 0px 15px 0pc 10px;
-  border-radius: 0px;
+  padding: 0 15px 0 10px;
   border: none;
 }
-
 .card-footer {
-  /* display: flex;
-  justify-content: space-between; */
-  margin-top: 0px;
+  margin-top: 0;
 }
-
 .btn {
   padding: 5px !important;
   border: none;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
-
 .btn.edit {
   background-color: #007bff;
   color: white;
 }
-
 .btn.edit-details {
   background-color: #ffc107;
   color: black;
 }
-
 .btn.add-subservice {
   background-color: #28a745;
   color: white;
 }
- 
 .btn.editmap {
   background-color: #af93ff;
   color: white;
 }
-.btn:hover {
-  opacity: 0.9;
-}
-
 .nz-col {
-  padding-left: 10px; /* Optional: To add space between columns */
-  padding-right: 10px; /* Optional: To add space between columns */
+  padding-left: 10px;
+  padding-right: 10px;
 }
-
 ::ng-deep .ant-card-body {
-  padding: 0px;
+  padding: 0;
+}
+.filter-row-top {
+  padding-top: 0;
+}
+.filter-loading-center {
+  text-align: center;
+}
+.filter-card-wrapper {
+  margin-bottom: 8px;
+}
+.filter-card {
+  border: 1px solid #a8a8a8;
+  border-radius: 7px;
+  padding: 5px 10px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.filter-name-text {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-action-row {
+  margin-top: 7px;
+}
+.filter-action-container {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-tag-icon {
+  font-size: 10px !important;
+}
+.filter-tag-view {
+  margin-right: 0;
+}
+.filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.filter-footer-btn {
+  margin-right: 10px;
+}
+.table-pre-line {
+  white-space: pre-line;
+}
+.time-filter-container {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.time-picker-from {
+  width: 100%;
+  margin-right: 8px;
+}
+.time-picker-to {
+  width: 100%;
+  margin-left: 8px;
+}
+.time-filter-separator {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.image-modal-container {
+  height: 400px;
+  overflow: auto;
+}
+.image-modal-iframe {
+  width: 832px;
+  height: 396px;
+  border: none;
+}
+.textcenter {
+  text-align: center
 }

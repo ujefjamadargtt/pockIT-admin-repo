@@ -8,7 +8,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { Coupan } from 'src/app/Support/Models/coupan';
 import { Coupontype } from 'src/app/Support/Models/coupontype';
-
 @Component({
   selector: 'app-coupon',
   templateUrl: './coupon.component.html',
@@ -31,11 +30,9 @@ export class CouponComponent implements OnInit {
     private datePipe: DatePipe,
     private message: NzNotificationService
   ) { }
-
   ngOnInit() {
     if (!this.data.ID) {
       this.data.START_DATE = new Date();
-      // this.disabledDateTime2
     }
     if (this.data.ID) {
       this.isEdit = true;
@@ -69,7 +66,6 @@ export class CouponComponent implements OnInit {
         this.Ref.nativeElement.value = null;
         this.data.COUPON_VALUE = null;
         this.data.COUPON_MAX_VALUE = null;
-        // value=null
         return;
       }
       if (this.data.COUPON_VALUE_TYPE === 'A') {
@@ -92,41 +88,6 @@ export class CouponComponent implements OnInit {
       }
     }
   }
-  // editorConfig: AngularEditorConfig = {
-  //   editable: true,
-  //   spellcheck: true,
-  //   height: '300px',
-  //   minHeight: '0',
-  //   maxHeight: '300px',
-  //   width: 'auto',
-  //   minWidth: '0',
-  //   translate: 'yes',
-  //   enableToolbar: true,
-  //   showToolbar: true,
-  //   placeholder: 'Add Details here...',
-  //   defaultParagraphSeparator: '',
-  //   defaultFontName: '',
-  //   defaultFontSize: '',
-  //   fonts: [
-  //     { class: 'arial', name: 'Arial' },
-  //     { class: 'times-new-roman', name: 'Times New Roman' },
-  //     { class: 'calibri', name: 'Calibri' },
-  //     { class: 'big-caslon', name: 'Big Caslon' },
-  //     { class: 'comic-sans-ms', name: 'Comic Sans MS' },
-  //     { class: 'bodoni-mt', name: 'Bodoni MT' },
-  //     { class: 'book-antiqua', name: 'Book Antiqua' },
-  //     { class: 'courier-new', name: 'Courier New' },
-  //     { class: 'lucida-console', name: 'Lucida Console' },
-  //     { class: 'trebuchet-ms', name: 'Trebuchet MS' },
-  //     { class: 'candara', name: 'Candara' },
-  //   ],
-  //   customClasses: [],
-  //   uploadWithCredentials: false,
-  //   sanitize: true,
-  //   toolbarPosition: 'top',
-  //   toolbarHiddenButtons: [['fonts']],
-  // };
-
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -166,26 +127,21 @@ export class CouponComponent implements OnInit {
   };
   disabledStartDate = (current: Date): boolean => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Normalize today's date
+    today.setHours(0, 0, 0, 0); 
     return current && current < today;
   };
   disabledEndDate = (current: Date): boolean => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Normalize today's date
-
-    // If start date is selected, compare with that; otherwise, just use today.
+    today.setHours(0, 0, 0, 0); 
     if (this.data.START_DATE) {
       const startDate = new Date(this.data.START_DATE);
       startDate.setHours(0, 0, 0, 0);
       return current && (current < today || current < startDate);
     }
-
     return current && current < today;
   };
   disabledDateTime: any = (current: Date | null) => {
     const now = new Date();
-
-    // If the current date is valid and matches today's date, disable past hours, minutes, and seconds.
     if (current && current instanceof Date) {
       if (
         current.getFullYear() === now.getFullYear() &&
@@ -194,19 +150,18 @@ export class CouponComponent implements OnInit {
       ) {
         return {
           nzDisabledHours: () =>
-            Array.from({ length: now.getHours() }, (_, i) => i), // Disable past hours
+            Array.from({ length: now.getHours() }, (_, i) => i), 
           nzDisabledMinutes: (hour: number) =>
             hour === now.getHours()
               ? Array.from({ length: now.getMinutes() }, (_, i) => i)
-              : [], // Disable past minutes if hour is current
+              : [], 
           nzDisabledSeconds: (hour: number, minute: number) =>
             hour === now.getHours() && minute === now.getMinutes()
               ? Array.from({ length: now.getSeconds() }, (_, i) => i)
-              : [], // Disable past seconds if hour & minute are current
+              : [], 
         };
       }
     }
-
     return {
       nzDisabledHours: () => [],
       nzDisabledMinutes: () => [],
@@ -214,10 +169,8 @@ export class CouponComponent implements OnInit {
     };
   };
   disabledDateTime2: any = (current: Date | null) => {
-    if (!this.data.START_DATE) return {}; // Ensure start date is defined
-
-    const startDate = new Date(this.data.START_DATE); // Convert startDate to Date object
-
+    if (!this.data.START_DATE) return {}; 
+    const startDate = new Date(this.data.START_DATE); 
     if (current && current instanceof Date) {
       if (
         current.getFullYear() === startDate.getFullYear() &&
@@ -226,49 +179,36 @@ export class CouponComponent implements OnInit {
       ) {
         return {
           nzDisabledHours: () =>
-            Array.from({ length: startDate.getHours() }, (_, i) => i), // Disable hours before start time
+            Array.from({ length: startDate.getHours() }, (_, i) => i), 
           nzDisabledMinutes: (hour: number) =>
             hour === startDate.getHours()
               ? Array.from({ length: startDate.getMinutes() + 1 }, (_, i) => i)
-              : [], // Disable minutes if hour matches
+              : [], 
           nzDisabledSeconds: (hour: number, minute: number) =>
             hour === startDate.getHours() && minute === startDate.getMinutes()
               ? Array.from({ length: startDate.getSeconds() + 1 }, (_, i) => i)
-              : [], // Disable seconds if hour & minute match
+              : [], 
         };
       }
     }
-
     return {
       nzDisabledHours: () => [],
       nzDisabledMinutes: () => [],
       nzDisabledSeconds: () => [],
     };
   };
-
   onStartDateChange(): void {
-    // Reset expiry date if start date changes
     if (this.data.START_DATE < this.data.EXPIRY_DATE) {
       this.data.EXPIRY_DATE = null;
     }
   }
-  // onCouponValueChange() {
-  //   if (this.data.COUPON_VALUE > 100) {
-  //     this.data.COUPON_VALUE = 100;
-  //   }
-  //   if (this.data.COUPON_VALUE && !Number.isInteger(this.data.COUPON_VALUE)) {
-  //     this.data.COUPON_VALUE = Math.floor(this.data.COUPON_VALUE);
-  //   }
-  // }
-
   onlynum(event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;
     const newValue = input.value + event.key;
-
     if (!/^\d*$/.test(event.key)) {
-      event.preventDefault(); // Prevent non-numeric characters
+      event.preventDefault(); 
     } else if (parseInt(newValue, 10) > 100) {
-      event.preventDefault(); // Prevent values greater than 100
+      event.preventDefault(); 
     }
   }
   public commonFunction = new CommonFunctionService();
@@ -292,7 +232,6 @@ export class CouponComponent implements OnInit {
         (err) => { }
       );
   }
-
   loadCoupons() {
     this.api.getAllCoupons(0, 0, 'ID', 'desc', '').subscribe(
       (data) => {
@@ -301,13 +240,11 @@ export class CouponComponent implements OnInit {
       (err) => { }
     );
   }
-
   tempcouponvalue;
   onCouponTypeChange() {
     if (this.data.COUPON_VALUE_TYPE === 'A') {
       this.data.COUPON_VALUE = this.tempcouponvalue;
       this.tempcouponvalue = this.data.COUPON_VALUE;
-
       this.data.COUPON_MAX_VALUE = this.data.COUPON_VALUE;
     } else if (this.data.COUPON_VALUE_TYPE === 'P' && !this.data.ID) {
       this.tempcouponvalue = this.data.COUPON_VALUE;
@@ -315,49 +252,17 @@ export class CouponComponent implements OnInit {
       this.data.COUPON_MAX_VALUE = null;
     }
   }
-
-  // close(): void {
-  //   this.drawerClose();
-
-  //   this.logtext = 'CLOSED - Coupon form';
-  //   this.api.addLog('A', this.logtext, this.api.emailId)
-  //     .subscribe(successCode => {
-  //       if (successCode['code'] == "200") {
   //
-  //       }
-  //       else {
-  //
-  //       }
-  //     });
-
-  // }
-
-  ////
-
   resetDrawer(couponMasterPage: NgForm) {
     this.data = new Coupan();
-    // couponMasterPage.form.reset();
-
     couponMasterPage.form.markAsPristine();
     couponMasterPage.form.markAsUntouched();
   }
-
   close(couponMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(couponMasterPage);
     couponMasterPage.form.reset();
-    // this.logtext = 'CLOSED - Coupon form';
-    // this.api.addLog('A', this.logtext, this.api.emailId)
-    //   .subscribe(successCode => {
-    //     if (successCode['code'] == "200") {
-    //
-    //     }
-    //     else {
-    //
-    //     }
-    //   });
   }
-  //save
   save(addNew: boolean, couponMasterPage: NgForm): void {
     this.data.MAX_CART_AMOUNT = 0;
     if (
@@ -386,9 +291,7 @@ export class CouponComponent implements OnInit {
         this.data.EXPIRY_DATE,
         'yyyy-MM-dd HH:mm:ss'
       );
-
       this.isSpinning = true;
-
       if (this.data.ID) {
         var filterData1: any = [];
         var returnData1: any = [];
@@ -407,7 +310,6 @@ export class CouponComponent implements OnInit {
             );
           });
         }
-
         if (filterData1.length > 0) {
           this.message.error('Name Is Already  Present in Database', '');
           this.isSpinning = false;
@@ -481,7 +383,6 @@ export class CouponComponent implements OnInit {
                   'Coupon information added successfully...',
                   ''
                 );
-
                 if (!addNew) {
                   this.drawerClose();
                 } else {
@@ -587,12 +488,10 @@ export class CouponComponent implements OnInit {
     var filterData = this.dataList.filter((object) => {
       return object['NAME'].toLowerCase() == this.data.NAME.toLowerCase();
     });
-
     if (filterData.length > 0) {
       this.isSpinning = false;
       if (filterData.length > 0)
         this.message.error('Name Is Already Present in Database', '');
-
       return false;
     } else {
       return true;
@@ -605,12 +504,10 @@ export class CouponComponent implements OnInit {
         object['ID'] != this.data.ID
       );
     });
-
     if (filterData.length > 0) {
       this.isSpinning = false;
       if (filterData.length > 0)
         this.message.error('Coupon Code Is Already Present in Database', '');
-
       return false;
     } else {
       return true;

@@ -14,7 +14,7 @@
                       [(ngModel)]="data.TEMPLATE_NAME" PlaceHolder="Enter Email Template Name"
                       (input)="replaceSpacesWithUnderscores()" required maxlength="128" (focus)="isFocused = 'name'"
                       (blur)="isFocused = ''" />
-                    <h6 style="color: red; font-size: 10px" *ngIf="
+                    <h6 class="txtarea-size" *ngIf="
                         isFocused === 'name' ||
                         (data.TEMPLATE_NAME && isFocused === 'name')
                       ">
@@ -30,9 +30,8 @@
                   <nz-form-label nzRequired nzNoColon>Template Category Name</nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Select Category Name">
                     <nz-select name="TEMPLATE_CATEGORY_ID" nzPlaceHolder="Select Category Name" nzShowSearch
-                      style="width: 100%" [(ngModel)]="data.TEMPLATE_CATEGORY_ID"
-                      [ngModelOptions]="{ standalone: true }" required nzAllowClear
-                      (ngModelChange)="onTemplateCategorySelect($event)">
+                      class="full-wdt" [(ngModel)]="data.TEMPLATE_CATEGORY_ID" [ngModelOptions]="{ standalone: true }"
+                      required nzAllowClear (ngModelChange)="onTemplateCategorySelect($event)">
                       <nz-option *ngFor="let data of templateCategories" [nzValue]="data.ID" [nzLabel]="data.NAME">
                       </nz-option>
                     </nz-select>
@@ -43,9 +42,8 @@
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Language Name</nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Please Select Language Name">
-                    <nz-select name="LANGUAGE_CODE" nzPlaceHolder="Select Language Name" nzShowSearch
-                      style="width: 100%" [(ngModel)]="data.LANGUAGE_CODE" [ngModelOptions]="{ standalone: true }"
-                      required nzAllowClear>
+                    <nz-select name="LANGUAGE_CODE" nzPlaceHolder="Select Language Name" nzShowSearch class="full-wdt"
+                      [(ngModel)]="data.LANGUAGE_CODE" [ngModelOptions]="{ standalone: true }" required nzAllowClear>
                       <nz-option *ngFor="let data of LangugageData" [nzValue]="data.ID" [nzLabel]="data.NAME">
                       </nz-option>
                     </nz-select>
@@ -61,7 +59,7 @@
                     <textarea nz-input autocomplete="off" name="Subject" type="text" [(ngModel)]="data.SUBJECT"
                       PlaceHolder="Enter Subject" required rows="2" maxlength="512" (focus)="isFocused = 'Subject'"
                       (blur)="isFocused = ''"></textarea>
-                    <h6 style="color: red; font-size: 10px" *ngIf="
+                    <h6 class="txtarea-size" *ngIf="
                         isFocused === 'Subject' ||
                         (data.SUBJECT && isFocused === 'Subject')
                       ">
@@ -92,30 +90,6 @@
                   nz-tooltip nzTooltipTitle="To add a custom variable,please add a variable in double curly
                 brackets like:{{ abc }}"></span> </nz-form-label><br />
               <nz-form-control nzHasFeedback nzErrorTip="Body is required">
-                <!-- <button
-                  nz-button
-                  style="color: #efefef; width: 40px"
-                  (click)="convertB()"
-                >
-                  <span style="color: black"><b>B</b></span>
-                </button>
-                <button
-                  nz-button
-                  style="color: #efefef; width: 40px"
-                  (click)="convertI()"
-                >
-                  <span style="color: black"><i>I</i></span>
-                </button> -->
-                <!-- [readonly]="data.ID ? true : false" -->
-                <!-- <textarea #textArea id="messages2" style="margin-top: 5px" nz-input (input)="checkInput1()" rows="13"
-                  name="Body" (keydown)="handleEnter($event)" [(ngModel)]="data.BODY" (blur)="saveFormattedData()"
-                  [ngModel]="getFormattedText()" required></textarea> -->
-                <!-- <button
-                  (click)="insertCustomButton()"
-                  
-                >
-                  Insert Button with Link
-                </button> -->
                 <angular-editor name="Body" [(ngModel)]="data.BODY" [config]="config" (input)="checkInput1()">
                 </angular-editor>
               </nz-form-control>
@@ -124,7 +98,7 @@
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Sample Values For Body Content</nz-form-label>
                 <nz-form-control>
-                  <nz-select style="width: 100%" nzMode="tags" nzPlaceHolder="Enter Sample Values" name="tag1"
+                  <nz-select class="full-wdt" nzMode="tags" nzPlaceHolder="Enter Sample Values" name="tag1"
                     [(ngModel)]="data.BODY_VALUES" (ngModelChange)="check1()">
                     <nz-option *ngFor="let option of inputValuess1" [nzLabel]="option.TABLE_COLUMN"
                       [nzValue]="option.TABLE_COLUMN"></nz-option>
@@ -138,21 +112,11 @@
     </nz-spin>
   </form>
   <div class="footer">
-    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close()" class="ant-btn footer-cancel-spacing">
       <span>Cancel</span>
     </button>
-    <!-- <button
-      type="button"
-      class="ant-btn ant-btn-primary"
-      style="border-radius: 4px; color: white;margin-right: 8px"
-      nz-button
-      [nzLoading]="isSpinning"
-      (click)="save1(false)"
-    >
-      <span>Save as Draft</span>
-    </button> -->
-    <button *ngIf="!data.ID" type="button" class="ant-btn ant-btn-primary" nz-button
-      style="border-radius: 4px; color: white" [nzLoading]="isSpinning" (click)="save(false, websitebannerPage)">
+    <button *ngIf="!data.ID" type="button" class="ant-btn ant-btn-primary footer-primary-btn" nz-button
+      [nzLoading]="isSpinning" (click)="save(false, websitebannerPage)">
       <span>Save & Close</span>
     </button>
     <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"

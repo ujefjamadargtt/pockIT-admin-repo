@@ -3,7 +3,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { customer } from 'src/app/Pages/Models/customer';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 @Component({
   selector: 'app-customer-overview-list',
   templateUrl: './customer-overview-list.component.html',
@@ -16,7 +15,6 @@ export class CustomerOverviewListComponent implements OnInit {
   @Input() drawerVisible: boolean;
   @Input() custid: any;
   @Input() TYPE: any = '';
-
   cusstomerFilter: any = '';
   constructor(private api: ApiServiceService, private message: NzNotificationService) { }
   ngOnInit() {
@@ -24,23 +22,18 @@ export class CustomerOverviewListComponent implements OnInit {
     this.getCustomerData();
     this.cusstomerFilter = " AND CUSTOMER_ID=" + this.custid
   }
-
   close() {
     this.drawerClose();
   }
-
   @Input() jobdetailsdata: any
   @Input() invoicefilter: any
   show: any = 0
   onSelectedIndexChange(event) {
     this.show = event;
   }
-
-
   addressData: any = [];
   loadaddresses: boolean = false;
   totalRecords: any = 0;
-
   CustData: any = [];
   loadCust: boolean = false;
   getaddressData() {
@@ -65,7 +58,6 @@ export class CustomerOverviewListComponent implements OnInit {
         }
       );
   }
-
   getCustomerData() {
     this.loadCust = true;
     this.api.getAllCustomer(0, 0, "", "desc", " AND ID=" + this.custid).subscribe(
@@ -84,6 +76,4 @@ export class CustomerOverviewListComponent implements OnInit {
       }
     );
   }
-
-
 }

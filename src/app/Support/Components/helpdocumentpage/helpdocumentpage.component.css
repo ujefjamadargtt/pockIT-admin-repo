@@ -2,15 +2,9 @@
     height: 100vh;
     display: flex;
 }
-
-/* Sidebar Styles */
 .custom-sider {
     background-color: #f5f5f5;
-    /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
-    /* overflow: auto; */
-    /* height: 100vh; */
     font-size: 12px;
-
     .logo {
         font-size: 14px;
         font-weight: bold;
@@ -19,71 +13,32 @@
         background: #fff;
         color: #092b9c;
     }
-
     .sider-menu {
         padding: 0;
     }
 }
-
-/* Content Area */
 .content-layout {
     flex: 1;
     overflow: auto;
 }
-
 .header {
     background: #fff;
     padding: 10px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* .header-left {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        .faq-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin: 0;
-        }
-
-        .faq-updated {
-            font-size: 12px;
-            color: gray;
-            margin: 2px 0 0;
-        }
-    }
-
-    .header-right {
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-
-        .search-bar {
-            width: 220px;
-            font-size: 12px;
-        }
-    } */
 }
-
 .content {
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
     width: 100%;
-    height: 100vh; /* Ensure full height */
+    height: 100vh; 
   }
-  
   .pdf-container {
     width: 100%;
-    height: 100vh; /* Make sure it takes full viewport height */
+    height: 100vh; 
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
   .pdf-viewer {
     width: 100%;
     height: 100%;
@@ -99,62 +54,51 @@
 }
 .scroll-container {
     height: 90vh;
-    /* max-height: 10vh; */
     overflow-x: hidden;
     overflow-y: scroll ;
     white-space: nowrap;
   }
   .menu-container {
     overflow-y: auto;
-    max-height: calc(100vh - 50px); /* Adjust based on header size */
+    max-height: calc(100vh - 50px); 
   }
-  
   .sider-menu::-webkit-scrollbar {
     width: 5px; 
   }
-  
   .sider-menu::-webkit-scrollbar-track {
     background: #f1f1f1; 
     border-radius: 10px;
   }
-  
   .sider-menu::-webkit-scrollbar-thumb {
     background: #888; 
     border-radius: 10px;
   }
-  
   .sider-menu::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
-  
   .sider-menu {
     max-height: calc(100vh - 50px); 
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-width: thin; /* Firefox-specific scrollbar size reduction */
-    scrollbar-color: #888 #f1f1f1; /* Firefox scrollbar color */
+    scrollbar-width: thin; 
+    scrollbar-color: #888 #f1f1f1; 
   }
-/* Responsive */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
         align-items: flex-start;
     }
-
     .header-right {
         width: 100%;
         margin-top: 10px;
-
         .search-bar {
             width: 100%;
         }
     }
 }
-
 :host::ng-deep .ant-menu-item-group-title {
    display: none;
   }
-  
 .search-container {
     display: flex;
     justify-content: center;
@@ -162,39 +106,32 @@
     padding-top: 0px;
     padding: 10px 0;
     width: 100vw;
-
     nz-input-group {
         width: 60%;
         max-width: 700px;
         border-radius: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
         input {
             font-size: 14px;
             border-radius: 20px;
             padding: 2px 12px;
         }
-
         .clear-icon {
             cursor: pointer;
             color: #999;
             transition: color 0.2s;
-
             &:hover {
                 color: #ff4d4f;
             }
         }
     }
 }
-
 :host::ng-deep .ant-menu-item-group-title {
     font-size: 13px !important;
   }
   :host::ng-deep .ant-collapse-header {
-    /* border-radius: 0 0 2px 2px !important; */
     font-size: 13px !important;
   }
-  
   .faq-panel {
     margin-bottom: 20px;
   }
@@ -203,21 +140,17 @@
     gap: 10px;
     margin-top: 10px;
 }
-
 .thumbs-up, .thumbs-down {
     cursor: pointer;
     font-size: 16px;
     transition: color 0.3s ease-in-out;
 }
-
 .thumbs-down.active {
     color: red;
 }
-
 .negative-response {
     margin-top: 10px;
 }
-
 .negative-response textarea {
     width: 100%;
     height: 40px;
@@ -225,7 +158,6 @@
     font-size: 14px;
     resize: none;
 }
-
 .negative-response button {
     margin-top: 5px;
     background-color: #092b9c;
@@ -235,7 +167,6 @@
     cursor: pointer;
     border-radius: 4px;
 }
-
 .negative-response button:hover {
     background-color: #0056b3;
 }
@@ -243,7 +174,7 @@
     white-space: pre-wrap;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    max-width: 100%; /* Ensures it does not exceed the parent */
+    max-width: 100%; 
 }
 .faq-answer {
     white-space: pre-wrap;
@@ -264,27 +195,23 @@
     align-items: center;
     justify-content: center;
   }
-
   .document-container {
     display: flex;
     justify-content: center;
     padding: 10px;
   }
-  
   .card-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
   }
-  
   .document-card {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 148px; /* Fixed height for equal sizing */
+    height: 148px; 
     border-radius: 6px;
     background-color: white;
     transition: box-shadow 0.2s ease-in-out;
@@ -292,11 +219,9 @@
     padding: 12px !important;
     text-align: center;
   }
-  
   .document-card:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
-  
   .card-content {
     display: flex;
     flex-direction: column;
@@ -304,58 +229,169 @@
     justify-content: center;
     flex-grow: 1;
   }
-  
   .icon-container {
     font-size: 24px;
     color: #1E90FF;
     margin-bottom: 5px;
   }
-  
   .text-container h4 {
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 3px;
   }
-  
   .text-container p {
     font-size: 12px;
     color: #666;
     margin: 0;
   }
-  
   .card-row {
     max-height: 450px; 
     overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
   }
-  
   .view-btn {
-    width: 120px; /* Set a fixed width */
+    width: 120px; 
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px; /* Adds spacing between icon and text */
+    gap: 5px; 
     padding-top: 10px;
-
   }
-  
-  
- 
   .border-blue {
     border: 1.5px solid #c4c4c4 !important;
   }
   :host::ng-deep .ant-card-body {
     padding: 0 !important;
   }
-    
-
   .mainnam {
-    /* color: #000; */
     font-size: 12px !important;
     font-weight: 600;
-  
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+.sider-background {
+  background: white !important;
+}
+.logo-container {
+  display: flex;
+  border-bottom: 1px solid #d9d9d9;
+}
+.logo-icon-wrapper {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #ffffff;
+  border-radius: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0px;
+  border: 2px solid #092b9c;
+  border-radius: 50%;
+}
+.logo-icon {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #ffffff;
+  border-radius: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0px;
+  border: 2px solid #092b9c;
+  border-radius: 50%;
+}
+.logo-text-wrapper {
+  text-align: left;
+  align-self: center !important;
+}
+.logo-text {
+  font-size: 19px !important;
+  padding-left: 10px;
+}
+.sider-menu-border {
+  border-right: none;
+}
+.menu-item-header {
+  font-size: 13px;
+  font-weight: 700;
+}
+.submenu-list {
+  font-size: 12px;
+}
+.submenu-group {
+  padding-top: 0px !important;
+}
+.submenu-item {
+  font-weight: 500 !important;
+}
+.truncated-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.normal-text {
+  font-weight: 500 !important;
+}
+.content-background {
+  background: white !important;
+  padding: 20px;
+}
+.content-margin {
+  margin-top: 70px;
+}
+.card-col {
+  margin-bottom: 12px;
+}
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.icon-container {
+  margin-bottom: 12px;
+}
+.text-container {
+  text-align: center;
+}
+.item-name {
+  margin: 0;
+  padding: 0;
+}
+.item-type {
+  margin: 0;
+  padding: 0;
+  color: #666;
+}
+.button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.view-btn {
+  padding-bottom: 12px;
+  margin-top: 6px;
+  display: block;
+  width: 100%;
+}
+.select-message {
+  width: 100%;
+}
+.empty-state {
+  margin-top: 38px;
+}
+.pdf-container {
+  width: 100%;
+}
+.pdf-iframe {
+  width: 100%;
+  height: 70vh;
+  border: none;
+}
+.modal-close-btn {
+  margin-right: 8px;
+}

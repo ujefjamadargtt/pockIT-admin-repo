@@ -1,7 +1,6 @@
 .large :host::ng-deep .ant-rate-star {
   font-size: 20px;
 }
-
 .count {
   padding-left: 8px;
   cursor: auto;
@@ -10,33 +9,44 @@
   padding-right: 8px;
   padding-left: 0;
 }
-
-
 .rating-container {
   display: block;
   margin-top: 8px;
 }
-
-
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 0px rgba(252, 252, 252, 0.1);
   background-color: #fdfdfd;
   box-shadow: inset 0 0 5px rgb(151, 150, 150);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;
 }
-
 ::-webkit-scrollbar-thumb {
   background: gray;
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(109, 108, 108);
 }
-
-
+.align-end-col {
+  align-items: end;
+}
+.review-list-container {
+  margin-top: 5px;
+  padding: 5px;
+  max-height: 40vh;
+  overflow: auto;
+  padding-right: 10px;
+}
+.rating-top-zero {
+  margin-top: 0px;
+}
+.empty-state-container {
+  font-weight: 600;
+  margin-top: 10%;
+}
+.center-text {
+  text-align: center;
+}

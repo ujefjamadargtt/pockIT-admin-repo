@@ -1,6 +1,32 @@
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.currency-form-hint-x1,
+.currency-form-hint-x2,
+.currency-form-hint-x3 {
+  color: red;
+  font-size: 10px;
+}
+.currency-form-hint-x4 {
+  color: red;
+  font-size: 10px !important;
+}
+.currency-footer-btn-x1 {
+  margin-right: 12px;
+}
+.currency-menu-item-x1 {
+  border-radius: 4px;
+  color: white !important;
+}
+.currency-menu-link-x1 {
+  color: white !important;
+}
+.currency-menu-btn-x1 {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: white !important;
+}

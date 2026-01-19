@@ -5,6 +5,142 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
+    max-width: 100%; 
     display: inline-block;
   }
+  .back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.top-right-controls {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-btn {
+  color: white;
+}
+.filter-inner-row {
+  padding-top: 0;
+}
+.filter-loading-center {
+  text-align: center;
+}
+.saved-filter-col {
+  margin-bottom: 8px;
+}
+.saved-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.saved-filter-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.saved-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.applied-filter-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.saved-filter-actions-row {
+  margin-top: 7px;
+}
+.saved-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.saved-filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.saved-filter-view-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0;
+}
+.saved-filter-action-icon {
+  font-size: 10px !important;
+}
+.no-filters-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-btn {
+  margin-right: 10px;
+}
+.new-filter-btn {
+  margin-right: 10px;
+}
+.filter-btn-wrapper {
+  width: 47px;
+}
+.table-top-margin {
+  margin-top: 10px;
+}
+.th-center {
+  text-align: center;
+}
+.view-details-tag {
+  cursor: pointer;
+}
+.view-details-icon {
+  font-size: 15px;
+}
+.submitted-date-range {
+  width: 100%;
+}
+.order-date-filter-dropdown {
+  width: 300px;
+}
+.order-date-search-box {
+  width: 280px;
+}
+.transfer-mode-select {
+  width: 100%;
+}
+.query-details-title {
+  text-align: center;
+}
+.jobdetails-top-right-controls {
+  display: flex;
+  justify-content: flex-end;
+}
+.jobdetails-summary-row {
+  padding: 10px 20px;
+}
+.jobdetails-main-name {
+  text-align: left;
+}
+.jobdetails-table-row {
+  padding: 0 10px;
+}
+.jobdetails-td-left {
+  white-space: pre-line;
+  text-align: left;
+}
+.jobdetails-footer {
+  text-align: right;
+  margin-top: 10px;
+}
+.jobdetails-cancel-btn {
+  margin-right: 8px;
+}

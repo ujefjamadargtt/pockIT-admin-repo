@@ -8,7 +8,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
 import { CountryData } from '../../Models/CountryMasterData';
-
 @Component({
   selector: 'app-userloginlogs',
   templateUrl: './userloginlogs.component.html',
@@ -22,7 +21,6 @@ export class UserloginlogsComponent {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   ngOnInit() {
     this.applyusertypefilter();
     const decryptedUserId = this.userId
@@ -40,7 +38,6 @@ export class UserloginlogsComponent {
   loadingRecords = false;
   totalRecords = 1;
   Country: any[] = [];
-
   columns: string[][] = [['USER_NAME', 'USER_NAME']];
   drawerCountryMappingVisible = false;
   drawerTitle = '';
@@ -62,9 +59,7 @@ export class UserloginlogsComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -81,14 +76,12 @@ export class UserloginlogsComponent {
       this.isFilterApplied = false;
     }
   }
-  // typefilter = ` AND USER_TYPE = 'A'`;
   typefilter: any = '';
   UserType: any = 'A';
   applyusertypefilter() {
     this.typefilter = ` AND USER_TYPE = '${this.UserType}'`;
     this.search();
   }
-
   filterQuery: string = '';
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
@@ -99,14 +92,12 @@ export class UserloginlogsComponent {
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -119,12 +110,11 @@ export class UserloginlogsComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `date(DATE_TIME) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -133,27 +123,19 @@ export class UserloginlogsComponent {
     } else {
       this.isregistrationDateFilterApplied = false;
     }
-
-    // Country Filter
     if (this.countrytext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `USER_NAME LIKE '%${this.countrytext.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS = '${this.statusFilter}'`;
     }
-
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // this.sortKey = 'NAME';
-    // sort = 'asc';
     if (exportInExcel == false) {
       this.api
         .getuserloginlogsReport(
@@ -198,7 +180,6 @@ export class UserloginlogsComponent {
     } else {
       this.loadingRecords = false;
       this.exportLoading = true;
-
       this.api
         .getuserloginlogsReport(
           0,
@@ -212,7 +193,6 @@ export class UserloginlogsComponent {
             if (data['status'] == 200) {
               this.loadingRecords = false;
               this.exportLoading = false;
-
               this.excelData = data.body['data'];
               this.convertInExcel();
             } else {
@@ -243,72 +223,51 @@ export class UserloginlogsComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   close() {
     this.drawervisible = false;
   }
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
-  //For Input
   countrytext: string = '';
   Countryvisible = false;
-
   reset(): void {
     this.searchText = '';
     this.countrytext = '';
-
     this.search();
   }
-
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
-
     this.search(true);
   }
-
   listOfFilter: any[] = [
     { text: 'Login', value: 'L' },
     { text: 'Logout', value: 'O' },
   ];
-
   dataList: any = [];
   visible = false;
-
-  // new filter
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
   applyCondition: any;
   isLoading = false;
   currentClientId = 1;
-
-  // new  Main filter
-
-  //Edit Code 3
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -325,9 +284,7 @@ export class UserloginlogsComponent {
       groups: [],
     },
   ];
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -344,7 +301,6 @@ export class UserloginlogsComponent {
       groups: [],
     },
   ];
-
   TabId: number;
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
@@ -352,10 +308,8 @@ export class UserloginlogsComponent {
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
-
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -364,16 +318,12 @@ export class UserloginlogsComponent {
       this.loadFilters();
     }
   }
-
   filterloading: boolean = false;
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -381,13 +331,12 @@ export class UserloginlogsComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -402,18 +351,15 @@ export class UserloginlogsComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -437,12 +383,11 @@ export class UserloginlogsComponent {
         this.isregistrationDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isregistrationDateFilterApplied = false;
     }
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -451,11 +396,9 @@ export class UserloginlogsComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   openfilter() {
     this.drawerTitle = 'User Login Logs Filter';
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -464,12 +407,9 @@ export class UserloginlogsComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -486,7 +426,6 @@ export class UserloginlogsComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -504,21 +443,17 @@ export class UserloginlogsComponent {
       },
     ];
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
@@ -551,7 +486,6 @@ export class UserloginlogsComponent {
       ],
       placeholder: 'Enter User Name',
     },
-
     {
       key: 'STATUS',
       label: 'Status',
@@ -567,16 +501,12 @@ export class UserloginlogsComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -593,9 +523,7 @@ export class UserloginlogsComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -621,11 +549,8 @@ export class UserloginlogsComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -633,44 +558,34 @@ export class UserloginlogsComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.FILTER_NAME = data.FILTER_NAME;
-    //
     this.filterData = data;
     this.EditQueryData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   excelData: any = [];
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -688,7 +603,6 @@ export class UserloginlogsComponent {
         } else if (this.excelData[i]['STATUS'] == 'O') {
           obj1['Status'] = 'Logout';
         }
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -702,9 +616,7 @@ export class UserloginlogsComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

@@ -5,3 +5,22 @@ textarea {
     width: -webkit-fill-available;
     padding: 0px 5px;
 }
+.channel-form-top-space {
+  margin-top: 10px;
+}
+.field-counter-text {
+  color: red;
+  font-size: 10px;
+}
+.textarea-full-width {
+  width: 100%;
+}
+.footer-cancel-spacing-lg {
+  margin-right: 12px;
+}
+.footer-menu-rounded {
+  border-radius: 4px;
+}
+.footer-menu-white-text {
+  color: white !important;
+}

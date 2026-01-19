@@ -1,94 +1,72 @@
 <div class="filter-container">
-  <!-- Outer Groups -->
   <div *ngFor="let group of filterGroups; let i = index">
     <div nz-row>
-      <!-- Remove Group -->
-      <div nz-col nzSpan="8" style="
-            margin-bottom: 2px;
-            font-weight: 600;
-            color: #092B9C!important;
-            padding-top: 16px;
-          ">
+      <div nz-col nzSpan="8" class="filter-group-title">
         Group {{ i + 1 }}
         <i *ngIf="filterGroups.length > 1" nz-tooltip nzTooltipTitle="Remove Condition" (click)="removeGroup(i)"
-          class="icon-size-4" style="color: red; cursor: pointer" nz-icon nzType="delete"></i>
+          class="filter-group-delete-icon icon-size-4" nz-icon nzType="delete">
+        </i>
       </div>
-      <div *ngIf="filterGroups.length > 1 && i != 0" nz-col nzSpan="8" style="text-align: center; padding-bottom: 5px">
-        <!-- Logical Operator for Group -->
-        <nz-select name="LogicalOperator{{ i }}" [(ngModel)]="group.operator" class="logical-operator"
-          style="width: 120px">
+      <div *ngIf="filterGroups.length > 1 && i != 0" nz-col nzSpan="8" class="filter-group-operator-wrapper">
+        <nz-select name="LogicalOperator{{ i }}" [(ngModel)]="group.operator"
+          class="logical-operator filter-group-operator-select">
           <nz-option nzValue="AND" nzLabel="AND"></nz-option>
           <nz-option nzValue="OR" nzLabel="OR"></nz-option>
         </nz-select>
       </div>
-
-      <!-- Render Conditions in the Group -->
-      <div nz-col nzSpan="24" style="
-            border-radius: 5px;
-            border: 1px dashed rgb(217 217 217);
-            padding: 8px;
-            background: #fbfbfb;
-          ">
-        <div style="padding: 8px; border-bottom: 1px solid rgb(246, 246, 246)"
-          *ngFor="let conditionObj of group.conditions; let j = index">
+      <div nz-col nzSpan="24" class="filter-conditions-wrapper">
+        <div *ngFor="let conditionObj of group.conditions; let j = index" class="filter-condition-row">
           <div nz-row [nzGutter]="16">
-            <div nz-col class="gutter-row" nzSpan="3">
-              <!-- Logical Operator between Conditions -->
+            <div nz-col nzSpan="3">
               <nz-select *ngIf="j > 0" name="operator{{ i }}{{ j }}" [(ngModel)]="conditionObj.operator"
-                style="width: 100%">
+                class="full-width-select">
                 <nz-option nzValue="AND" nzLabel="AND"></nz-option>
                 <nz-option nzValue="OR" nzLabel="OR"></nz-option>
               </nz-select>
-              <div *ngIf="j == 0" style="text-align: center; padding: 5px">
+              <div *ngIf="j == 0" class="filter-when-text">
                 When
               </div>
             </div>
-            <div nz-col class="gutter-row" nzSpan="6">
-              <!-- Field Selector -->
+            <div nz-col nzSpan="6">
               <nz-select name="Selector{{ i }}{{ j }}" [(ngModel)]="conditionObj.condition.field" nzShowSearch
-                (ngModelChange)="onFieldChange(conditionObj.condition)" style="width: 100%"
-                nzPlaceHolder="Select Column Name">
-                <nz-option *ngFor="let field of fields" [nzValue]="field.key" [nzLabel]="field.label"></nz-option>
+                (ngModelChange)="onFieldChange(conditionObj.condition)" nzPlaceHolder="Select Column Name"
+                class="full-width-select">
+                <nz-option *ngFor="let field of fields" [nzValue]="field.key" [nzLabel]="field.label">
+                </nz-option>
               </nz-select>
             </div>
-            <div nz-col class="gutter-row" nzSpan="6">
-              <!-- Comparator Selector -->
+            <div nz-col nzSpan="6">
               <nz-select name="Comparator{{ i }}{{ j }}" [(ngModel)]="conditionObj.condition.comparator"
-                style="width: 100%" nzPlaceHolder="Select Comparator">
-                <nz-option *ngFor="
-                      let comparator of getComparators(
-                        conditionObj.condition.field
-                      )
-                    " [nzValue]="comparator" [nzLabel]="comparator"></nz-option>
+                nzPlaceHolder="Select Comparator" class="full-width-select">
+                <nz-option *ngFor="let comparator of getComparators(conditionObj.condition.field)"
+                  [nzValue]="comparator" [nzLabel]="comparator">
+                </nz-option>
               </nz-select>
             </div>
-            <div nz-col class="gutter-row" nzSpan="6">
-              <!-- Value Input -->
-              <input name="value{{ i }}{{ j }}" *ngIf="isInputField(conditionObj.condition.field)" nz-input
+            <div nz-col nzSpan="6">
+              <input *ngIf="isInputField(conditionObj.condition.field)" nz-input name="value{{ i }}{{ j }}"
                 [(ngModel)]="conditionObj.condition.value" [placeholder]="getPlaceholder(conditionObj.condition.field)"
-                style="width: 100%" />
-              <nz-date-picker name="value{{ i }}{{ j }}" *ngIf="isDateField(conditionObj.condition.field)"
-                [(ngModel)]="conditionObj.condition.value" style="width: 100%"
-                [nzPlaceHolder]="getPlaceholder(conditionObj.condition.field)"></nz-date-picker>
-              <nz-select name="value{{ i }}{{ j }}" *ngIf="isSelectField(conditionObj.condition.field)"
-                [(ngModel)]="conditionObj.condition.value" style="width: 100%" nzShowSearch
-                [nzPlaceHolder]="getPlaceholder(conditionObj.condition.field)">
-                <nz-option *ngFor="
-                      let option of getOptions(conditionObj.condition.field)
-                    " [nzValue]="option.value" [nzLabel]="option.display"></nz-option>
+                class="full-width-input" />
+              <nz-date-picker *ngIf="isDateField(conditionObj.condition.field)" name="value{{ i }}{{ j }}"
+                [(ngModel)]="conditionObj.condition.value"
+                [nzPlaceHolder]="getPlaceholder(conditionObj.condition.field)" class="full-width-input">
+              </nz-date-picker>
+              <nz-select *ngIf="isSelectField(conditionObj.condition.field)" name="value{{ i }}{{ j }}"
+                [(ngModel)]="conditionObj.condition.value" nzShowSearch
+                [nzPlaceHolder]="getPlaceholder(conditionObj.condition.field)" class="full-width-input">
+                <nz-option *ngFor="let option of getOptions(conditionObj.condition.field)" [nzValue]="option.value"
+                  [nzLabel]="option.display">
+                </nz-option>
               </nz-select>
             </div>
-            <div nz-col class="gutter-row" nzSpan="3" style="text-align: right">
-              <!-- Remove Condition -->
-
+            <div nz-col nzSpan="3" class="filter-condition-actions">
               <button *ngIf="group.conditions.length > 1" nzShape="circle" nz-button nzType="primary" nzDanger
                 (click)="removeCondition(i, j)">
                 <span nz-icon nzType="delete"></span>
               </button>
-              <!-- Add Condition and Nested Group -->
-              <button nzShape="circle" style="margin-left: 10px" nz-button nzType="primary"
+              <button nzShape="circle" nz-button nzType="primary" class="add-condition-btn"
                 (click)="addCondition(i, j)">
-                <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
+                <span nz-icon nzType="plus-circle"></span>
               </button>
             </div>
           </div>
@@ -97,26 +75,22 @@
     </div>
   </div>
 </div>
-
 <div class="footer">
-  <!-- Filter Actions -->
   <div class="filter-actions">
-    <!-- Add Main Group -->
-    <button nz-button nzType="primary" (click)="addGroup()">
-      Add New Group
-    </button>
-
+    <button nz-button nzType="primary" (click)="addGroup()">Add New Group</button>
     <button nz-button (click)="resetFilters()">Reset All</button>
     <button nz-button nzType="primary" (click)="openNameModal()">
       <span nz-icon nzType="filter"></span> Save Filter
     </button>
   </div>
 </div>
-
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Enter Name For Filter'" (nzOnCancel)="handleCancel()"
-  nzOkText="Save & Close" (nzOnOk)="handleOk()"><ng-container *nzModalContent>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Enter Name For Filter" (nzOnCancel)="handleCancel()"
+  nzOkText="Save & Close" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
     <input nz-input [(ngModel)]="name" name="name" maxlength="128" placeholder="Enter Special Instruction"
-      style="width: 100%" autocomplete="off" />
-    <span style="color: red; font-size: 10px" *ngIf="name">{{ name.length }}/128</span>
+      autocomplete="off" class="filter-name-input" />
+    <span *ngIf="name" class="filter-name-counter">
+      {{ name.length }}/128
+    </span>
   </ng-container>
 </nz-modal>

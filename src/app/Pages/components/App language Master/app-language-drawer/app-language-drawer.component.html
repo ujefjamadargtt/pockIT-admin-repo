@@ -9,8 +9,9 @@
               <input nz-input placeholder="Enter App Language Name" name="name" required [(ngModel)]="data.NAME"
                 (keypress)="validateInput($event)" #name="ngModel" maxlength="256" autocomplete="off"
                 (focus)="isFocused = 'NAME'" (blur)="isFocused = ''" />
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  isFocused === 'NAME' || (data.NAME && isFocused === 'NAME')
+              <h6 class="field-counter-text" *ngIf="
+                  isFocused === 'NAME' ||
+                  (data.NAME && isFocused === 'NAME')
                 ">
                 {{ data.NAME.length }}/256
               </h6>
@@ -26,7 +27,7 @@
               <input nz-input placeholder="Enter Short Code" name="ShortCode" required [(ngModel)]="data.SHORT_CODE"
                 #name="ngModel" maxlength="8" autocomplete="off" (focus)="isFocused = 'shortCode'"
                 (blur)="isFocused = ''" />
-              <h6 style="color: red; font-size: 10px" *ngIf="
+              <h6 class="field-counter-text" *ngIf="
                   isFocused === 'shortCode' ||
                   (data.SHORT_CODE && isFocused === 'shortCode')
                 ">
@@ -45,7 +46,6 @@
           </nz-form-item>
         </div>
       </div>
-
       <div nz-row>
         <div nz-col nzSpan="12">
           <nz-form-item>
@@ -68,23 +68,20 @@
       </div>
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close()" class="ant-btn footer-cancel-spacing">
       <span>Cancel</span>
     </button>
-
     <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
       [nzLoading]="isSpinning" (click)="save(false, websitebannerPage)">
       <span>Save & Close</span>
     </button>
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important;">
-          <a class="footer-button" style="color: white !important;" (click)="save(true, websitebannerPage)"
+        <li nz-menu-item class="menuc footer-menu-rounded footer-menu-white-text">
+          <a class="footer-button footer-menu-white-text" (click)="save(true, websitebannerPage)"
             [class.loading]="isSpinning">
-            <button nz-button [nzLoading]="isSpinning" nzType="primary"
-              style="background: transparent; border: none; padding: 0;color: white !important; ">
+            <button nz-button [nzLoading]="isSpinning" nzType="primary" class="footer-transparent-btn">
               Save & New
             </button>
           </a>
@@ -100,9 +97,8 @@
     [nzContent]="content" [nzTitle]="'Image View'" (nzOnCancel)="ImageModalCancel()" [nzFooter]="ImageModalFooter">
     <ng-template #content>
       <nz-spin [nzSpinning]="isSpinning">
-        <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss"
-          style="height: 400px; overflow: auto">
-          <iframe [src]="imageshow" style="width: 832px; height: 396px" frameborder="0"></iframe>
+        <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss image-preview-container">
+          <iframe [src]="imageshow" class="image-preview-frame" frameborder="0"></iframe>
         </div>
       </nz-spin>
     </ng-template>

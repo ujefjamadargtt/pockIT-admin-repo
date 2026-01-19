@@ -1,5 +1,4 @@
 <div>
-  <!-- <form nz-form> -->
   <form nz-form #couponTypePage="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
       <div nz-row>
@@ -27,7 +26,7 @@
     </nz-spin>
   </form>
   <div class="footer">
-    <button type="button" nz-button (click)="close(couponTypePage)" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close(couponTypePage)" class="ant-btn coupon-footer-btn-x3">
       <span>Cancel</span>
     </button>
     <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
@@ -36,8 +35,10 @@
     </button>
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
-          <a (click)="save(true, couponTypePage)" style="color: white !important">Save & New</a>
+        <li nz-menu-item class="menuc coupon-dropdown-item-x3">
+          <a (click)="save(true, couponTypePage)" class="coupon-dropdown-link-x3">
+            Save & New
+          </a>
         </li>
       </ul>
     </nz-dropdown-menu>
@@ -46,10 +47,4 @@
       <span>Update & close</span>
     </button>
   </div>
-
-  <!-- <div class="header">
-    <button type="button" nz-button (click)="close(couponTypePage)" class="ant-btn" style="margin-right: 8px">
-      <i nz-icon nzType="close" nzTheme="outline"></i>
-    </button>
-  </div> -->
 </div>

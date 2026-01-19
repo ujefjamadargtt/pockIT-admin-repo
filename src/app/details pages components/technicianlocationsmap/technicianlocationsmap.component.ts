@@ -20,7 +20,6 @@ export class TechnicianlocationsmapComponent {
     private api: ApiServiceService,
     private datepipe: DatePipe
   ) { }
-
   technician: any;
   ngOnInit(): void {
     this.initMap();
@@ -30,7 +29,6 @@ export class TechnicianlocationsmapComponent {
   filterQueryDate: any;
   ORDER_IDFilt: any;
   tech_IDFilt: any;
-
   initMap(): void {
     this.isSpinning = true;
     this.isnodata = false;
@@ -45,14 +43,12 @@ export class TechnicianlocationsmapComponent {
               data['data'].forEach((element) => {
                 if (element.TECHNICIAN_ID) TECH_IDS.push(element.TECHNICIAN_ID);
               });
-
               filterquery =
                 ' AND ORDER_ID =' +
                 this.FILTER_ID +
                 ' AND TECHNICIAN_ID in (' +
                 TECH_IDS.toString() +
                 ')';
-
               if (TECH_IDS.length > 0) {
                 this.ORDER_IDFilt =
                   this.FILTER_ID != null && this.FILTER_ID != undefined
@@ -101,11 +97,9 @@ export class TechnicianlocationsmapComponent {
           (data2) => {
             if (data2['code'] == 200) {
               var TECH_IDS: any = [];
-
               data2['data'].forEach((element) => {
                 if (element.TECHNICIAN_ID) TECH_IDS.push(element.TECHNICIAN_ID);
               });
-
               filterquery =
                 ' AND JOB_CARD_ID in (' +
                 this.FILTER_ID.toString() +
@@ -150,7 +144,6 @@ export class TechnicianlocationsmapComponent {
         );
     } else if (this.TYPE == 'VENDOR') {
       var TECH_IDS: any = [];
-
       this.api
         .getTechnicianData(0, 0, '', '', ' AND VENDOR_ID =' + this.FILTER_ID)
         .subscribe(
@@ -201,7 +194,6 @@ export class TechnicianlocationsmapComponent {
       }
     }
   }
-
   getdataaa(filterquery) {
     this.api
       .getTechnicaionLoacionTrack(0, 0, '_id', 'desc', filterquery)
@@ -217,7 +209,6 @@ export class TechnicianlocationsmapComponent {
               this.isSpinning = false;
               this.isnodata = true;
             }
-            // Initialize the map with updated data
           } else {
             this.message.error('Server Not Found.', '');
           }
@@ -227,7 +218,6 @@ export class TechnicianlocationsmapComponent {
         }
       );
   }
-
   techniciansdata: any;
   handleHttpError(err: HttpErrorResponse) {
     if (err.status === 0) {
@@ -239,164 +229,14 @@ export class TechnicianlocationsmapComponent {
       this.message.error('Something Went Wrong.', '');
     }
   }
-  // Define travel path coordinates (lat, lng)
   private pathCoordinates: any[] = [];
-  // setLocation() {
-  //   const technician = this.technician;
-  //   if (technician) {
-  //     const locations = technician
-  //       .map((loc: any) => ({
-  //         name: loc.TECHNICIAN_NAME,
-  //         lat: parseFloat(loc.LOCATION_LATITUDE),
-  //         lng: parseFloat(loc.LOCATION_LONG),
-  //         locationName: `Location ID: ${loc._id}`,
-  //         dateTime: new Date(loc.createdAt).toLocaleString(),
-  //       }))
-  //       .filter((loc: any) => !isNaN(loc.lat) && !isNaN(loc.lng));
-
-  //     if (locations.length === 0) {
-  //       this.message.error('No valid locations found for the technician.', '');
-  //       return; // Exit if no valid locations
-  //     } else {
-  //       this.pathCoordinates = locations;
-  //     }
-  //   }
-  //   this.map = L.map('map').setView(
-  //     [this.pathCoordinates[0].lat, this.pathCoordinates[0].lng],
-  //     20
-  //   ); // Set initial view
-
-  //   // Add OpenStreetMap tile layer
-  //   L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-  //     attribution: '',
-  //     maxZoom: 22, // Set max zoom
-  //   }).addTo(this.map);
-
-  //   // Add markers with date-time info and polyline
-  //   this.plotPath();
-  //   this.isSpinning = false;
-  // }
-
-  // private plotPath(): void {
-  //   let markers: any = [];
-  //   let latLngs: [number, number][] = [];
-  //   // Custom Red Marker Icon
-  //   const redIcon = L.icon({
-  //     iconUrl:
-  //       'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png', // 🔴 Custom Red Marker
-  //     iconSize: [25, 41],
-  //     iconAnchor: [12, 41],
-  //     popupAnchor: [1, -34],
-  //     shadowUrl:
-  //       'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-  //     shadowSize: [41, 41],
-  //   });
-  //   this.pathCoordinates.forEach((point) => {
-  //     let marker: any = L.marker([point.lat, point.lng], { icon: redIcon })
-  //       .addTo(this.map)
-  //       .bindPopup(`<b>${point.name}<br/>Time:</b> ${point.dateTime}`)
-  //       .openPopup(); // Opens popup by default
-
-  //     markers.push(marker);
-  //     latLngs.push([point.lat, point.lng]);
-  //   });
-
-  //   // Draw polyline for the travel path
-  //   L.polyline(latLngs, { color: 'blue', weight: 4 }).addTo(this.map);
-  // }
-
-  // setLocation() {
-  //   const technician = this.technician;
-
-  //   if (technician) {
-  //     const locations = technician
-  //       .map((loc: any) => ({
-  //         name: loc.TECHNICIAN_NAME,
-  //         lat: parseFloat(loc.LOCATION_LATITUDE),
-  //         lng: parseFloat(loc.LOCATION_LONG),
-  //         locationName: `Location ID: ${loc._id}`,
-  //         dateTime: new Date(loc.createdAt).toLocaleString(),
-  //       }))
-  //       .filter((loc: any) => !isNaN(loc.lat) && !isNaN(loc.lng));
-
-  //     if (locations.length === 0) {
-  //       this.message.error('No valid locations found for the technician.', '');
-  //       return;
-  //     }
-
-  //     // Initialize Google Map
-  //     const map = new google.maps.Map(document.getElementById('map'), {
-  //       center: { lat: locations[0].lat, lng: locations[0].lng },
-  //       zoom: 14,
-  //       mapTypeId: 'roadmap',
-  //     });
-
-  //     // Store LatLng points for polyline
-  //     const pathCoordinates = locations.map((point) => ({
-  //       lat: point.lat,
-  //       lng: point.lng,
-  //     }));
-
-  //     // Create an InfoWindow
-  //     const infoWindow = new google.maps.InfoWindow();
-
-  //     // Add markers for each location
-  //     const markers = locations.map((point, index) => {
-  //       return new google.maps.Marker({
-  //         position: { lat: point.lat, lng: point.lng },
-  //         map: map,
-  //         title: `${point.name} - ${point.dateTime}`,
-  //         icon: {
-  //           url: index === 0
-  //             ? 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'  // 🟢 Green for Start
-  //             : 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',   // 🔴 Red for Others
-  //           scaledSize: new google.maps.Size(40, 40), // Resize if needed
-  //         }
-  //       });
-  //     });
-
-  //     // ✅ Add event listeners in a separate loop
-  //     markers.forEach((marker, index) => {
-  //       marker.addListener('mouseover', () => {
-  //         infoWindow.setContent(`
-  //           <div style="font-size: 14px;">
-  //             <strong>Technician:</strong> ${locations[index].name}<br>
-  //             <strong>Location:</strong> ${locations[index].locationName}<br>
-  //             <strong>Date & Time:</strong> ${locations[index].dateTime}
-  //           </div>
-  //         `);
-  //         infoWindow.open(map, marker);
-  //       });
-
-  //       marker.addListener('mouseout', () => {
-  //         infoWindow.close();
-  //       });
-  //     });
-
-  //     // Draw polyline to connect locations
-  //     const travelPath = new google.maps.Polyline({
-  //       path: pathCoordinates,
-  //       geodesic: true,
-  //       strokeColor: '#FF0000', // Red color
-  //       strokeOpacity: 1.0,
-  //       strokeWeight: 4, // Line thickness
-  //     });
-
-  //     travelPath.setMap(map); // Add line to map
-  //     this.isSpinning = false;
-  //   }
-  // }
-  // apiKey = 'AIzaSyA1EJJ0RMDQwzsDd00Oziy1pytYn_Ozi-g';
   apiKey = 'AIzaSyBOL8XUOxJicHzlQRGi27Wdn5M3zazFKTU';
-
   setLocation() {
     const technician = this.technician;
-
     if (!technician || technician.length === 0) {
       this.message.error('No technician location data available.', '');
       return;
     }
-
     const locations = technician
       .map((loc: any) => ({
         name: loc.TECHNICIAN_NAME,
@@ -406,13 +246,10 @@ export class TechnicianlocationsmapComponent {
         dateTime: new Date(loc.createdAt).toLocaleString(),
       }))
       .filter((loc: any) => !isNaN(loc.lat) && !isNaN(loc.lng));
-
     if (locations.length === 0) {
       this.message.error('No valid locations found for the technician.', '');
       return;
     }
-
-    // Initialize Google Map
     const map = new google.maps.Map(
       document.getElementById('map') as HTMLElement,
       {
@@ -421,10 +258,7 @@ export class TechnicianlocationsmapComponent {
         mapTypeId: 'roadmap',
       }
     );
-
     const bounds = new google.maps.LatLngBounds();
-
-    // Add markers
     locations.forEach((point, index) => {
       const marker = new google.maps.Marker({
         position: { lat: point.lat, lng: point.lng },
@@ -433,16 +267,14 @@ export class TechnicianlocationsmapComponent {
         icon: {
           url:
             index === 0
-              ? 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' // Start
+              ? 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' 
               : index === locations.length - 1
-                ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' // End
-                : 'https://maps.google.com/mapfiles/ms/icons/red-dot.png', // Waypoints
+                ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' 
+                : 'https://maps.google.com/mapfiles/ms/icons/red-dot.png', 
           scaledSize: new google.maps.Size(40, 40),
         },
       });
-
       bounds.extend(marker.getPosition());
-
       const infoWindow = new google.maps.InfoWindow({
         content: `
           <div style="font-size: 14px;">
@@ -452,30 +284,21 @@ export class TechnicianlocationsmapComponent {
           </div>
         `,
       });
-
       marker.addListener('click', () => {
         infoWindow.open(map, marker);
       });
       this.getNearestRoad(map, point);
     });
-
-    // Fit Map to Show All Markers
     map.fitBounds(bounds);
     this.isSpinning = false;
-    // Google API Key
-    const googleApiKey = this.apiKey; // Replace with your API key
+    const googleApiKey = this.apiKey; 
     const routeApiUrl = `https://routes.googleapis.com/directions/v2:computeRoutes?key=${googleApiKey}`;
-
-    // Process waypoints in batches of 25
     const MAX_WAYPOINTS = 25;
     const routeSegments: any = [];
-
     for (let i = 0; i < locations.length; i += MAX_WAYPOINTS) {
       const segment = locations.slice(i, i + MAX_WAYPOINTS);
       routeSegments.push(segment);
     }
-
-    // Function to fetch route and draw polylines
     const fetchAndDrawRoute = (segment: any, index: number) => {
       const origin = {
         latLng: { latitude: segment[0].lat, longitude: segment[0].lng },
@@ -489,7 +312,6 @@ export class TechnicianlocationsmapComponent {
       const intermediates = segment.slice(1, -1).map((point: any) => ({
         location: { latLng: { latitude: point.lat, longitude: point.lng } },
       }));
-
       const requestBody = {
         origin: { location: origin },
         destination: { location: destination },
@@ -499,7 +321,6 @@ export class TechnicianlocationsmapComponent {
         computeAlternativeRoutes: false,
         polylineEncoding: 'ENCODED_POLYLINE',
       };
-
       fetch(routeApiUrl, {
         method: 'POST',
         headers: {
@@ -517,8 +338,6 @@ export class TechnicianlocationsmapComponent {
             );
             return;
           }
-
-          // Decode and draw each segment
           const polylinePoints = this.decodePolyline(
             data.routes[0].polyline.encodedPolyline
           );
@@ -529,7 +348,6 @@ export class TechnicianlocationsmapComponent {
             strokeOpacity: 1.0,
             strokeWeight: 4,
           });
-
           travelPath.setMap(map);
         })
         .catch((error) => {
@@ -543,22 +361,16 @@ export class TechnicianlocationsmapComponent {
           );
         });
     };
-
-    // Process each segment
     routeSegments.forEach((segment, index) =>
       fetchAndDrawRoute(segment, index)
     );
-
   }
-
-  // Function to decode polyline
   decodePolyline(encoded: string) {
     let index = 0,
       len = encoded.length;
     let lat = 0,
       lng = 0;
     const coordinates: any = [];
-
     while (index < len) {
       let shift = 0,
         result = 0,
@@ -570,7 +382,6 @@ export class TechnicianlocationsmapComponent {
       } while (byte >= 0x20);
       let deltaLat = result & 1 ? ~(result >> 1) : result >> 1;
       lat += deltaLat;
-
       shift = 0;
       result = 0;
       do {
@@ -580,13 +391,10 @@ export class TechnicianlocationsmapComponent {
       } while (byte >= 0x20);
       let deltaLng = result & 1 ? ~(result >> 1) : result >> 1;
       lng += deltaLng;
-
       coordinates.push({ lat: lat / 1e5, lng: lng / 1e5 });
     }
-
     return coordinates;
   }
-  // Function to draw a dashed polyline from the road to the technician
   drawWalkingPath(map: any, roadLocation: { lat: number; lng: number }, technician: { lat: number; lng: number }) {
     if (!map || !roadLocation || !technician) {
       console.error('Invalid map or location data');
@@ -602,10 +410,9 @@ export class TechnicianlocationsmapComponent {
         { lat: roadLocation.lat, lng: roadLocation.lng },
         { lat: technician.lat, lng: technician.lng }
       ],
-
       geodesic: true,
-      strokeColor: '#FF0000', // Red color for walking path
-      strokeOpacity: 0, // Ensure visibility
+      strokeColor: '#FF0000', 
+      strokeOpacity: 0, 
       strokeWeight: 1,
       icons: [
         {
@@ -615,31 +422,22 @@ export class TechnicianlocationsmapComponent {
         },
       ],
     });
-
     walkingPath.setMap(map);
   }
-
-
   getNearestRoad(map: any, destination: any) {
-    const apiKey = this.apiKey; // Replace with your API Key
+    const apiKey = this.apiKey; 
     const roadApiUrl = `https://roads.googleapis.com/v1/nearestRoads?points=${destination.lat},${destination.lng}&key=${apiKey}`;
-
     fetch(roadApiUrl)
       .then((response) => response.json())
       .then((data) => {
         if (!data.snappedPoints || data.snappedPoints.length === 0) {
-          // console.warn('No nearest road found for:', destination.name);
           return;
         }
-
-        // Get snapped road point
         const roadPoint = data.snappedPoints[0].location;
         const roadLatLng = {
           lat: roadPoint.latitude,
           lng: roadPoint.longitude,
         };
-
-        // Draw walking path from road to technician
         this.drawWalkingPath(map, roadLatLng, destination);
       })
       .catch((error) => {

@@ -1,10 +1,43 @@
-nz-form-item  {
+nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 5px;
 }
-
 *:focus {
+  outline: none;
+}
+.tm-form-item-inline {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0 5px;
+}
+.tm-add-btn {
+  width: 100%;
+  margin-top: 5px;
+}
+.tm-search-container {
+  text-align: right;
+  padding-right: 20px;
+  width: 100%;
+}
+.tm-search-group {
+  margin-left: 26px;
+}
+.tm-search-input {
+  height: 32px;
+}
+.tm-th-center-bold {
+  text-align: center;
+  font-weight: bold;
+}
+.tm-preline-text {
+  white-space: pre-line;
+}
+.tm-footer-cancel-btn {
+  margin-right: 8px;
+}
+.tm-no-focus-outline:focus {
   outline: none;
 }

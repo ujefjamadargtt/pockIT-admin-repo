@@ -4,7 +4,6 @@ nz-form-item{
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 .my-box {
   border          : 1px dashed #e9e9e9;
   border-radius   : 6px;
@@ -13,8 +12,6 @@ nz-form-item{
   margin-bottom   : 12px;
   background-color: #fafafa;
 }
-
-
 .footer {
   position  : absolute;
   bottom    : 0px;
@@ -25,20 +22,61 @@ nz-form-item{
   left      : 0px;
   background: #fff;
 }
-
-/* .angular-editor[_ngcontent-cxg-c26] .angular-editor-wrapper[_ngcontent-cxg-c26] .angular-editor-textarea[_ngcontent-cxg-c26]{
-  height: 200px;
-} */
-
-/* .img {
-  height: 180px;
-   margin-left: 10px;
-    width: 70% important,
-}   */
-
 nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
+}
+.char-counter-red-10px {
+  color: red;
+  font-size: 10px;
+}
+.color-picker-full-width {
+  width: 100%;
+}
+.customer-type-select-full-width {
+  width: 100%;
+}
+.delete-icon-pointer-red-ml10 {
+  cursor: pointer;
+  color: red;
+  margin-left: 10px;
+}
+.upload-btn-banner-img {
+  height: 28px;
+  padding: 0px 7px;
+  font-size: 10px;
+}
+.file-input-hidden {
+  display: none !important;
+}
+.image-container-mt10 {
+  margin-top: 10px;
+}
+.banner-image-preview-400 {
+  width: 400px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+.image-preview-align-center {
+  align-items: center;
+}
+.footer-cancel-btn-mr12 {
+  margin-right: 12px;
+}
+.dropdown-menu-item-rounded-white {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-save-new-link-white {
+  color: white !important;
+}
+.crop-modal-container-h500-scroll {
+  height: 500px;
+  overflow: scroll;
+}
+.cropped-image-text-center {
+  text-align: center;
 }

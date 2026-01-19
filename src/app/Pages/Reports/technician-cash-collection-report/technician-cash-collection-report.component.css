@@ -1,11 +1,111 @@
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
-
   .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
+    max-width: 100%; 
     display: inline-block;
   }
+.back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.filter-actions-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-button {
+  color: white;
+}
+.filter-button-container {
+  width: 47px;
+}
+.filter-row-top {
+  padding-top: 0px;
+}
+.spin-container {
+  text-align: center;
+}
+.filter-card-column {
+  margin-bottom: 8px;
+}
+.filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.filter-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.applied-filter-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions-container-inner {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.view-tag {
+  margin-right: 0px;
+}
+.tag-icon {
+  font-size: 10px !important;
+}
+.no-filters-found {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-button {
+  margin-right: 10px;
+}
+.new-filter-button {
+  margin-right: 10px;
+}
+.table-row {
+  margin-top: 8px;
+}
+.table-header-center {
+  text-align: center;
+}
+.table-data-left {
+  text-align: left;
+}
+.transaction-date-filter {
+  width: 300px;
+}
+.transaction-date-search-box {
+  width: 280px;
+}
+.modal-content-text {
+  text-align: center;
+}

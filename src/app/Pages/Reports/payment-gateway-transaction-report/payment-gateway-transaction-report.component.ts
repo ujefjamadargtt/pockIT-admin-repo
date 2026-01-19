@@ -21,14 +21,12 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
   totalRecords = 1;
   fileName = 'DeptWise.xlsx';
   dataList: any = [];
-  // dataListForExport = [];
   loadingRecords: boolean = true;
   sortValue: string = 'desc';
   sortKey: string = 'ID';
   searchText: string = '';
   filterQuery: string = '';
   isFilterApplied: string = 'default';
-  // columns: string[][] = [["TICKET_GROUP_VALUE", "Ticket Group"], ["TOTAL", "Total Ticket(s)"], ["CREATED", "Pending"], ["ASSIGNED", "Assigned"], ["ANSWERED", "Answered"], ["RE_OPEN", "Re-Opened"], ["CLOSED", "Closed"], ["BANNED", "Banned"], ["ON_HOLD", "On Hold"]];
   columns: string[][] = [
     ['MOBILE_NUMBER', 'Ticket Group'],
     ['MEMBER_FROM', 'Ticket Group'],
@@ -60,35 +58,10 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
   value2: any = '';
   ticketGroups = [];
   supportusers = [];
-  // userId = Number(this.cookie.get('userId'));
   roleId = Number(this.cookie.get('roleId'));
   orgId = Number(this.cookie.get('orgId'));
   deptId = Number(this.cookie.get('deptId'));
   branchId = Number(this.cookie.get('branchId'));
-  // designationId = Number(this.cookie.get('designationId'));
-  // date1: any;
-  // date2: any
-  // today = new Date();
-  // orgName: string = this.api['ORGANIZATION_NAME'];
-  // isButtonSpinning: boolean = false;
-  // dataCount: number = 0;
-  // allTotal: number = 0;
-  // allCreated: number = 0;
-  // allAssigned: number = 0;
-  // allAnswered: number = 0;
-  // allReopened: number = 0;
-  // allClosed: number = 0;
-  // allBanned: number = 0;
-  // allOnHold: number = 0;
-  // TOTAL: number = 0;
-  // CREATED: number = 0;
-  // ASSIGNED: number = 0;
-  // ANSWERED: number = 0;
-  // RE_OPEN: number = 0;
-  // CLOSED: number = 0;
-  // BANNED: number = 0;
-  // ON_HOLD: number = 0;
-
   constructor(
     private api: ApiServiceService,
     private cookie: CookieService,
@@ -97,101 +70,12 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
-  // disabledToDate = (current: Date): boolean =>
-  //   differenceInCalendarDays(current, this.date1 == null ? this.today : this.date1) < 0;
-
-  // onFromDateChange(fromDate) {
-  //   if (fromDate == null)
-  //     this.date1 = new Date();
-
-  //   else
-  //     this.date1 = new Date(fromDate);
-  // }
-
-  // setDateForDeptWiseFilter() {
-  //   this.date = [];
-  //   let currentDate = new Date();
-  //   let previous15thDayDate = currentDate.setDate(currentDate.getDate() + (-30));
-  //   this.date1 = new Date(previous15thDayDate);
-  //   this.date2 = new Date();
-  // }
-
   ngOnInit() {
-    // this.setDateForDeptWiseFilter();
-
-    // this.api.getAllTicketGroups(0, 0, 'VALUE', 'ASC', " AND ORG_ID=1" ).subscribe(data => {
-    //   if (data['code'] == 200) {
-    //     this.ticketGroups = data['data'];
-    //   }
-
-    // }, err => {
-
-    // });
-
-    // if (this.roleId == 6)
-    //   this.getDepartmentToShowReport();
-
-    // if (this.roleId == 4)
-    //   this.getDepartmentSupportAgentWise();
-
-    // if ((this.roleId != 4) && (this.roleId != 6))
-    //   this.search(true);
-
-    // this.isFilterApplied = "default";
     this.filterClass = 'filter-invisible';
   }
-
-  // supportAgentWiseDeptArray: any = [];
-
-  // getDepartmentSupportAgentWise() {
-  //   this.supportAgentWiseDeptArray = [];
-
-  //   this.api.getbackOfficeDepartmentMapping(0, 0, 'ID', "ASC", ' AND BACKOFFICE_ID=' + this.userId).subscribe(data => {
-  //     if (data['status'] == 200) {
-  //       var supportAgentWiseDept = data['data'];
-
-  //       for (var i = 0; i < supportAgentWiseDept.length; i++) {
-  //         this.supportAgentWiseDeptArray.push(supportAgentWiseDept[i]['DEPARTMENT_ID']);
-  //       }
-
-  //       if (this.roleId == 4) {
-  //         this.search(true);
-  //       }
-  //     }
-  //   });
-  // }
-
-  // deptWiseReport: any = [];
-
-  // getDepartmentToShowReport() {
-  //   this.deptWiseReport = [];
-
-  //   this.api.getbackOfficeDepartmentMapping(0, 0, 'ID', "ASC", ' AND BACKOFFICE_ID=' + this.userId).subscribe(data => {
-  //     if (data['status'] == 200) {
-  //       var departments = data['data'];
-
-  //       for (var i = 0; i < departments.length; i++) {
-  //         this.deptWiseReport.push(departments[i]['DEPARTMENT_ID']);
-  //       }
-
-  //       if (this.roleId == 6) {
-  //         this.search(true);
-  //       }
-  //     }
-  //   });
-  // }
-
-  // sort(sort: { key: string; value: string }): void {
-  //   this.sortKey = sort.key;
-  //   this.sortValue = sort.value;
-  //   this.search(true);
-  // }
-
   exportexcel(): void {
     let element = document.getElementById('summer');
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
@@ -199,12 +83,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, this.fileName);
   }
-
-  // changeDate(value) {
-  //   this.value1 = this.datePipe.transform(value[0], "yyyy-MM-dd")
-  //   this.value2 = this.datePipe.transform(value[1], "yyyy-MM-dd");
-  // }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -217,20 +95,15 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -241,15 +114,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
-    // if (this.cartidText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `CART_ID LIKE '%${this.cartidText.trim()}%'`;
-    //   this.iscartidFilterApplied = true;
-    // } else {
-    //   this.iscartidFilterApplied = false;
-    // }
     if (this.orderidText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -282,7 +146,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.ismobilenoFilterApplied = false;
     }
-
     if (this.memberText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -291,16 +154,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.ismemberfromFilterApplied = false;
     }
-
-    // if (this.paymentfor !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `PAYMENT_FOR LIKE '%${this.paymentfor.trim()}%'`;
-    //   this.ispaymentforFilterApplied = true;
-    // } else {
-    //   this.ispaymentforFilterApplied = false;
-    // }
-
     if (this.statusFilter1) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -310,16 +163,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.ispaymentforFilterApplied = false;
     }
-
-    // if (this.paymentmodText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `PAYMENT_MODE LIKE '%${this.paymentmodText.trim()}%'`;
-    //   this.ispaymntmodeFilterApplied = true;
-    // } else {
-    //   this.ispaymntmodeFilterApplied = false;
-    // }
-
     if (this.statusFilter2) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -329,12 +172,11 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.ispaymntmodeFilterApplied = false;
     }
-
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `DATE(TRANSACTION_DATE) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -343,7 +185,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.isdateFilterApplied = false;
     }
-
     if (this.transactionIdText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -352,14 +193,12 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.istransactionidFilterApplied = false;
     }
-
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `TRANSACTION_STATUS = '${this.statusFilter}'`;
     }
-
     if (this.transactionamountText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -368,7 +207,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.istransactionamountFilterApplied = false;
     }
-
     if (this.paylodText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -377,7 +215,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.ispayloadFilterApplied = false;
     }
-
     if (this.responseText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -386,7 +223,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.isresponsedataFilterApplied = false;
     }
-
     if (this.merchantOrder !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -395,7 +231,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.ismerchantorderFilterApplied = false;
     }
-
     if (this.merchantIdText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -404,7 +239,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.ismerchantIdFilterApplied = false;
     }
-
     if (this.responsemessageText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -413,11 +247,7 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     } else {
       this.isresponseFilterApplied = false;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // const finalDataList =
-    //   this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
     if (exportInExcel == false) {
       this.api
         .paymentgatewaytransactionReport(
@@ -499,13 +329,11 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
         );
     }
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   clearFilter() {
     this.TICKET_GROUP = [];
     this.date = [];
@@ -515,47 +343,18 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     this.value2 = '';
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
-    // this.setDateForDeptWiseFilter();
     this.search(true);
     this.SELECT_ALL = false;
   }
-
   exportLoading: boolean = false;
   ticketGroupID2: any;
-
-  // isPDFModalVisible: boolean = false;
-  // PDFModalTitle: string = "Export in PDF";
-  // exportInPDFLoading: boolean = false;
   ticketGroupsToPrint: string = '';
-
-  // importInPDF(ticketGroupID) {
-  //   this.ticketGroupsToPrint = "";
-  //   this.search(false, false, true);
-  //   let tempTicketGroups = "";
-
-  //   for (var i = 0; i < ticketGroupID.length; i++) {
-  //     let ticketGroups = this.ticketGroups.filter(obj1 => {
-  //       return obj1['ID'] == ticketGroupID[i];
-  //     });
-
-  //     tempTicketGroups = tempTicketGroups + ticketGroups[0]["VALUE"] + ", ";
-  //   }
-
-  //   this.ticketGroupsToPrint = tempTicketGroups.substring(0, tempTicketGroups.length - 2);
-  // }
-
-  // handlePDFModalCancel() {
-  //   this.isPDFModalVisible = false;
-  // }
-
   getCurrentDateTime() {
     return new Date();
   }
-
   getUserName() {
     return this.api.userName;
   }
-
   getTicketGroups() {
     if (
       this.ticketGroupsToPrint == '' ||
@@ -564,138 +363,81 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       return 'All';
     else return this.ticketGroupsToPrint;
   }
-
   pdfDownload: boolean = false;
-
   SELECT_ALL: boolean = false;
-
   onSelectAllChecked(event) {
     this.SELECT_ALL = event;
-    //
     let ids = [];
     if (this.SELECT_ALL == true) {
       for (var i = 0; i < this.ticketGroups.length; i++) {
         ids.push(this.ticketGroups[i]['ID']);
-        //
       }
     } else {
       ids = [];
     }
     this.TICKET_GROUP = ids;
   }
-
   onSelectOff(event) {
     var a = this.ticketGroups.length;
     var b = this.ticketGroups.length - event.length;
-
     if ((a! = b)) {
       this.SELECT_ALL = false;
     } else {
       this.SELECT_ALL = true;
     }
-
     this.TICKET_GROUP = event;
-
     if (this.TICKET_GROUP.length == 0) {
       this.SELECT_ALL = false;
     }
   }
-
-  // getTotal(index: number, size: number) {
-  //   if (Number(index * size) >= Number(this.dataCount)) {
-  //     return true;
-
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
-  // nametext: string = "";
-  // iscustNameFilterApplied: boolean = false;
-  // custnamevisible = false;
-
   ticketGroupText: string = '';
   isticketgroupFilterApplied: boolean = false;
   ticketGroupVisible = false;
-
-  // cartidText: string = "";
-  // iscartidFilterApplied: boolean = false;
-  // cartidVisible = false;
-
   orderidText: string = '';
   isorderidFilterApplied: boolean = false;
   orderidVisible = false;
-
   customerIdText: string = '';
   iscustomeridFilterApplied: boolean = false;
   customeriddVisible = false;
-
   jobcardText: string = '';
   isjobcardFilterApplied: boolean = false;
   jobcardVisible = false;
-
-  // vendorText: string = "";
-  // isvendorFilterApplied: boolean = false;
-  // vendorVisible = false;
-
   mobilenoVisible: boolean = false;
   ismobilenoFilterApplied: boolean = false;
   mobileText: string = '';
-
   memberfromVisible: boolean = false;
   ismemberfromFilterApplied: boolean = false;
   memberText: string = '';
-
   paymentforVisible: boolean = false;
   ispaymentforFilterApplied: boolean = false;
   paymentfor: string = '';
-
   paymntmodeVisible: boolean = false;
   ispaymntmodeFilterApplied: boolean = false;
   paymentmodText: string = '';
-
   transactionidVisible: boolean = false;
   istransactionidFilterApplied: boolean = false;
   transactionIdText: string = '';
-
   transactionamountVisible: boolean = false;
   istransactionamountFilterApplied: boolean = false;
   transactionamountText: string = '';
-
   payloadVisible: boolean = false;
   ispayloadFilterApplied: boolean = false;
   paylodText: string = '';
-
   responsedataVisible: boolean = false;
   isresponsedataFilterApplied: boolean = false;
   responseText: string = '';
-
   merchantorderVisible: boolean = false;
   ismerchantorderFilterApplied: boolean = false;
   merchantOrder: string = '';
-
   merchantIdVisible: boolean = false;
   ismerchantIdFilterApplied: boolean = false;
   merchantIdText: string = '';
-
   responseVisible: boolean = false;
   isresponseFilterApplied: boolean = false;
   responsemessageText: string = '';
-
   dateVisible: boolean = false;
   isdateFilterApplied: boolean = false;
-  // paymentmodText: string = '';
-
-  // createdText: string = "";
-  // iscreatedFilterApplied: boolean = false;
-  // createdpVisible = false;
-
-  // assignedText: string = "";
-  // assignedVisible = false;
-  // isassignedFilterApplied: boolean = false;
-
   StartDate: any = [];
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -704,14 +446,12 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
         this.isdateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isdateFilterApplied = false;
     }
   }
-
   excelData: any = [];
-
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -721,7 +461,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     { text: 'Success', value: 'Success' },
     { text: 'Fail', value: 'Fail' },
   ];
-
   statusFilter1: string | undefined = undefined;
   onStatusFilterChange1(selectedStatus: string) {
     this.statusFilter1 = selectedStatus;
@@ -731,7 +470,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     { text: 'Job', value: 'Job' },
     { text: 'Order', value: 'Order' },
   ];
-
   statusFilter2: string | undefined = undefined;
   onStatusFilterChange2(selectedStatus: string) {
     this.statusFilter2 = selectedStatus;
@@ -741,19 +479,11 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     { text: 'Online', value: 'Online' },
     { text: 'Offline', value: 'Offline' },
   ];
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
     if (this.excelData.length > 0) {
       for (var i = 0; i < this.excelData.length; i++) {
-        // obj1["Feedback Date"] = this.excelData[i]["FEEDBACK_DATE_TIME"]
-        //   ? this.datepipe.transform(
-        //     this.excelData[i]["FEEDBACK_DATE_TIME"],
-        //     "dd/MM/yyyy hh:mm a"
-        //   )
-        //   : "-";
-
         obj1['Order Id'] = this.excelData[i]['ORDER_ID']
           ? this.excelData[i]['ORDER_ID']
           : '-';
@@ -802,7 +532,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
         obj1['Response Message'] = this.excelData[i]['RESPONSE_MESSAGE']
           ? this.excelData[i]['RESPONSE_MESSAGE']
           : '-';
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -816,7 +545,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       this.message.error('There is a No Data', '');
     }
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -825,28 +553,17 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   reset(): void {
     this.searchText = '';
   }
-
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
-    // if (this.cartidText.length >= 0 && keys.key === "Enter") {
-    //   this.search();
-    //   this.iscartidFilterApplied = true;
-    // } else if (this.cartidText.length == 0 && keys.key === "Backspace") {
-    //   this.search();
-    //   this.iscartidFilterApplied = false;
-    // }
     if (this.orderidText.length > 0 && keys.key === 'Enter') {
       this.search();
       this.isorderidFilterApplied = true;
@@ -952,30 +669,23 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       this.isresponseFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   isDeleting: boolean = false;
   savedFilters: any;
   selectedFilter: string | null = null;
   isfilterapply: boolean = false;
-
   public commonFunction = new CommonFunctionService();
   whichbutton: any;
   filterloading: boolean = false;
   updateButton: any;
   updateBtn: any;
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -991,14 +701,10 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           } else {
             this.isfilterapply = true;
           }
@@ -1021,7 +727,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       }
     );
   }
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
@@ -1030,7 +735,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
   TabId: number;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1038,16 +742,12 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1062,22 +762,15 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1091,21 +784,17 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   EditQueryData = [];
   editButton: any = '';
   FILTER_NAME: any;
   drawerTitle: string = '';
   drawerFilterVisible: boolean = false;
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -1122,21 +811,9 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       groups: [],
     },
   ];
-
-  // editQuery(data: any) {
-  //   this.filterGroups = JSON.parse(data.FILTER_JSON);
-  //   this.FILTER_NAME = data.FILTER_NAME;
-  //   //
-  //   this.EditQueryData = data;
-  //   this.editButton = "Y";
-  //   this.drawerTitle = "Edit Query";
-  //   this.drawerFilterVisible = true;
-  // }
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1144,7 +821,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1153,7 +829,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -1162,24 +837,19 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1188,26 +858,21 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
     this.search(true);
   }
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -1282,7 +947,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       ],
       placeholder: 'Enter Member From',
     },
-
     {
       key: 'PAYMENT_FOR',
       label: 'Payment for',
@@ -1297,7 +961,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       ],
       placeholder: 'Select Payment for',
     },
-
     {
       key: 'PAYMENT_MODE',
       label: 'Payment Mode',
@@ -1312,7 +975,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       ],
       placeholder: 'Select Payment Mode',
     },
-
     {
       key: 'TRANSACTION_DATE',
       label: 'Transaction Date',
@@ -1426,9 +1088,7 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       placeholder: 'Enter Response Message',
     },
   ];
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -1437,7 +1097,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       tooltip.hide();
     }
   }
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -1454,19 +1113,14 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Payment Gateway Transaction Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1483,7 +1137,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1500,7 +1153,6 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1510,31 +1162,8 @@ export class PaymentGatewayTransactionReportComponent implements OnInit {
       FILTER_JSON: {},
     };
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // var deptFilter = "";
-  // if (this.TICKET_GROUP.length > 0)
-  //   deptFilter = " AND TICKET_GROUP_ID IN (" + this.TICKET_GROUP + ")";
-
-  // var supportAgentWiseDept = "";
-  // if (this.roleId == 4) {
-  //   if (this.supportAgentWiseDeptArray.length > 0)
-  //     supportAgentWiseDept = " AND DEPARTMENT_ID IN (" + this.supportAgentWiseDeptArray + ")";
-
-  //   else
-  //     supportAgentWiseDept = "";
-  // }
-
-  // var deptAdminWiseDept = "";
-  // if (this.roleId == 6) {
-  //   if (this.deptWiseReport.length > 0)
-  //     deptAdminWiseDept = " AND DEPARTMENT_ID IN (" + this.deptWiseReport + ")";
-
-  //   else
-  //     deptAdminWiseDept = "";
-  // }
 }

@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 export class DataArray {
   UNIT_ID: any;
   RATIO_RATE: number;
@@ -14,13 +13,11 @@ export class DataArray {
   REORDER_STOCK_LEVEL: number;
   AVG_LEVEL: number;
 }
-
 export class Data {
   UNIT_ID: any;
   RATIO_RATE: number;
   QUANTITY_PER_UNIT: number;
 }
-
 @Component({
   selector: 'app-item-mapping',
   templateUrl: './item-mapping.component.html',
@@ -31,15 +28,12 @@ export class ItemMappingComponent implements OnInit {
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   isOk: boolean = true;
   public commonFunction = new CommonFunctionService();
   loadingRecords: boolean = false;
-
   ngOnInit(): void {
     this.loadUnitData();
     this.loadingRecords = true;
-
     this.api
       .getItemMappingData(0, 0, '', '', ' AND ITEM_ID = ' + this.itemId)
       .subscribe(
@@ -52,7 +46,6 @@ export class ItemMappingComponent implements OnInit {
         }
       );
   }
-
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
   @Input() data: any;
@@ -67,18 +60,14 @@ export class ItemMappingComponent implements OnInit {
     SUPPLIER_ID: 0,
     data: [this.Data],
   };
-
   onlynumdot(event: any) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
-
     if (charCode > 31 && (charCode < 46 || charCode > 57)) {
       return false;
     }
-
     return true;
   }
-
   loadUnitData() {
     this.api
       .getUnitData(
@@ -99,16 +88,13 @@ export class ItemMappingComponent implements OnInit {
         (err) => { }
       );
   }
-
   index = -1;
   editdata: boolean = false;
   dupplicate = true;
   tryData;
-
   addData(addNew: boolean, formData: NgForm) {
     this.loadingRecords = false;
     this.isOk = true;
-
     if (
       (this.data2.UNIT_ID == undefined || this.data2.UNIT_ID == null) &&
       (this.data2.QUANTITY_PER_UNIT == undefined ||
@@ -117,15 +103,6 @@ export class ItemMappingComponent implements OnInit {
       this.isOk = false;
       this.message.error('Please Fill All The Required Fields ', '');
     }
-    // else if (
-    //   this.data2.RATIO_RATE == undefined ||
-    //   this.data2.RATIO_RATE == null ||
-    //   this.data2.RATIO_RATE == 0
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error(' Please Enter Ratio.', '');
-
-    // }
     else if (this.data2.UNIT_ID == undefined || this.data2.UNIT_ID == null) {
       this.isOk = false;
       this.message.error('Please Select Unit  ', '');
@@ -157,9 +134,7 @@ export class ItemMappingComponent implements OnInit {
       this.isOk = false;
       this.message.error('Please Enter Alert Stock Level', '');
     }
-
     this.dupplicate = true;
-
     if (this.isOk) {
       if (this.Data?.length > 0) {
         for (let i = 0; i < this.Data.length; i++) {
@@ -173,16 +148,13 @@ export class ItemMappingComponent implements OnInit {
         }
       }
     }
-
     if (this.isOk && this.dupplicate) {
       if (!this.Data) {
         this.Data = [];
       }
-
       const selectedUnit = this.UnitData.find(
         (unit: any) => unit.ID === this.data2.UNIT_ID
       );
-
       if (selectedUnit) {
         this.data2.UNIT_CODE = selectedUnit.SHORT_CODE;
         this.data2.UNIT_NAME = selectedUnit.NAME;
@@ -190,13 +162,11 @@ export class ItemMappingComponent implements OnInit {
         this.isOk = false;
         return;
       }
-
       if (this.index > -1) {
         this.Data[this.index] = Object.assign({}, this.data2);
       } else {
         this.Data.push(Object.assign({}, this.data2));
       }
-
       this.Data = [...[], ...this.Data];
       formData.form.reset();
       this.data2 = new DataArray();
@@ -204,15 +174,12 @@ export class ItemMappingComponent implements OnInit {
       this.editdata = false;
     }
   }
-
   getUnitIdFromName(name: string): any {
     const unit = this.UnitData.find((unit: any) => unit.NAME === name);
     return unit ? unit.UNIT_ID : '';
   }
-
   save() {
     const ITEM_ID = this.itemId;
-
     const formattedData = this.Data.map((item: any) => ({
       UNIT_ID: item.UNIT_ID,
       RATIO_RATE: item.RATIO_RATE,
@@ -222,16 +189,13 @@ export class ItemMappingComponent implements OnInit {
       AVG_LEVEL: item.AVG_LEVEL,
       REORDER_STOCK_LEVEL: item.REORDER_STOCK_LEVEL,
     }));
-
     const dataToSave = {
       ITEM_ID: ITEM_ID,
       CATEGORY_ID: this.itemcategoryis,
       DATA: formattedData,
     };
-
     if (dataToSave.DATA.length > 0) {
       this.loadingRecords = true;
-
       this.api.addItemMapping(dataToSave).subscribe((data) => {
         if (data['code'] == 200) {
           this.loadingRecords = false;
@@ -247,25 +211,20 @@ export class ItemMappingComponent implements OnInit {
       this.message.error('There is No Data to Save', '');
     }
   }
-
   edit1(data: DataArray, i: any): void {
     this.index = i;
     this.editdata = true;
     this.data2 = Object.assign({}, data);
   }
-
   cancel() { }
   deleteCancel() { }
-
   confirmDeleterelation(data: any, i: number) {
     this.Data = this.Data.filter((item, index) => index != i);
     this.Data = [...[], ...this.Data];
   }
-
   close() {
     this.drawerClose();
   }
-
   onQuantityChange() {
     if (
       this.data?.BASE_QUANTITY &&

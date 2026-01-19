@@ -15,23 +15,6 @@
           </nz-form-item>
         </div>
       </div>
-
-      <!-- <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon>Team Member Name</nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Enter Team Member Name">
-              <input nz-input name="name" required [(ngModel)]="data.NAME" maxlength="128" autocomplete="off"
-                placeholder="Enter Team Member Name" (keypress)="commonFunction.alphaOnly($event)" />
-              <h6 style="color: red; font-size: 10px;  margin-bottom: 0px !important;"
-                *ngIf="data.NAME != undefined && data.NAME != null && data.NAME != ''">
-                {{ data.NAME.length }}/128
-              </h6>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div> -->
-
       <div nz-row>
         <div nz-col nzSpan="24">
           <nz-form-item>
@@ -40,36 +23,13 @@
               <input nz-input name="name" required [(ngModel)]="data.NAME" maxlength="128" autocomplete="off"
                 placeholder="Enter Team Member Name" (keypress)="commonFunction.alphaOnly($event)"
                 (focus)="isFocused = 'name'" (blur)="isFocused = ''" />
-              <h6 style="
-                  color: red;
-                  font-size: 10px;
-                  margin-bottom: 0px !important;
-                " *ngIf="data.NAME && isFocused === 'name'">
+              <h6 class="bo-length-indicator" *ngIf="data.NAME && isFocused === 'name'">
                 {{ data.NAME.length }}/128
               </h6>
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
-
-      <!-- <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon> Email </nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Enter Valid Email">
-              <input nz-input name="EMAIL_ID" required [(ngModel)]="data.EMAIL_ID" autocomplete="off"
-                placeholder="Enter Email" [pattern]="emailPattern.source" maxlength="87" />
-              <h6 style="color: red; font-size: 10px;  margin-bottom: 0px !important;" *ngIf="
-                  data.EMAIL_ID != undefined &&
-                  data.EMAIL_ID != null &&
-                  data.EMAIL_ID != ''
-                ">
-                {{ data.EMAIL_ID.length }}/87
-              </h6>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div> -->
       <div nz-row>
         <div nz-col nzSpan="24">
           <nz-form-item>
@@ -78,18 +38,13 @@
               <input nz-input name="EMAIL_ID" required [(ngModel)]="data.EMAIL_ID" autocomplete="off"
                 placeholder="Enter Email" [pattern]="emailPattern.source" maxlength="87"
                 (focus)="isFocused = 'EMAIL_ID'" (blur)="isFocused = ''" />
-              <h6 style="
-                  color: red;
-                  font-size: 10px;
-                  margin-bottom: 0px !important;
-                " *ngIf="data.EMAIL_ID && isFocused === 'EMAIL_ID'">
+              <h6 class="bo-length-indicator" *ngIf="data.EMAIL_ID && isFocused === 'EMAIL_ID'">
                 {{ data.EMAIL_ID.length }}/87
               </h6>
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
-
       <div nz-row>
         <div nz-col nzSpan="24">
           <nz-form-item>
@@ -118,46 +73,27 @@
             </div>
           </nz-form-item>
         </div>
-
-        <!-- <div nz-col nzSpan="24" *ngIf="reportingid == 25">
-          <nz-form-item>
-            <nz-form-label nzNoColon nzRequired>Reporting Head</nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Select Reporting Head Name">
-              <nz-select name="ReportingHead" nzPlaceHolder="Select Reporting Head Name" nzShowSearch
-                [(ngModel)]="data.REPORTING_HEAD_ID" nzAllowClear="true" required [nzLoading]="backoffice">
-                <nz-option *ngFor="let data of backofficedata" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div> -->
-
         <div nz-col nzSpan="24" *ngIf="!data.ID">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Password&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
                 nz-tooltip
                 nzTooltipTitle="Password must be 8-20 characters long and include at least 1 uppercase letter, 1 special character, and 1 number."></span></nz-form-label>
-            <nz-form-control nzHasFeedback style="text-align: left" nzRequired>
+            <nz-form-control nzHasFeedback class="txt-align" nzRequired>
               <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
                 <input nz-input [type]="passwordVisible ? 'text' : 'password'" name="password"
                   [(ngModel)]="data.PASSWORD" #password="ngModel" placeholder="Enter Password" required maxlength="20"
                   minlength="8" [pattern]="passwordPattern" autocomplete="off" [disabled]="data.ID"
                   (focus)="isFocused1 = true" (blur)="isFocused1 = false" />
               </nz-input-group>
-              <h6 style="
-                  color: red;
-                  font-size: 10px;
-                  margin-bottom: 0px !important;
-                " *ngIf="data.PASSWORD && isFocused1 == true">
+              <h6 class="bo-length-indicator" *ngIf="data.PASSWORD && isFocused1 == true">
                 {{ data.PASSWORD.length }}/20
               </h6>
-
               <ng-template #suffixTemplate>
                 <i nz-icon [nzType]="passwordVisible ? 'eye' : 'eye-invisible'"
                   (click)="passwordVisible = !passwordVisible"></i>
               </ng-template>
             </nz-form-control>
-
-            <div style="color: red; font-size: 10px; text-align: left">
+            <div class="bo-password-error-container">
               <span *ngIf="password.errors?.['required'] && password.touched">Password is required.</span>
               <span *ngIf="password.errors?.['minlength'] && password.touched">Password must be at least 8 characters
                 long.</span>
@@ -168,7 +104,6 @@
             </div>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="16">
           <nz-form-item>
             <nz-form-label nzNoColon>Price Edit Access?</nz-form-label>
@@ -187,7 +122,6 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="20">
           <nz-form-item>
             <nz-form-label nzNoColon>Profile Photo&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
@@ -196,29 +130,21 @@
               <span *ngIf="
                   (data.PROFILE_PHOTO && data.PROFILE_PHOTO != ' ') || fileURL
                 " nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete?" nzPopconfirmPlacement="top"
-                (nzOnConfirm)="imageDeleteConfirm(data)" (nzOnCancel)="deleteCancel()"
-                style="cursor: pointer; color: red; margin-left: 10px">
+                (nzOnConfirm)="imageDeleteConfirm(data)" (nzOnCancel)="deleteCancel()" class="bo-profile-delete">
                 <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
                   nzTooltipTitle="Delete"></span>
               </span>
             </nz-form-label>
             <nz-form-control nzHasFeedback nzErrorTip="Select Profile Photo">
-              <!-- Upload Button -->
               <button *ngIf="
                   !fileURL &&
                   (!data.PROFILE_PHOTO || data.PROFILE_PHOTO.trim() === '')
-                " nz-button style="
-                  height: 28px;
-                  padding: 0px 7px;
-                  font-size: 10px;
-                  width: 40%;
-                " (click)="image1.click()">
+                " nz-button class="bo-upload-btn" (click)="image1.click()">
                 <span nz-icon nzType="upload"></span>
                 Profie Photo
-                <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg" (change)="fileChangeEvent($event)"
-                  style="display: none" />
               </button>
-
+              <input #image1 name="image1" type="file" class="bo-hidden-file-input" accept=".png, .jpg, .jpeg"
+                (change)="fileChangeEvent($event)" />
               <div *ngIf="
                   data.PROFILE_PHOTO &&
                   data.PROFILE_PHOTO != null &&
@@ -226,27 +152,16 @@
                   data.PROFILE_PHOTO != ' ' &&
                   data.PROFILE_PHOTO != '' &&
                   (fileURL == undefined || fileURL == null || fileURL == '')
-                " style="margin-top: 10px">
-                <img nz-image [nzSrc]="fullImageUrl" alt="Uploaded Image" style="
-                    width: 120px;
-                    height: auto;
-                    border: 1px solid #ddd;
-                    margin-bottom: 10px;
-                  " />
+                " class="bo-uploaded-image-top">
+                <img nz-image [nzSrc]="fullImageUrl" alt="Uploaded Image" class="bo-uploaded-image" />
               </div>
               <div *ngIf="
                   fileURL != undefined &&
                   fileURL != null &&
                   fileURL != '' &&
                   fileURL != ' '
-                " class="ss" style="align-items: center">
-                <img nz-image [nzSrc]="imagePreview" alt="Preview" style="
-                    height: auto;
-                    width: auto;
-                    overflow: auto;
-                    max-width: 600;
-                    max-height: 400;
-                  " />
+                " class="ss bo-preview-image-center">
+                <img nz-image [nzSrc]="imagePreview" alt="Preview" class="bo-preview-image" />
               </div>
             </nz-form-control>
           </nz-form-item>
@@ -255,25 +170,21 @@
     </nz-spin>
   </form>
 </div>
-
 <div class="footer">
-  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn" class="bo-footer-cancel">
     Cancel
   </button>
-
   <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
     (click)="save(false, BackOfficeForm)" class="ant-btn ant-btn-primary">
     Save & Close
   </button>
-
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu>
-      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
-        <a class="footer-button" style="color: white !important" (click)="save(true, BackOfficeForm)">Save & New</a>
+      <li nz-menu-item class="menuc">
+        <a class="footer-button butcolor" (click)="save(true, BackOfficeForm)">Save & New</a>
       </li>
     </ul>
   </nz-dropdown-menu>
-
   <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
     (click)="save(false, BackOfficeForm)">
     <span>Update & Close</span>
@@ -288,13 +199,8 @@
           cropimageshow != undefined &&
           cropimageshow != null &&
           cropimageshow != ''
-        " class="ss" style="height: 500px; overflow: scroll">
-        <!-- <iframe
-      [src]="cropimageshow"
-      style="width: 832px; height: 396px"
-      frameborder="0"
-    ></iframe> -->
-        <div *ngIf="croppedImage" style="text-align: center">
+        " class="ss bo-crop-container">
+        <div *ngIf="croppedImage" class="centeri">
           <p>Cropped Image:</p>
           <img [src]="croppedImage" width="128" height="128" />
         </div>

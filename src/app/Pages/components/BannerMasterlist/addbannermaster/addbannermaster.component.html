@@ -1,5 +1,4 @@
 <div>
-  <!-- <form nz-form #form30> -->
   <form nz-form #form="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
       <div nz-row>
@@ -12,7 +11,7 @@
               <input nz-input name="name" placeholder="Enter Title" [(ngModel)]="data.TITLE"
                 [required]="data.BANNER_TYPE === 'O'" (keypress)="commonFunction.allowOnly($event)"
                 (focus)="isFocused = 'skillName'" (blur)="isFocused = ''" maxlength="64" autocomplete="off" />
-              <h6 style="color: red; font-size: 10px" *ngIf="isFocused === 'skillName' || data.TITLE?.length">
+              <h6 class="char-counter-red-10px" *ngIf="isFocused === 'skillName' || data.TITLE?.length">
                 {{ data.TITLE?.length || 0 }}/64
               </h6>
             </nz-form-control>
@@ -24,7 +23,7 @@
             <nz-form-control [nzErrorTip]="
                 data.BANNER_TYPE === 'O' ? 'Please enter a Title Color' : ''
               ">
-              <input style="width: 100%" [(colorPicker)]="titlecolor" [style.background]="titlecolor"
+              <input class="color-picker-full-width" [(colorPicker)]="titlecolor" [style.background]="titlecolor"
                 [required]="data.BANNER_TYPE === 'O'" (keypress)="nonumchar($event)" name="tcolour" />
             </nz-form-control>
           </nz-form-item>
@@ -40,8 +39,7 @@
               <input nz-input name="subtitle" placeholder="Enter Description" [(ngModel)]="data.SUB_TITLE"
                 [required]="data.BANNER_TYPE === 'O'" (keypress)="commonFunction.allowOnly($event)"
                 (focus)="isFocused = 'subtitle'" (blur)="isFocused = ''" maxlength="128" autocomplete="off" />
-
-              <h6 style="color: red; font-size: 10px" *ngIf="
+              <h6 class="char-counter-red-10px" *ngIf="
                   isFocused === 'subtitle' ||
                   (data.SUB_TITLE != undefined &&
                     data.SUB_TITLE != null &&
@@ -61,7 +59,7 @@
                   ? 'Please enter a Description Color'
                   : ''
               ">
-              <input style="width: 100%" [(colorPicker)]="subtitlecolor" [style.background]="subtitlecolor"
+              <input class="color-picker-full-width" [(colorPicker)]="subtitlecolor" [style.background]="subtitlecolor"
                 (keypress)="nonumchar($event)" name="subtcolour" />
             </nz-form-control>
           </nz-form-item>
@@ -103,7 +101,6 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="5" *ngIf="data.BANNER_TYPE === 'M'">
           <nz-form-item>
             <nz-form-label nzNoColon>For Shop&nbsp;&nbsp;<span>
@@ -118,7 +115,6 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="5">
           <nz-form-item>
             <nz-form-label nzNoColon>Status</nz-form-label>
@@ -128,12 +124,11 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="8" *ngIf="data.BANNER_TYPE !== 'O'">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon> Customer Type </nz-form-label>
             <nz-form-control nzErrorTip="Select Customer Type">
-              <nz-select nzAllowClear style="width: 100%" nzPlaceHolder="Select Customer Type"
+              <nz-select nzAllowClear class="customer-type-select-full-width" nzPlaceHolder="Select Customer Type"
                 [(ngModel)]="data.CUSTOMER_TYPE" name="customertype">
                 <nz-option nzValue="BB" nzLabel="B2B"></nz-option>
                 <nz-option nzValue="BC" nzLabel="B2C"></nz-option>
@@ -147,16 +142,12 @@
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label nzNoColon nzRequired>Banner Image &nbsp;&nbsp;
-
               <span>
-                <!-- Show info icon for 'Offer Banner' with dimensions 900x400 -->
                 <i *ngIf="data.BANNER_TYPE === 'M' && data.BANNER_FOR === 'W'" nz-icon nzType="info-circle"
                   nzTheme="twotone"
                   nzTooltipTitle="Please select an image file (PNG, JPG, JPEG) with an image dimension of 1290 x 300"
                   nzTooltipPlacement="top" nz-tooltip>
                 </i>
-
-                <!-- Show info icon for 'Main Banner' with dimensions 400x400 -->
                 <i *ngIf="data.BANNER_TYPE === 'M' && data.BANNER_FOR === 'M'" nz-icon nzType="info-circle"
                   nzTheme="twotone"
                   nzTooltipTitle="Please select an image file (PNG, JPG, JPEG) with an image dimension of 645x299"
@@ -167,33 +158,23 @@
                   nzTooltipPlacement="top" nz-tooltip>
                 </i>
               </span>
-
               <span *ngIf="(data.IMAGE_URL && data.IMAGE_URL != ' ') || fileURL" nz-popconfirm
                 nzPopconfirmTitle="Are you sure you want to delete?" nzPopconfirmPlacement="top"
                 (nzOnConfirm)="imageDeleteConfirm(data)" (nzOnCancel)="deleteCancel()"
-                style="cursor: pointer; color: red; margin-left: 10px">
+                class="delete-icon-pointer-red-ml10">
                 <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
                   nzTooltipTitle="Delete"></span>
               </span>
             </nz-form-label>
-
             <nz-form-control nzHasFeedback nzErrorTip="Select Banner Image">
-              <!-- Upload Button -->
               <button *ngIf="
                   !fileURL && (!data.IMAGE_URL || data.IMAGE_URL.trim() === '')
-                " nz-button style="
-                  height: 28px;
-                  padding: 0px 7px;
-                  font-size: 10px;
-                  width: 30%;
-                " (click)="image1.click()">
+                " nz-button class="upload-btn-banner-img" (click)="image1.click()">
                 <span nz-icon nzType="upload"></span>
                 Banner Image
                 <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg" (change)="onFileSelected($event)"
-                  style="display: none" />
-                <!-- (change)="fileChangeEvent($event)" -->
+                  class="file-input-hidden" />
               </button>
-
               <div *ngIf="
                   data.IMAGE_URL &&
                   data.IMAGE_URL != null &&
@@ -201,28 +182,16 @@
                   data.IMAGE_URL != ' ' &&
                   data.IMAGE_URL != '' &&
                   (fileURL == undefined || fileURL == null || fileURL == '')
-                " style="margin-top: 10px">
-                <img nz-image [nzSrc]="fullImageUrl" alt="Uploaded Image" style="
-                    width: 400px;
-                    height: auto;
-                    object-fit: contain;
-
-                    margin-bottom: 10px;
-                  " />
+                " class="image-container-mt10">
+                <img nz-image [nzSrc]="fullImageUrl" alt="Uploaded Image" class="banner-image-preview-400" />
               </div>
               <div *ngIf="
                   fileURL != undefined &&
                   fileURL != null &&
                   fileURL != '' &&
                   fileURL != ' '
-                " class="ss" style="align-items: center">
-                <img nz-image [nzSrc]="imagePreview" alt="Preview" style="
-                    width: 400px;
-                    height: auto;
-                    object-fit: contain;
-
-                    margin-bottom: 10px;
-                  " />
+                " class="ss image-preview-align-center">
+                <img nz-image [nzSrc]="imagePreview" alt="Preview" class="banner-image-preview-400" />
               </div>
             </nz-form-control>
           </nz-form-item>
@@ -231,25 +200,21 @@
     </nz-spin>
   </form>
 </div>
-
 <div class="footer">
-  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn footer-cancel-btn-mr12">
     Cancel
   </button>
-
   <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
     (click)="save(false, form)" class="ant-btn ant-btn-primary">
     Save & Close
   </button>
-
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu>
-      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
-        <a class="footer-button" style="color: white !important" (click)="save(true, form)">Save & New</a>
+      <li nz-menu-item class="menuc dropdown-menu-item-rounded-white">
+        <a class="footer-button footer-save-new-link-white" (click)="save(true, form)">Save & New</a>
       </li>
     </ul>
   </nz-dropdown-menu>
-
   <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
     (click)="save(false, form)">
     <span>Update & Close</span>
@@ -264,13 +229,8 @@
           cropimageshow != undefined &&
           cropimageshow != null &&
           cropimageshow != ''
-        " class="ss" style="height: 500px; overflow: scroll">
-        <!-- <iframe
-      [src]="cropimageshow"
-      style="width: 832px; height: 396px"
-      frameborder="0"
-    ></iframe> -->
-        <div *ngIf="croppedImage" style="text-align: center">
+        " class="ss crop-modal-container-h500-scroll">
+        <div *ngIf="croppedImage" class="cropped-image-text-center">
           <p>Cropped Image:</p>
           <img [src]="croppedImage" width="645" height="299" />
         </div>

@@ -14,7 +14,6 @@ import { CancelorderreqComponent } from '../orderpages/cancelorderreq/cancelorde
 import { ChatlistComponent } from '../details pages components/ChatInteraction/chatlist/chatlist.component';
 import { CancelshoporderreqComponent } from '../Inventorypages/pages/Shop/cancelshoporderreq/cancelshoporderreq.component';
 import { ReportComponent } from '../details pages components/reports/reports.component';
-
 const routes: Routes = [
   {
     path: '',
@@ -38,12 +37,10 @@ const routes: Routes = [
         component: CancelshoporderreqComponent,
       },
       { path: 'backoffice-technician-chat', component: ChatlistComponent },
-      // new
       { path: 'reports', component: ReportComponent },
     ],
   },
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

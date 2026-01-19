@@ -4,7 +4,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { DistrictMaster } from 'src/app/Pages/Models/District';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-district-master-drawer',
   templateUrl: './district-master-drawer.component.html',
@@ -15,7 +14,6 @@ export class DistrictMasterDrawerComponent {
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
   public commonFunction = new CommonFunctionService();
-
   isSpinning = false;
   isOk = true;
   isStateSpinning = false;
@@ -24,7 +22,6 @@ export class DistrictMasterDrawerComponent {
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   resetDrawer(teritorymaster: NgForm) {
     this.data = new DistrictMaster();
     teritorymaster.form.markAsPristine();
@@ -36,9 +33,7 @@ export class DistrictMasterDrawerComponent {
       this.getStateData(this.data.COUNTRY_ID);
     }
   }
-
   onCountryChange(countryId: number | null): void {
-    // Reset states when the country is cleared or changed
     this.data.STATE_ID = null;
     this.stateData = [];
     this.data.NAME = '';
@@ -47,7 +42,6 @@ export class DistrictMasterDrawerComponent {
     }
   }
   stateData: any = [];
-
   getStateData(countryId: number) {
     if (!countryId) {
       this.stateData = [];
@@ -55,7 +49,6 @@ export class DistrictMasterDrawerComponent {
       this.data.NAME = '';
       return;
     }
-
     this.isStateSpinning = true;
     this.api
       .getState(
@@ -70,7 +63,6 @@ export class DistrictMasterDrawerComponent {
           if (data['code'] == 200) {
             this.stateData = data['data'];
             this.data.STATE_ID = Number(this.data.STATE_ID);
-
             this.isStateSpinning = false;
           } else {
             this.stateData = [];
@@ -84,7 +76,6 @@ export class DistrictMasterDrawerComponent {
         }
       );
   }
-
   countryData: any = [];
   isCountrySpinning = true;
   getCountryData() {
@@ -95,7 +86,6 @@ export class DistrictMasterDrawerComponent {
         (data) => {
           if (data['code'] == 200) {
             this.countryData = data['data'];
-            // this.data.COUNTRY_ID = Number(this.data.COUNTRY_ID);
             this.isCountrySpinning = false;
           } else {
             this.countryData = [];
@@ -111,7 +101,6 @@ export class DistrictMasterDrawerComponent {
   save(addNew: boolean, teritorymaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       (this.data.NAME.trim() == '' ||
         this.data.NAME == null ||
@@ -151,7 +140,6 @@ export class DistrictMasterDrawerComponent {
       this.isOk = false;
       this.message.error('Please Enter Sequence No.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -183,7 +171,6 @@ export class DistrictMasterDrawerComponent {
               else {
                 this.data = new DistrictMaster();
                 this.resetDrawer(teritorymaster);
-
                 this.api.getDistrictData(1, 1, 'SEQ_NO', 'desc', '').subscribe(
                   (data) => {
                     if (data['code'] == 200) {
@@ -215,16 +202,14 @@ export class DistrictMasterDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   ondistChange() { }

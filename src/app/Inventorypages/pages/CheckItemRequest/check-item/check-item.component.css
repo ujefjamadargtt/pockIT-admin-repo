@@ -5,50 +5,119 @@ nz-form-item {
   padding: 0px 10px;
   width: 100%;
 }
-
 .custom-select-width {
   width: 100px;
 }
-
 body {
   font-family: 'Arial', sans-serif;
 }
-
 .nz-row {
   display: flex;
   flex-wrap: wrap;
 }
-
 .nz-col {
   box-sizing: border-box;
   padding: 0 10px;
 }
-
 .nz-form-label {
   font-weight: bold;
   color: #333;
 }
-
 .nz-form-control {
   display: flex;
   align-items: center;
 }
-
 @media screen and (max-width: 768px) {
   .nz-col {
     width: 100%;
     padding: 0 15px;
   }
 }
-
 tr:nth-child(even) td {
   background-color: #f4f3f3;
 }
-
 tr:nth-child(odd) td {
   background-color: #ebeaea;
 }
-
 td {
   font-size: 12px;
+}
+.responsive-margin {
+  margin-left: 20px;
+}
+.form-container {
+  display: inline-block;
+  width: 100%;
+}
+.tree-select-width {
+  width: 100%;
+}
+.small-screen-label {
+  margin-top: -6px;
+}
+.stock-table {
+  white-space: pre-line;
+}
+.action-column {
+  width: 70px;
+}
+.item-name-column,
+.requested-qty-column,
+.confirmed-qty-column {
+  text-align: center;
+}
+.item-name-column {
+  width: 300px !important;
+}
+.requested-qty-column,
+.confirmed-qty-column {
+  width: 80px !important;
+}
+.action-cell {
+  text-align: center;
+}
+.item-name-cell {
+  text-align: left;
+  width: 300px !important;
+}
+.requested-qty-cell {
+  text-align: left;
+  width: 80px !important;
+}
+.confirmed-qty-cell {
+  text-align: center;
+  width: 80px !important;
+}
+.remark-text {
+  font-size: 10px;
+  color: red;
+}
+.unit-name-text {
+  font-size: 10px;
+}
+.grid-input {
+  font-size: 12px;
+}
+.grid-select {
+  font-size: 12px;
+}
+.delete-icon-wrapper {
+  cursor: pointer;
+}
+.delete-icon {
+  color: red;
+}
+.character-counter-text {
+  color: red;
+  font-size: 10px;
+}
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 0;
+}
+.cancel-button,
+.reject-button,
+.accept-button {
+  margin-right: 8px;
 }

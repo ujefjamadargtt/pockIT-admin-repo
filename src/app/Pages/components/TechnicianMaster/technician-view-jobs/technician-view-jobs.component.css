@@ -1,0 +1,96 @@
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+.form-inline {
+    display: inline-flex;
+}
+.filter-btn-item {
+    width: 47px;
+}
+.search-item {
+    margin-left: 8px;
+}
+.wt-100 {
+    width: 100%
+}
+.text-center {
+    text-align: center
+}
+.search-input-group {
+    width: 100%;
+}
+.search-input {
+    width: 100%;
+}
+.search-btn {
+    cursor: pointer;
+}
+.filter-container {
+    border: 1px dashed black;
+    border-radius: 5px;
+    padding: 10px;
+}
+.filter-loading {
+    text-align: center;
+}
+.filter-no-data {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.filter-tag {
+    margin: 5px;
+    display: inline-flex;
+    align-items: center;
+    background-color: white;
+}
+.filter-selected {
+    background-color: #e6f7ff;
+}
+.filter-tag-text {
+    color: black;
+    margin-right: 10px;
+}
+.filter-tag-actions i {
+    margin-right: 8px;
+    cursor: pointer;
+}
+.icon-apply {
+    color: #01ac5c;
+}
+.icon-delete {
+    color: red;
+}
+.icon-eye {
+    color: blue;
+}
+.filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.btn-action {
+    margin-right: 10px;
+}
+.job-table .header-center {
+    text-align: center;
+    font-weight: bold;
+}
+.job-table .header-left {
+    text-align: left;
+    font-weight: bold;
+}
+.filter-icon {
+    display: inline-block;
+    color: inherit;
+}
+.filter-applied {
+    color: #092B9C !important;
+}
+.search-box nz-input {
+    width: 100%;
+}
+.search-box .ant-input-clear-icon {
+    cursor: pointer;
+}

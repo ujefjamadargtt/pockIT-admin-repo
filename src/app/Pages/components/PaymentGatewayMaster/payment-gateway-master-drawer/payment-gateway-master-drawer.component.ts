@@ -4,40 +4,23 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { paymentgateway } from 'src/app/Pages/Models/paymentgateway';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-payment-gateway-master-drawer',
   templateUrl: './payment-gateway-master-drawer.component.html',
   styleUrls: ['./payment-gateway-master-drawer.component.css']
 })
 export class PaymentGatewayMasterDrawerComponent {
-
   @Input() data: any = paymentgateway;
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
-
-  // Define the options for Mode
   ModeData = [
     { value: 'Test', label: 'Test' },
     { value: 'Live', label: 'Live' }
   ];
-  // TimeData = [
-  //   { value: 'same-day', label: 'Same Day' },
-  //   { value: '1-2 days', label: '1-2 Days' },
-  //   { value: '3-5 days', label: '3-5 Days' },
-  // ];
-
-  // data1 = {
-  //   MODE: 'Test',  // Default value
-  // };
-
   public commonFunction = new CommonFunctionService();
-
   isSpinning = false;
   isOk = true;
   isFocused: string = '';
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
@@ -47,78 +30,24 @@ export class PaymentGatewayMasterDrawerComponent {
     websitebannerPage.form.markAsPristine();
     websitebannerPage.form.markAsUntouched();
   }
-
   ngOnInit() {
-
     this.initializeSupportedCurrencies();
-
-
-
     this.getcurrencyData();
   }
-
-
-
-  // initializeSupportedCurrencies(): void {
-  //   
-
-  //   if (!Array.isArray(this.data.SUPPORTED_CURRENCIES)) {
-  //     if (typeof this.data.SUPPORTED_CURRENCIES === 'number') {
-  //       // If it's a number, convert it into an array
-  //       this.data.SUPPORTED_CURRENCIES = [this.data.SUPPORTED_CURRENCIES];
-  //     } else if (typeof this.data.SUPPORTED_CURRENCIES === 'string') {
-  //       
-
-  //       // If it's a string representing a number, convert it to an array with a single number
-  //       const numValue = Number(this.data.SUPPORTED_CURRENCIES);
-  //       if (!isNaN(numValue)) {
-  //         this.data.SUPPORTED_CURRENCIES = [numValue];
-  //       } else {
-  //         // If it's an invalid string, fallback to an empty array
-  //         this.data.SUPPORTED_CURRENCIES = [];
-  //       }
-  //     } else {
-  //       // For other invalid types, reset to an empty array
-  //       
-  //       this.data.SUPPORTED_CURRENCIES = [];
-  //     }
-  //   }
-
-  //   
-  // }
-
-
   initializeSupportedCurrencies(): void {
-
-
-    // Handle string values by splitting into an array
     if (typeof this.data.SUPPORTED_CURRENCIES === 'string') {
-
-
-      // Split by a delimiter (e.g., comma) to create an array of values
       this.data.SUPPORTED_CURRENCIES = this.data.SUPPORTED_CURRENCIES.split(',').map(item => item.trim());
     }
-
-    // Ensure the value is an array (fallback to an empty array for invalid types)
     if (!Array.isArray(this.data.SUPPORTED_CURRENCIES)) {
-
       this.data.SUPPORTED_CURRENCIES = [];
     }
-
-
   }
-
-
-
-
   CurrencyData: any[] = [];
   getcurrencyData() {
     this.api.getCurrency(0, 0, "", "", " AND IS_ACTIVE=1").subscribe(
       (data) => {
-
         if (data["code"] === 200 && Array.isArray(data["data"])) {
           this.CurrencyData = data["data"];
-
         } else {
           this.CurrencyData = [];
           this.message.error("Failed to get country data", "");
@@ -126,35 +55,27 @@ export class PaymentGatewayMasterDrawerComponent {
       }
       ,
       (error) => {
-
         this.message.error("Something Went Wrong ...", "");
       }
     );
   }
-
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z0-9\s\_]*$/; // Updated pattern to include numbers
+    const allowedPattern = /^[a-zA-Z0-9\s\_]*$/; 
     const char = String.fromCharCode(event.keyCode || event.which);
-
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
-
   numberOnly(event: KeyboardEvent): void {
-    const onlynumber = /^[0-9]*$/; // Updated pattern to include numbers
+    const onlynumber = /^[0-9]*$/; 
     const char = String.fromCharCode(event.keyCode || event.which);
-
     if (!onlynumber.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
-
-
   save(addNew: boolean, websitebannerPage: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       (this.data.GATEWAY_NAME == '' ||
         this.data.GATEWAY_NAME == null ||
@@ -209,7 +130,6 @@ export class PaymentGatewayMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Gateway Type.', '');
     }
-
     else if (
       this.data.API_SECRET == null ||
       this.data.API_SECRET == undefined ||
@@ -218,7 +138,6 @@ export class PaymentGatewayMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Api Secrete.', '');
     }
-
     else if (
       this.data.MERCHANT_ID == null ||
       this.data.MERCHANT_ID == undefined ||
@@ -227,7 +146,6 @@ export class PaymentGatewayMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Merchant Id', '');
     }
-
     else if (
       this.data.API_KEY == null ||
       this.data.API_KEY == undefined ||
@@ -236,7 +154,6 @@ export class PaymentGatewayMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Api Key.', '');
     }
-
     else if (
       this.data.ENCRYPTION_KEY == null ||
       this.data.ENCRYPTION_KEY == undefined ||
@@ -245,7 +162,6 @@ export class PaymentGatewayMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Encryption Key', '');
     }
-
     else if (
       this.data.ENDPOINT_URL == null ||
       this.data.ENDPOINT_URL == undefined ||
@@ -254,7 +170,6 @@ export class PaymentGatewayMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Endpoint Url', '');
     }
-
     else if (
       this.data.WEBHOOK_URL == null ||
       this.data.WEBHOOK_URL == undefined ||
@@ -263,23 +178,19 @@ export class PaymentGatewayMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Webhook Url', '');
     }
-
     else if (
-      !this.data.SUPPORTED_CURRENCIES || // Checks for null or undefined
-      this.data.SUPPORTED_CURRENCIES.length === 0 // Checks if the array is empty
+      !this.data.SUPPORTED_CURRENCIES || 
+      this.data.SUPPORTED_CURRENCIES.length === 0 
     ) {
       this.isOk = false;
       this.message.error('Please Select At Least One Supported Currency.', '');
     }
-
     else if (
       this.data.MIN_AMOUNT > this.data.MAX_AMOUNT
     ) {
       this.isOk = false;
       this.message.error('Minimum Amount Should Not Exceed Maximum Amount', '')
     }
-
-
     else if (
       this.data.MIN_AMOUNT == null ||
       this.data.MIN_AMOUNT == undefined ||
@@ -288,7 +199,6 @@ export class PaymentGatewayMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Minimum Amount', '');
     }
-
     else if (
       this.data.MAX_AMOUNT == null ||
       this.data.MAX_AMOUNT == undefined ||
@@ -297,31 +207,7 @@ export class PaymentGatewayMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Maximum  Number', '')
     }
-
-
-
-
-    // else if (
-    //   this.data.MODE == null ||
-    //   this.data.MODE == undefined ||
-    //   this.data.MODE.trim() == ''
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error(' Please Select Mode', '');
-    // }
-
-    // else if (
-    //   this.data.SETTLEMENT_TIME == null ||
-    //   this.data.SETTLEMENT_TIME == undefined ||
-    //   this.data.SETTLEMENT_TIME.trim() == ''
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error(' Please Select Settlement Time', '');
-    // }
-
-
     this.data.SUPPORTED_CURRENCIES = this.data.SUPPORTED_CURRENCIES.join(',');
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -367,7 +253,6 @@ export class PaymentGatewayMasterDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { Faq } from 'src/app/Support/Models/TicketingSystem';
-
 @Component({
   selector: 'app-searchfaq',
   templateUrl: './searchfaq.component.html',
@@ -18,7 +17,6 @@ export class SearchfaqComponent implements OnInit {
   sortKey: string = "ID";
   searchText = ''
   searchText1 = ''
-
   columns: string[][] = [["FAQ_HEAD_NAME", "FAQ Head Name"], ["QUESTION", "Question"], ["ANSWER", "Answer"], ["TAGS", "Tags"]]
   faqHeads: any = []
   issearched = false;
@@ -26,11 +24,8 @@ export class SearchfaqComponent implements OnInit {
   faqDetails: Faq = new Faq();
   inputValue = '';
   showSuggest = false
-  // img1=api+retriveimgUrl
   constructor(public api: ApiServiceService) { }
-
   ngOnInit() {
-    // this.search()
     this.faqHeads = []
     this.issearched = false;
     this.showSuggest = false;
@@ -38,44 +33,34 @@ export class SearchfaqComponent implements OnInit {
     this.showFull = false;
     this.api.getAllFaqHeads(0, 0, 'ID', 'ASC', ' AND STATUS=1').subscribe(data => {
       if (data['code'] == 200) {
-
         this.faqHeads = data['data'];
       }
-
     }, err => {
     });
   }
-
   back2() {
     this.dataList = [];
     this.issearched = false;
   }
-
   back34() {
     this.getfaqhead();
-    // this.faqHeads = [];
     this.issearched = false;
     this.searchText1 = '';
   }
-
   getfaqhead() {
     this.api.getAllFaqHeads(0, 0, 'ID', 'ASC', ' AND STATUS=1').subscribe(data => {
       if (data['code'] == 200) {
-
         this.faqHeads = data['data'];
       }
-
     }, err => {
     });
   }
-
   search(ev) {
     this.searchText = ev;
     this.inputValue = ''
     this.showFull = false;
     this.showSuggest = false;
     this.faqDetails = new Faq();
-
     if (this.searchText != "") {
       var likeQuery = " AND";
       this.columns.forEach(column => {
@@ -83,17 +68,13 @@ export class SearchfaqComponent implements OnInit {
       });
       likeQuery = likeQuery.substring(0, likeQuery.length - 2)
       this.issearched = true;
-
       this.loadingRecords = true;
       this.api.getAllFaqs(this.pageIndex, this.pageSize, 'ID', 'ASC', likeQuery).subscribe(data => {
-
-
         this.loadingRecords = false;
         this.totalRecords = data['count'];
         if (data['code'] == 200)
           this.dataList = data['data'];
       }, err => {
-
       });
     } else {
       this.dataList = [];
@@ -110,12 +91,10 @@ export class SearchfaqComponent implements OnInit {
         likeQuery += " " + column[0] + " like '%" + this.searchText1 + "%' OR";
       });
       likeQuery = likeQuery.substring(0, likeQuery.length - 2)
-
       this.loadingRecords = true;
       if (id.IS_PARENT == 1) {
         this.api.getAllFaqHeads(0, 0, 'ID', 'ASC', ' AND IS_PARENT=0 AND PARENT_ID = ' + id.ID).subscribe(data => {
           if (data['code'] == 200) {
-
             this.faqHeads = data['data'];
             this.issearched = false;
           }
@@ -128,12 +107,10 @@ export class SearchfaqComponent implements OnInit {
           if (data['code'] == 200)
             this.dataList = data['data'];
         }, err => {
-
         });
       }
     }
   }
-
   expandFAQ(dataList) {
     this.showFull = true;
     this.faqDetails = dataList;
@@ -162,14 +139,11 @@ export class SearchfaqComponent implements OnInit {
       STATUS: 1
     }
     this.api.createFaqResponse(d).subscribe(data => {
-
       if (data['code'] == 200) {
         this.showSuggest = false;
         this.inputValue = ''
       }
-
     }, err => {
-
     });
   }
   getUrl(url) {

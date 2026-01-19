@@ -8,7 +8,6 @@ import { CountryData } from 'src/app/Pages/Models/CountryMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-refund-report',
   templateUrl: './refund-report.component.html',
@@ -22,7 +21,6 @@ export class RefundReportComponent {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -39,7 +37,6 @@ export class RefundReportComponent {
   loadingRecords = false;
   totalRecords = 1;
   Country: any[] = [];
-
   columns: string[][] = [
     ['CUSTOMER_NAME', 'CUSTOMER_NAME'],
     ['TOTAL_AMOUNT', 'TOTAL_AMOUNT'],
@@ -51,7 +48,6 @@ export class RefundReportComponent {
   drawerData: CountryData = new CountryData();
   drawervisible = false;
   Seqtext: any;
-
   onKeyupS(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -65,9 +61,7 @@ export class RefundReportComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -83,7 +77,6 @@ export class RefundReportComponent {
       this.search();
       this.isFilterApplied = false;
     }
-
     if (this.Refundtext.length > 0 && event.key === 'Enter') {
       this.search();
       this.isrefundFilterApplied = true;
@@ -91,7 +84,6 @@ export class RefundReportComponent {
       this.search();
       this.isrefundFilterApplied = false;
     }
-
     if (this.Shortcodetext.length > 0 && event.key === 'Enter') {
       this.search();
       this.isShortApplied = true;
@@ -117,14 +109,12 @@ export class RefundReportComponent {
       this.sortKey = 'CUSTOMER_ID';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -137,55 +127,35 @@ export class RefundReportComponent {
           .join(' OR ') +
         ')';
     }
-
-    // Country Filter
     if (this.countrytext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `CUSTOMER_NAME LIKE '%${this.countrytext.trim()}%'`;
     }
-
-    // For Refund
-
     if (this.Refundtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TOTAL_AMOUNT LIKE '%${this.Refundtext.trim()}%'`;
     }
-
-    // //Short Code
-    // if (this.Shortcodetext !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') +
-    //     `SHORT_CODE LIKE '%${this.Shortcodetext.trim()}%'`;
-    // }
-    //Seq no
     if (this.Seqtext && this.Seqtext.toString().trim() !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SEQ_NO LIKE '%${this.Seqtext.toString().trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `PAYMENT_REFUND_STATUS = '${this.statusFilter}'`;
     }
-
     if (this.statusFilter1) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `PAYMENT_STATUS = '${this.statusFilter1}'`;
     }
-
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // this.sortKey = 'NAME';
-    // sort = 'asc';
     if (exportInExcel == false) {
       this.api
         .getrefundRepor(
@@ -264,34 +234,27 @@ export class RefundReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   close() {
     this.drawervisible = false;
   }
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
-  //For Input
   countrytext: string = '';
   Refundtext: string = '';
   Countryvisible = false;
@@ -306,52 +269,36 @@ export class RefundReportComponent {
     this.Shortcodetext = '';
     this.search();
   }
-
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
-
     this.search(true);
   }
-
   listOfFilter: any[] = [
     { text: 'Pending', value: 'P' },
     { text: 'Refunded', value: 'RF' },
   ];
-
   statusFilter1: string | undefined = undefined;
   onStatusFilterChange1(selectedStatus: string) {
     this.statusFilter1 = selectedStatus;
-
     this.search(true);
   }
-
   listOfFilter1: any[] = [
     { text: 'Pending', value: 'P' },
     { text: 'Reject', value: 'R' },
     { text: 'Approved', value: 'A' },
   ];
-
   dataList: any = [];
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Country Name', value: 'CUSTOMER_NAME' },
   ];
-
-  // new filter
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
   applyCondition: any;
   isLoading = false;
   currentClientId = 1;
-
-  // new  Main filter
-
-  //Edit Code 3
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -368,9 +315,7 @@ export class RefundReportComponent {
       groups: [],
     },
   ];
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -387,7 +332,6 @@ export class RefundReportComponent {
       groups: [],
     },
   ];
-
   TabId: number;
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
@@ -395,10 +339,8 @@ export class RefundReportComponent {
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
-
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -407,16 +349,12 @@ export class RefundReportComponent {
       this.loadFilters();
     }
   }
-
   filterloading: boolean = false;
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -424,13 +362,12 @@ export class RefundReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -445,18 +382,15 @@ export class RefundReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -470,7 +404,6 @@ export class RefundReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -479,11 +412,9 @@ export class RefundReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   openfilter() {
     this.drawerTitle = 'Refund Filter';
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -492,12 +423,9 @@ export class RefundReportComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -514,7 +442,6 @@ export class RefundReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -532,21 +459,17 @@ export class RefundReportComponent {
       },
     ];
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
@@ -609,16 +532,12 @@ export class RefundReportComponent {
       placeholder: 'Select Payment Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -635,9 +554,7 @@ export class RefundReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -663,11 +580,8 @@ export class RefundReportComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -675,44 +589,34 @@ export class RefundReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.FILTER_NAME = data.FILTER_NAME;
-    //
     this.filterData = data;
     this.EditQueryData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   excelData: any = [];
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -720,13 +624,11 @@ export class RefundReportComponent {
       for (var i = 0; i < this.excelData.length; i++) {
         obj1['Customer Name'] = this.excelData[i]['CUSTOMER_NAME'];
         obj1['Refund Amount'] = this.excelData[i]['TOTAL_AMOUNT'];
-        //  obj1["Payment Refund Status"] = this.excelData[i]["PAYMENT_REFUND_STATUS"];
         if (this.excelData[i]['PAYMENT_REFUND_STATUS'] == 'P') {
           obj1['Payment Refund Status'] = 'Pending';
         } else if (this.excelData[i]['PAYMENT_REFUND_STATUS'] == 'RF') {
           obj1['Payment Refund Status'] = 'Refunded';
         }
-        //  obj1["Payment Status"] = this.excelData[i]["PAYMENT_STATUS"];
         if (this.excelData[i]['PAYMENT_STATUS'] == 'P') {
           obj1['Payment Status'] = 'Pending';
         } else if (this.excelData[i]['PAYMENT_STATUS'] == 'A') {
@@ -746,9 +648,7 @@ export class RefundReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

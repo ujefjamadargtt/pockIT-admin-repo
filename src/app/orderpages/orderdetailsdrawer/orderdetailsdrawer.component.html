@@ -1,26 +1,13 @@
 <div nz-row nzGutter="16">
-  <div class="gutter-row" nz-col nzSpan="7" style="min-height: 88vh; max-height: 88vh; overflow: auto">
+  <div class="gutter-row" nz-col nzSpan="7" class="unique-overflow-auto ">
     <div nz-row class="backbbb">
-      <div class="mainnam" nz-col nzSpan="12" style="text-align: start">
-        <span style="
-            color: #1d39c4 !important;
-            background: #f0f5ff !important;
-            border-color: #adc6ff !important;
-            padding: 5px;
-            font-size: 11px !important;
-          " [attr.title]="vieworderdata.orderData[0]['ORDER_NUMBER']">
+      <div class="mainnam order-number-col" nz-col nzSpan="12">
+        <span class="order-number-badge" [attr.title]="vieworderdata.orderData[0]['ORDER_NUMBER']">
           {{ vieworderdata.orderData[0]["ORDER_NUMBER"] }}
         </span>
       </div>
-      <div class="mainnam" nz-col nzSpan="12" style="text-align: end">
-        <!-- {{ date }} -->
-        <span style="
-            color: #1d39c4 !important;
-            background: #f0f5ff !important;
-            border-color: #adc6ff !important;
-            padding: 5px;
-            font-size: 10px !important;
-          " [attr.title]="
+      <div class="mainnam order-align-end" nz-col nzSpan="12">
+        <span class="order-datetime-badge" [attr.title]="
             vieworderdata.orderData[0]['ORDER_DATE_TIME']
               | date : 'dd/MM/yyyy HH:mm a'
           ">
@@ -29,37 +16,23 @@
           | date : "dd/MM/yyyy HH:mm a"
           }}
         </span>
-
         <span *ngIf="
             vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' &&
             (vieworderdata.orderData[0]['REFUND_STATUS'] == null ||
               vieworderdata.orderData[0]['REFUND_STATUS'] == 'R')
-          " (click)="editOrder(vieworderdata.orderData[0])" nz-icon
-          style="margin-left: 5px; font-size: 11px !important; cursor: pointer" nzType="edit" nzTheme="outline">
+          " (click)="editOrder(vieworderdata.orderData[0])" nz-icon class="order-edit-icon" nzType="edit"
+          nzTheme="outline">
         </span>
         <span *ngIf="
             vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' &&
             (vieworderdata.orderData[0]['REFUND_STATUS'] == null ||
               vieworderdata.orderData[0]['REFUND_STATUS'] == 'R')
-          " (click)="editOrder(vieworderdata.orderData[0])" style="
-            margin-left: 2px;
-            font-size: 11px !important;
-            font-weight: 500;
-            cursor: pointer;
-          ">Edit</span>
+          " (click)="editOrder(vieworderdata.orderData[0])" class="order-edit-text">
+          Edit</span>
       </div>
-
-      <div class="subnam" nz-col nzSpan="24" style="
-          font-size: 12px !important;
-          margin-top: 4px;
-          overflow: hidden;
-          white-space: nowrap;
-          display: flex;
-          justify-content: flex-start;
-        ">
-        <!-- <span nz-icon nzType="user" nzTheme="outline" style="margin-right: 3px"></span> -->
+      <div class="subnam order-subname-container" nz-col nzSpan="24">
         <span *ngIf="vieworderdata.orderData[0].CUSTOMER_TYPE == 'I'" nz-icon nzType="user" nzTheme="outline"
-          style="margin-right: 3px"></span>
+          class="order-customer-icon"></span>
         <svg *ngIf="vieworderdata.orderData[0].CUSTOMER_TYPE == 'B'" enable-background="new 0 0 48 48" height="17px"
           id="Layer_1" version="1.1" viewBox="0 0 48 48" width="17px" xml:space="preserve"
           xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -68,19 +41,21 @@
             fill-rule="evenodd" />
         </svg>
         <span (click)="view(vieworderdata.orderData[0])" [nzTooltipTitle]="
-            isTextOverflow ? vieworderdata.orderData[0]['COMPANY_NAME'] : null
-          " #tooltipRef11="nzTooltip" nz-tooltip *ngIf="
-            vieworderdata.orderData[0].CUSTOMER_TYPE != 'I';
-            else elsenameblockss
-          " #textContainer11 class="truncate-text" (mouseenter)="checkOverflow(textContainer11, tooltipRef11)">{{
-          vieworderdata.orderData[0].COMPANY_NAME }}</span>
+      isTextOverflow ? vieworderdata.orderData[0]['COMPANY_NAME'] : null
+    " #tooltipRef11="nzTooltip" nz-tooltip *ngIf="
+      vieworderdata.orderData[0].CUSTOMER_TYPE != 'I';
+      else elsenameblockss
+    " #textContainer11 class="truncate-text" (mouseenter)="checkOverflow(textContainer11, tooltipRef11)">
+          {{ vieworderdata.orderData[0].COMPANY_NAME }}
+        </span>
         <ng-template #elsenameblockss>
           <span (click)="view(vieworderdata.orderData[0])" #textContainer12 class="truncate-text" [nzTooltipTitle]="
-              isTextOverflow
-                ? vieworderdata.orderData[0]['CUSTOMER_NAME']
-                : null
-            " #tooltipRef2="nzTooltip" nz-tooltip (mouseenter)="checkOverflow(textContainer12, tooltipRef2)">{{
-            vieworderdata.orderData[0].CUSTOMER_NAME }}</span>
+        isTextOverflow
+          ? vieworderdata.orderData[0]['CUSTOMER_NAME']
+          : null
+      " #tooltipRef2="nzTooltip" nz-tooltip (mouseenter)="checkOverflow(textContainer12, tooltipRef2)">
+            {{ vieworderdata.orderData[0].CUSTOMER_NAME }}
+          </span>
         </ng-template>
       </div>
       <div nz-col nzSpan="24">
@@ -88,18 +63,17 @@
           <div nz-col nzSpan="1">
             <span nz-icon nzType="environment" nzTheme="fill"></span>
           </div>
-          <div class="subnam subnamhover" nz-col nzSpan="23" style="font-size: 12px !important; text-align: start"
-            [attr.title]="
-              vieworderdata.orderData[0]['ADDRESS_LINE_1'] +
-              ', ' +
-              vieworderdata.orderData[0]['ADDRESS_LINE_2'] +
-              ' ' +
-              vieworderdata.orderData[0]['COUNTRY_NAME'] +
-              ', ' +
-              vieworderdata.orderData[0]['STATE_NAME'] +
-              ', ' +
-              vieworderdata.orderData[0]['PINCODE']
-            ">
+          <div class="subnam subnamhover order-address-text" nz-col nzSpan="23" [attr.title]="
+        vieworderdata.orderData[0]['ADDRESS_LINE_1'] +
+        ', ' +
+        vieworderdata.orderData[0]['ADDRESS_LINE_2'] +
+        ' ' +
+        vieworderdata.orderData[0]['COUNTRY_NAME'] +
+        ', ' +
+        vieworderdata.orderData[0]['STATE_NAME'] +
+        ', ' +
+        vieworderdata.orderData[0]['PINCODE']
+      ">
             {{ vieworderdata.orderData[0]["ADDRESS_LINE_1"] }},
             {{ vieworderdata.orderData[0]["ADDRESS_LINE_2"] }}
             {{ vieworderdata.orderData[0]["COUNTRY_NAME"] }},
@@ -108,63 +82,53 @@
           </div>
         </div>
       </div>
-      <div class="subnam" nz-col nzSpan="8" style="font-size: 11px !important; text-align: start">
-        <a nzTooltipTitle="Call To Customer" nz-tooltip style="margin-right: 3px; color: #262626; cursor: pointer"
+      <div class="subnam order-contact-phone" nz-col nzSpan="8">
+        <a nzTooltipTitle="Call To Customer" nz-tooltip class="order-call-link"
           href="tel:+{{ vieworderdata.orderData[0]['MOBILE_NO'] }}" target="_blank">
-          <span nz-icon nzType="phone" nzTheme="fill" style="color: #262626 !important"></span>
+          <span nz-icon nzType="phone" nzTheme="fill" class="order-call-icon">
+          </span>
         </a>
         {{ vieworderdata.orderData[0]["MOBILE_NO"] }}
       </div>
-      <div class="subnam" nz-col nzSpan="16" style="font-size: 11px !important; text-align: end">
-        <a style="
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #262626 !important;
-            cursor: pointer;
-            font-size: 11px !important;
-          " href="mailto:{{ vieworderdata.orderData[0]['EMAIL'] }}" target="_blank">
-          <span nz-icon nzType="mail" nzTheme="fill" style="color: #262626 !important" nzTooltipTitle="Mail To Customer"
-            nz-tooltip></span>
+      <div class="subnam order-contact-email" nz-col nzSpan="16">
+        <a class="order-email-link" href="mailto:{{ vieworderdata.orderData[0]['EMAIL'] }}" target="_blank">
+          <span nz-icon nzType="mail" nzTheme="fill" class="order-email-icon" nzTooltipTitle="Mail To Customer"
+            nz-tooltip>
+          </span>
           {{ vieworderdata.orderData[0]["EMAIL"] }}
         </a>
       </div>
-      <div class="subnam" nz-col nzSpan="12" style="font-size: 11px !important; text-align: start">
-        <span nzTooltipTitle="Slot time" nz-tooltip style="margin-right: 3px; color: #262626; cursor: pointer">
-          <span nz-icon nzType="clock-circle" nzTheme="fill" style="color: #262626 !important"></span>
+      <div class="subnam order-slot-info" nz-col nzSpan="12">
+        <span nzTooltipTitle="Slot time" nz-tooltip class="order-slot-tooltip">
+          <span nz-icon nzType="clock-circle" nzTheme="fill" class="order-slot-icon">
+          </span>
         </span>
-
         <ng-container *ngIf="vieworderdata.orderData[0]['SLOTS'] as slot">
-          <ng-container *ngIf="slot.includes('Slot 1')">Morning ({{ slot.split('(')[1] }}</ng-container>
-          <ng-container *ngIf="slot.includes('Slot 2')">Afternoon ({{ slot.split('(')[1] }}</ng-container>
-          <ng-container *ngIf="slot.includes('Slot 3')">Evening ({{ slot.split('(')[1] }}</ng-container>
+          <ng-container *ngIf="slot.includes('Slot 1')">
+            Morning ({{ slot.split('(')[1] }}
+          </ng-container>
+          <ng-container *ngIf="slot.includes('Slot 2')">
+            Afternoon ({{ slot.split('(')[1] }}
+          </ng-container>
+          <ng-container *ngIf="slot.includes('Slot 3')">
+            Evening ({{ slot.split('(')[1] }}
+          </ng-container>
         </ng-container>
       </div>
-
-      <div class="subnam" nz-col nzSpan="12" style="font-size: 11px !important; text-align: end">
-        <span style="
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #262626 !important;
-            cursor: pointer;
-            font-size: 11px !important;
-            margin-left: 47px;
-          ">
-          <span nz-icon nzType="calendar" nzTheme="fill" style="color: #262626 !important" nzTooltipTitle="Service Date"
-            nz-tooltip></span>
+      <div class="subnam order-service-date-container" nz-col nzSpan="12">
+        <span class="order-service-date-text">
+          <span nz-icon nzType="calendar" nzTheme="fill" class="order-service-date-icon" nzTooltipTitle="Service Date"
+            nz-tooltip>
+          </span>
           {{
           vieworderdata.detailsData[0]['EXPECTED_DATE_TIME']
           | date : 'dd/MMM/yyyy hh:mm a'
-          }} </span>
+          }}
+        </span>
       </div>
     </div>
-    <div nz-row class="backbbb" style="margin-top: 10px">
-      <div style="
-          display: flex;
-          justify-content: space-between !important;
-          width: 100%;
-        ">
+    <div nz-row class="backbbb order-contact-row">
+      <div class="order-contact-actions">
         <div>
           <a nzTooltipTitle="Call To Customer" nzTooltipPlacement="top" nz-tooltip
             href="tel:+{{ vieworderdata.orderData[0]['MOBILE_NO'] }}" target="_blank">
@@ -182,8 +146,8 @@
           </a>
         </div>
         <div>
-          <a nzTooltipTitle="Mail To Customer" nzTooltipPlacement="top"
-            href="mailto:{{ vieworderdata.orderData[0]['EMAIL'] }}" target="_blank" nz-tooltip>
+          <a nzTooltipTitle="Mail To Customer" nzTooltipPlacement="top" nz-tooltip
+            href="mailto:{{ vieworderdata.orderData[0]['EMAIL'] }}" target="_blank">
             <button nz-button nzType="primary">
               <span nz-icon nzType="mail" nzTheme="fill"></span>Email
             </button>
@@ -191,345 +155,194 @@
         </div>
       </div>
     </div>
-
-    <div nz-row class="backbbb" style="margin-top: 10px; display: block; overflow: auto">
+    <div nz-row class="backbbb order-cart-root">
       <div nz-col nzSpan="24" class="mainnam">Order Cart</div>
-      <div nz-col nzSpan="24" style="max-height: 30vh; overflow: auto">
-        <div *ngFor="let cartItem of vieworderdata['detailsData']" class="cardstyle" style="
-            font-size: 11px;
-            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
-              rgb(209, 213, 219) 0px 0px 0px 1px inset;
-            padding: 10px;
-            margin-bottom: 4px;
-          ">
+      <div nz-col nzSpan="24" class="order-cart-scroll">
+        <div *ngFor="let cartItem of vieworderdata['detailsData']" class="cardstyle order-cart-card">
           <div nz-row>
             <div nz-col nzSpan="22" class="subname">
               <b>{{ cartItem.CATEGORY_NAME }}</b>
-              <b *ngIf="
-                  cartItem.SERVICE_PARENT_NAME != undefined &&
-                  cartItem.SERVICE_PARENT_NAME != null &&
-                  cartItem.SERVICE_PARENT_NAME != ''
-                ">
-                > {{ cartItem.SERVICE_PARENT_NAME }}</b>
+              <b *ngIf="cartItem.SERVICE_PARENT_NAME">
+                > {{ cartItem.SERVICE_PARENT_NAME }}
+              </b>
               <b>> {{ cartItem.SUB_CATEGORY_NAME }}</b>
             </div>
-            <div nz-col nzSpan="2" style="text-align: right">
-              <span *ngIf="cartItem.PHOTO_FILE != null && cartItem.PHOTO_FILE != ''" nz-icon
-                (click)="viewImage(cartItem.PHOTO_FILE)" nzType="picture" nzTheme="outline"
-                [nzTooltipTitle]="'View Photo'" nz-tooltip style="
-                  cursor: pointer;
-                  border: 1px solid grey;
-                  padding: 3px 4px;
-                  border-radius: 50px;
-                  background: white;
-                  margin-top: -5px;
-                  font-size: 12px !important;
-                "></span>
+            <div nz-col nzSpan="2" class="order-cart-image-col">
+              <span *ngIf="cartItem.PHOTO_FILE" nz-icon nzType="picture" nzTheme="outline" class="order-cart-image-icon"
+                (click)="viewImage(cartItem.PHOTO_FILE)" [nzTooltipTitle]="'View Photo'" nz-tooltip>
+              </span>
             </div>
           </div>
           <div nz-row>
-            <div nz-col nzSpan="24" style="border-bottom: 1px solid #ebebeb" class="subname" #SERVICE_NAME [attr.title]="
-                isTextOverflowing(SERVICE_NAME) ? cartItem.SERVICE_NAME : null
-              ">
+            <div nz-col nzSpan="24" class="subname order-service-name" #SERVICE_NAME
+              [attr.title]="isTextOverflowing(SERVICE_NAME) ? cartItem.SERVICE_NAME : null">
               {{ cartItem.SERVICE_NAME }}
             </div>
-            <div nz-col nzSpan="24" style="margin-top: 7px"
-              *ngIf="cartItem.BRAND_NAME != null && cartItem.BRAND_NAME != ''">
+            <div nz-col nzSpan="24" class="order-brand-block" *ngIf="cartItem.BRAND_NAME">
               Brand Name :
-              <span style="
-                  font-size: 10px !important;
-                  font-weight: 400;
-                  margin-bottom: 2px;
-                  color: grey;
-                  white-space: pre-line;
-                ">{{ cartItem.BRAND_NAME }}</span>
+              <span class="order-meta-text">{{ cartItem.BRAND_NAME }}</span>
             </div>
-            <div nz-col nzSpan="24" *ngIf="
-                cartItem.MODEL_NUMBER != null && cartItem.MODEL_NUMBER != ''
-              ">
+            <div nz-col nzSpan="24" *ngIf="cartItem.MODEL_NUMBER">
               Model Number :
-              <span style="
-                  font-size: 10px !important;
-                  font-weight: 400;
-                  margin-bottom: 2px;
-                  color: grey;
-                  white-space: pre-line;
-                ">
-                {{ cartItem.MODEL_NUMBER }}</span>
+              <span class="order-meta-text">{{ cartItem.MODEL_NUMBER }}</span>
             </div>
-            <div nz-col nzSpan="24" *ngIf="cartItem.DESCRIPTION != null && cartItem.DESCRIPTION != ''">
+            <div nz-col nzSpan="24" *ngIf="cartItem.DESCRIPTION">
               Description :
-              <span class="truncate-two-lines" nz-popover style="
-                  font-size: 10px !important;
-                  font-weight: 400;
-                  color: grey;
-                " [nzPopoverContent]="descript" nzPopoverPlacement="topLeft" [innerHTML]="cartItem['DESCRIPTION']">
+              <span class="truncate-two-lines order-description-text" nz-popover [nzPopoverContent]="descript"
+                nzPopoverPlacement="topLeft" [innerHTML]="cartItem['DESCRIPTION']">
               </span>
               <ng-template #descript>
                 <span [innerHTML]="cartItem['DESCRIPTION']"></span>
               </ng-template>
             </div>
-            <div nz-col nzSpan="11" style="
-                font-size: 10px;
-                font-weight: 400;
-                color: grey;
-                margin-top: 8px;
-              ">
+            <div nz-col nzSpan="11" class="order-time-left">
               Preparation Time :
               {{ formatTime(cartItem.TOTAL_DURARTION_MIN) }}
               <small>Hrs.</small>
             </div>
-            <div nz-col nzSpan="13" style="
-                font-size: 10px;
-                font-weight: 400;
-                color: grey;
-                text-align: right;
-                margin-top: 8px;
-              ">
+            <div nz-col nzSpan="13" class="order-time-right">
               Service Time :
               {{ convertDateTiem(cartItem.START_TIME) | date : "HH:mm a" }}
               To
               {{ convertDateTiem(cartItem.END_TIME) | date : "HH:mm a" }}
             </div>
-
             <div nz-col nzSpan="12">
-              <span style="font-weight: 500; font-size: 11px !important">₹ {{ cartItem.TAX_EXCLUSIVE_AMOUNT }} x
-                {{ cartItem.QUANTITY }}</span>
+              <span class="order-price-multiply">
+                ₹ {{ cartItem.TAX_EXCLUSIVE_AMOUNT }} x {{ cartItem.QUANTITY }}
+              </span>
             </div>
-            <div nz-col nzSpan="12" style="
-                text-align: right;
-                font-weight: 500;
-                font-size: 12px !important;
-              ">
+            <div nz-col nzSpan="12" class="order-total-amount">
               ₹ {{ cartItem.TOTAL_TAX_EXCLUSIVE_AMOUNT | number }}
             </div>
-            <div nz-col nzSpan="24" style="
-                display: flex;
-                justify-content: space-between;
-                align-items: end;
-                font-size: 10px;
-                font-weight: 400;
-                color: grey;
-                text-align: right;
-              ">
-              <small style="font-size: 10px; font-weight: 500">
-                <small *ngIf="vieworderdata.orderData[0].IS_SAME_STATE == 1">CGST({{ cartItem.CGST }}%) + SGST({{
-                  cartItem.SGST }}%)
+            <div nz-col nzSpan="24" class="order-tax-row">
+              <small class="order-tax-label">
+                <small *ngIf="vieworderdata.orderData[0].IS_SAME_STATE == 1">
+                  CGST({{ cartItem.CGST }}%) + SGST({{ cartItem.SGST }}%)
                 </small>
                 <small *ngIf="vieworderdata.orderData[0].IS_SAME_STATE != 1">
-                  IGST ({{ cartItem.IGST }}%)</small>
-                <small *ngIf="cartItem.CESS != null && cartItem.CESS != 0">
-                  + CESS({{ cartItem.CESS }}%)</small>
+                  IGST ({{ cartItem.IGST }}%)
+                </small>
+                <small *ngIf="cartItem.CESS">
+                  + CESS({{ cartItem.CESS }}%)
+                </small>
               </small>
-
               (+)Tax Amount : ₹ {{ cartItem.TAX_AMOUNT | number }}
             </div>
             <div nz-col nzSpan="12"></div>
-            <div nz-col nzSpan="12" style="text-align: right">
-              <span style="
-                  background-color: rgb(245 45 162);
-                  font-size: 10px !important;
-                  font-weight: 500;
-                  padding: 0px 5px;
-                  color: white;
-                  border-radius: 15px;
-                " *ngIf="
-                  cartItem.IS_EXPRESS && vieworderdata.orderData[0].IS_EXPRESS
-                ">Express</span>
+            <div nz-col nzSpan="12" class="order-express-col">
+              <span class="order-express-badge" *ngIf="cartItem.IS_EXPRESS && vieworderdata.orderData[0].IS_EXPRESS">
+                Express
+              </span>
             </div>
           </div>
         </div>
       </div>
       <div nz-col nzSpan="24" class="mainnam">Summary</div>
       <div nz-col nzSpan="24">
-        <div nz-row style="font-size: 12px">
-          <div nz-col nzSpan="16" style="text-align: right">Taxable Amount</div>
-
-          <div nz-col nzSpan="8" style="text-align: right">
+        <div nz-row class="order-summary-row">
+          <div nz-col nzSpan="16" class="order-summary-right">Taxable Amount</div>
+          <div nz-col nzSpan="8" class="order-summary-right">
             ₹ {{ vieworderdata.orderData[0].TOTAL_TAXABLE_AMOUNT | number }}
           </div>
-
-          <div nz-col nzSpan="16" style="text-align: right">
-            (-) Discount
-            <span style="font-size: 9px !important"> </span>
-          </div>
-
-          <div nz-col nzSpan="8" style="text-align: right">
+          <div nz-col nzSpan="16" class="order-summary-right">(-) Discount</div>
+          <div nz-col nzSpan="8" class="order-summary-right">
             ₹ {{ vieworderdata.orderData[0].DISCOUNT_AMOUNT | number }}
           </div>
-
-          <div nz-col nzSpan="16" style="text-align: right">
-            (+) Express Delivery
-            <span style="font-size: 9px !important"> </span>
-          </div>
-
-          <div nz-col nzSpan="8" style="text-align: right">
-            ₹
-            {{
-            vieworderdata.orderData[0].IS_EXPRESS
+          <div nz-col nzSpan="16" class="order-summary-right">(+)&nbsp;Express Delivery</div>
+          <div nz-col nzSpan="8" class="order-summary-right">
+            ₹ {{ vieworderdata.orderData[0].IS_EXPRESS
             ? (vieworderdata.orderData[0].EXPRESS_DELIVERY_CHARGES | number)
-            : 0
-            }}
+            : 0 }}
           </div>
-
-          <div nz-col nzSpan="16" style="text-align: right">
-            (+) Tax Amount
-
-            <span style="font-size: 9px !important"> </span>
-          </div>
-
-          <div nz-col nzSpan="8" style="text-align: right">
+          <div nz-col nzSpan="16" class="order-summary-right">(+)&nbsp;Tax Amount</div>
+          <div nz-col nzSpan="8" class="order-summary-right">
             ₹ {{ vieworderdata.orderData[0].TAX_AMOUNT | number }}
           </div>
         </div>
-        <div nz-row style="
-            border-top: 1px dashed #7e7272;
-            padding: 1px 0;
-            font-size: 12px;
-          ">
-          <div nz-col nzSpan="16" style="font-weight: 600; text-align: right">
-            Order Total
-          </div>
-
-          <div nz-col nzSpan="8" style="font-weight: bold; text-align: right">
+        <div nz-row class="order-summary-total">
+          <div nz-col nzSpan="16" class="order-summary-total-label">Order Total</div>
+          <div nz-col nzSpan="8" class="order-summary-total-value">
             ₹ {{ vieworderdata.orderData[0].TOTAL_AMOUNT | number }}
           </div>
         </div>
       </div>
-
       <div nz-col nzSpan="24" class="mainnam">Other Details</div>
-      <div nz-col nzSpan="24" class="subnam" style="font-size: 12px">
+      <div nz-col nzSpan="24" class="subnam order-other-text">
         Payment Mode:
-        <span style="font-weight: 500" *ngIf="
-            vieworderdata != undefined &&
-              vieworderdata.orderData[0]['PAYMENT_MODE'] == 'COD';
-            else elsepyblocks
-          ">
-          Cash On Delivery</span>
+        <span class="order-other-strong"
+          *ngIf="vieworderdata?.orderData[0]['PAYMENT_MODE'] == 'COD'; else elsepyblocks">
+          Cash On Delivery
+        </span>
         <ng-template #elsepyblocks>Online</ng-template>
       </div>
-      <div nz-col nzSpan="24" class="subnam" style="font-size: 12px">
+      <div nz-col nzSpan="24" class="subnam order-other-text">
         Express Service Taken:
-        <span style="font-weight: 500">{{
-          vieworderdata.orderData[0]["IS_EXPRESS"] == 1 ? "Yes" : "No"
-          }}</span>
+        <span class="order-other-strong">
+          {{ vieworderdata.orderData[0]['IS_EXPRESS'] == 1 ? 'Yes' : 'No' }}
+        </span>
       </div>
-      <div nz-col nzSpan="24" class="subnam" style="font-size: 12px; margin-bottom: 10px"
-        *ngIf="vieworderdata.orderData[0]['SPECIAL_INSTRUCTIONS']">
+      <div nz-col nzSpan="24" class="subnam order-remark" *ngIf="vieworderdata.orderData[0]['SPECIAL_INSTRUCTIONS']">
         Remark:
-        <p class="truncate-two-lines" nz-popover style="font-size: 10px !important; font-weight: 400; color: grey"
-          *ngIf="
-            vieworderdata.orderData[0]['SPECIAL_INSTRUCTIONS'] != null &&
-            vieworderdata.orderData[0]['SPECIAL_INSTRUCTIONS'] != ''
-          " [nzPopoverContent]="descriptspl" nzPopoverPlacement="topLeft"
-          [innerHTML]="vieworderdata.orderData[0]['SPECIAL_INSTRUCTIONS']"></p>
+        <p class="truncate-two-lines order-remark-text" nz-popover [nzPopoverContent]="descriptspl"
+          nzPopoverPlacement="topLeft" [innerHTML]="vieworderdata.orderData[0]['SPECIAL_INSTRUCTIONS']">
+        </p>
         <ng-template #descriptspl>
           <span [innerHTML]="vieworderdata.orderData[0]['SPECIAL_INSTRUCTIONS']"></span>
         </ng-template>
       </div>
     </div>
-
-    <div class="footer" style="position: sticky !important; width: 100% !important">
-      <!-- <nz-tag
-        style="width: 100% !important; text-align: center"
-        [nzColor]="'orange'"
-        >Order Scheduled</nz-tag
-      > -->
-
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="
+    <div class="footer order-footer-container">
+      <nz-tag class="order-status-tag" *ngIf="
           vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' &&
           (vieworderdata.orderData[0]['REFUND_STATUS'] == null ||
             vieworderdata.orderData[0]['REFUND_STATUS'] == 'R')
         " [nzColor]="'#ff9d19'">Order Placed</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="
-          vieworderdata.orderData[0]['ORDER_STATUS'] == 'OA' &&
-          (vieworderdata.orderData[0]['REFUND_STATUS'] == null ||
-            vieworderdata.orderData[0]['REFUND_STATUS'] == 'R')
-        " [nzColor]="'#00b778'">Order Accepted</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'" [nzColor]="'#e50000'">Order Rejected</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'" [nzColor]="'#0351ea'">Order Scheduled</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="
+      <nz-tag class="order-status-tag" *ngIf="
+      vieworderdata.orderData[0]['ORDER_STATUS'] == 'OA' &&
+      (vieworderdata.orderData[0]['REFUND_STATUS'] == null ||
+        vieworderdata.orderData[0]['REFUND_STATUS'] == 'R')
+    " [nzColor]="'#00b778'">
+        Order Accepted
+      </nz-tag>
+      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'" [nzColor]="'#e50000'">Order Rejected</nz-tag>
+      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'" [nzColor]="'#0351ea'">Order Scheduled</nz-tag>
+      <nz-tag class="order-status-tag" *ngIf="
           (vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' ||
             vieworderdata.orderData[0]['ORDER_STATUS'] == 'OA') &&
           vieworderdata.orderData[0]['REFUND_STATUS'] == 'P'
         " [nzColor]="'#d10404'">Cancel Requested</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'ON'" [nzColor]="'#0351ea'">Order Ongoing</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="
+      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'ON'" [nzColor]="'#0351ea'">Order Ongoing</nz-tag>
+      <nz-tag class="order-status-tag" *ngIf="
           vieworderdata.orderData[0]['ORDER_STATUS'] == 'OC' ||
           vieworderdata.orderData[0]['ORDER_STATUS'] == 'CO'
         " [nzColor]="'#028d00'">Order Completed</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="
-          vieworderdata.orderData[0]['ORDER_STATUS'] == 'C' ||
-          vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
-        " [nzColor]="'#f70000'">Order Cancelled</nz-tag>
+      <nz-tag class="order-status-tag" *ngIf="
+      vieworderdata.orderData[0]['ORDER_STATUS'] == 'C' ||
+      vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
+    " [nzColor]="'#f70000'">
+        Order Cancelled
+      </nz-tag>
+      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'PC'" [nzColor]="'#f70000'">
+        Order Partially Cancelled
+      </nz-tag>
     </div>
   </div>
   <div class="gutter-row" nz-col nzSpan="17">
-    <!-- <nz-affix nzOffsetTop="10"> -->
     <div class="backbbb">
-      <!-- <div style="min-height: 87vh;overflow-y: auto;"> -->
-      <!-- <div
-        nz-col
-        nzSpan="24"
-        style="text-align: center; margin-bottom: 5px"
-        class="cardstyle1"
-      >
-        <h6>
-          The order was accepted on {{ date | date : "dd-MM-yyyy HH:mm a" }} by
-          Harsh
-        </h6>
-      </div> -->
       <nz-spin [nzSpinning]="isSpinning">
         <nz-tabset nzCentered (nzSelectedIndexChange)="onSelectedIndexChange($event)">
           <nz-tab [nzTitle]="titleTemplate">
             <ng-template #titleTemplate>
               Verification
-              <span *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP'" nz-icon style="color: orange"
-                nzType="warning" nzTheme="fill"></span>
-
-              <span *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] != 'OP'" nz-icon style="color: green"
-                nzType="check-circle" nzTheme="fill"></span>
+              <span *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP'" nz-icon
+                class="order-verification-warning-icon" nzType="warning" nzTheme="fill">
+              </span>
+              <span *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] != 'OP'" nz-icon
+                class="order-verification-success-icon" nzType="check-circle" nzTheme="fill">
+              </span>
             </ng-template>
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="order-tab-scroll">
                 <div nz-row *ngIf="
                     vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' &&
                     vieworderdata.orderData[0]['ORDER_STATUS'] != 'C' &&
@@ -538,70 +351,56 @@
                       vieworderdata.orderData[0]['REFUND_STATUS'] == 'R') &&
                     decreptedroleId != 2
                   ">
-                  <div nz-col nzSpan="24" style="text-align: center; padding: 10px; font-size: 20px">
+                  <div nz-col nzSpan="24" class="new13">
                     <b>Verify Order</b>
                   </div>
-
-                  <div nz-col nzSpan="24" style="text-align: center; margin-bottom: 10px">
-                    <nz-radio-group name="checkstatus" [(ngModel)]="STATUS" style="display: inline-block" required>
-                      <label nz-radio nzValue="A" style="
-                          color: green;
-                          margin-right: 20px;
-                          font-weight: 600;
-                        ">
-                        <span style="font-size: 16px !important; margin-right: 4px">Accept</span>
-                        <span style="font-size: 18px !important" nz-icon nzType="check-circle"
-                          nzTheme="outline"></span></label>
-                      <label nz-radio nzValue="R" style="color: red; margin-right: 20px; font-weight: 600">
-                        <span style="font-size: 16px !important; margin-right: 4px">Reject</span>
-                        <span style="font-size: 18px !important" nz-icon nzType="close-circle"
-                          nzTheme="outline"></span></label>
-                      <label nz-radio nzValue="Res" style="color: #0c21af; font-weight: 600">
-                        <span style="font-size: 16px !important; margin-right: 4px">Reschedule</span>
-                        <span style="font-size: 18px !important" nz-icon nzType="schedule" nzTheme="outline"></span>
+                  <div nz-col nzSpan="24" class="order-radio-wrapper">
+                    <nz-radio-group name="checkstatus" [(ngModel)]="STATUS" class="order-radio-group" required>
+                      <label nz-radio nzValue="A" class="order-radio-accept">
+                        <span class="order-radio-text">Accept</span>
+                        <span nz-icon nzType="check-circle" nzTheme="outline" class="order-radio-icon"></span>
+                      </label>
+                      <label nz-radio nzValue="R" class="order-radio-reject">
+                        <span class="order-radio-text">Reject</span>
+                        <span nz-icon nzType="close-circle" nzTheme="outline" class="order-radio-icon"></span>
+                      </label>
+                      <label nz-radio nzValue="Res" class="order-radio-reschedule">
+                        <span class="order-radio-text">Reschedule</span>
+                        <span nz-icon nzType="schedule" nzTheme="outline" class="order-radio-icon"></span>
                       </label>
                     </nz-radio-group>
                   </div>
-                  <div nz-col nzSpan="24" style="text-align: center" *ngIf="STATUS === 'A'">
+                  <div nz-col nzSpan="24" class="order-center-align" *ngIf="STATUS === 'A'">
                     <div nz-row>
-                      <div nz-col nzSpan="6">
-
-                      </div>
-                      <div nz-col nzSpan="12" class="my-box" style="padding: 10px">
-
-                        <nz-form-item class="nz-form-itemm" style="text-align: left"
-                          *ngIf="[2, 3, 4, 5, 7, 8, 20, 21, 22].includes(+decreptedroleId)">
-                          <nz-form-label nzNoColon>Choose a vendor to assign order (optional)</nz-form-label>
+                      <div nz-col nzSpan="6"></div>
+                      <div nz-col nzSpan="12" class="my-box order-box-padding">
+                        <nz-form-item class="nz-form-itemm order-text-left"
+                          *ngIf="[2,3,4,5,7,8,20,21,22].includes(+decreptedroleId)">
+                          <nz-form-label nzNoColon>
+                            Choose a vendor to assign order (optional)
+                          </nz-form-label>
                           <nz-form-control nzHasFeedback nzErrorTip="Choose vendor to assign order">
-                            <nz-select nzAllowClear="true" nzPlaceHolder="Select vendor to assign order" name="vendors"
+                            <nz-select nzAllowClear nzPlaceHolder="Select vendor to assign order" name="vendors"
                               [(ngModel)]="vendors" nzShowSearch>
                               <nz-option *ngFor="let vendor of vendorsList" [nzValue]="vendor.VENDOR_ID"
-                                [nzLabel]="vendor.BUSINESS_NAME"></nz-option>
+                                [nzLabel]="vendor.BUSINESS_NAME">
+                              </nz-option>
                             </nz-select>
                           </nz-form-control>
                         </nz-form-item>
-
-                        <nz-form-item class="nz-form-itemm" style="text-align: left">
+                        <nz-form-item class="nz-form-itemm order-text-left">
                           <nz-form-label nzNoColon>Acceptance Remark</nz-form-label>
                           <nz-form-control>
-                            <textarea name="remarks" style="width: 100%" nz-input
+                            <textarea nz-input name="remarks" class="order-textarea-full"
                               [(ngModel)]="orderData.ACCEPTANCE_REMARK" [nzAutosize]="{ minRows: 2, maxRows: 4 }"
-                              maxlength="256" placeholder="Please Enter Acceptance Remark" draggable="false"
-                              required></textarea>
-                            <h6 style="
-                                color: red;
-                                font-size: 10px;
-                                text-align: left;
-                              " *ngIf="
-                                orderData.ACCEPTANCE_REMARK != undefined &&
-                                orderData.ACCEPTANCE_REMARK != null &&
-                                orderData.ACCEPTANCE_REMARK != ''
-                              ">
+                              maxlength="256" placeholder="Please Enter Acceptance Remark" draggable="false" required>
+                </textarea>
+                            <h6 class="order-remark-count" *ngIf="orderData.ACCEPTANCE_REMARK">
                               {{ orderData.ACCEPTANCE_REMARK.length }}/256
                             </h6>
                           </nz-form-control>
                         </nz-form-item>
-                        <button nz-button nzType="primary" style="margin-top: 5px" (nzOnConfirm)="acceptorder()"
+                        <button nz-button nzType="primary" class="order-action-btn" (nzOnConfirm)="acceptorder()"
                           [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
                           nzPopconfirmTitle="Are you sure, you want to accept order?" nzPopconfirmPlacement="top">
                           <i nz-icon nzType="check"></i>Accept Order
@@ -613,32 +412,29 @@
                   <div nz-col nzSpan="24" *ngIf="STATUS === 'R' || STATUS === 'Res'">
                     <div nz-row>
                       <div nz-col nzSpan="6"></div>
-                      <div nz-col nzSpan="12" class="my-box" style="padding: 10px">
+                      <div nz-col nzSpan="12" class="my-box job-action-box">
                         <div nz-row>
                           <div nz-col nzSpan="24" *ngIf="STATUS === 'R'">
                             <nz-form-item class="nz-form-itemm">
                               <nz-form-label nzRequired nzNoColon>Reject Remark</nz-form-label>
                               <nz-form-control nzHasFeedback nzErrorTip="Please Enter Rejection Remark">
-                                <textarea name="remark" style="width: 100%" nz-input [(ngModel)]="orderData.REMARK"
+                                <textarea name="remark" nz-input [(ngModel)]="orderData.REMARK"
                                   [nzAutosize]="{ minRows: 2, maxRows: 4 }" maxlength="256"
-                                  placeholder="Please Enter Rejection Remark" draggable="false" required></textarea>
-                                <h6 style="color: red; font-size: 10px" *ngIf="
-                                    orderData.REMARK != undefined &&
-                                    orderData.REMARK != null &&
-                                    orderData.REMARK != ''
-                                  ">
+                                  placeholder="Please Enter Rejection Remark" draggable="false" required
+                                  class="job-textarea-full">
+          </textarea>
+                                <h6 class="job-char-counter-small" *ngIf="
+              orderData.REMARK != undefined &&
+              orderData.REMARK != null &&
+              orderData.REMARK != ''
+            ">
                                   {{ orderData.REMARK.length }}/256
                                 </h6>
                               </nz-form-control>
                             </nz-form-item>
                           </div>
                           <div nz-col nzSpan="24" *ngIf="STATUS === 'Res'">
-                            <div style="
-                                font-size: 14px;
-                                font-weight: 500;
-                                text-align: center;
-                                margin-top: 10px;
-                              ">
+                            <div class="job-reschedule-title">
                               Reschedule Order
                             </div>
                             <div nz-row>
@@ -646,38 +442,40 @@
                                 <nz-form-item class="nz-form-itemm">
                                   <nz-form-label nzRequired nzNoColon>Schedule Datetime</nz-form-label>
                                   <nz-form-control>
-                                    <nz-date-picker style="width: 100%" (ngModelChange)="setDate($event)"
-                                      [(ngModel)]="expectedDate" nzFormat="dd/MM/yyyy" [nzShowToday]="false"
-                                      [nzDisabledDate]="disabledPastDates" name="expectedDate"></nz-date-picker>
+                                    <nz-date-picker (ngModelChange)="setDate($event)" [(ngModel)]="expectedDate"
+                                      nzFormat="dd/MM/yyyy" [nzShowToday]="false" [nzDisabledDate]="disabledPastDates"
+                                      name="expectedDate" class="job-input-full">
+                                    </nz-date-picker>
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
                               <div nz-col nzSpan="8">
                                 <nz-form-item class="nz-form-itemm">
                                   <nz-form-label nzNoColon></nz-form-label>
-                                  <nz-form-control style="margin-top: 3px">
-                                    <nz-time-picker [(ngModel)]="time" name="time" style="width: 100%"
-                                      nzFormat="HH:mm a" [nzMinuteStep]="10" (ngModelChange)="setTime($event)"
-                                      [nzAllowEmpty]="false" [nzDisabledHours]="getDisabledHours"
-                                      [nzDisabledMinutes]="getDisabledMinutes"></nz-time-picker>
+                                  <nz-form-control class="job-timepicker-wrapper">
+                                    <nz-time-picker [(ngModel)]="time" name="time" nzFormat="HH:mm a"
+                                      [nzMinuteStep]="10" (ngModelChange)="setTime($event)" [nzAllowEmpty]="false"
+                                      [nzDisabledHours]="getDisabledHours" [nzDisabledMinutes]="getDisabledMinutes"
+                                      class="job-input-full">
+                                    </nz-time-picker>
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
                             </div>
                           </div>
-                          <div nz-col nzSpan="24" style="text-align: center; padding-bottom: 20px">
-                            <button nz-button *ngIf="STATUS === 'R'" nzType="primary" style="margin-top: 10px"
+                          <div nz-col nzSpan="24" class="job-action-footer">
+                            <button nz-button *ngIf="STATUS === 'R'" nzType="primary" class="job-action-button"
                               (nzOnConfirm)="acceptorder()" [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()"
                               nz-popconfirm nzPopconfirmTitle="Are you sure, you want to reject order?"
                               nzPopconfirmPlacement="top">
                               Reject Order
                             </button>
-
-                            <button nz-button nzType="primary" style="margin-top: 10px" (nzOnConfirm)="acceptorder()"
+                            <button nz-button nzType="primary" class="job-action-button" (nzOnConfirm)="acceptorder()"
                               [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
                               nzPopconfirmTitle="Are you sure, you want to reschedule order?"
                               nzPopconfirmPlacement="top" *ngIf="STATUS === 'Res'">
-                              <i nz-icon nzType="calendar"></i>Reschedule Order
+                              <i nz-icon nzType="calendar"></i>
+                              Reschedule Order
                             </button>
                           </div>
                         </div>
@@ -691,12 +489,8 @@
                     vieworderdata.orderData[0]['ORDER_STATUS'] != 'C' &&
                     vieworderdata.orderData[0]['ORDER_STATUS'] != 'CA' &&
                     decreptedroleId == 2
-                  " style="
-                    text-align: center;
-                    padding-top: 30vh;
-                    font-size: 20px;
-                    font-weight: 500;
-                    color: orangered;
+                  " class="
+                   order-ver-status
                   ">
                   Order Verification Is Pending.
                 </div>
@@ -706,13 +500,7 @@
                     vieworderdata.orderData[0]['ORDER_STATUS'] != 'C' &&
                     vieworderdata.orderData[0]['ORDER_STATUS'] != 'CA' &&
                     vieworderdata.orderData[0]['REFUND_STATUS'] == 'P'
-                  " style="
-                    text-align: center;
-                    padding-top: 30vh;
-                    font-size: 20px;
-                    font-weight: 500;
-                    color: orangered;
-                  ">
+                  " class="order-state-warning">
                   The cancellation request is under verification.
                 </div>
                 <div *ngIf="
@@ -722,34 +510,16 @@
                     vieworderdata.orderData[0]['ORDER_STATUS'] != 'CA' &&
                     (vieworderdata.orderData[0]['REFUND_STATUS'] == null ||
                       vieworderdata.orderData[0]['REFUND_STATUS'] == 'R')
-                  " style="
-                    text-align: center;
-                    padding-top: 30vh;
-                    font-size: 20px;
-                    font-weight: 500;
-                    color: green;
-                  ">
+                  " class="order-state-success">
                   Order Accepted
                 </div>
-                <div *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'" style="
-                    text-align: center;
-                    padding-top: 30vh;
-                    font-size: 20px;
-                    font-weight: 500;
-                    color: red;
-                  ">
+                <div *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'" class="order-state-error">
                   Order Rejected
                 </div>
                 <div *ngIf="
-                    vieworderdata.orderData[0]['ORDER_STATUS'] == 'C' ||
-                    vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
-                  " style="
-                    text-align: center;
-                    padding-top: 30vh;
-                    font-size: 20px;
-                    font-weight: 500;
-                    color: red;
-                  ">
+        vieworderdata.orderData[0]['ORDER_STATUS'] == 'C' ||
+        vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
+      " class="order-state-error">
                   Order Cancelled
                 </div>
               </div>
@@ -764,51 +534,29 @@
                 vieworderdata.orderData[0]['REFUND_STATUS'] == 'P')
             " [nzTitle]="'Jobs'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="job-tab-scroll">
                 <div nz-row nzGutter="16">
-                  <div nz-col nzSpan="12" style="padding: 10px" *ngFor="let data of orderDetailsData; let i = index">
-                    <div class="cardstyle1" nz-row style="height: 100%">
-                      <div class="mainnam" nz-col nzSpan="12" style="text-align: start">
-                        <span style="
-                            color: #1d39c4 !important;
-                            background: #f0f5ff !important;
-                            border-color: #adc6ff !important;
-                            padding: 5px;
-                            font-size: 12px !important;
-                          " [attr.title]="vieworderdata.orderData[0].ORDER_NUMBER">
+                  <div nz-col nzSpan="12" class="job-card-wrapper" *ngFor="let data of orderDetailsData; let i = index">
+                    <div class="cardstyle1 job-card-root" nz-row>
+                      <div class="mainnam job-align-start" nz-col nzSpan="10">
+                        <span class="job-order-badge" [attr.title]="vieworderdata.orderData[0].ORDER_NUMBER">
                           {{ vieworderdata.orderData[0].ORDER_NUMBER }}</span>
                       </div>
-                      <div class="mainnam" nz-col nzSpan="12" style="text-align: end">
-                        <span (click)="openjobcarddetails(data)" *ngIf="
-                            data.JOB_CARD_NO != undefined &&
-                            data.JOB_CARD_NO != null
-                          " style="
-                            color: #1d39c4 !important;
-                            background: #f0f5ff !important;
-                            border-color: #adc6ff !important;
-                            padding: 5px;
-                            font-size: 12px !important;
-                            cursor: pointer;
-                          " [attr.title]="data.JOB_CARD_NO">
-                          {{ data.JOB_CARD_NO }}</span>
+                      <div nz-col nzSpan="4" class="job-align-center">
+                        <nz-tag *ngIf="data.JOB_CART_STATUS == 'CN'" [nzColor]="'red'">
+                          {{ data.JOB_CARD_STATUS_NAME }}
+                        </nz-tag>
                       </div>
-
-                      <div class="subnam" nz-col nzSpan="16" style="
-                          font-size: 11px !important;
-                          margin-top: 4px;
-                          display: flex;
-                          justify-content: flex-start;
-                        ">
+                      <div class="mainnam job-align-end" nz-col nzSpan="10">
+                        <span *ngIf="data.JOB_CARD_NO" (click)="openjobcarddetails(data)" class="job-jobcard-badge"
+                          [attr.title]="data.JOB_CARD_NO">
+                          {{ data.JOB_CARD_NO }}
+                        </span>
+                      </div>
+                      <div class="subnam job-customer-row" nz-col nzSpan="16">
                         <span *ngIf="
                             vieworderdata.orderData[0].CUSTOMER_TYPE == 'I'
                           " nz-icon nzType="user" nzTheme="outline"></span>
-
                         <svg *ngIf="
                             vieworderdata.orderData[0].CUSTOMER_TYPE != 'I'
                           " enable-background="new 0 0 55 55" height="17px" id="Layer_1" version="1.1"
@@ -839,25 +587,17 @@
                             vieworderdata.orderData[0].CUSTOMER_NAME
                             }}</span>
                         </ng-template>
-                        <!-- {{ vieworderdata.orderData[0].CUSTOMER_NAME }} -->
                       </div>
-                      <div class="subnam" nz-col nzSpan="8" style="
-                          font-size: 11px !important;
-                          margin-top: 4px;
-                          text-align: end;
-                          font-weight: 600;
-                        ">
+                      <div class="subnam job-amount-text" nz-col nzSpan="8">
                         ₹ {{ data.FINAL_ITEM_AMOUNT | number }}
                       </div>
                       <div nz-col nzSpan="16">
                         <div nz-row>
-                          <div class="subnam" nz-col nzSpan="23" style="font-size: 11px !important">
-                            <span class="subnam" style="font-size: 11px !important" *ngIf="
-                                vieworderdata.orderData[0]['SERVICE_ADDRESS'] !=
-                                null
-                              ">
+                          <div class="subnam service-address-container" nz-col nzSpan="23">
+                            <span class="subnam service-address-text"
+                              *ngIf="vieworderdata.orderData[0]['SERVICE_ADDRESS'] != null">
                               <span nz-icon nzType="environment" nzTheme="fill"></span>
-                              <span style="font-size: 11px !important" *ngIf="
+                              <span class="service-address-text" *ngIf="
                                   vieworderdata.orderData[0]['SERVICE_ADDRESS']
                                     .length >= 40
                                 " nz-popover [nzPopoverContent]="
@@ -878,7 +618,7 @@
                                 : ""
                                 }}
                               </span>
-                              <span style="font-size: 11px !important" *ngIf="
+                              <span class="service-address-text" *ngIf="
                                   vieworderdata.orderData[0]['SERVICE_ADDRESS']
                                     .length < 40
                                 ">
@@ -906,51 +646,41 @@
                           </div>
                         </div>
                       </div>
-                      <div class="subnam" nz-col nzSpan="8" style="text-align: end; font-weight: 600">
-                        <span style="font-size: 10px !important" *ngIf="data.IS_EXPRESS == 1">Express | ₹{{
-                          data.EXPRESS_DELIVERY_CHARGES | number
-                          }}</span>
+                      <div class="subnam job-express-container" nz-col nzSpan="8">
+                        <span class="job-express-text" *ngIf="data.IS_EXPRESS == 1">
+                          Express | ₹{{ data.EXPRESS_DELIVERY_CHARGES | number }}
+                        </span>
                       </div>
-                      <div class="subnam" nz-col nzSpan="12" style="font-size: 11px !important" [nzTooltipTitle]="
-                          isTextOverflow
-                            ? vieworderdata.orderData[0].PINCODE
-                            : null
-                        " #tooltipRefpin="nzTooltip" nz-tooltip #textContainerpinn class="truncate-text" (mouseenter)="
-                          checkOverflow(textContainerpinn, tooltipRefpin)
-                        ">
+                      <div class="subnam job-pincode-container truncate-text" nz-col nzSpan="12"
+                        [nzTooltipTitle]="isTextOverflow ? vieworderdata.orderData[0].PINCODE : null"
+                        #tooltipRefpin="nzTooltip" nz-tooltip #textContainerpinn
+                        (mouseenter)="checkOverflow(textContainerpinn, tooltipRefpin)">
                         Pincode :{{ vieworderdata.orderData[0].PINCODE }}
                       </div>
-                      <div class="subnam" nz-col nzSpan="12" style="font-size: 11px !important; text-align: end"
-                        [nzTooltipTitle]="
-                          isTextOverflow
-                            ? vieworderdata.orderData[0].TERRITORY_NAME
-                            : null
-                        " #tooltipRefter="nzTooltip" nz-tooltip #textContainerpinn class="truncate-text" (mouseenter)="
-                          checkOverflow(textContainerpinn, tooltipRefter)
-                        ">
-                        Territory :{{
-                        vieworderdata.orderData[0].TERRITORY_NAME
-                        }}
+                      <div class="subnam job-territory-container truncate-text" nz-col nzSpan="12"
+                        [nzTooltipTitle]="isTextOverflow ? vieworderdata.orderData[0].TERRITORY_NAME : null"
+                        #tooltipRefter="nzTooltip" nz-tooltip #textContainerpinn
+                        (mouseenter)="checkOverflow(textContainerpinn, tooltipRefter)">
+                        Territory :{{ vieworderdata.orderData[0].TERRITORY_NAME }}
                       </div>
-                      <div class="subnam" nz-col nzSpan="24" style="font-size: 11px !important; text-align: start"
+                      <div class="subnam job-service-container truncate-text" nz-col nzSpan="24"
                         [nzTooltipTitle]="
                           isTextOverflow ? data.SERVICE_NAME : null
-                        " #tooltipRefser="nzTooltip" nz-tooltip #textContainerpinn class="truncate-text" (mouseenter)="
+                        " #tooltipRefser="nzTooltip" nz-tooltip #textContainerpinn (mouseenter)="
                           checkOverflow(textContainerpinn, tooltipRefser)
                         ">
                         Service :{{ data.SERVICE_NAME }}
                       </div>
-                      <div class="subnam" nz-col nzSpan="14" style="text-align: start">
-                        <span style="font-size: 11px !important" *ngIf="
+                      <div class="subnam job-schedule-container" nz-col nzSpan="14">
+                        <span class="job-schedule-text" *ngIf="
                             data.SCHEDULED_DATE_TIME != undefined &&
                             data.SCHEDULED_DATE_TIME != null
                           ">
                           Scheduled Date:
-                          {{
-                          data.SCHEDULED_DATE_TIME | date : "dd/MM/yyyy"
-                          }}&nbsp;{{ formatTimess(data.START_TIME) }}
+                          {{ data.SCHEDULED_DATE_TIME | date : 'dd/MM/yyyy' }}
+                          &nbsp;{{ formatTimess(data.START_TIME) }}
                         </span>
-                        <button nz-button style="margin-top: 5px" nzSize="small" nzType="primary" *ngIf="
+                        <button nz-button nzSize="small" nzType="primary" class="job-schedule-btn" *ngIf="
                             decreptedroleId !== 2 &&
                             TYPE_FOR_LOCAL != 'CUSTOMER' &&
                             data.JOB_CARD_ID != undefined &&
@@ -962,8 +692,8 @@
                           Go To Scheduler
                         </button>
                       </div>
-                      <div class="subnam" nz-col nzSpan="10" style="text-align: end">
-                        <span style="font-size: 11px !important" *ngIf="
+                      <div class="subnam job-estimate-container" nz-col nzSpan="10">
+                        <span class="job-estimate-text" *ngIf="
                             data.ESTIMATED_TIME_IN_MIN != undefined &&
                             data.ESTIMATED_TIME_IN_MIN != null
                           ">
@@ -971,13 +701,9 @@
                           {{ data.ESTIMATED_TIME_IN_MIN }} min.
                         </span>
                       </div>
-
-                      <div class="subnam" nz-col nzSpan="8" style="
-                          font-size: 11px !important;
-                          text-align: start;
-                          margin-top: 5px;
-                        "></div>
-                      <div nz-col nzSpan="8" style="text-align: center; cursor: pointer">
+                      <div class="subnam job-empty-left" nz-col nzSpan="8">
+                      </div>
+                      <div nz-col nzSpan="8" class="job-center-action">
                         <button nz-button nzType="primary" *ngIf="
                             decreptedroleId !== 2 &&
                             TYPE_FOR_LOCAL != 'CUSTOMER' &&
@@ -988,12 +714,8 @@
                           Generate Job
                         </button>
                       </div>
-
-                      <div class="subnam" nz-col nzSpan="8" style="
-                          font-size: 12px !important;
-                          text-align: end;
-                          margin-top: 5px;
-                        "></div>
+                      <div class="subnam job-empty-right" nz-col nzSpan="8">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1009,17 +731,11 @@
                 vieworderdata.orderData[0]['REFUND_STATUS'] == 'P')
             ">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="parts-tab-scroll">
                 <div nz-row nzGutter="16" *ngIf="parts != undefined && parts.length > 0">
-                  <div nz-col nzSpan="12" style="padding: 10px" *ngFor="let part of parts; let l = index">
-                    <div class="cardstyle1" nz-row style="height: 130px">
-                      <div class="mainnam" nz-col nzSpan="12" style="text-align: start" #patJOB_CARD_NO [attr.title]="
+                  <div nz-col nzSpan="12" class="parts-card-wrapper" *ngFor="let part of parts; let l = index">
+                    <div class="cardstyle1 parts-card-root" nz-row>
+                      <div class="mainnam parts-align-start" nz-col nzSpan="12" #patJOB_CARD_NO [attr.title]="
                           isTextOverflowing(patJOB_CARD_NO)
                             ? part.JOB_CARD_NO
                             : null
@@ -1027,18 +743,12 @@
                         <span *ngIf="
                             part.JOB_CARD_NO != undefined &&
                             part.JOB_CARD_NO != null
-                          " style="
-                            color: #1d39c4 !important;
-                            background: #f0f5ff !important;
-                            border-color: #adc6ff !important;
-                            padding: 5px;
-                            font-size: 12px !important;
-                            cursor: pointer;
+                          "class="parts-jobcard-badge
                           " [attr.title]="part.JOB_CARD_NO">
                           {{ part.JOB_CARD_NO }}</span>
                       </div>
-                      <div class="subnam" nz-col nzSpan="12" style="text-align: end">
-                        <span style="font-size: 11px !important">
+                      <div class="subnam parts-align-end" nz-col nzSpan="12">
+                        <span class="parts-date-text">
                           {{
                           part.REQUESTED_DATE_TIME
                           | date : "dd/MM/yyyy HH:mm a"
@@ -1053,12 +763,12 @@
                               part.INVENTRY_SUB_CATEGORY_NAME
                             : null
                         ">
-                        <span style="font-size: 11px !important">
+                        <span class="parts-meta-text">
                           {{ part.INVENTORY_CATEGORY_NAME }} >
                           {{ part.INVENTRY_SUB_CATEGORY_NAME }}
                         </span>
                       </div>
-                      <div class="subnam" nz-col nzSpan="24" style="font-size: 12px !important" #ITEM_NAME [attr.title]="
+                      <div class="subnam parts-item-name" nz-col nzSpan="24" #ITEM_NAME [attr.title]="
                           isTextOverflowing(ITEM_NAME) ? part.ITEM_NAME : null
                         ">
                         Part Name :
@@ -1068,82 +778,45 @@
                         : part.INVENTORY_NAME
                         }}
                       </div>
-                      <div class="subnam" nz-col nzSpan="24" style="font-size: 11px !important">
+                      <div class="subnam parts-meta-row" nz-col nzSpan="24">
                         Requested By : {{ part.TECHNICIAN_NAME }}
                       </div>
-                      <div class="subnam" nz-col nzSpan="8" style="font-size: 11px !important">
+                      <div class="subnam parts-meta-row" nz-col nzSpan="8">
                         Price : ₹ {{ part.TOTAL_AMOUNT | number }}
                       </div>
-                      <div class="subnam" nz-col nzSpan="7" style="font-size: 11px !important">
+                      <div class="subnam parts-meta-row" nz-col nzSpan="7">
                         Quantity : {{ part.QUANTITY }}
                       </div>
-
-                      <div class="subnam" nz-col nzSpan="9" style="font-size: 11px !important">
-                        <nz-tag style="
-                            width: 100% !important;
-                            text-align: center;
-                            font-size: 11px !important;
-                          " *ngIf="part['STATUS'] == 'P'" [nzColor]="'#ff9d19'">Pending</nz-tag>
-                        <nz-tag style="
-                            width: 100% !important;
-                            text-align: center;
-                            font-size: 11px !important;
-                          " *ngIf="part['STATUS'] == 'A'" [nzColor]="'green'">Approved</nz-tag>
-                        <nz-tag style="
-                            width: 100% !important;
-                            text-align: center;
-                            font-size: 11px !important;
-                          " *ngIf="part['STATUS'] == 'AC'" [nzColor]="'green'">Approved By Customer</nz-tag>
-                        <nz-tag style="
-                            width: 100% !important;
-                            text-align: center;
-                            font-size: 11px !important;
-                          " *ngIf="part['STATUS'] == 'AP'" [nzColor]="'green'">Auto Approved</nz-tag>
-                        <nz-tag style="
-                            width: 100% !important;
-                            text-align: center;
-                            font-size: 11px !important;
-                          " *ngIf="part['STATUS'] == 'R'" [nzColor]="'red'">Rejected</nz-tag>
+                      <div class="subnam parts-status-col" nz-col nzSpan="9">
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'P'" [nzColor]="'#ff9d19'">Pending</nz-tag>
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'A'" [nzColor]="'green'">Approved</nz-tag>
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'AC'" [nzColor]="'green'">Approved By Customer</nz-tag>
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'AP'" [nzColor]="'green'">Auto Approved</nz-tag>
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'R'" [nzColor]="'red'">Rejected</nz-tag>                       
                       </div>
                     </div>
                   </div>
                 </div>
                 <div *ngIf="parts == undefined || parts.length == 0">
-                  <nz-empty style="margin-top: 50px"
+                  <nz-empty class="parts-empty-state"
                     nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                     [nzNotFoundContent]="contentTpl">
                     <ng-template #contentTpl>
                       <span> No Parts Request Available. </span>
                     </ng-template>
                   </nz-empty>
-                  <!-- <p class="emptyDataTex" style="
-                      margin-top: 100px;
-                      white-space: pre-line;
-                      text-align: center;
-                      font-size: 13px;
-                    ">
-                    No Parts Request Available.
-                  </p> -->
                 </div>
               </div>
             </ng-template>
           </nz-tab>
-
           <nz-tab (nzSelect)="setFilter()" [nzTitle]="'Action/Activity Log'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="common-tab-scroll">
                 <app-actionlogs [TYPE]="'ORDER'" [FILTER_ID]="orderDetails.ID"
                   [CUSTOMER_ID]="vieworderdata.orderData[0].CUSTOMER_ID"></app-actionlogs>
               </div>
             </ng-template>
           </nz-tab>
-
           <nz-tab (nzSelect)="setFilter()" [nzDisabled]="
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' ||
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR' ||
@@ -1151,13 +824,7 @@
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
             " [nzTitle]="'Customer Ratings for Technicians'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="common-tab-scroll">
                 <app-customerratting [TYPE]="'ORDER'" [customer_id]="vieworderdata.orderData[0].CUSTOMER_ID"
                   [FILTER_ID]="orderDetails.ID"></app-customerratting>
               </div>
@@ -1170,19 +837,12 @@
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
             " [nzTitle]="'Technician Ratings for Customers'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="common-tab-scroll">
                 <app-technicianratting [TYPE]="'ORDER'" [FILTER_ID]="orderDetails.ID"
                   [customer_id]="vieworderdata.orderData[0].CUSTOMER_ID"></app-technicianratting>
               </div>
             </ng-template>
           </nz-tab>
-
           <nz-tab (nzSelect)="setFilter()" [nzDisabled]="
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' ||
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR' ||
@@ -1190,32 +850,18 @@
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
             " [nzTitle]="'Chat'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="order-common-tab-scroll">
                 <app-chatoverview-comp [TYPE]="'ORDER'" [FILTER_ID]="orderDetails.ID"></app-chatoverview-comp>
               </div>
             </ng-template>
           </nz-tab>
           <nz-tab (nzSelect)="setFilter()" [nzTitle]="'Order Location'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="order-common-tab-scroll">
                 <app-location [TYPE]="'ORDER'" [FILTER_ID]="orderDetails.ID"></app-location>
               </div>
             </ng-template>
           </nz-tab>
-
-          <!-- <nz-tab [nzTitle]="'Technician Travel Log'"> </nz-tab> -->
           <nz-tab (nzSelect)="setFilter()" [nzDisabled]="
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' ||
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR' ||
@@ -1223,13 +869,7 @@
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
             " [nzTitle]="'Technician Travel History'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="order-common-tab-scroll">
                 <app-technicianlocationsmap [TYPE]="'ORDER'" [FILTER_ID]="orderDetails.ID"></app-technicianlocationsmap>
               </div>
             </ng-template>
@@ -1241,18 +881,11 @@
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
             " [nzTitle]="'Technician Locations'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="order-common-tab-scroll">
                 <app-multiplelocationpage [TYPE]="'ORDER'" [FILTER_ID]="orderDetails.ID"></app-multiplelocationpage>
               </div>
             </ng-template>
           </nz-tab>
-
           <nz-tab (nzSelect)="setFilter()" [nzDisabled]="
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' ||
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR' ||
@@ -1260,33 +893,16 @@
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
             " [nzTitle]="'Invoices'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="order-common-tab-scroll">
                 <app-invoicepage [TYPE]="'ORDER'" [FILTER_ID]="orderDetails.ID"></app-invoicepage>
               </div>
             </ng-template>
           </nz-tab>
-          <!-- <nz-tab (nzSelect)="setFilter()"
-            [nzDisabled]="
-              vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' ||
-              vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'
-            "
-            [nzTitle]="'Payment Details'"
-          >
-          </nz-tab> -->
         </nz-tabset>
       </nz-spin>
     </div>
   </div>
 </div>
-
-<!-- sanjana -->
-<!--Drawer For view Past Order-->
 <div *ngIf="drawerVisiblepastorder">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -1306,7 +922,7 @@
   [nzContent]="content" [nzTitle]="'Image View'" (nzOnCancel)="ImageModalCancel()" [nzFooter]="ImageModalFooter">
   <ng-template #content>
     <nz-spin [nzSpinning]="isSpinning">
-      <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss" style="height: 400px">
+      <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss image-preview-container">
         <div class="controls">
           <button nz-button nzType="primary" nzShape="circle" (click)="zoomIn()">
             <i nz-icon nzType="zoom-in"></i>
@@ -1325,9 +941,8 @@
           </button>
         </div>
         <div class="image-container">
-          <img [src]="imageshow" [style.transform]="
-              'scale(' + zoomLevel + ') rotate(' + rotation + 'deg)'
-            " alt="Zoomable Image" />
+          <img [src]="imageshow" [style.transform]="'scale(' + zoomLevel + ') rotate(' + rotation + 'deg)'"
+            alt="Zoomable Image" />
         </div>
       </div>
     </nz-spin>
@@ -1341,9 +956,9 @@
 <nz-modal [(nzVisible)]="openModal" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
   nzClosable="false" [nzFooter]="contextofrules" nzMaskClosable="false">
   <ng-container *nzModalContent>
-    <h5 style="font-size: 15px">Generate Job</h5>
-    <hr style="margin: 8px 0" />
-    <p style="font-size: 13px; margin-bottom: 10px"></p>
+    <h5 class="job-modal-title">Generate Job</h5>
+    <hr class="job-modal-divider" />
+    <p class="job-modal-description"></p>
     <div nz-row>
       <div nz-col nzSpan="24">
         <nz-form-item class="nz-form-itemm">
@@ -1351,9 +966,9 @@
           <nz-form-control nzHasFeedback>
             <textarea nz-input [(ngModel)]="jobdetails" name="jobdetails" rows="3" maxlength="512"
               (focus)="checkLength()" (blur)="checkLength()" placeholder="Enter Additional Remark"
-              style="width: 100%"></textarea>
+              class="job-textarea-full"></textarea>
           </nz-form-control>
-          <span style="color: red; font-size: 10px" *ngIf="jobdetails && showerror">{{ jobdetails.length }}/512</span>
+          <span class="job-char-counter" *ngIf="jobdetails && showerror">{{ jobdetails.length }}/512</span>
         </nz-form-item>
       </div>
       <div nz-col nzSpan="24" *ngIf="
@@ -1375,10 +990,10 @@
         <nz-form-item class="nz-form-itemm">
           <nz-form-label nzNoColon nzRequired>Estimation Time</nz-form-label>
           <nz-form-control nzErrorTip="Enter Estimation Time">
-            <nz-input-group [nzAddOnAfter]="'mins'" style="width: 100%">
+            <nz-input-group [nzAddOnAfter]="'mins'" class="job-inputgroup-full">
               <input nz-input name="DURATION" placeholder="Enter Estimation Time" required autocomplete="off"
                 [(ngModel)]="estimatetime" #nameField="ngModel" (keypress)="commonFunction.onlynum($event)"
-                style="width: 100%" />
+                class="job-input-full" />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
@@ -1393,13 +1008,12 @@
         </nz-form-item>
       </div>
       <div nz-col nzSpan="24">
-        <small style="color: red; font-size: 11px; margin-left: 10px">
+        <small class="job-validation-note">
           *only numbers multiples of 10 (e.g. 10, 20, 30,...) are
           allowed.</small>
       </div>
     </div>
   </ng-container>
-
   <ng-template #contextofrules>
     <button nz-button [nzLoading]="isSpinning" nzType="primary" class="btn btn-primary" (nzOnConfirm)="createJob()"
       [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
@@ -1411,7 +1025,6 @@
     </button>
   </ng-template>
 </nz-modal>
-
 <div *ngIf="jobdetailsshow">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -1426,8 +1039,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-
-<!-- shreya -->
 <div *ngIf="drawerVisibleCustomers">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',

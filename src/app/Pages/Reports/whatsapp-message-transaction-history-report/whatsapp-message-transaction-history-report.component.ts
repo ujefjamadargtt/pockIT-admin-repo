@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-whatsapp-message-transaction-history-report',
   templateUrl: './whatsapp-message-transaction-history-report.component.html',
@@ -21,7 +20,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
     public datepipe: DatePipe,
     private _exportService: ExportService
   ) { }
-
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -45,7 +43,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
   Seqtext: any;
   excelData: any = [];
   exportLoading: boolean = false;
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -62,11 +59,7 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       groups: [],
     },
   ];
-
-  //New Advance Filter
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -83,7 +76,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       groups: [],
     },
   ];
-
   onKeyupS(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -94,27 +86,14 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // keyup(event) {
-  //   if (this.searchText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.searchText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  // }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -123,15 +102,11 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       tooltip.hide();
     }
   }
-
-  //For Input
   countrytext: string = '';
   orderNumberText: string = '';
   orderDateText: string = '';
   finalAmountText: string = '';
   orderStatusText: string = '';
-
-  // Filter Visibility
   SentTOVisible = false;
   TemplateNameVisible = false;
   completedVisible = false;
@@ -139,18 +114,15 @@ export class WhatsappMessageTransactionHistoryReportComponent {
   cancelledVisible = false;
   rejectedVisible = false;
   finalAmountVisible = false;
-
   Shortcodetext: string = '';
   ShortCodevisible = false;
   Seqvisible = false;
-
   SentToText: string = '';
   TemplateNameText: string = '';
   completedText: string = '';
   pendingText: string = '';
   cancelledText: string = '';
   rejectedText: string = '';
-
   isSentToApplied: boolean = false;
   isTemplateNameApplied: boolean = false;
   isCompletedApplied: boolean = false;
@@ -158,7 +130,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
   isCancelledApplied: boolean = false;
   isRejectedApplied: boolean = false;
   isFinalAmountApplied: boolean = false;
-
   onKeyup(event: KeyboardEvent): void {
     if (this.SentToText.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -167,7 +138,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       this.search();
       this.isSentToApplied = false;
     }
-
     if (this.TemplateNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isTemplateNameApplied = true;
@@ -177,8 +147,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
     }
   }
   filterQuery: string = '';
-
-  // Search function to apply filters and fetch data
   date: Date[] = [];
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
@@ -189,14 +157,12 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let dateQuery = '';
     let globalSearchQuery = '';
@@ -210,37 +176,28 @@ export class WhatsappMessageTransactionHistoryReportComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.SentToText.trim()) {
       likeQuery += `SENT_TO LIKE '%${this.SentToText.trim()}%'`;
     }
     if (this.TemplateNameText.trim()) {
       likeQuery += `TEMPLATE_NAME LIKE '%${this.TemplateNameText.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS = '${this.statusFilter}'`;
     }
-
     if (this.date && this.date.length === 2) {
       const [startDate, endDate] = this.date;
       const start = startDate.toISOString().split('T')[0];
       const end = endDate.toISOString().split('T')[0];
-
-      // if(dateQuery!=='') dateQuery+=' AND ';
       dateQuery += ` AND  DATE(CREATED_MODIFIED_DATE) BETWEEN '${start}' AND '${end}' `
     }
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.loadingRecords = true;
-
       this.api
         .getWhatsappTransactionHistoryReport(
           this.pageIndex,
@@ -277,7 +234,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
     } else {
       this.exportLoading = true;
       this.loadingRecords = true;
-
       this.api
         .getWhatsappTransactionHistoryReport(
           0,
@@ -306,8 +262,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
         );
     }
   }
-
-  // Sorting function
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -316,40 +270,32 @@ export class WhatsappMessageTransactionHistoryReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
-    this.search(); // Perform search again with sorting applied
+    this.search(); 
   }
-
   close() {
     this.drawervisible = false;
   }
-
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
   reset(): void {
     this.SentToText = '';
     this.TemplateNameText = '';
     this.search(true);
   }
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -361,37 +307,26 @@ export class WhatsappMessageTransactionHistoryReportComponent {
   ];
   dataList: any = [];
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Send To', value: 'SENT_TO' },
     { label: 'Template Name', value: 'TEMPLATE_NAME' },
     { label: 'Status', value: 'STATUS' },
   ];
-
-  // new filter
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
   applyCondition: any;
-
   isLoading = false;
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   userId = sessionStorage.getItem('userId');
   USER_ID: number;
   savedFilters: any;
   currentClientId = 1;
-
-  // new  Main filter
   isfilterapply: boolean = false;
   drawerTitle!: string;
-
   filterClass: string = 'filter-invisible';
   filterloading: boolean = false;
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -400,14 +335,11 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       this.loadFilters();
     }
   }
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -415,13 +347,12 @@ export class WhatsappMessageTransactionHistoryReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -436,21 +367,15 @@ export class WhatsappMessageTransactionHistoryReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -464,7 +389,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -473,11 +397,9 @@ export class WhatsappMessageTransactionHistoryReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   openfilter() {
     this.drawerTitle = 'Whatsapp Transaction History Report Filter';
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -486,13 +408,9 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -509,7 +427,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -527,11 +444,9 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       },
     ];
   }
-
   drawerflterClose(buttontype, updateButton) {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
@@ -541,7 +456,6 @@ export class WhatsappMessageTransactionHistoryReportComponent {
   get filtercloseCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'SENT_TO',
@@ -586,16 +500,12 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -612,9 +522,7 @@ export class WhatsappMessageTransactionHistoryReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -640,9 +548,7 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -651,13 +557,10 @@ export class WhatsappMessageTransactionHistoryReportComponent {
     this.search(true);
     sessionStorage.setItem('ID', item.ID);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
@@ -665,19 +568,16 @@ export class WhatsappMessageTransactionHistoryReportComponent {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.FILTER_NAME = data.FILTER_NAME;
-
     this.filterData = data;
     this.EditQueryData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -685,11 +585,9 @@ export class WhatsappMessageTransactionHistoryReportComponent {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();

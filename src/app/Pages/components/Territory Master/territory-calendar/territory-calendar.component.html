@@ -1,9 +1,7 @@
-<div style="border: 1px solid #ccc; padding: 5px; position: relative">
-
+<div class="container">
   <div *ngIf="loading" class="calendar-loading-overlay">
     <nz-spin [nzSpinning]="loading" nzSimple></nz-spin>
   </div>
-
   <nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"
     (nzSelectChange)="selectChange($event)">
     <ul *nzDateCell="let date" class="events" [class.disabled-date]="isPastOrToday(date)" [ngClass]="{
@@ -36,36 +34,12 @@
             }
           : { position: 'relative', 'min-height': '100%', padding: '4px' }
       " (click)="!isPastOrToday(date) && openModalIfNotWeeklyOff(date)">
-      <div *ngIf="isHoliday(date)" style="
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background-color: #ff4d4f;
-          border-radius: 4px 4px 0 0;
-          z-index: 1;
-        "></div>
-      <div *ngIf="isWeeklyOff(date)" style="
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: rgba(255, 0, 0, 0.05);
-          z-index: 0;
-          border-radius: 6px;
-        ">
-        <p style="
-            color: #ff4d4f;
-            justify-content: center;
-            margin-top: 20px;
-            text-align: start;
-          ">
+      <div *ngIf="isHoliday(date)" class="isholidya"></div>
+      <div *ngIf="isWeeklyOff(date)" class="weeklyoff">
+        <p class="nonworking">
           Non-Working Days
         </p>
       </div>
-
       <ng-container *ngFor="let item of calenderdata">
         <ng-container *ngIf="isSameDate(date, item.DATE)">
           <li *ngIf="item.IS_HOLIDAY === 1 && item.STATUS === 1" [ngStyle]="{
@@ -95,7 +69,6 @@
               : item.REASON
               }}
             </span>
-
             <span *ngIf="item.REASON && item.REASON.length <= 16" class="holiday-reason" [ngClass]="{
                 'holiday-reason-truncated':
                   item.REASON && item.REASON.length >= 16
@@ -110,37 +83,12 @@
               }">
               {{ item.REASON }}
             </span>
-            <!-- <nz-tooltip
-              nzTooltipTitle="item.REASON"
-              nzTooltipPlacement="top"
-              nzTooltipOverlayClassName="holiday-tooltip"
-            >
-              <span
-                class="holiday-reason"
-                [ngClass]="{
-                  'holiday-reason-truncated':
-                    item.REASON && item.REASON.length > 30
-                }"
-                [ngStyle]="{
-                  color: '#d32f2f',
-                  'font-weight': '600',
-                  'font-size': '10px',
-                  display: 'block',
-                  'line-height': '1.3',
-                  cursor:
-                    item.REASON && item.REASON.length > 30 ? 'help' : 'default'
-                }"
-              >
-                {{ getShortReason(item.REASON) }}
-              </span>
-            </nz-tooltip> -->
           </li>
         </ng-container>
       </ng-container>
     </ul>
   </nz-calendar>
 </div>
-
 <nz-modal [(nzVisible)]="isVisible" (nzOnCancel)="closeModal()" (nzOnOk)="save()" [nzOkLoading]="loading"
   [nzMaskClosable]="false" [nzWidth]="400">
   <ng-container *nzModalContent>
@@ -150,11 +98,10 @@
           <nz-form-label nzRequired nzNoColon>
             {{ labelText }}
           </nz-form-label>
-
           <nz-form-control *ngIf="showReasonField" nzErrorTip="Please enter reason for holiday">
             <textarea rows="3" nz-input name="HOLIDAY_REASON" placeholder="Please enter reason"
               [(ngModel)]="saveData.HOLIDAY_REASON" maxlength="50" required></textarea>
-            <h6 style="color: red; font-size: 10px">
+            <h6 class="holiday">
               {{ saveData.HOLIDAY_REASON?.length || 0 }}/50
             </h6>
           </nz-form-control>

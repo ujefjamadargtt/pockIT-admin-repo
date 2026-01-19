@@ -23,3 +23,155 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
+
+.brand-input {
+  width: 100%;
+}
+
+.brand-char-counter {
+  color: red;
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+.brand-info-icon {
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.brand-image-delete {
+  cursor: pointer;
+  color: red;
+  margin-left: 10px;
+}
+
+.brand-upload-btn {
+  height: 28px;
+  padding: 0 7px;
+  font-size: 10px;
+  width: 100%;
+}
+
+.brand-hidden-file {
+  display: none !important;
+}
+
+.brand-image-wrapper {
+  margin-top: 10px;
+}
+
+.brand-image-preview {
+  width: 128px;
+  height: auto;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.brand-preview-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.brand-preview-image {
+  width: 128px;
+  height: 128px;
+  border: 1px solid #ccc;
+  object-fit: contain;
+}
+
+.brand-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 10px;
+}
+
+.brand-btn {
+  min-width: 120px;
+}
+
+.brand-btn-cancel {
+  margin-right: 8px;
+}
+
+.brand-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+}
+
+.brand-menu-item {
+  border-radius: 4px;
+  background-color: #1890ff;
+}
+
+.brand-menu-link {
+  color: #ffffff !important;
+  display: block;
+}
+
+.image-modal-body {
+  height: 400px;
+  overflow: auto;
+}
+
+.image-modal-iframe {
+  width: 832px;
+  height: 396px;
+  border: none;
+}
+
+.image-modal-close-btn {
+  min-width: 90px;
+}
+
+.image-view-modal .ant-modal-body {
+  padding: 16px;
+}
+
+.crop-image-modal {
+  margin-top: -80px;
+}
+
+.crop-image-container {
+  height: 500px;
+  overflow: scroll;
+}
+
+.cropped-preview-wrapper {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.cropped-preview-title {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.cropped-preview-image {
+  width: 165px;
+  height: 165px;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+}
+
+.crop-image-divider {
+  width: calc(100% - 900px);
+}
+
+.crop-modal-close-btn {
+  margin-right: 8px;
+}
+
+.crop-modal-upload-btn {
+  min-width: 90px;
+}
+
+.crop-container-uid {
+  height: 500px;
+  overflow: scroll;
+}
+
+.crop-preview-center-uid {
+  text-align: center;
+}

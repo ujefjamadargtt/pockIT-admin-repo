@@ -7,7 +7,6 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
-
 @Component({
   selector: 'app-technician-part-request-details-report',
   templateUrl: './technician-part-request-details-report.component.html',
@@ -30,7 +29,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -38,7 +36,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   formTitle = 'Job Wise Part Request Details';
   excelData: any = [];
   exportLoading: boolean = false;
@@ -59,17 +56,14 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
   isLoading = true;
   loadingRecords = false;
   loadingRecords1 = false;
-
   filteredUnitData: any[] = [];
   filterQuery1: any = '';
   dataList: any = [];
   dataList1: any = [];
-
   filterQuery: string = '';
   savedFilters: any[] = [];
   TabId: number;
   isDeleting: boolean = false;
-
   drawerTitle!: string;
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
@@ -83,14 +77,12 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   totalRecords = 1;
   totalRecords1 = 1;
-
   columns: string[][] = [
     ['ORDER_NO', 'ORDER_NO'],
     ['JOB_CARD_NO', 'JOB_CARD_NO'],
     ['TECHNICIAN_NAME', 'TECHNICIAN_NAME'],
     ['CUSTOMER_NAME', 'CUSTOMER_NAME'],
   ];
-
   columns1: string[][] = [
     ['ACTUAL_UNIT_NAME', 'ACTUAL_UNIT_NAME'],
     ['ITEM_NAME', 'ITEM_NAME'],
@@ -108,9 +100,7 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
   }
   territoryData: any = [];
   territoryData1: any = [];
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -119,7 +109,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       tooltip.hide();
     }
   }
-
   getTeritory() {
     this.api.getTeritory(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -136,9 +125,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       }
     );
   }
-
-  // categories1: any = [];
-
   getteritorydata() {
     this.api.getTeritory(0, 0, '', '', ' AND IS_ACTIVE=1').subscribe((data) => {
       if (data['code'] == '200') {
@@ -153,48 +139,38 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       }
     });
   }
-
   territoryVisible = false;
   selectedterritory: any[] = [];
   isterritorynameFilterApplied = false;
   onTerritoryChange(): void {
     if (this.selectedterritory?.length) {
       this.search();
-      this.isterritorynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isterritorynameFilterApplied = true; 
     } else {
       this.search();
-      this.isterritorynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isterritorynameFilterApplied = false; 
     }
-    // this.search();
   }
-
   managertext: string = '';
   ismangerfilt: boolean = false;
   managervisible = false;
-
   warehousename: string = '';
   iswarehousename: boolean = false;
   warehousenameisible = false;
-
   itemtext: string = '';
   itemtextvisible = false;
   isitemFilterApplied: boolean = false;
-
   serialtext: string = '';
   serialtextvisible = false;
   isserialFilterApplied: boolean = false;
-
   BATCHtext: string = '';
   BATCHtextvisible = false;
   isBATCHFilterApplied: boolean = false;
-
   unittext: string = '';
   unittextvisible = false;
   isunitFilterApplied: boolean = false;
-
   scheduleDateVisible = false;
   isscheduleDateFilterApplied: boolean = false;
-
   reset(): void {
     this.searchText = '';
     this.warehousename = '';
@@ -203,16 +179,13 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     this.serialtext = '';
     this.BATCHtext = '';
     this.unittext = '';
-
     this.search();
   }
-
   listOfFilter: any[] = [
     { text: 'Pending', value: ['P'] },
     { text: 'Approved', value: ['AP', 'AC'] },
     { text: 'Rejected', value: ['R'] },
   ];
-
   statusFilter: string[] | undefined = undefined;
   onStatusFilterChange(selectedStatus: string[]) {
     this.statusFilter = selectedStatus;
@@ -230,20 +203,12 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
   }
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
-    // if (this.nametext.trim() === "") {
-    //   this.searchText = "";
-    // } else if (this.nametext.length >= 3 ) {
-    //   this.search();
-    // }
-
     if (this.warehousename.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.iswarehousename = true;
@@ -265,7 +230,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       this.search();
       this.isitemFilterApplied = false;
     }
-
     if (this.serialtext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isserialFilterApplied = true;
@@ -273,7 +237,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       this.search();
       this.isserialFilterApplied = false;
     }
-
     if (this.BATCHtext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isBATCHFilterApplied = true;
@@ -281,7 +244,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       this.search();
       this.isBATCHFilterApplied = false;
     }
-
     if (this.unittext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isunitFilterApplied = true;
@@ -290,13 +252,10 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       this.isunitFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -305,9 +264,7 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -327,7 +284,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -335,14 +291,12 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   filterloading: boolean = false;
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -351,16 +305,11 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
       )
-      // Use USER_ID as a number
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-            //
-            //
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -381,14 +330,9 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -402,7 +346,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -411,7 +354,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -428,9 +370,7 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -456,7 +396,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -465,21 +404,17 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -492,18 +427,14 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       this.sortKey = 'JOB_CARD_NO';
       this.sortValue = 'desc';
     }
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -530,7 +461,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     } else {
       this.ismangerfilt = false;
     }
-
     if (this.itemtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -547,13 +477,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     } else {
       this.isunitFilterApplied = false;
     }
-    // if (this.statusFilter) {
-    //   if (likeQuery !== '') {
-    //     likeQuery += ' AND ';
-    //   }
-    //   likeQuery += `STATUS = '${this.statusFilter}'`;
-    // }
-
     if (this.statusFilter && this.statusFilter.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -565,35 +488,21 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         likeQuery += `STATUS IN (${statusList})`;
       }
     }
-
     if (this.statusFilter1) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `INVENTORY_TRACKING_TYPE = '${this.statusFilter1}'`;
     }
-    // if (this.mobiletext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.mobiletext.trim()}%'`;
-    //   this.ismobileFilterApplied = true;
-    // } else {
-    //   this.ismobileFilterApplied = false;
-    // }
-
-    // Date Range Filter
     if (this.approvedDate?.length === 2) {
       const [start, end] = this.approvedDate;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `REQUESTED_DATE_TIME BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00'`;
@@ -601,16 +510,13 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     }
     if (this.approvedDate1?.length === 2) {
       const [start, end] = this.approvedDate1;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `VERIFICATION_DATE BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00'`;
@@ -620,33 +526,10 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; 
     }
-
-    // if (this.ratingtext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.ratingtext.trim()}%'`;
-    //   this.isratingNameFilterApplied = true;
-    // } else {
-    //   this.isratingNameFilterApplied = false;
-    // }
-
-    // if (this.commenttext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `TECHNICIAN_NAME LIKE '%${this.commenttext.trim()}%'`;
-    //   this.iscommentFilterApplied = true;
-    // } else {
-    //   this.iscommentFilterApplied = false;
-    // }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // const finalDataList =
-    //   this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
     this.loadingRecords = true;
-
     if (exportInExcel == false) {
       this.api
         .getTechniciansPartRequestReport(
@@ -726,7 +609,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -735,24 +617,19 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   openfilter() {
     this.drawerTitle = 'Job Wise Part Request Details Filter';
     this.drawerFilterVisible = true;
@@ -764,13 +641,9 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -787,7 +660,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -805,7 +677,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       },
     ];
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -847,7 +718,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         obj1['Total Items'] = this.excelData[i]['TOTAL_ITEMS']
           ? this.excelData[i]['TOTAL_ITEMS']
           : '-';
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -861,31 +731,20 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       this.message.error('No data found', '');
     }
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
-  // excelData: any = [];
-  // exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
@@ -904,12 +763,11 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         this.isapprovedDateFilterApplied = true;
       }
     } else {
-      this.approvedDate = null; // or [] if you prefer
+      this.approvedDate = null; 
       this.search();
       this.isapprovedDateFilterApplied = false;
     }
   }
-
   isapprovedDateFilterApplied1 = false;
   approvedDate1: any = [];
   approvedDateVisible1 = false;
@@ -921,7 +779,7 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         this.isapprovedDateFilterApplied1 = true;
       }
     } else {
-      this.approvedDate1 = null; // or [] if you prefer
+      this.approvedDate1 = null; 
       this.search();
       this.isapprovedDateFilterApplied1 = false;
     }
@@ -929,7 +787,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'REQUESTED_DATE_TIME',
@@ -945,7 +802,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       ],
       placeholder: 'Select Requested Date',
     },
-
     {
       key: 'TECHNICIAN_NAME',
       label: 'Technician Name',
@@ -974,7 +830,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       ],
       placeholder: 'Enter Customer Name',
     },
-
     {
       key: 'JOB_CARD_NO',
       label: 'Job Number',
@@ -1003,7 +858,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       ],
       placeholder: 'Enter Order Number',
     },
-
     {
       key: 'STATUS',
       label: 'Approval Status',
@@ -1014,13 +868,9 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       ],
       options: [
         { value: 'P', display: 'Pending' },
-        // { value: 'AP', display: 'Approved' },
-        // { value: ['AP', 'AC'], display: 'Approved' },
         { value: "AP' OR STATUS = 'AC", display: 'Approved' },
-
         { value: 'R', display: 'Rejected' },
       ],
-
       placeholder: 'Select Approval Status',
     },
     {
@@ -1038,14 +888,11 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       placeholder: 'Select Verification Date',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -1054,12 +901,11 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         this.isscheduleDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isscheduleDateFilterApplied = false;
     }
   }
-
   isdetailsclosed = false;
   storeid: any;
   PartTitle: any = '';
@@ -1069,12 +915,10 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     this.search1();
     this.isdetailsclosed = true;
   }
-
   closedetailsd() {
     this.search();
     this.isdetailsclosed = false;
   }
-
   search1(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText1.trim().length < 3 &&
@@ -1087,18 +931,14 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       this.sortKey1 = '';
       this.sortValue1 = 'desc';
     }
-
     let sort: string;
     try {
       sort = this.sortValue1.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText1 !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -1125,7 +965,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
     } else {
       this.ismangerfilt = false;
     }
-
     if (this.itemtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -1170,30 +1009,15 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       }
       likeQuery += `INVENTORY_TRACKING_TYPE = '${this.statusFilter1}'`;
     }
-    // if (this.mobiletext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.mobiletext.trim()}%'`;
-    //   this.ismobileFilterApplied = true;
-    // } else {
-    //   this.ismobileFilterApplied = false;
-    // }
-
     if (this.selectedterritory.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; 
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // const finalDataList =
-    //   this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
-
     if (exportInExcel == false) {
       this.loadingRecords1 = true;
-
       this.api
         .getTechniciansPartRequestDetailsReport(
           this.pageIndex1,
@@ -1275,33 +1099,27 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         );
     }
   }
-
   sort1(params: NzTableQueryParams) {
-    // this.loadingRecords1 = true;
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || '';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex1 = pageIndex;
     this.pageSize1 = pageSize;
-
     if (this.pageSize1 != pageSize) {
       this.pageIndex1 = 1;
       this.pageSize1 = pageSize;
     }
-
     if (this.sortKey1 != sortField) {
       this.pageIndex1 = 1;
       this.pageSize1 = pageSize;
     }
-
     this.sortKey1 = sortField;
     this.sortValue1 = sortOrder;
     if (currentSort != null && currentSort.value != undefined) {
       this.search1();
     }
   }
-
   convertInExcel1() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -1328,7 +1146,6 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
         obj1['Batch No.'] = this.excelData1[i]['BATCH_NO']
           ? this.excelData1[i]['BATCH_NO']
           : '-';
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData1.length - 1) {
           this._exportService.exportExcel(
@@ -1342,10 +1159,8 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
       this.message.error('No data found', '');
     }
   }
-
   onKeyup1(keys) {
     const element = window.document.getElementById('button1');
-    // if (element != null) element.focus();
     if (this.searchText1.length >= 3 && keys.key === 'Enter') {
       this.search1();
     } else if (this.searchText1.length === 0 && keys.key == 'Backspace') {
@@ -1356,6 +1171,5 @@ export class TechnicianPartRequestDetailsReportComponent implements OnInit {
   onEnterKey1(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
 }

@@ -7,7 +7,6 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
-
 @Component({
   selector: 'app-technician-wise-stock-details',
   templateUrl: './technician-wise-stock-details.component.html',
@@ -30,7 +29,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -38,7 +36,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   formTitle = 'Technician Wise Item Stock Details';
   excelData: any = [];
   exportLoading: boolean = false;
@@ -58,7 +55,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
   savedFilters: any[] = [];
   TabId: number;
   isDeleting: boolean = false;
-
   drawerTitle!: string;
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
@@ -71,7 +67,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   totalRecords = 1;
-
   columns: string[][] = [
     ['ACTUAL_UNIT_NAME', 'ACTUAL_UNIT_NAME'],
     ['ITEM_NAME', 'ITEM_NAME'],
@@ -86,9 +81,7 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
   }
   territoryData: any = [];
   territoryData1: any = [];
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -97,7 +90,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       tooltip.hide();
     }
   }
-
   getTeritory() {
     this.api.getTeritory(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -114,9 +106,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       }
     );
   }
-
-  // categories1: any = [];
-
   getteritorydata() {
     this.api.getTeritory(0, 0, '', '', ' AND IS_ACTIVE=1').subscribe((data) => {
       if (data['code'] == '200') {
@@ -131,48 +120,38 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       }
     });
   }
-
   territoryVisible = false;
   selectedterritory: any[] = [];
   isterritorynameFilterApplied = false;
   onTerritoryChange(): void {
     if (this.selectedterritory?.length) {
       this.search();
-      this.isterritorynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isterritorynameFilterApplied = true; 
     } else {
       this.search();
-      this.isterritorynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isterritorynameFilterApplied = false; 
     }
-    // this.search();
   }
-
   managertext: string = '';
   ismangerfilt: boolean = false;
   managervisible = false;
-
   warehousename: string = '';
   iswarehousename: boolean = false;
   warehousenameisible = false;
-
   itemtext: string = '';
   itemtextvisible = false;
   isitemFilterApplied: boolean = false;
-
   serialtext: string = '';
   serialtextvisible = false;
   isserialFilterApplied: boolean = false;
-
   BATCHtext: string = '';
   BATCHtextvisible = false;
   isBATCHFilterApplied: boolean = false;
-
   unittext: string = '';
   unittextvisible = false;
   isunitFilterApplied: boolean = false;
-
   scheduleDateVisible = false;
   isscheduleDateFilterApplied: boolean = false;
-
   reset(): void {
     this.searchText = '';
     this.warehousename = '';
@@ -181,10 +160,8 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
     this.serialtext = '';
     this.BATCHtext = '';
     this.unittext = '';
-
     this.search();
   }
-
   listOfFilter: any[] = [
     { text: 'Both Sellable & Technician', value: 'B' },
     { text: 'Sellable Inventory', value: 'P' },
@@ -207,20 +184,12 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
   }
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
-    // if (this.nametext.trim() === "") {
-    //   this.searchText = "";
-    // } else if (this.nametext.length >= 3 ) {
-    //   this.search();
-    // }
-
     if (this.warehousename.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.iswarehousename = true;
@@ -242,7 +211,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       this.search();
       this.isitemFilterApplied = false;
     }
-
     if (this.serialtext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isserialFilterApplied = true;
@@ -250,7 +218,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       this.search();
       this.isserialFilterApplied = false;
     }
-
     if (this.BATCHtext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isBATCHFilterApplied = true;
@@ -258,7 +225,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       this.search();
       this.isBATCHFilterApplied = false;
     }
-
     if (this.unittext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isunitFilterApplied = true;
@@ -267,13 +233,10 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       this.isunitFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -282,10 +245,8 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -305,7 +266,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -313,14 +273,12 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   filterloading: boolean = false;
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -329,13 +287,11 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
       )
-      // Use USER_ID as a number
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -350,21 +306,15 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -378,7 +328,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -387,7 +336,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -404,9 +352,7 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -432,7 +378,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -441,21 +386,17 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -468,18 +409,14 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       this.sortKey = 'ITEM_ID';
       this.sortValue = 'desc';
     }
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -498,15 +435,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
     } else {
       this.iswarehousename = false;
     }
-    // if (this.managertext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `WAREHOUSE_MANAGER_NAME LIKE '%${this.managertext.trim()}%'`;
-    //   this.ismangerfilt = true;
-    // } else {
-    //   this.ismangerfilt = false;
-    // }
-
     if (this.itemtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -551,21 +479,11 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       }
       likeQuery += `INVENTORY_TRACKING_TYPE = '${this.statusFilter1}'`;
     }
-    // if (this.mobiletext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.mobiletext.trim()}%'`;
-    //   this.ismobileFilterApplied = true;
-    // } else {
-    //   this.ismobileFilterApplied = false;
-    // }
-
-    // Date Range Filter
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `SCHEDULED_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -578,33 +496,10 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; 
     }
-
-    // if (this.ratingtext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.ratingtext.trim()}%'`;
-    //   this.isratingNameFilterApplied = true;
-    // } else {
-    //   this.isratingNameFilterApplied = false;
-    // }
-
-    // if (this.commenttext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `TECHNICIAN_NAME LIKE '%${this.commenttext.trim()}%'`;
-    //   this.iscommentFilterApplied = true;
-    // } else {
-    //   this.iscommentFilterApplied = false;
-    // }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // const finalDataList =
-    //   this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
     this.loadingRecords = true;
-
     if (exportInExcel == false) {
       this.api
         .getTechniciansStockMgtReport(
@@ -649,7 +544,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
     } else {
       this.loadingRecords = true;
       this.exportLoading = true;
-
       this.api
         .getTechniciansStockMgtReport(
           0,
@@ -673,7 +567,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this.loadingRecords = false;
             this.exportLoading = false;
-
             if (err.status === 0) {
               this.message.error(
                 'Unable to connect. Please check your internet or server connection and try again shortly.',
@@ -686,7 +579,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -695,22 +587,18 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   openfilter() {
     this.drawerTitle = 'Technician Wise Item Stock Details Report Filter';
     this.drawerFilterVisible = true;
@@ -722,13 +610,9 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -745,7 +629,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -763,7 +646,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       },
     ];
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -772,7 +654,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
         obj1['Technician Name'] = this.excelData[i]['TECHNICIAN_NAME']
           ? this.excelData[i]['TECHNICIAN_NAME']
           : '-';
-        // obj1["Assigned By"] = this.excelData[i]["WAREHOUSE_MANAGER_NAME"] ? this.excelData[i]["WAREHOUSE_MANAGER_NAME"] : "-";
         obj1['Item Name'] = this.excelData[i]['ITEM_NAME']
           ? this.excelData[i]['ITEM_NAME']
           : '-';
@@ -785,7 +666,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
         } else {
           obj1['Inventory Type'] = '-';
         }
-
         if (this.excelData[i]['INVENTORY_TRACKING_TYPE'] === 'N') {
           obj1['Tracking Type'] = 'None';
         } else if (this.excelData[i]['INVENTORY_TRACKING_TYPE'] === 'S') {
@@ -795,8 +675,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
         } else {
           obj1['Tracking Type'] = '-';
         }
-        // obj1["Serial No."] = this.excelData[i]["SERIAL_NO"] ? this.excelData[i]["SERIAL_NO"] : "-";
-        // obj1["Batch No."] = this.excelData[i]["BATCH_NO"] ? this.excelData[i]["BATCH_NO"] : "-";
         obj1['Unit Name'] = this.excelData[i]['ACTUAL_UNIT_NAME']
           ? this.excelData[i]['ACTUAL_UNIT_NAME']
           : '-';
@@ -809,7 +687,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
         obj1['Average Stock Level'] = this.excelData[i]['AVG_LEVEL']
           ? this.excelData[i]['AVG_LEVEL']
           : '-';
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -823,39 +700,26 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       this.message.error('No data found', '');
     }
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
-  // excelData: any = [];
-  // exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'TECHNICIAN_NAME',
@@ -875,7 +739,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       key: 'ITEM_NAME',
       label: 'Item Name',
       type: 'text',
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -909,7 +772,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
       ],
-
       options: [
         { value: 'N', display: 'None' },
         { value: 'S', display: 'Serial No. Wise' },
@@ -921,7 +783,6 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       key: 'ACTUAL_UNIT_NAME',
       label: 'Unit Name',
       type: 'text',
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -933,14 +794,11 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
       placeholder: 'Enter Unit Name',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -949,7 +807,7 @@ export class TechnicianWiseStockDetailsComponent implements OnInit {
         this.isscheduleDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isscheduleDateFilterApplied = false;
     }

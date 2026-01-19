@@ -6,7 +6,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-skill-status',
   templateUrl: './skill-status.component.html',
@@ -22,8 +21,6 @@ export class SkillStatusComponent {
   sortValue: string = 'desc';
   sortKey: string = 'id';
   searchText: string = '';
-  // filterQuery: string = "";
-
   columns: string[][] = [
     ['SKILL_NAME', 'SKILL_NAME'],
     ['TECHNICIAN_NAME', 'TECHNICIAN_NAME'],
@@ -35,7 +32,6 @@ export class SkillStatusComponent {
   visible1 = false;
   drawerVisible: boolean;
   drawerTitle: string;
-
   drawerVisible1: boolean;
   drawerTitle1: string;
   ROLES = [];
@@ -47,7 +43,6 @@ export class SkillStatusComponent {
     { label: 'Request Date ', key: 'REQUESTED_DATETIME', visible: true },
     { label: 'Remark', key: 'REJECTED_REMARK', visible: true },
   ];
-
   isapprovedDateFilterApplied = false;
   approvedDateVisible = false;
   isapprovedFilterApplied = false;
@@ -80,7 +75,6 @@ export class SkillStatusComponent {
     this.isnewFilter = selectedStatus;
     this.search(true);
   }
-
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   filterQuery: string = '';
@@ -92,8 +86,6 @@ export class SkillStatusComponent {
     { label: 'Remark', value: 'REJECTED_REMARK' },
   ];
   isFilterApplied: boolean = false;
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -110,7 +102,6 @@ export class SkillStatusComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -118,29 +109,12 @@ export class SkillStatusComponent {
   ) { }
   public commonFunction = new CommonFunctionService();
   ngOnInit() {
-    // this.search();
-    // this.columns1 = [
-    //   { label: 'Category Name', value: 'NAME' },
-    //   // add more columns if needed
-    // ];
-    // if (this.VERIFIED_STATUS == 'P') {
-    //   this.ExtraQuery =
-    //     " AND IS_APPROVED_BY_ADMIN = '" +
-    //     "P'"
-    // } else {
-    //   this.ExtraQuery =
-    //     " AND VERIFICATION_STATUS = '" +
-    //     this.VERIFIED_STATUS +
-    //     "'"
-    // }
     this.getTeritory();
     this.getTeritory1();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
       : '0';
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
-
     this.getcounts();
   }
   VERIFIED_STATUS: any = 'P';
@@ -150,7 +124,6 @@ export class SkillStatusComponent {
   }
   reset(): void {
     this.searchText = '';
-
     this.customername = '';
     this.techname = '';
     this.approvedby = '';
@@ -169,12 +142,11 @@ export class SkillStatusComponent {
         this.isSubmittedDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isSubmittedDateFilterApplied = false;
     }
   }
-
   onApprovedDateRangeChange(): void {
     if (this.approvedDate && this.approvedDate.length === 2) {
       const [start, end] = this.approvedDate;
@@ -183,7 +155,7 @@ export class SkillStatusComponent {
         this.isapprovedDateFilterApplied = true;
       }
     } else {
-      this.approvedDate = null; // or [] if you prefer
+      this.approvedDate = null; 
       this.search();
       this.isapprovedDateFilterApplied = false;
     }
@@ -193,20 +165,16 @@ export class SkillStatusComponent {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
@@ -221,7 +189,6 @@ export class SkillStatusComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
     var sort: string;
     try {
@@ -230,7 +197,6 @@ export class SkillStatusComponent {
       sort = '';
     }
     var likeQuery = '';
-
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -243,29 +209,26 @@ export class SkillStatusComponent {
         ')';
     }
     this.loadingRecords = true;
-    // Date Range Filter
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `REQUESTED_DATETIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-
     if (this.approvedDate && this.approvedDate.length === 2) {
       const [start, end] = this.approvedDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `ACTION_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-
     if (this.customername !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -276,24 +239,18 @@ export class SkillStatusComponent {
         (likeQuery ? ' AND ' : '') +
         `APPROVED_BY LIKE '%${this.approvedby.trim()}%'`;
     }
-
     if (this.techname !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TECHNICIAN_NAME LIKE '%${this.techname.trim()}%'`;
     }
-
     if (this.remark !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `REJECTED_REMARK LIKE '%${this.remark.trim()}%'`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.ExtraQuery = " AND STATUS='" + this.VERIFIED_STATUS + "'";
-
     this.api
       .getskillreq(
         this.pageIndex,
@@ -309,7 +266,6 @@ export class SkillStatusComponent {
             this.totalRecords = data['count'];
             this.dataList = data['data'];
             this.TabId = data['TAB_ID'];
-
             this.api
               .getskillreqcount(
                 this.pageIndex,
@@ -330,7 +286,6 @@ export class SkillStatusComponent {
                     this.message.error('Invalid filter parameter', '');
                   } else {
                     this.loadingRecords = false;
-
                     this.message.error(
                       'Failed to get Data. please try again later.',
                       ''
@@ -340,17 +295,14 @@ export class SkillStatusComponent {
                 (err: HttpErrorResponse) => {
                   this.loadingRecords = false;
                   if (err.status === 0) {
-                    // Network error
                     this.message.error(
                       'Unable to connect. Please check your internet or server connection and try again shortly.',
                       ''
                     );
-                    // this.dataList = [];
                   } else if (err['status'] == 400) {
                     this.loadingRecords = false;
                     this.message.error('Invalid filter parameter', '');
                   } else {
-                    // Other errors
                     this.message.error('Server error: ' + err.message, '');
                   }
                 }
@@ -374,7 +326,6 @@ export class SkillStatusComponent {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
@@ -396,7 +347,6 @@ export class SkillStatusComponent {
   isterritorynameFilterApplied = false;
   territoryVisible = false;
   selectedterritory: any[] = [];
-
   onKeyup(event: KeyboardEvent, field: string): void {
     if (
       this.customername.length >= 3 &&
@@ -413,7 +363,6 @@ export class SkillStatusComponent {
       this.search();
       this.iscustnmFilterApplied = false;
     }
-
     if (this.techname.length >= 3 && event.key === 'Enter' && field == 'TECH') {
       this.search();
       this.istechnmFilterApplied = true;
@@ -425,7 +374,6 @@ export class SkillStatusComponent {
       this.search();
       this.istechnmFilterApplied = false;
     }
-
     if (
       this.approvedby.length >= 3 &&
       event.key === 'Enter' &&
@@ -441,7 +389,6 @@ export class SkillStatusComponent {
       this.search();
       this.isapprovedFilterApplied = false;
     }
-
     if (this.remark.length >= 3 && event.key === 'Enter' && field == 'REM') {
       this.search();
       this.isremarkFilterApplied = true;
@@ -457,16 +404,13 @@ export class SkillStatusComponent {
   onCountryChange(): void {
     if (this.selectedterritory?.length) {
       this.search();
-      this.isterritorynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isterritorynameFilterApplied = true; 
     } else {
       this.search();
-      this.isterritorynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isterritorynameFilterApplied = false; 
     }
-    // this.search();
   }
-
   territoryData: any = [];
-
   getTeritory() {
     this.api.getTeritory(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -482,7 +426,6 @@ export class SkillStatusComponent {
       }
     );
   }
-
   territoryData1: any = [];
   getTeritory1() {
     this.api
@@ -503,25 +446,20 @@ export class SkillStatusComponent {
   navigateToMastersMenu(): void {
     this.router.navigate(['/masters/menu']);
   }
-
   close(): void {
     this.visible1 = false;
   }
-
   close1(accountMasterPage: NgForm) {
     this.drawerVisible1 = false;
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
@@ -538,10 +476,7 @@ export class SkillStatusComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // Main Filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -550,50 +485,34 @@ export class SkillStatusComponent {
       this.loadFilters();
     }
   }
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
+  userId = sessionStorage.getItem('userId'); 
   decryptedUserId = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '0';
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
+  USER_ID: number; 
+  savedFilters: any; 
   currentClientId = 1;
   selectedFilter: string | null = null;
-  // filterQuery = '';
-  // applyfilter(item) {
-  //   this.filterClass = 'filter-invisible';
-  //   this.selectedFilter = item.ID;
-  //   this.isfilterapply = true;
-  //   this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
-
-  //   this.search(true);
-  // }
-
   oldFilter: any[] = [];
   isLoading = false;
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -610,21 +529,13 @@ export class SkillStatusComponent {
       groups: [],
     },
   ];
-
   filterData: any;
-  // currentClientId = 1;
-
   openfilter() {
     this.drawerTitle = 'Skill Request Filter';
-    // this.applyCondition = "";
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -641,7 +552,6 @@ export class SkillStatusComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -658,7 +568,6 @@ export class SkillStatusComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -668,19 +577,6 @@ export class SkillStatusComponent {
       FILTER_JSON: {},
     };
   }
-
-  // Clearfilter() {
-  //   this.filterClass = 'filter-invisible';
-  //   this.selectedFilter = '';
-  //   this.isfilterapply = false;
-  //   this.filterQuery = '';
-  //   this.search();
-  //   sessionStorage.removeItem('ID');
-  // }
-  // drawerfilterClose() {
-  //   this.drawerFilterVisible = false;
-  //   this.loadFilters();
-  // }
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -688,16 +584,11 @@ export class SkillStatusComponent {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-  // drawerflterClose(): void {
-  //   this.drawerFilterVisible = false;
-  // }
   filterFields: any[] = [
     {
       key: 'REQUESTED_DATETIME',
       label: 'Request Date',
       type: 'date',
-      // comparators: ['=', '!=', '>', '<', '>=', '<='],
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -712,7 +603,6 @@ export class SkillStatusComponent {
       key: 'ACTION_DATE_TIME',
       label: 'Verification Date',
       type: 'date',
-      // comparators: ['=', '!=', '>', '<', '>=', '<='],
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -769,16 +659,12 @@ export class SkillStatusComponent {
       placeholder: 'Select Skill Name',
     },
   ];
-
   filterloading: boolean = false;
   whichbutton: any;
-
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -786,16 +672,12 @@ export class SkillStatusComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -810,21 +692,15 @@ export class SkillStatusComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -838,7 +714,6 @@ export class SkillStatusComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -847,10 +722,7 @@ export class SkillStatusComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
-    //  
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -866,13 +738,10 @@ export class SkillStatusComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //  
           } else {
             this.isfilterapply = true;
           }
@@ -895,11 +764,8 @@ export class SkillStatusComponent {
       }
     );
   }
-
   isDeleting: boolean = false;
-
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -907,40 +773,23 @@ export class SkillStatusComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
-  // editQuery(data: any) {
-  //   this.filterGroups = JSON.parse(data.FILTER_JSON);
-  //   this.FILTER_NAME = data.FILTER_NAME;
-  //   //
-  //   this.EditQueryData = data;
-  //   this.editButton = 'Y';
-  //   this.drawerTitle = 'Edit Query';
-  //   this.drawerFilterVisible = true;
-  // }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -948,44 +797,6 @@ export class SkillStatusComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-  // selectStatus(status) {
-  //   this.VERIFIED_STATUS = status;
-  //   if (status == 'A') {
-  //     this.STATUS = 'A';
-  //   } else {
-  //     this.STATUS = 'I';
-  //   }
-  //   this.ExtraQuery = '';
-  //   if (status == 'P') {
-  //     this.ExtraQuery =
-  //       " AND IS_APPROVED_BY_ADMIN = '" +
-  //       "P'" +
-  //       " AND STATUS ='" +
-  //       this.STATUS +
-  //       "'";
-  //   } else if (status == 'R') {
-  //     this.ExtraQuery =
-  //       " AND IS_APPROVED_BY_ADMIN = '" +
-  //       "R'" +
-  //       " AND STATUS ='" +
-  //       this.STATUS +
-  //       "'";
-  //   } else if (status == 'A') {
-  //     this.ExtraQuery =
-  //       " AND IS_REGISTERED = '" + "1'" + " AND STATUS ='" + this.STATUS + "'";
-  //   } else {
-  //     this.ExtraQuery =
-  //       " AND VERIFICATION_STATUS = '" +
-  //       this.VERIFIED_STATUS +
-  //       "'" +
-  //       " AND STATUS ='" +
-  //       this.STATUS +
-  //       "'";
-  //   }
-  //   this.dataList = [];
-  //   this.search(true);
-  // }
   rejectreason: any = '';
   appreorder(data: any, action: any) {
     this.isspinnnnnnn = true;
@@ -999,7 +810,7 @@ export class SkillStatusComponent {
       this.isspinnnnnnn = false;
     } else {
       const skillIdsArray = data.SKILL_IDS
-        ? data.SKILL_IDS.split(',').map((id: string) => id.trim()) // Split and trim values
+        ? data.SKILL_IDS.split(',').map((id: string) => id.trim()) 
         : [];
       var dataaa = {
         ID: data.ID,
@@ -1009,10 +820,7 @@ export class SkillStatusComponent {
         TECHNICIAN_NAME: data.TECHNICIAN_NAME,
         CUSTOMER_ID: data.CUSTOMER_ID,
         SKILL_IDS: skillIdsArray,
-        // APPROVER_ID: this.decryptedUserId,
       };
-
-      // this.api.approverejectorder(dataaa).subscribe(
       this.api.updateskillstatus(dataaa).subscribe(
         (successCode: any) => {
           if (successCode.code == 200) {
@@ -1045,11 +853,9 @@ export class SkillStatusComponent {
       );
     }
   }
-
   isspinnnnnnn: boolean = false;
   openmodell: boolean = false;
   openmodellRefund: boolean = false;
-
   cancelorderdata: any;
   action: any;
   opencancelmodal(event: any, action: any) {
@@ -1058,10 +864,8 @@ export class SkillStatusComponent {
     this.cancelorderdata = '';
     this.cancelorderdata = event;
   }
-
   opencancelmodalRefunc(event: any) {
     this.openmodellRefund = true;
-    // this.action = action;
     this.cancelorderdata = '';
     this.cancelorderdata = event;
   }
@@ -1075,17 +879,14 @@ export class SkillStatusComponent {
     this.isspinnnnnnn = false;
     this.cancelorderdata = '';
   }
-
   rejectedCount: any = 0;
   pendingCount: any = 0;
   approvedCount: any = 0;
   getcounts() { }
-
   selectStatus(event) {
     this.VERIFIED_STATUS = event;
     this.search(true);
   }
-
   appreorderRef(data: any) {
     this.isspinnnnnnn = true;
     var dataaa = {
@@ -1097,12 +898,10 @@ export class SkillStatusComponent {
       ORDER_STATUS: data.ORDER_STATUS,
       PAYMENT_REFUND_STATUS: 'RF',
     };
-
     this.api.Refundorder(dataaa).subscribe(
       (successCode: any) => {
         if (successCode.code == 200) {
           this.message.success('Refund status updated successfully', '');
-
           this.openmodellRefund = false;
           this.isspinnnnnnn = false;
           this.search();
@@ -1117,9 +916,7 @@ export class SkillStatusComponent {
       }
     );
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

@@ -1,18 +1,17 @@
 <div nz-row>
   <div nz-col nzSpan="24">
-    <div style="position: relative">
-      <nz-table class="my-scroll no-wrap1" nzBordered #table [nzData]="serviceData" [nzSize]="'small'"
-        [nzFrontPagination]="false" (nzQueryParams)="sort($event)" style="white-space: pre-line"
-        [nzLoading]="isSpinning" [nzScroll]="{ y: '60vh' }">
+    <div class="table-wrapper">
+      <nz-table class="my-scroll no-wrap1 pre-line" nzBordered #table [nzData]="serviceData" nzSize="small"
+        [nzFrontPagination]="false" (nzQueryParams)="sort($event)" [nzLoading]="isSpinning" [nzScroll]="{ y: '60vh' }">
         <thead>
           <tr>
-            <th nzWidth="120px" nzShowSort [nzSortFn]="true" nzColumnKey="{{ 'IS_ACTIVE' }}">
+            <th nzWidth="120px" nzShowSort [nzSortFn]="true" nzColumnKey="IS_ACTIVE">
               Is Mapped ?
             </th>
-            <th nzWidth="200px" nzShowSort [nzSortFn]="true" nzColumnKey="{{ 'NAME' }}">
+            <th nzWidth="200px" nzShowSort [nzSortFn]="true" nzColumnKey="NAME">
               Service
             </th>
-            <th nzWidth="130px" nzShowSort [nzSortFn]="true" nzColumnKey="{{ 'IS_SERIVCE_AVAILABILE' }}">
+            <th nzWidth="130px" nzShowSort [nzSortFn]="true" nzColumnKey="IS_SERIVCE_AVAILABILE">
               Is Available ?
             </th>
             <th nzWidth="150px">Week Day</th>
@@ -20,18 +19,14 @@
             <th nzWidth="150px">Service End Time</th>
             <th nzWidth="150px">Break Start Time</th>
             <th nzWidth="150px">Break End Time</th>
-            <!-- <th nzWidth="300px">Remark</th> -->
           </tr>
         </thead>
-
         <tbody>
           <tr *ngFor="let data of table.data; let i = index">
-            <!-- Status Switch Column -->
-            <td align="center" style="white-space: pre-line">
+            <td align="center" class="pre-line">
               <nz-switch name="IS_ACTIVE" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                 [(ngModel)]="data['IS_ACTIVE']"></nz-switch>
             </td>
-            <!-- <td style="white-space: pre-line">{{ data.NAME }}</td> -->
             <td align="left">
               <span *ngIf="data['NAME'] != null">
                 <span *ngIf="data['NAME'].length >= 20" nz-popover [nzPopoverContent]="data['NAME']"
@@ -44,59 +39,47 @@
                 </span>
                 <span *ngIf="data['NAME'].length < 20">
                   {{
-                  data["NAME"] == null ? "-" : (data["NAME"] | slice : 0 : 20)
+                  data["NAME"] == null
+                  ? "-"
+                  : (data["NAME"] | slice : 0 : 20)
                   }}
                   {{ data["NAME"].length > 20 ? "..." : "" }}
                 </span>
               </span>
               <span *ngIf="data['NAME'] == null">-</span>
             </td>
-            <td align="center" style="white-space: pre-line">
+            <td align="center" class="pre-line">
               <nz-switch name="IS_SERIVCE_AVAILABILE" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                 [(ngModel)]="data['IS_SERIVCE_AVAILABILE']"></nz-switch>
             </td>
-            <td style="white-space: pre-line">
-              <nz-select name="WEEK_DAY" nzPlaceHolder="Select Week Day" nzShowSearch style="width: 100%"
+            <td class="pre-line">
+              <nz-select name="WEEK_DAY" nzPlaceHolder="Select Week Day" nzShowSearch class="full-width"
                 [(ngModel)]="data.WEEK_DAY" [ngModelOptions]="{ standalone: true }" required nzAllowClear
                 [nzDisabled]="!data['IS_SERIVCE_AVAILABILE']">
-                <nz-option *ngFor="let experience of WEEK_DAY" [nzValue]="experience.Id" [nzLabel]="experience.Name">
-                </nz-option>
+                <nz-option *ngFor="let experience of WEEK_DAY" [nzValue]="experience.Id"
+                  [nzLabel]="experience.Name"></nz-option>
               </nz-select>
             </td>
-
-            <td style="white-space: pre-line">
-              <nz-time-picker name="DAY_START_TIME{{ i }}" [(ngModel)]="data.DAY_START_TIME" style="width: 100%"
-                [nzFormat]="'HH:mm a'" nzPlaceholder="Select Service Start Time"
+            <td class="pre-line">
+              <nz-time-picker name="DAY_START_TIME{{ i }}" [(ngModel)]="data.DAY_START_TIME" class="full-width"
+                nzFormat="HH:mm a" nzPlaceholder="Select Service Start Time"
                 [nzDisabled]="!data['IS_SERIVCE_AVAILABILE']"></nz-time-picker>
             </td>
-
-            <td style="white-space: pre-line">
-              <nz-time-picker name="DAY_END_TIME{{ i }}" [(ngModel)]="data.DAY_END_TIME" style="width: 100%"
-                [nzFormat]="'HH:mm a'" nzPlaceholder="Select Service End Time"
+            <td class="pre-line">
+              <nz-time-picker name="DAY_END_TIME{{ i }}" [(ngModel)]="data.DAY_END_TIME" class="full-width"
+                nzFormat="HH:mm a" nzPlaceholder="Select Service End Time"
                 [nzDisabled]="!data['IS_SERIVCE_AVAILABILE']"></nz-time-picker>
             </td>
-            <td style="white-space: pre-line">
-              <nz-time-picker name="BREAK_START_TIME{{ i }}" [(ngModel)]="data.BREAK_START_TIME" style="width: 100%"
-                [nzFormat]="'HH:mm a'" nzPlaceholder="Select Break Start Time"
+            <td class="pre-line">
+              <nz-time-picker name="BREAK_START_TIME{{ i }}" [(ngModel)]="data.BREAK_START_TIME" class="full-width"
+                nzFormat="HH:mm a" nzPlaceholder="Select Break Start Time"
                 [nzDisabled]="!data['IS_SERIVCE_AVAILABILE']"></nz-time-picker>
             </td>
-
-            <td style="white-space: pre-line">
-              <nz-time-picker name="BREAK_END_TIME{{ i }}" [(ngModel)]="data.BREAK_END_TIME" style="width: 100%"
-                [nzFormat]="'HH:mm a'" nzPlaceholder="Select Break End Time"
+            <td class="pre-line">
+              <nz-time-picker name="BREAK_END_TIME{{ i }}" [(ngModel)]="data.BREAK_END_TIME" class="full-width"
+                nzFormat="HH:mm a" nzPlaceholder="Select Break End Time"
                 [nzDisabled]="!data['IS_SERIVCE_AVAILABILE']"></nz-time-picker>
             </td>
-            <!-- <td>
-              <input
-                nz-input
-                name="REMARKS"
-                placeholder="Enter Remark"
-                required
-                [(ngModel)]="data.REMARKS"
-                maxlength="128"
-                autocomplete="off"
-              />
-            </td> -->
           </tr>
         </tbody>
       </nz-table>
@@ -104,11 +87,11 @@
   </div>
 </div>
 <div class="footer">
-  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+  <button type="button" nz-button (click)="close()" class="ant-btn footer-btn-cancel">
     <span>Cancel</span>
   </button>
-
-  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" (click)="save()">
+  <button type="button" nz-button class="ant-btn ant-btn-primary footer-btn-primary" [nzLoading]="isSpinning"
+    (click)="save()">
     <span>Map & Close</span>
   </button>
 </div>

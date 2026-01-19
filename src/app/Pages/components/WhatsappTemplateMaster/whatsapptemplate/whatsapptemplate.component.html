@@ -1,5 +1,5 @@
-<div>
-  <p style="text-align: center">
+<div class="template-form-container">
+  <p class="form-description">
     This template creation form allows individuals to generate templates. It is
     essential to fill in all mandatory fields when creating a template.
     Furthermore, dynamic values can be inserted within double curly braces
@@ -14,14 +14,13 @@
             <div nz-row>
               <div nz-col nzSpan="10">
                 <nz-form-item>
-                  <nz-form-label nzRequired nzNoColon><b> Template Name </b></nz-form-label>
+                  <nz-form-label nzRequired nzNoColon class="form-label-bold"> Template Name </nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Enter Template Name">
                     <input nz-input autocomplete="off" name="name" type="text" [(ngModel)]="data.NAME"
                       placeholder="Enter Template Name" required maxlength="128" (focus)="isFocused = 'NAME'"
-                      (blur)="isFocused = ''" />
+                      (blur)="isFocused = ''" class="template-name-input" />
                   </nz-form-control>
-                  <!-- Dynamic Character Count -->
-                  <h6 style="color: red; font-size: 10px" *ngIf="
+                  <h6 class="character-count" *ngIf="
                       isFocused === 'NAME' ||
                       (data.NAME && isFocused === 'NAME')
                     ">
@@ -29,15 +28,13 @@
                   </h6>
                 </nz-form-item>
               </div>
-
               <div nz-col nzSpan="7">
                 <nz-form-item>
-                  <nz-form-label nzRequired nzNoColon><b> Category</b>
+                  <nz-form-label nzRequired nzNoColon class="form-label-bold"> Category
                   </nz-form-label>
-
                   <nz-form-control nzHasFeedback nzErrorTip="Select Category">
                     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Category" name="agent12"
-                      [(ngModel)]="data.TYPE" required>
+                      [(ngModel)]="data.TYPE" required class="category-select">
                       <nz-option nzValue="UTILITY" nzLabel="Utility"></nz-option>
                       <nz-option nzDisabled nzValue="AUTHENTICATION" nzLabel="Authentication"></nz-option>
                       <nz-option nzValue="MARKETING" nzLabel="marketing"></nz-option>
@@ -45,15 +42,13 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-
               <div nz-col nzSpan="7">
                 <nz-form-item>
-                  <nz-form-label nzRequired nzNoColon><b>Language</b>
+                  <nz-form-label nzRequired nzNoColon class="form-label-bold">Language
                   </nz-form-label>
-
                   <nz-form-control nzHasFeedback nzErrorTip="Select Language">
                     <nz-select nzShowSearch nzAllowClear required nzPlaceHolder="Select Language" name="agent"
-                      [(ngModel)]="data.LANGUAGE">
+                      [(ngModel)]="data.LANGUAGE" class="language-select">
                       <nz-option nzValue="en" nzLabel="English"></nz-option>
                       <nz-option nzValue="en_US" nzLabel="English(US)"></nz-option>
                       <nz-option nzValue="en_UK" nzLabel="English(UK)"></nz-option>
@@ -65,22 +60,18 @@
               </div>
             </div>
           </div>
-
           <div nz-col nzSpan="24">
             <div>
               <div nz-row class="my-box">
                 <div nz-col nzSpan="10">
                   <nz-form-item>
-                    <nz-form-label nzNoColon><b> Header (Optional) </b> &nbsp;<span nz-icon nzType="info-circle"
+                    <nz-form-label nzNoColon class="form-label-bold"> Header (Optional) </nz-form-label>
+                    <span nz-icon nzType="info-circle"
                         nzTheme="twotone" nz-tooltip
-                        nzTooltipTitle="Add a Text or choose type of Media for header. Your title can not include more than one variable"></span>
-                    </nz-form-label>
-                    <!-- <br />
-                     <br /> -->
-
+                        nzTooltipTitle="Add a Text or choose type of Media for header. Your title can not include more than one variable" class="info-icon"></span>
                     <nz-form-control>
                       <nz-select [disabled]="visiblemedia" nzShowSearch nzAllowClear nzPlaceHolder="Select Header Type"
-                        name="agent1" [(ngModel)]="data.HEADER_TYPE">
+                        name="agent1" [(ngModel)]="data.HEADER_TYPE" class="header-type-select">
                         <nz-option nzValue="N" nzLabel="None"></nz-option>
                         <nz-option nzValue="T" nzLabel="Text"></nz-option>
                         <nz-option nzValue="M" nzLabel="Media"></nz-option>
@@ -88,31 +79,15 @@
                     </nz-form-control>
                   </nz-form-item>
                 </div>
-                <!-- <div nz-col nzSpan="14" *ngIf="data.HEADER_TYPE == 'T'" style="margin-top: 45px">
-                  <nz-form-item>
-                    <nz-form-label nzRequired nzNoColon>Header Text
-                    </nz-form-label>
-                    <nz-form-control nzHasFeedback nzErrorTip="Enter Header Text">
-                      <input nz-input autocomplete="off" required name="text1" type="text"
-                        [(ngModel)]="data.HEADER_TEXT" (input)="checkInput()" placeholder="Enter Header Text..."
-                        maxlength="60" />
-                    </nz-form-control>
-                    <h6 style="color: red; font-size: 10px" *ngIf="data.HEADER_TEXT != undefined">
-                      {{ data.HEADER_TEXT.length }}/60
-                    </h6>
-                  </nz-form-item>
-                </div> -->
                 <div nz-col nzSpan="14" *ngIf="data.HEADER_TYPE == 'T'">
                   <nz-form-item>
-                    <nz-form-label nzRequired nzNoColon>Header Text</nz-form-label>
+                    <nz-form-label nzRequired nzNoColon class="header-text-label">Header Text</nz-form-label>
                     <nz-form-control nzHasFeedback nzErrorTip="Enter Header Text">
-                      <!-- Input with Focus Logic -->
                       <input nz-input autocomplete="off" required name="text1" type="text"
                         [(ngModel)]="data.HEADER_TEXT" (focus)="isFocused = 'HEADER_TEXT'" (blur)="isFocused = ''"
-                        (input)="checkInput()" placeholder="Enter Header Text..." maxlength="60" />
+                        (input)="checkInput()" placeholder="Enter Header Text..." maxlength="60" class="header-text-input" />
                     </nz-form-control>
-                    <!-- Dynamic Character Count -->
-                    <h6 style="color: red; font-size: 10px" *ngIf="
+                    <h6 class="character-count" *ngIf="
                         isFocused === 'HEADER_TEXT' ||
                         (data.HEADER_TEXT && isFocused === 'HEADER_TEXT')
                       ">
@@ -120,12 +95,11 @@
                     </h6>
                   </nz-form-item>
                 </div>
-
                 <div nz-col nzSpan="24" *ngIf="showDynamicInput">
                   <nz-form-item>
-                    <nz-form-label nzRequired nzNoColon>Sample Values For Header Content</nz-form-label>
+                    <nz-form-label nzRequired nzNoColon class="sample-values-label">Sample Values For Header Content</nz-form-label>
                     <nz-form-control>
-                      <nz-select style="width: 100%" nzMode="tags" nzPlaceHolder="Enter Sample Values" name="tag"
+                      <nz-select class="sample-values-select" nzMode="tags" nzPlaceHolder="Enter Sample Values" name="tag"
                         [(ngModel)]="data.HEADER_VALUES" (ngModelChange)="check()">
                         <nz-option *ngFor="let option of inputValuess" [nzLabel]="option"
                           [nzValue]="option"></nz-option>
@@ -134,140 +108,112 @@
                   </nz-form-item>
                 </div>
                 <div nz-col nzSpan="14" *ngIf="data.HEADER_TYPE == 'M'">
-                  <div nz-row nzSpan="24">
+                  <div nz-row nzSpan="24" class="media-upload-row">
                     <div nz-col nzSpan="8">
                       <nz-form-item>
-                        <nz-form-label nzNoColon><b>Image</b>&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
-                            nz-tooltip
-                            nzTooltipTitle="Please select an image file (PNG, JPG, JPEG) with a size up to 1MB."></span>
+                        <nz-form-label nzNoColon class="upload-label">
+                          <b>Image</b>
+                          <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                            nzTooltipTitle="Please select an image file (PNG, JPG, JPEG) with a size up to 1MB." class="info-icon"></span>
                         </nz-form-label>
                         <nz-form-control nzHasFeedback nzErrorTip="Upload Image.">
-                          <button nz-button style="
-                              height: 28px;
-                              padding: 0px 7px;
-                              font-size: 12px;
-                            " (click)="fileInput.click()" [disabled]="visiblemedia">
+                          <button nz-button class="upload-button" (click)="fileInput.click()" [disabled]="visiblemedia">
                             Upload Image
-
                             <input accept="image/*" #fileInput name="albumimage" type="file"
-                              (change)="onFileSelected($event)" style="display: none" required />
+                              (change)="onFileSelected($event)" class="file-input" required />
                           </button>
                         </nz-form-control>
                       </nz-form-item>
-
-                      <div nz-col nzSpan="24" *ngIf="fileURL != null">
+                      <div nz-col nzSpan="24" *ngIf="fileURL != null" class="file-name-container">
                         {{ fileURL.name | slice : 0 : 15
                         }}{{ fileURL.name.length > 15 ? "..." : "" }}
-
                         <p nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove Image"
-                          nzTooltipPlacement="top" nz-tooltip style="
-                            cursor: pointer;
-                            color: red;
-                            margin-top: -19px;
-                            margin-left: 90px;
-                          " (click)="clearimg()"></p>
+                          nzTooltipPlacement="top" nz-tooltip class="remove-file-icon" (click)="clearimg()"></p>
                       </div>
                     </div>
-
                     <div nz-col nzSpan="8">
                       <nz-form-item>
-                        <nz-form-label nzNoColon><b>Video </b>&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
-                            nz-tooltip
-                            nzTooltipTitle="Please select a video  with a size up to 1MB."></span></nz-form-label>
+                        <nz-form-label nzNoColon class="upload-label">
+                          <b>Video</b>
+                          <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                            nzTooltipTitle="Please select a video with a size up to 1MB." class="info-icon"></span>
+                        </nz-form-label>
                         <nz-form-control nzHasFeedback nzErrorTip="Please select Video.... ">
-                          <button nz-button [disabled]="visiblemedia" style="
-                              height: 28px;
-                              padding: 0px 7px;
-                              font-size: 12px;
-                            " (click)="fileInput1.click()">
+                          <button nz-button [disabled]="visiblemedia" class="upload-button" (click)="fileInput1.click()">
                             Upload Video
                             <input #fileInput1 name="video" type="file" (click)="fileInput1.value = ''" value=""
-                              (change)="onFileSelected1($event)" style="display: none" accept="video/*" required />
+                              (change)="onFileSelected1($event)" class="file-input" accept="video/*" required />
                           </button>
                         </nz-form-control>
                       </nz-form-item>
-
-                      <div nz-col nzSpan="23" *ngIf="fileDataIMAGE_URL != null" style="margin-top: -39px">
+                      <div nz-col nzSpan="23" *ngIf="fileDataIMAGE_URL != null" class="video-file-name-container">
                         {{ fileDataIMAGE_URL.name | slice : 0 : 10
                         }}{{ fileDataIMAGE_URL.name.length > 10 ? "..." : "" }}
-
                         <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove Video"
-                          nzTooltipPlacement="top" nz-tooltip style="cursor: pointer; color: red; margin-top: 38px"
-                          (click)="clearvid()"></span>
+                          nzTooltipPlacement="top" nz-tooltip class="remove-video-icon" (click)="clearvid()"></span>
                       </div>
                     </div>
-
                     <div nz-col nzSpan="8">
                       <nz-form-item>
-                        <nz-form-label nzNoColon><b>Document</b>&nbsp;<span nz-icon nzType="info-circle"
-                            nzTheme="twotone" nz-tooltip
-                            nzTooltipTitle="Please select an icon file (PDF, Doc, Docs) with a size up to 1MB."></span>
+                        <nz-form-label nzNoColon class="upload-label">
+                          <b>Document</b>
+                          <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                            nzTooltipTitle="Please select an icon file (PDF, Doc, Docs) with a size up to 1MB." class="info-icon"></span>
                         </nz-form-label>
                         <nz-form-control nzHasFeedback nzErrorTip="Upload File">
-                          <button [disabled]="visiblemedia" nz-button (click)="fileInput12.click()" style="
-                              height: 28px;
-                              padding: 0px 7px;
-                              font-size: 12px;
-                            ">
+                          <button [disabled]="visiblemedia" nz-button (click)="fileInput12.click()" class="upload-button">
                             Upload Document
                             <input #fileInput12 name="otherimage" type="file"
                               accept="application/pdf, application/vnd.ms-excel" (change)="onFileSelected3($event)"
-                              style="display: none" required />
+                              class="file-input" required />
                           </button>
                         </nz-form-control>
                       </nz-form-item>
-
-                      <div nz-col nzSpan="23" *ngIf="fileURLPDF != null" style="margin-top: -39px; margin-left: 10px">
+                      <div nz-col nzSpan="23" *ngIf="fileURLPDF != null" class="document-file-name-container">
                         {{ fileURLPDF.name | slice : 0 : 15
                         }}{{ fileURLPDF.name.length > 15 ? "..." : "" }}
-
                         <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove Document"
-                          nzTooltipPlacement="top" nz-tooltip style="cursor: pointer; color: red; margin-top: 38px"
-                          (click)="cleardoc()"></span>
+                          nzTooltipPlacement="top" nz-tooltip class="remove-document-icon" (click)="cleardoc()"></span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <h6 *ngIf="data.HEADER_TYPE == 'M'" style="color: blue; font-size: 10px; margin-left: 10px">
-                  Note:You are limited to upload single attachment.
+                <h6 *ngIf="data.HEADER_TYPE == 'M'" class="media-upload-note">
+                  Note: You are limited to upload single attachment.
                 </h6>
               </div>
-
               <div nz-col nzSpan="24" class="my-box">
                 <nz-form-item>
-                  <nz-form-label nzRequired nzNoColon><b> Body</b> &nbsp;<span nz-icon nzType="info-circle"
-                      nzTheme="twotone" nz-tooltip nzTooltipTitle="To add a custom variable,please add a variable in double curly
-                    brackets like:{{ abc }}"></span>
-                  </nz-form-label>
+                  <nz-form-label nzRequired nzNoColon class="form-label-bold"> Body</nz-form-label>
+                  <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip nzTooltipTitle="To add a custom variable, please add a variable in double curly
+                    brackets like:{{ abc }}" class="info-icon"></span>
                   <br />
-
                   <nz-form-control nzHasFeedback nzErrorTip="Body is required">
-                    <button nz-button style="color: #efefef; width: 40px" (click)="convertB()">
-                      <span style="color: black"><b>B</b></span>
+                    <button nz-button class="format-button" (click)="convertB()">
+                      <span class="format-button-text"><b>B</b></span>
                     </button>
-                    <button nz-button style="color: #efefef; width: 40px" (click)="convertI()">
-                      <span style="color: black"><i>I</i></span>
+                    <button nz-button class="format-button" (click)="convertI()">
+                      <span class="format-button-text"><i>I</i></span>
                     </button>
-                    <button nz-button style="font-size: 15px; color: #efefef; width: 38px" iconClass="fa fa-smile-o"
+                    <button nz-button class="emoji-button" iconClass="fa fa-smile-o"
                       (click)="showEmojiPicker = !showEmojiPicker">
-                      <span style="color: black" nz-icon nzType="smile" nzTheme="outline"></span>
+                      <span nz-icon nzType="smile" nzTheme="outline" class="emoji-icon"></span>
                     </button>
                     <textarea #textArea id="messages2" (keyup)="checkCurlyBraces($event)"
-                      (mouseup)="onEditorMouseUp($event)" (input)="checkInput1()" style="margin-top: 5px" nz-input
-                      rows="6" name="description" [(ngModel)]="data.BODY_TEXT" placeholder="Enter Body Text"
+                      (mouseup)="onEditorMouseUp($event)" (input)="checkInput1()" class="body-textarea"
+                      nz-input rows="6" name="description" [(ngModel)]="data.BODY_TEXT" placeholder="Enter Body Text"
                       required></textarea>
                     <emoji-mart *ngIf="showEmojiPicker" (emojiSelect)="onEmojiSelect($event)"
                       [showPreview]="false"></emoji-mart>
-                    <h6 style="color: red; font-size: 10px" *ngIf="inputBody != undefined">
-                      <!-- {{ inputBody.length }}/1020 -->
+                    <h6 class="character-count" *ngIf="inputBody != undefined">
                     </h6>
                   </nz-form-control>
                 </nz-form-item>
                 <span *ngIf="showDynamicInput1">
                   <nz-form-item>
-                    <nz-form-label nzRequired nzNoColon>Sample Values For Body Content</nz-form-label>
+                    <nz-form-label nzRequired nzNoColon class="sample-values-label">Sample Values For Body Content</nz-form-label>
                     <nz-form-control>
-                      <nz-select style="width: 100%" nzMode="tags" nzPlaceHolder="Enter Sample Values For Body Text"
+                      <nz-select class="sample-values-select" nzMode="tags" nzPlaceHolder="Enter Sample Values For Body Text"
                         name="tag1" [(ngModel)]="data.BODY_VALUES" (ngModelChange)="check1()">
                         <nz-option *ngFor="let option of inputValuess1" [nzLabel]="option"
                           [nzValue]="option"></nz-option>
@@ -276,37 +222,17 @@
                   </nz-form-item>
                 </span>
               </div>
-
-              <!-- <div nz-col nzSpan="24" class="my-box">
-                <nz-form-item>
-                  <nz-form-label nzNoColon><b> Footer (Optional)</b>
-                  </nz-form-label>
-                  <br />
-                  Add a short line of text to the bottom of your template
-                  <nz-form-control>
-                    <textarea nz-input rows="2" autocomplete="off" name="footer" type="text"
-                      [(ngModel)]="data.FOOTER_TEXT" PlaceHolder="Enter Footer" maxlength="60"></textarea>
-                    <h6 style="color: red; font-size: 10px" *ngIf="data.FOOTER_TEXT != undefined">
-                      {{ data.FOOTER_TEXT.length }}/60
-                    </h6>
-                  </nz-form-control>
-                </nz-form-item>
-              </div> -->
               <div nz-col nzSpan="24" class="my-box">
                 <nz-form-item>
-                  <nz-form-label nzNoColon><b> Footer (Optional)</b> &nbsp;<span nz-icon nzType="info-circle"
-                      nzTheme="twotone" nz-tooltip
-                      nzTooltipTitle="Add a short line of text to the bottom of your template"></span>
-                  </nz-form-label>
+                  <nz-form-label nzNoColon class="form-label-bold"> Footer (Optional)</nz-form-label>
+                  <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                    nzTooltipTitle="Add a short line of text to the bottom of your template" class="info-icon"></span>
                   <br />
-
                   <nz-form-control>
-                    <!-- Textarea with Focus Logic -->
                     <textarea nz-input rows="2" autocomplete="off" name="footer" type="text"
                       [(ngModel)]="data.FOOTER_TEXT" PlaceHolder="Enter Footer" maxlength="60"
-                      (focus)="isFocused = 'FOOTER_TEXT'" (blur)="isFocused = ''"></textarea>
-                    <!-- Dynamic Character Count -->
-                    <h6 style="color: red; font-size: 10px" *ngIf="
+                      (focus)="isFocused = 'FOOTER_TEXT'" (blur)="isFocused = ''" class="footer-textarea"></textarea>
+                    <h6 class="character-count" *ngIf="
                         isFocused === 'FOOTER_TEXT' ||
                         (data.FOOTER_TEXT && isFocused === 'FOOTER_TEXT')
                       ">
@@ -317,81 +243,62 @@
               </div>
             </div>
           </div>
-
           <div nz-col nzSpan="24">
             <div nz-row class="my-box">
               <div nz-col nzSpan="10">
                 <nz-form-item>
-                  <nz-form-label nzNoColon><b> Button (Optional)</b>
-                  </nz-form-label>
-
-                  <nz-select [disabled]="visiblebutton || visiblebuttonn" style="width: 100%" nzShowSearch nzAllowClear
+                  <nz-form-label nzNoColon class="form-label-bold"> Button (Optional)</nz-form-label>
+                  <nz-select [disabled]="visiblebutton || visiblebuttonn" class="button-type-select" nzShowSearch nzAllowClear
                     nzPlaceHolder="Select Button" name="button" [(ngModel)]="data.BUTTON_VALUES"
                     (ngModelChange)="offercode()">
                     <nz-option nzCustomContent nzValue="URL" nzLabel="Visit Website">
                       <div nz-col nzSpan="24">Visit Website</div>
-                      <div nz-col nzSpan="24" style="font-size: 11px">
+                      <div nz-col nzSpan="24" class="button-description">
                         2 buttons maximum
                       </div>
                     </nz-option>
                     <nz-option nzCustomContent nzValue="PHONE_NUMBER" nzLabel="Call Phone number">
                       <div nz-col nzSpan="24">Call Phone number</div>
-                      <div nz-col nzSpan="24" style="font-size: 11px">
+                      <div nz-col nzSpan="24" class="button-description">
                         1 button maximum
                       </div>
                     </nz-option>
                     <nz-option nzCustomContent nzValue="COPY_CODE" nzLabel="Send Offer Code">
                       <div nz-col nzSpan="24">Send Offer Code</div>
-                      <div nz-col nzSpan="24" style="font-size: 11px">
+                      <div nz-col nzSpan="24" class="button-description">
                         1 button maximum
                       </div>
                     </nz-option>
                     <nz-option nzCustomContent nzValue="QUICK_REPLY" nzLabel="Custom">
                       <div nz-col nzSpan="24">Custom</div>
-                      <div nz-col nzSpan="24" style="font-size: 11px">
+                      <div nz-col nzSpan="24" class="button-description">
                         10 buttons maximum
                       </div>
                     </nz-option>
-
-                    <!-- <nz-option
-                      nzValue="URL"
-                      nzLabel=" Visit Website"
-                    ></nz-option>
-                    <nz-option
-                      nzValue="PHONE_NUMBER"
-                      nzLabel="Call Phone number"
-                    ></nz-option> -->
                     <nz-option *ngIf="data.TYPE == 'MARKETING'" nzValue="COPY_CODE"
                       nzLabel="Send Offer Code"></nz-option>
-                    <!-- <nz-option
-                      nzValue="QUICK_REPLY"
-                      nzLabel="Custom"
-                    ></nz-option> -->
                   </nz-select>
                 </nz-form-item>
               </div>
               <div nz-col nzSpan="4" *ngIf="data.BUTTON_VALUES != null">
                 <nz-form-item>
-                  <button nz-button nzType="primary" style="margin-top: 25px" (click)="addData1()">
+                  <button nz-button nzType="primary" class="add-button-button" (click)="addData1()">
                     <i nz-icon nzType="plus"></i>Add Button
                   </button>
                 </nz-form-item>
               </div>
-
               <div nz-col nzSpan="24" *ngIf="data.BUTTON_VALUES == 'QUICK_REPLY'">
-                <div nz-row>
+                <div nz-row class="button-input-row">
                   <div nz-col nzSpan="10">
                     <nz-form-item>
                       <nz-form-control nzErrorTip="Please Enter Button Text">
-                        <nz-form-label nzRequired nzNoColon>
+                        <nz-form-label nzRequired nzNoColon class="button-text-label">
                           Button Text
                         </nz-form-label>
-                        <!-- Input with Focus Logic -->
                         <input nz-input autocomplete="off" name="Webistetext" [disabled]="disablecustom" type="text"
                           required PlaceHolder="Enter Text" [(ngModel)]="custom" maxlength="25" required
-                          (focus)="isFocused = 'custom'" (blur)="isFocused = ''" />
-                        <!-- Dynamic Character Count -->
-                        <h6 style="color: red; font-size: 10px" *ngIf="
+                          (focus)="isFocused = 'custom'" (blur)="isFocused = ''" class="button-text-input" />
+                        <h6 class="character-count" *ngIf="
                             isFocused === 'custom' ||
                             (custom && isFocused === 'custom')
                           ">
@@ -400,37 +307,30 @@
                       </nz-form-control>
                     </nz-form-item>
                   </div>
-
                   <div nz-col nzSpan="4">
                     <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
-                      nz-tooltip style="
-                        margin-left: 10px;
-                        cursor: pointer;
-                        color: red;
-                        margin-top: 38px;
-                      " (click)="clearcustom()"></span>
+                      nz-tooltip class="remove-custom-button" (click)="clearcustom()"></span>
                   </div>
                   <nz-form-item>
-                    <span *ngIf="disablecustom" style="color: #faad14"><img src="assets/warning.png" alt="Logo"
-                        style="width: 17px; height: 17px; color: #faad14" /><b>You can add only ten button of
-                        "Custom"</b></span>
+                    <span *ngIf="disablecustom" class="warning-message">
+                      <img src="assets/warning.png" alt="Logo" class="warning-icon" />
+                      <b>You can add only ten button of "Custom"</b>
+                    </span>
                   </nz-form-item>
                 </div>
               </div>
               <div nz-col nzSpan="24" *ngIf="data.BUTTON_VALUES == 'URL'">
-                <div nz-row>
+                <div nz-row class="button-input-row">
                   <div nz-col nzSpan="6">
                     <nz-form-item>
                       <nz-form-control nzErrorTip="Please Enter Button Text">
-                        <nz-form-label nzRequired nzNoColon>
+                        <nz-form-label nzRequired nzNoColon class="button-text-label">
                           Button Text
                         </nz-form-label>
-                        <!-- Input with Focus Logic -->
                         <input nz-input autocomplete="off" name="Webistetext" [disabled]="dsiableurl" type="text"
                           required PlaceHolder="Enter Text" [(ngModel)]="websitebuttontext" maxlength="25"
-                          (focus)="isFocused = 'websitebuttontext'" (blur)="isFocused = ''" />
-                        <!-- Dynamic Character Count -->
-                        <h6 style="color: red; font-size: 10px" *ngIf="
+                          (focus)="isFocused = 'websitebuttontext'" (blur)="isFocused = ''" class="button-text-input" />
+                        <h6 class="character-count" *ngIf="
                             isFocused === 'websitebuttontext' ||
                             (websitebuttontext &&
                               isFocused === 'websitebuttontext')
@@ -440,29 +340,27 @@
                       </nz-form-control>
                     </nz-form-item>
                   </div>
-
                   <div nz-col nzSpan="4">
                     <nz-form-item>
-                      <nz-form-label nzRequired nzNoColon>URL Type</nz-form-label>
-
-                      <nz-select style="width: 100%" nzShowSearch nzAllowClear name="url" [(ngModel)]="urlmode">
+                      <nz-form-label nzRequired nzNoColon class="url-type-label">URL Type</nz-form-label>
+                      <nz-select class="url-type-select" nzShowSearch nzAllowClear name="url" [(ngModel)]="urlmode">
                         <nz-option nzValue="S" nzLabel="Static"></nz-option>
                         <nz-option nzValue="D" nzLabel="Dyanmic"></nz-option>
                       </nz-select>
                     </nz-form-item>
                   </div>
-
                   <div nz-col nzSpan="10">
                     <nz-form-item>
                       <nz-form-control>
-                        <nz-form-label nzRequired nzNoColon>
-                          Website URL</nz-form-label>
-                        <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+                        <nz-form-label nzRequired nzNoColon class="website-url-label">
+                          Website URL
+                        </nz-form-label>
+                        <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate" class="url-input-group">
                           <input nz-input autocomplete="off" name="Webisteurl" type="text" (input)="checkInputURL1()"
-                            PlaceHolder="www.example.com" [(ngModel)]="WEBSITE_URL" maxlength="2000" />
+                            PlaceHolder="www.example.com" [(ngModel)]="WEBSITE_URL" maxlength="2000" class="url-input" />
                         </nz-input-group>
                         <ng-template #addOnBeforeTemplate>
-                          <nz-select style="width: 89px" [(ngModel)]="prefixValue" name="prefixValue">
+                          <nz-select class="url-prefix-select" [(ngModel)]="prefixValue" name="prefixValue">
                             <nz-option nzLabel="Http://" nzValue="Http://"></nz-option>
                             <nz-option nzLabel="Https://" nzValue="Https://"></nz-option>
                           </nz-select>
@@ -470,21 +368,21 @@
                       </nz-form-control>
                     </nz-form-item>
                   </div>
-
                   <div nz-col nzSpan="2">
                     <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
-                      nz-tooltip style="cursor: pointer; color: red; margin-top: 38px" (click)="clearbuttons()"></span>
+                      nz-tooltip class="remove-button-icon" (click)="clearbuttons()"></span>
                   </div>
                   <nz-form-item>
-                    <span *ngIf="dsiableurl" style="color: #faad14"><img src="assets/warning.png" alt="Logo"
-                        style="width: 17px; height: 17px; color: #faad14" />&nbsp;<b>You can add only two button of
-                        "Visit Website"</b></span>
+                    <span *ngIf="dsiableurl" class="warning-message">
+                      <img src="assets/warning.png" alt="Logo" class="warning-icon" />
+                      &nbsp;<b>You can add only two button of "Visit Website"</b>
+                    </span>
                   </nz-form-item>
                   <div nz-col nzSpan="24" *ngIf="showDynamicInputURL">
                     <nz-form-item>
-                      <nz-form-label nzRequired nzNoColon>Sample Values for URL</nz-form-label>
+                      <nz-form-label nzRequired nzNoColon class="sample-values-label">Sample Values for URL</nz-form-label>
                       <nz-form-control>
-                        <nz-select style="width: 100%" nzMode="tags" nzPlaceHolder="Enter Sample Values for URL"
+                        <nz-select class="sample-values-select" nzMode="tags" nzPlaceHolder="Enter Sample Values for URL"
                           name="tag" [(ngModel)]="URL_SAMPLE" (ngModelChange)="checkInputURL()">
                           <nz-option *ngFor="let option of urlinputValuess" [nzLabel]="option"
                             [nzValue]="option"></nz-option>
@@ -495,19 +393,17 @@
                 </div>
               </div>
               <div nz-col nzSpan="24" *ngIf="data.BUTTON_VALUES == 'PHONE_NUMBER'">
-                <div nz-row>
+                <div nz-row class="button-input-row">
                   <div nz-col nzSpan="10">
                     <nz-form-item>
                       <nz-form-control nzErrorTip="Please Enter Button Text">
-                        <nz-form-label nzRequired nzNoColon>
+                        <nz-form-label nzRequired nzNoColon class="button-text-label">
                           Button Text
                         </nz-form-label>
-                        <!-- Input with Focus Logic -->
                         <input nz-input autocomplete="off" name="Webistetext12" type="text" [disabled]="disablephone"
                           required [(ngModel)]="BUTTON1" PlaceHolder="Enter Text" maxlength="25"
-                          (focus)="isFocused = 'BUTTON1'" (blur)="isFocused = ''" />
-                        <!-- Dynamic Character Count -->
-                        <h6 style="color: red; font-size: 10px" *ngIf="
+                          (focus)="isFocused = 'BUTTON1'" (blur)="isFocused = ''" class="button-text-input" />
+                        <h6 class="character-count" *ngIf="
                             isFocused === 'BUTTON1' ||
                             (BUTTON1 && isFocused === 'BUTTON1')
                           ">
@@ -516,85 +412,80 @@
                       </nz-form-control>
                     </nz-form-item>
                   </div>
-
                   <div nz-col nzSpan="10">
                     <nz-form-item>
                       <nz-form-control>
-                        <nz-form-label nzRequired nzNoColon>
-                          Phone Number</nz-form-label>
-                        <nz-input-group nzCompact style="display: flex">
-                          <input [disabled]="true" class="phone-select" type="text" name="prefix" nz-input
-                            [ngModel]="PREFIX" />
-
+                        <nz-form-label nzRequired nzNoColon class="phone-number-label">
+                          Phone Number
+                        </nz-form-label>
+                        <nz-input-group nzCompact class="phone-input-group">
+                          <input [disabled]="true" type="text" name="prefix" nz-input [ngModel]="PREFIX" class="phone-prefix-input" />
                           <input nzErrorTip="Please enter valid Mobile No." nz-input autocomplete="off" name="phone"
                             type="text" PlaceHolder="Enter Mobile Number" [(ngModel)]="mobile" [pattern]="mobpattern"
-                            (keypress)="omit($event)" maxlength="10" />
+                            (keypress)="omit($event)" maxlength="10" class="phone-number-input" />
                         </nz-input-group>
                       </nz-form-control>
                     </nz-form-item>
                   </div>
-
                   <div nz-col nzSpan="4">
                     <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
-                      nz-tooltip style="cursor: pointer; color: red; margin-top: 38px" (click)="clearbuttons2()"></span>
+                      nz-tooltip class="remove-button-icon" (click)="clearbuttons2()"></span>
                   </div>
                   <nz-form-item>
-                    <span *ngIf="disablephone" style="color: #faad14">
-                      <img src="assets/warning.png" alt="Logo"
-                        style="width: 17px; height: 17px; color: #faad14" />&nbsp;<b>You can add only one button of
-                        "Call to Phone"</b></span>
+                    <span *ngIf="disablephone" class="warning-message">
+                      <img src="assets/warning.png" alt="Logo" class="warning-icon" />
+                      &nbsp;<b>You can add only one button of "Call to Phone"</b>
+                    </span>
                   </nz-form-item>
                 </div>
               </div>
               <div nz-col nzSpan="24" *ngIf="data.BUTTON_VALUES == 'COPY_CODE'">
-                <div nz-row>
+                <div nz-row class="button-input-row">
                   <div nz-col nzSpan="10">
                     <nz-form-item>
                       <nz-form-control>
-                        <nz-form-label nzRequired nzNoColon>
+                        <nz-form-label nzRequired nzNoColon class="button-text-label">
                           Button Text
                         </nz-form-label>
                         <input [disabled]="BUTTON12diabled" nz-input autocomplete="off" name="Webistetext12" type="text"
-                          [(ngModel)]="BUTTON12" PlaceHolder="Enter Text" maxlength="25" />
-                        <h6 style="color: red; font-size: 10px" *ngIf="BUTTON12 != undefined">
+                          [(ngModel)]="BUTTON12" PlaceHolder="Enter Text" maxlength="25" class="button-text-input" />
+                        <h6 class="character-count" *ngIf="BUTTON12 != undefined">
                           {{ BUTTON12.length }}/25
                         </h6>
                       </nz-form-control>
                     </nz-form-item>
                   </div>
-
                   <div nz-col nzSpan="10">
                     <nz-form-item>
                       <nz-form-control>
-                        <nz-form-label nzRequired nzNoColon>
-                          Offer Code</nz-form-label>
+                        <nz-form-label nzRequired nzNoColon class="offer-code-label">
+                          Offer Code
+                        </nz-form-label>
                         <input nz-input autocomplete="off" name="phone" type="text" [disabled]="disableoffer"
-                          PlaceHolder="Offer Code" [(ngModel)]="code" />
+                          PlaceHolder="Offer Code" [(ngModel)]="code" class="offer-code-input" />
                       </nz-form-control>
                     </nz-form-item>
                   </div>
-
                   <div nz-col nzSpan="4">
                     <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
-                      nz-tooltip style="cursor: pointer; color: red; margin-top: 38px" (click)="clearbuttons1()"></span>
+                      nz-tooltip class="remove-button-icon" (click)="clearbuttons1()"></span>
                   </div>
                   <nz-form-item>
-                    <span *ngIf="disableoffer" style="color: #faad14"><img src="assets/warning.png" alt="Logo"
-                        style="width: 17px; height: 17px; color: #faad14" />&nbsp;<b>You can add only one button of
-                        "Copy Offer Code"</b></span>
+                    <span *ngIf="disableoffer" class="warning-message">
+                      <img src="assets/warning.png" alt="Logo" class="warning-icon" />
+                      &nbsp;<b>You can add only one button of "Copy Offer Code"</b>
+                    </span>
                   </nz-form-item>
                 </div>
               </div>
-
               <h6 *ngIf="
                   (data.BUTTON_VALUES == 'PHONE_NUMBER' ||
                     data.BUTTON_VALUES == 'COPY_CODE' ||
                     data.BUTTON_VALUES == 'URL' ||
                     data.BUTTON_VALUES == 'QUICK_REPLY') &&
                   data.BUTTON_VALUES !== null
-                " style="color: blue; font-size: 10px; margin-left: 10px">
-                Note: After adding information of button please click on Add
-                Button.
+                " class="button-note">
+                Note: After adding information of button please click on Add Button.
               </h6>
             </div>
           </div>
@@ -608,7 +499,6 @@
                       <th>Action</th>
                       <th>Button Type</th>
                       <th>Custom Text</th>
-
                       <th>Mobile Number</th>
                       <th>Offer Code</th>
                       <th>Website URL</th>
@@ -618,17 +508,12 @@
                     <tr *ngFor="let data of FamilyDetails; index as i">
                       <td>
                         <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
-                          nz-tooltip style="
-                            cursor: pointer;
-                            color: red;
-                            text-align: center;
-                          " nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete this Button"
+                          nz-tooltip class="table-remove-icon" nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete this Button"
                           (nzOnConfirm)="clear(i)" (nzOnCancel)="cancel()"></span>
                       </td>
                       <td>{{ data.Type }}</td>
                       <td>{{ data.Name }}</td>
                       <td>{{ data.mobile }}</td>
-
                       <td>{{ data.code }}</td>
                       <td>{{ data.WEBSITE_URL }}</td>
                     </tr>
@@ -639,210 +524,73 @@
           </div>
         </div>
         <div nz-col nzSpan="1"></div>
-
         <div nz-col nzSpan="6" class="vertical-card">
-          <div style="margin-top: 10px; margin-left: 12px; margin-bottom: 10px">
+          <div class="preview-header">
             <span><b>Template Preview</b></span>
           </div>
-
           <div nz-row>
             <div nz-col nzSpan="1"></div>
             <div nz-col nzSpan="22">
               <nz-card class="vertical">
                 <nz-form-item>
-                  <span style="font-size: 13px" *ngIf="data.HEADER_TYPE == 'T'"><b>{{ inputValue }}</b></span>
-                  <div nz-col nzSpan="24" *ngIf="fileURL != null && IMAGE != ''" style="
-                      background-color: #fff;
-                      position: relative;
-                      width: 100%;
-                      cursor: pointer;
-                      padding: 10px;
-                      border: 1px solid #efefef;
-                      border-radius: 10px;
-                    ">
-                    <img width="100%" height="100px" [src]="image" />
+                  <span class="preview-header-text" *ngIf="data.HEADER_TYPE == 'T'"><b>{{ inputValue }}</b></span>
+                  <div nz-col nzSpan="24" *ngIf="fileURL != null && IMAGE != ''" class="image-preview-container">
+                    <img width="100%" height="100px" [src]="image" class="preview-image" />
                   </div>
-
-                  <div nz-col nzSpan="22" *ngIf="fileDataIMAGE_URL != null && VIDEO_URL != ''" style="
-                      background-color: #fff;
-                      position: relative;
-                      width: 100%;
-                      cursor: pointer;
-                      padding: 10px;
-                      border: 1px solid #efefef;
-                      border-radius: 10px;
-                    ">
-                    <video style="width: 100%; height: 100px" controls>
+                  <div nz-col nzSpan="22" *ngIf="fileDataIMAGE_URL != null && VIDEO_URL != ''" class="video-preview-container">
+                    <video class="preview-video" controls>
                       <source [src]="video" />
                       <source [src]="video" />
                       <source [src]="video" />
                     </video>
                     <br />
                   </div>
-                  <div nz-col nzSpan="24" *ngIf="fileURLPDF != null" style="
-                      background-color: #fdfdfd;
-                      position: relative;
-                      width: 100%;
-                      cursor: pointer;
-                      border: 1px solid #efefef;
-                      padding: 6px;
-                      border-radius: 10px;
-                      text-align: left;
-                    ">
+                  <div nz-col nzSpan="24" *ngIf="fileURLPDF != null" class="document-preview-container">
                     <div nz-row>
                       <div nz-col nzSpan="4">
                         <svg *ngIf="TYPE == 'xlsx'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                          viewBox="0 0 79.996 98">
-                          <g id="_3174396535664" transform="translate(-14272.2 -3469.67)">
-                            <path id="Path_185" data-name="Path 185" d="M14272.2,5073.42l11.53,8.6v-8.6Z"
-                              transform="translate(0 -1526.582)" fill="#6f7d30" fill-rule="evenodd" />
-                            <path id="Path_186" data-name="Path 186"
-                              d="M14510,3469.67h43.238l25.228,25.076v72.924H14510Zm42.916,4.3,21.291,21.164h-21.291Zm-39.32,90.092,61.394,0-.14-65.574-25.3.032-.1-25.317-36.066.014C14513.462,3542.958,14513.721,3515.48,14513.6,3564.058Z"
-                              transform="translate(-226.271 0)" fill="#9cbd32" fill-rule="evenodd" />
-                            <rect id="Rectangle_257" data-name="Rectangle 257" width="57.08" height="28.548"
-                              transform="translate(14272.2 3518.466)" fill="#9cbd32" />
-                            <path id="Path_187" data-name="Path 187"
-                              d="M14568.812,4654.337a3.2,3.2,0,0,1,.239.569.308.308,0,0,1-.066.326.765.765,0,0,1-.44.142c-.215.021-.509.032-.888.032-.315,0-.567-.007-.748-.021a2.2,2.2,0,0,1-.431-.066.489.489,0,0,1-.229-.128.709.709,0,0,1-.122-.2l-2.475-4.748-2.456,4.748a.957.957,0,0,1-.132.2.483.483,0,0,1-.229.128,2.267,2.267,0,0,1-.44.066c-.186.014-.434.021-.736.021a8.128,8.128,0,0,1-.822-.032.62.62,0,0,1-.394-.142.33.33,0,0,1-.036-.326,2.78,2.78,0,0,1,.252-.569l3.145-5.743-2.927-5.4a4.363,4.363,0,0,1-.25-.586.3.3,0,0,1,.053-.326.752.752,0,0,1,.43-.132c.212-.017.511-.024.9-.024.317,0,.571.007.76.021a2.351,2.351,0,0,1,.439.065.417.417,0,0,1,.229.129,1.086,1.086,0,0,1,.128.2l2.32,4.352,2.236-4.352a1.087,1.087,0,0,1,.129-.2.409.409,0,0,1,.211-.129,1.985,1.985,0,0,1,.405-.065c.175-.014.413-.021.719-.021.337,0,.6.007.8.024a.649.649,0,0,1,.405.139.323.323,0,0,1,.057.327,4.174,4.174,0,0,1-.229.579l-2.927,5.365Z"
-                              transform="translate(-272.306 -1116.006)" fill="#fefefe" />
-                            <path id="_1" data-name="1"
-                              d="M14823.81,4654.226a4.283,4.283,0,0,1-.024.514,1.577,1.577,0,0,1-.077.342.406.406,0,0,1-.127.2.281.281,0,0,1-.177.063h-6.025a.824.824,0,0,1-.561-.2.806.806,0,0,1-.229-.645v-11.943a.28.28,0,0,1,.066-.184.509.509,0,0,1,.219-.132,2.147,2.147,0,0,1,.413-.079,6.733,6.733,0,0,1,1.3,0,2.2,2.2,0,0,1,.406.079.505.505,0,0,1,.218.132.28.28,0,0,1,.066.184v10.58h4.131a.282.282,0,0,1,.177.056.4.4,0,0,1,.127.184,1.217,1.217,0,0,1,.077.336A4.223,4.223,0,0,1,14823.81,4654.226Z"
-                              transform="translate(-517.993 -1116.006)" fill="#fefefe" />
-                            <path id="_2" data-name="2"
-                              d="M14990.262,4648.134a4.065,4.065,0,0,1-.387,1.821,3.8,3.8,0,0,1-1.045,1.3,4.652,4.652,0,0,1-1.548.787,6.946,6.946,0,0,1-3.159.149,7.024,7.024,0,0,1-1.029-.273,4.277,4.277,0,0,1-.749-.333,2.336,2.336,0,0,1-.434-.308.8.8,0,0,1-.187-.386,3.4,3.4,0,0,1-.056-.714c0-.212.007-.386.021-.528a1.528,1.528,0,0,1,.066-.347.4.4,0,0,1,.121-.187.292.292,0,0,1,.18-.056.84.84,0,0,1,.4.169,7.111,7.111,0,0,0,.666.371,5.8,5.8,0,0,0,.975.372,4.5,4.5,0,0,0,1.307.169,3.1,3.1,0,0,0,.874-.114,1.981,1.981,0,0,0,.658-.329,1.414,1.414,0,0,0,.413-.524,1.678,1.678,0,0,0,.143-.7,1.212,1.212,0,0,0-.244-.767,2.341,2.341,0,0,0-.638-.568,6.248,6.248,0,0,0-.891-.468c-.328-.146-.672-.3-1.026-.461a8.806,8.806,0,0,1-1.025-.555,3.978,3.978,0,0,1-.892-.738,3.417,3.417,0,0,1-.639-1.023,3.689,3.689,0,0,1-.242-1.411,3.751,3.751,0,0,1,.351-1.661,3.412,3.412,0,0,1,.942-1.186,4.06,4.06,0,0,1,1.4-.708,6.128,6.128,0,0,1,1.713-.232,6.06,6.06,0,0,1,.934.073,6.326,6.326,0,0,1,.874.19,5.43,5.43,0,0,1,.721.274,1.772,1.772,0,0,1,.416.257.765.765,0,0,1,.135.169.824.824,0,0,1,.063.191,1.822,1.822,0,0,1,.034.295c.007.118.011.263.011.44,0,.193,0,.36-.014.5a1.894,1.894,0,0,1-.052.336.4.4,0,0,1-.1.191.253.253,0,0,1-.181.063.873.873,0,0,1-.354-.143q-.245-.14-.6-.312a5.771,5.771,0,0,0-.825-.3,3.545,3.545,0,0,0-1.026-.139,2.428,2.428,0,0,0-.764.107,1.565,1.565,0,0,0-.54.295,1.145,1.145,0,0,0-.327.451,1.447,1.447,0,0,0-.107.558,1.224,1.224,0,0,0,.239.756,2.327,2.327,0,0,0,.642.572,7.205,7.205,0,0,0,.912.465c.337.146.684.3,1.037.461a9.738,9.738,0,0,1,1.037.555,4.3,4.3,0,0,1,.909.742,3.483,3.483,0,0,1,.642,1.016,3.553,3.553,0,0,1,.241,1.373Z"
-                              transform="translate(-675.068 -1112.745)" fill="#fefefe" />
-                          </g>
+                          viewBox="0 0 79.996 98" class="document-icon">
                         </svg>
-
                         <svg *ngIf="TYPE == 'docx'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                          viewBox="0 0 80.002 98">
-                          <g id="_3174394821168" transform="translate(-6866.51 -3469.67)">
-                            <path id="Path_177" data-name="Path 177" d="M6866.519,5073.42l11.529,8.6v-8.6Z"
-                              transform="translate(-0.009 -1526.583)" fill="#12567d" fill-rule="evenodd" />
-                            <path id="Path_178" data-name="Path 178"
-                              d="M7104.27,3469.669h43.243l25.229,25.076v72.924H7104.27Zm42.919,4.3,21.3,21.165h-21.3Zm-39.323,90.092,61.4,0-.142-65.574-25.307.031-.1-25.317-36.071.014C7107.732,3542.957,7107.99,3515.48,7107.866,3564.058Z"
-                              transform="translate(-226.231 0.001)" fill="#0575bf" fill-rule="evenodd" />
-                            <rect id="Rectangle_251" data-name="Rectangle 251" width="57.086" height="28.551"
-                              transform="translate(6866.51 3518.464)" fill="#0575bf" />
-                            <path id="Path_179" data-name="Path 179"
-                              d="M7101.784,4649.8a9.037,9.037,0,0,1-.472,3.1,5.283,5.283,0,0,1-1.357,2.1,5.446,5.446,0,0,1-2.15,1.193,10.55,10.55,0,0,1-3.013.382h-3.138a.829.829,0,0,1-.565-.2.808.808,0,0,1-.229-.645v-11.466a.806.806,0,0,1,.229-.645.825.825,0,0,1,.565-.2h3.371a9.437,9.437,0,0,1,2.983.414,5.386,5.386,0,0,1,2.063,1.217,5.276,5.276,0,0,1,1.277,2A7.983,7.983,0,0,1,7101.784,4649.8Zm-2.769.093a6.611,6.611,0,0,0-.218-1.737,3.669,3.669,0,0,0-.7-1.387,3.261,3.261,0,0,0-1.238-.919,5.064,5.064,0,0,0-1.988-.329h-1.349v8.927h1.391a5.216,5.216,0,0,0,1.848-.285,3.1,3.1,0,0,0,1.255-.855,3.73,3.73,0,0,0,.75-1.426A7.138,7.138,0,0,0,7099.016,4649.9Z"
-                              transform="translate(-213.471 -1117.234)" fill="#fefefe" />
-                            <path id="_1" data-name="1"
-                              d="M7360.924,4645.352a9.733,9.733,0,0,1-.406,2.923,5.838,5.838,0,0,1-1.21,2.188,5.21,5.21,0,0,1-1.984,1.373,7.363,7.363,0,0,1-2.74.472,8.065,8.065,0,0,1-2.673-.4,4.625,4.625,0,0,1-1.908-1.225,5.245,5.245,0,0,1-1.142-2.091,10.565,10.565,0,0,1-.38-3.008,9.438,9.438,0,0,1,.405-2.868,5.8,5.8,0,0,1,1.211-2.167,5.225,5.225,0,0,1,1.983-1.37,7.312,7.312,0,0,1,2.75-.479,8.076,8.076,0,0,1,2.637.4,4.6,4.6,0,0,1,1.907,1.221,5.249,5.249,0,0,1,1.158,2.074A10.042,10.042,0,0,1,7360.924,4645.352Zm-2.809.135a10.069,10.069,0,0,0-.164-1.883,4.049,4.049,0,0,0-.551-1.454,2.665,2.665,0,0,0-1.04-.936,3.6,3.6,0,0,0-1.624-.329,3.317,3.317,0,0,0-1.64.37,3.04,3.04,0,0,0-1.069.992,4.116,4.116,0,0,0-.572,1.446,9.049,9.049,0,0,0-.166,1.755,10.726,10.726,0,0,0,.162,1.936,4.247,4.247,0,0,0,.548,1.47,2.526,2.526,0,0,0,1.034.93,3.7,3.7,0,0,0,1.633.319,3.31,3.31,0,0,0,1.641-.367,2.936,2.936,0,0,0,1.068-1,4.158,4.158,0,0,0,.572-1.466A9.091,9.091,0,0,0,7358.115,4645.487Z"
-                              transform="translate(-458.6 -1112.743)" fill="#fefefe" />
-                            <path id="_2" data-name="2"
-                              d="M7648.426,4650.5c0,.17,0,.316-.014.434a1.851,1.851,0,0,1-.047.3.728.728,0,0,1-.08.223,1.053,1.053,0,0,1-.163.205,2.1,2.1,0,0,1-.429.3,5.74,5.74,0,0,1-.786.348,7.188,7.188,0,0,1-1.054.273,7.061,7.061,0,0,1-1.286.111,6.755,6.755,0,0,1-2.435-.417,4.8,4.8,0,0,1-1.848-1.245,5.487,5.487,0,0,1-1.169-2.066,9.3,9.3,0,0,1-.405-2.882,9.131,9.131,0,0,1,.447-2.976,6.226,6.226,0,0,1,1.249-2.186,5.216,5.216,0,0,1,1.925-1.339,6.493,6.493,0,0,1,2.473-.458,6.392,6.392,0,0,1,1.994.333,4.691,4.691,0,0,1,.777.34,2.425,2.425,0,0,1,.482.333,1.3,1.3,0,0,1,.188.229.784.784,0,0,1,.08.231,2.566,2.566,0,0,1,.048.337c.011.128.014.285.014.476s-.006.375-.021.517a1.369,1.369,0,0,1-.07.343.47.47,0,0,1-.121.191.241.241,0,0,1-.162.062.707.707,0,0,1-.386-.176,6.1,6.1,0,0,0-.6-.395,4.643,4.643,0,0,0-.884-.4,3.709,3.709,0,0,0-1.222-.177,2.891,2.891,0,0,0-2.437,1.231,4.358,4.358,0,0,0-.655,1.44,8.363,8.363,0,0,0,.018,3.9,3.9,3.9,0,0,0,.679,1.4,2.718,2.718,0,0,0,1.064.815,3.507,3.507,0,0,0,1.406.271,4.055,4.055,0,0,0,1.228-.167,5.467,5.467,0,0,0,.885-.368c.249-.136.45-.257.61-.365a.764.764,0,0,1,.372-.163.275.275,0,0,1,.159.042.3.3,0,0,1,.1.164,1.916,1.916,0,0,1,.059.34c.015.148.02.343.02.59Z"
-                              transform="translate(-734.755 -1113.152)" fill="#fefefe" />
-                          </g>
+                          viewBox="0 0 80.002 98" class="document-icon">
                         </svg>
-
                         <svg *ngIf="TYPE == 'txt'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                          viewBox="0 0 80.001 98">
-                          <g id="_3174395074240" transform="translate(-4397.94 -3469.67)">
-                            <path id="Path_182" data-name="Path 182" d="M4397.95,5073.42l11.529,8.6v-8.6Z"
-                              transform="translate(-0.009 -1526.583)" fill="#707070" fill-rule="evenodd" />
-                            <path id="Path_183" data-name="Path 183"
-                              d="M4635.7,3469.67h43.243l25.229,25.076v72.924H4635.7Zm42.92,4.3,21.293,21.164H4678.62Zm-39.324,90.092,61.4,0-.14-65.574-25.307.031-.1-25.317-36.071.014C4639.162,3542.958,4639.421,3515.48,4639.3,3564.058Z"
-                              transform="translate(-226.231 0)" fill="#8b8b8b" fill-rule="evenodd" />
-                            <rect id="Rectangle_254" data-name="Rectangle 254" width="57.085" height="28.551"
-                              transform="translate(4397.94 3518.464)" fill="#8b8b8b" />
-                            <path id="Path_184" data-name="Path 184"
-                              d="M4668.563,4644.516a4.2,4.2,0,0,1-.024.507,1.3,1.3,0,0,1-.076.333.407.407,0,0,1-.128.187.256.256,0,0,1-.166.063h-3.288v10.6a.285.285,0,0,1-.066.184.5.5,0,0,1-.219.132,2.384,2.384,0,0,1-.413.079,6.667,6.667,0,0,1-1.29,0,2.375,2.375,0,0,1-.413-.079.5.5,0,0,1-.219-.132.285.285,0,0,1-.066-.184v-10.6h-3.288a.26.26,0,0,1-.173-.062.466.466,0,0,1-.121-.187,1.483,1.483,0,0,1-.076-.333,4.3,4.3,0,0,1-.024-.507,4.464,4.464,0,0,1,.024-.516,1.507,1.507,0,0,1,.076-.341.452.452,0,0,1,.121-.183.273.273,0,0,1,.173-.056h9.26a.274.274,0,0,1,.166.056.393.393,0,0,1,.128.183,1.32,1.32,0,0,1,.076.341A4.356,4.356,0,0,1,4668.563,4644.516Z"
-                              transform="translate(-247.938 -1117.234)" fill="#fefefe" />
-                            <path id="_1" data-name="1"
-                              d="M4886.671,4654.338a3.211,3.211,0,0,1,.239.569.307.307,0,0,1-.066.325.776.776,0,0,1-.44.143c-.215.02-.511.031-.888.031-.316,0-.569-.007-.749-.021a2.179,2.179,0,0,1-.43-.066.478.478,0,0,1-.229-.129.684.684,0,0,1-.122-.2l-2.477-4.748-2.455,4.748a.952.952,0,0,1-.131.2.484.484,0,0,1-.229.129,2.266,2.266,0,0,1-.44.066q-.281.021-.739.021c-.354,0-.628-.011-.822-.031a.625.625,0,0,1-.393-.143.33.33,0,0,1-.038-.325,2.93,2.93,0,0,1,.254-.569l3.145-5.744-2.926-5.4a4.129,4.129,0,0,1-.25-.586.3.3,0,0,1,.052-.326.757.757,0,0,1,.43-.132c.211-.017.51-.024.895-.024q.478,0,.76.021a2.236,2.236,0,0,1,.44.066.412.412,0,0,1,.229.128,1.085,1.085,0,0,1,.128.2l2.321,4.352,2.236-4.352a1.138,1.138,0,0,1,.128-.2.413.413,0,0,1,.211-.128,1.879,1.879,0,0,1,.406-.066c.173-.014.413-.021.718-.021.336,0,.6.007.8.024a.661.661,0,0,1,.406.139.323.323,0,0,1,.056.326,4,4,0,0,1-.229.579l-2.928,5.366Z"
-                              transform="translate(-455.106 -1116.007)" fill="#fefefe" />
-                            <path id="_2" data-name="2"
-                              d="M5117.433,4644.516a4.212,4.212,0,0,1-.024.507,1.318,1.318,0,0,1-.076.333.415.415,0,0,1-.128.187.257.257,0,0,1-.167.063h-3.288v10.6a.282.282,0,0,1-.065.184.5.5,0,0,1-.219.132,2.394,2.394,0,0,1-.413.079,6.672,6.672,0,0,1-1.29,0,2.384,2.384,0,0,1-.413-.079.5.5,0,0,1-.219-.132.288.288,0,0,1-.066-.184v-10.6h-3.287a.261.261,0,0,1-.173-.062.461.461,0,0,1-.121-.187,1.431,1.431,0,0,1-.076-.333,4.083,4.083,0,0,1-.025-.507,4.233,4.233,0,0,1,.025-.516,1.455,1.455,0,0,1,.076-.341.447.447,0,0,1,.121-.183.274.274,0,0,1,.173-.056h9.259a.277.277,0,0,1,.167.056.4.4,0,0,1,.128.183,1.323,1.323,0,0,1,.076.341A4.368,4.368,0,0,1,5117.433,4644.516Z"
-                              transform="translate(-675.041 -1117.234)" fill="#fefefe" />
-                          </g>
+                          viewBox="0 0 80.001 98" class="document-icon">
                         </svg>
-
                         <svg *ngIf="TYPE == 'pdf'" xmlns="http://www.w3.org/2000/svg" width="29" height="25"
-                          viewBox="0 0 79.999 98">
-                          <g id="_3174384174496" transform="translate(-11803.7 -3469.67)">
-                            <path id="Path_188" data-name="Path 188" d="M11803.7,5073.42l11.526,8.6v-8.6Z"
-                              transform="translate(-0.001 -1526.584)" fill="#7a2f36" fill-rule="evenodd" />
-                            <path id="Path_189" data-name="Path 189"
-                              d="M12041.4,3469.67h43.243l25.229,25.075v72.925H12041.4Zm42.92,4.3,21.295,21.164h-21.295ZM12045,3564.058l61.4,0-.141-65.574-25.308.032-.1-25.317-36.072.014C12044.863,3542.958,12045.122,3515.48,12045,3564.058Z"
-                              transform="translate(-226.175)" fill="#ba2527" fill-rule="evenodd" />
-                            <rect id="Rectangle_260" data-name="Rectangle 260" width="57.087" height="28.551"
-                              transform="translate(11803.7 3518.464)" fill="#ba2527" />
-                            <path id="Path_190" data-name="Path 190"
-                              d="M12083,4647.415a5.129,5.129,0,0,1-.348,1.963,3.694,3.694,0,0,1-1.008,1.439,4.42,4.42,0,0,1-1.623.892,7.492,7.492,0,0,1-2.27.305h-1.1v4.193a.274.274,0,0,1-.066.184.5.5,0,0,1-.218.132,2.16,2.16,0,0,1-.406.08,5.5,5.5,0,0,1-.645.031,5.636,5.636,0,0,1-.646-.031,2.4,2.4,0,0,1-.409-.08.44.44,0,0,1-.212-.132.3.3,0,0,1-.062-.184v-11.83a.952.952,0,0,1,.25-.718.908.908,0,0,1,.655-.239h3.1c.312,0,.609.01.891.035a10.153,10.153,0,0,1,1.013.152,4.516,4.516,0,0,1,1.193.434,3.535,3.535,0,0,1,1.033.8,3.3,3.3,0,0,1,.651,1.131A4.388,4.388,0,0,1,12083,4647.415Zm-2.788.195a2.377,2.377,0,0,0-.246-1.141,1.7,1.7,0,0,0-.6-.663,2.04,2.04,0,0,0-.75-.271,5.684,5.684,0,0,0-.814-.055h-1.145v4.474h1.207a2.943,2.943,0,0,0,1.078-.174,1.83,1.83,0,0,0,.711-.485,2.1,2.1,0,0,0,.42-.742A3.034,3.034,0,0,0,12080.212,4647.61Z"
-                              transform="translate(-257.182 -1117.234)" fill="#fefefe" />
-                            <path id="_1" data-name="1"
-                              d="M12313.336,4649.8a9.033,9.033,0,0,1-.472,3.1,5.273,5.273,0,0,1-1.356,2.1,5.451,5.451,0,0,1-2.149,1.193,10.547,10.547,0,0,1-3.015.382h-3.139a.835.835,0,0,1-.565-.2.808.808,0,0,1-.229-.645v-11.466a.807.807,0,0,1,.229-.645.835.835,0,0,1,.565-.2h3.372a9.444,9.444,0,0,1,2.982.413,5.393,5.393,0,0,1,2.063,1.217,5.269,5.269,0,0,1,1.277,2A7.974,7.974,0,0,1,12313.336,4649.8Zm-2.769.094a6.608,6.608,0,0,0-.218-1.737,3.637,3.637,0,0,0-.7-1.388,3.237,3.237,0,0,0-1.238-.918,5.042,5.042,0,0,0-1.986-.33h-1.349v8.927h1.39a5.21,5.21,0,0,0,1.849-.284,3.106,3.106,0,0,0,1.256-.857,3.718,3.718,0,0,0,.749-1.425A7.085,7.085,0,0,0,12310.567,4649.9Z"
-                              transform="translate(-474.527 -1117.234)" fill="#fefefe" />
-                            <path id="_2" data-name="2"
-                              d="M12580.247,4644.517a4.223,4.223,0,0,1-.024.513,1.174,1.174,0,0,1-.083.333.553.553,0,0,1-.125.18.245.245,0,0,1-.163.063h-4.307v3.538h4.04a.261.261,0,0,1,.163.052.407.407,0,0,1,.128.17,1.123,1.123,0,0,1,.08.326,4.738,4.738,0,0,1,0,1.017,1.258,1.258,0,0,1-.08.335.482.482,0,0,1-.128.188.247.247,0,0,1-.163.055h-4.04v4.9a.319.319,0,0,1-.063.194.45.45,0,0,1-.218.135,1.977,1.977,0,0,1-.41.087,6.743,6.743,0,0,1-1.3,0,1.9,1.9,0,0,1-.413-.087.5.5,0,0,1-.218-.135.3.3,0,0,1-.065-.194v-11.924a.81.81,0,0,1,.229-.645.832.832,0,0,1,.565-.2h6.2a.256.256,0,0,1,.163.056.5.5,0,0,1,.125.184,1.194,1.194,0,0,1,.083.339A4.372,4.372,0,0,1,12580.247,4644.517Z"
-                              transform="translate(-731.862 -1117.235)" fill="#fefefe" />
-                          </g>
+                          viewBox="0 0 79.999 98" class="document-icon">
                         </svg>
-
                         <svg *ngIf="TYPE == 'pptx'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                          viewBox="0 0 79.995 98">
-                          <g id="_3174394941968" transform="translate(-9335.08 -3469.67)">
-                            <path id="Path_191" data-name="Path 191" d="M9335.09,5073.42l11.528,8.6v-8.6Z"
-                              transform="translate(-0.009 -1526.582)" fill="#a35338" fill-rule="evenodd" />
-                            <path id="Path_192" data-name="Path 192"
-                              d="M9572.84,3469.669h43.241l25.226,25.076v72.924H9572.84Zm42.917,4.3,21.292,21.164h-21.292Zm-39.321,90.092,61.4,0-.142-65.574-25.307.032-.1-25.318-36.068.014C9576.3,3542.957,9576.56,3515.48,9576.436,3564.057Z"
-                              transform="translate(-226.231 0)" fill="#de542f" fill-rule="evenodd" />
-                            <rect id="Rectangle_263" data-name="Rectangle 263" width="57.082" height="28.549"
-                              transform="translate(9335.08 3518.465)" fill="#de542f" />
-                            <path id="Path_193" data-name="Path 193"
-                              d="M9628.368,4647.414a5.151,5.151,0,0,1-.347,1.963,3.7,3.7,0,0,1-1.01,1.439,4.431,4.431,0,0,1-1.622.892,7.5,7.5,0,0,1-2.268.3h-1.1v4.193a.273.273,0,0,1-.066.184.51.51,0,0,1-.218.132,2.2,2.2,0,0,1-.406.08,5.5,5.5,0,0,1-.645.031,5.636,5.636,0,0,1-.646-.031,2.4,2.4,0,0,1-.408-.08.437.437,0,0,1-.212-.132.3.3,0,0,1-.062-.184v-11.829a.948.948,0,0,1,.249-.718.9.9,0,0,1,.654-.239h3.1c.312,0,.611.01.892.035a10.2,10.2,0,0,1,1.013.152,4.511,4.511,0,0,1,1.193.434,3.5,3.5,0,0,1,1.033.8,3.321,3.321,0,0,1,.652,1.13A4.389,4.389,0,0,1,9628.368,4647.414Zm-2.788.194a2.363,2.363,0,0,0-.247-1.141,1.689,1.689,0,0,0-.6-.663,2.018,2.018,0,0,0-.75-.271,5.664,5.664,0,0,0-.814-.056h-1.145v4.474h1.207a2.964,2.964,0,0,0,1.078-.173,1.819,1.819,0,0,0,.71-.486,2.117,2.117,0,0,0,.422-.743A3.059,3.059,0,0,0,9625.58,4647.608Z"
-                              transform="translate(-270.495 -1117.233)" fill="#fefefe" />
-                            <path id="_1" data-name="1"
-                              d="M9856.7,4647.414a5.151,5.151,0,0,1-.348,1.963,3.692,3.692,0,0,1-1.01,1.439,4.416,4.416,0,0,1-1.624.892,7.48,7.48,0,0,1-2.267.3h-1.1v4.193a.279.279,0,0,1-.067.184.508.508,0,0,1-.219.132,2.179,2.179,0,0,1-.407.08,5.446,5.446,0,0,1-.644.031,5.594,5.594,0,0,1-.645-.031,2.507,2.507,0,0,1-.411-.08.445.445,0,0,1-.21-.132.3.3,0,0,1-.062-.184v-11.829a.948.948,0,0,1,.249-.718.908.908,0,0,1,.656-.239h3.1c.311,0,.609.01.891.035a10.181,10.181,0,0,1,1.012.152,4.511,4.511,0,0,1,1.2.434,3.527,3.527,0,0,1,1.033.8,3.337,3.337,0,0,1,.652,1.13A4.389,4.389,0,0,1,9856.7,4647.414Zm-2.788.194a2.363,2.363,0,0,0-.248-1.141,1.681,1.681,0,0,0-.6-.663,2.025,2.025,0,0,0-.749-.271,5.7,5.7,0,0,0-.815-.056h-1.143v4.474h1.206a2.972,2.972,0,0,0,1.078-.173,1.829,1.829,0,0,0,.709-.486,2.116,2.116,0,0,0,.421-.743A3.03,3.03,0,0,0,9853.912,4647.608Z"
-                              transform="translate(-487.754 -1117.233)" fill="#fefefe" />
-                            <path id="_2" data-name="2"
-                              d="M10057.879,4644.514a4.422,4.422,0,0,1-.024.507,1.225,1.225,0,0,1-.077.333.408.408,0,0,1-.127.188.257.257,0,0,1-.166.062h-3.289v10.6a.289.289,0,0,1-.064.184.51.51,0,0,1-.221.132,2.425,2.425,0,0,1-.411.08,6.672,6.672,0,0,1-1.29,0,2.445,2.445,0,0,1-.411-.08.516.516,0,0,1-.221-.132.284.284,0,0,1-.065-.184v-10.6h-3.287a.258.258,0,0,1-.173-.062.464.464,0,0,1-.122-.188,1.5,1.5,0,0,1-.076-.333,4.21,4.21,0,0,1-.024-.507,4.362,4.362,0,0,1,.024-.516,1.523,1.523,0,0,1,.076-.34.448.448,0,0,1,.122-.184.271.271,0,0,1,.173-.055h9.26a.273.273,0,0,1,.166.055.4.4,0,0,1,.127.184,1.25,1.25,0,0,1,.077.34A4.157,4.157,0,0,1,10057.879,4644.514Z"
-                              transform="translate(-678.19 -1117.233)" fill="#fefefe" />
-                          </g>
+                          viewBox="0 0 79.995 98" class="document-icon">
                         </svg>
-
                         <svg *ngIf="TYPE == 'zip'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                          viewBox="0 0 384 512">
-                          <path
-                            d="M365.3 93.38l-74.63-74.64C278.6 6.742 262.3 0 245.4 0L64-.0001c-35.35 0-64 28.65-64 64l.0065 384c0 35.34 28.65 64 64 64H320c35.2 0 64-28.8 64-64V138.6C384 121.7 377.3 105.4 365.3 93.38zM336 448c0 8.836-7.164 16-16 16H64.02c-8.838 0-16-7.164-16-16L48 64.13c0-8.836 7.164-16 16-16h48V64h64V48.13h48.01L224 128c0 17.67 14.33 32 32 32h79.1V448zM176 96h-64v32h64V96zM176 160h-64v32h64V160zM176 224h-64l-30.56 116.5C73.51 379.5 103.7 416 144.3 416c40.26 0 70.45-36.3 62.68-75.15L176 224zM160 368H128c-8.836 0-16-7.164-16-16s7.164-16 16-16h32c8.836 0 16 7.164 16 16S168.8 368 160 368z" />
+                          viewBox="0 0 384 512" class="document-icon">
                         </svg>
                       </div>
                       <div nz-col nzSpan="1"></div>
-                      <div nz-col nzSpan="19">
+                      <div nz-col nzSpan="19" class="document-info">
                         <span>{{ upload }}&nbsp;&nbsp;<a><i nz-icon nzType="eye" (click)="showfile()"
-                              nzTheme="outline"></i>
+                              nzTheme="outline" class="preview-eye-icon"></i>
                             &nbsp;&nbsp;</a>
                           <br />
-                          <span style="font-weight: lighter; font-size: x-small" *ngIf="TYPE == 'pdf'">PDF.{{
-                            fileSizedocKB }}KB</span>
-                          <span style="font-weight: lighter; font-size: x-small" *ngIf="TYPE == 'zip'">ZIP.{{
-                            fileSizedocKB }}KB</span>
-                          <span style="font-weight: lighter; font-size: x-small" *ngIf="TYPE == 'pptx'">PPT.{{
-                            fileSizedocKB }}KB</span>
-                          <span style="font-weight: lighter; font-size: x-small" *ngIf="TYPE == 'txt'">TXT.{{
-                            fileSizedocKB }}KB</span>
-                          <span style="font-weight: lighter; font-size: x-small" *ngIf="TYPE == 'xlsx'">XLSX.{{
-                            fileSizedocKB }}KB</span>
-                          <span style="font-weight: lighter; font-size: x-small" *ngIf="TYPE == 'docx'">DOCX.{{
-                            fileSizedocKB }}KB</span>
+                          <span class="document-size" *ngIf="TYPE == 'pdf'">PDF.{{ fileSizedocKB }}KB</span>
+                          <span class="document-size" *ngIf="TYPE == 'zip'">ZIP.{{ fileSizedocKB }}KB</span>
+                          <span class="document-size" *ngIf="TYPE == 'pptx'">PPT.{{ fileSizedocKB }}KB</span>
+                          <span class="document-size" *ngIf="TYPE == 'txt'">TXT.{{ fileSizedocKB }}KB</span>
+                          <span class="document-size" *ngIf="TYPE == 'xlsx'">XLSX.{{ fileSizedocKB }}KB</span>
+                          <span class="document-size" *ngIf="TYPE == 'docx'">DOCX.{{ fileSizedocKB }}KB</span>
                         </span>
                       </div>
                     </div>
                   </div>
-
                   <br />
-                  <span style="font-size: 13px" [innerHTML]="inputBody"></span>
+                  <span class="preview-body" [innerHTML]="inputBody"></span>
                   <br />
-                  <span style="
-                      font-size: 11px;
-                      font-weight: lighter;
-                      color: #938370b0;
-                    ">{{ data.FOOTER_TEXT }}</span>
+                  <span class="preview-footer">{{ data.FOOTER_TEXT }}</span>
                   <br />
-                  <hr />
-
+                  <hr class="preview-divider" />
                   <div nz-row nzSpan="24">
-                    <table>
+                    <table class="preview-buttons-table">
                       <thead>
                         <tr>
                           <th></th>
@@ -850,58 +598,38 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let button of addedButtons" style="display: flex; text-align: center; width: 100%">
-                          <td style="width: 40px"></td>
-                          <td style="width: 130px; text-align: left">
+                        <tr *ngFor="let button of addedButtons" class="preview-button-row">
+                          <td class="button-spacer"></td>
+                          <td class="button-content">
                             <ng-container [ngSwitch]="button.type">
-                              <!-- Icon for 'PHONE_NUMBER' -->
                               <ng-container *ngSwitchCase="'PHONE_NUMBER'">
                                 <a><svg xmlns="http://www.w3.org/2000/svg" width="28" height="14" viewBox="0 0 22 21"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-phone-call">
+                                    stroke-linejoin="round" class="button-icon">
                                     <path
                                       d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
                                     </path>
                                   </svg></a>
                               </ng-container>
-
-                              <!-- Icon for 'COPY_CODE' -->
                               <ng-container *ngSwitchCase="'COPY_CODE'">
-                                <a><span nz-icon nzType="copy" nzTheme="outline"></span></a>
+                                <a><span nz-icon nzType="copy" nzTheme="outline" class="button-icon"></span></a>
                               </ng-container>
-
-                              <!-- Icon for 'URL' -->
                               <ng-container *ngSwitchCase="'URL'">
-                                <a><span nz-icon nzType="link" nzTheme="outline"></span></a>
+                                <a><span nz-icon nzType="link" nzTheme="outline" class="button-icon"></span></a>
                               </ng-container>
-
-                              <!-- Icon for 'QUICK_REPLY' -->
                               <ng-container *ngSwitchCase="'QUICK_REPLY'">
                                 <a><svg xmlns="http://www.w3.org/2000/svg" width="28" height="14" fill="none"
-                                    stroke="currentColor" class="bi bi-box-arrow-up-left" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                      d="M7.364 3.5a.5.5 0 0 1 .5-.5H14.5A1.5 1.5 0 0 1 16 4.5v10a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 3 14.5V7.864a.5.5 0 1 1 1 0V14.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-10a.5.5 0 0 0-.5-.5H7.864a.5.5 0 0 1-.5-.5z">
-                                    </path>
-                                    <path fill-rule="evenodd"
-                                      d="M0 .5A.5.5 0 0 1 .5 0h5a.5.5 0 0 1 0 1H1.707l8.147 8.146a.5.5 0 0 1-.708.708L1 1.707V5.5a.5.5 0 0 1-1 0v-5z">
-                                    </path>
+                                    stroke="currentColor" class="button-icon bi bi-box-arrow-up-left" viewBox="0 0 16 16">
                                   </svg></a>
                               </ng-container>
                             </ng-container>
-                            <a>{{ button.buttonText }}</a>
+                            <a class="button-text">{{ button.buttonText }}</a>
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-
-                  <span style="
-                      font-size: 11px;
-                      font-weight: lighter;
-                      color: #0a0a09b0;
-                      float: right;
-                    ">{{ Date | date : "hh:mm:a" }}
-                  </span>
+                  <span class="preview-time">{{ Date | date : "hh:mm:a" }}</span>
                 </nz-form-item>
               </nz-card>
             </div>
@@ -911,13 +639,11 @@
       </div>
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close()" class="cancel-button">
       <span>Cancel</span>
     </button>
-    <button type="button" class="ant-btn ant-btn-primary" nz-button nz-dropdown
-      style="border-radius: 4px; color: white;" (click)="save(false)" [nzLoading]="isSpinning">
+    <button type="button" class="save-button" nz-button nz-dropdown (click)="save(false)" [nzLoading]="isSpinning">
       <span>Save & Close</span>
     </button>
   </div>

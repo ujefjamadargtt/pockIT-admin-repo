@@ -6,8 +6,6 @@ import { setHours } from 'date-fns';
 import { CookieService } from 'ngx-cookie-service';
 import { ExportService } from 'src/app/Service/export.service';
 import { Ticket } from 'src/app/Support/Models/TicketingSystem';
-
-// import { ChattdetailsicketComponent } from '../chattdetailsicket/chattdetailsicket.component';
 import { ChattdetailsicketComponent } from '../chattdetailsicket/chattdetailsicket.component';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -32,27 +30,21 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
   searchText: string = '';
   filterQuery: string = '';
   isFilterApplied: any = 'default';
-  savedFilters: any; // Define the type of savedFilters if possible
-
+  savedFilters: any; 
   columns: string[][] = [
     ['CREATER_NAME', 'Creator Name'],
     ['DEPARTMENT_NAME', 'Department Name'],
     ['TICKET_NO', 'Ticket No.'],
-
     ['TICKET_TAKEN_EMPLOYEE', 'Ticket Taken By'],
     ['TICKET_TAKEN_DEPARTMENT_NAME', 'Department Name'],
   ];
-
-  // USER_ID: any
   supportUsers: any = [];
   branches: any;
   TICKET_GENERATOR_BRANCH_ID: any = [];
-
   BRANCH = [];
   DEPARTMENT_ID: any = [];
   DEPARTMENT: any = [];
   TICKET_GROUP = [];
-  // ticketGroups = [];
   departments: any = [];
   SUPPORT_USER = 'AL';
   isSpinning = false;
@@ -68,8 +60,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
   drawerData: Ticket = new Ticket();
   uniqueDateArry: any[] = [];
   newData2: any = [];
-  // data1 = [];
-  // ticketGroups: Ticketgroup[] = [];
   index = 0;
   ticketQuestion = {};
   value1: string = '';
@@ -78,23 +68,17 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
   supportusers: any;
   roleId = Number(this.cookie.get('roleId'));
   orgId = Number(this.cookie.get('orgId'));
-
-  // orgName: string = this.api.ORGANIZATION_NAME;
   isButtonSpinning: boolean = false;
   FROM_DATE: any = new Date();
   TO_DATE: any = new Date();
   endOpen = false;
-  // startOpen = false;
   employees = [];
   EXECUTIVE_ID: any = [];
   DATE: any;
-
   CurrentValue: any = new Date();
-
   dateQuery: string = '';
   START_DATE: any = new Date();
   END_DATE: any = new Date();
-
   isfilterapply: boolean = false;
   orderData: any;
   filterdrawerTitle!: string;
@@ -117,7 +101,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   ngOnInit(): void {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -134,7 +117,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   getSupportUsers() {
     this.supportUsers = [];
-
     this.api
       .getAllemployeeMaster(
         0,
@@ -147,8 +129,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
         (data) => {
           if (data['code'] == 200) {
             this.supportUsers = data['data'];
-            // this.onSelectAllCheckedUserID(true);
-            // this.getDepartments();
           }
         },
         (err) => { }
@@ -157,40 +137,7 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   SELECT_ALL_UserID: boolean = false;
-  // onSelectAllCheckedUserID(event) {
-
-  //   this.SELECT_ALL_UserID = event
-
-  //   //
-  //   let ids = [];
-  //   if (this.SELECT_ALL_UserID == true) {
-  //     for (var i = 0; i < this.supportUsers.length; i++) {
-  //       // ids.push(this.supportUsers[i]["ID"]);
-  //       //
-  //     }
-  //   } else {
-  //     ids = [];
-  //   }
-  //   this.USER_ID = ids
-  // }
-
-  // onSelectOffUserID(event) {
-  //   var a = this.supportUsers.length
-  //   var b = this.supportUsers.length - event.length
-  //   if (a! = b) {
-  //     this.SELECT_ALL_UserID = false;
-  //   } else {
-  //     this.SELECT_ALL_UserID = true;
-
-  //   }
-  //   this.USER_ID = event
-  //   if (this.USER_ID.length == 0) {
-  //     this.SELECT_ALL_UserID = false;
-  //   }
-  // }
-
   getDepartments() {
     this.api
       .getAllDepartments(
@@ -202,11 +149,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       )
       .subscribe(
         (data) => {
-          // if (data['status'] == 200) {
-          //   this.departments = data.body['data'];
-          //   // this.onSelectAllChecked(true);
-          //   // this.getBranches()
-          // }
           if (data['status'] == 200) {
             if (data.body['count'] > 0) {
               data.body['data'].forEach((element) => {
@@ -221,7 +163,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
         (err) => { }
       );
   }
-
   distinctData: any = [];
   onFilterClick(columnKey: string): void {
     this.api.getDistinctData(126, columnKey).subscribe(
@@ -243,40 +184,35 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
   onCountryChange(): void {
     if (this.selectedCountries?.length) {
       this.search();
-      this.isCountryFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isCountryFilterApplied = true; 
     } else {
       this.search();
-      this.isCountryFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isCountryFilterApplied = false; 
     }
   }
-
   isCountryFilterApplied1 = false;
   countryVisible1: boolean = false;
   onCountryChange1(): void {
     if (this.selectedCountries1?.length) {
       this.search();
-      this.isCountryFilterApplied1 = true; // Filter applied if selectedCategories has values
+      this.isCountryFilterApplied1 = true; 
     } else {
       this.search();
-      this.isCountryFilterApplied1 = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isCountryFilterApplied1 = false; 
     }
   }
   SELECT_ALL: boolean = false;
   onSelectAllChecked(event) {
     this.SELECT_ALL = event;
-    //
     let ids = [];
     if (this.SELECT_ALL == true) {
       for (var i = 0; i < this.departments.length; i++) {
-        // ids.push(this.departments[i]["ID"]);
-        //
       }
     } else {
       ids = [];
     }
     this.DEPARTMENT = ids;
   }
-
   onSelectOff(event) {
     var a = this.departments.length;
     var b = this.departments.length - event.length;
@@ -290,10 +226,8 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       this.SELECT_ALL = false;
     }
   }
-
   getBranches() {
     this.branches = [];
-
     this.api
       .getAllBranch(
         0,
@@ -306,23 +240,17 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
         (data) => {
           if (data['code'] == 200) {
             this.branches = data['data'];
-            // this.onSelectAllCheckedBranch(true);
-            // this.search(true);
           }
         },
         (err) => { }
       );
   }
-
   SELECT_ALL_Branch: boolean = false;
   onSelectAllCheckedBranch(event) {
     this.SELECT_ALL_Branch = event;
-    //
     let ids = [];
     if (this.SELECT_ALL_Branch == true) {
       for (var i = 0; i < this.branches.length; i++) {
-        // ids.push(this.branches[i]["ID"]);
-        //
       }
     } else {
       ids = [];
@@ -342,50 +270,39 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       this.SELECT_ALL_Branch = false;
     }
   }
-
   keyup(event: any) {
     this.search(true);
   }
-
   startOpen: boolean = false;
-
   onStartChange(date: Date): void {
     this.START_DATE = date;
   }
   onEndChange(date: Date): void {
     this.END_DATE = date;
   }
-
   handleStartOpenChange(open: boolean): void {
     if (!open) {
       this.endOpen = true;
     }
   }
-
   handleEndOpenChange(open: boolean): void {
     this.endOpen = open;
   }
-
   disabledStartDate = (START_DATE: Date): boolean => {
     if (!START_DATE || !this.END_DATE) {
       return false;
     }
     return START_DATE.getTime() > this.END_DATE;
   };
-
   current = new Date();
-
   disabledEndDate = (END_DATE: Date): boolean => {
     if (!END_DATE) {
       return false;
     }
-
     var previousDate = new Date(this.START_DATE);
     previousDate.setDate(previousDate.getDate() + -1);
-
     return END_DATE <= new Date(previousDate);
   };
-
   isOrderNumberApplied: boolean = false;
   isOrderDateApplied = false;
   isOrderStatusApplied = false;
@@ -418,36 +335,12 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       this.search();
       this.isOrderNumberApplied = false;
     }
-
-    // if (this.orderStatusText.length >= 3 && event.key === "Enter") {
-    //   this.search();
-    //   this.isorderStatusApplied = true;
-    // } else if (this.orderStatusText.length == 0 && event.key === "Backspace") {
-    //   this.search();
-    //   this.isorderStatusApplied = false;
-    // }
-    // if (this.reasonText.length >= 3 && event.key === "Enter") {
-    //   this.search();
-    //   this.isreasonApplied = true;
-    // } else if (this.reasonText.length == 0 && event.key === "Backspace") {
-    //   this.search();
-    //   this.isreasonApplied = false;
-    // }
-    // if (this.cancelDateText != null && event.key === 'Enter') {
-    //   this.search();
-    //   this.isOrderDateApplied = true;
-    // } else if (this.cancelDateText == null && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isOrderDateApplied = false;
-    // }
   }
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
-
   onKeyupS(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -461,7 +354,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   EditQueryData = [];
   editButton: any;
@@ -482,7 +374,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -499,8 +390,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       groups: [],
     },
   ];
-
-
   filterData: any;
   currentClientId = 1
   openfilter() {
@@ -508,7 +397,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       ' Department Wise Ticket Auto Close Detailed Report Filter';
     this.filterFields[2]['options'] = this.departments;
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -517,13 +405,9 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -540,10 +424,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
         groups: [],
       },
     ];
-
-
-
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -561,12 +441,8 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       },
     ];
   }
-
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -574,10 +450,8 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
@@ -587,14 +461,10 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     this.selectedQuery = '';
   }
   isDeleting: boolean = false;
-
-
   editQuery(data: any) {
-
     this.filterFields[2]['options'] = this.departments;
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -603,28 +473,23 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     this.drawerFilterVisible = true;
   }
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   nameFilter() {
     if (this.customerNameText.trim() === '') {
       this.searchText = '';
     } else if (this.customerNameText.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   nameFilter1() {
     if (this.customerNameText1.trim() === '') {
       this.searchText = '';
     } else if (this.customerNameText1.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   dataList2 = [];
@@ -633,10 +498,7 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-
-    // this.loadingRecords = true;
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
@@ -645,12 +507,8 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     if (this.DEPARTMENT != undefined || this.DEPARTMENT.length > 0) {
       this.DEPARTMENT_ID = this.DEPARTMENT;
     }
-
-    //
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -661,67 +519,48 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (this.orderDateText?.length === 2) {
       const [start, end] = this.orderDateText;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `DATE BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00'`;
       }
     }
-
     if (this.orderDateText1?.length === 2) {
       const [start, end] = this.orderDateText1;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `LAST_RESPONDED BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00'`;
       }
     }
-
     if (this.orderDateText2?.length === 2) {
       const [start, end] = this.orderDateText2;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `CREATED_MODIFIED_DATE BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00'`;
       }
     }
-
-    // if (this.customerNameText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `CREATER_NAME LIKE '%${this.customerNameText.trim()}%'`;
-    // }
-
     if (this.customerNameText?.trim()) {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -738,11 +577,9 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
         (likeQuery ? ' AND ' : '') +
         `TICKET_TAKEN_EMPLOYEE LIKE '%${this.customerNameText1.trim()}%'`;
     }
-
     if (this.orderNumberText !== '') {
       likeQuery += `TICKET_NO LIKE '%${this.orderNumberText.trim()}%'`;
     }
-
     this.START_DATE = this.datePipe.transform(this.START_DATE, 'yyyy-MM-dd');
     this.END_DATE = this.datePipe.transform(this.END_DATE, 'yyyy-MM-dd');
     if (this.selectedCountries.length > 0) {
@@ -751,55 +588,17 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       }
       likeQuery += `DEPARTMENT_NAME IN ('${this.selectedCountries.join(
         "','"
-      )}')`; // Update with actual field name in the DB
+      )}')`; 
     }
-
     if (this.selectedCountries1.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `TICKET_TAKEN_DEPARTMENT_NAME IN ('${this.selectedCountries1.join(
         "','"
-      )}')`; // Update with actual field name in the DB
+      )}')`; 
     }
-    // if (exportInExcel == false) {
-    //   this.loadingRecords = true;
-    //   this.isSpinning = true;
-    //   this.api.getGroupWiseAutoClose(this.pageIndex, this.pageSize, this.sortKey, this.sortValue, this.filterQuery + likeQuery, this.START_DATE, this.END_DATE, this.USER_ID, this.DEPARTMENT_ID, this.TICKET_GENERATOR_BRANCH_ID).subscribe(data => {
-    //     this.loadingRecords = false;
-    //     this.isSpinning = false;
-    //     this.totalRecords = data['count'];
-    //     this.dataList = data['data'];
-    //     this.totalRecords = data["count"];
-    //     this.TabId = data["TAB_ID"];
-    //   }, err => {
-    //
-    //     // this.isSpinning = false;
-    //     // this.loadingRecords = false;
-    //     this.message.error("Server Not Found", "");
-    //   });
-    // }
-    // else {
-    //   this.exportLoading = true;
-    //   this.api.getGroupWiseAutoClose(0, 0, this.sortKey, this.sortValue, this.filterQuery + likeQuery, this.START_DATE, this.END_DATE, this.USER_ID, this.DEPARTMENT_ID, this.TICKET_GENERATOR_BRANCH_ID).subscribe(data => {
-    //     if (data['code'] == 200) {
-    //       this.exportLoading = false;
-    //       this.isSpinning = false;
-    //       this.loadingRecords = false;
-    //       this.dataList2 = data['data'];
-    //       this.convertInExcel();
-    //     }
-    //   },
-    //     err => {
-    //       if (err['ok'] == false)
-    //         this.isSpinning = false;
-    //       this.loadingRecords = false;
-    //       this.message.error("Server Not Found", "");
-    //     });
-    // }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.api
         .getGroupWiseAutoClose(
@@ -899,7 +698,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     this.orderDateText = '';
     this.orderDateText1 = '';
     this.orderDateText2 = '';
-
     this.customerNameText = '';
     this.orderNumberText = '';
     this.orderNumberVisible = false;
@@ -920,7 +718,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     { text: 'Banned', value: 'B' },
     { text: 'On-Hold', value: 'H' },
   ];
-
   onDateChange(selectedDate: any): void {
     if (this.orderDateText && this.orderDateText.length === 2) {
       this.search();
@@ -931,7 +728,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
   }
   statusFilter1: string | undefined = undefined;
   OrderStatusVisible: boolean = false;
-
   orderStatusVisible: boolean = false;
   onorderStatusFilterChange(selectedStatus: string) {
     this.statusFilter1 = selectedStatus;
@@ -966,28 +762,22 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     }
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
   TabId: number;
-
   filterloading: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -995,16 +785,12 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1019,22 +805,15 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1048,8 +827,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1058,10 +835,7 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -1077,14 +851,10 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           }
         } else {
           this.message.error('Failed to delete filter.', '');
@@ -1105,9 +875,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       }
     );
   }
-
-
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -1116,39 +883,24 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       this.loadFilters();
     }
   }
-
-
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
-
   drawerfilterClose(buttontype, updateButton): void {
-
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
-
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-
       this.loadFilters();
     }
   }
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
@@ -1263,7 +1015,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       ],
       placeholder: 'Select Auto close Date Time',
     },
-
     {
       key: 'STATUS',
       label: 'Status',
@@ -1298,14 +1049,12 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
         this.dataList2[i]['TICKET_GENERATOR_BRANCH'] == null
           ? '-'
           : this.dataList2[i]['TICKET_GENERATOR_BRANCH'];
-
       obj1['Created Date'] = this.dataList2[i]['DATE']
         ? this.datePipe.transform(
           this.dataList2[i]['DATE'],
           'dd/MM/yyyy hh:mm a'
         )
         : '-';
-
       obj1['Ticket Taken By'] =
         this.dataList2[i]['TICKET_TAKEN_EMPLOYEE'] == null
           ? '-'
@@ -1314,21 +1063,18 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
         this.dataList2[i]['TICKET_TAKEN_DEPARTMENT_NAME'] == null
           ? '-'
           : this.dataList2[i]['TICKET_TAKEN_DEPARTMENT_NAME'];
-
       obj1['Last Responded'] = this.dataList2[i]['LAST_RESPONDED']
         ? this.datePipe.transform(
           this.dataList2[i]['LAST_RESPONDED'],
           'dd/MM/yyyy hh:mm a'
         )
         : '-';
-
       obj1['Auto close Date Time'] = this.dataList2[i]['CREATED_MODIFIED_DATE']
         ? this.datePipe.transform(
           this.dataList2[i]['CREATED_MODIFIED_DATE'],
           'dd/MM/yyyy hh:mm a'
         )
         : '-';
-
       if (this.dataList2[i]['STATUS'] == 'P') {
         obj1['Status'] = 'Pending';
       } else if (this.dataList2[i]['STATUS'] == 'C') {
@@ -1344,7 +1090,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       } else if (this.dataList2[i]['STATUS'] == 'H') {
         obj1['Status'] = 'On-Hold';
       }
-
       arry1.push(Object.assign({}, obj1));
       if (i == this.dataList2.length - 1) {
         this._exportService.exportExcel1(
@@ -1355,43 +1100,32 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
       }
     }
   }
-
-  // @ViewChild(ChattdetailsicketComponent, { static: false }) ChattdetailsicketComponentVar: ChattdetailsicketComponent;
   grpid = 0;
   bread = [];
   newstr: string;
   GRPNAME = '';
   isloading = false;
-
   viewTicketData(data: any) {
     this.isloading = true;
-
     this.newData2 = [];
     this.data1 = [];
-    // this.ChattdetailsicketComponentVar.loading = true;
     this.drawerTitle = 'Ticket No. ' + data.TICKET_NO;
     this.drawerData = Object.assign({}, data);
     var filterQuery1 = ' AND TICKET_MASTER_ID = ' + data.TICKET_MASTER_ID + '';
     this.uniqueDateArry = [];
-
     this.api
       .getAllTicketDetails(0, 0, 'CREATED_MODIFIED_DATE', 'asc', filterQuery1)
       .subscribe(
         (data) => {
           if (data['status'] == 200) {
-            // this.ChattdetailsicketComponentVar.loading = false;
             this.totalRecords = data.body['count'];
             this.data1 = data.body['data'];
             this.isloading = false;
-
-            // this.grpid = this.data1[0]['TICKET_GROUP_ID'];
             if (data['count'] > 0) {
               this.grpid = this.data1[0]['TICKET_GROUP_ID'];
             } else {
               this.grpid = 0;
             }
-
-            // Getting Unique dates
             for (var i = 0; i < this.data1.length; i++) {
               this.uniqueDateArry.push(
                 this.datePipe.transform(
@@ -1400,10 +1134,8 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
                 )
               );
             }
-
             this.uniqueDateArry = [...new Set(this.uniqueDateArry)];
             this.uniqueDateArry.sort();
-
             this.uniqueDateArry.forEach((d1) => {
               this.newData2.push({
                 key: d1,
@@ -1416,10 +1148,7 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
                 ),
               });
             });
-
             this.data1 = this.newData2;
-            // this.ChattdetailsicketComponentVar.scrollIntoViewFunction();
-
             this.api
               .getBreadInChat(0, 0, 'ID', 'desc', '', '', this.grpid)
               .subscribe(
@@ -1428,7 +1157,6 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
                     this.bread = data.body['data'];
                     this.newstr = '';
                     this.GRPNAME = '';
-
                     for (var i = 0; i < this.bread.length; i++) {
                       this.GRPNAME =
                         this.GRPNAME + '>' + this.bread[i]['VALUE'];
@@ -1444,20 +1172,15 @@ export class GroupWiseAutoCloseTicketComponent implements OnInit {
         },
         (err) => { }
       );
-
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search(false);
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   onEnterKeyPress() {
-    // document.getElementById("searchBtn").focus();
   }
 }

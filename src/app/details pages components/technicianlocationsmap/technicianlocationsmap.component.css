@@ -1,5 +1,13 @@
-.emptyDataTex{
+.emptyDataTex {
   color: grey;
   font-weight: 500;
   font-size: 20px;
+}
+.map-container {
+  height: 500px;
+  width: 100%;
+}
+.map-no-data {
+  text-align: center;
+  margin-top: 20vh;
 }

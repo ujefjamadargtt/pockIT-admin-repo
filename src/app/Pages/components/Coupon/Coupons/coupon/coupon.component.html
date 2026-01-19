@@ -1,5 +1,4 @@
 <div>
-  <!-- <form nz-form> -->
   <form nz-form #couponMasterPage="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
       <div nz-row>
@@ -7,59 +6,25 @@
           <div nz-row>
             <div nz-col nzSpan="24">
               <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Country </nz-form-label>
-                <nz-form-control
-                  nzHasFeedback
-                  nzErrorTip="Please Select Country"
-                >
-                  <nz-select
-                    name="COUNTRY_ID"
-                    [nzLoading]="loadingCouponTypes"
-                    nzShowSearch
-                    nzAllowClear
-                    required
-                    style="width: 100%"
-                    nzPlaceHolder="Select Country"
-                    [(ngModel)]="data.COUNTRY_ID"
-                    placeholder="Select Country"
-                  >
-                    <nz-option
-                      *ngFor="let country of countryList"
-                      [nzValue]="country.ID"
-                      [nzLabel]="country.NAME"
-                    >
-                    </nz-option>
+                <nz-form-label nzRequired nzNoColon>Country</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Please Select Country">
+                  <nz-select name="COUNTRY_ID" [nzLoading]="loadingCouponTypes" nzShowSearch nzAllowClear required
+                    nzPlaceHolder="Select Country" [(ngModel)]="data.COUNTRY_ID" placeholder="Select Country"
+                    class="coupon-width-full-a1">
+                    <nz-option *ngFor="let country of countryList" [nzValue]="country.ID"
+                      [nzLabel]="country.NAME"></nz-option>
                   </nz-select>
                 </nz-form-control>
               </nz-form-item>
             </div>
-
             <div nz-col nzSpan="24">
               <nz-form-item>
-                <nz-form-label nzRequired nzNoColon
-                  >Coupon Type Name
-                </nz-form-label>
-                <nz-form-control
-                  nzHasFeedback
-                  nzErrorTip="Please Select Coupon Type"
-                >
-                  <nz-select
-                    name="Coupon_type_id"
-                    [nzLoading]="loadingCouponTypes"
-                    nzShowSearch
-                    nzAllowClear
-                    required
-                    style="width: 100%"
-                    nzPlaceHolder="Select Coupon Type"
-                    [(ngModel)]="data.COUPON_TYPE_ID"
-                    placeholder="Select Coupon Type Name"
-                  >
-                    <nz-option
-                      *ngFor="let val of couponTypes"
-                      [nzValue]="val.ID"
-                      [nzLabel]="val.NAME"
-                    >
-                    </nz-option>
+                <nz-form-label nzRequired nzNoColon>Coupon Type Name</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Please Select Coupon Type">
+                  <nz-select name="Coupon_type_id" [nzLoading]="loadingCouponTypes" nzShowSearch nzAllowClear required
+                    nzPlaceHolder="Select Coupon Type" [(ngModel)]="data.COUPON_TYPE_ID"
+                    placeholder="Select Coupon Type Name" class="coupon-width-full-a1">
+                    <nz-option *ngFor="let val of couponTypes" [nzValue]="val.ID" [nzLabel]="val.NAME"></nz-option>
                   </nz-select>
                 </nz-form-control>
               </nz-form-item>
@@ -68,25 +33,12 @@
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Name</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please enter name">
-                  <input
-                    nz-input
-                    name="name"
-                    type="text"
-                    [(ngModel)]="data.NAME"
-                    maxlength="64"
-                    required
-                    autocomplete="off"
-                    placeholder="Enter Name"
-                    (focus)="isFocused = 'NAME'"
-                    (blur)="isFocused = ''"
-                  />
-                  <h6
-                    style="color: red; font-size: 10px"
-                    *ngIf="
+                  <input nz-input name="name" type="text" [(ngModel)]="data.NAME" maxlength="64" required
+                    autocomplete="off" placeholder="Enter Name" (focus)="isFocused = 'NAME'" (blur)="isFocused = ''" />
+                  <h6 class="coupon-text-counter-a1" *ngIf="
                       isFocused === 'NAME' ||
                       (data.NAME && isFocused === 'NAME')
-                    "
-                  >
+                    ">
                     {{ data.NAME.length }}/64
                   </h6>
                 </nz-form-control>
@@ -95,20 +47,9 @@
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Coupon For</nz-form-label>
-                <nz-form-control
-                  nzHasFeedback
-                  nzErrorTip="Please Enter Coupon For"
-                >
-                  <nz-select
-                    [nzDisabled]="isEdit"
-                    nz-input
-                    required
-                    nzPlaceHolder="Select Coupon For"
-                    nzAllowClear
-                    nzShowSearch
-                    name="selectcouponfor"
-                    [(ngModel)]="data.COUPON_FOR"
-                  >
+                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Coupon For">
+                  <nz-select [nzDisabled]="isEdit" nz-input required nzPlaceHolder="Select Coupon For" nzAllowClear
+                    nzShowSearch name="selectcouponfor" [(ngModel)]="data.COUPON_FOR">
                     <nz-option nzLabel="Both" nzValue="BO"></nz-option>
                     <nz-option nzLabel="Inventory" nzValue="IN"></nz-option>
                     <nz-option nzLabel="Services" nzValue="SE"></nz-option>
@@ -119,29 +60,14 @@
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Coupon Code</nz-form-label>
-                <nz-form-control
-                  nzHasFeedback
-                  nzErrorTip="Please Enter Coupon Code"
-                >
-                  <input
-                    nz-input
-                    name="coupon_code"
-                    type="text"
-                    autocomplete="off"
-                    [(ngModel)]="data.COUPON_CODE"
-                    placeholder="Coupon Code"
-                    maxlength="20"
-                    required
-                    (focus)="isFocused = 'COUPON_CODE'"
-                    (blur)="isFocused = ''"
-                  />
-                  <h6
-                    style="color: red; font-size: 10px"
-                    *ngIf="
+                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Coupon Code">
+                  <input nz-input name="coupon_code" type="text" autocomplete="off" [(ngModel)]="data.COUPON_CODE"
+                    placeholder="Coupon Code" maxlength="20" required (focus)="isFocused = 'COUPON_CODE'"
+                    (blur)="isFocused = ''" />
+                  <h6 class="coupon-text-counter-a1" *ngIf="
                       isFocused === 'COUPON_CODE' ||
                       (data.COUPON_CODE && isFocused === 'COUPON_CODE')
-                    "
-                  >
+                    ">
                     {{ data.COUPON_CODE.length }}/20
                   </h6>
                 </nz-form-control>
@@ -149,44 +75,22 @@
             </div>
             <div nz-col nzSpan="12">
               <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Start Date </nz-form-label>
-                <nz-form-control
-                  nzHasFeedback
-                  nzErrorTip="Please Select Start Date"
-                >
-                  <nz-date-picker
-                    [nzShowTime]="{ nzFormat: 'HH:mm' }"
-                    name="start_date"
-                    [nzFormat]="'dd/MM/yyyy HH:mm a'"
-                    [(ngModel)]="data.START_DATE"
-                    placeholder="Start Date"
-                    [nzDisabledDate]="disabledStartDate"
-                    [nzDisabledTime]="disabledDateTime"
-                    (ngModelChange)="onStartDateChange()"
-                    required
-                  >
-                  </nz-date-picker>
+                <nz-form-label nzRequired nzNoColon>Start Date</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Please Select Start Date">
+                  <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" name="start_date"
+                    [nzFormat]="'dd/MM/yyyy HH:mm a'" [(ngModel)]="data.START_DATE" placeholder="Start Date"
+                    [nzDisabledDate]="disabledStartDate" [nzDisabledTime]="disabledDateTime"
+                    (ngModelChange)="onStartDateChange()" required></nz-date-picker>
                 </nz-form-control>
               </nz-form-item>
             </div>
             <div nz-col nzSpan="12">
               <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Expiry Date </nz-form-label>
-                <nz-form-control
-                  nzHasFeedback
-                  nzErrorTip="Please Select Expiry Date"
-                >
-                  <nz-date-picker
-                    [nzShowTime]="{ nzFormat: 'HH:mm' }"
-                    name="expiry_date"
-                    [nzFormat]="'dd/MM/yyyy HH:mm a'"
-                    [(ngModel)]="data.EXPIRY_DATE"
-                    placeholder="End Date"
-                    [nzDisabledDate]="disabledEndDate"
-                    [nzDisabledTime]="disabledDateTime2"
-                    required
-                  >
-                  </nz-date-picker>
+                <nz-form-label nzRequired nzNoColon>Expiry Date</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Please Select Expiry Date">
+                  <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" name="expiry_date"
+                    [nzFormat]="'dd/MM/yyyy HH:mm a'" [(ngModel)]="data.EXPIRY_DATE" placeholder="End Date"
+                    [nzDisabledDate]="disabledEndDate" [nzDisabledTime]="disabledDateTime2" required></nz-date-picker>
                 </nz-form-control>
               </nz-form-item>
             </div>
@@ -196,95 +100,60 @@
         <div nz-col nzSpan="6" class="my-box">
           <div nz-col nzSpan="24">
             <nz-form-item>
-              <nz-form-label nzRequired nzNoColon
-                >Max Usage Count</nz-form-label
-              >
+              <nz-form-label nzRequired nzNoColon>Max Usage Count</nz-form-label>
               <nz-form-control nzErrorTip="Please Enter Max Usage Count">
-                <input
-                  nz-input
-                  (keypress)="commonFunction.onlynum($event)"
-                  name="max_uses_count"
-                  style="width: 100%"
-                  [(ngModel)]="data.MAX_USES_COUNT"
-                  required
-                  autocomplete="off"
-                  [placeholder]="'Enter Max Usage Count'"
-                />
+                <input nz-input (keypress)="commonFunction.onlynum($event)" name="max_uses_count"
+                  [(ngModel)]="data.MAX_USES_COUNT" required autocomplete="off" placeholder="Enter Max Usage Count"
+                  class="coupon-width-full-a1" />
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="24">
             <nz-form-item>
-              <nz-form-label nzRequired nzNoColon
-                >Per User Max Count</nz-form-label
-              >
+              <nz-form-label nzRequired nzNoColon>Per User Max Count</nz-form-label>
               <nz-form-control nzErrorTip="Please Enter Per User Max Count">
-                <input
-                  nz-input
-                  (keypress)="commonFunction.onlynum($event)"
-                  name="peruser_max_count"
-                  style="width: 100%"
-                  [(ngModel)]="data.PERUSER_MAX_COUNT"
-                  required
-                  autocomplete="off"
-                  [placeholder]="'Enter Per User Max Count'"
-                />
+                <input nz-input (keypress)="commonFunction.onlynum($event)" name="peruser_max_count"
+                  [(ngModel)]="data.PERUSER_MAX_COUNT" required autocomplete="off"
+                  placeholder="Enter Per User Max Count" class="coupon-width-full-a1" />
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="24">
             <nz-form-item>
-              <nz-form-label nzRequired nzNoColon
-                >Min Cart Amount</nz-form-label
-              >
+              <nz-form-label nzRequired nzNoColon>Min Cart Amount</nz-form-label>
               <nz-form-control nzErrorTip="Please Enter Min Cart Amount">
                 <nz-input-group nzAddOnAfter="₹">
-                  <input
-                    nz-input
-                    (keypress)="commonFunction.onlynum($event)"
-                    name="min_cart_amount"
-                    style="width: 100%"
-                    [(ngModel)]="data.MIN_CART_AMOUNT"
-                    (ngModelChange)="onMinValueChange()"
-                    required
-                    autocomplete="off"
-                    [placeholder]="'Enter Min Cart Amount'"
-                  />
+                  <input nz-input (keypress)="commonFunction.onlynum($event)" name="min_cart_amount"
+                    [(ngModel)]="data.MIN_CART_AMOUNT" (ngModelChange)="onMinValueChange()" required autocomplete="off"
+                    placeholder="Enter Min Cart Amount" class="coupon-width-full-a1" />
                 </nz-input-group>
               </nz-form-control>
             </nz-form-item>
           </div>
         </div>
         <div nz-col nzSpan="1"></div>
-
         <div nz-col nzSpan="6" class="my-box">
           <div nz-col nzSpan="24">
             <nz-form-item>
-              <nz-form-label nzNoColon>Coupon Value Type </nz-form-label>
+              <nz-form-label nzNoColon>Coupon Value Type</nz-form-label>
               <nz-form-control>
-                <nz-radio-group
-                  name="couponvaluetype"
-                  [nzButtonStyle]="'solid'"
-                  [(ngModel)]="data.COUPON_VALUE_TYPE"
-                  (ngModelChange)="onCouponTypeChange()"
-                >
+                <nz-radio-group name="couponvaluetype" [nzButtonStyle]="'solid'" [(ngModel)]="data.COUPON_VALUE_TYPE"
+                  (ngModelChange)="onCouponTypeChange()">
                   <span *ngIf="data.COUPON_VALUE_TYPE == 'A'">
                     <label nz-radio-button nzValue="A">
-                      <span style="color: white"> Amt(₹) </span></label
-                    >
-                    <label nz-radio-button nzValue="P"
-                      ><span style="color: black"> Per(%) </span></label
-                    >
+                      <span class="coupon-radio-active-a1">Amt(₹)</span>
+                    </label>
+                    <label nz-radio-button nzValue="P">
+                      <span class="coupon-radio-inactive-a1">Per(%)</span>
+                    </label>
                   </span>
                   <span *ngIf="data.COUPON_VALUE_TYPE == 'P'">
                     <label nz-radio-button nzValue="A">
-                      <span style="color: black"> Amt(₹) </span></label
-                    >
-                    <label nz-radio-button nzValue="P"
-                      ><span style="color: white"> Per(%) </span></label
-                    >
+                      <span class="coupon-radio-inactive-a1">Amt(₹)</span>
+                    </label>
+                    <label nz-radio-button nzValue="P">
+                      <span class="coupon-radio-active-a1">Per(%)</span>
+                    </label>
                   </span>
                 </nz-radio-group>
               </nz-form-control>
@@ -295,38 +164,20 @@
               <nz-form-label nzRequired nzNoColon>Coupon Value</nz-form-label>
               <nz-form-control nzErrorTip="Please Enter Coupon Value">
                 <nz-input-group nzAddOnAfter="₹">
-                  <input
-                    #coupntypea
-                    nz-input
-                    (keypress)="commonFunction.onlynum($event)"
-                    name="coupon_value"
-                    style="width: 100%"
-                    [(ngModel)]="data.COUPON_VALUE"
-                    required
-                    autocomplete="off"
-                    [placeholder]="'Enter Coupon Value'"
-                    (ngModelChange)="updateMaxValue($event)"
-                  />
+                  <input nz-input (keypress)="commonFunction.onlynum($event)" name="coupon_value"
+                    [(ngModel)]="data.COUPON_VALUE" required autocomplete="off" placeholder="Enter Coupon Value"
+                    class="coupon-width-full-a1" (ngModelChange)="updateMaxValue($event)" />
                 </nz-input-group>
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="24" *ngIf="data.COUPON_VALUE_TYPE == 'P'">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Coupon Value</nz-form-label>
               <nz-form-control nzErrorTip="Please Enter Coupon Value">
                 <nz-input-group nzAddOnAfter="%">
-                  <input
-                    nz-input
-                    (keypress)="onlynum($event)"
-                    name="coupon_value1"
-                    style="width: 100%"
-                    [(ngModel)]="data.COUPON_VALUE"
-                    required
-                    autocomplete="off"
-                    [placeholder]="'Enter Coupon Value'"
-                  />
+                  <input nz-input (keypress)="onlynum($event)" name="coupon_value1" [(ngModel)]="data.COUPON_VALUE"
+                    required autocomplete="off" placeholder="Enter Coupon Value" class="coupon-width-full-a1" />
                 </nz-input-group>
               </nz-form-control>
             </nz-form-item>
@@ -336,19 +187,10 @@
               <nz-form-label nzNoColon>Coupon Max Value</nz-form-label>
               <nz-form-control nzErrorTip="Please Enter Coupon Max Value">
                 <nz-input-group nzAddOnAfter="₹">
-                  <input
-                    #couponmaxvalue
-                    nz-input
-                    (keypress)="commonFunction.onlynum($event)"
-                    name="coupon_max_value"
-                    style="width: 100%"
-                    [(ngModel)]="data.COUPON_MAX_VALUE"
-                    (ngModelChange)="onCouponMaxValueChange($event)"
-                    required
-                    autocomplete="off"
-                    [placeholder]="'Enter Coupon Max Value'"
-                    [disabled]="data.COUPON_VALUE_TYPE == 'A'"
-                  />
+                  <input nz-input (keypress)="commonFunction.onlynum($event)" name="coupon_max_value"
+                    [(ngModel)]="data.COUPON_MAX_VALUE" (ngModelChange)="onCouponMaxValueChange($event)" required
+                    autocomplete="off" placeholder="Enter Coupon Max Value" [disabled]="data.COUPON_VALUE_TYPE == 'A'"
+                    class="coupon-width-full-a1" />
                 </nz-input-group>
               </nz-form-control>
             </nz-form-item>
@@ -358,102 +200,43 @@
               <nz-form-item>
                 <nz-form-label nzNoColon>Status</nz-form-label>
                 <nz-form-control>
-                  <nz-switch
-                    name="status_switch"
-                    nzCheckedChildren="Yes"
-                    nzUnCheckedChildren="No"
-                    [(ngModel)]="data.STATUS"
-                  ></nz-switch>
+                  <nz-switch name="status_switch" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                    [(ngModel)]="data.STATUS"></nz-switch>
                 </nz-form-control>
               </nz-form-item>
             </div>
-
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label nzNoColon>Is For Public</nz-form-label>
                 <nz-form-control>
-                  <nz-switch
-                    name="is_public_switch"
-                    nzCheckedChildren="Yes"
-                    nzUnCheckedChildren="No"
-                    [(ngModel)]="data.IS_PUBLIC"
-                  ></nz-switch>
+                  <nz-switch name="is_public_switch" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                    [(ngModel)]="data.IS_PUBLIC"></nz-switch>
                 </nz-form-control>
               </nz-form-item>
             </div>
           </nz-row>
         </div>
       </div>
-
-      <!-- <div nz-row class="my-box">
-        <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label nzNoColon>Description </nz-form-label>
-            <nz-form-control>
-              <angular-editor style="resize: none; color: black" name="desc" id="editor3" [(ngModel)]="data.DESCRIPTION"
-                [config]="editorConfig" (focus)="isFocused = 'desc'" (blur)="isFocused = ''" maxlength="512"
-                placeholder="Enter Description..." (ngModelChange)="limitTextLength()"></angular-editor>
-              <h6 style="color: red; font-size: 10px" *ngIf="data.DESCRIPTION != undefined">
-                {{ data.DESCRIPTION.length }}/512
-              </h6>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div> -->
     </nz-spin>
   </form>
   <div class="footer">
-    <button
-      type="button"
-      nz-button
-      (click)="close(couponMasterPage)"
-      class="ant-btn"
-      style="margin-right: 8px"
-    >
+    <button type="button" nz-button (click)="close(couponMasterPage)" class="ant-btn coupon-footer-gap-a1">
       <span>Cancel</span>
     </button>
-    <button
-      type="button"
-      class="ant-btn ant-btn-primary"
-      *ngIf="!data.ID"
-      nz-button
-      nz-dropdown
-      [nzDropdownMenu]="menu"
-      [nzLoading]="isSpinning"
-      (click)="save(false, couponMasterPage)"
-    >
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning" (click)="save(false, couponMasterPage)">
       <span>Save & Close</span>
     </button>
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li
-          nz-menu-item
-          class="menuc"
-          style="border-radius: 4px; color: white !important"
-        >
-          <a
-            (click)="save(true, couponMasterPage)"
-            style="color: white !important"
-            >Save & New</a
-          >
+        <li nz-menu-item class="menuc coupon-menu-item-style">
+          <a (click)="save(true, couponMasterPage)" class="coupon-menu-link-white">Save & New</a>
         </li>
       </ul>
     </nz-dropdown-menu>
-    <button
-      type="button"
-      class="ant-btn ant-btn-primary"
-      nz-button
-      [nzLoading]="isSpinning"
-      *ngIf="data.ID"
-      (click)="save(false, couponMasterPage)"
-    >
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, couponMasterPage)">
       <span>Update & close</span>
     </button>
   </div>
-
-  <!-- <div class="header">
-    <button type="button" nz-button (click)="close(couponMasterPage)" class="ant-btn" style="margin-right: 8px">
-      <i nz-icon nzType="close" nzTheme="outline"></i>
-    </button>
-  </div> -->
 </div>

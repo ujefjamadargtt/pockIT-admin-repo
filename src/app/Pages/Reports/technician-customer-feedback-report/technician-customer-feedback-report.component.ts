@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-technician-customer-feedback-report',
   templateUrl: './technician-customer-feedback-report.component.html',
@@ -21,7 +20,6 @@ export class TechnicianCustomerFeedbackReportComponent {
     private datepipe: DatePipe,
     private _exportService: ExportService
   ) { }
-
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -61,17 +59,7 @@ export class TechnicianCustomerFeedbackReportComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // keyup(event) {
-  //   if (this.searchText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.searchText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  // }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -80,17 +68,13 @@ export class TechnicianCustomerFeedbackReportComponent {
   isOrderDateApplied = false;
   isTechnicianNameApplied = false;
   isCustomerNameApplied = false;
-
   ratingtext: string = '';
   isratingNameFilterApplied: boolean = false;
   ratingvisible = false;
-
   commenttext: string = '';
   iscommentFilterApplied: boolean = false;
   commentvisible = false;
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -99,7 +83,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       tooltip.hide();
     }
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.customerNameText.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -108,7 +91,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       this.search();
       this.isCustomerNameApplied = false;
     }
-
     if (this.technicianNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isTechnicianNameApplied = true;
@@ -119,7 +101,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       this.search();
       this.isTechnicianNameApplied = false;
     }
-
     if (this.orderDateText != null && event.key === 'Enter') {
       this.search();
       this.isOrderDateApplied = true;
@@ -127,7 +108,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       this.search();
       this.isOrderDateApplied = false;
     }
-
     if (this.ratingtext.length > 0 && event.key === 'Enter') {
       this.search();
       this.isratingNameFilterApplied = true;
@@ -135,7 +115,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       this.search();
       this.isratingNameFilterApplied = false;
     }
-
     if (this.commenttext.length >= 3 && event.key === 'Enter') {
       this.search();
       this.iscommentFilterApplied = true;
@@ -145,7 +124,6 @@ export class TechnicianCustomerFeedbackReportComponent {
     }
   }
   filterQuery: string = '';
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -154,69 +132,48 @@ export class TechnicianCustomerFeedbackReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   close() {
     this.drawervisible = false;
   }
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
-  //For Input
   countrytext: string = '';
   orderNumberText: string = '';
-  // orderDateText: string = '';
   finalAmountText: string = '';
   orderStatusText: string = '';
   idVisible: boolean = false;
-
   customerNameText: string = '';
   customerNameVisible: boolean = false;
-
   technicianNameText: string = '';
   technicianNameVisible: boolean = false;
   OrderDateVisible = false;
   reset(): void {
     this.customerNameText = '';
     this.isCustomerNameApplied = false;
-
     this.orderDateText = '';
     this.OrderDateVisible = false;
-
     this.technicianNameText = '';
     this.isTechnicianNameApplied = false;
-
     this.search();
   }
   orderDateText: any;
-
   onDateChange(selectedDate: any): void {
-    // this.orderDateText = selectedDate;
-    // if (selectedDate) {
-    //   this.search();  // Call the search function when the date is selected
-    //   this.isOrderDateApplied = true;
-    // } else {
-    //   this.isOrderDateApplied = false;
-    // }
     if (this.orderDateText && this.orderDateText.length === 2) {
       const [start, end] = this.orderDateText;
       if (start && end) {
@@ -224,41 +181,34 @@ export class TechnicianCustomerFeedbackReportComponent {
         this.isOrderDateApplied = true;
       }
     } else {
-      this.orderDateText = null; // or [] if you prefer
+      this.orderDateText = null; 
       this.search();
       this.isOrderDateApplied = false;
     }
   }
-
   resetDateFilter(): void {
     this.orderDateText = '';
     this.commenttext = '';
     this.ratingtext = '';
     this.isOrderDateApplied = false;
-    this.search(); // Reset the search results
+    this.search(); 
   }
-
   ratingFilter() {
     if (this.ratingtext.trim() === '') {
       this.searchText = '';
     } else if (this.ratingtext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   commentFilter() {
     if (this.commenttext.trim() === '') {
       this.searchText = '';
     } else if (this.commenttext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -270,28 +220,18 @@ export class TechnicianCustomerFeedbackReportComponent {
   ];
   dataList: any = [];
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Customer Name', value: 'CUSTOMER_NAME' },
-    // { label: 'Short Code', value: 'SHORT_CODE' },
   ];
-
-  // new filter
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   isLoading = false;
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
-  savedFilters: any; // Define the type of savedFilters if possible
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
+  savedFilters: any; 
   currentClientId = 1;
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
@@ -299,7 +239,6 @@ export class TechnicianCustomerFeedbackReportComponent {
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -308,9 +247,7 @@ export class TechnicianCustomerFeedbackReportComponent {
       this.loadFilters();
     }
   }
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -330,7 +267,6 @@ export class TechnicianCustomerFeedbackReportComponent {
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -338,14 +274,12 @@ export class TechnicianCustomerFeedbackReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   filterloading: boolean = false;
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -354,13 +288,11 @@ export class TechnicianCustomerFeedbackReportComponent {
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
       )
-      // Use USER_ID as a number
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -375,21 +307,15 @@ export class TechnicianCustomerFeedbackReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -403,7 +329,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -412,7 +337,6 @@ export class TechnicianCustomerFeedbackReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -429,9 +353,7 @@ export class TechnicianCustomerFeedbackReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -457,7 +379,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -466,21 +387,17 @@ export class TechnicianCustomerFeedbackReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -497,15 +414,10 @@ export class TechnicianCustomerFeedbackReportComponent {
       groups: [],
     },
   ];
-
   drawerTitle!: string;
-
   openfilter() {
     this.drawerTitle = 'Technician Customer Feedback Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -514,13 +426,9 @@ export class TechnicianCustomerFeedbackReportComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -537,7 +445,6 @@ export class TechnicianCustomerFeedbackReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -555,7 +462,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       },
     ];
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -565,14 +471,12 @@ export class TechnicianCustomerFeedbackReportComponent {
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -585,8 +489,6 @@ export class TechnicianCustomerFeedbackReportComponent {
           .join(' OR ') +
         ')';
     }
-
-    // Country Filter
     if (this.customerNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -599,16 +501,13 @@ export class TechnicianCustomerFeedbackReportComponent {
     }
     if (this.orderDateText?.length === 2) {
       const [start, end] = this.orderDateText;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `FEEDBACK_DATE_TIME BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00'`;
@@ -617,7 +516,6 @@ export class TechnicianCustomerFeedbackReportComponent {
     } else {
       this.isOrderDateApplied = false;
     }
-
     if (this.ratingtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -626,7 +524,6 @@ export class TechnicianCustomerFeedbackReportComponent {
     } else {
       this.isratingNameFilterApplied = false;
     }
-
     if (this.commenttext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -635,11 +532,8 @@ export class TechnicianCustomerFeedbackReportComponent {
     } else {
       this.iscommentFilterApplied = false;
     }
-
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // this.sortKey = 'NAME';
     if (exportInExcel == false) {
       this.api
         .getTechnicianCustomerFeedbackReport(
@@ -684,7 +578,6 @@ export class TechnicianCustomerFeedbackReportComponent {
     } else {
       this.loadingRecords = false;
       this.exportLoading = true;
-
       this.api
         .getTechnicianCustomerFeedbackReport(
           0,
@@ -708,7 +601,6 @@ export class TechnicianCustomerFeedbackReportComponent {
           (err: HttpErrorResponse) => {
             this.loadingRecords = false;
             this.exportLoading = false;
-
             if (err.status === 0) {
               this.message.error(
                 'Unable to connect. Please check your internet or server connection and try again shortly.',
@@ -716,14 +608,12 @@ export class TechnicianCustomerFeedbackReportComponent {
               );
             } else {
               this.exportLoading = false;
-
               this.message.error('Something Went Wrong.', '');
             }
           }
         );
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
@@ -770,7 +660,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       ],
       placeholder: 'Enter Customer Name',
     },
-
     {
       key: 'RATING',
       label: 'Rating',
@@ -800,41 +689,29 @@ export class TechnicianCustomerFeedbackReportComponent {
       placeholder: 'Enter Comment',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   excelData: any = [];
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -871,7 +748,6 @@ export class TechnicianCustomerFeedbackReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   roundRating(rating: number): number {
     if (rating !== null && rating !== undefined && rating > 0) {
       return Math.round(rating * 2) / 2;

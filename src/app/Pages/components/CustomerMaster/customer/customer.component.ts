@@ -19,8 +19,7 @@ import { appkeys } from 'src/app/app.constant';
 export class CustomerComponent {
   emailpattern =
     /^(?!.*\.\.)[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$/;
-      passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
-
+  passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
   customercategories: any = [];
   @Input() drawerClose: Function;
   @Input() data: customer = new customer();
@@ -34,25 +33,20 @@ export class CustomerComponent {
   loadingRecords = true;
   isSpinning = false;
   searchText: string = '';
-  filteredData: any[] = []; // searched list
+  filteredData: any[] = []; 
   originalAddressData: any[] = [];
   isOk = true;
   namepatt = /^[a-zA-Z0-9 _\-\.&()]+$/;
-  // mobpattern = /^[6-9]\d{9}$/;
   mobpattern = '[789][0-9]{9}';
   onlynum = /^[0-9]*$/;
   onlychar = /^[a-zA-Z ]*$/;
-  activeTabIndex: number = 0; // Default to the first tab
+  activeTabIndex: number = 0; 
   isFocused: string = '';
   uploadedImage: any = '';
   public commonFunction = new CommonFunctionService();
   CustomerManager: any = [];
   imgUrl;
-
-  
-
-    passwordVisible: boolean = false;
-
+  passwordVisible: boolean = false;
   tabs = [
     {
       name: 'Personal Details',
@@ -64,11 +58,10 @@ export class CustomerComponent {
     },
   ];
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   constructor(
@@ -79,11 +72,10 @@ export class CustomerComponent {
     private modal: NzModalService,
     private sanitizer: DomSanitizer
   ) { }
-
   ngOnInit() {
     this.getCustomerCategoryData();
     this.data.SALUTATION = 'Mr';
-
+    this.businessDomains = this.data.DOMAINS.split(',');
     if (
       this.data.ID != null &&
       this.data.ID != undefined &&
@@ -96,7 +88,6 @@ export class CustomerComponent {
       this.uploadedImage = this.data.PROFILE_PHOTO;
     } else {
     }
-
     this.api.getBackOfficeData(0, 0, '', '', ' AND ROLE_ID=7').subscribe(
       (dataaa1) => {
         if (dataaa1['code'] == 200) {
@@ -110,15 +101,12 @@ export class CustomerComponent {
       }
     );
   }
-
   allowAlphanumericAndSymbols(event: KeyboardEvent): void {
     const allowedRegex = /^[a-zA-Z0-9_-]$/;
-
     if (!allowedRegex.test(event.key)) {
-      event.preventDefault(); // Block the character if it doesn't match the pattern
+      event.preventDefault(); 
     }
   }
-
   getCustomerCategoryData() {
     this.api
       .getCustomerCategeroyData(0, 0, '', '', ' AND IS_ACTIVE = 1')
@@ -137,7 +125,6 @@ export class CustomerComponent {
       );
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -151,22 +138,17 @@ export class CustomerComponent {
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
-
     return true;
   }
-
   close(accountMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
-    // this.fileURL = null;
     this.data = new customer();
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
   }
-
   changetype(event: any) {
     if (event == 'B') {
       this.data.IS_SPECIAL_CATALOGUE = this.data.IS_SPECIAL_CATALOGUE;
@@ -177,7 +159,6 @@ export class CustomerComponent {
     } else {
       this.data.IS_SPECIAL_CATALOGUE = false;
     }
-
     if (event == 'I') {
       this.data.SHORT_CODE = null;
     }
@@ -189,7 +170,6 @@ export class CustomerComponent {
     this.myElementRef.nativeElement.value = null;
   }
   CropImageModalVisible = false;
-  // CropImageModalFooter: string|TemplateRef<{}>|ModalButtonOptions<any>[]|null|undefined;
   isSpinningCrop = false;
   cropimageshow: any;
   base64ToFile(base64String: string, filename: string): File {
@@ -206,21 +186,14 @@ export class CustomerComponent {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   fileChangeEvent(event: any): void {
-    //
-
     this.CropImageModalVisible = true;
     this.cropimageshow = true;
-
     this.imageChangedEvent = event;
   }
-
   cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
   imageCropped(event: any) {
     this.enhanceImageQuality(event.base64, 128, 128);
-    // this.imageWidth = event.original.size.width;
-    // this.imageHeight = event.original.size.height;
   }
-
   async enhanceImageQuality(
     base64: any,
     finalWidth: number,
@@ -230,27 +203,19 @@ export class CustomerComponent {
       this.croppedImage = await new Promise((resolve, reject) => {
         const img = new Image();
         img.src = base64;
-        img.crossOrigin = 'Anonymous'; // Prevents tainted canvas issues.
-
+        img.crossOrigin = 'Anonymous'; 
         img.onload = async () => {
-          await img.decode(); // Ensures the image is fully loaded
-
-          // **Create initial high-resolution canvas**
+          await img.decode(); 
           const tempCanvas = document.createElement('canvas');
           const tempCtx = tempCanvas.getContext('2d');
-
           if (!tempCtx) return reject('Canvas context not available');
-
-          tempCanvas.width = img.width * 2; // Upscale before downscaling
+          tempCanvas.width = img.width * 2; 
           tempCanvas.height = img.height * 2;
-
           tempCtx.imageSmoothingEnabled = true;
           tempCtx.imageSmoothingQuality = 'high';
-          tempCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+          tempCtx.fillStyle = 'white'; 
           tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
           tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
-
-          // **Stepwise Downscaling**
           const downscaleCanvas = (
             sourceCanvas: HTMLCanvasElement,
             width: number,
@@ -258,69 +223,51 @@ export class CustomerComponent {
           ): HTMLCanvasElement => {
             const newCanvas = document.createElement('canvas');
             const newCtx = newCanvas.getContext('2d');
-
             if (!newCtx) return sourceCanvas;
-
             newCanvas.width = width;
             newCanvas.height = height;
-
             newCtx.imageSmoothingEnabled = true;
             newCtx.imageSmoothingQuality = 'high';
-            newCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+            newCtx.fillStyle = 'white'; 
             newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
             newCtx.drawImage(sourceCanvas, 0, 0, width, height);
-
             return newCanvas;
           };
-
           let currentCanvas = tempCanvas;
           const downscaleSteps = [
-            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], // Step 1
-            [finalWidth * 2, finalHeight * 2], // Step 2
-            [finalWidth, finalHeight], // Final resolution
+            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], 
+            [finalWidth * 2, finalHeight * 2], 
+            [finalWidth, finalHeight], 
           ];
-
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
           }
-
-          // **Convert to PNG at Max Quality**
           resolve(currentCanvas.toDataURL('image/png', 1.0));
         };
-
         img.onerror = (err) => reject(`Image load error: ${err}`);
       });
     } catch (error) {
-      // console.error("Image enhancement failed:", error);
     }
   }
-
-  // Function to compress image and ensure size < 1MB
   compressImage(canvas: HTMLCanvasElement, quality: number) {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-
-        const sizeInMB = blob.size / (1024 * 1024); // Convert to MB
-
+        const sizeInMB = blob.size / (1024 * 1024); 
         if (sizeInMB > 1 && quality > 0.1) {
-          // If size is still >1MB, reduce quality and try again
           this.compressImage(canvas, quality - 0.1);
         } else {
-          // Final compressed image (size is now below 1MB)
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             this.croppedImage = reader.result as string;
-            //
           };
         }
       },
       'image/jpeg',
       quality
-    ); // Convert to JPEG with given quality
+    ); 
   }
-
   imageWidth: number = 0;
   imageHeight: number = 0;
   imageLoaded(event) {
@@ -330,26 +277,16 @@ export class CustomerComponent {
     this.imagePreview = this.croppedImage;
     this.imageWidth = event.original.size.width;
     this.imageHeight = event.original.size.height;
-    // Image loaded successfully
   }
-
   cropperReady(event) {
-    //
-    // Cropper ready
-    // event.height = 128;
-    // event.width = 128;
   }
-
   loadImageFailed() {
-    // Image failed to load
   }
-
   save(addNew: boolean, accountMasterPage: NgForm): void {
     this.isOk = true;
     if (this.data.CUSTOMER_TYPE == 'I') {
       this.data.COMPANY_NAME = null;
       this.data.PAN = null;
-      // this.data.GST_NO = null;
       this.data.IS_SPECIAL_CATALOGUE = false;
       this.data.SHORT_CODE = null;
     }
@@ -367,7 +304,6 @@ export class CustomerComponent {
       this.data.CUSTOMER_TYPE == ''
     ) {
       this.isOk = false;
-
       this.message.error('Please Select Customer Type', '');
     } else if (
       this.data.CUSTOMER_CATEGORY_ID == undefined ||
@@ -375,17 +311,15 @@ export class CustomerComponent {
       this.data.CUSTOMER_CATEGORY_ID == 0
     ) {
       this.isOk = false;
-
       this.message.error('Please Select Customer Category', '');
     }
-     else if (
+    else if (
       this.data.CUSTOMER_TYPE == 'B' &&
       (this.data.COMPANY_NAME == undefined ||
         this.data.COMPANY_NAME == null ||
         this.data.COMPANY_NAME.trim() == '')
     ) {
       this.isOk = false;
-
       this.message.error('Please Enter Company Name', '');
     } else if (
       this.data.CUSTOMER_TYPE == 'B' &&
@@ -394,7 +328,6 @@ export class CustomerComponent {
         this.data.NAME == '')
     ) {
       this.isOk = false;
-
       this.message.error('Please Enter Contact Customer Name', '');
     } else if (
       this.data.CUSTOMER_TYPE == 'I' &&
@@ -421,20 +354,18 @@ export class CustomerComponent {
     } else if (!this.commonFunction.emailpattern.test(this.data.EMAIL)) {
       this.isOk = false;
       this.message.error('Please Enter a Valid Email Address.', '');
-    } 
-
+    }
     else if (
-       !this.data.ID &&
-       this.data.CUSTOMER_TYPE == 'B' &&
-
+      !this.data.ID &&
+      this.data.CUSTOMER_TYPE == 'B' &&
       (this.data.PASSWORD == null ||
-      this.data.PASSWORD == undefined ||
-      this.data.PASSWORD == '')
+        this.data.PASSWORD == undefined ||
+        this.data.PASSWORD == '')
     ) {
       this.isOk = false;
       this.message.error(' Please Enter Password.', '');
     } else if (
-       !this.data.ID &&
+      !this.data.ID &&
       this.data.CUSTOMER_TYPE == 'B' &&
       this.data.PASSWORD != null &&
       this.data.PASSWORD != undefined &&
@@ -443,12 +374,12 @@ export class CustomerComponent {
       this.isOk = false;
       this.message.error('Please Enter Valid Password. ', '');
     } else if (
-       !this.data.ID &&
+      !this.data.ID &&
       this.data.CUSTOMER_TYPE == 'B' &&
       !this.commonFunction.passwordPattern.test(this.data.PASSWORD)) {
       this.isOk = false;
       this.message.error('Please Enter a Valid Password.', '');
-    } 
+    }
     else if (
       this.data.COUNTRY_CODE == undefined ||
       this.data.COUNTRY_CODE == 0 ||
@@ -530,17 +461,17 @@ export class CustomerComponent {
     ) {
       this.isOk = false;
       this.message.error('Please enter a valid GST number.', '');
+    } else if (this.data.IS_CHILD_SELF_REG && this.data.CUSTOMER_TYPE == 'B' && this.businessDomains.length == 0) {
+      this.isOk = false;
+      this.message.error('Please Enter at least one Business Domains', '');
     }
     if (this.isOk) {
       if (this.fileURL) {
         const number = Math.floor(100000 + Math.random() * 900000);
         const fileExt = this.fileURL.name.split('.').pop();
         const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-
         var url = `${d ?? ''}${number}.${fileExt}`;
-
         const uploadedfileExt = this.uploadedImage.split('.').pop();
-
         if (this.data.ID) {
           if (uploadedfileExt == fileExt) {
             this.UrlImageOne = this.uploadedImage;
@@ -550,14 +481,11 @@ export class CustomerComponent {
         } else {
           this.UrlImageOne = url;
         }
-
         this.api
           .onUpload('CustomerProfile', this.fileURL, this.UrlImageOne)
           .subscribe((res) => {
             if (res.type === HttpEventType.Response && res.status === 200) {
               this.data.PROFILE_PHOTO = this.UrlImageOne;
-
-              // this.message.success('Icon Uploaded Successfully...', '');
               this.handleSaveOperation(addNew, accountMasterPage);
             } else if (res.type === HttpEventType.Response) {
               this.message.error('Failed to Upload Profile Photo.', '');
@@ -568,9 +496,6 @@ export class CustomerComponent {
         this.handleSaveOperation(addNew, accountMasterPage);
       }
     }
-    // if (this.isOk) {
-
-    // }
   }
   chagegst(data: any) {
     if (!this.data.IS_HAVE_GST) {
@@ -590,15 +515,15 @@ export class CustomerComponent {
         this.data.IS_HAVE_GST = false;
         this.data.INDIVIDUAL_COMPANY_NAME = null;
         this.data.COMPANY_ADDRESS = null;
+        this.data.DOMAINS = this.businessDomains.join() ?? null;
+        this.data.IS_CHILD_SELF_REG = this.data.IS_CHILD_SELF_REG;
       } else {
         this.data.PASSWORD = null
         this.data.COMPANY_NAME = null;
         this.data.PAN = null;
-        // this.data.GST_NO = null;
         this.data.IS_SPECIAL_CATALOGUE = false;
       }
       this.isSpinning = true;
-
       if (this.data.ID) {
         this.api.updateCustomer(this.data).subscribe(
           (successCode: any) => {
@@ -611,7 +536,6 @@ export class CustomerComponent {
               this.resetDrawer(accountMasterPage);
               if (!addNew) this.drawerClose();
             } else if (successCode.code == 300) {
-              // this.message.error("Email is already exist", "");
               var msg = successCode.message;
               this.message.error(msg, '');
               this.isSpinning = false;
@@ -630,17 +554,12 @@ export class CustomerComponent {
           (successCode: any) => {
             if (successCode.code == '200') {
               this.isSpinning = false;
-
               this.message.success(
                 'Customer Information Saved Successfully',
                 ''
               );
-
               this.ID = successCode.ID;
               this.CUSTOMER_MASTER_ID = successCode.CUSTOMER_DETAILS_ID;
-
-              // this.resetDrawer(accountMasterPage);
-
               this.api
                 .getCustomerDetails(
                   0,
@@ -664,14 +583,7 @@ export class CustomerComponent {
                 },
               ];
               this.activeTabIndex = 1;
-              // if (!addNew) this.drawerClose();
-              // else {
-              //   this.data = new customer();
-              //   this.resetDrawer(CountryDrawer);
-
-              // }
             } else if (successCode.code == 300) {
-              // this.message.error("Email is already exist", "");
               var msg = successCode.message;
               this.message.error(msg, '');
               this.isSpinning = false;
@@ -688,27 +600,22 @@ export class CustomerComponent {
       }
     }
   }
-
   drawerTitle: string;
   drawerVisibleAddress: boolean;
   drawerDataAddress: any;
   loadingFamilyRecords;
   dataFamilyList;
-
   addAddress() {
     this.drawerTitle = 'Add Address Details';
     this.drawerVisibleAddress = true;
     this.drawerData = new Address();
   }
-
   drawerData: Address = new Address();
-
   editAddress(data: Address) {
     this.drawerTitle = 'Update Address Details';
     this.drawerData = Object.assign({}, data);
     this.drawerVisibleAddress = true;
   }
-
   fullAddress: any;
   addressdata: any = [];
   drawerAddressClose(): void {
@@ -734,30 +641,26 @@ export class CustomerComponent {
           this.showsearch = false;
         }
         if (this.addressdata && this.addressdata.length > 0) {
-          // Loop through each address and add FULL_ADDRESS key
           this.addressdata = this.addressdata.map((address) => {
             this.fullAddress = [
-              address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+              address.ADDRESS_LINE_1 || '', 
               address.ADDRESS_LINE_2 || '',
               address.CITY_NAME || '',
               address.STATE_NAME || '',
               address.COUNTRY_NAME || '',
               address.PINCODE || '',
             ]
-              .filter((part) => part.trim() !== '') // Remove empty parts
-              .join(', '); // Combine with commas
-
+              .filter((part) => part.trim() !== '') 
+              .join(', '); 
             return {
               ...address,
-              FULL_ADDRESS: this.fullAddress, // Add the concatenated address
+              FULL_ADDRESS: this.fullAddress, 
             };
           });
         }
       });
     this.drawerVisibleAddress = false;
-    // this.searchFamily(true);
   }
-
   get closeCallbackAddress() {
     return this.drawerAddressClose.bind(this);
   }
@@ -768,7 +671,6 @@ export class CustomerComponent {
     } else {
       this.showsearch = false;
     }
-
     this.activeTabIndex = 1;
     if (this.data.ID) {
       this.ID = this.custid;
@@ -786,7 +688,7 @@ export class CustomerComponent {
         ' AND STATUS = 1 AND CUSTOMER_ID= ' + this.ID
       )
       .subscribe((data) => {
-        this.addressdata = data['data']; // Get the address data
+        this.addressdata = data['data']; 
         this.originalAddressData = [...this.addressdata];
         if (this.originalAddressData.length > 2) {
           this.showsearch = true;
@@ -794,24 +696,20 @@ export class CustomerComponent {
           this.showsearch = false;
         }
         if (this.addressdata && this.addressdata.length > 0) {
-          // Loop through each address and add FULL_ADDRESS key
           this.addressdata = this.addressdata.map((address) => {
-            // Concatenate the full address for each address object
             const fullAddress = [
-              address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+              address.ADDRESS_LINE_1 || '', 
               address.ADDRESS_LINE_2 || '',
               address.CITY_NAME || '',
               address.STATE_NAME || '',
               address.COUNTRY_NAME || '',
               address.PINCODE || '',
             ]
-              .filter((part) => part.trim() !== '') // Remove empty parts
-              .join(', '); // Combine with commas
-
-            // Return the address object with the FULL_ADDRESS
+              .filter((part) => part.trim() !== '') 
+              .join(', '); 
             return {
               ...address,
-              FULL_ADDRESS: fullAddress, // Add the concatenated address as FULL_ADDRESS
+              FULL_ADDRESS: fullAddress, 
             };
           });
         }
@@ -838,16 +736,13 @@ export class CustomerComponent {
     });
   }
   setasdefault(selectedData: any) {
-    // Step 1: Update the IS_DEFAULT values locally
     this.addressdata.forEach((item) => {
       if (item === selectedData) {
-        item.IS_DEFAULT = 1; // Set the selected address as default
+        item.IS_DEFAULT = 1; 
       } else {
-        item.IS_DEFAULT = 0; // Reset others
+        item.IS_DEFAULT = 0; 
       }
     });
-
-    // Step 2: Call the API to save the changes
     this.api.updateCustomerAddressNew(selectedData).subscribe(
       (successCode: any) => {
         if (successCode.code == '200') {
@@ -867,7 +762,6 @@ export class CustomerComponent {
       }
     );
   }
-
   countryCodes = [
     { label: '+91 (India)', value: '+91' },
     { label: '+92 (Pakistan)', value: '+92' },
@@ -1106,9 +1000,6 @@ export class CustomerComponent {
     { label: 'Kyrgyzstan (+996)', value: '+996' },
     { label: 'Uzbekistan (+998)', value: '+998' },
   ];
-
-  // Profile Photo
-
   imageshow: any = null;
   selectedFile: any;
   imagePreview: any;
@@ -1123,47 +1014,36 @@ export class CustomerComponent {
   sanitizedLink: any = '';
   sanitizedFileURL: SafeUrl | null = null;
   imagePreviewURL;
-
   fullImageUrl: string;
   retriveimgUrl = appkeys.retriveimgUrl;
-
   imageDeleteConfirm(data: any) {
     this.fileURL = null;
     this.UrlImageOne = null;
     this.data.PROFILE_PHOTO = '';
     this.fileURL = null;
   }
-
   deleteCancel() { }
-
   onFileSelected(event: any): void {
-    const maxFileSize = 1 * 1024 * 1024; // 1 MB
+    const maxFileSize = 1 * 1024 * 1024; 
     const allowedWidth = 128;
     const allowedHeight = 128;
-
     if (event.target.files[0]?.type.match(/image\/(jpeg|jpg|png)/)) {
       this.fileURL = this.base64ToFile(this.croppedImage, 'cropped-image.png');
-
       if (this.fileURL.size > maxFileSize) {
         this.message.error('File size should not exceed 1MB.', '');
         this.fileURL = null;
         return;
       }
-
-      // Validate image dimensions
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const img = new Image();
         img.src = e.target.result;
         const input = event.target as HTMLInputElement;
-
         if (input?.files?.length) {
           this.selectedFile = input.files[0];
-
-          // Generate a preview of the selected image
           const reader = new FileReader();
           reader.onload = () => {
-            this.imagePreview = this.croppedImage; // Base64 image data
+            this.imagePreview = this.croppedImage; 
           };
           reader.readAsDataURL(this.selectedFile);
         }
@@ -1176,7 +1056,6 @@ export class CustomerComponent {
             this.fileURL = null;
             this.sanitizedFileURL = null;
           } else {
-            // Sanitize the file URL for preview
             this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
               URL.createObjectURL(this.fileURL)
             );
@@ -1184,7 +1063,6 @@ export class CustomerComponent {
           }
         };
       };
-
       reader.readAsDataURL(this.fileURL);
       this.CropImageModalVisible = false;
     } else {
@@ -1197,52 +1075,41 @@ export class CustomerComponent {
       this.sanitizedFileURL = null;
     }
   }
-
   removeImage1(): void {
     this.data.PROFILE_PHOTO = '';
     this.fileURL = null;
     this.imagePreviewURL = null;
     this.message.success('Profie Photo removed successfully.', '');
   }
-
   openImageInNewWindow(): void {
     if (this.fileURL) {
-      const imageURL = URL.createObjectURL(this.fileURL); // Get blob URL
+      const imageURL = URL.createObjectURL(this.fileURL); 
       window.open(imageURL, '_blank');
     } else {
       alert('No Profile Photo selected to view.');
     }
   }
-
   deleteImage(): void {
-    // Remove selected file and its preview
     this.fileURL = null;
     this.sanitizedFileURL = null;
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   keyup(keys: KeyboardEvent) {
     const element = window.document.getElementById('button');
     if (element) element.focus();
-
     this.search(this.searchText);
     if (this.searchText.length === 0 && keys.key === 'Backspace') {
       this.addressdata = [...this.originalAddressData];
     }
   }
-
   search(searchText) {
     const query = this.searchText.trim().toLowerCase();
-
     if (query.length < 1) {
       this.addressdata = [...this.originalAddressData];
       return;
     }
-
-    // Apply search only if original data has 3 or more items
     if (this.originalAddressData.length >= 3) {
       this.addressdata = this.originalAddressData.filter(
         (item) =>
@@ -1257,5 +1124,121 @@ export class CustomerComponent {
     } else {
       this.addressdata = [...this.originalAddressData];
     }
+  }
+  PUBLIC_EMAIL_DOMAINS = [
+    "gmail.com", "googlemail.com", "yahoo.com", "ymail.com", "rocketmail.com",
+    "hotmail.com", "outlook.com", "live.com", "msn.com", "hotmail.co.uk",
+    "live.co.uk", "outlook.co.uk", "icloud.com", "me.com", "mac.com",
+    "aol.com", "protonmail.com", "proton.me", "zoho.com", "yandex.com",
+    "yandex.ru", "mail.com", "gmx.com", "gmx.net", "rediff.com", "rediffmail.com",
+    "hotmail.in", "outlook.in", "rambler.ru", "bk.ru", "inbox.ru", "list.ru",
+    "mail.ru", "web.de", "gmx.de", "t-online.de", "orange.fr", "qq.com",
+    "163.com", "126.com", "sina.com", "sina.cn", "fastmail.com",
+    "hushmail.com", "tutanota.com", "tuta.io", "mailfence.com",
+    "inbox.lv", "inbox.lt", "lycos.com", "usa.com", "europe.com",
+    "asia.com", "india.com", "email.com", "consultant.com", "post.com",
+    "dr.com", "techie.com", "engineer.com"
+  ];
+  businessDomains: string[] = []; 
+  domainInput: string = "";
+  domainError: string = "";
+  domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;  
+  isDomainLoading = false;
+  addDomain() {
+    const domain = this.domainInput.trim().toLowerCase();
+    this.domainError = "";
+    if (!domain) {
+      this.message.error('Please enter a domain', '');
+      return
+    };
+    if (!this.domainRegex.test(domain)) {
+      this.domainError = "Invalid domain format";
+      return;
+    }
+    if (this.PUBLIC_EMAIL_DOMAINS.includes(domain)) {
+      this.domainError = "Public email domains are not allowed";
+      return;
+    }
+    if (this.businessDomains.includes(domain)) {
+      this.domainError = "Domain already added";
+      return;
+    }
+    if (this.businessDomains.length >= 3) {
+      this.message.error('Domain limit reached.', '');
+      return
+    }
+    this.isDomainLoading = true
+    this.api.checkdomainexits(1, 1, "", "", "", domain).subscribe((res: any) => {
+      if (res.code == "200") {
+        this.isDomainLoading = false
+        this.businessDomains.unshift(domain);
+        this.domainInput = "";
+        if (this.businessDomains.length == 3) {
+          this.message.info('Domain limit reached.', '');
+        }
+        return;
+      } else {
+        this.isDomainLoading = false
+        this.message.error('Domain already exists', '');
+        return;
+      }
+    })
+  }
+  removeDomain(index: number) {
+    this.businessDomains.splice(index, 1);
+  }
+  clearDomains() {
+    this.businessDomains = [];
+  }
+  showPopConfirm = false;
+  previousChildRegState = true;
+  turnOffChildReg_old() {
+    this.data.IS_CHILD_SELF_REG = false;
+    this.clearDomains();
+    this.showPopConfirm = false;
+  }
+  handleChildSwitchClick(event: MouseEvent) {
+    if (this.data.IS_CHILD_SELF_REG) {
+      event.preventDefault(); 
+      this.showPopConfirm = true;
+      this.previousChildRegState = true;
+    }
+  }
+  turnOffChildReg() {
+    this.data.IS_CHILD_SELF_REG = false;
+    this.clearDomains();
+    this.showPopConfirm = false;
+  }
+  revertChildReg() {
+    this.data.IS_CHILD_SELF_REG = true;
+    this.showPopConfirm = false;
+  }
+  showPop: boolean = false;
+  switchLocked: boolean = false;
+  onSwitchClick(event: any) {
+    const currentValue = this.data.IS_CHILD_SELF_REG;
+    const nextValue = !currentValue;
+    const hasDomains = this.businessDomains.length > 0;
+    if (nextValue === true) {
+      this.showPop = false;
+    } else if (!nextValue && !hasDomains) {
+      this.showPop = false;
+    } else {
+      this.switchLocked = true;
+      this.showPop = false;
+    }
+  }
+  confirmTurnOff() {
+    this.data.IS_CHILD_SELF_REG = false;
+    this.clearDomains();
+    this.closePopup();
+  }
+  cancelTurnOff() {
+    this.data.IS_CHILD_SELF_REG = true;
+    this.closePopup();
+  }
+  closePopup() {
+    this.showPop = false;
+    this.switchLocked = false;
   }
 }

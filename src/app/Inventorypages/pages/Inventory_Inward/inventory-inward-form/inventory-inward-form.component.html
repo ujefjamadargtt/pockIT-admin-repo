@@ -5,11 +5,10 @@
         <div nz-col nzSpan="4">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Stock Check-In Date</nz-form-label>
-
             <nz-form-control nzErrorTip="Enter Name">
               <nz-date-picker [(ngModel)]="data.INWARD_DATE" [nzDisabled]="true" [nzShowToday]="false" required
                 name="INWARD_DATE" autocomplete="off" nzPlaceHolder="Select Date" nzFormat="dd/MM/yyyy"
-                style="width: 100%">
+                class="full-wdt">
               </nz-date-picker>
             </nz-form-control>
           </nz-form-item>
@@ -17,7 +16,6 @@
         <div nz-col nzSpan="5">
           <nz-form-item>
             <nz-form-label nzNoColon>PO Number</nz-form-label>
-
             <nz-form-control nzErrorTip="Enter PO Number">
               <input [(ngModel)]="data.PO_NUMBER" (keypress)="commonFunction.allowOnly1Numbers($event)" name="PO_NUMBER"
                 autocomplete="off" nz-input maxlength="128" placeholder="Enter PO Number" />
@@ -27,9 +25,8 @@
         <div nz-col nzSpan="9">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Warehouse</nz-form-label>
-
             <nz-form-control nzErrorTip="Select Warehouse">
-              <nz-select nzShowSearch nzAllowClear="false" style="width: 100%" nzPlaceHolder="Select Warehouse"
+              <nz-select nzShowSearch nzAllowClear="false" class="full-wdt" nzPlaceHolder="Select Warehouse"
                 [(ngModel)]="data.WAREHOUSE_ID" name="WAREHOUSE_ID" (ngModelChange)="onWarehousechange($event)"
                 [nzMaxTagCount]="2" [nzLoading]="warehouseLoading">
                 <nz-option *ngFor="let unit of warehouseList" [nzValue]="unit.ID" [nzLabel]="unit.NAME">
@@ -43,13 +40,11 @@
             <nz-form-label nzNoColon>SKU Code<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
                 nzTooltipTitle="SKU stands for Stock Keeping Unit. It is a unique code assigned to each inventory item to manage your inentory efficiently.">&nbsp;</span>
             </nz-form-label>
-
             <nz-form-control>
               <nz-input-group nzSearch [nzAddOnAfter]="suffixIconSKU">
                 <input type="text" [(ngModel)]="data.SKU_CODE" (keypress)="commonFunction.allowOnly1Numbers($event)"
                   name="SKU_CODE" autocomplete="off" nz-input maxlength="128" placeholder="Enter SKU Code To Search" />
               </nz-input-group>
-
               <ng-template #suffixIconSKU>
                 <button nz-button nzType="primary" nzSearch (click)="getItemsAsPerSKU(data.SKU_CODE)">
                   <span nz-icon nzType="search"></span>
@@ -59,15 +54,13 @@
           </nz-form-item>
         </div>
       </div>
-
       <div class="my-box">
         <div nz-row>
           <div nz-col [nzSpan]="data.IS_VARIANT ? 6 : 9">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Item Name</nz-form-label>
-
               <nz-form-control nzErrorTip="Select Item Name">
-                <nz-tree-select name="INWARD_ITEM_ID" style="width: 100%" [nzHideUnMatched]="true" [nzDropdownStyle]="{
+                <nz-tree-select name="INWARD_ITEM_ID" class="full-wdt" [nzHideUnMatched]="true" [nzDropdownStyle]="{
                     'min-height': '10px',
                     'max-height': '220px',
                     'overflow-x': 'auto'
@@ -80,29 +73,22 @@
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="6" *ngIf="data.IS_VARIANT">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Variant Name</nz-form-label>
-
               <nz-form-control>
                 <nz-select [(ngModel)]="data.INWARD_VARIANT_ID" [nzLoading]="isVarientLoading"
                   nzPlaceHolder="Select Variant" name="INWARD_VARIANT_ID" [nzOptionHeightPx]="50"
                   (ngModelChange)="variantchange($event)" nzShowSearch nzAllowClear>
                   <nz-option *ngFor="let option of InwardVarientsGet" [nzLabel]="option.VARIANT_COMBINATION"
                     [nzValue]="option.ID" nzCustomContent>
-                    <div style="white-space: pre-line">
+                    <div class="variant-option-wrapper">
                       <div nz-row>
-                        <div nz-col nzSpan="24" style="
-                            font-size: 11px;
-                            color: #272425;
-                            white-space: pre-line;
-                          ">
+                        <div nz-col nzSpan="24" class="variant-category-text">
                           {{ option.INVENTORY_CATEGORY_NAME }} >
                           {{ option.INVENTRY_SUB_CATEGORY_NAME }}
                         </div>
-
-                        <div nz-col nzSpan="24" style="font-size: 14px; color: black">
+                        <div nz-col nzSpan="24" class="variant-combination-text">
                           <b>{{ option.VARIANT_COMBINATION }}</b>
                         </div>
                       </div>
@@ -112,35 +98,30 @@
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="4">
             <nz-form-item>
               <nz-form-label nzNoColon> Tracking Type</nz-form-label>
-
               <nz-form-control>
-                <label *ngIf="ItemDetails" style="color: blue">
+                <label *ngIf="ItemDetails" class="tracking-type-text">
                   <span [ngSwitch]="ItemDetails['INVENTORY_TRACKING_TYPE']">
                     <span *ngSwitchCase="'N'">None</span>
                     <span *ngSwitchCase="'S'">Serial No. Wise</span>
                     <span *ngSwitchCase="'B'">Batch Wise</span>
                   </span>
                 </label>
-
-                <label *ngIf="!ItemDetails" style="color: blue"> --- </label>
+                <label *ngIf="!ItemDetails" class="tracking-type-text"> --- </label>
               </nz-form-control>
             </nz-form-item>
           </div>
           <div nz-col nzSpan="6">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Quantity</nz-form-label>
-
               <nz-form-control>
                 <nz-input-group nzCompact>
-                  <input nz-input placeholder="Quantity" name="QUANTITY"
-                    style="width: 40%; padding: 4.7px 11px !important" required [(ngModel)]="data.QUANTITY"
-                    (keypress)="commonFunction.onlynum($event)" maxlength="5" autocomplete="off" />
-
-                  <nz-select nzShowSearch nzAllowClear="false" style="width: 60%" nzPlaceHolder="Select Unit"
+                  <input nz-input placeholder="Quantity" name="QUANTITY" class="quantity-input-field" required
+                    [(ngModel)]="data.QUANTITY" (keypress)="commonFunction.onlynum($event)" maxlength="5"
+                    autocomplete="off" />
+                  <nz-select nzShowSearch nzAllowClear="false" class="unit-select-field" nzPlaceHolder="Select Unit"
                     [(ngModel)]="data.UNIT_ID" name="Unitss" (ngModelChange)="onChange($event)" [nzLoading]="Unitload">
                     <nz-option *ngFor="let unit of UnitList" [nzValue]="unit.UNIT_ID" [nzLabel]="unit.UNIT_NAME">
                     </nz-option>
@@ -149,13 +130,12 @@
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="2">
             <nz-form-item>
               <nz-form-label nzNoColon></nz-form-label>
               <nz-form-control>
-                <button type="button" *ngIf="ItemDetails; else elseblockitem" nz-button class="ant-btn-primary"
-                  style="margin-top: 3px" (click)="
+                <button type="button" *ngIf="ItemDetails; else elseblockitem" nz-button
+                  class="ant-btn-primary add-button-spacing" (click)="
                     generateInwardData(
                       data.QUANTITY,
                       ItemDetails['INVENTORY_TRACKING_TYPE']
@@ -164,7 +144,7 @@
                   <span nz-icon nzType="plus" nzTheme="outline"></span> Add
                 </button>
                 <ng-template #elseblockitem>
-                  <button type="button" nz-button class="ant-btn-primary" style="margin-top: 3px"
+                  <button type="button" nz-button class="ant-btn-primary add-button-spacing"
                     (click)="generateInwardData1()">
                     <span nz-icon nzType="plus" nzTheme="outline"></span> Add
                   </button>
@@ -174,12 +154,11 @@
           </div>
         </div>
       </div>
-
       <div nz-row>
         <div nz-col nzSpan="24">
           <ng-container *ngFor="let inwardData of finalInwardArray; let i = index">
             <nz-tag nzMode="closeable" (nzOnClose)="onItemTagClose(i)"
-              [nzColor]="selectedTagIndex === i ? '#87d068' : '#f50'" style="padding: 5px; cursor: pointer; margin: 5px"
+              [nzColor]="selectedTagIndex === i ? '#87d068' : '#f50'" class="container-block"
               (click)="onItemTagClick(i)">
               {{
               inwardData["IS_VARIANT"]
@@ -190,33 +169,39 @@
           </ng-container>
         </div>
       </div>
-
-      <div nz-row style="margin-bottom: -22px">
+      <div nz-row class="row-margin-fix">
         <div nz-col nzSpan="24">
           <nz-table #table [nzFrontPagination]="false" [nzData]="inwardDataList" [nzLoading]="inwardLoadingRecords"
-            [nzSize]="'small'" [nzScroll]="{ y: '35vh' }" class="my-scroll no-wrap1" nzBordered nzShowSizeChanger
-            style="white-space: pre-line">
+            [nzSize]="'small'" [nzScroll]="{ y: '35vh' }" class="my-scroll no-wrap1 table-preline" nzBordered
+            nzShowSizeChanger>
             <thead>
               <tr>
                 <th nzLeft nzWidth="250px">Item Name</th>
                 <th nzWidth="180px">Tracking Type</th>
                 <th nzWidth="180px">Unit</th>
                 <th nzWidth="180px">Contains Qty</th>
-
-                <th nzWidth="180px" style="font-weight: bold; text-align: center">
+                <th nzWidth="180px" class="table-header-center-bold">
                   <span *ngIf="inwardDataList && inwardDataList.length > 0">
                     <span [ngSwitch]="inwardDataList[0]['INVENTORY_TRACKING_TYPE']">
-                      <span *ngSwitchCase="'N'">Unique No.&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
-                          nz-tooltip nzTooltipTitle="Please enetr unique number"></span></span>
-                      <span *ngSwitchCase="'S'">Serial No.&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
-                          nz-tooltip nzTooltipTitle="Please enter unique serial number"></span></span>
-                      <span *ngSwitchCase="'B'">Batch No.&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
-                          nz-tooltip nzTooltipTitle="Please enter unique batch number"></span></span>
+                      <span *ngSwitchCase="'N'">
+                        Unique No.&nbsp;
+                        <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                          nzTooltipTitle="Please enetr unique number"></span>
+                      </span>
+                      <span *ngSwitchCase="'S'">
+                        Serial No.&nbsp;
+                        <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                          nzTooltipTitle="Please enter unique serial number"></span>
+                      </span>
+                      <span *ngSwitchCase="'B'">
+                        Batch No.&nbsp;
+                        <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                          nzTooltipTitle="Please enter unique batch number"></span>
+                      </span>
                     </span>
-                    <input nz-input nzSize="small" style="margin-top: 5px; font-size: 12px !important"
-                      name="UNIQUE_NOGlobals" [(ngModel)]="UNIQUE_NOGlobal"
-                      (keypress)="commonFunction.allowOnly1Numbers($event)" autocomplete="off" maxlength="32"
-                      placeholder="Enter {{
+                    <input nz-input nzSize="small" class="global-unique-input" name="UNIQUE_NOGlobals"
+                      [(ngModel)]="UNIQUE_NOGlobal" (keypress)="commonFunction.allowOnly1Numbers($event)"
+                      autocomplete="off" maxlength="32" placeholder="Enter {{
                         inwardDataList[0].INVENTORY_TRACKING_TYPE == 'B'
                           ? 'Batch No.'
                           : inwardDataList[0].INVENTORY_TRACKING_TYPE == 'S'
@@ -228,28 +213,25 @@
                 <th nzWidth="180px">
                   Expiry Date <br />
                   <nz-date-picker *ngIf="inwardDataList && inwardDataList.length > 0" nzSize="small"
-                    style="margin-top: 5px; font-size: 12px !important" [(ngModel)]="GLOBAL_EXPIRY_DATE"
+                    class="global-expiry-picker full-wdt" [(ngModel)]="GLOBAL_EXPIRY_DATE"
                     [nzDisabledDate]="disabledPastDates" [nzShowToday]="false" name="GLOBAL_EXPIRY_DATE"
-                    nzPlaceHolder="Select Date" nzFormat="dd/MM/yyyy" style="width: 100%"
+                    nzPlaceHolder="Select Date" nzFormat="dd/MM/yyyy"
                     (ngModelChange)="onGlobalExpiryDateChange($event)">
                   </nz-date-picker>
                 </th>
               </tr>
             </thead>
-
             <tbody>
               <tr *ngFor="let data of table.data; let i = index">
                 <td nzLeft nzWidth="250px">
                   {{ data.ITEM_NAME }}
-
                   <ng-container *ngIf="data.INWARD_VARIANT_NAME">
                     <br />
-                    <span style="font-size: 10px !important; color: gray">
+                    <span class="variant-name-text">
                       ({{ data.INWARD_VARIANT_NAME }})
                     </span>
                   </ng-container>
                 </td>
-
                 <td nzWidth="180px">
                   <span [ngSwitch]="data.INVENTORY_TRACKING_TYPE">
                     <span *ngSwitchCase="'N'">None</span>
@@ -258,13 +240,13 @@
                   </span>
                 </td>
                 <td nzWidth="180px">
-                  <span> {{ data.ACTUAL_UNIT_NAME }}</span>
+                  <span>{{ data.ACTUAL_UNIT_NAME }}</span>
                 </td>
                 <td nzWidth="180px">
-                  <span>{{ data.BASE_QUANTITY }} qty </span>
+                  <span>{{ data.BASE_QUANTITY }} qty</span>
                 </td>
-                <td nzWidth="180px" style="text-align: center">
-                  <input nz-input nzSize="small" style="font-size: 12px !important" name="UNIQUE_NO{{ i }}"
+                <td nzWidth="180px" class="table-cell-center">
+                  <input nz-input nzSize="small" class="row-unique-input" name="UNIQUE_NO{{ i }}"
                     [(ngModel)]="data.UNIQUE_NO" (keypress)="commonFunction.allowOnly1Numbers($event)"
                     autocomplete="off" maxlength="32" placeholder="Enter {{
                       data.INVENTORY_TRACKING_TYPE == 'B'
@@ -275,10 +257,10 @@
                     }}" />
                 </td>
                 <td nzWidth="180px">
-                  <nz-date-picker nzSize="small" style="font-size: 12px !important" [(ngModel)]="data.EXPIRY_DATE"
-                    [nzShowToday]="false" name="EXPIRY_DATE{{ i }}" (ngModelChange)="onExpiryDateChange($event,i)"
+                  <nz-date-picker nzSize="small" class="row-expiry-picker full-wdt" [(ngModel)]="data.EXPIRY_DATE"
+                    [nzShowToday]="false" name="EXPIRY_DATE{{ i }}" (ngModelChange)="onExpiryDateChange($event, i)"
                     nzPlaceHolder="Select Date" nzFormat="dd/MM/yyyy" [nzDisabledDate]="disabledPastDates"
-                    style="width: 100%" [nzDisabled]="data.EXPIRY_DATE_ALLOWED ? 'false' : 'true'">
+                    [nzDisabled]="data.EXPIRY_DATE_ALLOWED ? 'false' : 'true'">
                   </nz-date-picker>
                 </td>
               </tr>
@@ -288,31 +270,27 @@
       </div>
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button nz-button (click)="close(myForm)" type="button" class="ant-btn" style="margin-right: 8px">
+    <button nz-button (click)="close(myForm)" type="button" class="ant-btn footer-cancel-btn-spacing">
       <span>Cancel</span>
     </button>
-
     <button nz-button *ngIf="!data.ID" [nzLoading]="isSpinning" [nzDropdownMenu]="menu"
       (nzOnConfirm)="save(false, myForm)" [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
       nzPopconfirmTitle="Are you sure, you want to save information?" nzPopconfirmPlacement="top" type="button"
       class="ant-btn ant-btn-primary" nz-dropdown>
       <span>Save & Close</span>
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px">
+        <li nz-menu-item class="menuc footer-menu-item-rounded">
           <a (nzOnConfirm)="save(true, myForm)" [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
             nzPopconfirmTitle="Are you sure, you want to save information?" nzPopconfirmPlacement="top"
-            style="color: white !important">
+            class="footer-menu-link-text">
             Save & New
           </a>
         </li>
       </ul>
     </nz-dropdown-menu>
-
     <button nz-button *ngIf="data.ID" [nzLoading]="isSpinning" (nzOnConfirm)="save(false, myForm)" [nzOkText]="'Yes'"
       (nzOnCancel)="deleteCancel()" nz-popconfirm nzPopconfirmTitle="Are you sure, you want to update information?"
       nzPopconfirmPlacement="top" type="button" class="ant-btn ant-btn-primary">

@@ -7,7 +7,6 @@ import { DashboardMaster } from "src/app/Pages/Models/dashboardmaster";
 import { TemplateCategoryMaster } from "src/app/Pages/Models/templateCategory";
 import { ApiServiceService } from "src/app/Service/api-service.service";
 import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
-
 @Component({
   selector: 'app-dashboard-master-table',
   templateUrl: './dashboard-master-table.component.html',
@@ -33,10 +32,8 @@ export class DashboardMasterTableComponent {
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
-
   isRoleFIlterApplied: boolean = false;
   ROLEvISIBLE: boolean = false;
-
   roles: any = [];
   namevisible = false;
   roleVisible = false;
@@ -55,13 +52,10 @@ export class DashboardMasterTableComponent {
     { text: "Active", value: "1" },
     { text: "Inactive", value: "0" },
   ];
-
   isfilterapply: boolean = false;
   filterClass: string = "filter-invisible";
   filterQuery: string = "";
   visible = false;
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: "AND",
@@ -78,7 +72,6 @@ export class DashboardMasterTableComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -104,12 +97,10 @@ export class DashboardMasterTableComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   isseqapply = false;
   isDistApplied = false;
   isDistapply = false;
-
   onKeyup(event: KeyboardEvent): void {
     if (this.Name.length >= 3 && event.key === "Enter") {
       this.search();
@@ -118,8 +109,6 @@ export class DashboardMasterTableComponent {
       this.search();
       this.isnameFilterApplied = false;
     }
-
-
     if (this.Description.length >= 3 && event.key === "Enter") {
       this.search();
       this.isDistapply = true;
@@ -130,19 +119,14 @@ export class DashboardMasterTableComponent {
   }
   public commonFunction = new CommonFunctionService();
   ngOnInit() {
-    // this.getCountyData();
-    // this.getStateData();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : "0"; // Decrypt userId or use '0' as fallback
+      : "0"; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
     this.getRole();
     this.getRoleData();
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -151,11 +135,7 @@ export class DashboardMasterTableComponent {
       tooltip.hide();
     }
   }
-
-
   roleData: any = [];
-
-
   getRole() {
     this.api
       .getAllRoles(0, 0, '', '', '')
@@ -167,10 +147,7 @@ export class DashboardMasterTableComponent {
         }
       });
   }
-
-
   roleData1: any = [];
-
   getRoleData() {
     this.api
       .getAllRoles(0, 0, '', '', '')
@@ -187,34 +164,30 @@ export class DashboardMasterTableComponent {
         }
       });
   }
-
   isStateFilterApplied = false;
   onBranchChange(): void {
-    //this.search();
     if (this.selectedBranches?.length) {
       this.search();
-      this.isStateFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isStateFilterApplied = true; 
     } else {
       this.search();
-      this.isStateFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isStateFilterApplied = false; 
     }
   }
   isnameFilterApplied = false;
   onCountryChange(): void {
-    //this.search();
     if (this.selectedCountries?.length) {
       this.search();
-      this.isnameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isnameFilterApplied = true; 
     } else {
       this.search();
-      this.isnameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isnameFilterApplied = false; 
     }
   }
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   reset(): void {
     this.searchText = "";
     this.Name = "";
@@ -231,17 +204,14 @@ export class DashboardMasterTableComponent {
       this.sortKey = "id";
       this.sortValue = "desc";
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith("a") ? "asc" : "desc";
     } catch (error) {
       sort = "";
     }
-
     var likeQuery = "";
     let globalSearchQuery = "";
-
     if (this.searchText !== "") {
       globalSearchQuery =
         " AND (" +
@@ -253,7 +223,6 @@ export class DashboardMasterTableComponent {
         ")";
     }
     this.loadingRecords = true;
-
     if (this.roles?.length) {
       const roles = this.roles.join(',');
       likeQuery +=
@@ -262,8 +231,6 @@ export class DashboardMasterTableComponent {
     } else {
       this.isRoleFIlterApplied = false;
     }
-
-    // name Filter
     if (this.Name !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") + `TITLE LIKE '%${this.Name.trim()}%'`;
@@ -272,7 +239,6 @@ export class DashboardMasterTableComponent {
     else {
       this.isnameFilterApplied = false;
     }
-
     if (this.Description !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") + `SNAPSHOT_LINK LIKE '%${this.Description.trim()}%'`;
@@ -281,9 +247,6 @@ export class DashboardMasterTableComponent {
     else {
       this.isDistapply = false;
     }
-
-
-    // SEQ_NO Filter
     if (this.seqno !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") + `SEQ_NO LIKE '%${this.seqno.trim()}%'`;
@@ -291,11 +254,7 @@ export class DashboardMasterTableComponent {
     }
     else {
       this.isseqapply = false;
-
     }
-
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
@@ -319,8 +278,6 @@ export class DashboardMasterTableComponent {
             this.totalRecords = responseBody["count"];
             this.dataList = responseBody["data"];
             this.TabId = responseBody["TAB_ID"];
-
-            //this.loadFilters();
           } else if (data.status == 400) {
             this.loadingRecords = false;
             this.dataList = [];
@@ -347,13 +304,11 @@ export class DashboardMasterTableComponent {
         }
       );
   }
-
   add(): void {
     this.drawerTitle = "Add New Dashboard";
     this.drawerData = new DashboardMaster();
     this.drawerVisible = true;
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -362,44 +317,33 @@ export class DashboardMasterTableComponent {
     const sortOrder = (currentSort && currentSort.value) || "desc";
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   edit(data: DashboardMaster): void {
     this.drawerTitle = "Update Dashboard";
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   back() {
     this.router.navigate(["/masters/menu"]);
   }
-
-
-
-  // new filter
   showMainFilter() {
     if (this.filterClass === "filter-visible") {
       this.filterClass = "filter-invisible";
@@ -411,23 +355,14 @@ export class DashboardMasterTableComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   openfilter() {
     this.drawerTitle = "Dashboard Filter";
-    // this.applyCondition = "";
     this.filterFields[0]["options"] = this.roleData1;
-    // this.filterFields[1]["options"] = this.stateData;
-
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = "N";
     this.FILTER_NAME = "";
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: "AND",
@@ -445,17 +380,13 @@ export class DashboardMasterTableComponent {
       },
     ];
   }
-
   drawerflterClose(): void {
     this.drawerFilterVisible = false;
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
-
     {
       key: 'ROLE_ID',
       label: 'Role',
@@ -478,8 +409,6 @@ export class DashboardMasterTableComponent {
       ],
       placeholder: "Enter Title",
     },
-
-
     {
       key: "STATUS",
       label: "Status",
@@ -501,8 +430,7 @@ export class DashboardMasterTableComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === "string" ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === "string" ? `'${value}'` : value; 
         switch (comparator) {
           case "Contains":
             return `${field} LIKE '%${value}%'`;
@@ -516,27 +444,18 @@ export class DashboardMasterTableComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(" AND "); // Top-level groups are combined with ' AND'
+    return filterGroups.map(processGroup).join(" AND "); 
   }
-
   showFilter() {
     if (this.filterClass === "filter-visible")
       this.filterClass = "filter-invisible";
     else this.filterClass = "filter-visible";
   }
-
-  // filterQuery = '';
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = "filter-invisible";
     this.selectedFilter = item.ID;
@@ -544,25 +463,21 @@ export class DashboardMasterTableComponent {
     this.filterQuery = " AND (" + item.FILTER_QUERY + ")";
     this.search(true);
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ""; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ""; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ""; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ""; 
   }
-  userId = sessionStorage.getItem("userId"); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  //TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem("userId"); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
   TabId: number;
-
   Clearfilter() {
     this.filterClass = "filter-invisible";
     this.selectedFilter = "";
@@ -578,7 +493,6 @@ export class DashboardMasterTableComponent {
     return this.drawerfilterClose.bind(this);
   }
   filterloading: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
     this.api
@@ -588,14 +502,13 @@ export class DashboardMasterTableComponent {
         "",
         "",
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
             this.filterQuery = "";
-
           } else {
             this.filterloading = false;
             this.message.error("Failed to load filters.", "");
@@ -608,9 +521,7 @@ export class DashboardMasterTableComponent {
       );
     this.filterQuery = "";
   }
-
   deleteItem(item: any): void {
-
     this.filterloading = true;
     this.api.deleteFilterById(item.ID).subscribe(
       (data) => {
@@ -622,7 +533,6 @@ export class DashboardMasterTableComponent {
           this.filterloading = false;
           this.isfilterapply = false;
           this.filterClass = "filter-invisible";
-
           this.loadFilters();
           this.filterQuery = "";
           this.search(true);
@@ -644,18 +554,12 @@ export class DashboardMasterTableComponent {
       }
     );
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
-    // this.filterFields[0]["options"] = this.countryData;
-    // this.filterFields[1]["options"] = this.stateData;
-
     this.filterGroups = JSON.parse(data.FILTER_JSON);
     this.FILTER_NAME = data.FILTER_NAME;
-    // 
     this.EditQueryData = data;
     this.editButton = "Y";
     this.drawerTitle = "Edit Query";

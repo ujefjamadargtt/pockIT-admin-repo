@@ -4,7 +4,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { SkillMasterData } from 'src/app/Pages/Models/SkillMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-skill-drawer',
   templateUrl: './skill-drawer.component.html',
@@ -13,31 +12,24 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 export class SkillDrawerComponent {
   isSpinning = false;
   isOk = true;
-
   ngOnInit(): void { }
-
   public commonFunction = new CommonFunctionService();
   @Input() data: any = SkillMasterData;
   @Input()
   drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   resetDrawer(Skillmaster: NgForm) {
     this.data = new SkillMasterData();
     Skillmaster.form.markAsPristine();
     Skillmaster.form.markAsUntouched();
   }
-
   techData: any = [];
-
   skillData: any = [];
   isFocused: string = '';
-
   save(addNew: boolean, Skillmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -49,7 +41,6 @@ export class SkillDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Skill Name', '');
     }
-
     if (this.isOk) {
       if (this.data.DESCRIPTION == '') {
         this.data.DESCRIPTION = null;
@@ -105,7 +96,6 @@ export class SkillDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }

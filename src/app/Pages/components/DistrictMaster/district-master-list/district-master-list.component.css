@@ -1,45 +1,95 @@
-th {
-    text-align: center !important;
-    vertical-align: middle !important;
-    /* font-weight: bold; */
+.cm-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.cm-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.cm-filter-btn-wrapper {
+  width: 47px;
+}
+.cm-add-btn-wrapper {
+  margin-right: 0;
+}
+.cm-center {
+  text-align: center;
+}
+.cm-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.cm-filter-row {
+  padding-top: 0;
+}
+.cm-filter-card-wrapper {
+  margin-bottom: 8px;
+}
+.cm-filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.cm-filter-card-title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.cm-filter-text {
+  color: black;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.cm-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.cm-filter-actions {
+  margin-top: 7px;
+}
+.cm-filter-action-row {
+  display: flex;
+  justify-content: space-between;
+}
+.cm-filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.cm-no-margin {
+  margin-right: 0;
+}
+.cm-filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.cm-footer-btn {
+  margin-right: 10px;
+}
+.cm-table-preline {
+  white-space: pre-line;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+.full-wdt{
+  width: 100%;
+}
+.edit-tag-clickable {
+  cursor: pointer;
+}
+.edit-tag-icon {
+  font-size: 15px;
 }
 
-.select{
-  width: 200px;
-  padding: 8px;
-  display: block;
+.ctr-txt{
+  text-align: center
 }
-
-.search-box {
-    padding: 8px;
-  }
-
-  .search-box input {
-    width: 188px;
-    display: block;
-  }
-
-  .search-box button {
-    width: 90px;
-  }
-
-  .search-button {
-    margin-right: 8px;
-  }
-
-  nz-select {
-    width: 100%;
-  }
-
-  
-  :host::ng-deep .ant-card-body {
-    padding: 0px;
-  }
-
-  .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
-    display: inline-block;
-  }

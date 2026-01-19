@@ -1,6 +1,20 @@
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.heading-txt {
+  color: red;
+  font-size: 10px
+}
+.footer-btn-margin-12 {
+  margin-right: 12px;
+}
+.footer-dropdown-item-white {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-dropdown-link-white {
+  color: white !important;
+}

@@ -3,25 +3,10 @@ table {
     border-collapse: collapse;
     width: 100%;
 }
-
-/* td,
-th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 5px;
-    text-align: center !important;
-    vertical-align: middle !important;
-} */
-
-/* tr:nth-child(even) {
-    background-color: #dddddd;
-} */
-
 .container {
     height: 100px;
     position: relative;
 }
-
 .vertical-center {
     margin: 0;
     position: relative;
@@ -29,7 +14,6 @@ th {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
-
 .vv {
     margin-top: 2%;
     position: relative;
@@ -45,16 +29,112 @@ th {
     border-radius: 4px;
     transition: all .3s;
 }
-
 .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
+  .text-center{
+    text-align: center
+  }
+  .back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-button {
+  color: white;
+}
+.filter-button-wrapper {
+  width: 47px;
+}
+.filter-row {
+  padding-top: 0;
+}
+.spin-container {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-card-actions-row {
+  margin-top: 7px;
+}
+.filter-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.no-filters-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+.reset-filter-btn {
+  margin-right: 10px;
+}
+.new-filter-btn {
+  margin-right: 10px;
+}
+.ticket-summary-table {
+  width: 100%;
+}
+.filter-icon.active {
+  color: #092B9C;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.table-total-row {
+  font-weight: bold;
+}
+.total-label, .total-value {
+  font-weight: bold;
+}

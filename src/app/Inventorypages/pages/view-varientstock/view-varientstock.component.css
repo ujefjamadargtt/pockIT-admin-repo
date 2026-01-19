@@ -2,20 +2,86 @@
     0% {
         opacity: 1;
     }
-
     50% {
         opacity: 0;
     }
-
     100% {
         opacity: 1;
     }
 }
-
 .blinking-text {
     text-align: center;
     animation: blink 1s infinite;
     color: red;
     font-size: 13px !important;
     font-weight: 600;
+}
+.flex-start-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.flex-end-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.warehouse-select-width {
+  min-width: 350px;
+}
+
+.stock-level-badge {
+  padding: 0px 8px;
+  margin-right: 5px;
+  font-size: 12px !important;
+  border-radius: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  height: 26px;
+}
+
+.alert-level-badge {
+  border: 1px solid #ff9d64;
+  background: #fff9ed;
+}
+
+.reorder-level-badge {
+  border: 1px solid #6464ff;
+  background: #ededff;
+}
+
+.avg-level-badge {
+  border: 1px solid #00e810;
+  background: #d4ffdc;
+}
+
+.level-separator {
+  font-size: 19px !important;
+  font-weight: 300;
+  margin: 0px 5px;
+}
+
+.table-whitespace {
+  white-space: pre-line;
+}
+
+.th-bold {
+  font-weight: bold;
+}
+
+.th-center {
+  text-align: center;
+}
+
+.tbody-tr-center {
+  text-align: center;
+}
+
+.variant-text {
+  font-size: 11px !important;
+}
+
+.out-of-stock-text {
+  color: rgb(255, 0, 0);
 }

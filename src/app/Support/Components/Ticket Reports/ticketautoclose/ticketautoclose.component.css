@@ -3,10 +3,125 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
+  .header-row {
+  display: flex;
+  align-items: center;
+}
+.back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.btn-excel {
+  color: white;
+}
+.btn-filter-wrapper {
+  width: 47px;
+}
+.search-input {
+  width: 200px; 
+}
+.filter-row {
+  margin-top: 10px;
+}
+.filter-inner-row {
+  padding-top: 0;
+}
+.filter-loading {
+  text-align: center;
+}
+.saved-filters-row {
+  margin-bottom: 8px;
+}
+.saved-filter-col {
+  margin-bottom: 8px;
+}
+.saved-filter-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  position: relative;
+}
+.saved-filter-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.filter-name {
+  color: black;
+  font-size: 25px;
+  white-space: nowrap;
+  text-align: center;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.saved-filter-actions-row {
+  margin-top: 7px;
+}
+.saved-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.no-data-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.btn-reset,
+.btn-new {
+  margin-right: 10px;
+}
+.text-center{
+    text-align: center
+}
+.action-cell {
+  text-align: center;
+}
+.view-tag {
+  cursor: pointer;
+}
+.view-icon {
+  font-size: 15px;
+}
+.truncate-cell {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.center-cell {
+  text-align: center;
+}
+.active-filter {
+  color: #1890ff;
+}
+.width-full{
+    width: 100%
+}

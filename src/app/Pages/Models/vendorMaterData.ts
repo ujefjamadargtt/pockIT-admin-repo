@@ -1,10 +1,8 @@
-
 export class VendorMasterData {
   ID: any;
   NAME: string = '';
   TYPE: string = '';
   MOBILE_NUMBER: any;
-  // EMAIL_ID: string;
   EMAIL_ID: string = '';
   PROFILE_PHOTO: any
   BUSINESS_NAME: string = '';
@@ -13,7 +11,6 @@ export class VendorMasterData {
   ADDRESS_LINE_1: any;
   ADDRESS_LINE_2: any;
   ADDRESS2: string = '';
-  // BUSINESS_NAME: string;
   CITY_ID: number | null;
   STATE_ID: any;
   COUNTRY_ID: number;
@@ -22,8 +19,6 @@ export class VendorMasterData {
   IS_ACTIVE: boolean = true;
   SEQ_NO: number;
   PINCODE_ID: number | null;
-  // CONTRACT_START_DATE: Date;
-  // CONTRACT_END_DATE: Date;
   STATUS: boolean = true;
   PAN: any;
   GST_NO: any;
@@ -31,4 +26,3 @@ export class VendorMasterData {
   ORG_ID: any
   CREATED_DATE: any;
 }
-

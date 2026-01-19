@@ -11,7 +11,7 @@
               <nz-option *ngFor="let data of countryData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
             </nz-select>
             <ng-template #dropdownTemplate>
-              <div style="max-width: 300px; overflow-x: auto; white-space: nowrap">
+              <div class="tm-country-dropdown">
                 <nz-option *ngFor="let data of countryData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
               </div>
             </ng-template>
@@ -19,7 +19,6 @@
         </nz-form-item>
       </div>
     </div>
-
     <div nz-row>
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
         <nz-form-item>
@@ -33,22 +32,6 @@
         </nz-form-item>
       </div>
     </div>
-    <!-- <div nz-row>
-      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
-        <nz-form-item>
-          <nz-form-label nzRequired nzNoColon>District Name</nz-form-label>
-          <nz-form-control nzHasFeedback nzErrorTip="Please Enter District Name">
-            <input nz-input name="name" placeholder="Enter District Name" required [(ngModel)]="data.NAME"
-              (keypress)="validateInput($event)" #nameField="ngModel" maxlength="128" autocomplete="off"  />
-            <h6 style="color: red; font-size: 10px" *ngIf="
-                data.NAME != undefined && data.NAME != null && data.NAME != ''
-              ">
-              {{ data.NAME.length }}/128
-            </h6>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-    </div> -->
     <div nz-row>
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
         <nz-form-item>
@@ -57,8 +40,7 @@
             <input nz-input name="name" placeholder="Enter District Name" required [(ngModel)]="data.NAME"
               (keypress)="validateInput($event)" #nameField="ngModel" maxlength="128" autocomplete="off"
               (focus)="isFocused = 'districtName'" (blur)="isFocused = ''" />
-            <!-- Dynamic Character Count -->
-            <h6 style="color: red; font-size: 10px" *ngIf="
+            <h6 class="tm-char-count" *ngIf="
                 isFocused === 'districtName' ||
                 (data.NAME && isFocused === 'districtName')
               ">
@@ -68,16 +50,13 @@
         </nz-form-item>
       </div>
     </div>
-
-
     <div nz-row>
       <div nz-col nzSpan="12">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
           <nz-form-control nzHasFeedback nzErrorTip="Please Enter Sequence No.">
-            <input nz-input placeholder="Sequence No." name="SeqNo" style="width: 150px" required
-              [(ngModel)]="data.SEQ_NO" required #seqNo="ngModel" (keypress)="commonFunction.onlynum($event)"
-              maxlength="8" autocomplete="off" />
+            <input nz-input placeholder="Sequence No." name="SeqNo" required [(ngModel)]="data.SEQ_NO" #seqNo="ngModel"
+              (keypress)="commonFunction.onlynum($event)" maxlength="8" autocomplete="off" class="tm-seq-input" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -94,25 +73,23 @@
     </div>
   </form>
 </div>
-
 <div class="footer">
-  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn tm-footer-cancel">
     Cancel
   </button>
-
   <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
     (click)="save(false, teritorymaster)" class="ant-btn ant-btn-primary">
     Save & Close
   </button>
-
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu>
-      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
-        <a class="footer-button" style="color: white!important" (click)="save(true, teritorymaster)">Save & New</a>
+      <li nz-menu-item class="menuc tm-save-new-item">
+        <a class="footer-button tm-save-new-link" (click)="save(true, teritorymaster)">
+          Save & New
+        </a>
       </li>
     </ul>
   </nz-dropdown-menu>
-
   <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
     (click)="save(false, teritorymaster)">
     <span>Update & Close</span>

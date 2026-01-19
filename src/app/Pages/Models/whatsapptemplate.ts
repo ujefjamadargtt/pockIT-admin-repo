@@ -1,4 +1,3 @@
-
 export class whatsapptemplate {
   ID: number = 0;
   NAME: any
@@ -13,5 +12,4 @@ export class whatsapptemplate {
   BODY_VALUES: any
   HEADER_TEXT: any
   BUTTON_VALUES: any = []
-
 }

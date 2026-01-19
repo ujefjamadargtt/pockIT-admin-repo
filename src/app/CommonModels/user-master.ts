@@ -17,9 +17,6 @@ export class UserMaster {
   PROFILE_PHOTO: any
   ORG_ID: any = 0;
   ORGANISATION_ID: any = 0;
-
-
     CEMAIL_ID: string = '';
       CPASSWORD: string = '';
 }
-

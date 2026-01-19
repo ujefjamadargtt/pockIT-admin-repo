@@ -22,40 +22,28 @@ export class TechcalenderComponent {
   saveData: any = new Data();
   date: Date = new Date();
   mode: 'month' | 'year' = 'month';
-  selectedDate: Date | null = null; // For storing the full date
-  selectedDayName: string = ''; // For storing the day name
+  selectedDate: Date | null = null; 
+  selectedDayName: string = ''; 
   isVisible = false;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private datePipe: DatePipe
   ) { }
-
   ngOnInit() {
     this.getTechnicianWeekData1();
     this.getCalenderData();
     this.dateSelect = this.datePipe.transform(new Date(), 'dd');
   }
-
   openModal(event: any): void {
-    // Logic to open the modal
-    // this.isVisible = true;
   }
-
   onModeChange(event: any): void {
     this.isVisible = false;
-    // Prevent modal from opening when year or month is changed
-
-    // If needed, you can add logic here to detect if it’s a year or month change
   }
-
   panelChange(event: { date: Date; mode: string }): void {
     this.isVisible = false;
-
-    const currentMonth = event.date.getMonth() + 1; // Months are 0-based
+    const currentMonth = event.date.getMonth() + 1; 
     const currentYear = event.date.getFullYear();
-
     this.getCalenderData();
   }
   year: any;
@@ -65,41 +53,29 @@ export class TechcalenderComponent {
   currentDate: any = new Date();
   ModelShowWithTime(event: Date) {
     const options: Intl.DateTimeFormatOptions = { weekday: 'short' };
-    const dayName = event.toLocaleDateString('en-US', options).substring(0, 2); // Get 'Mo', 'Tu', etc.
-
+    const dayName = event.toLocaleDateString('en-US', options).substring(0, 2); 
     const date = event.getDate().toString().padStart(2, '0');
     this.dateSelect = event.getDate().toString().padStart(2, '0');
-    this.month = event.getMonth() + 1; // e.g., 12 for December
-    this.year = event.getFullYear(); // e.g., 2024
-
-    this.formattedDate = `${this.year}-${this.month}-${date}`; // Format in yyyy-mm-dd
-
+    this.month = event.getMonth() + 1; 
+    this.year = event.getFullYear(); 
+    this.formattedDate = `${this.year}-${this.month}-${date}`; 
     const matchingDay =
       this.techdata.length > 0 && this.techdata[0].WEEK_DAY_DATA
         ? this.techdata[0].WEEK_DAY_DATA.find(
           (day: any) => day.WEEK_DAY.toLowerCase() === dayName.toLowerCase()
         )
         : null;
-
     if (matchingDay) {
     } else {
-
     }
-
     const calendarDay = this.calenderdata.find(
       (day: any) => day.DATE_OF_MONTH === this.formattedDate
     );
-
     if (calendarDay) {
     } else {
-
     }
-
-    // Set time picker values based on calendarDay or matchingDay
     if (calendarDay && calendarDay.DAY_START_TIME != null) {
-      // Use calendarDay if DAY_START_TIME is not null
       this.saveData.IS_SERIVCE_AVAILABLE = calendarDay.IS_SERIVCE_AVAILABLE;
-
       this.saveData.DAY_START_TIME = this.convertTimeToDate(
         calendarDay.DAY_START_TIME
       );
@@ -113,7 +89,6 @@ export class TechcalenderComponent {
         calendarDay.BREAK_END_TIME
       );
     } else if (matchingDay && matchingDay.DAY_START_TIME != null) {
-      // Use matchingDay if DAY_START_TIME is not null
       this.saveData.IS_SERIVCE_AVAILABLE = matchingDay.IS_SERIVCE_AVAILABLE;
       this.saveData.DAY_START_TIME = this.convertTimeToDate(
         matchingDay.DAY_START_TIME
@@ -128,7 +103,6 @@ export class TechcalenderComponent {
         matchingDay.BREAK_END_TIME
       );
     } else {
-      // Default values if no data is found
       this.saveData = {
         DAY_START_TIME: null,
         DAY_END_TIME: null,
@@ -137,17 +111,11 @@ export class TechcalenderComponent {
         IS_SERIVCE_AVAILABLE: false,
       };
     }
-
     if (this.mode === 'year') {
       return;
     }
-
-    // Otherwise, show the modal
     this.selectedDate = event;
-
-    // this.isVisible = true;
   }
-
   selectChange(event: Date): void {
     if (this.dateSelect != event.getDate().toString().padStart(2, '0')) {
       this.ModelShowWithTime(event);
@@ -163,23 +131,18 @@ export class TechcalenderComponent {
       this.getCalenderData();
     }
   }
-
   convertTimeToDate(time: any): Date {
     if (typeof time !== 'string' || !time.includes(':')) {
-
-      return new Date(); // Return current time as fallback
+      return new Date(); 
     }
-
     const [hours, minutes, seconds] = time.split(':').map(Number);
     const now = new Date();
-    now.setHours(hours, minutes, seconds || 0, 0); // Set hours, minutes, seconds, and milliseconds
+    now.setHours(hours, minutes, seconds || 0, 0); 
     return now;
   }
-
   closeModal(): void {
     this.isVisible = false;
   }
-
   techdata: any = [];
   getTechnicianWeekData1() {
     this.api
@@ -204,9 +167,7 @@ export class TechcalenderComponent {
         }
       );
   }
-
   calenderdata: any = [];
-
   createDate(Time: any) {
     const currentDate = new Date();
     const timeParts = Time.split(':');
@@ -215,11 +176,9 @@ export class TechcalenderComponent {
       parseInt(timeParts[1], 10),
       parseInt(timeParts[2], 10)
     );
-
     return this.datePipe.transform(currentDate, 'HH:mm');
   }
   timelineData: any[] = [];
-
   getStatusIcon(status: string): string {
     switch (status) {
       case 'order placed':
@@ -240,13 +199,11 @@ export class TechcalenderComponent {
         return 'ℹ️';
     }
   }
-
   formatTimelineData(data: any[]): any[] {
     return data.map((day) => ({
       date: day._id,
       events: day.ACTION_LOGS.map((log) => ({
-        icon: this.getStatusIcon(log.STATUS || ''), // Adjust icon logic as needed
-
+        icon: this.getStatusIcon(log.STATUS || ''), 
         time: log.TIME ? log.TIME : 'N/A',
         user:
           log.TYPE == "ADMIN" || log.TYPE == "Admin"
@@ -273,7 +230,6 @@ export class TechcalenderComponent {
     } else {
       year = this.datePipe.transform(new Date(), 'yyyy');
     }
-
     const datessssss = this.getStartAndEndDates(month, year);
     this.api
       .getCalenderData(0, 0, '', '', '', month, year, this.FILTER_ID)
@@ -308,25 +264,13 @@ export class TechcalenderComponent {
               datessssss.endDate,
               'yyyy-MM-dd'
             );
-            // var filterrr: any =
-            //   ' AND TECHNICIAN_ID = ' +
-            //   this.FILTER_ID +
-            //   " AND DATE(LOG_DATE_TIME) BETWEEN '" +
-            //   this.datePipe.transform(datessssss.startDate, 'yyyy-MM-dd') +
-            //   "' AND '" +
-            //   this.datePipe.transform(datessssss.endDate, 'yyyy-MM-dd') +
-            //   "'";
-            // // var filterrr:any= " AND TECHNICIAN_ID = " + this.FILTER_ID
-
             this.filterdata1 = (this.FILTER_ID != null && this.FILTER_ID != undefined) ? {
               TECHNICIAN_ID: {
                 $in: [this.FILTER_ID]
               }
             } : {};
-
             var filterrr: any = {
               $and: [
-
                 {
                   $expr: {
                     $and: [
@@ -338,7 +282,7 @@ export class TechcalenderComponent {
                               date: '$LOG_DATE_TIME',
                             },
                           },
-                          value1, // Start date, e.g., "2025-01-14"
+                          value1, 
                         ],
                       },
                       {
@@ -349,7 +293,7 @@ export class TechcalenderComponent {
                               date: '$LOG_DATE_TIME',
                             },
                           },
-                          value2, // End date, e.g., "2025-01-15"
+                          value2, 
                         ],
                       },
                     ],
@@ -373,7 +317,6 @@ export class TechcalenderComponent {
                 this.loading = false;
               }
             );
-
             this.calenderdata = data['data'];
           } else {
             this.calenderdata = [];
@@ -387,21 +330,17 @@ export class TechcalenderComponent {
         }
       );
   }
-
   isSameDate(date: Date, itemDate: string): boolean {
     const selectedDate = new Date(date);
     const item = new Date(itemDate);
-
     return (
       selectedDate.getDate() === item.getDate() &&
       selectedDate.getMonth() === item.getMonth() &&
       selectedDate.getFullYear() === item.getFullYear()
     );
   }
-
   isSpinning = false;
   isOk = true;
-
   save() { }
   disableEndHours = (): number[] => {
     if (this.saveData.DAY_START_TIME) {
@@ -413,7 +352,6 @@ export class TechcalenderComponent {
     }
     return [];
   };
-
   disableEndMinutes = (hour: number): number[] => {
     if (this.saveData.DAY_START_TIME) {
       const startTime = new Date(this.saveData.DAY_START_TIME);
@@ -441,25 +379,20 @@ export class TechcalenderComponent {
     } else if (typeof value === 'string') {
       timeString = value;
     } else {
-
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     this.saveData.DAY_START_TIME = date.toISOString();
   }
-
   updateEndTime(value: any): void {
     let timeString: string;
     if (value instanceof Date) {
@@ -471,35 +404,27 @@ export class TechcalenderComponent {
     } else if (typeof value === 'string') {
       timeString = value;
     } else {
-
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     this.saveData.DAY_END_TIME = date.toISOString();
   }
-
   disableBreakStartHours = (): number[] => {
     const disabledHours: number[] = [];
     if (this.saveData.DAY_START_TIME && this.saveData.DAY_END_TIME) {
       const dayStartTime = new Date(this.saveData.DAY_START_TIME);
       const dayEndTime = new Date(this.saveData.DAY_END_TIME);
-
       const dayStartHour = dayStartTime.getHours();
       const dayEndHour = dayEndTime.getHours();
-
-      // Disable hours outside the range of DAY_START_TIME and DAY_END_TIME
       for (let hour = 0; hour < 24; hour++) {
         if (hour < dayStartHour || hour > dayEndHour) {
           disabledHours.push(hour);
@@ -508,29 +433,23 @@ export class TechcalenderComponent {
     }
     return disabledHours;
   };
-
   disableBreakStartMinutes = (hour: number): number[] => {
     const disabledMinutes: number[] = [];
     if (this.saveData.DAY_START_TIME && this.saveData.DAY_END_TIME) {
       const dayStartTime = new Date(this.saveData.DAY_START_TIME);
       const dayEndTime = new Date(this.saveData.DAY_END_TIME);
-
       const dayStartHour = dayStartTime.getHours();
       const dayStartMinute = dayStartTime.getMinutes();
       const dayEndHour = dayEndTime.getHours();
       const dayEndMinute = dayEndTime.getMinutes();
-
       if (hour === dayStartHour) {
-        // Disable minutes before the DAY_START_TIME
         for (let minute = 0; minute < 60; minute++) {
           if (minute < dayStartMinute) {
             disabledMinutes.push(minute);
           }
         }
       }
-
       if (hour === dayEndHour) {
-        // Disable minutes after the DAY_END_TIME
         for (let minute = 0; minute < 60; minute++) {
           if (minute > dayEndMinute) {
             disabledMinutes.push(minute);
@@ -550,7 +469,6 @@ export class TechcalenderComponent {
     }
     return [];
   };
-
   disableBreakEndMinutes = (hour: number): number[] => {
     if (this.saveData.BREAK_START_TIME) {
       const startTime = new Date(this.saveData.BREAK_START_TIME);
@@ -578,25 +496,20 @@ export class TechcalenderComponent {
     } else if (typeof value === 'string') {
       timeString = value;
     } else {
-
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     this.saveData.BREAK_START_TIME = date.toISOString();
   }
-
   updateBreakEndTime(value: any): void {
     let timeString: string;
     if (value instanceof Date) {
@@ -608,80 +521,40 @@ export class TechcalenderComponent {
     } else if (typeof value === 'string') {
       timeString = value;
     } else {
-
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     this.saveData.BREAK_END_TIME = date.toISOString();
   }
-
   getStartAndEndDates(month: number, year: number) {
-    // Start date: 1st day of the given month and year
     const startDate = new Date(year, month - 1, 1);
-
-    // End date: Last day of the given month and year
-    // Create a date object for the first day of the next month, and subtract one day.
     const endDate = new Date(year, month, 0);
-
     return {
       startDate: startDate,
       endDate: endDate,
     };
   }
-
-  // sortActionLogsDescending(data: any[]): any[] {
-  //   const actionLogs = data[0]?.ACTION_LOGS || [];
-  //   return actionLogs.sort((a: any, b: any) => b.TIME.localeCompare(a.TIME));
-  // }
-
-  // sortEventsByTime(data: any[]): any[] {
-  //   return data.map((dateObj) => {
-  //     return {
-  //       ...dateObj,
-  //       events: dateObj.events.sort((a: any, b: any) => {
-  //         return b.time.localeCompare(a.time); // Compare time strings
-  //       }),
-  //     };
-  //   });
-  // }
-  // sortEventsByTime(data: any[]): any[] {
-  //   return data
-  //     .sort((a, b) => b.date.localeCompare(a.date)) // Sort by date
-  //     .map((dateObj) => {
-  //       return {
-  //         ...dateObj,
-  //         events: dateObj.events.sort((a: any, b: any) => {
-  //           return b.time.localeCompare(a.time); // Sort events by time in descending order
-  //         }),
-  //       };
-  //     });
-  // }
   sortEventsByTime(data: any[]): any[] {
     return data
-      .sort((a, b) => b.date.localeCompare(a.date)) // Sort by date
+      .sort((a, b) => b.date.localeCompare(a.date)) 
       .map((dateObj) => {
         return {
           ...dateObj,
           events: dateObj.events.sort((a: any, b: any) => {
-            // Convert time strings to Date objects for proper AM/PM sorting
             const timeA = new Date(`1970-01-01 ${a.time}`);
             const timeB = new Date(`1970-01-01 ${b.time}`);
-            return timeB.getTime() - timeA.getTime(); // Sort descending
+            return timeB.getTime() - timeA.getTime(); 
           }),
         };
       });
   }
-
 }

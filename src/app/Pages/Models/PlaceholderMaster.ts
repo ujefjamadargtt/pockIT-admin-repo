@@ -7,6 +7,4 @@ export class PlaceholderMaster {
     TEMPLATE_CATEGORY_ID: any
     DESCRIPTION: any
     IS_ACTIVE: boolean = true;
-    // selectedTable: any
-
 }

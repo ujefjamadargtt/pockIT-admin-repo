@@ -1,15 +1,12 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-.select{
-width: 200px;
-padding: 8px;
-display: block;
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
@@ -22,7 +19,6 @@ display: block;
 .inputgroup>span>span {
   font-size: 11px !important;
 }
-
 .optiongroup>div {
   font-size: 11px !important;
 }
@@ -30,22 +26,15 @@ display: block;
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
-
-/* new css */
 .card {
   background: #fff;
   border: 1px solid #ddd;
@@ -55,53 +44,42 @@ nz-select {
   margin: 15px 0px 0px 0px;
   padding: 0px;
 }
-
 .card-header {
-  /* display: flex; */
   justify-content: space-between;
-  align-items:center;
-      margin-bottom: 0px;
-      padding: 0px !important;
-  background-color: white!important;
-  border-radius: 8px 8px 0px 0px!important;
+  align-items: center;
+  margin-bottom: 0px;
+  padding: 0px !important;
+  background-color: white !important;
+  border-radius: 8px 8px 0px 0px !important;
   height: 28px;
 }
-
 .category-name {
   font-weight: bold;
   color: #333;
 }
-
 .subcategory-name {
   font-weight: bold;
   color: #555;
 }
-
 .tag {
-font-size: 12px;
-font-weight: bold;
-padding: 3px 12px;
-border-radius: 0px 8px 0px 8px;
-position: relative;
-display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 3px 12px;
+  border-radius: 0px 8px 0px 8px;
+  position: relative;
+  display: inline-block;
 }
-
 .card-body {
-/* display: flex;
-justify-content: space-between; */
-align-items: flex-start; /* Align items at the start */
-gap: 20px;
+  align-items: flex-start;
+  gap: 20px;
 }
-
 .details {
-flex: 1; /* Take up remaining space */
+  flex: 1;
 }
-
 .service-image {
-flex-shrink: 0; /* Prevent shrinking */
-text-align: right;
+  flex-shrink: 0;
+  text-align: right;
 }
-
 .name {
   margin: 0 0 5px;
   font-size: 16px;
@@ -113,50 +91,40 @@ text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* Limit to 3 lines */
+  -webkit-line-clamp: 1;
   line-clamp: 1;
-  max-height: calc(1.5em * 1); /* Adjust line height (e.g., 1.5em) */
+  max-height: calc(1.5em * 1);
   cursor: pointer;
   line-height: 1.5em;
 }
-
 .truncate-three-lines {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-line-clamp: 3;
   line-clamp: 3;
-  max-height: calc(1.5em * 3); /* Adjust line height (e.g., 1.5em) */
+  max-height: calc(1.5em * 3);
   cursor: pointer;
   line-height: 1.5em;
 }
-
 .description {
   margin: 0;
   color: #555;
   font-size: 14px;
 }
-
 .service-image {
   flex: 1;
   text-align: right;
 }
-
 .service-image img {
-  /* max-width: 120px;
-  max-height: 120px; */
   padding: 0px 15px 0pc 10px;
   border-radius: 0px;
   border: none;
 }
-
 .card-footer {
-  /* display: flex;
-  justify-content: space-between; */
   margin-top: 0px;
 }
-
 .btn {
   padding: 5px !important;
   border: none;
@@ -165,22 +133,18 @@ text-align: right;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .btn.edit {
   background-color: #007bff;
   color: white;
 }
-
 .btn.edit-details {
   background-color: #ffc107;
   color: black;
 }
-
 .btn.add-subservice {
   background-color: #28a745;
   color: white;
 }
- 
 .btn.editmap {
   background-color: #af93ff;
   color: white;
@@ -188,16 +152,173 @@ text-align: right;
 .btn:hover {
   opacity: 0.9;
 }
-
 .nz-col {
-  padding-left: 10px; /* Optional: To add space between columns */
-  padding-right: 10px; /* Optional: To add space between columns */
+  padding-left: 10px;
+  padding-right: 10px;
 }
-
- :host::ng-deep .ant-card-body {
-    padding: 0px;
-  }
-
-  :host::ng-deep .ant-picker-ok button {
-    color: white !important;
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}
+:host::ng-deep .ant-picker-ok button {
+  color: white !important;
+}
+.whitespace1 {
+  white-space: pre-line
+}
+.service-image-header-th {
+  font-weight: bold;
+  text-align: center;
+}
+.tbody-view-image-tag {
+  cursor: pointer;
+}
+.tbody-view-image-icon {
+  font-size: 15px;
+}
+.dropdown-range-picker-full-width {
+  width: 100%;
+}
+.dropdown-select-full-width {
+  width: 100%;
+}
+.dropdown-duration-inputs-container {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.dropdown-duration-input-hours {
+  flex: 1;
+  width: 150px;
+  margin-right: 8px;
+}
+.dropdown-duration-input-minutes {
+  flex: 1;
+  width: 150px;
+}
+.dropdown-duration-actions-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+}
+.prep-hours-container {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.prep-hours-input {
+  flex: 1;
+  width: 150px;
+  margin-right: 8px;
+}
+.prep-minutes-input {
+  flex: 1;
+  width: 150px;
+}
+.prep-apply-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+}
+.time-filter-container {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.time-picker-from {
+  width: 100%;
+  margin-right: 8px;
+}
+.time-picker-to {
+  width: 100%;
+  margin-left: 8px;
+}
+.image-preview-container {
+  height: 400px;
+  overflow: auto;
+}
+.image-preview-img {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600;
+  max-height: 400;
+}
+.query-text-center {
+  text-align: center;
+}
+.filter-row-align-end {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px
+}
+.filter-icon-item {
+  width: 47px;
+}
+.filter-row-padding-reset {
+  padding-top: 0px;
+}
+.filter-loading-center {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-text {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-selected-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions-container {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-icon {
+  font-size: 10px !important;
+}
+.filter-action-view {
+  margin-right: 0px;
+}
+.filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.filter-footer-btn {
+  margin-right: 10px;
+}
+.filter-row-padding {
+  margin-bottom: 5px;
 }

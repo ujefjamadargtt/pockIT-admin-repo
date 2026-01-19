@@ -34,7 +34,3 @@ export class orderMasterData {
     SERVICE_ADDRESS_DATA: any = null;
     BILLING_ADDRESS_DATA: any = null;
 }
-
-
-
-

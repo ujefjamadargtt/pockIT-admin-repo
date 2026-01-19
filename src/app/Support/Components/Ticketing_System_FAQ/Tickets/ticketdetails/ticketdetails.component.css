@@ -1,26 +1,18 @@
 ::-webkit-scrollbar {
- 
     height: 5px;
     width: 5px;
   }
-  
-  /* Track */
   ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px rgb(233, 233, 233); 
     border-radius: 10px;
   }
-   
-  /* Handle */
   ::-webkit-scrollbar-thumb {
     background: rgb(131, 131, 131); 
     border-radius: 10px;
   }
-  
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #aaaaaa; 
   }
-
   .noty {
     height: auto;
     width: 480px;
@@ -30,7 +22,6 @@
     white-space: nowrap;
     text-align: center;
   }
-  
   .noty:hover {
     height: auto;
     width: 480px;
@@ -40,7 +31,6 @@
     word-wrap: break-word;
     text-align: center;
   }
-
   .name {
     height: auto;
     width: 480px;
@@ -51,7 +41,6 @@
     text-align: center;
     color: white;
   }
- 
   .name:hover {
     height: auto;
     width: 480px;
@@ -62,3 +51,227 @@
     text-align: center;
     color: white;
   }
+.loading-container {
+    text-align: center;
+}
+.loading-col {
+    text-align: center;
+}
+.header-row {
+    margin-top: -45px;
+    position: fixed;
+    z-index: 10;
+    width: 485px;
+    cursor: pointer;
+}
+.header-col {
+    padding: 5px;
+    border-radius: 0px 0px 20px 20px;
+    background-color: #1890ff;
+    border: 1px solid white;
+}
+.name {
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+.date-tag-row {
+    text-align: center;
+    margin-top: 20px;
+}
+.date-tag-col {
+    padding-top: 16px;
+}
+.date-tag {
+    font-weight: bold;
+}
+.system-message-container {
+    text-align: center;
+    margin-top: 10px;
+}
+.system-message-tag {
+    padding: 5px 10px;
+}
+.system-message-content {
+    text-align: center;
+}
+.noty {
+    font-style: italic;
+    margin-bottom: 5px;
+}
+.system-message-time {
+    text-align: right;
+    font-size: 11px;
+    color: #666;
+}
+.message-container {
+    display: flex;
+    flex-direction: column;
+}
+.user-message {
+    margin-top: 10px;
+    padding: 5px 10px 0px;
+    border: 1px solid #1890ff;
+    border-radius: 0px 20px 20px 20px;
+    background-color: white;
+    font-size: 12px;
+}
+.user-sent {
+    align-self: flex-start;
+    max-width: 60%;
+}
+.staff-message {
+    margin-top: 10px;
+    padding: 5px 10px 0px;
+    border: 1px solid #1890ff;
+    border-radius: 0px 20px 20px 20px;
+    background-color: white;
+    font-size: 12px;
+}
+.staff-other {
+    align-self: flex-start;
+    max-width: 60%;
+}
+.staff-self {
+    margin-top: 10px;
+    padding: 5px 10px 0px;
+    border: 1px solid #1890ff;
+    border-radius: 20px 0px 20px 20px;
+    background-color: #b1e1ff;
+    color: black;
+    font-size: 12px;
+    align-self: flex-end;
+    max-width: 60%;
+}
+.sender-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.message-text {
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+.message-text-self {
+    color: black;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+.message-image {
+    width: 100%;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.message-time {
+    text-align: right;
+    font-size: 11px;
+    color: #666;
+}
+.message-time-self {
+    text-align: right;
+    color: black;
+    font-size: 11px;
+}
+.message-container-right {
+    display: flex;
+    justify-content: flex-end;
+}
+.no-data-container {
+    font-weight: 600;
+    margin-top: 20px;
+}
+.scroll-spacer {
+    user-select: none;
+}
+.footer {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #e8e8e8;
+}
+.reply-section {
+    margin-bottom: 15px;
+}
+.image-close-container {
+    text-align: center;
+    margin-bottom: 5px;
+}
+.image-close-icon {
+    color: #ff4d4f;
+    cursor: pointer;
+    font-size: 18px;
+}
+.image-preview-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.preview-image {
+    height: 150px;
+    max-width: 100%;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+}
+.reply-textarea-col {
+    padding-right: 5px;
+}
+.reply-textarea {
+    border-radius: 5px;
+    margin-top: 8px;
+    resize: vertical;
+    min-height: 40px;
+}
+.attachment-col {
+    padding-right: 5px;
+}
+.attachment-button {
+    width: 40px;
+    margin-top: 8px;
+}
+.attachment-icon {
+    font-size: 20px;
+}
+.file-input {
+    display: none;
+}
+.send-col {
+    padding-left: 0;
+}
+.send-button {
+    width: 40px;
+    margin-top: 8px;
+}
+.send-icon {
+    height: 15px;
+    width: 15px;
+}
+.ticket-actions {
+    text-align: center;
+    margin-top: 15px;
+}
+.action-button {
+    margin-bottom: 5px;
+}
+.take-ticket-btn {
+    margin-right: 5px;
+}
+.hold-btn {
+    margin-right: 10px;
+}
+.unban-btn {
+    margin-right: 10px;
+}
+.ban-btn {
+    margin-left: 10px;
+}
+.transfer-btn {
+    margin-left: 10px;
+}
+.taken-by-other {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.taken-by-label {
+    white-space: pre-wrap;
+    font-weight: bold;
+    color: #ff4d4f;
+}

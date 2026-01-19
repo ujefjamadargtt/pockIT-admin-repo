@@ -8,29 +8,24 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { Ticket, Ticketdetails, Ticketgroup } from 'src/app/Support/Models/TicketingSystem';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { TicketdetailsComponent } from '../Ticketing_System_FAQ/Tickets/ticketdetails/ticketdetails.component';
-
 @Component({
   selector: 'app-order-tickets',
   templateUrl: './order-tickets.component.html',
   styleUrls: ['./order-tickets.component.css']
 })
 export class OrderTicketsComponent implements OnInit {
-
   formTitle = 'Manage Order Support Tickets';
   pageIndex = 1;
   pageSize = 10;
   totalRecords = 1;
   dataList: any = [];
-
   userId = sessionStorage.getItem('userId');
   public commonFunction = new CommonFunctionService();
-
   backofficeId = sessionStorage.getItem('backofficeId');
   decreptedbackofficeIDString = this.backofficeId
     ? this.commonFunction.decryptdata(this.backofficeId)
     : '';
   decreptedbackofficeID: any = parseInt(this.decreptedbackofficeIDString, 10);
-
   empList: any;
   roleId = this.cookie.get('roleId');
   roleID = sessionStorage.getItem('roleId');
@@ -59,11 +54,8 @@ export class OrderTicketsComponent implements OnInit {
   applicationId = Number(this.cookie.get('applicationId'));
   selectedDate: any = [];
   dateFormat = 'dd/MM/yyyy';
-
   @ViewChild(TicketdetailsComponent, { static: false })
   details: TicketdetailsComponent;
-
-  //drawer Variables
   drawerVisible: boolean;
   drawerTitle: string;
   drawerData: Ticket = new Ticket();
@@ -72,65 +64,45 @@ export class OrderTicketsComponent implements OnInit {
   ticketGroups: Ticketgroup[] = [];
   index = 0;
   ticketQuestion = {};
-  // value1: any = ""
-  // value2: any = ""
   departments: any = [];
   departments2: any = [];
-
   departmentVisible: boolean = false;
   isnameFilterApplied: boolean = false;
   departmentText: string = '';
-
   ticketnoVisible: boolean = false;
   isticketnoFilterApplied: boolean = false;
   ticketnoText: string = '';
-
   mobilenoVisible: boolean = false;
   ismobilenoFilterApplied: boolean = false;
   mobileText: string = '';
-
   emailVisible: boolean = false;
   isemailFilterApplied: boolean = false;
   emailText: string = '';
-
   questionVisible: boolean = false;
   isquestionFilterApplied: boolean = false;
   questionText: string = '';
-
   guaranteeVisible: boolean = false;
   isguaranteeFilterApplied: boolean = false;
   guaranteeText: string = '';
-
-
   warrantyVisible: boolean = false;
   iswarrantyFilterApplied: boolean = false;
   warrantyText: string = '';
-
-
   jobcardVisible: boolean = false;
   isjobcardFilterApplied: boolean = false;
   jobcardText: string = '';
-
   ordernoVisible: boolean = false;
   isordernoFilterApplied: boolean = false;
   ordernoText: string = '';
-
   shopordernoVisible: boolean = false;
   isshopordernoFilterApplied: boolean = false;
   shopordernoText: string = '';
-
-
-
   istakenVisible: boolean = false;
   istakenstatusFilterApplied: boolean = false;
-  // questionText: string = '';
-
   lastrespondedDateVisible: boolean = false;
   isscheduleDateFilterApplied: boolean = false;
   lastDateText: string = '';
   StartDate: any = [];
   EndDate: any = [];
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -139,12 +111,11 @@ export class OrderTicketsComponent implements OnInit {
         this.isscheduleDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isscheduleDateFilterApplied = false;
     }
   }
-
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -154,7 +125,6 @@ export class OrderTicketsComponent implements OnInit {
     { text: 'Yes', value: 'Yes' },
     { text: 'No', value: 'No' },
   ];
-
   statusFilter1: string | undefined = undefined;
   onStatusFilterChange1(selectedStatus: string) {
     this.statusFilter1 = selectedStatus;
@@ -169,9 +139,7 @@ export class OrderTicketsComponent implements OnInit {
     { text: 'Banned', value: 'B' },
     { text: 'On-Hold', value: 'H' },
   ];
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -180,7 +148,6 @@ export class OrderTicketsComponent implements OnInit {
       tooltip.hide();
     }
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.departmentText.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -217,7 +184,6 @@ export class OrderTicketsComponent implements OnInit {
       this.search();
       this.isquestionFilterApplied = false;
     }
-
     if (this.warrantyText.length >= 2 && event.key === 'Enter') {
       this.search();
       this.iswarrantyFilterApplied = true;
@@ -225,7 +191,6 @@ export class OrderTicketsComponent implements OnInit {
       this.search();
       this.iswarrantyFilterApplied = false;
     }
-
     if (this.guaranteeText.length >= 2 && event.key === 'Enter') {
       this.search();
       this.isguaranteeFilterApplied = true;
@@ -233,7 +198,6 @@ export class OrderTicketsComponent implements OnInit {
       this.search();
       this.isguaranteeFilterApplied = false;
     }
-
     if (this.jobcardText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isjobcardFilterApplied = true;
@@ -241,8 +205,6 @@ export class OrderTicketsComponent implements OnInit {
       this.search();
       this.isjobcardFilterApplied = false;
     }
-
-
     if (this.ordernoText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isordernoFilterApplied = true;
@@ -250,8 +212,6 @@ export class OrderTicketsComponent implements OnInit {
       this.search();
       this.isordernoFilterApplied = false;
     }
-
-
     if (this.shopordernoText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isshopordernoFilterApplied = true;
@@ -259,11 +219,7 @@ export class OrderTicketsComponent implements OnInit {
       this.search();
       this.isshopordernoFilterApplied = false;
     }
-
   }
-
-
-
   reset() {
     this.departmentText = '';
     this.ticketnoText = '';
@@ -271,14 +227,12 @@ export class OrderTicketsComponent implements OnInit {
     this.emailText = '';
     this.questionText = '';
   }
-
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
     private cookie: CookieService,
     private router: Router
   ) { }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -293,7 +247,6 @@ export class OrderTicketsComponent implements OnInit {
       : '0';
     this.userid = Number(decryptedUserId);
     this.getMappedDepartments();
-
     this.table.data = [
       {
         CATEGORY_NAME: 'Electronics',
@@ -301,16 +254,11 @@ export class OrderTicketsComponent implements OnInit {
         QUESTION: 'What is the warranty period?',
       },
     ];
-
     this.filteredData = this.table.data;
-
     this.columns.forEach((column) => {
       this.filterMenu[column[0]] = `filterMenu${column[0]}`;
     });
-
-
   }
-
   showcolumn = [
     { label: 'Customer Name ', key: 'NAME', visible: true },
     { label: 'E-mail ID', key: 'EMAIL', visible: true },
@@ -318,25 +266,18 @@ export class OrderTicketsComponent implements OnInit {
     { label: 'Customer Type', key: 'CUSTOMER_TYPE', visible: true },
     { label: 'Status', key: 'ACCOUNT_STATUS', visible: true },
   ];
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
   selectedDepartment: any = '';
-
   onDepartmentChange(): void {
-    //this.search();
     if (this.selectedDepartment?.length) {
       this.search();
-      // this.istechniciannameFilterApplied = true; // Filter applied if selectedCategories has values
     } else {
       this.search();
-      // this.istechniciannameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
     }
   }
-
   departmentData: any = '';
   getAllDepartmentsData() {
     this.api.getAllDepartments(0, 0, 'id', 'desc', '').subscribe((data) => {
@@ -347,18 +288,14 @@ export class OrderTicketsComponent implements OnInit {
       }
     });
   }
-
-
-
   filterText: { [key: string]: string } = {};
   filterVisible: any = {};
   filteredData: any[] = [];
   selectedColumn: string = '';
   filterMenu: any = {};
   table: any = {
-    data: [], // Initialize with your actual table data
+    data: [], 
   };
-
   onFilterVisibleChange(
     visible: boolean,
     columnKey: string,
@@ -371,15 +308,11 @@ export class OrderTicketsComponent implements OnInit {
       this.selectedColumn = '';
     }
   }
-
   filterQuery3: any = '';
-
   checkAndApplyFilter(event: KeyboardEvent, selectedColumn: string) {
     const filterValue = this.filterText[selectedColumn] || '';
-
     if (event.key === 'Enter' && filterValue.length >= 3) {
       this.filterQuery3 = ` AND ${selectedColumn} LIKE '%${filterValue}%'`;
-
       this.api
         .getAllTickets(
           this.pageIndex,
@@ -403,10 +336,7 @@ export class OrderTicketsComponent implements OnInit {
           .includes(filterValue.toLowerCase())
       );
     } else if (event.key == 'Backspace' && filterValue.length === 0) {
-      // Clear filterQuery3
       this.filterQuery3 = '';
-
-      // Reload data without the cleared filter
       this.api
         .getAllTickets(
           this.pageIndex,
@@ -420,16 +350,12 @@ export class OrderTicketsComponent implements OnInit {
             this.loadingRecords = false;
             this.totalRecords = data.body['count'];
             this.dataList = data.body['data'];
-
-            // Reset filteredData to show full data list
             this.filteredData = this.dataList;
           },
           (err) => { }
         );
     }
   }
-
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -438,42 +364,29 @@ export class OrderTicketsComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
   filterQuery1: any = '';
-
   value11: string | null = null;
   value22: string | null = null;
-
   filterQuery2: any = '';
-
   applyFilter() {
-
-
     if (this.selectedDepartment && this.selectedDepartment.length > 0) {
-      // Convert array to string and compare each value with DEPARTMENT_NAME
       const departmentConditions = this.selectedDepartment
         .map((dept) => `DEPARTMENT_NAME = '${dept}'`)
         .join(' OR ');
-
-      // Apply the filter for all selected departments
       this.filterQuery2 = ` AND (${departmentConditions})`;
     }
-
-    // Check if the date range is selected
     if (this.selectedDate && this.selectedDate.length === 2) {
       this.value11 = this.datePipe.transform(
         this.selectedDate[0],
@@ -485,12 +398,9 @@ export class OrderTicketsComponent implements OnInit {
       );
       this.filterQuery2 += ` AND DATE(LAST_RESPONDED) BETWEEN '${this.value11}' AND '${this.value22}'`;
     }
-
     ;
     this.isFilterApplied = 'primary';
-
     this.search();
-
     this.isSpinning = false;
     this.filterClass = 'filter-invisible';
   }
@@ -507,7 +417,6 @@ export class OrderTicketsComponent implements OnInit {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
@@ -518,16 +427,13 @@ export class OrderTicketsComponent implements OnInit {
     }
     this.loadingRecords = true;
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     var filterQuery5 = '';
-
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -539,25 +445,21 @@ export class OrderTicketsComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (this.STATUS == 'AL') {
       this.filterQuery = this.filterQuery;
     } else {
       this.filterQuery1 = " AND STATUS='" + this.STATUS + "'";
     }
-
     if (this.departmentText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `DEPARTMENT_NAME LIKE '%${this.departmentText.trim()}%'`;
     }
-
     if (this.ticketnoText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `TICKET_NO LIKE '%${this.ticketnoText.trim()}%'`;
     }
-
     if (this.mobileText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
@@ -568,62 +470,52 @@ export class OrderTicketsComponent implements OnInit {
         (filterQuery5 ? ' AND ' : '') +
         `EMAIL_ID LIKE '%${this.emailText.trim()}%'`;
     }
-
     if (this.questionText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `QUESTION LIKE '%${this.questionText.trim()}%'`;
     }
-
     if (this.warrantyText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `WARRANTY_PERIOD LIKE '%${this.warrantyText.trim()}%'`;
     }
-
     if (this.guaranteeText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `GUARANTEE_PERIOD LIKE '%${this.warrantyText.trim()}%'`;
     }
-
     if (this.jobcardText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `JOB_CARD_NO LIKE '%${this.jobcardText.trim()}%'`;
     }
-
     if (this.ordernoText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `ORDER_NO LIKE '%${this.ordernoText.trim()}%'`;
     }
-
     if (this.shopordernoText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `ORDER_NUMBER LIKE '%${this.shopordernoText.trim()}%'`;
     }
-
     if (this.questionText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `QUESTION LIKE '%${this.questionText.trim()}%'`;
     }
-
-
     if (this.statusFilter) {
       if (filterQuery5 !== '') {
         filterQuery5 += ' AND ';
       }
       filterQuery5 += `IS_TAKEN_STATUS = "${this.statusFilter}"`;
     }
-
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         filterQuery5 +=
           (filterQuery5 ? ' AND ' : '') +
           `LAST_RESPONDED BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -632,18 +524,14 @@ export class OrderTicketsComponent implements OnInit {
     } else {
       this.isscheduleDateFilterApplied = false;
     }
-
     var filterQuery = this.filterQuery + this.filterQuery1;
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (this.STATUS == 'P') {
       if (this.departments2.length > 0)
         filterQuery +=
           filterQuery + ' AND DEPARTMENT_ID IN (' + this.departments2 + ')';
     } else filterQuery += filterQuery + ' AND TAKEN_BY_USER_ID=' + this.userid;
-
     filterQuery5 = filterQuery5 ? ' AND ' + filterQuery5 : '';
-
     if (
       this.decreptedroleID == 8 ||
       this.decreptedroleID == 1) {
@@ -670,7 +558,6 @@ export class OrderTicketsComponent implements OnInit {
               this.totalRecords = 0;
               this.dataList = [];
             }
-
           },
           (err) => {
             this.loadingRecords = false;
@@ -703,7 +590,6 @@ export class OrderTicketsComponent implements OnInit {
                 this.totalRecords = 0;
                 this.dataList = [];
               }
-
             },
             (err) => {
               this.loadingRecords = false;
@@ -717,19 +603,13 @@ export class OrderTicketsComponent implements OnInit {
         this.dataList = [];
       }
     }
-
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
-
-
   filterQuery4: any = '';
   searchSet() {
     if (this.searchText && this.searchText.length >= 3) {
-
       const searchConditions = this.columns
         .reduce((acc, column) => {
           if (this.searchText) {
@@ -738,8 +618,6 @@ export class OrderTicketsComponent implements OnInit {
           return acc;
         }, [])
         .join(' OR ');
-
-      // Apply the filter query
       this.filterQuery4 = ` AND (${searchConditions})`;
       this.api
         .getAllTickets(
@@ -758,22 +636,16 @@ export class OrderTicketsComponent implements OnInit {
           (err) => { }
         );
     } else {
-
       this.filterQuery4 = '';
     }
   }
-
-
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   clearFilter() {
     this.STATUS = 'P';
-    // this.filterQuery = ""
     this.filterQuery2 = '';
     this.selectedDate = null;
     this.selectedDepartment = [];
@@ -782,12 +654,8 @@ export class OrderTicketsComponent implements OnInit {
     this.filterClass = 'filter-invisible';
     this.applyFilter();
   }
-
   changeDate(value) {
-    // this.value1 = this.datePipe.transform(value[0], "yyyy-MM-dd")
-    // this.value2 = this.datePipe.transform(value[1], "yyyy-MM-dd");
   }
-
   uniqueDateArry: any = [];
   newData2: any = [];
   grpid: number;
@@ -798,38 +666,27 @@ export class OrderTicketsComponent implements OnInit {
   isloading = false;
   @ViewChild(TicketdetailsComponent, { static: false })
   TicketdetailsComponentVar: TicketdetailsComponent;
-
   ViewDetails(data) {
     this.isloading = true;
-
     this.newData2 = [];
     this.data1 = [];
     this.uniqueDateArry = [];
-
     this.drawerTitle = 'Ticket No. ' + data.TICKET_NO;
     this.drawerData = Object.assign({}, data);
-
     var filterQuery1 = ' AND TICKET_MASTER_ID = ' + data.ID + '';
-
     this.api
       .getAllTicketDetails(0, 0, 'CREATED_MODIFIED_DATE', 'asc', filterQuery1)
       .subscribe(
         (data) => {
           if (data['status'] == 200) {
-            // this.TicketdetailsComponentVar.loading = false;
-
             this.totalRecords = data.body['count'];
             this.data1 = data.body['data'];
             this.isloading = false;
-
-            // this.grpid = this.data1[0]['TICKET_GROUP_ID'];
             if (data['count'] > 0) {
               this.grpid = this.data1[0]['TICKET_GROUP_ID'];
             } else {
               this.grpid = 0;
             }
-
-            // Getting Unique dates
             for (var i = 0; i < this.data1.length; i++) {
               this.uniqueDateArry.push(
                 this.datePipe.transform(
@@ -838,10 +695,8 @@ export class OrderTicketsComponent implements OnInit {
                 )
               );
             }
-
             this.uniqueDateArry = [...new Set(this.uniqueDateArry)];
             this.uniqueDateArry.sort();
-
             this.uniqueDateArry.forEach((d1) => {
               this.newData2.push({
                 key: d1,
@@ -854,10 +709,7 @@ export class OrderTicketsComponent implements OnInit {
                 ),
               });
             });
-
             this.data1 = this.newData2;
-
-
             this.api
               .getBreadInChat(
                 0,
@@ -873,12 +725,8 @@ export class OrderTicketsComponent implements OnInit {
                   if (data.status == 200) {
                     data = data.body;
                     this.bread = data['data'];
-
-                    // this.isSpinning = false;
-
                     this.newstr = '';
                     this.GRPNAME = '';
-
                     for (var i = 0; i < this.bread.length; i++) {
                       this.GRPNAME =
                         this.GRPNAME + '>' + this.bread[i]['VALUE'];
@@ -888,7 +736,6 @@ export class OrderTicketsComponent implements OnInit {
                   }
                 },
                 (err) => {
-                  // this.isSpinning = false;
                 }
               );
           }
@@ -896,21 +743,17 @@ export class OrderTicketsComponent implements OnInit {
         },
         (err) => { }
       );
-
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   changeRadioButton(event) {
     this.STATUS = event;
     this.applyFilter();
   }
   teritoryIds: any = [];
-
   getMappedDepartments() {
     this.empList = [];
     if (
@@ -919,52 +762,22 @@ export class OrderTicketsComponent implements OnInit {
       this.decreptedbackofficeID !== '' &&
       !Number.isNaN(this.decreptedbackofficeID)
     ) {
-      // console.log("1")
-      // this.api
-      //   .getBackofcTerritoryMappedData(
-      //     0,
-      //     0,
-      //     '',
-      //     '',
-      //     ' AND IS_ACTIVE =1 AND BACKOFFICE_ID =' + this.decreptedbackofficeID
-      //   )
-      //   .subscribe((data2) => {
-      //     if (data2['code'] == '200') {
-      //       console.log("11")
-
-      // if (data2['count'] > 0) {
-      //   console.log("111")
-
-      //   data2['data'].forEach((element) => {
-      //     this.teritoryIds.push(element.TERITORY_ID);
-      //   });
-      //   console.log("111this.teritoryIds", this.teritoryIds.length)
-
-      // if (this.teritoryIds.length > 0) {
-
-
       this.api
         .mappedDepartments(
           0,
           0,
           '',
           '',
-
           ' AND IS_ACTIVE = 1 AND BACKOFFICE_ID = ' + this.decreptedbackofficeID
         )
         .subscribe(
           (data) => {
-
             this.empList = data['data'];
             if (data['code'] == '200') {
-
-
               for (var i = 0; i < this.empList?.length; i++) {
                 this.departments2.push(this.empList[i]['DEPARTMENT_ID']);
               }
               if (this.departments2.length > 0) {
-
-
                 this.search(true);
               } else {
                 this.loadingRecords = false;
@@ -985,35 +798,8 @@ export class OrderTicketsComponent implements OnInit {
             this.departments2 = []
           }
         );
-      // } else {
-      //   this.loadingRecords = false;
-      //   this.totalRecords = 0;
-      //   this.dataList = [];
-      //   this.departments2 = []
-      // }
-
-      // } else {
-      //   this.loadingRecords = false;
-      //   this.totalRecords = 0;
-      //   this.dataList = [];
-      //   this.departments2 = []
-      // }
-      //   } else {
-      //     this.loadingRecords = false;
-      //     this.totalRecords = 0;
-      //     this.dataList = [];
-      //     this.departments2 = []
-      //   }
-      // }, err => {
-      //   this.loadingRecords = false;
-      //   this.totalRecords = 0;
-      //   this.dataList = [];
-      //   this.departments2 = []
-      // });
     } else {
-
       this.search(true);
     }
   }
-
 }

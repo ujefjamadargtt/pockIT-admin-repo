@@ -1,0 +1,62 @@
+.payment-transaction-table {
+  margin-top: 16px;
+}
+.customer-name-header,
+.mobile-number-header,
+.service-name-header,
+.service-full-name-header,
+.order-name-header,
+.order-number-header,
+.job-card-number-header,
+.service-amount-header,
+.transaction-id-header,
+.transaction-date-header,
+.transaction-amount-header,
+.transaction-status-header,
+.payment-mode-header,
+.payment-for-header,
+.service-address-header {
+  font-weight: bold;
+  text-align: left;
+  padding: 12px 8px;
+}
+.table-row {
+  vertical-align: top;
+}
+.customer-name-cell,
+.service-full-name-cell,
+.order-number-cell,
+.job-card-number-cell,
+.service-amount-cell,
+.transaction-id-cell,
+.transaction-date-cell,
+.transaction-amount-cell,
+.transaction-status-cell,
+.payment-mode-cell,
+.payment-for-cell,
+.service-address-cell {
+  text-align: center;
+  padding: 8px;
+}
+.mobile-number-cell,
+.service-name-cell,
+.order-name-cell {
+  padding: 8px;
+}
+.pdf-modal {
+  top: 10px;
+}
+.pdf-modal-content {
+  width: 100%;
+  height: 100%;
+}
+.pdf-iframe {
+  width: 100%;
+  height: 550px;
+}
+.modal-close-btn {
+  margin-right: 8px;
+}
+.modal-download-btn {
+  margin-left: 8px;
+}

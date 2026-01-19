@@ -29,13 +29,13 @@ export class JobcardpageComponent {
   };
   loadingRecords: boolean = false;
   selectedFilter: string | null = null;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  userId1 = sessionStorage.getItem('userName'); // Retrieve userId from session storage
-  USER_ID1: any; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  TabId: number = 44; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  userId1 = sessionStorage.getItem('userName'); 
+  USER_ID1: any; 
+  savedFilters: any; 
+  currentClientId = 1; 
+  TabId: number = 44; 
   pageIndex = 1;
   pageSize = 9;
   sortKey: string = 'ID';
@@ -79,7 +79,6 @@ export class JobcardpageComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -96,7 +95,6 @@ export class JobcardpageComponent {
       groups: [],
     },
   ];
-
   constructor(
     private datePipe: DatePipe,
     private api: ApiServiceService,
@@ -117,17 +115,15 @@ export class JobcardpageComponent {
   decreptedroleID = 0;
   backofficeId = sessionStorage.getItem('backofficeId');
   decreptedbackofficeId = 0;
-  // public commonFunction = new CommonFunctionService();
   ngOnInit(): void {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
     const decryptedUserId1 = this.userId1
       ? this.commonFunction.decryptdata(this.userId1)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID1 = decryptedUserId1;
-
     this.userId1 = sessionStorage.getItem('userName');
     this.USER_ID1 = this.userId1
       ? this.commonFunction.decryptdata(this.userId1)
@@ -151,10 +147,8 @@ export class JobcardpageComponent {
         : '';
       this.decreptedbackofficeId = parseInt(decreptedbackofficeId, 10);
     }
-
     this.getDatas();
   }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -165,16 +159,13 @@ export class JobcardpageComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
   }
-
   editQuery(data) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.filterData = data;
     this.drawerTitle = 'Edit Filter';
     this.applyCondition = '';
@@ -183,18 +174,15 @@ export class JobcardpageComponent {
     this.filterFields[8]['options'] = this.technicians;
     this.drawerFilterVisible = true;
   }
-
   loadMore() {
     if (this.jobdatss.length < this.totalRecords) {
       this.pageIndex = this.pageIndex + 1;
-
       var sort: string;
       try {
         sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
       } catch (error) {
         sort = '';
       }
-
       var likeQuery = '';
       let globalSearchQuery = '';
       if (this.searchText !== '') {
@@ -207,13 +195,10 @@ export class JobcardpageComponent {
             .join(' OR ') +
           ')';
       }
-
       if (this.filterOfTerritory.length > 0 && this.isall == false) {
-
         likeQuery += ' AND TERRITORY_ID =' + this.filterOfTerritory;
       } else {
         if (
-
           this.TYPE == 'VENDOR' ||
           this.decreptedroleID == 9 ||
           (this.decreptedroleID != 1 &&
@@ -221,18 +206,13 @@ export class JobcardpageComponent {
             this.decreptedroleID != 8 &&
             this.decreptedroleID != 9)
         ) {
-
           likeQuery += ' TERRITORY_ID in (' + this.teritoryIds.toString() + ') AND ASSING_TO = ' + this.decreptedvID;
-
         }
         this.filterOfTerritory = [];
         this.filterOfTerritory.push(0);
       }
-      // Combine global search query and column-specific search query
       likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
       this.isSpinning = true;
-
       if (this.TYPE == 'CUSTOMER') {
         likeQuery = likeQuery + ' AND CUSTOMER_ID =' + this.FILTER_ID;
         this.dataGet(sort, likeQuery);
@@ -245,8 +225,6 @@ export class JobcardpageComponent {
       } else if (
         (this.decreptedroleID === 7)
       ) {
-        // likeQuery =
-        //   ' AND TERRITORY_ID in (' + this.teritoryIds.toString() + ')';
         this.dataGet(sort, likeQuery + this.customerMangeer);
       } else if (
         this.TYPE == 'VENDOR' ||
@@ -256,8 +234,6 @@ export class JobcardpageComponent {
           this.decreptedroleID != 8 &&
           this.decreptedroleID != 9)
       ) {
-        // likeQuery =
-        //   ' AND TERRITORY_ID in (' + this.teritoryIds.toString() + ')';
         likeQuery += " AND ASSING_TO = " + this.decreptedvID
         this.dataGet(sort, likeQuery);
       } else {
@@ -265,7 +241,6 @@ export class JobcardpageComponent {
       }
     }
   }
-
   dataGet(sort, likeQuery) {
     this.api
       .getpendinjobsdataa(
@@ -284,7 +259,6 @@ export class JobcardpageComponent {
           } else if (data['code'] == 400) {
             this.isSpinning = false;
             this.jobdatss = [...this.jobdatss, ...[]];
-
             this.message.error('Invalid filter parameter', '');
           } else {
             this.jobdatss = [...this.jobdatss, ...[]];
@@ -312,12 +286,10 @@ export class JobcardpageComponent {
         }
       );
   }
-
   jobdetaildrawerTitle = '';
   jobdetailsshow = false;
   jobdetailsdata: any;
   invoicefilter: any;
-
   openjobcarddetails(data: any) {
     this.invoicefilter = ' AND JOB_CARD_ID=' + data.ID;
     this.jobdetailsdata = data;
@@ -328,25 +300,21 @@ export class JobcardpageComponent {
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
   }
-  //Drawer Methods
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -359,12 +327,10 @@ export class JobcardpageComponent {
           .join(' OR ') +
         ')';
     }
-    // this.filterOfTerritory.length
     if (this.filterOfTerritory.length > 0 && this.isall == false) {
       likeQuery +=
         ' TERRITORY_ID in (' + this.filterOfTerritory.toString() + ')';
     } else {
-      // alert(this.teritoryIds);
       if (
         (this.decreptedvendorId != 1 &&
           this.decreptedvendorId != 6 &&
@@ -376,20 +342,11 @@ export class JobcardpageComponent {
       ) {
         likeQuery += ' TERRITORY_ID in (' + this.teritoryIds.toString() + ')';
       }
-
       this.filterOfTerritory = [];
       this.filterOfTerritory.push(0);
     }
-    // else{
-    //   likeQuery +=
-    //   ' AND TERRITORY_ID in (' + this.TERRITORY_IDS.toString() + ')';
-    // }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.isSpinning = true;
-
     if (this.TYPE == 'CUSTOMER') {
       likeQuery = likeQuery + ' AND CUSTOMER_ID =' + this.FILTER_ID;
       this.getData(sort, likeQuery);
@@ -417,8 +374,6 @@ export class JobcardpageComponent {
         this.decreptedvendorId != 9 &&
         this.decreptedbackofficeId > 0)
     ) {
-      // likeQuery = ' AND TERRITORY_ID in (' + this.teritoryIds.toString() + ')';
-      // alert(this.teritoryIds.length + ' ' + likeQuery);
       if (this.teritoryIds.length > 0) {
         likeQuery += " AND ASSING_TO =  " + this.decreptedvendorId
         this.getData(sort, likeQuery);
@@ -430,7 +385,6 @@ export class JobcardpageComponent {
       this.getData(sort, likeQuery);
     }
   }
-
   getData(sort, likeQuery) {
     this.api
       .getpendinjobsdataa(
@@ -480,11 +434,9 @@ export class JobcardpageComponent {
         }
       );
   }
-
   getDatas() {
     this.CustomersData = [];
     var likeQuery = '';
-
     if (this.TYPE == 'VENDOR') {
       likeQuery = ' AND VENDOR_ID =' + this.FILTER_ID;
     }
@@ -495,8 +447,6 @@ export class JobcardpageComponent {
     if (this.TYPE == 'CUSTOMER') {
       custQuery = ' AND ID =' + this.FILTER_ID;
     }
-
-
     if (this.decreptedroleID == 7) {
       this.api.getAllCustomer(0, 0, '', '', custQuery + ' AND ACCOUNT_STATUS=1 AND CUSTOMER_MANAGER_ID=' + this.decreptedbackofficeId).subscribe((data) => {
         if (data['code'] == '200') {
@@ -644,17 +594,14 @@ export class JobcardpageComponent {
       });
   }
   custType: any = '';
-
   filterQuery1 = '';
   filterQuery2 = '';
   Customers = null;
-
   onKeyup(event: KeyboardEvent): void {
     if (this.searchText.length > 3 && event.key === 'Enter') {
       this.search(true);
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById('buttonss');
     if (element != null) element.focus();
@@ -682,38 +629,7 @@ export class JobcardpageComponent {
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
-    // for (var i = 0; i < this.exportdataList.length; i++) {
-    //   obj1['Invoice Date'] = this.exportdataList[i]['INVOICE_DATE'] ? this.datePipe.transform(this.exportdataList[i]['INVOICE_DATE'], 'dd/MM/yyyy') : "-";
-
-    //   obj1['Customer Name'] = this.exportdataList[i]['CUSTOMER_NAME'] ? this.exportdataList[i]['CUSTOMER_NAME'] : "-";
-
-    //   obj1['Mobile No.'] = this.exportdataList[i]['MOBILE_NO'] ? this.exportdataList[i]['MOBILE_NO'] : "-";
-    //   obj1['Email ID'] = this.exportdataList[i]['EMAIL'] ? this.exportdataList[i]['EMAIL'] : "-";
-    //   if (this.exportdataList[i]['CUSTOMER_TYPE'] == 'I') {
-    //     obj1[' Customer Type'] = 'Indivisual';
-    //   } else if (this.exportdataList[i]['CUSTOMER_TYPE'] == 'B') {
-    //     obj1[' Customer Type'] = 'Business';
-    //   } else {
-    //     obj1[' Customer Type'] = '-';
-    //   }
-    //   obj1['Total Amount'] = this.exportdataList[i]['TOTAL_AMOUNT'] ? this.exportdataList[i]['TOTAL_AMOUNT'] : "0";
-    //   obj1['Tax Amount'] = this.exportdataList[i]['TAX_AMOUNT'] ? this.exportdataList[i]['TAX_AMOUNT'] : "0";
-    //   obj1['Discount Amount'] = this.exportdataList[i]['DISCOUNT_AMOUNT'] ? this.exportdataList[i]['DISCOUNT_AMOUNT'] : "0";
-    //   obj1['Final Amount'] = this.exportdataList[i]['FINAL_AMOUNT'] ? this.exportdataList[i]['FINAL_AMOUNT'] : "0";
-    //   // obj1['Invoice PDF'] = this.exportdataList[i]['INVOICE_URL']
-    //   //   ? `=HYPERLINK("${appkeys.retriveimgUrl}Invoices/${this.exportdataList[i]['INVOICE_URL']}", "Download")`
-    //   //   : "-";
-    //   arry1.push(Object.assign({}, obj1));
-    //   if (i == this.exportdataList.length - 1) {
-    //     this._exportService.exportExcel(
-    //       arry1,
-    //       'Invoice Report On ' +
-    //       this.datePipe.transform(new Date(), 'dd/mm/yyyy')
-    //     );
-    //   }
-    // }
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -725,10 +641,8 @@ export class JobcardpageComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
   drawerTitle = '';
-
   openfilter() {
     this.drawerTitle = 'Job Filter';
     this.filterData = {
@@ -777,25 +691,18 @@ export class JobcardpageComponent {
     this.filterFields[8]['options'] = this.technicians;
     this.drawerFilterVisible = true;
   }
-
   whichbutton;
   updateBtn;
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
-
-      //  this.applyfilter(this.savedFilters[0]['FILTER_QUERY'])
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -911,7 +818,6 @@ export class JobcardpageComponent {
       ],
       placeholder: 'Select Job Status',
     },
-
     {
       key: 'TERRITORY_ID',
       label: 'Territory',
@@ -935,7 +841,6 @@ export class JobcardpageComponent {
       placeholder: 'Select Technician',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
@@ -944,8 +849,7 @@ export class JobcardpageComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -959,23 +863,17 @@ export class JobcardpageComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
@@ -993,7 +891,6 @@ export class JobcardpageComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
@@ -1020,7 +917,6 @@ export class JobcardpageComponent {
       }
     );
   }
-
   applyfilter(item) {
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1030,12 +926,10 @@ export class JobcardpageComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   filterloading: boolean = false;
   isDeleting: boolean = false;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1043,7 +937,7 @@ export class JobcardpageComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
@@ -1069,14 +963,9 @@ export class JobcardpageComponent {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1090,21 +979,16 @@ export class JobcardpageComponent {
       );
     this.filterQuery = '';
   }
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   orderdrawerVisible = false;
   orderdrawerTitle = '';
   ORDER_ID = 0;
@@ -1121,7 +1005,6 @@ export class JobcardpageComponent {
   get closeCallbackOrders() {
     return this.orderdrawerClose.bind(this);
   }
-
   ratingsShow: boolean = false;
   ratingsData: any;
   RatingsdrawerTitle: any = '';
@@ -1136,15 +1019,12 @@ export class JobcardpageComponent {
   giveratingsdrawerClose(): void {
     this.ratingsShow = false;
   }
-  //Drawer Methods
   get giveratingscloseCallback() {
     return this.giveratingsdrawerClose.bind(this);
   }
-
   stopPropagation(event: Event): void {
     event.stopPropagation();
   }
-
   TechJobsPhotosData: any;
   TechJobsPhotosTitle: any = '';
   Jobcustid: any;
@@ -1159,11 +1039,9 @@ export class JobcardpageComponent {
   TechJobsPhotosdrawerClose(): void {
     this.TechJobsPhotosView = false;
   }
-  //Drawer Methods
   get TechJobsPhotoscloseCallback() {
     return this.TechJobsPhotosdrawerClose.bind(this);
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1172,7 +1050,6 @@ export class JobcardpageComponent {
     this.search();
     sessionStorage.removeItem('ID');
   }
-
   filterOfTerritory: any = [];
   isall = true;
   applyfilterChange(event) {
@@ -1188,10 +1065,8 @@ export class JobcardpageComponent {
       }
       this.isall = false;
     }
-
     this.search(true);
   }
-
   chatdata: any;
   chatdrawerClose() {
     this.chatdrawerVisible = false;
@@ -1201,154 +1076,14 @@ export class JobcardpageComponent {
   get chatcloseCallback() {
     return this.chatdrawerClose.bind(this);
   }
-
-  // openchat(data) {
-  //   this.chatdata = data;
-
-  //   this.chatdrawerVisible = true;
-  //   this.chatdrawerTitle = 'Chat with ' + data.TECHNICIAN_NAME;
-
-  //   var topics =
-  //     'support_chat_' + data.ID + '_backoffice_' + this.USER_ID + '_channel';
-
-  //   const subscribedChannels1 = sessionStorage.getItem('subscribedChannels1');
-  //   if (subscribedChannels1) {
-  //     let channelsArray = JSON.parse(subscribedChannels1);
-  //     if (Array.isArray(channelsArray) && channelsArray.length > 0) {
-  //       var fi = -1;
-  //       fi = channelsArray.findIndex(
-  //         (channel: any) => topics == channel.CHANNEL_NAME
-  //       );
-  //       if (fi != undefined && fi != null && fi == -1) {
-  //         this.api.subscribeToMultipleTopics([topics]).subscribe({
-  //           next: () => {
-  //             // Update sessionStorage
-  //             var j: any = sessionStorage.getItem('subscribedChannels1');
-  //             let channelsArray = JSON.parse(j);
-  //             channelsArray.push({ CHANNEL_NAME: topics });
-  //             sessionStorage.setItem(
-  //               'subscribedChannels1',
-  //               JSON.stringify(channelsArray)
-  //             );
-  //           },
-  //           error: (err) => {
-  //             console.error('Failed to subscribe to topics:', err);
-  //           },
-  //         });
-  //       }
-  //     } else {
-  //       this.api.subscribeToMultipleTopics([topics]).subscribe({
-  //         next: () => {
-  //           // Update sessionStorage
-  //           var j: any = sessionStorage.getItem('subscribedChannels1');
-  //           let channelsArray = JSON.parse(j);
-  //           channelsArray.push({ CHANNEL_NAME: topics });
-  //           sessionStorage.setItem(
-  //             'subscribedChannels1',
-  //             JSON.stringify(channelsArray)
-  //           );
-  //         },
-  //         error: (err) => {
-  //           console.error('Failed to subscribe to topics:', err);
-  //         },
-  //       });
-  //     }
-  //   }
-  // }
-
-  // openchat(data: any) {
-  //   this.chatdata = data;
-
-  //   this.chatdrawerVisible = true;
-  //   this.chatdrawerTitle = 'Chat with ' + data.TECHNICIAN_NAME;
-
-  //   var topic1 =
-  //     'support_chat_' + data.ID + '_backoffice_' + this.USER_ID + '_channel';
-  //   var topic2 =
-  //     'job_chat_' + data.ID + '_initiate_channel';
-
-  //   var topic1data: any = {
-  //     CHANNEL_NAME: topic1,
-  //     USER_ID: this.USER_ID,
-  //     STATUS: true,
-  //     CLIENT_ID: 1,
-  //     USER_NAME: this.USER_ID1,
-  //     TYPE: 'B',
-  //     DATE: this.datePipe.transform(new Date(), "yyyy-MM-dd HH:mm:ss")
-  //   }
-  //   var topic1data1: any = {
-  //     CHANNEL_NAME: topic2,
-  //     USER_ID: this.USER_ID,
-  //     STATUS: true,
-  //     CLIENT_ID: 1,
-  //     USER_NAME: this.USER_ID1,
-  //     TYPE: 'B',
-  //     DATE: this.datePipe.transform(new Date(), "yyyy-MM-dd HH:mm:ss")
-  //   }
-  //   this.api.channelSubscribedUsers(topic1data).subscribe(
-  //     (data) => { });
-  //   this.api.channelSubscribedUsers(topic1data1).subscribe(
-  //     (data) => { });
-
-  //   const topics = [topic1, topic2];
-
-  //   const subscribedChannels1 = sessionStorage.getItem('subscribedChannels1');
-  //   if (subscribedChannels1) {
-  //     let channelsArray = JSON.parse(subscribedChannels1);
-  //     if (Array.isArray(channelsArray) && channelsArray.length > 0) {
-  //       topics.forEach((topic) => {
-  //         var fi = channelsArray.findIndex(
-  //           (channel: any) => topic == channel.CHANNEL_NAME
-  //         );
-  //         if (fi == -1) {
-  //           this.api.subscribeToMultipleTopics([topic]).subscribe({
-  //             next: () => {
-  //               var j: any = sessionStorage.getItem('subscribedChannels1');
-  //               let channelsArray = JSON.parse(j);
-  //               channelsArray.push({ CHANNEL_NAME: topic });
-  //               sessionStorage.setItem(
-  //                 'subscribedChannels1',
-  //                 JSON.stringify(channelsArray)
-  //               );
-  //             },
-  //             error: (err) => {
-  //               console.error('Failed to subscribe to topic:', err);
-  //             },
-  //           });
-  //         }
-  //       });
-  //     } else {
-  //       topics.forEach((topic) => {
-  //         this.api.subscribeToMultipleTopics([topic]).subscribe({
-  //           next: () => {
-  //             var j: any = sessionStorage.getItem('subscribedChannels1');
-  //             let channelsArray = JSON.parse(j);
-  //             channelsArray.push({ CHANNEL_NAME: topic });
-  //             sessionStorage.setItem(
-  //               'subscribedChannels1',
-  //               JSON.stringify(channelsArray)
-  //             );
-  //           },
-  //           error: (err) => {
-  //             console.error('Failed to subscribe to topic:', err);
-  //           },
-  //         });
-  //       });
-  //     }
-  //   }
-  // }
-
   openchat(data: any) {
     this.chatdata = data;
-
     this.chatdrawerVisible = true;
     this.chatdrawerTitle = 'Chat with ' + data.TECHNICIAN_NAME;
-
     var topic1 =
       'support_chat_' + data.ID + '_backoffice_' + this.USER_ID + '_channel';
     var topic2 =
       'job_chat_' + data.ID + '_initiate_channel';
-
     var topic1data: any = {
       CHANNEL_NAME: topic1,
       USER_ID: this.USER_ID,
@@ -1367,13 +1102,11 @@ export class JobcardpageComponent {
       TYPE: 'B',
       DATE: this.datePipe.transform(new Date(), "yyyy-MM-dd HH:mm:ss")
     };
-
     const topics = [topic1, topic2];
     const topicDataMap = {
       [topic1]: topic1data,
       [topic2]: topic2data,
     };
-
     const subscribedChannels1 = sessionStorage.getItem('subscribedChannels1');
     if (subscribedChannels1) {
       let channelsArray = JSON.parse(subscribedChannels1);
@@ -1392,8 +1125,6 @@ export class JobcardpageComponent {
                   'subscribedChannels1',
                   JSON.stringify(channelsArray)
                 );
-
-                // Call channelSubscribedUsers only on new subscription
                 this.api.channelSubscribedUsers(topicDataMap[topic]).subscribe(
                   () => { },
                   (err) => { console.error('Failed to log channel subscription:', err); }
@@ -1416,8 +1147,6 @@ export class JobcardpageComponent {
                 'subscribedChannels1',
                 JSON.stringify(channelsArray)
               );
-
-              // Call channelSubscribedUsers only on new subscription
               this.api.channelSubscribedUsers(topicDataMap[topic]).subscribe(
                 () => { },
                 (err) => { console.error('Failed to log channel subscription:', err); }
@@ -1431,9 +1160,6 @@ export class JobcardpageComponent {
       }
     }
   }
-
-
-
   roundRating(rating: number): number {
     if (rating !== null && rating !== undefined && rating > 0) {
       return Math.round(rating * 2) / 2;

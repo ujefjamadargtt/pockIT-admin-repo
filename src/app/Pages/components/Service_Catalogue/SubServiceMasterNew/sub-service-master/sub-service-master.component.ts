@@ -9,7 +9,6 @@ import { Observable, switchMap, forkJoin } from 'rxjs';
 import { ServiceCatMasterDataNew } from 'src/app/Pages/Models/ServiceCatMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-sub-service-master',
   templateUrl: './sub-service-master.component.html',
@@ -19,7 +18,6 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 export class SubServiceMasterComponent implements OnInit {
   uniteDta: any = [];
   HSNdata: any = [];
-
   taxData: any = [];
   isFocused: string = '';
   isSpinning = false;
@@ -32,9 +30,6 @@ export class SubServiceMasterComponent implements OnInit {
   fileURL: any = '';
   subcategoryData: any = [];
   currencyData: any = [];
-  // hours: any='00';
-  // minutes: any='00';
-
   organizationid: any = sessionStorage.getItem('orgId');
   oldservicename: any;
   @Input() data: any = ServiceCatMasterDataNew;
@@ -46,7 +41,6 @@ export class SubServiceMasterComponent implements OnInit {
   SkilssData: any = [];
   uploadedImage: any = '';
   uploadedImage1: any = '';
-
   CAN_CHANGE_SERVICE_PRICE1: any = sessionStorage.getItem(
     'CAN_CHANGE_SERVICE_PRICE'
   );
@@ -57,7 +51,6 @@ export class SubServiceMasterComponent implements OnInit {
       this.cleanTextLength = html.length;
       this.showLengthError = html.length > this.maxLength;
     }
-
     this.organizationid = sessionStorage.getItem('orgId');
     this.data.ORG_ID = 1;
     this.CAN_CHANGE_SERVICE_PRICE1 = sessionStorage.getItem(
@@ -86,7 +79,6 @@ export class SubServiceMasterComponent implements OnInit {
         }
       );
     }
-
     this.api.getSkillData(0, 0, 'NAME', 'asc', ' AND IS_ACTIVE = 1').subscribe(
       (successCode: any) => {
         if (successCode.code == '200') {
@@ -100,7 +92,6 @@ export class SubServiceMasterComponent implements OnInit {
       }
     );
     this.getSubCategoryData();
-
     this.getUnits();
     if (
       this.data.ID != null &&
@@ -112,7 +103,6 @@ export class SubServiceMasterComponent implements OnInit {
       this.uploadedImage = this.data.SERVICE_IMAGE;
     } else {
     }
-
     if (
       this.data.ID != null &&
       this.data.ID != undefined &&
@@ -124,9 +114,7 @@ export class SubServiceMasterComponent implements OnInit {
     } else {
     }
   }
-
   public commonFunction = new CommonFunctionService();
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
@@ -172,7 +160,6 @@ export class SubServiceMasterComponent implements OnInit {
   };
   currentHour = new Date().getHours();
   currentMinute = new Date().getMinutes();
-  // Disable hours before the current hour for START_TIME
   disableBeforeCurrentHour = (): number[] => {
     const hours: number[] = [];
     for (let i = 0; i < this.currentHour; i++) {
@@ -180,8 +167,6 @@ export class SubServiceMasterComponent implements OnInit {
     }
     return hours;
   };
-
-  // Disable minutes before the current minute for START_TIME (if the current hour is selected)
   disableBeforeCurrentMinutes = (selectedHour: number): number[] => {
     const minutes: number[] = [];
     if (selectedHour === this.currentHour) {
@@ -191,8 +176,6 @@ export class SubServiceMasterComponent implements OnInit {
     }
     return minutes;
   };
-
-  // Disable hours before the selected START_TIME for END_TIME
   disableBeforeStartHour = (): number[] => {
     if (!this.data.START_TIME) {
       return [];
@@ -204,8 +187,6 @@ export class SubServiceMasterComponent implements OnInit {
     }
     return hours;
   };
-
-  // Disable minutes before the selected START_TIME for END_TIME (if the selected hour is the same as START_TIME)
   disableBeforeStartMinutes = (selectedHour: number): number[] => {
     if (!this.data.START_TIME) {
       return [];
@@ -242,7 +223,6 @@ export class SubServiceMasterComponent implements OnInit {
         this.message.error('Something Went Wrong', '');
       }
     );
-
     this.api
       .getAllOrganizations(1, 1, '', 'desc', ' AND ID=1')
       .subscribe((data) => {
@@ -261,8 +241,6 @@ export class SubServiceMasterComponent implements OnInit {
                 );
               }
             }
-
-            // Parse organization end time
             if (data['body']['data'][0].DAY_END_TIME) {
               const endParts = data['body']['data'][0].DAY_END_TIME.split(':');
               this.orgEndHour = +endParts[0];
@@ -275,10 +253,7 @@ export class SubServiceMasterComponent implements OnInit {
                 );
               }
             }
-
-            // Initialize time restrictions
             this.initializeTimeRestrictions();
-
             if (data['body'].count > 0 && !this.data.ID) {
               if (
                 data['body']['data'][0].DAY_START_TIME != undefined &&
@@ -287,7 +262,7 @@ export class SubServiceMasterComponent implements OnInit {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_START_TIME.split(':'); // Split "HH:mm:ss"
+                  data['body']['data'][0].DAY_START_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -300,7 +275,7 @@ export class SubServiceMasterComponent implements OnInit {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_END_TIME.split(':'); // Split "HH:mm:ss"
+                  data['body']['data'][0].DAY_END_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -311,14 +286,11 @@ export class SubServiceMasterComponent implements OnInit {
         }
       });
   }
-
   initializeTimeRestrictions() {
-    // Disable Start Hours
     this.disableStartHours = () =>
       Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < this.orgStartHour || hour > this.orgEndHour
       );
-
     this.disableStartMinutes = (hour: number) =>
       hour === this.orgStartHour
         ? Array.from({ length: 60 }, (_, i) => i).filter(
@@ -329,86 +301,59 @@ export class SubServiceMasterComponent implements OnInit {
             (minute) => minute > this.orgEndMinute
           )
           : [];
-
-    // Disable End Hours
     this.disableEndHours = () => {
       const startHour = this.getStartHour();
       return Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < startHour || hour > this.orgEndHour
       );
     };
-
     this.disableEndMinutes = (hour: number) => {
       const startHour = this.getStartHour();
       const startMinute = this.getStartMinute();
-
       if (hour === startHour) {
-        // Disable minutes less than or equal to the start time's minutes
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute <= startMinute
         );
       } else if (hour === this.orgEndHour) {
-        // Disable minutes beyond the organization's end minute
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute > this.orgEndMinute
         );
       } else {
-        // No restriction for other hours
         return [];
       }
     };
   }
-
-  // Getters for dynamic restrictions on End Time based on Start Time
   getStartHour() {
     return this.data.START_TIME
       ? new Date(this.data.START_TIME).getHours()
       : this.orgStartHour;
   }
-
   getStartMinute() {
     return this.data.START_TIME
       ? new Date(this.data.START_TIME).getMinutes()
       : this.orgStartMinute;
   }
-
-  // Update End Time picker restrictions on Start Time change
-  // onStartTimeChange() {
-  //   this.data.END_TIME = null;
-  //   this.initializeTimeRestrictions();
-  // }
-
   onStartTimeChange() {
     this.data.END_TIME = null;
-
     const selectedTime = new Date(this.data.START_TIME);
-
-    // Round the time to the nearest 10-minute interval
     this.data.START_TIME = this.roundMinutesToNearestInterval(selectedTime);
-
     this.initializeTimeRestrictions();
   }
   roundMinutesToNearestInterval(date: Date): Date {
     const minutes = date.getMinutes();
     const roundedMinutes = Math.ceil(minutes / 10) * 10;
-
-    // If roundedMinutes reaches 60, adjust the hour
     let finalHour = date.getHours();
     let finalMinutes = roundedMinutes;
-
     if (roundedMinutes >= 60) {
       finalMinutes = 0;
-      finalHour = (finalHour + 1) % 24; // Ensure it stays within 24-hour format
+      finalHour = (finalHour + 1) % 24; 
     }
-
     const roundedDate = new Date(date);
     roundedDate.setHours(finalHour);
     roundedDate.setMinutes(finalMinutes);
     roundedDate.setSeconds(0);
-
     return roundedDate;
   }
-
   resetDrawer(ServiceCatmaster: NgForm) {
     this.data = new ServiceCatMasterDataNew();
     this.data.QTY = 1;
@@ -434,8 +379,6 @@ export class SubServiceMasterComponent implements OnInit {
                 );
               }
             }
-
-            // Parse organization end time
             if (data['body']['data'][0].DAY_END_TIME) {
               const endParts = data['body']['data'][0].DAY_END_TIME.split(':');
               this.orgEndHour = +endParts[0];
@@ -448,10 +391,7 @@ export class SubServiceMasterComponent implements OnInit {
                 );
               }
             }
-
-            // Initialize time restrictions
             this.initializeTimeRestrictions();
-
             if (data['body'].count > 0 && !this.data.ID) {
               if (
                 data['body']['data'][0].DAY_START_TIME != undefined &&
@@ -460,7 +400,7 @@ export class SubServiceMasterComponent implements OnInit {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_START_TIME.split(':'); // Split "HH:mm:ss"
+                  data['body']['data'][0].DAY_START_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -473,7 +413,7 @@ export class SubServiceMasterComponent implements OnInit {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_END_TIME.split(':'); // Split "HH:mm:ss"
+                  data['body']['data'][0].DAY_END_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -486,7 +426,6 @@ export class SubServiceMasterComponent implements OnInit {
     ServiceCatmaster.form.markAsPristine();
     ServiceCatmaster.form.markAsUntouched();
   }
-
   getUnits() {
     this.api
       .getUnitData(0, 0, 'SEQ_NO', 'asc', ' AND IS_ACTIVE =1')
@@ -544,7 +483,6 @@ export class SubServiceMasterComponent implements OnInit {
       this.data.HSN_CODE = null;
     }
   }
-
   taxChange(hsnno: any) {
     if (hsnno !== '' && hsnno !== null && hsnno != undefined) {
       var hsnnumber: any = this.taxData.filter(
@@ -559,7 +497,6 @@ export class SubServiceMasterComponent implements OnInit {
       this.data.TAX_NAME = null;
     }
   }
-
   unitChange(hsnno: any) {
     if (hsnno !== '' && hsnno !== null && hsnno != undefined) {
       var hsnnumber: any = this.uniteDta.filter(
@@ -574,50 +511,40 @@ export class SubServiceMasterComponent implements OnInit {
       this.data.UNIT_NAME = null;
     }
   }
-
   prepareDescriptionWithUploads(
     html: string,
     callback: (updatedHtml: string) => void
   ): void {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
-
     const imgElements = Array.from(tempDiv.querySelectorAll('img'));
     const uploadObservables: Observable<any>[] = [];
     const replacements: { element: HTMLImageElement; filename: string }[] = [];
-
     imgElements.forEach((img) => {
       const src = img.getAttribute('src');
       if (src && (src.startsWith('data:image/') || src.startsWith('blob:'))) {
         const filename = `image_${Date.now()}_${Math.floor(
           Math.random() * 10000
         )}.png`;
-
         const obs = this.convertSrcToFile(src).pipe(
           switchMap((file) => this.api.onUpload2('Item', file, filename))
         );
-
         uploadObservables.push(obs);
         replacements.push({ element: img, filename });
       }
     });
-
     if (uploadObservables.length === 0) {
       callback(tempDiv.innerHTML);
       return;
     }
-
     forkJoin(uploadObservables).subscribe(() => {
       replacements.forEach((rep) => {
         const url = `${this.api.retriveimgUrl}Item/${rep.filename}`;
-
         rep.element.setAttribute('src', url);
       });
-
       callback(tempDiv.innerHTML);
     });
   }
-
   convertSrcToFile(src: string): Observable<File> {
     return new Observable((observer) => {
       fetch(src)
@@ -631,36 +558,27 @@ export class SubServiceMasterComponent implements OnInit {
         });
     });
   }
-
   cleanTextLength = 0;
   showLengthError = false;
   maxLength = 50000;
-
   checkDescriptionLength(): void {
     const html = this.data.DESCRIPTION || '';
-
     const totalLength = html.length;
     this.cleanTextLength = totalLength;
     this.showLengthError = totalLength > this.maxLength;
-
     if (this.showLengthError) {
       const truncated = html.slice(0, this.maxLength);
-
       this.data.DESCRIPTION = '';
       setTimeout(() => {
         this.data.DESCRIPTION = truncated;
         this.cleanTextLength = truncated.length;
-        // this.showLengthError = false;
       });
     }
   }
-
   save(addNew: boolean, ServiceCatmaster: NgForm): void {
     this.isOk = true;
-
     const isBlobInDescription =
       this.data.DESCRIPTION && this.data.DESCRIPTION.includes('data:image');
-
     if (isBlobInDescription) {
       this.prepareDescriptionWithUploads(
         this.data.DESCRIPTION,
@@ -673,11 +591,9 @@ export class SubServiceMasterComponent implements OnInit {
       this.continueSave(addNew, ServiceCatmaster);
     }
   }
-
   continueSave(addNew: boolean, ServiceCatmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       this.data.NAME == null ||
       this.data.NAME == undefined ||
@@ -898,7 +814,6 @@ export class SubServiceMasterComponent implements OnInit {
           'HH:mm'
         );
       }
-
       {
         if (!this.data.IS_EXPRESS) {
           this.data.EXPRESS_COST = null;
@@ -934,14 +849,13 @@ export class SubServiceMasterComponent implements OnInit {
                   ''
                 );
                 this.isSpinning = false;
-
                 if (
                   this.data.START_TIME != undefined &&
                   this.data.START_TIME != null &&
                   this.data.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.START_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.data.START_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.START_TIME = new Date(today);
@@ -953,7 +867,7 @@ export class SubServiceMasterComponent implements OnInit {
                   this.data.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.END_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.data.END_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.END_TIME = new Date(today);
@@ -962,14 +876,13 @@ export class SubServiceMasterComponent implements OnInit {
               } else {
                 this.message.error('Sub Service Updation Failed', '');
                 this.isSpinning = false;
-
                 if (
                   this.data.START_TIME != undefined &&
                   this.data.START_TIME != null &&
                   this.data.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.START_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.data.START_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.START_TIME = new Date(today);
@@ -981,7 +894,7 @@ export class SubServiceMasterComponent implements OnInit {
                   this.data.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.END_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.data.END_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.END_TIME = new Date(today);
@@ -999,14 +912,13 @@ export class SubServiceMasterComponent implements OnInit {
               } else {
                 this.message.error('Something Went Wrong.', '');
               }
-
               if (
                 this.data.START_TIME != undefined &&
                 this.data.START_TIME != null &&
                 this.data.START_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = this.data.START_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = this.data.START_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -1018,7 +930,7 @@ export class SubServiceMasterComponent implements OnInit {
                 this.data.END_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = this.data.END_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = this.data.END_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -1028,7 +940,6 @@ export class SubServiceMasterComponent implements OnInit {
           );
         } else {
           this.data.OLD_SERVICE_NAME = null;
-
           this.api.createServiceMain(this.data).subscribe(
             (successCode: any) => {
               if (successCode.code == '200') {
@@ -1051,7 +962,7 @@ export class SubServiceMasterComponent implements OnInit {
                   this.data.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.START_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.data.START_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.START_TIME = new Date(today);
@@ -1063,7 +974,7 @@ export class SubServiceMasterComponent implements OnInit {
                   this.data.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.END_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.data.END_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.END_TIME = new Date(today);
@@ -1078,7 +989,7 @@ export class SubServiceMasterComponent implements OnInit {
                   this.data.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.START_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.data.START_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.START_TIME = new Date(today);
@@ -1090,7 +1001,7 @@ export class SubServiceMasterComponent implements OnInit {
                   this.data.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.END_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.data.END_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.END_TIME = new Date(today);
@@ -1108,14 +1019,13 @@ export class SubServiceMasterComponent implements OnInit {
               } else {
                 this.message.error('Something Went Wrong.', '');
               }
-
               if (
                 this.data.START_TIME != undefined &&
                 this.data.START_TIME != null &&
                 this.data.START_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = this.data.START_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = this.data.START_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -1127,7 +1037,7 @@ export class SubServiceMasterComponent implements OnInit {
                 this.data.END_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = this.data.END_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = this.data.END_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -1139,12 +1049,10 @@ export class SubServiceMasterComponent implements OnInit {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }
   CropImageModalVisible = false;
-  // CropImageModalFooter: string|TemplateRef<{}>|ModalButtonOptions<any>[]|null|undefined;
   isSpinningCrop = false;
   cropimageshow: any;
   @ViewChild('image1') myElementRef!: ElementRef;
@@ -1167,66 +1075,47 @@ export class SubServiceMasterComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   fileChangeEvent(event: any): void {
-    //
-
     this.CropImageModalVisible = true;
     this.cropimageshow = true;
-
     this.imageChangedEvent = event;
   }
-
   cropperPosition = { x1: 0, y1: 0, x2: 200, y2: 200 };
   imageCropped2(event: any) {
     this.enhanceImageQuality(event.base64, 200, 200);
-    // this.imageWidth = event.original.size.width;
-    // this.imageHeight = event.original.size.height;
   }
-
-  // Function to compress image and ensure size < 1MB
   compressImage(canvas: HTMLCanvasElement, quality: number) {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-
-        const sizeInMB = blob.size / (1024 * 1024); // Convert to MB
-
+        const sizeInMB = blob.size / (1024 * 1024); 
         if (sizeInMB > 1 && quality > 0.1) {
-          // If size is still >1MB, reduce quality and try again
           this.compressImage(canvas, quality - 0.1);
         } else {
-          // Final compressed image (size is now below 1MB)
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             this.croppedImage = reader.result as string;
-            //
           };
         }
       },
       'image/jpeg',
       quality
-    ); // Convert to JPEG with given quality
+    ); 
   }
-
   imageWidth: number = 0;
   imageHeight: number = 0;
   imageLoaded(event) {
-    //
     setTimeout(() => {
       this.cropperPosition = { x1: 0, y1: 0, x2: 200, y2: 200 };
     }, 50);
-    // this.imagePreview = this.croppedImage;
     this.imageWidth = event.original.size.width;
     this.imageHeight = event.original.size.height;
-    // Image loaded successfully
   }
   imageCropped(event: any) {
     let cropWidth: any;
     let cropHeight: any;
-
     cropWidth = 200;
     cropHeight = 200;
-
     this.enhanceImageQuality(event.base64, cropWidth, cropHeight);
     this.imageWidth = event?.original?.size.width;
     this.imageHeight = event?.original?.size.height;
@@ -1241,27 +1130,16 @@ export class SubServiceMasterComponent implements OnInit {
         const img = new Image();
         img.src = base64;
         img.crossOrigin = 'Anonymous';
-
         img.onload = async () => {
-          await img.decode(); // Ensures image is fully loaded before processing.
-
-          // Create a high-resolution canvas
+          await img.decode(); 
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
-
           if (!ctx) return reject('Canvas context not available');
-
-          // Set canvas to final size initially
           canvas.width = finalWidth * 2;
           canvas.height = finalHeight * 2;
-
           ctx.imageSmoothingEnabled = true;
           ctx.imageSmoothingQuality = 'high';
-
-          // Draw image at high resolution first
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-          // Stepwise Downscaling to Avoid Blur
           const downscaleCanvas = (
             sourceCanvas: HTMLCanvasElement,
             width: number,
@@ -1270,32 +1148,23 @@ export class SubServiceMasterComponent implements OnInit {
             const newCanvas = document.createElement('canvas');
             const newCtx = newCanvas.getContext('2d');
             if (!newCtx) return sourceCanvas;
-
             newCanvas.width = width;
             newCanvas.height = height;
-
             newCtx.imageSmoothingEnabled = true;
             newCtx.imageSmoothingQuality = 'high';
-
             newCtx.drawImage(sourceCanvas, 0, 0, width, height);
             return newCanvas;
           };
-
-          // Reduce stepwise to avoid quality loss
           let currentCanvas = canvas;
           const downscaleSteps = [
-            [Math.floor(finalWidth * 1.5), Math.floor(finalHeight * 1.5)], // Reduce gradually
-            [finalWidth, finalHeight], // Final resolution
+            [Math.floor(finalWidth * 1.5), Math.floor(finalHeight * 1.5)], 
+            [finalWidth, finalHeight], 
           ];
-
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
           }
-
-          // Convert to WebP or PNG at High Quality
-          resolve(currentCanvas.toDataURL('image/png', 2)); // WebP preserves more details
+          resolve(currentCanvas.toDataURL('image/png', 2)); 
         };
-
         img.onerror = (err) => reject(`Image load error: ${err}`);
       });
     } catch (error) {
@@ -1303,277 +1172,16 @@ export class SubServiceMasterComponent implements OnInit {
     }
   }
   cropperReady(event) { }
-
   loadImageFailed() {
-    // Image failed to load
   }
-  // onFileSelected(event: any) {
-  //   const maxFileSize = 1 * 1024 * 1024;
-
-  //   // File validation
-  //   if (
-  //     event.target.files[0].type === 'image/jpeg' ||
-  //     event.target.files[0].type === 'image/jpg' ||
-  //     event.target.files[0].type === 'image/png'
-  //   ) {
-  //     this.fileURL = this.base64ToFile(this.croppedImage, 'cropped-image.png');
-
-  //     if (this.fileURL.size > maxFileSize) {
-  //       this.message.error('File size should not exceed 1MB.', '');
-  //       return;
-  //     }
-
-  //     // Check image dimensions
-  //     const reader = new FileReader();
-  //     reader.onload = (e: any) => {
-  //       const img = new Image();
-  //       img.onload = () => {
-  //         if (img.height === 200 && img.width === 200) {
-  //           // Image dimensions are valid, proceed with upload
-  //           var number = Math.floor(100000 + Math.random() * 900000);
-  //           var fileExt = this.fileURL.name.split('.').pop();
-  //           var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-  //           var url = '';
-  //           url = d == null ? '' : d + number + '.' + fileExt;
-  //           // this.UrlImageOne = url;
-
-  //           if (
-  //             this.data.SERVICE_IMAGE != undefined &&
-  //             this.data.SERVICE_IMAGE.trim() != ''
-  //           ) {
-  //             var arr = this.data.SERVICE_IMAGE.split('/');
-  //             if (arr.length > 1) {
-  //               url = arr[5];
-  //             }
-  //           }
-
-  //           const uploadedfileExt = this.uploadedImage.split('.').pop();
-
-  //           if (this.data.ID || this.data.SERVICE_IMAGE) {
-  //             // if (uploadedfileExt == fileExt) {
-  //             //
-  //             // this.UrlImageOne = this.uploadedImage;
-  //             this.UrlImageOne = this.uploadedImage.split('?')[0];
-  //             // }
-  //             //  else {
-  //             //   this.UrlImageOne = url;
-  //             // }
-  //           } else {
-  //             this.UrlImageOne = url;
-  //           }
-
-  //           this.progressBarImageOne = true;
-  //           this.urlImageOneShow = true;
-  //           this.isSpinning = true;
-
-  //           this.timer = this.api
-  //             .onUpload('Item', this.fileURL, this.UrlImageOne)
-  //             .subscribe((res) => {
-  //               this.data.SERVICE_IMAGE = this.UrlImageOne;
-  //               this.uploadedImage = this.data.SERVICE_IMAGE;
-
-  //               if (res.type === HttpEventType.Response) {
-  //               }
-  //               if (res.type === HttpEventType.UploadProgress) {
-  //                 const percentDone = Math.round(
-  //                   (100 * res.loaded) / res.total
-  //                 );
-  //                 this.percentImageOne = percentDone;
-  //                 if (this.percentImageOne === 100) {
-  //                   this.isSpinning = false;
-  //                   setTimeout(() => {
-  //                     this.progressBarImageOne = false;
-  //                   }, 2000);
-  //                 }
-  //               } else if (res.type == 2 && res.status != 200) {
-  //                 this.message.error('Failed To Upload Catalogue Image...', '');
-
-  //                 this.isSpinning = false;
-  //                 this.progressBarImageOne = false;
-  //                 this.percentImageOne = 0;
-  //                 this.data.SERVICE_IMAGE = null;
-  //               } else if (res.type == 4 && res.status == 200) {
-  //                 if (res.body['code'] === 200) {
-  //                   this.message.success(
-  //                     'Catalogue Image Uploaded Successfully...',
-  //                     ''
-  //                   );
-  //                   this.CropImageModalVisible = false;
-  //                   this.isSpinning = false;
-  //                   this.data.SERVICE_IMAGE = this.UrlImageOne;
-  //                 } else {
-  //                   this.isSpinning = false;
-  //                   this.progressBarImageOne = false;
-  //                   this.percentImageOne = 0;
-  //                   this.data.SERVICE_IMAGE = null;
-  //                 }
-  //               }
-  //             });
-  //         } else {
-  //           this.message.error(
-  //             'Image dimensions must be 200px height and 200px width.',
-  //             ''
-  //           );
-  //           event.target.value == null;
-  //           this.fileURL = null;
-  //           this.isSpinning = false;
-  //           this.progressBarImageOne = false;
-  //           this.percentImageOne = 0;
-  //           this.data.SERVICE_IMAGE = null;
-  //         }
-  //       };
-
-  //       img.onerror = () => {
-  //         this.message.error(
-  //           'Failed to load image for dimension validation.',
-  //           ''
-  //         );
-  //       };
-
-  //       img.src = this.croppedImage;
-  //     };
-  //     reader.readAsDataURL(this.fileURL);
-  //   } else {
-  //     this.message.error('Please Select Only Image File', '');
-  //     this.fileURL = null;
-  //     this.isSpinning = false;
-  //     this.progressBarImageOne = false;
-  //     this.percentImageOne = 0;
-  //     this.data.SERVICE_IMAGE = null;
-  //   }
-  // }
   selectedFile: any;
   imagePreview: any;
   sanitizedFileURL: SafeUrl | null = null;
-  // onFileSelected(event: any) {
-  //   const maxFileSize = 1 * 1024 * 1024; // 5MB
-  //   const allowedWidth = 200;
-  //   const allowedHeight = 200;
-  //   if (
-  //     event.target.files[0]?.type === 'image/jpeg' ||
-  //     event.target.files[0]?.type === 'image/jpg' ||
-  //     event.target.files[0]?.type === 'image/png'
-  //   ) {
-  //     const input = event.target as HTMLInputElement;
-
-  //     if (input?.files?.length) {
-  //       this.selectedFile = input.files[0];
-
-  //       // Validate file size
-  //       if (this.selectedFile.size > maxFileSize) {
-  //         this.message.error('Service Image size should not exceed 1MB.', '');
-  //         return;
-  //       }
-
-  //       const reader = new FileReader();
-  //       reader.onload = (e: any) => {
-  //         const image = new Image();
-  //         image.src = e.target.result;
-
-  //         image.onload = () => {
-  //           if (
-  //             image.width !== allowedWidth ||
-  //             image.height !== allowedHeight
-  //           ) {
-  //             this.message.error(
-  //               `Image dimensions should be exactly ${allowedWidth} x ${allowedHeight} px.`,
-  //               ''
-  //             );
-  //             this.fileURL = null;
-  //             this.sanitizedFileURL = null;
-  //             this.selectedFile = null;
-  //             return;
-  //           }
-
-  //           // If dimensions are valid, continue upload logic
-  //           this.imagePreview = e.target.result;
-  //           this.fileURL = this.selectedFile;
-
-  //           var number = Math.floor(100000 + Math.random() * 900000);
-  //           var fileExt = this.fileURL.name.split('.').pop();
-  //           var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-  //           var url = d == null ? '' : d + number + '.' + fileExt;
-
-  //           if (
-  //             this.data.SERVICE_IMAGE != undefined &&
-  //             this.data.SERVICE_IMAGE.trim() !== ''
-  //           ) {
-  //             var arr = this.data.SERVICE_IMAGE.split('/');
-  //             if (arr.length > 1) {
-  //               url = arr[5];
-  //             }
-  //           }
-
-  //           const uploadedfileExt = this.uploadedImage.split('.').pop();
-
-  //           if (this.data.ID && this.data.SERVICE_IMAGE) {
-  //             this.UrlImageOne = this.uploadedImage.split('?')[0];
-  //           } else {
-  //             this.UrlImageOne = url;
-  //           }
-
-  //           this.timer = this.api
-  //             .onUpload('Item', this.fileURL, this.UrlImageOne)
-  //             .subscribe((res) => {
-  //               this.data.SERVICE_IMAGE = this.UrlImageOne;
-  //               this.uploadedImage = this.data.SERVICE_IMAGE;
-  //               if (res.type === HttpEventType.UploadProgress) {
-  //                 const percentDone = Math.round(
-  //                   (100 * res.loaded) / res.total
-  //                 );
-  //                 this.percentImageOne = percentDone;
-  //                 if (this.percentImageOne === 100) {
-  //                   this.isSpinning = false;
-  //                   setTimeout(() => {
-  //                     this.progressBarImageOne = false;
-  //                   }, 2000);
-  //                 }
-  //               } else if (res.type == 2 && res.status != 200) {
-  //                 this.message.error('Failed To Upload Service Image...', '');
-  //                 this.isSpinning = false;
-  //                 this.progressBarImageOne = false;
-  //                 this.percentImageOne = 0;
-  //                 this.data.SERVICE_IMAGE = null;
-  //               } else if (res.type == 4 && res.status == 200) {
-  //                 if (res.body['code'] === 200) {
-  //                   this.message.success(
-  //                     'Service Image Uploaded Successfully...',
-  //                     ''
-  //                   );
-  //                   this.isSpinning = false;
-  //                   this.data.SERVICE_IMAGE = this.UrlImageOne;
-  //                 } else {
-  //                   this.isSpinning = false;
-  //                   this.progressBarImageOne = false;
-  //                   this.percentImageOne = 0;
-  //                   this.data.SERVICE_IMAGE = null;
-  //                 }
-  //               }
-  //             });
-  //         };
-  //       };
-  //       reader.readAsDataURL(this.selectedFile);
-  //     }
-  //   } else {
-  //     this.message.error(
-  //       'Please select a valid Image file (PNG, JPG, JPEG).',
-  //       ''
-  //     );
-  //     this.fileURL = null;
-  //     this.isSpinning = false;
-  //     this.progressBarImageOne = false;
-  //     this.percentImageOne = 0;
-  //     this.data.SERVICE_IMAGE = null;
-  //   }
-  // }
-
   onFileSelected(event: any): void {
-    const maxFileSize = 1 * 1024 * 1024; // 1MB
+    const maxFileSize = 1 * 1024 * 1024; 
     const canvasSize = 200;
-
     const file = event.target.files?.[0];
     if (!file) return;
-
     if (!['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
       this.message.error(
         'Please select a valid Image file (PNG, JPG, JPEG).',
@@ -1582,91 +1190,65 @@ export class SubServiceMasterComponent implements OnInit {
       this.resetImageUpload();
       return;
     }
-
     if (file.size > maxFileSize) {
       this.message.error('Service Image size should not exceed 1MB.', '');
       this.resetImageUpload();
       return;
     }
-
     const reader = new FileReader();
     reader.onload = (e: any) => {
       const image = new Image();
       image.src = e.target.result;
-
       image.onload = () => {
         const imgWidth = image.width;
         const imgHeight = image.height;
-
         const canvas = document.createElement('canvas');
         canvas.width = canvasSize;
         canvas.height = canvasSize;
-
         const ctx = canvas.getContext('2d');
         if (!ctx) {
           this.message.error('Canvas not supported.', '');
           return;
         }
-
         let drawWidth = imgWidth;
         let drawHeight = imgHeight;
         let ratio = 1;
-
-        // Case 1: Small image (<100x100) – soft upscale
         if (imgWidth < 100 && imgHeight < 100) {
           ratio = Math.min(100 / imgWidth, 100 / imgHeight);
         }
-
-        // Case 2: Too large – scale down to fit canvas
         if (imgWidth * ratio > canvasSize || imgHeight * ratio > canvasSize) {
           ratio = Math.min(canvasSize / imgWidth, canvasSize / imgHeight);
         }
-
         drawWidth = imgWidth * ratio;
         drawHeight = imgHeight * ratio;
-
         const xOffset = (canvasSize - drawWidth) / 2;
         const yOffset = (canvasSize - drawHeight) / 2;
-
         ctx.clearRect(0, 0, canvasSize, canvasSize);
         ctx.drawImage(image, xOffset, yOffset, drawWidth, drawHeight);
-
         canvas.toBlob((blob) => {
           if (!blob) {
             this.message.error('Image processing failed.', '');
             return;
           }
-
           const number = Math.floor(100000 + Math.random() * 900000);
           const fileExt = 'png';
           const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
           let url = (d ? d : '') + number + '.' + fileExt;
-
           if (this.data.SERVICE_IMAGE?.trim()) {
             const arr = this.data.SERVICE_IMAGE.split('/');
             if (arr.length > 1) url = arr[5];
           }
-
           const resizedFile = new File([blob], url, { type: 'image/png' });
-
           this.selectedFile = resizedFile;
           this.fileURL = resizedFile;
           this.imagePreview = canvas.toDataURL('image/png');
-
           const uploadedfileExt = this.uploadedImage?.split('.').pop();
-          // this.UrlImageOne =
-          //   this.data.ID &&
-          //     this.data.SERVICE_IMAGE &&
-          //     uploadedfileExt === fileExt
-          //     ? this.uploadedImage.split('?')[0]
-          //     : url;
           this.UrlImageOne =
             this.data.ID &&
               this.data.SERVICE_IMAGE &&
               uploadedfileExt === fileExt
               ? url
               : url;
-
           this.timer = this.api
             .onUpload('Item', this.fileURL, this.UrlImageOne)
             .subscribe((res) => {
@@ -1696,10 +1278,8 @@ export class SubServiceMasterComponent implements OnInit {
         }, 'image/png');
       };
     };
-
     reader.readAsDataURL(file);
   }
-
   resetImageUpload() {
     this.isSpinning = false;
     this.progressBarImageOne = false;
@@ -1713,48 +1293,36 @@ export class SubServiceMasterComponent implements OnInit {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
-
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + 'Item/' + link;
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   image1DeleteConfirm(data: any) {
     this.UrlImageOne = null;
     this.data.SERVICE_IMAGE = ' ';
-
     this.fileURL = null;
   }
   deleteCancel() { }
-
   removeImage() {
     this.data.URL = ' ';
     this.data.SERVICE_IMAGE = ' ';
     this.fileURL = null;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   imageshow;
-
   expressAvailable(event: any) {
     if (event == true) {
       this.data.EXPRESS_COST = null;
     }
   }
-
   subServiceAvailable(event: any) {
     if (event == true) {
       this.data.B2B_PRICE = null;
@@ -1788,101 +1356,86 @@ export class SubServiceMasterComponent implements OnInit {
       this.data.QTY = 1;
     }
   }
-
   restrictMinutes(event: any): void {
     const input = event.target.value;
     if (input > 59) {
-      event.target.value = 59; // Prevent values greater than 59
-      this.data.DURARTION_MIN = 59; // Update the model value
+      event.target.value = 59; 
+      this.data.DURARTION_MIN = 59; 
     } else if (input < 0) {
-      event.target.value = ''; // Prevent negative values
+      event.target.value = ''; 
       this.data.DURARTION_MIN = null;
     } else {
-      this.data.DURARTION_MIN = input; // Update model for valid input
+      this.data.DURARTION_MIN = input; 
     }
   }
   restrictMinutes1(event: any): void {
     const input = event.target.value;
     if (input > 59) {
-      event.target.value = 59; // Prevent values greater than 59
-      this.data.PREPARATION_MINUTES = 59; // Update the model value
+      event.target.value = 59; 
+      this.data.PREPARATION_MINUTES = 59; 
     } else if (input < 0) {
-      event.target.value = ''; // Prevent negative values
+      event.target.value = ''; 
       this.data.PREPARATION_MINUTES = null;
     } else {
-      this.data.PREPARATION_MINUTES = input; // Update model for valid input
+      this.data.PREPARATION_MINUTES = input; 
     }
   }
-
   restrictHours(event: any): void {
     const input = event.target.value;
     if (input > 24) {
-      event.target.value = 24; // Prevent values greater than 60
-      this.data.DURARTION_HOUR = 24; // Update the model value
+      event.target.value = 24; 
+      this.data.DURARTION_HOUR = 24; 
     } else if (input < 0) {
-      event.target.value = ''; // Prevent negative values
+      event.target.value = ''; 
       this.data.DURARTION_HOUR = null;
     } else {
-      this.data.DURARTION_HOUR = input; // Update model for valid input
+      this.data.DURARTION_HOUR = input; 
     }
   }
   restrictHours1(event: any): void {
     const input = event.target.value;
     if (input > 24) {
-      event.target.value = 24; // Prevent values greater than 60
-      this.data.PREPARATION_HOURS = 24; // Update the model value
+      event.target.value = 24; 
+      this.data.PREPARATION_HOURS = 24; 
     } else if (input < 0) {
-      event.target.value = ''; // Prevent negative values
+      event.target.value = ''; 
       this.data.PREPARATION_HOURS = null;
     } else {
-      this.data.PREPARATION_HOURS = input; // Update model for valid input
+      this.data.PREPARATION_HOURS = input; 
     }
   }
-
-  //Sanjana Code
-
   imageshow2: any = null;
   selectedFile2: any;
   imagePreview3: any;
   UrlImageThree;
   fileURL2: any = '';
   ImageModal2Visible: boolean = false;
-
   progressBarImage: boolean = false;
   percentImage = 0;
   sanitizedLink2: any;
   ViewImage2;
-
   onDetailsFileSelected(event: any) {
-    const maxFileSize = 1 * 1024 * 1024; // 5MB
-
+    const maxFileSize = 1 * 1024 * 1024; 
     if (
       event.target.files[0]?.type === 'image/jpeg' ||
       event.target.files[0]?.type === 'image/jpg' ||
       event.target.files[0]?.type === 'image/png'
     ) {
       const input = event.target as HTMLInputElement;
-
       if (input?.files?.length) {
         this.selectedFile2 = input.files[0];
-
-        // Validate file size
         if (this.selectedFile2.size > maxFileSize) {
           this.message.error('Service Image size should not exceed 5MB.', '');
           return;
         }
-
-        // Set preview and proceed
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.imagePreview3 = e.target.result; // Base64 image data
+          this.imagePreview3 = e.target.result; 
           this.fileURL2 = this.selectedFile2;
-
           var number = Math.floor(100000 + Math.random() * 900000);
           var fileExt = this.fileURL2.name.split('.').pop();
           var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
           var url = d == null ? '' : d + number + '.' + fileExt;
-
           if (
             this.data.SERVICE_DETAILS_IMAGE != undefined &&
             this.data.SERVICE_DETAILS_IMAGE.trim() !== ''
@@ -1892,21 +1445,17 @@ export class SubServiceMasterComponent implements OnInit {
               url = arr[5];
             }
           }
-
           const uploadedfileExt = this.uploadedImage1.split('.').pop();
-
           if (this.data.ID && this.data.SERVICE_DETAILS_IMAGE) {
             this.UrlImageThree = this.uploadedImage1.split('?')[0];
           } else {
             this.UrlImageThree = url;
           }
-
           this.timer = this.api
             .onUpload('ServiceDetailsImage', this.fileURL2, this.UrlImageThree)
             .subscribe((res) => {
               this.data.SERVICE_DETAILS_IMAGE = this.UrlImageThree;
               this.uploadedImage1 = this.data.SERVICE_DETAILS_IMAGE;
-
               if (res.type === HttpEventType.Response) {
               }
               if (res.type === HttpEventType.UploadProgress) {
@@ -1940,10 +1489,6 @@ export class SubServiceMasterComponent implements OnInit {
                 }
               }
             });
-          // this.UrlImageThree = url;
-          // this.progressBarImageTwo = true;
-          // this.urlImageOneShow = true;
-          // this.data.SERVICE_DETAILS_IMAGE = this.UrlImageThree;
         };
         reader.readAsDataURL(this.selectedFile2);
       }
@@ -1959,42 +1504,33 @@ export class SubServiceMasterComponent implements OnInit {
       this.data.SERVICE_DETAILS_IMAGE = null;
     }
   }
-
   viewDetailsImage(imageURL: string): void {
     this.ViewImage2 = 1;
     this.GetDetailsImage(imageURL);
   }
-
   GetDetailsImage(link: string) {
-    //sanjana
     let imagePath2 = this.api.retriveimgUrl + 'ServiceDetailsImage/' + link;
     this.sanitizedLink2 =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath2);
     this.imageshow2 = this.sanitizedLink2;
-
     this.ImageModal2Visible = true;
   }
-
   IconDeleteConfirm(data: any) {
     this.UrlImageThree = null;
     this.data.SERVICE_DETAILS_IMAGE = ' ';
     this.data.SERVICE_DETAILS_IMAGE = null;
     this.fileURL2 = null;
   }
-
   deleteDetailsCancel() { }
-
   removeDetailsImage() {
     this.data.UrlImageThree = ' ';
     this.fileURL2 = null;
     this.imageshow2 = null;
     this.data.SERVICE_DETAILS_IMAGE = null;
   }
-
   ImageDeatilsModalCancel() {
     this.ImageModal2Visible = false;
   }
-
   ImageModal2Cancel() {
     this.ImageModal2Visible = false;
   }

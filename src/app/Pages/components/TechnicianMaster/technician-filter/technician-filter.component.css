@@ -1,19 +1,74 @@
 .filter-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .condition-group {
-    border: 1px solid #d9d9d9;
-    padding: 15px;
-    border-radius: 8px;
-    background: #fafafa;
-  }
-  
-  .filter-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.condition-group {
+  border: 1px solid #d9d9d9;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.filter-group-title {
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: #092b9c !important;
+  padding-top: 16px;
+}
+.filter-group-delete-icon {
+  color: red;
+  cursor: pointer;
+}
+.filter-group-operator-wrapper {
+  text-align: center;
+  padding-bottom: 5px;
+}
+.filter-group-operator-select {
+  width: 120px;
+}
+.filter-conditions-wrapper {
+  border-radius: 5px;
+  border: 1px dashed rgb(217, 217, 217);
+  padding: 8px;
+  background: #fbfbfb;
+}
+.filter-condition-row {
+  padding: 8px;
+  border-bottom: 1px solid rgb(246, 246, 246);
+}
+.filter-when-text {
+  text-align: center;
+  padding: 5px;
+}
+.full-width-select,
+.full-width-input {
+  width: 100%;
+}
+.filter-condition-actions {
+  text-align: right;
+}
+.add-condition-btn {
+  margin-left: 10px;
+}
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.filter-name-input {
+  width: 100%;
+}
+.filter-name-counter {
+  color: red;
+  font-size: 10px;
+}

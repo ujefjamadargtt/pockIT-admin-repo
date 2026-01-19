@@ -17,13 +17,10 @@ export class HelpdocumentpageComponent {
   decryptedEmail = this.Emaiid
     ? this.commonFunction.decryptdata(this.Emaiid)
     : '';
-
   MobileNo = sessionStorage.getItem('mobile');
-
   decryptedMobile = this.MobileNo
     ? this.commonFunction.decryptdata(this.MobileNo)
     : '';
-
   isCollapsed = false;
   selectedContent: any = [];
   constructor(
@@ -34,7 +31,6 @@ export class HelpdocumentpageComponent {
   faqHeads: any;
   menuItems: any = [];
   isFirstLoad: boolean = true;
-
   ngOnInit() {
     this.api
       .gethelpDocumentCategory(0, 0, 'id', 'asc', ' AND IS_ACTIVE=1')
@@ -42,22 +38,18 @@ export class HelpdocumentpageComponent {
         if (data.status == 200) {
           this.faqHeads = data.body['data'];
           this.menuItems = this.transformFaqData(this.faqHeads);
-
           if (this.menuItems.length > 0) {
             const firstMenu = this.menuItems[0];
             firstMenu.open = true;
             this.ItemID = firstMenu['id'];
-
             this.getSubCategories(firstMenu, true);
           }
         }
       });
   }
-
   getSubCategories(event, boolean) {
     this.isSpinning = true;
     this.selectedContent = [];
-
     if (boolean) {
       this.api
         .gethelpDocumentsubCategory(
@@ -75,7 +67,6 @@ export class HelpdocumentpageComponent {
                 dataa.children.push(...data.body.data);
               }
             });
-
             if (this.isFirstLoad) {
               const firstChild = this.menuItems.find(
                 (item) => item.id == event.id
@@ -95,18 +86,11 @@ export class HelpdocumentpageComponent {
         });
     }
   }
-
-  /**
-   * Transform API response into menuItems format.
-   */
   transformFaqData(faqHeads: any[]): any[] {
-    const categoryMap = new Map<number, any>(); // Stores categories
-    const menuItems: any[] = []; // Final structured menu
-
+    const categoryMap = new Map<number, any>(); 
+    const menuItems: any[] = []; 
     faqHeads.forEach((faq) => {
-      // Only process items that belong to a category
       if (faq.ID) {
-        // If the category doesn't exist in map, create it
         if (!categoryMap.has(faq.ID)) {
           categoryMap.set(faq.ID, {
             id: faq.ID,
@@ -114,24 +98,19 @@ export class HelpdocumentpageComponent {
             open: false,
             children: [],
           });
-          menuItems.push(categoryMap.get(faq.ID)); // Add category to menu
+          menuItems.push(categoryMap.get(faq.ID)); 
         }
       }
     });
-
     return menuItems;
   }
-
   selectedContentData: any = [];
-  // Function to update FAQ content based on menu selection
-
   ItemID: any;
   onMenuItemClick(item: any) {
     this.isSpinning = true;
     this.ItemID = item;
     this.loadHelpData(item);
   }
-
   loadHelpData(item: any) {
     this.api
       .getHelpDoc(
@@ -148,16 +127,8 @@ export class HelpdocumentpageComponent {
         (data: any) => {
           const statusCode = data.code;
           const responseBody = data.data;
-
           if (statusCode === 200) {
             this.selectedContent = responseBody;
-            // this.selectedContent = Array.from({ length: 50 }, (_, i) => ({
-            //   ID: i + 1,
-            //   NAME: `Document ${i + 1}`,
-            //   TYPE: i % 2 === 0 ? 'D' : 'L', // आर्धे Documents, आर्धे Links
-            //   CATEGORY_ID: 1,
-            //   SUBCATEGORY_ID: 1,
-            // }));
           }
           this.isSpinning = false;
         },
@@ -166,36 +137,26 @@ export class HelpdocumentpageComponent {
         }
       );
   }
-
   isModalVisible = false;
   selectedItem: any;
-  // fullImageUrl: string = '';
   retriveImageurl = appkeys.retriveimgUrl;
   fullImageUrl;
-
   pdfUrl: any;
   loaddocs: boolean = false;
   openDocument(item: any): void {
     this.loaddocs = true;
-
     if (item.TYPE === 'D') {
       this.selectedItem = item;
-
       this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
         `${this.retriveImageurl}HelpDocument/${item.DOCUMENT}#toolbar=0&navpanes=0&scrollbar=0`
       );
-
       this.isModalVisible = true;
       this.loaddocs = false;
-
-      // Force Angular to detect changes
-      // this.cdr.detectChanges();
     } else if (item.TYPE === 'L' && item.LINK) {
       window.open(item.LINK, '_blank');
       this.loaddocs = false;
     }
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
   }

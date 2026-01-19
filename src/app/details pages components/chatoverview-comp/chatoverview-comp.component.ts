@@ -3,7 +3,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { appkeys } from 'src/app/app.constant';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 @Component({
   selector: 'app-chatoverview-comp',
   templateUrl: './chatoverview-comp.component.html',
@@ -12,7 +11,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 export class ChatoverviewCompComponent implements OnInit {
   @Input() FILTER_ID: any;
   @Input() TYPE: any = '';
-
   JOB: any;
   dataListOrder: any = [];
   cusstomerFilterOrder: any = '';
@@ -43,7 +41,6 @@ export class ChatoverviewCompComponent implements OnInit {
           (data) => {
             if (data['code'] == 200) {
               this.loaddata = false;
-
               data['data'].forEach((element) => {
                 if (element.ID) TECH_IDS.push(element.ID);
               });
@@ -56,15 +53,12 @@ export class ChatoverviewCompComponent implements OnInit {
           },
           (err) => {
             this.loaddata = false;
-
           }
         );
     } else {
       this.orderget();
     }
-    // this.jobCardChatDetails();
   }
-
   filterdata: any = '';
   getjobss(filterdatapassed: any) {
     this.loaddata = true;
@@ -82,7 +76,6 @@ export class ChatoverviewCompComponent implements OnInit {
             if (data['count'] > 0) {
               this.dataListOrder = data['data'];
               this.JOB = data['data'][0]['ID']
-
               this.onTechnicianChange(data['data'][0]['ID'])
             } else {
               this.loaddata = false;
@@ -124,7 +117,6 @@ export class ChatoverviewCompComponent implements OnInit {
             if (data['count'] > 0) {
               this.dataListOrder = data['data'];
               this.JOB = data['data'][0]['ID']
-
               this.onTechnicianChange(data['data'][0]['ID'])
             } else {
               this.cusstomerFilterOrder = '';
@@ -142,7 +134,6 @@ export class ChatoverviewCompComponent implements OnInit {
   }
   chantcount: any = 0;
   urllll = appkeys.retriveimgUrl;
-
   jobCardChatDetails() {
     this.api
       .jobCardChatDetailsnew(0, 0, "_id", "", this.JOB)
@@ -163,9 +154,6 @@ export class ChatoverviewCompComponent implements OnInit {
         }
       );
   }
-
-
-
   getTechnicianData() {
     this.api.getTechnicianData(0, 0, '', '', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -177,11 +165,9 @@ export class ChatoverviewCompComponent implements OnInit {
         }
       },
       () => {
-        // this.message.error('Something Went Wrong', '');
       }
     );
   }
-
   onTechnicianChange(d: any) {
     var selectedTechnician: any;
     if (d != null && d != undefined && d != '') {
@@ -190,7 +176,5 @@ export class ChatoverviewCompComponent implements OnInit {
       );
       this.jobCardChatDetails();
     }
-
   }
-
 }

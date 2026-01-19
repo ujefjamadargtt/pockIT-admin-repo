@@ -6,7 +6,8 @@
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Sub Category</nz-form-label>
             <nz-form-control nzHasFeedback nzErrorTip="Select Sub Category">
-              <nz-tree-select name="SUB_CATEGORY_ID" style="width: 100%" [nzHideUnMatched]="true" [nzDropdownStyle]="{
+              <nz-tree-select name="SUB_CATEGORY_ID" class="subcategory-tree-width-c1" [nzHideUnMatched]="true"
+                [nzDropdownStyle]="{
                   'min-height': '10px',
                   'max-height': '300px',
                   'overflow-x': 'auto'
@@ -16,8 +17,9 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col nzSpan="4" style="padding-right: 4px">
-          <button style="margin-top: 26px" nz-button nzType="primary" [nzLoading]="isSpinning11" (click)="apply()">
+        <div nz-col nzSpan="4" class="subcategory-action-col-c1">
+          <button nz-button nzType="primary" [nzLoading]="isSpinning11" (click)="apply()"
+            class="subcategory-apply-btn-c1">
             Apply
           </button>
         </div>
@@ -25,25 +27,26 @@
     </form>
   </div>
 </div>
-
 <div nz-row>
   <div nz-col nzSpan="10">
     <form nz-form #teritorymaster="ngForm">
       <div nz-row>
-        <div nz-col nzSpan="12" style="text-align: left; padding-left: 10px">
+        <div nz-col nzSpan="12" class="inventory-left-info-c1">
           <span *ngIf="selectedPincodeSet.size > 0">
             {{ selectedPincodeSet.size }} records selected out of
-            {{ PincodeMappingdata.length }}</span>
-          <span *ngIf="selectedPincodeSet.size == 0">Total Records {{ PincodeMappingdata.length }}</span>
+            {{ PincodeMappingdata.length }}
+          </span>
+          <span *ngIf="selectedPincodeSet.size == 0">
+            Total Records {{ PincodeMappingdata.length }}
+          </span>
         </div>
-
-        <div nz-col nzSpan="12" style="text-align: right; padding-right: 10px">
-          <form nz-form [nzLayout]="'inline'" style="display: inline-flex">
+        <div nz-col nzSpan="12" class="inventory-right-search-c1">
+          <form nz-form [nzLayout]="'inline'" class="inline-form-c1">
             <nz-form-item>
-              <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="margin-left: 26px !important">
+              <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" class="search-group-offset-c1">
                 <input type="text" name="postsearch" [(ngModel)]="searchText" autocomplete="off"
-                  (keydown.enter)="handleEnterKey($event)" (keydown.backspace)="handleEnterKey($event)"
-                  style="height: 32px" nz-input placeholder="Min 3 chars required." />
+                  (keydown.enter)="handleEnterKey($event)" (keydown.backspace)="handleEnterKey($event)" nz-input
+                  class="search-input-height-c1" placeholder="Min 3 chars required." />
               </nz-input-group>
               <ng-template #suffixIconButton>
                 <button nz-button nzType="primary" id="button" (click)="SearchUnmappedData(searchText)">
@@ -54,28 +57,28 @@
           </form>
         </div>
       </div>
-
       <div nz-row>
         <div nz-col nzSpan="24">
-          <div style="position: relative">
-            <nz-table class="my-scroll no-wrap1" nzBordered #tableeeee [nzData]="PincodeMappingdata"
+          <div class="relative-container-c1">
+            <nz-table class="my-scroll no-wrap1 table-preline-c1" nzBordered #tableeeee [nzData]="PincodeMappingdata"
               (nzQueryParams)="sort($event)" [nzSize]="'small'" [nzFrontPagination]="false"
-              style="white-space: pre-line" [nzLoading]="isSpinning11 || isLoading" [nzScroll]="{ y: '66vh' }">
+              [nzLoading]="isSpinning11 || isLoading" [nzScroll]="{ y: '66vh' }">
               <thead>
                 <tr>
                   <th nzWidth="30px">
-                    <label (ngModelChange)="toggleAll($event)" nz-checkbox [(ngModel)]="allSelected" name="allSelected"
-                      [nzIndeterminate]="tableIndeterminate">All</label>
+                    <label nz-checkbox [(ngModel)]="allSelected" name="allSelected"
+                      [nzIndeterminate]="tableIndeterminate" (ngModelChange)="toggleAll($event)">
+                      All
+                    </label>
                   </th>
                   <th nzWidth="90px" nzShowSort [nzSortFn]="true" nzColumnKey="{{ 'NAME' }}">
                     Inventory
                   </th>
                 </tr>
               </thead>
-
               <tbody>
                 <tr *ngFor="let data of tableeeee.data; let i = index">
-                  <td style="text-align: center">
+                  <td class="center-text-c1">
                     <label nz-checkbox [(ngModel)]="data.selected" name="allSelecteddd{{ i }}"
                       (ngModelChange)="onPincodeSelecttable(data, $event)"></label>
                   </td>
@@ -83,8 +86,8 @@
                     nz-tooltip>
                     <div #textContainer4 *ngIf="
                         data.VARIANT_NAME !== null &&
-                          data.VARIANT_NAME !== undefined &&
-                          data.VARIANT_NAME !== '';
+                        data.VARIANT_NAME !== undefined &&
+                        data.VARIANT_NAME !== '';
                         else elsevblocks
                       " class="truncate-text" (mouseenter)="checkOverflow(textContainer4, tooltipRef)">
                       {{ data["VARIANT_NAME"] }}
@@ -104,42 +107,40 @@
       </div>
     </form>
   </div>
-  <div nz-col nzSpan="1" style="align-self: center; text-align: center; align-items: center">
-    <div>
-      <nz-spin [nzSpinning]="isSpinning">
-        <span nz-icon nz-tooltip nzTooltipTitle="No coupon selected" nzType="right-circle"
-          style="font-size: 26px !important" nzTheme="outline" *ngIf="selectedPincodeSet.size == 0"></span>
-        <span nz-icon nzType="right-circle" nz-tooltip nzTooltipTitle="Click here to map data to inventory"
-          style="font-size: 26px !important" nzTheme="fill" (click)="mapdatatopincode()"
-          *ngIf="selectedPincodeSet.size > 0"></span>
-      </nz-spin>
-    </div>
+  <div nz-col nzSpan="1" class="mapping-arrow-col-c1">
+    <nz-spin [nzSpinning]="isSpinning">
+      <span nz-icon nz-tooltip nzTooltipTitle="No coupon selected" nzType="right-circle" nzTheme="outline"
+        class="mapping-arrow-icon-c1" *ngIf="selectedPincodeSet.size == 0"></span>
+      <span nz-icon nzType="right-circle" nz-tooltip nzTooltipTitle="Click here to map data to inventory" nzTheme="fill"
+        class="mapping-arrow-icon-c1" (click)="mapdatatopincode()" *ngIf="selectedPincodeSet.size > 0"></span>
+    </nz-spin>
   </div>
-
   <div nz-col nzSpan="13">
-    <div nz-row style="display: flex; justify-content: space-between">
-      <div style="display: flex">
-        <div style="text-align: left; padding-left: 10px">
-          <span *ngIf="selectedPincode11.length > 0">{{ selectedPincode11.length }} records selected out of
-            {{ totoalrecordsss }}</span>
-          <span *ngIf="selectedPincode11.length == 0">Total Records {{ totoalrecordsss }}</span>
+    <div nz-row class="mapped-header-row-c1">
+      <div class="mapped-header-left-c1">
+        <div class="mapped-count-c1">
+          <span *ngIf="selectedPincode11.length > 0">
+            {{ selectedPincode11.length }} records selected out of
+            {{ totoalrecordsss }}
+          </span>
+          <span *ngIf="selectedPincode11.length == 0">
+            Total Records {{ totoalrecordsss }}
+          </span>
         </div>
-
-        <div style="text-align: left; padding-left: 10px">
-          <td align="center" style="white-space: pre-line" nzLeft>
+        <div class="mapped-switch-c1">
+          <td nzLeft class="table-preline-c1">
             <nz-switch name="allChange" nzCheckedChildren="Select All" nzUnCheckedChildren="Deselect All"
               (ngModelChange)="allChange($event)" [(ngModel)]="allChecked"></nz-switch>
           </td>
         </div>
       </div>
-
-      <div nz-col nzSpan="12" style="text-align: right; padding-right: 10px">
-        <form nz-form [nzLayout]="'inline'" style="display: inline-flex">
+      <div nz-col nzSpan="12" class="mapped-search-right-c1">
+        <form nz-form [nzLayout]="'inline'" class="inline-form-c1">
           <nz-form-item>
-            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton1" style="margin-left: 26px !important">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton1" class="search-group-offset-c1">
               <input type="text" name="pincodesearch" [(ngModel)]="searchPincode" autocomplete="off"
                 (keydown.enter)="handleEnterPincodeKey($event)" (keydown.backspace)="handleEnterPincodeKey($event)"
-                style="height: 32px" nz-input placeholder="Min 3 chars required." />
+                nz-input class="search-input-height-c1" placeholder="Min 3 chars required." />
             </nz-input-group>
             <ng-template #suffixIconButton1>
               <button nz-button nzType="primary" id="pincode" (click)="SearchPincode(searchPincode)">
@@ -150,13 +151,12 @@
         </form>
       </div>
     </div>
-
     <div nz-row>
       <div nz-col nzSpan="24">
-        <div style="position: relative">
-          <nz-table class="my-scroll no-wrap1" nzBordered #table [nzData]="mappingdata"
+        <div class="relative-container-c1">
+          <nz-table class="my-scroll no-wrap1 table-preline-c1" nzBordered #table [nzData]="mappingdata"
             (nzQueryParams)="unmappedsort($event)" [nzSize]="'small'" [nzFrontPagination]="false"
-            style="white-space: pre-line" [nzLoading]="isSpinning22" [nzScroll]="{ x: '1000px', y: '66vh' }">
+            [nzLoading]="isSpinning22" [nzScroll]="{ x: '1000px', y: '66vh' }">
             <thead>
               <tr>
                 <th nzLeft nzWidth="60px" nzShowSort [nzSortFn]="true" nzColumnKey="{{ 'STATUS' }}">
@@ -173,10 +173,9 @@
                 </th>
               </tr>
             </thead>
-
             <tbody>
               <tr *ngFor="let data of table.data; let i = index">
-                <td align="center" style="white-space: pre-line" nzLeft>
+                <td nzLeft class="center-text-c1 table-preline-c1">
                   <nz-switch name="STATUS" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                     (ngModelChange)="SelectOnOFForUnmapData(data, $event)" [(ngModel)]="data['STATUS']"></nz-switch>
                 </td>

@@ -51,7 +51,6 @@ export class AddStockMovementRequestMasterComponent {
   deletedItemData1: any = [];
   newItemTableData: any[] = [];
   public commonFunction = new CommonFunctionService();
-
   supplierlist: any = [];
   INNERTABLEDATA: any = new InnerStockMovementRequest();
   index = -1;
@@ -59,38 +58,32 @@ export class AddStockMovementRequestMasterComponent {
   pageSize = 1;
   pageIndex = 1;
   roleID: number;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private datePipe: DatePipe
   ) { }
-  roleid = sessionStorage.getItem('roleId'); // Retrieve userId from session storage
+  roleid = sessionStorage.getItem('roleId'); 
   toGodownName: any;
   tempSelectedItemData: any;
   @Input() category: any;
   isFromGodownLoading1: boolean = false;
   tempSelectedUnitData: any;
   itemWiseUnitList: any;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
+  userId = sessionStorage.getItem('userId'); 
   USER_ID: number;
-
   ngOnInit(): void {
     this.data.DATE = new Date();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-
     const decryptedUserId1 = this.roleid
       ? this.commonFunction.decryptdata(this.roleid)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.roleID = Number(decryptedUserId1);
     this.newItemTableData = this.item2.map((item) => item);
     this.GodownMaster();
-    // this.loadItems();
-    // this.getItemsData();
-    // this.getallgodowns();
   }
   checkQuantity(event) {
     if (event) {
@@ -113,9 +106,6 @@ export class AddStockMovementRequestMasterComponent {
     if (id && this.data2.VARIANT_ID) {
       query = " AND ITEM_ID='" + this.data2.VARIANT_ID + "'";
     }
-    // if (this.data2.VARIANT_ID) {
-    //   query += " AND VARIANT_ID='" + this.data2.VARIANT_ID + "'";
-    // }
     if (this.data.SOURCE_WAREHOUSE_ID) {
       query += " AND WAREHOUSE_ID='" + this.data.SOURCE_WAREHOUSE_ID + "'";
     }
@@ -155,16 +145,9 @@ export class AddStockMovementRequestMasterComponent {
     if (this.data2.INVENTORY_ID && this.data2.VARIANT_ID) {
       query = ' AND ITEM_ID=' + this.data2.VARIANT_ID;
     }
-    // if (this.data2.VARIANT_ID) {
-    //   query += ' AND VARIANT_ID=' + this.data2.VARIANT_ID;
-    // }
-    // if(this.data2.VARIANT_ID){
-    //   query+=' AND VARIANT_ID='+this.data2.VARIANT_ID
-    // }
     if (this.data.SOURCE_WAREHOUSE_ID) {
       query += ' AND WAREHOUSE_ID=' + this.data.SOURCE_WAREHOUSE_ID;
     }
-
     this.api
       .getInventorySerialNoBatch(
         this.radioValue,
@@ -174,13 +157,9 @@ export class AddStockMovementRequestMasterComponent {
       )
       .subscribe((data) => {
         if (data['status'] == 200) {
-          //  ;
           this.batchData = data.body['data'];
           if (this.items.length > 0) {
             this.items.forEach((item) => {
-              // if (item.SERIAL_NO) {
-              //   this.serialNoData = this.serialNoData.filter((data) => data.SERIAL_NO !== String(item.SERIAL_NO));
-              // }
               if (item.BATCH_NO) {
                 this.batchData = this.batchData.filter(
                   (data) => data.BATCH_NO !== String(item.BATCH_NO)
@@ -193,7 +172,6 @@ export class AddStockMovementRequestMasterComponent {
         }
       });
   }
-
   getSerialNoData() {
     var query = '';
     if (this.data2.INVENTORY_ID && !this.data2.VARIANT_ID) {
@@ -202,10 +180,6 @@ export class AddStockMovementRequestMasterComponent {
     if (this.data2.INVENTORY_ID && this.data2.VARIANT_ID) {
       query = ' AND ITEM_ID=' + this.data2.VARIANT_ID;
     }
-    // if (this.data2.VARIANT_ID) {
-    //   query += ' AND VARIANT_ID=' + this.data2.VARIANT_ID;
-    // }
-
     if (this.data.SOURCE_WAREHOUSE_ID) {
       query += ' AND WAREHOUSE_ID=' + this.data.SOURCE_WAREHOUSE_ID;
     }
@@ -218,7 +192,6 @@ export class AddStockMovementRequestMasterComponent {
       )
       .subscribe((data) => {
         if (data['status'] == 200) {
-          //  ;
           this.serialNoData = data.body['data'];
           if (this.items.length > 0) {
             this.items.forEach((item) => {
@@ -227,9 +200,6 @@ export class AddStockMovementRequestMasterComponent {
                   (data) => data.SERIAL_NO !== String(item.SERIAL_NO)
                 );
               }
-              // if (item.BATCH_NO) {
-              //   this.batchData = this.batchData.filter((data) => data.BATCH_NO !== String(item.BATCH_NO));
-              // }
             });
           }
         } else {
@@ -237,11 +207,7 @@ export class AddStockMovementRequestMasterComponent {
         }
       });
   }
-  // onChangeSourceGodown(e){
-  //   this.loadItems()
-  // }
   onChangeMovementType(event) {
-    // if(event)
     this.data2.INVENTORY_ID = null;
     this.showvariant = false;
     this.serialNoData = [];
@@ -262,12 +228,10 @@ export class AddStockMovementRequestMasterComponent {
       this.loadItems();
     } else {
       this.loadItems();
-      // this.Itemdata = [];
     }
   }
   loadItems(): void {
     this.Itemdata = [];
-
     this.api
       .getInventoryHirarchyInwardFilterWise(
         this.radioValue,
@@ -287,12 +251,10 @@ export class AddStockMovementRequestMasterComponent {
         }
       );
   }
-
   GodownMaster(): void {
     this.LoadGodown = [];
     this.LoadGodown1 = [];
     var userMainId = '';
-
     if (
       this.USER_ID != null &&
       this.USER_ID != undefined &&
@@ -302,7 +264,6 @@ export class AddStockMovementRequestMasterComponent {
     } else {
       userMainId = '';
     }
-
     if (this.roleID == 1 || this.roleID == 8) {
       this.isFromGodownLoading = true;
       this.api.getWarehouses(0, 0, 'ID', 'desc', ' AND STATUS=1').subscribe(
@@ -373,7 +334,6 @@ export class AddStockMovementRequestMasterComponent {
             this.LoadGodown1 = [];
           }
         );
-
       this.api.getWarehouses(0, 0, 'ID', 'desc', ' AND STATUS=1').subscribe(
         (data) => {
           if (data['code'] == 200) {
@@ -393,17 +353,13 @@ export class AddStockMovementRequestMasterComponent {
       );
     }
   }
-
   onUnitSelection(key: number): void {
     this.tempSelectedUnitData = this.itemWiseUnitList.filter(
       (val: any) => val.UNIT_ID === key
     );
   }
-
   IS_FIRST = 0;
   changeFromGodown(event: any) {
-    // this.data.SOURCE_WAREHOUSE_NAME =this.LoadGodown.filter((val: any) => val.ID === event)[0].NAME
-    // this.data.DESTINATION_WAREHOUSE_NAME =this.LoadGodown1.filter((val: any) => val.ID === this.data.DESTINATION_WAREHOUSE_ID)[0].NAME
     this.data2.INVENTORY_ID = null;
     if (event === this.data.DESTINATION_WAREHOUSE_ID) {
       this.data.DESTINATION_WAREHOUSE_ID = null;
@@ -446,16 +402,13 @@ export class AddStockMovementRequestMasterComponent {
         });
     }
     this.radioValue = '';
-    // this.loadItems();
     this.onChangeMovementType(this.radioValue);
     this.getFilteredDestinationGodowns();
     this.INNERTABLEDATA = {};
     this.items = [];
   }
-
   LoadGodownMain: any = [];
   LoadGodownMain1: any = [];
-
   getallgodowns() {
     this.isFromGodownLoading1 = true;
     this.api.getWarehouses(0, 0, 'ID', 'desc', ' AND STATUS=1').subscribe(
@@ -479,9 +432,7 @@ export class AddStockMovementRequestMasterComponent {
       }
     );
   }
-
   getFilteredDestinationGodowns() {
-    // If no source is selected, return the full list
     if (
       this.data.SOURCE_WAREHOUSE_ID === null ||
       this.data.SOURCE_WAREHOUSE_ID === undefined ||
@@ -494,20 +445,7 @@ export class AddStockMovementRequestMasterComponent {
         (godown) => godown.ID !== this.data.SOURCE_WAREHOUSE_ID
       );
     }
-    // Filter out the selected source godown
   }
-
-  // ITEMLIST: any[] = [];
-
-  // getItemsData(): void {
-  //   this.api.getInventory(0, 0, '', '', '').subscribe((data) => {
-  //     if (data['code'] == 200) {
-  //       this.ITEMLIST = data['data'];
-  //     }
-  //   }, (err) => {
-  //     this.message.error('Server Not Found', '');
-  //   });
-  // }
   save(addNew: boolean, form1: NgForm): void {
     this.isOk = true;
     if (
@@ -518,14 +456,6 @@ export class AddStockMovementRequestMasterComponent {
       this.isOk = false;
       this.message.error('Please Select Date', '');
     }
-    // else if (
-    //   this.data.MOVEMENT_NUMBER === undefined ||
-    //   this.data.MOVEMENT_NUMBER === null ||
-    //   this.data.MOVEMENT_NUMBER <= 0
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Enter Movement Request No.', '');
-    // }
     else if (
       this.data.SOURCE_WAREHOUSE_ID === undefined ||
       this.data.SOURCE_WAREHOUSE_ID === null ||
@@ -544,29 +474,20 @@ export class AddStockMovementRequestMasterComponent {
       this.isOk = false;
       this.message.error('Please Add Item(s)', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
-
       this.data.USER_ID = Number(this.USER_ID);
       this.data.USER_NAME = this.commonFunction.decryptdata(
         sessionStorage.getItem('userName') || ''
       );
-
-      // this.data.AUTHORISED_DATETIME = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss')
-      // this.data.CONFIRMED_DATETIME = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss')
-      // this.data.TOTAL_ITEMS = this.items.length;
       this.data.SOURCE_WAREHOUSE_ID = Number(this.data.SOURCE_WAREHOUSE_ID);
       this.data.DESTINATION_WAREHOUSE_ID = Number(
         this.data.DESTINATION_WAREHOUSE_ID
       );
       this.data.STATUS = 'P';
-      // this.data.STATUS = 'D'
-
       this.deletedItemData1 = this.newItemTableData.filter(
         (newItem) => !this.items.some((item) => item.ITEM_ID == newItem.ITEM_ID)
       );
-
       this.deletedItemData1.forEach((newItem) => {
         this.deletedItemData.push({
           ITEM_ID: newItem.ITEM_ID,
@@ -574,7 +495,6 @@ export class AddStockMovementRequestMasterComponent {
           REQUESTED_QTY_UNIT_ID: newItem.REQUESTED_QTY_UNIT_ID,
         });
       });
-      // this.data.MOVEMENT_TYPE=this.radioValue
       if (this.data.ID) {
         this.data.DATE = this.datePipe.transform(
           new Date(),
@@ -593,20 +513,17 @@ export class AddStockMovementRequestMasterComponent {
         this.data.DESTINATION_WAREHOUSE_NAME = selectedWarehouse
           ? selectedWarehouse.NAME
           : null;
-
         const selectedWarehouse1111 = this.LoadGodownMain.find(
           (val: any) => val.ID === this.data.SOURCE_WAREHOUSE_ID
         );
         this.data.SOURCE_WAREHOUSE_NAME = selectedWarehouse1111
           ? selectedWarehouse1111.NAME
           : null;
-
         this.data.USER_NAME = this.commonFunction.decryptdata(
           sessionStorage.getItem('userName') || ''
         );
         this.data.INVENTORY_DETAILS = this.items;
         this.data.deletedItemData = this.deletedItemData;
-
         this.api.CreateStockRequpdate(this.data).subscribe(
           (successCode) => {
             if (successCode['status'] == 200) {
@@ -636,14 +553,12 @@ export class AddStockMovementRequestMasterComponent {
         this.data.DESTINATION_WAREHOUSE_NAME = selectedWarehouse
           ? selectedWarehouse.NAME
           : null;
-
         const selectedWarehouse1111 = this.LoadGodownMain.find(
           (val: any) => val.ID === this.data.SOURCE_WAREHOUSE_ID
         );
         this.data.SOURCE_WAREHOUSE_NAME = selectedWarehouse1111
           ? selectedWarehouse1111.NAME
           : null;
-
         this.data.USER_NAME = this.commonFunction.decryptdata(
           sessionStorage.getItem('userName') || ''
         );
@@ -653,20 +568,16 @@ export class AddStockMovementRequestMasterComponent {
           this.data.DATE,
           'yyyy-MM-dd HH:mm:ss'
         );
-
         this.api.createMovement(this.data).subscribe(
           (successCode) => {
             if (successCode['status'] == 200) {
               this.message.success('Stock Movement Created Successfully', '');
-
               if (!addNew) this.drawerClose();
               else {
                 this.data = new StockMovementRequest();
                 this.resetDrawer(form1);
-                // this.newRequestNo();
                 this.items = [];
               }
-
               this.isSpinning = false;
             } else {
               this.message.error('Stock Movement Creation Failed', '');
@@ -681,7 +592,6 @@ export class AddStockMovementRequestMasterComponent {
       }
     }
   }
-
   newRequestNo(): void {
     this.api.stockMovementRequest(1, 1, 'ID', 'DESC', '').subscribe(
       (data) => {
@@ -691,15 +601,12 @@ export class AddStockMovementRequestMasterComponent {
               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')[
               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/').length - 1
               ];
-
             let currentYear = new Date().getFullYear();
             let previousID =
               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')[
               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/').length - 2
               ];
-
             let lastID = 0;
-
             if (!previousID) {
               lastID = 1;
             } else {
@@ -711,7 +618,6 @@ export class AddStockMovementRequestMasterComponent {
                   ]
                 ) + 1;
             }
-
             if (lastYear === currentYear) {
               this.data.MOVEMENT_NUMBER =
                 'REQ/' +
@@ -745,25 +651,20 @@ export class AddStockMovementRequestMasterComponent {
       (err) => { }
     );
   }
-
   resetDrawer(form1: NgForm) {
     this.data = new StockMovementRequest();
     form1.form.markAsPristine();
     form1.form.markAsUntouched();
   }
-
   addData(addNew: boolean, form2: NgForm): void {
     this.isOk = true;
     this.data.MOVEMENT_TYPE = 'T';
     let inventorytrackingtype = this.radioValue;
-
-    // Validation checks
     if (!this.data2.INVENTORY_ID || this.data2.INVENTORY_ID <= 0) {
       this.isOk = false;
       this.message.error('Please Select Item Name', '');
       return;
     }
-
     if (
       this.data2.IS_VARIANT &&
       (!this.data2.VARIANT_ID || this.data2.VARIANT_ID <= 0)
@@ -772,37 +673,31 @@ export class AddStockMovementRequestMasterComponent {
       this.message.error('Please Select Variant Name', '');
       return;
     }
-
     if (this.radioValue === 'S' && !this.data2.SERIAL_NO) {
       this.isOk = false;
       this.message.error('Please Select Serial No', '');
       return;
     }
-
     if (this.radioValue === 'B' && !this.data2.BATCH_NO) {
       this.isOk = false;
       this.message.error('Please Select Batch No', '');
       return;
     }
-
     if (!this.data2.STOCK || this.data2.STOCK <= 0) {
       this.isOk = false;
       this.message.info('There Is No Stock Available', '');
       return;
     }
-
     if (!this.data2.STOCK_UNIT_ID || this.data2.STOCK_UNIT_ID === 0) {
       this.isOk = false;
       this.message.info('There is No Stock Unit Available', '');
       return;
     }
-
     if (!this.data2.QUANTITY || this.data2.QUANTITY <= 0) {
       this.isOk = false;
       this.message.error('Please Enter Quantity', '');
       return;
     }
-
     if (!this.data2.UNIT_ID || this.data2.UNIT_ID <= 0) {
       this.isOk = false;
       this.message.error('Please Select Unit Name', '');
@@ -813,7 +708,6 @@ export class AddStockMovementRequestMasterComponent {
         ? this.data2.VARIANT_ID
         : this.data2.INVENTORY_ID;
     }
-    // Check if an item with the same INVENTORY_ID, UNIT_ID, SERIAL_NO, and BATCH_NO already exists
     let existingIndex = this.items.findIndex(
       (element: any) =>
         Number(element.INVENTORY_ID) === Number(this.inventoryid) &&
@@ -823,13 +717,8 @@ export class AddStockMovementRequestMasterComponent {
         (element.BATCH_NO === this.data2.BATCH_NO ||
           (!element.BATCH_NO && !this.data2.BATCH_NO))
     );
-
-    // if()
-
     if (existingIndex > -1) {
-      // If item exists, update its quantity
       let existingItem = this.items[existingIndex];
-
       if (existingItem.STOCK < existingItem.QUANTITY + this.data2.QUANTITY) {
         this.message.error(
           'Quantity should be less than or equal to available stock',
@@ -837,31 +726,15 @@ export class AddStockMovementRequestMasterComponent {
         );
         return;
       }
-
       existingItem.QUANTITY += Number(this.data2.QUANTITY);
-      this.items = [...this.items]; // Ensures Angular detects changes
+      this.items = [...this.items]; 
     } else if (this.index > -1) {
       this.items[this.index] = Object.assign({}, this.data2);
-
-      // if (existingItem.STOCK < existingItem.QUANTITY + this.data2.QUANTITY) {
-      //   this.message.error('Quantity should be less than or equal to available stock', '');
-      //   return;
-      // }
-      // existingItem.INVENTORY_ID=this.inventoryid
-      // existingItem.QUANTITY = Number(this.data2.QUANTITY);
-      // existingItem.VARIANT_NAME=this.data2.VARIANT_NAME;
-      // existingItem.SERIAL_NO=this.data2.SERIAL_NO;
-      // existingItem.BATCH_NO=this.data2.BATCH_NO;
-      // existingItem.STOCK=this.data2.STOCK;
-      // // existingItem.VARIANT_NAME=this.data2.VARIANT_NAME;
-      // existingItem.VARIANT_ID=this.data2.VARIANT_ID
-      this.items = [...this.items]; // Ensures Angular detects changes
+      this.items = [...this.items]; 
     } else {
-      // Add new item
       let selectedUnit = this.itemWiseUnitList.find(
         (val: any) => val.UNIT_ID === this.data2.UNIT_ID
       );
-
       this.INNERTABLEDATA = {
         INVENTORY_ID: this.inventoryid,
         QUANTITY: Number(this.data2.QUANTITY),
@@ -883,26 +756,21 @@ export class AddStockMovementRequestMasterComponent {
         STOCK_UNIT_ID: this.data2.STOCK_UNIT_ID,
         QUANTITY_PER_UNIT: this.ItemDetails.BASE_QUANTITY,
       };
-
       this.batchData = this.batchData.filter(
         (data) => data.BATCH_NO != this.INNERTABLEDATA.BATCH_NO
       );
       this.items.push(this.INNERTABLEDATA);
-      this.items = [...this.items]; // Ensures Angular detects changes
+      this.items = [...this.items]; 
     }
-
     this.index = -1;
     this.totaldata = this.items.length;
     this.editdata = false;
-
-    // Reset form AFTER ensuring all updates are completed
     form2.form.reset();
     this.Unitload = false;
     this.data2.VARIANT_ID = null;
     this.data2.VARIANT_NAME = null;
     this.data2.IS_VARIANT = false;
   }
-
   removedItems: any[] = [];
   edit(data2: InnerStockMovementRequest, i: number): void {
     data2.VARIANT_ID = this.varientId ? this.varientId : data2.VARIANT_ID;
@@ -921,65 +789,28 @@ export class AddStockMovementRequestMasterComponent {
         '-' +
         data2.INVENTORY_ID;
     }
-
     this.editdata = true;
     this.index = i;
-
-    // let restoredItems = this.removedItems.filter(
-    //   (item) => item.ID == data2.INVENTORY_ID
-    // );
-    //
-
-    //  if (restoredItems.length > 0) {
-    //    // Add restored items back to Itemdata
-    //    this.Itemdata.forEach((parent) => {
-    //      parent.children?.forEach((child) => {
-    //        if (child.children) {
-    //
-    //          child.children.push(...restoredItems);
-    //        }
-    //      });
-    //    });
-
-    //    // Remove restored items from removedItems list
-    //    this.removedItems = this.removedItems.filter(item => item.ID !== data2.VARIANT_ID);
-    //  }
-
     if (data2['IS_HAVE_VARIANTS'] == true) {
       this.getUnitsedit(data2.VARIANT_ID, data2.UNIT_ID);
-      //   data2.INVENTORY_ID =
-      // data2.INVENTORY_CAT_ID +
-      // '-' +
-      // data2.INVENTROY_SUB_CAT_ID +
-      // '-' +
-      // data2.INVENTORY_ID;
       this.data2.STOCK_UNIT_ID = data2.UNIT_ID;
     } else {
       this.getUnitsedit(data2.INVENTORY_ID, data2.UNIT_ID);
     }
-    // data2.INVENTORY_ID = joindata2;
-    // joindata2 = '';
-
-    // data2.VARIANT_ID = data2['VARIENT_ID'];
     this.radioValue = data2['INVENTORY_TRACKING_TYPE'];
     this.getNamesCatAndSub(data2.INVENTORY_ID);
     this.GetVariants(data2.INVENTORY_ID);
-
     this.data2 = Object.assign({}, data2);
   }
-
   delete(data: any, i: number): void {
     this.items = this.items.filter(
       (dat, idx) => !(idx === i && dat.INVENTORY_ID === data.INVENTORY_ID)
     );
   }
-
   cancel(): void { }
-
   close(): void {
     this.drawerClose();
   }
-
   splitddata: any;
   InwardVarientsGet: any = [];
   ItemDetails: any;
@@ -994,8 +825,6 @@ export class AddStockMovementRequestMasterComponent {
             if (unitdata.code == 200) {
               this.Unitload = false;
               this.itemWiseUnitList = unitdata['data'];
-              // if (!this.data.ID) {
-
               if (unitdata['count'] > 0) {
                 var FiltUnit: any = this.itemWiseUnitList.find(
                   (product) => product.UNIT_ID === this.ItemDetails.BASE_UNIT_ID
@@ -1010,7 +839,6 @@ export class AddStockMovementRequestMasterComponent {
                   this.onUnitSelection(FiltUnit.UNIT_ID);
                 }
               }
-              // }
             } else {
               this.Unitload = false;
               this.itemWiseUnitList = [];
@@ -1035,12 +863,10 @@ export class AddStockMovementRequestMasterComponent {
             if (unitdata.code == 200) {
               this.Unitload = false;
               this.itemWiseUnitList = unitdata['data'];
-              // if (!this.data.ID) {
               if (unitdata['count'] > 0) {
                 var FiltUnit: any = this.InwardVarientsGet.find(
                   (product) => product.ID === event
                 );
-
                 if (
                   FiltUnit !== null &&
                   FiltUnit !== undefined &&
@@ -1051,7 +877,6 @@ export class AddStockMovementRequestMasterComponent {
                   this.onUnitSelection(FiltUnit.BASE_UNIT_ID);
                 }
               }
-              // }
             } else {
               this.Unitload = false;
               this.itemWiseUnitList = [];
@@ -1091,7 +916,6 @@ export class AddStockMovementRequestMasterComponent {
       this.Unitload = false;
     }
   }
-
   GetVariants(event: any) {
     if (event != null && event !== undefined && event !== '') {
       if (
@@ -1112,11 +936,7 @@ export class AddStockMovementRequestMasterComponent {
               (data) => {
                 if (data['code'] == 200) {
                   this.InwardVarientsGet = data['data'];
-
                   if (this.editdata) {
-                    // this.data2.VARIANT_ID = this.InwardVarientsGet[0]?.ID;
-                    // this.radioValue =
-                    //   this.InwardVarientsGet[0]?.INVENTORY_TRACKING_TYPE;
                     if (this.radioValue) {
                       if (this.radioValue == 'S') {
                         this.getSerialNoData();
@@ -1171,7 +991,6 @@ export class AddStockMovementRequestMasterComponent {
       this.itemWiseUnitList = [];
     }
   }
-
   inventoryid: any;
   onSerialNoChange(event) {
     this.getStock(event, this.inventoryid);
@@ -1179,7 +998,6 @@ export class AddStockMovementRequestMasterComponent {
   onBatchNoChange(event) {
     this.getStock(event, this.inventoryid);
   }
-  // onGenericChange()
   PARENT_ID;
   child;
   getNamesCatAndSub(selectedKey: any): void {
@@ -1197,17 +1015,10 @@ export class AddStockMovementRequestMasterComponent {
       selectedKey !== undefined &&
       selectedKey !== ''
     ) {
-      // Search the entire tree for the selected key and its ancestry.
       const ancestry = this.findNodeAncestry(this.Itemdata, selectedKey);
-
       if (ancestry) {
-        // Example: For a selection with ancestry length 3:
-        // ancestry[0] = Parent, ancestry[1] = Sub-parent, ancestry[2] = Child
-        // Assign the parent's details:
         this.data2.INVENTORY_CAT_ID = ancestry[0].id;
         this.data2.INVENTORY_CAT_NAME = ancestry[0].title;
-
-        // If there is a sub-parent level, assign its details:
         if (ancestry.length > 1) {
           this.data2.INVENTROY_SUB_CAT_ID = ancestry[1].id;
           this.data2.INVENTROY_SUB_CAT_NAME = ancestry[1].title;
@@ -1215,21 +1026,12 @@ export class AddStockMovementRequestMasterComponent {
           this.data2.INVENTROY_SUB_CAT_ID = null;
           this.data2.INVENTROY_SUB_CAT_NAME = null;
         }
-
-        // Finally, assign the child (selected node) details:
         const child = ancestry[ancestry.length - 1];
-
         this.PARENT_ID = child.details?.PARENT_ID;
-        this.data2.INVENTORY_ID = child.id; // The ID of the selected (child) node.
+        this.data2.INVENTORY_ID = child.id; 
         this.inventoryid = child.id;
         this.data2.INVENTORY_NAME = child.title;
-
-        // if(child.details.IS_HAVE_VARIANTS == true){
-        //     this.showvariant = true;
-
-        // }else {
         this.ItemDetails = child.details;
-
         this.radioValue = this.ItemDetails.INVENTORY_TRACKING_TYPE;
         this.getUnitsedit(child.id, child.details?.BASE_UNIT_ID);
         if (this.radioValue == 'S') {
@@ -1241,13 +1043,8 @@ export class AddStockMovementRequestMasterComponent {
           this.getStock(this.data2.BATCH_NO, this.data2.INVENTORY_ID);
         }
         if (this.radioValue == 'N') {
-          // this.getGeneric(child.id)
           this.getStock('', this.data2.INVENTORY_ID);
         }
-        // this.getStock();
-        // }
-
-        // this.onUnitSelection(this.ItemDetails.BASE_UNIT_ID)
       }
       if (this.items.length > 0) {
         this.items.forEach((item) => {
@@ -1264,7 +1061,6 @@ export class AddStockMovementRequestMasterComponent {
         });
       }
     } else {
-      // Clear values if no subcategory is selected.
       this.data2.INVENTORY_CAT_NAME = null;
       this.data2.INVENTROY_SUB_CAT_NAME = null;
       this.data2.INVENTROY_SUB_CAT_ID = null;
@@ -1276,17 +1072,14 @@ export class AddStockMovementRequestMasterComponent {
   varientId;
   onVariantChange(event) {
     var dataaaa = this.InwardVarientsGet.filter((val: any) => val.ID === event);
-
     this.data2.VARIANT_NAME = dataaaa[0]?.VARIANT_COMBINATION;
     if (event) {
       this.inventoryid = dataaaa[0]?.ID;
       this.varientId = dataaaa[0]?.ID;
     }
     this.getUnitsVarient(dataaaa[0]?.ID);
-
     this.radioValue = dataaaa[0]?.INVENTORY_TRACKING_TYPE;
     this.data2.STOCK_UNIT_ID = null;
-
     if (this.radioValue == 'S') {
       this.getSerialNoData();
       this.getStock(this.data2.SERIAL_NO, this.data2.INVENTORY_ID);
@@ -1296,33 +1089,18 @@ export class AddStockMovementRequestMasterComponent {
       this.getStock(this.data2.BATCH_NO, this.data2.INVENTORY_ID);
     }
     if (this.radioValue == 'N') {
-      // this.getGeneric(Number(event))
       this.getStock('', this.inventoryid);
     }
     this.data2.SERIAL_NO = null;
     this.data2.BATCH_NO = null;
-    // this.getStock()
-    // else{
-    //   this.getStock('N',child.id)
-    // }
   }
-
   showvariant: any = false;
-  /**
-   * Recursively searches for a node by key and returns an array representing its ancestry.
-   * @param nodes - The list of nodes to search.
-   * @param key - The key of the node to find.
-   * @param ancestry - The accumulated ancestry (initially empty).
-   * @returns An array of ancestry objects if found, or null.
-   */
   findNodeAncestry(
     nodes: any[],
     key: string,
     ancestry: any[] = []
   ): any[] | null {
     for (const node of nodes) {
-      // Add the current node to the ancestry array.
-
       const newAncestry = ancestry.concat([
         {
           id: node.ID,
@@ -1356,7 +1134,6 @@ export class AddStockMovementRequestMasterComponent {
       }
     }
   }
-
   approve() {
     this.isSpinning = true;
     for (let i = 0; i < this.items.length; i++) {
@@ -1370,7 +1147,6 @@ export class AddStockMovementRequestMasterComponent {
         this.isSpinning = false;
         return;
       }
-
       if (this.items[i].APPROVAL_QUANTITY > this.items[i].INWARD_QUANTITY) {
         this.items[i].APPROVAL_QUANTITY = null;
         this.items[i].APPROVAL_QUANTITY = null;
@@ -1385,18 +1161,14 @@ export class AddStockMovementRequestMasterComponent {
         return;
       }
     }
-
     this.data.APPROVE_REJECTED_BY_NAME = this.commonFunction.decryptdata(
       sessionStorage.getItem('userName') || ''
     );
-
     this.data.APPROVE_REJECTED_DATE = this.datePipe.transform(
       new Date(),
       'yyyy-MM-dd HH:mm:ss'
     );
-
     this.data.APPROVE_REJECTED_BY_ID = this.USER_ID;
-
     this.data.STATUS = 'A';
     this.data.DETAILS_DATA = this.items;
     this.api.approverejectmomentreq(this.data).subscribe(
@@ -1406,9 +1178,7 @@ export class AddStockMovementRequestMasterComponent {
             'Stock Movement Request Approved Successfully',
             ''
           );
-
           this.drawerClose();
-
           this.isSpinning = false;
         } else {
           this.message.error('Stock Movement Request Approved Failed', '');
@@ -1421,10 +1191,8 @@ export class AddStockMovementRequestMasterComponent {
       }
     );
   }
-
   reject() {
     this.isSpinning = true;
-
     if (
       this.data.REASON == null ||
       this.data.REASON == undefined ||
@@ -1434,18 +1202,14 @@ export class AddStockMovementRequestMasterComponent {
       this.isSpinning = false;
       return;
     }
-
     this.data.APPROVE_REJECTED_BY_NAME = this.commonFunction.decryptdata(
       sessionStorage.getItem('userName') || ''
     );
-
     this.data.APPROVE_REJECTED_DATE = this.datePipe.transform(
       new Date(),
       'yyyy-MM-dd HH:mm:ss'
     );
-
     this.data.APPROVE_REJECTED_BY_ID = this.USER_ID;
-
     this.data.STATUS = 'R';
     this.data.DETAILS_DATA = this.items;
     this.api.approverejectmomentreq(this.data).subscribe(
@@ -1455,9 +1219,7 @@ export class AddStockMovementRequestMasterComponent {
             'Stock Movement Request Rejected Successfully',
             ''
           );
-
           this.drawerClose();
-
           this.isSpinning = false;
         } else {
           this.message.error('Stock Movement Request Rejected Failed', '');
@@ -1470,9 +1232,7 @@ export class AddStockMovementRequestMasterComponent {
       }
     );
   }
-
   showreject: boolean = false;
-
   reject111() {
     this.showreject = true;
   }

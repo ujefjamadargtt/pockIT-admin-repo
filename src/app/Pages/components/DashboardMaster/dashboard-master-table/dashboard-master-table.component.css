@@ -1,32 +1,127 @@
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 .select {
     width: 200px;
     padding: 8px;
     display: block;
 }
-
 .search-box {
     padding: 8px;
 }
-
 .search-box input {
     width: 188px;
     display: block;
 }
-
 .search-box button {
     width: 90px;
 }
-
 .search-button {
     margin-right: 8px;
 }
-
 nz-select {
     width: 100%;
+}
+.back-arrow-icon {
+    font-weight: bold;
+    cursor: pointer;
+}
+.header-flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+.filter-btn-width {
+    width: 47px;
+}
+.no-right-margin {
+    margin-right: 0px;
+}
+.filter-top-padding {
+    padding-top: 10px;
+}
+.filter-dashed-box {
+    border: 1px dashed black;
+    border-radius: 5px;
+    padding: 10px;
+}
+.center-text {
+    text-align: center;
+}
+.saved-filter-tag {
+    margin: 1px;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    background-color: white;
+}
+.saved-filter-active {
+    background-color: #e6f7ff;
+}
+.saved-filter-name {
+    color: black;
+    margin-right: 10px;
+}
+.filter-icon-apply {
+    color: #01ac5c;
+    margin-right: 8px;
+}
+.filter-icon-delete {
+    color: red;
+    margin-right: 8px;
+}
+.filter-icon-view {
+    color: blue;
+    margin-right: 8px;
+}
+.filter-icon-edit {
+    font-size: 15px;
+}
+.no-data-text {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.filter-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-top: 10px;
+}
+.filter-footer-btn {
+    margin-right: 10px;
+}
+.table-preline {
+    white-space: pre-line;
+}
+.th-bold-center {
+    font-weight: bold;
+    text-align: center;
+}
+.th-center {
+    text-align: center;
+}
+.td-center {
+    text-align: center;
+}
+.action-tag {
+    cursor: pointer;
+}
+.action-icon {
+    font-size: 15px;
+}
+.full-width {
+    width: 100%;
+}
+.bkground-12 {
+    margin: 1px;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+}
+.saved-filter-name {
+    color: black;
+    margin-right: 10px;
 }

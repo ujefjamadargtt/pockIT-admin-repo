@@ -12,11 +12,9 @@ export class VendorOverviewDetailsComponent implements OnInit {
   @Input() drawerVisible: boolean;
   @Input() custid: any;
   @Input() TYPE: any = '';
-
   constructor() { }
   ngOnInit() {
   }
-
   close() {
     this.drawerClose();
   }

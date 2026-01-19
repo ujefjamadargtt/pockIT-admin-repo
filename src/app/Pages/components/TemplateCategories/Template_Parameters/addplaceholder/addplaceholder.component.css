@@ -3,5 +3,14 @@ nz-form-item {
     margin-bottom: 5px;
     width: -webkit-fill-available;
     padding: 0px 10px;
-    /* font-family: '"Poppins", sans-serif !important'; */
+}
+.footer-cancel-btn {
+    margin-right: 8px;
+}
+.menu-item-custom {
+    border-radius: 4px;
+    color: white !important;
+}
+.menu-link {
+    color: white !important;
 }

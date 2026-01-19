@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-technicianratting',
   templateUrl: './technicianratting.component.html',
@@ -33,9 +32,7 @@ export class TechnicianrattingComponent implements OnInit {
   @Input() customer_id: any = '';
   @Input() FILTER_ID: any;
   filterQuery1: string = '';
-
   Technician: any = [];
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
@@ -46,7 +43,6 @@ export class TechnicianrattingComponent implements OnInit {
   isFilterApplied: any = 'default';
   filterClass: any = 'filter-invisible';
   Customers: any = [];
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
@@ -105,7 +101,6 @@ export class TechnicianrattingComponent implements OnInit {
           (data) => {
             if (data['code'] == 200) {
               this.loaddata = false;
-
               data['data'].forEach((element) => {
                 if (element.ID) TECH_IDS.push(element.ID);
               });
@@ -134,9 +129,7 @@ export class TechnicianrattingComponent implements OnInit {
       }
     }
   }
-
   applyFilter() {
-    // this.loadingRecords = true;
     if (this.TYPE == 'VENDOR') {
       if (
         this.Customers != null &&
@@ -204,10 +197,7 @@ export class TechnicianrattingComponent implements OnInit {
         this.isFilterApplied = 'default';
       }
     }
-
-    // this.loadingRecords = false;
   }
-
   getTechinitialdata() {
     if (this.roleID == '9') {
       this.vendorid = this.commonFunction.decryptdata(
@@ -297,7 +287,6 @@ export class TechnicianrattingComponent implements OnInit {
       var tec = Array.from(new Set(this.TECHNICIAN_ID));
       filter = ' AND ID in(' + tec.toString() + ')';
     }
-
     this.api
       .getTechnicianData(0, 0, 'NAME', 'desc', ' AND IS_ACTIVE=1' + filter)
       .subscribe(
@@ -373,12 +362,10 @@ export class TechnicianrattingComponent implements OnInit {
     } else {
     }
   }
-
   clearFilter() {
     this.pageIndex = 1;
     this.filterQuery = '';
     this.filterQuery1 = '';
-
     if (this.TYPE != 'JOB' && this.TYPE != 'ORDER') this.Customers = null;
     if (
       this.roleID != 1 &&
@@ -396,7 +383,6 @@ export class TechnicianrattingComponent implements OnInit {
       this.ViewTechnicianReviewDetails();
     }
   }
-
   loadMoreTechnician() {
     this.pageSizeforTechnician += 10;
     if (this.TYPE == 'VENDOR') {
@@ -406,7 +392,6 @@ export class TechnicianrattingComponent implements OnInit {
     }
   }
   filterdata: any = '';
-
   ViewTechnicianReviewDetails() {
     if (this.TYPE == 'ORDER' || this.TYPE == 'JOB') {
       this.Customers = this.customer_id;
@@ -472,13 +457,10 @@ export class TechnicianrattingComponent implements OnInit {
         (data) => {
           if (data['code'] === 200) {
             this.isSpinning = false;
-
             this.technicianData = data['data'];
             this.totalRecords = Number(data['count']);
-
             this.averageTechnicianRating = Number(data['averageRating']);
             this.globalTechnicianRating = data['count'];
-
             this.progressTechList = data['progress'].reverse();
           } else {
             this.technicianData = [];
@@ -560,13 +542,10 @@ export class TechnicianrattingComponent implements OnInit {
         (data) => {
           if (data['code'] === 200) {
             this.isSpinning = false;
-
             this.technicianData = data['data'];
             this.totalRecords = Number(data['count']);
-
             this.averageTechnicianRating = Number(data['averageRating']);
             this.globalTechnicianRating = data['count'];
-
             this.progressTechList = data['progress'].reverse();
           } else {
             this.technicianData = [];
@@ -580,7 +559,6 @@ export class TechnicianrattingComponent implements OnInit {
         }
       );
   }
-
   roundRating(rating: number): number {
     if (rating !== null && rating !== undefined && rating > 0) {
       return Math.round(rating * 2) / 2;

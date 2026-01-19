@@ -5,34 +5,25 @@ nz-form-item {
     padding: 0px 10px;
     width: 100%;
   }
-  
   .custom-select-width {
     width: 100px;
   }
-  
   tr:nth-child(even) td {
     background-color: #f4f3f3;
   }
-  
   tr:nth-child(odd) td {
     background-color: #ebeaea;
   }
-  
   td {
     font-size: 12px;
   }
-  
-  
   .mainnam {
-    /* color: #000; */
     font-size: 14px !important;
     font-weight: 600;
-  
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
   .subname {
     color: #4c4c4ceb;
     font-size: 11px !important;
@@ -41,3 +32,16 @@ nz-form-item {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .order-row-padding-lg {
+  padding: 10px 20px;
+}
+.order-row-padding-sm {
+  padding: 0 10px;
+}
+.order-table-preline {
+  white-space: pre-line;
+}
+.order-td-preline-left {
+  white-space: pre-line;
+  text-align: left;
+}

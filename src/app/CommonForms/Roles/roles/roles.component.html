@@ -1,27 +1,27 @@
 <div nz-row nzType="flex">
   <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8">
-    <div class="formname">
+    <div class="formname bo-form-title">
       <b>
-        <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
-          style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp; {{ formTitle }}
+        <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline" class="bo-back-icon"></span>&nbsp;&nbsp;
+        {{ formTitle }}
       </b>
     </div>
   </div>
 
-  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="4" nzXl="16" style="display: flex; justify-content: flex-end">
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="4" nzXl="16" class="bo-form-actions">
     <form nz-form [nzLayout]="'inline'">
-      <nz-form-item>
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 270px">
+      <nz-form-item class="bo-form-item">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" class="bo-search-group">
           <input type="text" name="search" nz-input (keyup)="keyup($event)" placeholder="Min 3 chars required."
-            [(ngModel)]="searchText" autocomplete="off" />
+            [(ngModel)]="searchText" autocomplete="off" class="bo-search-input" />
         </nz-input-group>
         <ng-template #suffixIconButton>
-          <button nz-button nzType="primary" (click)="search(true)" nzSearch>
+          <button nz-button nzType="primary" (click)="search(true)" nzSearch class="bo-search-btn">
             <i nz-icon nzType="search"></i>
           </button>
         </ng-template>
       </nz-form-item>
-      <nz-form-item style="margin-right: 0px">
+      <nz-form-item class="bo-form-item">
         <button nz-button nzType="primary" (click)="add()" nzJustify="end">
           <i nz-icon nzType="plus"></i>New Role
         </button>
@@ -29,24 +29,22 @@
     </form>
   </div>
 </div>
-<div nz-row style="padding-top: 10px">
+<div nz-row class="bo-table-row">
   <div nz-col nzSpan="24">
-    <nz-table class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger [nzFrontPagination]="false"
+    <nz-table class="my-scroll no-wrap1 bo-table" nzBordered #table nzShowSizeChanger [nzFrontPagination]="false"
       [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
       [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)"
       (nzQueryParams)="sort($event)" [nzSize]="'small'" [nzScroll]="{ y: '50vh' }">
       <thead nzSingleSort>
         <tr>
-          <th nzWidth="30px" nzLeft>Action</th>
-          <th nzWidth="30px" nzLeft>Forms</th>
-          <th nzWidth="200px" nzShowSort align="center" nzColumnKey="PARENT_ROLE_NAME" [nzSortFn]="true">
+          <th nzWidth="30px" nzLeft class="bo-table-th-center">Action</th>
+          <th nzWidth="30px" nzLeft class="bo-table-th-center">Forms</th>
+          <th nzWidth="200px" nzShowSort align="center" nzColumnKey="PARENT_ROLE_NAME" [nzSortFn]="true"
+            class="bo-table-th-bold">
             Parent
           </th>
-          <th nzWidth="200px" nzColumnKey="NAME" [nzSortFn]="true">Name</th>
-          <!-- <th nzWidth="320px" nzColumnKey="DESCRIPTION" [nzSortFn]="true">
-            Description
-          </th> -->
-          <th nzWidth="60px" nzShowSort align="center" nzColumnKey="TYPE" [nzSortFn]="true">
+          <th nzWidth="200px" nzColumnKey="NAME" [nzSortFn]="true" class="bo-table-th-bold">Name</th>
+          <th nzWidth="60px" nzShowSort align="center" nzColumnKey="TYPE" [nzSortFn]="true" class="bo-table-th-center">
             Type
           </th>
         </tr>
@@ -56,26 +54,24 @@
         <tr *ngFor="let data of table.data">
           <td align="center">
             <a (click)="edit(data)">
-              <span nz-icon nzType="edit" nzTheme="twotone" style="font-size: 15px" nzTooltipTitle="Edit"
+              <span nz-icon nzType="edit" nzTheme="twotone" class="bo-action-icon" nzTooltipTitle="Edit"
                 nz-tooltip></span>
             </a>
           </td>
-
           <td align="center">
             <a (click)="MapForms(data)">
-              <span nz-icon nzType="form" nzTheme="outline" style="font-size: 15px; color: #0d6efd"
+              <span nz-icon nzType="form" nzTheme="outline" class="bo-action-icon bo-form-icon"
                 nzTooltipTitle="Form Mapping" nz-tooltip></span>
             </a>
           </td>
-          <td align="left" style="white-space: pre-line">
+          <td align="left" class="bo-table-cell-preline">
             <span *ngIf="data.PARENT_ID != 0">{{ data.PARENT_ROLE_NAME }}</span>
             <span *ngIf="data.PARENT_ID == 0">None</span>
           </td>
-
           <td align="left">
             <span *ngIf="data['NAME'] != null">
               <span *ngIf="data['NAME'].length >= 40" nz-popover [nzPopoverContent]="data['NAME']"
-                nzPopoverPlacement="topLeft">
+                nzPopoverPlacement="topLeft" class="bo-descreption-ellipsis">
                 {{ data["NAME"] == null ? "-" : (data["NAME"] | slice : 0 : 40)
                 }}{{ data["NAME"].length > 40 ? "..." : "" }}
               </span>
@@ -88,21 +84,7 @@
             </span>
             <span *ngIf="data['NAME'] == null">-</span>
           </td>
-          <!-- <td align="left">{{ data.NAME }}</td> -->
-
-          <!-- <td align="left">
-            <span
-              nzPopoverPlacement="top"
-              nz-popover
-              [nzPopoverContent]="popoverContent"
-              nzPopoverOverlayClassName="custom-popover"
-              class="descreption-ellipsis"
-            >
-              {{ data.DESCRIPTION }}
-            </span>
-          </td> -->
           <td align="left">{{ data.TYPE }}</td>
-          <!-- Popover Content Template -->
           <ng-template #popoverContent>
             <span class="custom-popover-content">{{ data.DESCRIPTION }}</span>
           </ng-template>

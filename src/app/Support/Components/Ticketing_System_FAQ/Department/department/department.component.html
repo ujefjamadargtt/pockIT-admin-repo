@@ -1,10 +1,4 @@
 <div>
-  <!-- <div class="header">
-        <button type="button" nz-button (click)="close(accountMasterPage)" class="ant-btn"><i nz-icon nzType="close"
-                nzTheme="outline"></i>
-        </button>
-    </div> -->
-
   <form nz-form #accountMasterPage="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
       <div class="my-box">
@@ -12,69 +6,54 @@
           <div nz-col nzSpan="24">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Department Name</nz-form-label>
-
               <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Department Name">
                 <input nz-input name="name1" placeholder="Enter Department Name" (keypress)="validateInput($event)"
                   maxlength="128" [(ngModel)]="data.NAME" autocomplete="off" required (focus)="isFocused = 'name1'"
                   (blur)="isFocused = ''" />
               </nz-form-control>
-
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  isFocused === 'name1' || (data.NAME && isFocused === 'name1')
-                ">
+              <h6 class="kb-char-count" *ngIf="isFocused === 'name1' || (data.NAME && isFocused === 'name1')">
                 {{ data.NAME?.length || 0 }}/128
               </h6>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="12">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
-
               <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Short Code">
-                <input autocomplete="off" nz-input name="shortcode" placeholder="Enter Short Code" maxlength="8"
-                  pattern="^[a-zA-Z0-9 ]+$" [(ngModel)]="data.SHORT_CODE" autocomplete="off" required
-                  (focus)="isFocused = 'shortCode'" (blur)="isFocused = ''" />
+                <input nz-input name="shortcode" placeholder="Enter Short Code" maxlength="8" pattern="^[a-zA-Z0-9 ]+$"
+                  [(ngModel)]="data.SHORT_CODE" autocomplete="off" required (focus)="isFocused = 'shortCode'"
+                  (blur)="isFocused = ''" />
               </nz-form-control>
-
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  isFocused === 'shortCode' ||
-                  (data.SHORT_CODE && isFocused === 'shortCode')
-                ">
+              <h6 class="kb-char-count"
+                *ngIf="isFocused === 'shortCode' || (data.SHORT_CODE && isFocused === 'shortCode')">
                 {{ data.SHORT_CODE?.length || 0 }}/8
               </h6>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="8">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
-
               <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Sequence Number">
                 <input nz-input name="Sequence" autocomplete="off" placeholder="Enter Sequence No."
                   [(ngModel)]="data.SEQUENCE_NO" required />
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="4">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Status </nz-form-label>
-
-              <nz-switch style="margin-top: 5px" name="status" [(ngModel)]="data.STATUS" nzCheckedChildren="Active"
-                nzUnCheckedChildren="Inactive">
+              <nz-switch name="status" [(ngModel)]="data.STATUS" nzCheckedChildren="Active"
+                nzUnCheckedChildren="Inactive" class="kb-status-switch">
               </nz-switch>
             </nz-form-item>
           </div>
         </div>
       </div>
-
       <div class="my-box">
         <div nz-row>
           <div nz-col nzSpan="12">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Ticket Closure Time (In Day(s))</nz-form-label>
-
               <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Ticket Closure Time (In Day(s))">
                 <input nz-input name="closureDays" autocomplete="off"
                   placeHolder="Enter Ticket Closure Time (In Day(s))" maxlength="3" type="text"
@@ -86,25 +65,23 @@
       </div>
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button type="button" nz-button class="ant-btn" style="margin-right: 8px" (click)="close(accountMasterPage)">
+    <button type="button" nz-button class="ant-btn kb-footer-cancel" (click)="close(accountMasterPage)">
       <span>Cancel</span>
     </button>
-
     <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
       (click)="save(false, accountMasterPage)" [nzLoading]="isSpinning">
       <span>Save & Close</span>
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
-          <a (click)="save(true, accountMasterPage)" style="color: white !important">Save & New</a>
+        <li nz-menu-item class="menuc kb-footer-menu">
+          <a (click)="save(true, accountMasterPage)" class="kb-footer-link">
+            Save & New
+          </a>
         </li>
       </ul>
     </nz-dropdown-menu>
-
     <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
       (click)="save(false, accountMasterPage)">
       <span>Update & close</span>

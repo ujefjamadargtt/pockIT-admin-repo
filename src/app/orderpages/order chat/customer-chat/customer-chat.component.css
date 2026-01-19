@@ -4,22 +4,16 @@ nz-form-item {
     width: -webkit-fill-available;
     padding: 0px 10px;
   }
-
   .select-container {
     display: flex;
     justify-content: center;
   }
-
   body {
     font-family: Arial, sans-serif;
   }
-  
   .customer-message {
-    
     max-width: 50%; 
   }
- 
-  
   .chat-container {
     max-height: 400px;
     width: 450px;
@@ -33,46 +27,36 @@ nz-form-item {
     justify-content: flex-start; 
     height: 500px; 
   }
-  
   .message-box {
-    
     flex-grow: 1;
     overflow-y: auto; 
     margin-bottom: 10px;
     padding-right: 10px;
     scrollbar-width: thin; 
     scrollbar-color: #888 #f4f4f4; 
-    
   }
-  
-  
   .message-box::-webkit-scrollbar {
     width: 2px; 
   }
-  
   .message-box::-webkit-scrollbar-thumb {
     background-color: #888; 
     border-radius: 3px; 
   }
-  
   .message-box::-webkit-scrollbar-track {
     background-color: #f4f4f4; 
     border-radius: 3px; 
   }
-  
   .message {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
   }
-  
   .customer-message {
     max-width: 70%; 
     align-items: flex-start; 
     display: flex;
     flex-direction: column;
   }
-  
   .technician-message {
     max-width: 70%; 
     align-items: flex-end; 
@@ -80,20 +64,16 @@ nz-form-item {
     flex-direction: column;
     margin-left: auto; 
   }
-  
   .customer-name,
   .technician-name {
     font-weight: bold;
     font-size: 10px !important;
   }
-  
   .timestamp {
-    
     font-size: 10px !important;
     color: gray;
     margin-top: 5px;
   }
-  
   .message-text {
     font-size:13px;
     margin-top: 5px;
@@ -101,16 +81,13 @@ nz-form-item {
     padding: 5px;
     border-radius: 5px;
   }
-  
   .technician-message .message-text {
     background-color: #d3f9d8; 
   }
-  
   .input-area {
     display: flex;
     justify-content: space-between;
   }
-  
   textarea {
     width: 80%;
     padding: 8px;
@@ -119,7 +96,6 @@ nz-form-item {
     border: 1px solid #ddd;
     resize: none;
   }
-  
   .whatsapp-send-icon {
     width: 13%;
     background-color: #4CAF50;
@@ -132,12 +108,9 @@ nz-form-item {
     height: 37px;
     cursor: pointer;
   }
-  
   .whatsapp-send-icon:hover {
     background-color: #45a049;
   }
-  
-
   .paper-clip {
     margin-right: 2px;
     background-color: #f4f4f4; 
@@ -146,4 +119,11 @@ nz-form-item {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.timestamp-right {
+  text-align: right !important;
+  width: 100%;
+}
+.paper-clip-icon {
+  font-size: 20px !important;
 }

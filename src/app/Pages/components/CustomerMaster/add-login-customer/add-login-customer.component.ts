@@ -10,7 +10,6 @@ import { customerAddLogin } from 'src/app/Pages/Models/customerAddLogin';
 import { customerAddLoginsAddress } from 'src/app/Pages/Models/customerAddLoginsAddress';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-add-login-customer',
   templateUrl: './add-login-customer.component.html',
@@ -21,11 +20,9 @@ export class AddLoginCustomerComponent {
     /^(?!.*\.\.)[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$/;
   customercategories: any = [];
   customers: any = [];
-
   @Input() drawerClose: Function;
   @Input() data: any = new customerAddLogin();
   @Input() mainCustData: customer = new customer();
-
   @Input() drawerVisible: boolean;
   @Input() custid;
   @Input() companyName;
@@ -39,14 +36,13 @@ export class AddLoginCustomerComponent {
   onlynum = /^[0-9]*$/;
   onlychar = /^[a-zA-Z ]*$/;
   passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
-  activeTabIndex: number = 0; // Default to the first tab
+  activeTabIndex: number = 0; 
   isFocused: string = '';
   uploadedImage: any = '';
   public commonFunction = new CommonFunctionService();
   isTextOverflow = false;
   passwordVisible: boolean = false;
   isSpining: boolean = false;
-
   imgUrl;
   tabs = [
     {
@@ -58,17 +54,13 @@ export class AddLoginCustomerComponent {
       disabled: true,
     },
   ];
-
   dataList: any = [];
-
   ID: any;
-
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   constructor(
@@ -78,14 +70,10 @@ export class AddLoginCustomerComponent {
     private message: NzNotificationService,
     private modal: NzModalService,
     private sanitizer: DomSanitizer
-  ) {}
-
+  ) { }
   ngOnInit() {
-    // this.getCustomerCategoryData();
-    // this.data.COMPANY_NAME = this.mainCustData.COMPANY_NAME;
     this.data['CUSTOMER_DETAILS_ID'] = this.mainCustData.ID;
   }
-
   getCustomerCategoryData() {
     this.api
       .getCustomerCategeroyData(0, 0, '', '', ' AND IS_ACTIVE = 1')
@@ -103,7 +91,6 @@ export class AddLoginCustomerComponent {
         }
       );
   }
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -112,27 +99,23 @@ export class AddLoginCustomerComponent {
       tooltip.hide();
     }
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
-
     return true;
   }
-
   close(accountMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     this.data = new customerAddLogin();
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
   }
-
+  cusTid: any
   save(addNew: boolean, accountMasterPage: NgForm): void {
     this.isOk = true;
     if (
@@ -223,17 +206,16 @@ export class AddLoginCustomerComponent {
       this.data.PROFILE_PHOTO = this.mainCustData.PROFILE_PHOTO;
       this.data.ALTCOUNTRY_CODE = this.mainCustData.ALTCOUNTRY_CODE;
       this.data.IS_SPECIAL_CATALOGUE = this.mainCustData.IS_SPECIAL_CATALOGUE;
+      this.data.PARENT_ID = this.mainCustData.CUSTOMER_MASTER_ID;
       if (!this.data.ID) {
         this.data.PASSWORD = this.data.PASSWORD
           ? this.data.PASSWORD
           : this.mainCustData.PASSWORD;
       }
-
       this.data.IS_HAVE_GST = false;
       this.data.INDIVIDUAL_COMPANY_NAME =
         this.mainCustData.INDIVIDUAL_COMPANY_NAME;
       this.data.COMPANY_ADDRESS = this.mainCustData.COMPANY_ADDRESS;
-
       this.isSpinning = true;
       {
         if (this.data.ID) {
@@ -266,15 +248,12 @@ export class AddLoginCustomerComponent {
             (successCode: any) => {
               if (successCode.code == '200') {
                 this.isSpinning = false;
-
                 this.message.success(
                   'Customer Information Saved Successfully',
                   ''
                 );
-
                 this.ID = successCode.CUSTOMER_DETAILS_ID;
-                // this.resetDrawer(accountMasterPage);
-
+                this.cusTid = successCode.CUSTOMER_DETAILS_ID;
                 this.api
                   .getAllCustomer(
                     0,
@@ -282,11 +261,55 @@ export class AddLoginCustomerComponent {
                     '',
                     '',
                     ' AND IS_PARENT=0 AND ID =' +
-                      successCode.CUSTOMER_DETAILS_ID
+                    successCode.CUSTOMER_DETAILS_ID
                   )
                   .subscribe((data) => {
                     this.loadingRecords = false;
                     this.dataList = data['data'];
+                  });
+                this.api
+                  .getAllCustomerAddress(
+                    0,
+                    0,
+                    'IS_DEFAULT',
+                    'desc',
+                    ' AND CUSTOMER_ID= ' + this.cusTid
+                  )
+                  .subscribe((data) => {
+                    if (data['code'] === 200) {
+                      this.isSpining = false;
+                      this.addressdata = data['data']; 
+                      this.originalAddressData = [...this.addressdata];
+                      if (this.originalAddressData.length > 2) {
+                        this.showsearch = true;
+                      } else {
+                        this.showsearch = false;
+                      }
+                      if (this.addressdata && this.addressdata.length > 0) {
+                        this.addressdata = this.addressdata.map((address) => {
+                          const fullAddress = [
+                            address.ADDRESS_LINE_1 || '', 
+                            address.ADDRESS_LINE_2 || '',
+                            address.CITY_NAME || '',
+                            address.STATE_NAME || '',
+                            address.COUNTRY_NAME || '',
+                            address.PINCODE || '',
+                          ]
+                            .filter((part) => part.trim() !== '') 
+                            .join(', '); 
+                          return {
+                            ...address,
+                            FULL_ADDRESS: fullAddress, 
+                          };
+                        });
+                        const parentIds = this.addressdata
+                          .map((addr) => addr.PARENT_ADDRESS_ID)
+                          .filter((id) => id != null);
+                        this.uniqueParentAddressIds = [...new Set(parentIds)];
+                      }
+                    } else {
+                      this.isSpining = false;
+                    }
                   });
                 this.tabs = [
                   {
@@ -322,15 +345,12 @@ export class AddLoginCustomerComponent {
       }
     }
   }
-
   drawerTitle: string;
   drawerVisibleCustomerAddLoginsAddress: boolean;
   drawerDataAddress: any;
   loadingFamilyRecords;
   dataFamilyList;
-
   drawerData: customerAddLoginsAddress = new customerAddLoginsAddress();
-
   tempCustID: any;
   secondDrawerData: any = '';
   addAddress() {
@@ -344,12 +364,10 @@ export class AddLoginCustomerComponent {
       this.custid != null &&
       this.custid != ''
     ) {
-      // this.ID = this.mainCustData.CUSTOMER_MASTER_ID;
       this.tempCustID = this.custid;
     } else {
       this.tempCustID = this.ID;
     }
-
     this.drawerData = new customerAddLoginsAddress();
     if (this.addressdata.length === 0) {
       this.drawerData.IS_DEFAULT = true;
@@ -368,67 +386,12 @@ export class AddLoginCustomerComponent {
     this.whosAddress = 'OwnAddress';
     this.drawerVisibleCustomerAddLoginsAddress = true;
   }
-
-  // editAddress(data: customerAddLoginsAddress) {
-  //   this.drawerTitle = 'Update Address Details';
-  //   this.drawerData = Object.assign({}, data);
-  //   this.drawerVisibleCustomerAddLoginsAddress = true;
-  // }
-
   fullAddress: any;
   addressdata: any = [];
-  // drawerCustomerAddLoginsAddressClose(): void {
-  //   if (this.originalAddressData.length > 2) {
-  //     this.showsearch = true;
-  //   } else {
-  //     this.showsearch = false;
-  //   }
-  //   this.api
-  //     .getAllCustomerAddress(
-  //       0,
-  //       0,
-  //       'IS_DEFAULT',
-  //       'desc',
-  //       ' AND STATUS = 1 AND CUSTOMER_ID= ' + this.ID
-  //     )
-  //     .subscribe((data) => {
-  //       this.addressdata = data['data'];
-  //       this.originalAddressData = [...this.addressdata];
-  //       if (this.originalAddressData.length > 2) {
-  //         this.showsearch = true;
-  //       } else {
-  //         this.showsearch = false;
-  //       }
-  //       if (this.addressdata && this.addressdata.length > 0) {
-  //         // Loop through each address and add FULL_ADDRESS key
-  //         this.addressdata = this.addressdata.map((address) => {
-  //           this.fullAddress = [
-  //             address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
-  //             address.ADDRESS_LINE_2 || '',
-  //             address.CITY_NAME || '',
-  //             address.STATE_NAME || '',
-  //             address.COUNTRY_NAME || '',
-  //             address.PINCODE || '',
-  //           ]
-  //             .filter((part) => part.trim() !== '') // Remove empty parts
-  //             .join(', '); // Combine with commas
-
-  //           return {
-  //             ...address,
-  //             FULL_ADDRESS: this.fullAddress, // Add the concatenated address
-  //           };
-  //         });
-  //       }
-  //     });
-
-  //   this.drawerVisibleCustomerAddLoginsAddress = false;
-  // }
-
   get closeCallbackCustomerAddLoginsAddress() {
     return this.drawerCustomerAddLoginsAddressClose.bind(this);
   }
   showsearch: boolean = false;
-
   next() {
     if (this.originalAddressData.length > 2) {
       this.showsearch = true;
@@ -437,7 +400,6 @@ export class AddLoginCustomerComponent {
     }
     this.activeTabIndex = 1;
     if (this.data.ID) {
-      // this.ID = this.mainCustData.CUSTOMER_MASTER_ID;
       this.ID = this.custid;
     } else {
       this.ID = this.ID;
@@ -454,8 +416,7 @@ export class AddLoginCustomerComponent {
       .subscribe((data) => {
         if (data['code'] === 200) {
           this.isSpining = false;
-
-          this.addressdata = data['data']; // Get the address data
+          this.addressdata = data['data']; 
           this.originalAddressData = [...this.addressdata];
           if (this.originalAddressData.length > 2) {
             this.showsearch = true;
@@ -463,39 +424,31 @@ export class AddLoginCustomerComponent {
             this.showsearch = false;
           }
           if (this.addressdata && this.addressdata.length > 0) {
-            // Loop through each address and add FULL_ADDRESS key
             this.addressdata = this.addressdata.map((address) => {
-              // Concatenate the full address for each address object
               const fullAddress = [
-                address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+                address.ADDRESS_LINE_1 || '', 
                 address.ADDRESS_LINE_2 || '',
                 address.CITY_NAME || '',
                 address.STATE_NAME || '',
                 address.COUNTRY_NAME || '',
                 address.PINCODE || '',
               ]
-                .filter((part) => part.trim() !== '') // Remove empty parts
-                .join(', '); // Combine with commas
-
-              // Return the address object with the FULL_ADDRESS
+                .filter((part) => part.trim() !== '') 
+                .join(', '); 
               return {
                 ...address,
-                FULL_ADDRESS: fullAddress, // Add the concatenated address as FULL_ADDRESS
+                FULL_ADDRESS: fullAddress, 
               };
             });
-
             const parentIds = this.addressdata
               .map((addr) => addr.PARENT_ADDRESS_ID)
               .filter((id) => id != null);
-            // Get unique PARENT_ADDRESS_ID values
             this.uniqueParentAddressIds = [...new Set(parentIds)];
           }
         } else {
           this.isSpining = false;
         }
       });
-
-    // this.isSpining = true;
     let filter;
     var customerid = '';
     if (this.data.ID) {
@@ -509,30 +462,23 @@ export class AddLoginCustomerComponent {
       this.uniqueParentAddressIds.length > 0
     ) {
       filter =
-        ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + //+customerid+
+        ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + 
         this.mainCustData.CUSTOMER_MASTER_ID +
-        // ' AND CUSTOMER_DETAILS_ID!=' +
         ' AND ID NOT IN (' +
-        this.uniqueParentAddressIds +')';
-      // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid + " AND CUSTOMER_DETAILS_ID!=" + this.uniqueParentAddressIds
+        this.uniqueParentAddressIds + ')';
     } else {
       filter =
         ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
         this.mainCustData.CUSTOMER_MASTER_ID;
-      // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
     }
     this.isLoadingAddresses = true;
-
     this.api
       .getAllCustomerAddress(
         0,
         0,
         'IS_DEFAULT',
         'desc',
-        // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
         filter
-
-        // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.isParentId
       )
       .subscribe((data) => {
         if (data['code'] === 200) {
@@ -549,7 +495,6 @@ export class AddLoginCustomerComponent {
         }
       });
   }
-
   back() {
     this.activeTabIndex = 0;
     this.api
@@ -561,7 +506,6 @@ export class AddLoginCustomerComponent {
         this.custid = this.data.ID;
       });
   }
-
   confirmSetAsDefault(selectedData: any): void {
     this.modal.confirm({
       nzTitle: 'Set as Default Address',
@@ -571,17 +515,14 @@ export class AddLoginCustomerComponent {
       nzOnOk: () => this.setasdefault(selectedData),
     });
   }
-
   setasdefault(selectedData: any) {
     this.addressdata.forEach((item) => {
       if (item === selectedData) {
-        item.IS_DEFAULT = 1; // Set the selected address as default
+        item.IS_DEFAULT = 1; 
       } else {
-        item.IS_DEFAULT = 0; // Reset others
+        item.IS_DEFAULT = 0; 
       }
     });
-
-    // Step 2: Call the API to save the changes
     this.api.updateCustomerAddressNew(selectedData).subscribe(
       (successCode: any) => {
         if (successCode.code == '200') {
@@ -603,7 +544,6 @@ export class AddLoginCustomerComponent {
       }
     );
   }
-
   countryCodes = [
     { label: '+91 (India)', value: '+91' },
     { label: '+92 (Pakistan)', value: '+92' },
@@ -842,29 +782,23 @@ export class AddLoginCustomerComponent {
     { label: 'Kyrgyzstan (+996)', value: '+996' },
     { label: 'Uzbekistan (+998)', value: '+998' },
   ];
-
   searchText: string = '';
-
-  filteredData: any[] = []; // searched list
+  filteredData: any[] = []; 
   originalAddressData: any[] = [];
   keyup(keys: KeyboardEvent) {
     const element = window.document.getElementById('button');
     if (element) element.focus();
-
     this.search(this.searchText);
     if (this.searchText.length === 0 && keys.key === 'Backspace') {
       this.addressdata = [...this.originalAddressData];
     }
   }
-
   search(searchText) {
     const query = this.searchText.trim().toLowerCase();
-
     if (query.length < 1) {
       this.addressdata = [...this.originalAddressData];
       return;
     }
-    // Apply search only if original data has 5 or more items
     if (this.originalAddressData.length >= 3) {
       this.addressdata = this.originalAddressData.filter(
         (item) =>
@@ -880,16 +814,12 @@ export class AddLoginCustomerComponent {
       this.addressdata = [...this.originalAddressData];
     }
   }
-
   allowAlphanumericAndSymbols(event: KeyboardEvent): void {
     const allowedRegex = /^[a-zA-Z0-9_-]$/;
-
     if (!allowedRegex.test(event.key)) {
-      event.preventDefault(); // Block the character if it doesn't match the pattern
+      event.preventDefault(); 
     }
   }
-
-  //////////////////////////////////////////////////////////////////////////////////
   addressdata2: any = [];
   showParentAddress: boolean = false;
   isLoadingAddresses: boolean = false;
@@ -899,15 +829,12 @@ export class AddLoginCustomerComponent {
   ownAddress: any[] = [];
   @Input() isParentId: number;
   uniqueParentAddressIds: any[] = [];
-
   AddressTypeChange(value: boolean) {
     this.showParentAddress = value;
-
     this.isparentId = this.isParentId;
     if (value) {
       this.selectedAddress = null;
       let filter;
-
       var customerid = '';
       if (this.data.ID) {
         customerid = this.data.ID;
@@ -920,17 +847,14 @@ export class AddLoginCustomerComponent {
         this.uniqueParentAddressIds.length > 0
       ) {
         filter =
-          ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + //+customerid+
+          ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + 
           this.mainCustData.CUSTOMER_MASTER_ID +
-          // ' AND CUSTOMER_DETAILS_ID!=' +
           ' AND  ID NOT IN (' +
-          this.uniqueParentAddressIds +')';
-        // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid + " AND CUSTOMER_DETAILS_ID!=" + this.uniqueParentAddressIds
+          this.uniqueParentAddressIds + ')';
       } else {
         filter =
-          ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + // +customerid
+          ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + 
           this.mainCustData.CUSTOMER_MASTER_ID;
-        // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
       }
       this.isLoadingAddresses = true;
       this.api
@@ -939,62 +863,28 @@ export class AddLoginCustomerComponent {
           0,
           'IS_DEFAULT',
           'desc',
-          // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
           filter
-
-          // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.isParentId
         )
         .subscribe((data) => {
           if (data['code'] === 200) {
             this.addressdata2 = [];
             this.addressdata2 = data['data'];
-
             const childAddress = this.addressdata2?.find(
               (addr) => addr.IS_FOR_CHILD === 1
             );
             const parentAddress = this.addressdata2?.find(
               (addr) => addr.PARENT_ADDRESS_ID
             );
-
             if (childAddress) {
-              // Found child address - make readonly
               this.selectedParentAddress = childAddress;
               this.isAddressReadOnly = true;
             } else if (this.addressdata2?.length > 0) {
-              // Use default parent address - also readonly
               this.selectedParentAddress = this.addressdata2[0];
               this.isAddressReadOnly = true;
             } else {
-              // No parent address found
               this.selectedParentAddress = null;
               this.isAddressReadOnly = false;
             }
-            // this.originalAddressData = [...this.addressdata];
-            // if (this.originalAddressData.length > 2) {
-            //   this.showsearch = true;
-            // } else {
-            //   this.showsearch = false;
-            // }
-            // if (this.addressdata && this.addressdata.length > 0) {
-            //   // Loop through each address and add FULL_ADDRESS key
-            //   this.addressdata = this.addressdata.map((address) => {
-            //     this.fullAddress = [
-            //       address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
-            //       address.ADDRESS_LINE_2 || '',
-            //       address.CITY_NAME || '',
-            //       address.STATE_NAME || '',
-            //       address.COUNTRY_NAME || '',
-            //       address.PINCODE || '',
-            //     ]
-            //       .filter((part) => part.trim() !== '') // Remove empty parts
-            //       .join(', '); // Combine with commas
-
-            //     return {
-            //       ...address,
-            //       FULL_ADDRESS: this.fullAddress, // Add the concatenated address
-            //     };
-            //   });
-            // }
             this.isLoadingAddresses = false;
           } else {
             this.addressdata2 = [];
@@ -1003,28 +893,23 @@ export class AddLoginCustomerComponent {
           }
         });
     } else {
-      // Own mode selected - enable editing
       this.isAddressReadOnly = false;
       this.selectedParentAddress = null;
     }
   }
   selectedAddress: number | null = null;
-
   selectedAddressData: any = '';
   onAddressSelect(addressId: number) {
     if (!addressId || addressId === null || addressId === undefined) {
       this.selectedAddress = null;
       return;
     }
-
     this.selectedAddressData = '';
     if (addressId) {
       const selectedAddr = this.addressdata2.find(
         (addr) => addr.ID === addressId
       );
-
       this.selectedAddressData = selectedAddr;
-
       if (selectedAddr) {
         this.editAddress(selectedAddr, 'Create');
       }
@@ -1034,18 +919,15 @@ export class AddLoginCustomerComponent {
     this.selectedAddress = null;
   }
   whosAddress: any = '';
-
   editAddress(data: customerAddLoginsAddress, mode: any) {
     this.ID = this.ID;
     this.whosAddress = '';
     this.selectedAddressData = this.selectedAddressData;
-
     this.mainCustData = this.mainCustData;
     this.isAddressReadOnly = false;
     this.secondDrawerData = '';
     if (mode != 'Edit') {
       this.whosAddress = 'ParentAddress';
-      // data['IS_PARENT_ADDRESS'] = true
       this.drawerTitle = 'Add Address Details';
       this.drawerData = new customerAddLoginsAddress();
       this.drawerData = Object.assign({}, data);
@@ -1056,21 +938,16 @@ export class AddLoginCustomerComponent {
         this.custid != null &&
         this.custid != ''
       ) {
-        // this.ID = this.mainCustData.CUSTOMER_MASTER_ID;
         this.tempCustID = this.custid;
       } else {
         this.tempCustID = this.ID;
       }
-
       if (this.addressdata.length === 0) {
         this.drawerData.IS_DEFAULT = true;
       } else {
         this.drawerData.IS_DEFAULT = false;
       }
-      // this.drawerData.PARENT_ADDRESS_ID = this.data.PARENT_ID;
       this.drawerData.PARENT_ADDRESS_ID = this.selectedAddressData.ID;
-
-      // this.drawerData.PARENT_ADDRESS_ID = this.isParentId;
       if (
         this.drawerData.PARENT_ADDRESS_ID != null &&
         this.drawerData.PARENT_ADDRESS_ID != undefined &&
@@ -1078,7 +955,6 @@ export class AddLoginCustomerComponent {
       ) {
         this.isAddressReadOnly = true;
       }
-
       this.drawerVisibleCustomerAddLoginsAddress = true;
       this.drawerData.IS_PARENT_ADDRESS = true;
       this.drawerData.IS_FOR_CHILD = false;
@@ -1088,7 +964,6 @@ export class AddLoginCustomerComponent {
       this.drawerData = Object.assign({}, data);
       this.drawerData.ID = this.drawerData.ID;
       this.drawerData.PARENT_ADDRESS_ID = this.drawerData.PARENT_ADDRESS_ID;
-
       if (
         this.drawerData.PARENT_ADDRESS_ID != null &&
         this.drawerData.PARENT_ADDRESS_ID != undefined &&
@@ -1098,19 +973,7 @@ export class AddLoginCustomerComponent {
       }
       this.drawerVisibleCustomerAddLoginsAddress = true;
     }
-    // if (this.showParentAddress == true) {
-    //   data.ID = null;
-    //   this.drawerTitle = 'Add Address Details';
-    //   this.drawerData = new customerAddLoginsAddress()
-    //   this.drawerData = Object.assign({}, data);
-    //   this.drawerVisibleCustomerAddLoginsAddress = true;
-    // } else {
-    //   this.drawerTitle = 'Update Address Details';
-    //   this.drawerData = Object.assign({}, data);
-    //   this.drawerVisibleCustomerAddLoginsAddress = true;
-    // }
   }
-
   drawerCustomerAddLoginsAddressClose(): void {
     if (this.originalAddressData.length > 2) {
       this.showsearch = true;
@@ -1128,12 +991,10 @@ export class AddLoginCustomerComponent {
       this.custid != null &&
       this.custid != ''
     ) {
-      // this.ID = this.mainCustData.CUSTOMER_MASTER_ID;
       tempCustID = this.custid;
     } else {
       tempCustID = this.ID;
     }
-
     this.api
       .getAllCustomerAddress(
         0,
@@ -1141,28 +1002,21 @@ export class AddLoginCustomerComponent {
         'IS_DEFAULT',
         'desc',
         ' AND CUSTOMER_ID= ' + tempCustID
-        // ' AND CUSTOMER_ID= '  +this.custid //+this.mainCustData.CUSTOMER_MASTER_ID
-        // ' AND CUSTOMER_ID= ' + this.ID
       )
       .subscribe((data) => {
         if (data['code'] === 200) {
           this.addressdata = data['data'];
-
           const parentIds = this.addressdata
             .map((addr) => addr.PARENT_ADDRESS_ID)
             .filter((id) => id != null);
-          // Get unique PARENT_ADDRESS_ID values
           this.uniqueParentAddressIds = [...new Set(parentIds)];
-
           if (
             this.uniqueParentAddressIds != null &&
             this.uniqueParentAddressIds != undefined &&
             this.uniqueParentAddressIds.length > 0
           ) {
             this.selectedAddress = null;
-            // this.AddressTypeChange(true)
           }
-
           this.ownAddress = this.addressdata;
           this.originalAddressData = [...this.addressdata];
           if (this.originalAddressData.length > 2) {
@@ -1171,28 +1025,24 @@ export class AddLoginCustomerComponent {
             this.showsearch = false;
           }
           if (this.addressdata && this.addressdata.length > 0) {
-            // Loop through each address and add FULL_ADDRESS key
             this.addressdata = this.addressdata.map((address) => {
               this.fullAddress = [
-                address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+                address.ADDRESS_LINE_1 || '', 
                 address.ADDRESS_LINE_2 || '',
                 address.CITY_NAME || '',
                 address.STATE_NAME || '',
                 address.COUNTRY_NAME || '',
                 address.PINCODE || '',
               ]
-                .filter((part) => part.trim() !== '') // Remove empty parts
-                .join(', '); // Combine with commas
-
+                .filter((part) => part.trim() !== '') 
+                .join(', '); 
               return {
                 ...address,
-                FULL_ADDRESS: this.fullAddress, // Add the concatenated address
+                FULL_ADDRESS: this.fullAddress, 
               };
             });
           }
-
           let filter;
-
           if (
             this.uniqueParentAddressIds != null &&
             this.uniqueParentAddressIds != undefined &&
@@ -1203,31 +1053,23 @@ export class AddLoginCustomerComponent {
               this.mainCustData.CUSTOMER_MASTER_ID +
               ' AND ID NOT IN (' +
               this.uniqueParentAddressIds + ')';
-            // ' AND CUSTOMER_DETAILS_ID!=' +
-            // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid + " AND CUSTOMER_DETAILS_ID!=" + this.uniqueParentAddressIds
           } else {
             filter =
               ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
               this.mainCustData.CUSTOMER_MASTER_ID;
-            // filter = ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
           }
           this.isLoadingAddresses = true;
-
           this.api
             .getAllCustomerAddress(
               0,
               0,
               'IS_DEFAULT',
               'desc',
-              // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.custid
               filter
-
-              // ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' + this.isParentId
             )
             .subscribe((data) => {
               if (data['data'] === 200) {
                 this.isSpining = false;
-
                 this.addressdata2 = data['data'];
                 this.whosAddress = '';
                 this.drawerVisibleCustomerAddLoginsAddress = false;
@@ -1236,7 +1078,6 @@ export class AddLoginCustomerComponent {
               } else {
                 this.isSpining = false;
                 this.whosAddress = '';
-
                 this.drawerVisibleCustomerAddLoginsAddress = false;
                 this.selectedAddressData = '';
                 this.isLoadingAddresses = false;
@@ -1247,14 +1088,12 @@ export class AddLoginCustomerComponent {
           this.selectedAddress = null;
           this.showParentAddress = false;
           this.whosAddress = '';
-
           this.drawerVisibleCustomerAddLoginsAddress = false;
           this.selectedAddressData = '';
           this.isSpining = false;
         }
       });
   }
-
   loadCustAddress() {
     let filter;
     if (
@@ -1273,14 +1112,10 @@ export class AddLoginCustomerComponent {
         this.mainCustData.CUSTOMER_MASTER_ID +
         ' AND  ID NOT IN (' +
         this.uniqueParentAddressIds + ')'
-      //+customerid// + this.custid   // this.custid
-
-      // ' AND CUSTOMER_DETAILS_ID!=' +
     } else {
       filter =
         ' AND STATUS = 1 AND IS_FOR_CHILD = 1 AND CUSTOMER_ID= ' +
         this.mainCustData.CUSTOMER_MASTER_ID;
-      // + this.custid;
     }
     this.isLoadingAddresses = true;
     this.api
@@ -1289,36 +1124,29 @@ export class AddLoginCustomerComponent {
         0,
         'IS_DEFAULT',
         'desc',
-        // filter
         ' AND STATUS = 1 AND CUSTOMER_ID= ' +
-          this.mainCustData.CUSTOMER_MASTER_ID
-        // ' AND STATUS = 1 AND CUSTOMER_ID= ' + this.isParentId
+        this.mainCustData.CUSTOMER_MASTER_ID
       )
       .subscribe((data) => {
         if (data['code'] === 200) {
           this.addressdata2 = [];
           this.addressdata2 = data['data'];
-
           const parentAddress = this.addressdata2.find(
             (addr) => addr.IS_PARENT_ADDRESS === true || addr.IS_FOR_CHILD === 0
           );
           const childAddress = this.addressdata2.find(
             (addr) => addr.IS_FOR_CHILD === true || addr.IS_FOR_CHILD === 1
           );
-
           if (childAddress) {
-            // Found child address - make readonly
             this.selectedParentAddress = childAddress;
             this.isAddressReadOnly = false;
           } else if (parentAddress) {
             this.selectedParentAddress = parentAddress;
             this.isAddressReadOnly = true;
           } else if (this.addressdata2.length > 0) {
-            // Use default parent address - also readonly
             this.selectedParentAddress = this.addressdata2[0];
             this.isAddressReadOnly = true;
           } else {
-            // No parent address found
             this.selectedParentAddress = null;
             this.isAddressReadOnly = false;
           }

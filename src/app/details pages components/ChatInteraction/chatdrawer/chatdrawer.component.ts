@@ -11,7 +11,6 @@ import { AppComponent } from 'src/app/app.component';
 import { appkeys } from 'src/app/app.constant';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-chatdrawer',
   templateUrl: './chatdrawer.component.html',
@@ -28,51 +27,18 @@ export class ChatdrawerComponent {
   ) { }
   private messageListener: (event: any) => void;
   notifications: any[] = [];
-
   ngOnInit(): void {
     this.getmsgs();
-    // this.firebaseService.requestPermission(); // Request notification permission
-    // this.firebaseService.receiveMessages(); // Listen for messages
-
-    // Get stored notifications
     this.notifications = JSON.parse(localStorage.getItem('NOTIFICATIONS') || '[]');
-
-    // Update UI when a new notification arrives
-    // this.firebaseService.currentMessage.subscribe((message) => {
-    //   if (message) {
-    //     this.getmsgs();
-    //     this.notifications.push(message);
-    //   }
-    // });
     navigator.serviceWorker.addEventListener('message', (event: any) => {
       if (event.data && event.data.type === 'NEW_NOTIFICATION') {
-
-        this.getmsgs(); // 👈 reload your chat here
+        this.getmsgs(); 
       }
     });
-    // this.messageListener = (event: any) => {
-    //   console.log("11ks1")
-
-    //   var obj = JSON.parse(event.data.data.data4);
-    //   delete obj.authData;
-    //   this.allchatmsg = [...this.allchatmsg, ...[obj]];
-    //   this.groupeddata = this.groupDataBySendDate(this.allchatmsg);
-    //   this.msgspin = false;
-    //   setTimeout(() => {
-    //     const div = this.scrollableDivvvvv.nativeElement;
-    //     div.scrollTop = div.scrollHeight;
-    //   }, 500);
-    //   if (event?.data?.firebaseMessaging) {
-    //     // this.messages.push(event.data.firebaseMessaging.notification);
-    //   }
-    // };
-
     navigator.serviceWorker.addEventListener('message', this.messageListener);
-    //  this.connectToSSE()
   }
   userId = sessionStorage.getItem('userId');
   showEmojiPicker: boolean = false;
-
   showemoj() {
     if (this.showEmojiPicker) {
       this.showEmojiPicker = false;
@@ -80,27 +46,6 @@ export class ChatdrawerComponent {
       this.showEmojiPicker = true;
     }
   }
-
-  // onEmojiSelectaaaa(event: any) {
-  //   // Ensure BODY_TEXT is initialized
-  //   if (typeof this.BODY_TEXT !== 'string') {
-  //     this.BODY_TEXT = '';
-  //   }
-
-  //   // Handle emoji insertion
-  //   if (event?.emoji?.native) {
-  //     const sub1 = this.BODY_TEXT.substring(0, this.cursorPosition || 0);
-  //     const sub2 = this.BODY_TEXT.substring(this.cursorPosition || 0);
-
-  //     // Insert emoji at the cursor position
-  //     this.BODY_TEXT = sub1 + event.emoji.native + sub2;
-  //     this.cursorPosition = (sub1 + event.emoji.native).length;
-  //   }
-
-  //   // Trigger additional logic
-  //   this.checkInput1();
-  // }
-
   cursorPosition: number = 0;
   showDynamicInput1: boolean = false;
   BODY_TEXT: string = '';
@@ -108,35 +53,6 @@ export class ChatdrawerComponent {
   inputBody: string = '';
   Date: Date = new Date();
   i: number = 0;
-
-  // checkInput1() {
-  //   // Toggle dynamic input visibility based on BODY_TEXT content
-  //   this.showDynamicInput1 = this.BODY_TEXT.includes('}}');
-
-  //   const regex = /}}(?!)/;
-  //   if (regex.test(this.BODY_TEXT)) {
-  //     this.i++;
-  //   } else {
-  //     this.inputBody = this.BODY_TEXT;
-  //   }
-
-  //   this.check1();
-  //   this.Date = new Date();
-  // }
-
-  // check1() {
-  //   const pattern = /{{\d+}}/g;
-  //   const matches = this.BODY_TEXT.match(pattern);
-
-  //   if (matches && this.BODY_VALUES?.length > 0) {
-  //     matches.forEach((match, index) => {
-  //       const replacement = this.BODY_VALUES[index] || match;
-  //       this.inputBody = this.inputBody.replace(match, replacement + ' ');
-  //     });
-  //   } else {
-  //     this.inputBody = this.BODY_TEXT;
-  //   }
-  // }
   BODY_TEXTTTT: any;
   ICON: any = '';
   isSpinning: boolean = false;
@@ -175,7 +91,6 @@ export class ChatdrawerComponent {
         .onUpload('JobChat', this.fileURL, this.UrlImageOne)
         .subscribe((res) => {
           this.ICON = this.UrlImageOne;
-
           if (res.type === HttpEventType.Response) {
           }
           if (res.type === HttpEventType.UploadProgress) {
@@ -233,27 +148,23 @@ export class ChatdrawerComponent {
   }
   isimgupload = false;
   getMediaType(url: string): string {
-    if (!url) return ''; // Return empty if no attachment
+    if (!url) return ''; 
     const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
     const videoExtensions = ['mp4', 'avi', 'mov', 'mkv', 'webm'];
-
-    const extension = url.split('.').pop()?.toLowerCase(); // Extract file extension
-
+    const extension = url.split('.').pop()?.toLowerCase(); 
     if (extension && imageExtensions.includes(extension)) {
-      return 'I'; // Image
+      return 'I'; 
     } else if (extension && videoExtensions.includes(extension)) {
-      return 'V'; // Video
+      return 'V'; 
     }
-    return ''; // Default if not recognized
+    return ''; 
   }
-
-  // commonFunction = new CommonFunction();
   sendmessage() {
     if (this.isimgupload) {
       this.isSpinning = true;
       if (this.BODY_TEXT === '') {
       } else {
-        const boldPattern = /\*(.*?)\*/g; // Matches text wrapped in a single pair of '*'
+        const boldPattern = /\*(.*?)\*/g; 
         this.BODY_TEXT = this.BODY_TEXT.replace(boldPattern, '<b>$1</b>');
       }
       const mediaType = this.getMediaType(this.ICON);
@@ -290,11 +201,9 @@ export class ChatdrawerComponent {
         MSG_SEND_BY: 'B',
         MEDIA_TYPE: mediaType,
       };
-
       this.api.createchat(dataaa).subscribe(
         (successCode: any) => {
           if (successCode.code == '200') {
-            // this.message.success('Message Sent Successfully', '');
             this.BODY_TEXT = '';
             this.ICON = null;
             this.isimgupload = true;
@@ -303,7 +212,6 @@ export class ChatdrawerComponent {
             this.getmsgs();
             this.isSpinning = false;
           } else {
-            // this.message.error('Message Failed to sent', '');
             this.isSpinning = false;
           }
         },
@@ -323,7 +231,7 @@ export class ChatdrawerComponent {
       if (this.BODY_TEXT === '') {
         this.message.error('Please Enter Message', '');
       } else {
-        const boldPattern = /\*(.*?)\*/g; // Matches text wrapped in a single pair of '*'
+        const boldPattern = /\*(.*?)\*/g; 
         this.BODY_TEXT = this.BODY_TEXT.replace(boldPattern, '<b>$1</b>');
         this.isSpinning = true;
         const mediaType = this.getMediaType(this.ICON);
@@ -360,11 +268,9 @@ export class ChatdrawerComponent {
           MSG_SEND_BY: 'B',
           MEDIA_TYPE: mediaType,
         };
-
         this.api.createchat(dataaa).subscribe(
           (successCode: any) => {
             if (successCode.code == '200') {
-              // this.message.success('Message Sent Successfully', '');
               this.BODY_TEXT = '';
               this.ICON = null;
               this.isimgupload = true;
@@ -373,7 +279,6 @@ export class ChatdrawerComponent {
               this.getmsgs();
               this.isSpinning = false;
             } else {
-              // this.message.error('Message Failed to sent', '');
               this.isSpinning = false;
             }
           },
@@ -392,15 +297,12 @@ export class ChatdrawerComponent {
       }
     }
   }
-
   allchatmsg: any = [];
   @ViewChild('scrollableDivvvvv')
   scrollableDivvvvv!: ElementRef<HTMLDivElement>;
   groupeddata: any;
   msgspin = false;
   getmsgs() {
-    // var filter = `{ $and:[ {TECHNICIAN_ID: ${this.chatdata.TECHNICIAN_ID}},{jobcardid:${this.chatdata.ID}}]}`;
-    // var filter = { $and:[ {TECHNICIAN_ID: ${this.chatdata.TECHNICIAN_ID}},{jobcardid:${this.chatdata.ID}}]};
     this.msgspin = true;
     var filter = {
       $and: [
@@ -408,12 +310,10 @@ export class ChatdrawerComponent {
         { JOB_CARD_ID: this.chatdata.ID },
       ],
     };
-
     this.api.getchat(0, 0, '_id', 'asc', filter).subscribe((data) => {
       if (data['code'] == '200') {
         if (data['count'] > 0) {
           this.allchatmsg = data['data'];
-
           this.groupeddata = this.groupDataBySendDate(this.allchatmsg);
           this.msgspin = false;
           setTimeout(() => {
@@ -426,24 +326,9 @@ export class ChatdrawerComponent {
     });
   }
   private eventSource: EventSource;
-  // connectToSSE() {
-  //   this.eventSource = new EventSource('https://1786vqrk-9887.inc1.devtunnels.ms/api/jobchat/get');
-
-  //   this.eventSource.onmessage = (event) => {
-  //     this.getmsgs(); // Fetch new messages when an update is received
-  //   };
-
-  //   this.eventSource.onerror = () => {
-  //     this.eventSource.close();
-  //     setTimeout(() => this.connectToSSE(), 5000); // Reconnect after 5s
-  //   };
-  // }
-
   groupDataBySendDate(data: any[]): { [key: string]: any[] } {
     return data.reduce((groupedData, item) => {
-      // Extract only the date part (YYYY-MM-DD) from SEND_DATE
       const sendDate = new Date(item.SEND_DATE).toISOString().split('T')[0];
-
       if (!groupedData[sendDate]) {
         groupedData[sendDate] = [];
       }
@@ -451,77 +336,15 @@ export class ChatdrawerComponent {
       return groupedData;
     }, {});
   }
-
   getKeys(obj: any): string[] {
     return Object.keys(obj);
   }
-
-  // onEmojiSelect(event: any): void {
-  //   if (event?.native) { // Check if the event contains a valid emoji
-  //     const textarea = document.querySelector('textarea[name=BODY_TEXT]') as HTMLTextAreaElement;
-  //     if (textarea) {
-  //       const cursorPosition = textarea.selectionStart; // Get the current cursor position
-  //       this.BODY_TEXTTTT =
-  //         this.BODY_TEXTTTT.slice(0, cursorPosition) + // Text before the cursor
-  //         event.native + // Selected emoji
-  //         this.BODY_TEXTTTT.slice(cursorPosition); // Text after the cursor
-  //     }
-  //   }
-  // }
   urllll = appkeys.retriveimgUrl;
   foldername = 'AppLanguageIcon';
-  // Method to handle text changes in the textarea
-  // changeevent(event: string): void {
-  //   this.BODY_TEXTTTT = event; // Update the text as user types
-  // }
-
-  // onEmojiSelect(event: any): void {
-  //   if (event?.emoji?.native) {
-  //     const sub1 = this.BODY_TEXTTTT.substring(0, this.cursorPosition || 0);
-  //     const sub2 = this.BODY_TEXTTTT.substring(this.cursorPosition || 0);
-  //     this.BODY_TEXTTTT = sub1 + event.emoji.native + sub2;
-  //     this.cursorPosition = sub1.length + event.emoji.native.length;
-  //   }
-  //   this.checkInput1();
-  // }
-
-  // // Method to handle cursor position update
-  // updateCursorPosition(event: any): void {
-  //   this.cursorPosition = event.target.selectionStart;
-  // }
-
-  // checkInput1(): void {
-  //   this.showDynamicInput1 = this.BODY_TEXTTTT.includes('}}');
-  //   const regex = /}}(?!)/;
-  //   if (regex.test(this.BODY_TEXTTTT)) {
-  //     this.i++;
-  //   } else {
-  //     this.inputBody = this.BODY_TEXTTTT;
-  //   }
-  //   this.check1();
-  //   this.Date = new Date();
-  // }
-
-  // check1(): void {
-  //   const pattern = /{{\d+}}/g;
-  //   const matches = this.BODY_TEXTTTT.match(pattern);
-  //   if (matches && this.BODY_VALUES?.length > 0) {
-  //     matches.forEach((match, index) => {
-  //       const replacement = this.BODY_VALUES[index] || match;
-  //       this.inputBody = this.inputBody.replace(match, replacement + ' ');
-  //     });
-  //   } else {
-  //     this.inputBody = this.BODY_TEXTTTT;
-  //   }
-  // }
-
   onEmojiSelect(event: any) {
-    // Ensure BODY_TEXT is initialized
     if (typeof this.BODY_TEXT !== 'string') {
       this.BODY_TEXT = '';
     }
-
-    // Extract emoji codes from BODY_TEXT
     const emojiCodePattern = /&#(x[\dA-Fa-f]+|\d+);/g;
     const emojiCodes = this.BODY_TEXT.match(emojiCodePattern);
     if (emojiCodes) {
@@ -537,22 +360,16 @@ export class ChatdrawerComponent {
         } catch (error) { }
       });
     }
-
-    // Handle emoji insertion
     const ev = Object.assign({}, event);
     const sub1 = this.BODY_TEXT.substring(0, this.cursorPosition || 0);
     const sub2 = this.BODY_TEXT.substring(
       this.cursorPosition || 0,
       this.BODY_TEXT.length
     );
-
     this.BODY_TEXT = sub1 + `${ev.emoji.native}` + sub2;
     this.cursorPosition = (sub1 + `${ev.emoji.native}`).length;
-
-    // Call additional logic
     this.checkInput1();
   }
-
   checkInput1() {
     if (this.BODY_TEXT == '' || this.BODY_TEXT == undefined) {
       this.showDynamicInput1 = false;
@@ -561,7 +378,6 @@ export class ChatdrawerComponent {
       this.showDynamicInput1 = true;
     }
     const regex = /}}(?!)/;
-
     if (this.BODY_TEXT.match(regex)) {
       this.i++;
     } else {
@@ -570,11 +386,9 @@ export class ChatdrawerComponent {
     this.check1();
     this.Date = new Date();
   }
-
   check1() {
     const pattern = /{{\d+}/g;
     const matches = this.BODY_TEXT.match(pattern);
-
     if (matches && this.BODY_VALUES != undefined) {
       for (let i = 0; i < matches.length; i++) {
         this.inputBody = this.inputBody.replace(
@@ -596,71 +410,40 @@ export class ChatdrawerComponent {
     const cursorPosition = textarea.selectionStart;
     this.cursorPosition = cursorPosition;
   }
-
   checkCurlyBraces(event: Event): void {
     const text = (event.target as HTMLTextAreaElement).value;
-    const regex = /\{\{\d+\}\}/; // Matches patterns like {{1}}, {{123}}, etc.
+    const regex = /\{\{\d+\}\}/; 
     this.hasCurlyBraceContent = regex.test(text);
   }
-
-  // handleEnter(event: KeyboardEvent): void {
-  //   if (event.key === 'Enter') {
-  //     // Prevent default Enter key behavior if necessary
-  //     event.preventDefault();
-
-  //     // Insert a newline character at the cursor position
-  //     const textarea = event.target as HTMLTextAreaElement;
-  //     const start = textarea.selectionStart;
-  //     const end = textarea.selectionEnd;
-
-  //     this.BODY_TEXT =
-  //       this.BODY_TEXT.slice(0, start) + '\n' + this.BODY_TEXT.slice(end);
-
-  //     // Move the cursor to the next line
-  //     setTimeout(() => {
-  //       textarea.selectionStart = textarea.selectionEnd = start + 1;
-  //     });
-  //   }
-  // }
-
   handleEnter(event: KeyboardEvent): void {
     if (event.ctrlKey && event.key === 'b') {
       this.makeBold();
     }
     if (event.key === 'Enter') {
       event.preventDefault();
-
       const textarea = event.target as HTMLTextAreaElement;
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
-
       this.BODY_TEXT =
         this.BODY_TEXT.slice(0, start) + '\n' + this.BODY_TEXT.slice(end);
-
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = start + 1;
       });
     }
   }
-
   makeBold(): void {
     const textarea = document.getElementById(
       'messages2'
     ) as HTMLTextAreaElement;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-
     if (start !== end) {
-      // Wrap selected text in <b> tags
       const selectedText = this.BODY_TEXT.substring(start, end);
       const boldText = `*${selectedText}*`;
       this.BODY_TEXT =
         this.BODY_TEXT.slice(0, start) + boldText + this.BODY_TEXT.slice(end);
-
-      // Update textarea and cursor position
       textarea.value = this.BODY_TEXT;
-      textarea.selectionStart = textarea.selectionEnd = end + 7; // Adjust for <b></b>
-      // this.updateFormattedText();
+      textarea.selectionStart = textarea.selectionEnd = end + 7; 
     }
   }
   transform(value: string): string {

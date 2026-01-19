@@ -4,8 +4,6 @@ import { NgForm } from '@angular/forms';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { StateMaster } from '../../../Models/state';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-// import { StateMaster } from '../../Models/state';
-
 @Component({
   selector: 'app-addstate',
   templateUrl: './addstate.component.html',
@@ -29,22 +27,17 @@ export class AddstateComponent {
   namepatt = /^([^0-9]*)$/;
   pinpatt = /^-?(0|[1-9]\d*)?$/;
   onlynumber = /^[0-9]*$/;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService
   ) { }
-
   onCountryChange(countryId: number | null): void {
-    // Reset states when the country is cleared or change
     this.data.NAME = '';
     this.data.SHORT_CODE = '';
   }
   ngOnInit(): void {
     this.getCountyData();
   }
-  // For Accepting Only Alphabits/ Character
-
   alphaOnly(event: any) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -57,7 +50,6 @@ export class AddstateComponent {
     }
     return true;
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -65,11 +57,9 @@ export class AddstateComponent {
     }
     return true;
   }
-
   close(): void {
     this.drawerClose();
   }
-
   countryData: any = [];
   isCountrySpinning = false;
   getCountyData() {
@@ -93,11 +83,10 @@ export class AddstateComponent {
       );
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-]*$/; // Updated pattern
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-]*$/; 
     const char = String.fromCharCode(event.keyCode || event.which);
-
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   save(addNew: boolean, StateMasterPage: NgForm): void {
@@ -200,7 +189,6 @@ export class AddstateComponent {
       }
     }
   }
-
   stateSeq(): void {
     this.api.getState(1, 1, 'SEQ_NO', 'desc', '').subscribe(
       (data) => {
@@ -214,7 +202,6 @@ export class AddstateComponent {
       (err) => { }
     );
   }
-
   resetDrawer(StateMasterPage: NgForm) {
     this.data = new StateMaster();
     StateMasterPage.form.markAsPristine();

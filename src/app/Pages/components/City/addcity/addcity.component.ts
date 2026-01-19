@@ -4,7 +4,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-
 @Component({
   selector: 'app-addcity',
   templateUrl: './addcity.component.html',
@@ -28,18 +27,16 @@ export class AddcityComponent {
   pinpatt = /^-?(0|[1-9]\d*)?$/;
   onlynumber = /^[0-9]*$/;
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService
   ) { }
-
   ngOnInit(): void {
     this.getCountyData();
     if (this.data?.COUNTRY_ID) {
@@ -49,19 +46,6 @@ export class AddcityComponent {
       this.getDistrictByState(this.data.STATE_ID, false);
     }
   }
-  // For Accepting Only Alphabits/ Character
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['data'] && this.data) {
-  //     const { COUNTRY_ID, STATE_ID } = this.data;
-  //     // Call the API to load state, city, and pincode
-  //     this.getStateData(COUNTRY_ID);
-  //     this.getDistrinct(STATE_ID);
-  //     if (STATE_ID) {
-  //       this.getDistrinct(STATE_ID);
-  //     }
-  //   }
-  // }
-
   alphaOnly(event: any) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -74,7 +58,6 @@ export class AddcityComponent {
     }
     return true;
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -82,11 +65,9 @@ export class AddcityComponent {
     }
     return true;
   }
-
   close(): void {
     this.drawerClose();
   }
-
   countryData: any = [];
   IsCountrySpinng = false;
   getCountyData() {
@@ -117,18 +98,14 @@ export class AddcityComponent {
   }
   stateData: any = [];
   isStateSpinning: boolean = false;
-
   getStatesByCountry(countryId: any, value: boolean) {
     if (value == true) {
       this.data.STATE_ID = null;
       this.data.DISTRICT_ID = null;
       this.data.CITY_ID = null;
       this.data.NAME = '';
-      //this.data.PINCODE_ID = null;
       this.stateData = [];
       this.DistrictData = [];
-      //this.CityData = [];
-      //this.PincodeData = [];
     }
     this.isStateSpinning = true;
     this.api
@@ -143,7 +120,6 @@ export class AddcityComponent {
         (data) => {
           if (data['code'] === 200) {
             this.stateData = data['data'];
-            //this.data.STATE_ID = "";
             this.isStateSpinning = false;
           } else {
             this.stateData = [];
@@ -156,16 +132,12 @@ export class AddcityComponent {
         }
       );
   }
-
   getDistrictByState(stateId: any, value: boolean) {
     if (value == true) {
       this.data.DISTRICT_ID = null;
       this.data.CITY_ID = null;
       this.data.NAME = '';
-      //this.data.PINCODE_ID = null;
       this.DistrictData = [];
-      //this.CityData = [];
-      //this.PincodeData = [];
     }
     this.isDistSpinning = true;
     this.api
@@ -194,7 +166,6 @@ export class AddcityComponent {
   }
   DistrictData: any = [];
   isDistSpinning: boolean = false;
-
   save(addNew: boolean, CityMasterPage: NgForm): void {
     this.isOk = true;
     if (
@@ -206,7 +177,6 @@ export class AddcityComponent {
       (this.data.NAME == undefined ||
         this.data.NAME == '' ||
         this.data.NAME.trim() == '')
-      // && (this.data.SHORT_CODE == undefined || this.data.SHORT_CODE == "" || this.data.SHORT_CODE.trim() == "")
     ) {
       this.isOk = false;
       this.message.error('Please Fill All The Required Fields ', '');
@@ -242,10 +212,6 @@ export class AddcityComponent {
       this.isOk = false;
       this.message.error('Please Enter Sequence No.', '');
     }
-    // else if (this.data.SHORT_CODE == null || this.data.SHORT_CODE == "") {
-    //   this.isOk = false;
-    //   this.message.error('Please Enter Short Code', '');
-    // }
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -299,7 +265,6 @@ export class AddcityComponent {
       }
     }
   }
-
   citySeq(): void {
     this.api.getAllCityMaster(1, 10, 'SEQ_NO', 'desc', '').subscribe(
       (data) => {
@@ -313,7 +278,6 @@ export class AddcityComponent {
       (err) => { }
     );
   }
-
   resetDrawer(CityMasterPage: NgForm) {
     this.data = new CityMaster();
     CityMasterPage.form.markAsPristine();

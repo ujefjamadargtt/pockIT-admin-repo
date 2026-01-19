@@ -1,43 +1,135 @@
-th {
-  text-align: center !important;
-  vertical-align: middle !important;
-  /* font-weight: bold; */
+.back-icon {
+  font-weight: bold;
+  cursor: pointer;
 }
-
-th {
-  text-align: center !important;
-  vertical-align: middle !important;
-  /* font-weight: bold; */
+.actions-col {
+  display: flex;
+  justify-content: flex-end;
 }
-
+.form-item-filter-button {
+  width: 47px;
+}
+.filter-button {
+  width: 100%;
+}
+.search-button {
+  width: 90px;
+  margin-left: 5px;
+}
+.filter {
+  padding: 8px;
+}
+.filter-box {
+  width: 100%;
+}
+.filter-content {
+  padding-top: 0;
+}
+.filter-loading {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.wt-100 {
+  width: 100%;
+}
+.font-15px {
+  font-size: 15px
+}
+.text-left {
+  text-align: left
+}
+.cursor-icon {
+  cursor: pointer
+}
+.text-center {
+  text-align: center
+}
+.font-weight-align {
+  font-weight: bold;
+  text-align: center
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.size-10 {
+  font-size: 10px !important;
+}
+.filter-action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.filter-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.no-filters {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.filter-footer-btn {
+  margin-right: 10px;
+}
+.table-row {
+  padding-top: 10px;
+}
 .select {
   width: 200px;
   padding: 8px;
-  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
-.search-button {
-  margin-right: 8px;
-}
-
 nz-select {
   width: 100%;
 }
-
-
-:host::ng-deep .ant-card-body {
+:host ::ng-deep .ant-card-body {
   padding: 0px;
+}
+th {
+  text-align: center !important;
+  vertical-align: middle !important;
 }

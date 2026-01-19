@@ -8,7 +8,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-ticket-transfer-report',
   templateUrl: './ticket-transfer-report.component.html',
@@ -23,7 +22,6 @@ export class TicketTransferReportComponent implements OnInit {
   isFilterApplied: string = 'default';
   filterClass: string = 'filter-invisible';
   loadingRecords = false;
-  // SearchData : string = '';
   sortValue: string = 'desc';
   sortKey: string = 'ID';
   filterQuery: string = '';
@@ -34,25 +32,21 @@ export class TicketTransferReportComponent implements OnInit {
     ['RECIVER_AGENT', 'Receiver Agent'],
     ['ANSWER_AGENT', 'Answered Agent'],
   ];
-
   columns1: string[][] = [
     ['CREATOR_EMPLOYEE_NAME', 'Tickdesk Creator'],
     ['TICKET_TAKEN_EMPLOYEE', 'Tickdesk Receiver'],
     ['TICKET_TAKEN_DEPARTMENT_NAME', 'Transfer Department'],
     ['TICKET_TRANSFER_EMPLOYEE_NAME', 'Employee Name'],
   ];
-
   searchText: string = '';
   date = null;
   excelData: any = [];
   exportLoading: boolean = false;
-
   orgId = this.cookie.get('orgId');
   startValue: any = new Date();
   endValue: any = new Date();
   STARTDATE = this.datePipe.transform(this.startValue, 'yyyy-MM-dd');
   ENDDATE = this.datePipe.transform(this.endValue, 'yyyy-MM-dd');
-
   constructor(
     private api: ApiServiceService,
     private cookie: CookieService,
@@ -61,14 +55,11 @@ export class TicketTransferReportComponent implements OnInit {
     private _exportService: ExportService,
     private router: Router
   ) { }
-
   isDeleting: boolean = false;
   savedFilters: any;
   selectedFilter: string | null = null;
   isfilterapply: boolean = false;
-
   public commonFunction = new CommonFunctionService();
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
@@ -76,10 +67,8 @@ export class TicketTransferReportComponent implements OnInit {
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   TabId: number;
   filterloading: boolean = false;
-
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -99,10 +88,8 @@ export class TicketTransferReportComponent implements OnInit {
   updateBtn: any;
   whichbutton: any;
   updateButton: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -110,13 +97,12 @@ export class TicketTransferReportComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -131,21 +117,15 @@ export class TicketTransferReportComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -159,7 +139,6 @@ export class TicketTransferReportComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -168,7 +147,6 @@ export class TicketTransferReportComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -185,9 +163,7 @@ export class TicketTransferReportComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -213,7 +189,6 @@ export class TicketTransferReportComponent implements OnInit {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -222,34 +197,28 @@ export class TicketTransferReportComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   drawerTitle: string = '';
   drawerFilterVisible: boolean = false;
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -266,11 +235,9 @@ export class TicketTransferReportComponent implements OnInit {
       groups: [],
     },
   ];
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -278,18 +245,12 @@ export class TicketTransferReportComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   openfilter() {
     this.drawerTitle = 'Ticket Transfer Report';
-
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -306,7 +267,6 @@ export class TicketTransferReportComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -323,7 +283,6 @@ export class TicketTransferReportComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -341,26 +300,21 @@ export class TicketTransferReportComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   departments = [];
   getDepartments() {
     this.departments = [];
-
     this.api
       .getAllDepartments(
         0,
@@ -381,10 +335,8 @@ export class TicketTransferReportComponent implements OnInit {
   supportUsers = [];
   supportUsers1 = [];
   supportUsers2 = [];
-
   getSupportUsers() {
     this.supportUsers = [];
-
     this.api
       .getAllemployeeMaster(
         0,
@@ -404,7 +356,6 @@ export class TicketTransferReportComponent implements OnInit {
   }
   getSupportUsers1() {
     this.supportUsers1 = [];
-
     this.api
       .getAllemployeeMaster(
         0,
@@ -424,7 +375,6 @@ export class TicketTransferReportComponent implements OnInit {
   }
   getSupportUsers2() {
     this.supportUsers2 = [];
-
     this.api
       .getAllemployeeMaster(
         0,
@@ -449,7 +399,6 @@ export class TicketTransferReportComponent implements OnInit {
     this.getSupportUsers1();
     this.getSupportUsers();
   }
-
   endOpen = false;
   disabledStartDate = (startValue: Date): boolean => {
     if (!startValue || !this.endValue) {
@@ -457,7 +406,6 @@ export class TicketTransferReportComponent implements OnInit {
     }
     return startValue.getTime() > this.endValue.getTime();
   };
-
   disabledEndDate = (endValue: Date): boolean => {
     if (!endValue || !this.startValue) {
       return false;
@@ -470,7 +418,6 @@ export class TicketTransferReportComponent implements OnInit {
   onEndChange(date: Date): void {
     this.endValue = date;
   }
-
   handleStartOpenChange(open: boolean): void {
     if (!open) {
       this.endOpen = true;
@@ -479,18 +426,14 @@ export class TicketTransferReportComponent implements OnInit {
   handleEndOpenChange(open: boolean): void {
     this.endOpen = open;
   }
-
   faqs = [];
-
   getFaqsHead() {
     this.faqs = [];
-
     this.api.getAllFaqHeads(0, 0, 'NAME', 'asc', ' AND STATUS=1').subscribe(
       (data: any) => {
         if (data['code'] == 200) {
           this.faqs = data['data'];
         }
-        //
       },
       (err) => {
         if (err['ok'] == false) this.message.error('Server Not Found', '');
@@ -498,7 +441,6 @@ export class TicketTransferReportComponent implements OnInit {
     );
   }
   SELECT_ALL1: boolean = false;
-
   showFilter(): void {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
@@ -507,7 +449,6 @@ export class TicketTransferReportComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   applyFilter1() {
     var sort: string;
     this.startValue = this.datePipe.transform(this.startValue, 'yyyy-MM-dd');
@@ -517,55 +458,42 @@ export class TicketTransferReportComponent implements OnInit {
     } catch (error) {
       sort = '';
     }
-
     this.filterQuery = '';
-
     var filter = '';
     filter = this.filterQuery;
     var likeQuery = '';
-
     if (this.startValue != null) {
       this.STARTDATE = this.startValue;
     }
     if (this.endValue != null) {
       this.ENDDATE = this.endValue;
     }
-
     this.search();
     var likeQuery = '';
-
     if (this.searchText != '') {
       likeQuery = ' AND ';
-
       this.columns1.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
     }
   }
-
   clearFilter1() {
     this.SELECT_ALL1 = false;
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
-    // this.MONTH1 = new Date();
     this.startValue = new Date();
     this.endValue = new Date();
     this.STARTDATE = this.datePipe.transform(this.startValue, 'yyyy-MM-dd');
     this.ENDDATE = this.datePipe.transform(this.endValue, 'yyyy-MM-dd');
     this.filterQuery = '';
-    // this.dataList = [];
     this.search();
     this.SELECT_ALL = false;
     this.SELECT_ALL1 = false;
     this.SELECT_ALL2 = false;
     this.SELECT_ALL3 = false;
   }
-
   dataList: any = [];
-  // exportLoading: boolean = false;
-
   dateQuery;
   dataList1;
   search(reset: boolean = false, exportInExcel: boolean = false) {
@@ -575,7 +503,6 @@ export class TicketTransferReportComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-
     var sort: string;
     this.startValue = this.datePipe.transform(this.startValue, 'yyyy-MM-dd');
     this.endValue = this.datePipe.transform(this.endValue, 'yyyy-MM-dd');
@@ -584,12 +511,8 @@ export class TicketTransferReportComponent implements OnInit {
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-
-    // var likeQuery = "";
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -600,7 +523,6 @@ export class TicketTransferReportComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (this.ticketCreatortext !== '' && this.ticketCreatortext.length >= 3) {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -618,7 +540,6 @@ export class TicketTransferReportComponent implements OnInit {
     } else {
       this.isticketReceiverFilterApplied = false;
     }
-
     if (
       this.ticketTransfertext !== '' &&
       this.ticketTransfertext !== undefined &&
@@ -631,7 +552,6 @@ export class TicketTransferReportComponent implements OnInit {
     } else {
       this.isticketTransferFilterApplied = false;
     }
-
     if (
       this.ticketReceiverAgenttext !== '' &&
       this.ticketReceiverAgenttext !== undefined &&
@@ -644,7 +564,6 @@ export class TicketTransferReportComponent implements OnInit {
     } else {
       this.isticketReceiverAgentFilterApplied = false;
     }
-
     if (
       this.ticketAnswerAgenttext !== '' &&
       this.ticketAnswerAgenttext !== undefined &&
@@ -657,12 +576,9 @@ export class TicketTransferReportComponent implements OnInit {
     } else {
       this.isansweredAgentFilterApplied = false;
     }
-
     if (this.startValue != null && this.endValue != null) {
       this.startValue = this.datePipe.transform(this.startValue, 'yyyy-MM-dd');
       this.endValue = this.datePipe.transform(this.endValue, 'yyyy-MM-dd');
-
-      // " AND MOBILE_VERIFICATION_DATETIME = '" +this.startValue + "' ";
       this.dateQuery =
         " AND DATE(CREATED_MODIFIED_DATE) BETWEEN '" +
         this.startValue +
@@ -671,24 +587,16 @@ export class TicketTransferReportComponent implements OnInit {
         "' ";
     }
     var USER_IDFilter = '';
-    // if (this.USER_ID.length > 0)
-    //   USER_IDFilter = "'" + this.USER_ID + "'";
-
     var TAKEN_BY_USER_IDFilter = '';
     if (this.TAKEN_BY_USER_ID.length > 0)
       TAKEN_BY_USER_IDFilter = " '" + this.TAKEN_BY_USER_ID + "'";
-
     var DEPARTMENT_IDFilter = '';
     if (this.DEPARTMENT_ID.length > 0)
       DEPARTMENT_IDFilter = " '" + this.DEPARTMENT_ID + "'";
-
     var TRANSFER_USER_IDFilter = '';
     if (this.TRANSFER_USER_ID.length > 0)
       TRANSFER_USER_IDFilter = "'" + this.TRANSFER_USER_ID + "'";
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.loadingRecords = true;
       this.api
@@ -705,12 +613,10 @@ export class TicketTransferReportComponent implements OnInit {
         )
         .subscribe(
           (data) => {
-            //
             this.loadingRecords = false;
             this.totalRecords = data.body['count'];
             this.TabId = data.body['TAB_ID'];
             this.dataList = data.body['data'];
-
             this.filterClass = 'filter-invisible';
           },
           (err) => { }
@@ -731,7 +637,6 @@ export class TicketTransferReportComponent implements OnInit {
         )
         .subscribe(
           (data) => {
-            //
             this.loadingRecords = false;
             this.totalRecords = data.body['count'];
             this.TabId = data.body['TAB_ID'];
@@ -744,47 +649,16 @@ export class TicketTransferReportComponent implements OnInit {
           (err) => { }
         );
     }
-    // else {
-    //   this.exportLoading = true;
-    //   this.api
-    //     .getTicketTransfer(
-    //       0,
-    //       0,
-    //       this.sortKey,
-    //       sort,
-    //       this.dateQuery + likeQuery,
-    //       USER_IDFilter,
-    //       TAKEN_BY_USER_IDFilter,
-    //       DEPARTMENT_IDFilter,
-    //       TRANSFER_USER_IDFilter
-    //     )
-    //     .subscribe(
-    //       (data) => {
-    //         if (data['code'] == 200) {
-    //           this.exportLoading = false;
-    //           this.dataList1 = data.body['data'];
-    //           // this.convertInExcel();
-    //         }
-    //       },
-    //       (err) => {
-    //         if (err['ok'] == false) this.message.error('Server Not Found', '');
-    //       }
-    //     );
-    // }
   }
-
   SELECT_ALL: boolean = false;
   DEPARTMENT_ID = [];
-
   TAKEN_BY_USER_ID = [];
   onSelectAllChecked1(event) {
     this.SELECT_ALL1 = event;
-    //
     let ids = [];
     if (this.SELECT_ALL1 == true) {
       for (var i = 0; i < this.supportUsers.length; i++) {
         ids.push(this.supportUsers[i]['ID']);
-        //
       }
     } else {
       ids = [];
@@ -804,22 +678,17 @@ export class TicketTransferReportComponent implements OnInit {
       this.SELECT_ALL1 = false;
     }
   }
-
   SELECT_ALL2: boolean = false;
-  // USER_ID = []
   onSelectAllChecked2(event) {
     this.SELECT_ALL2 = event;
-    //
     let ids2 = [];
     if (this.SELECT_ALL2 == true) {
       for (var i = 0; i < this.supportUsers1.length; i++) {
         ids2.push(this.supportUsers1[i]['ID']);
-        //
       }
     } else {
       ids2 = [];
     }
-    // this.USER_ID = ids2
   }
   onSelectOff2(event) {
     var a3 = this.supportUsers2.length;
@@ -830,18 +699,13 @@ export class TicketTransferReportComponent implements OnInit {
       this.SELECT_ALL2 = true;
     }
     this.USER_ID = event;
-    // if (this.USER_ID.length == 0) {
-    //   this.SELECT_ALL2 = false;
-    // }
   }
   onSelectAllChecked3(event) {
     this.SELECT_ALL = event;
-    //
     let ids3 = [];
     if (this.SELECT_ALL == true) {
       for (var i = 0; i < this.departments.length; i++) {
         ids3.push(this.departments[i]['ID']);
-        //
       }
     } else {
       ids3 = [];
@@ -865,12 +729,10 @@ export class TicketTransferReportComponent implements OnInit {
   TRANSFER_USER_ID = [];
   onSelectAllChecked4(event) {
     this.SELECT_ALL3 = event;
-    //
     let ids4 = [];
     if (this.SELECT_ALL3 == true) {
       for (var i = 0; i < this.supportUsers2.length; i++) {
         ids4.push(this.supportUsers2[i]['ID']);
-        //
       }
     } else {
       ids4 = [];
@@ -901,7 +763,6 @@ export class TicketTransferReportComponent implements OnInit {
     }
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -910,7 +771,6 @@ export class TicketTransferReportComponent implements OnInit {
       tooltip.hide();
     }
   }
-
   onKeyup(event: KeyboardEvent, type: any): void {
     if (
       this.ticketCreatortext.length >= 3 &&
@@ -927,7 +787,6 @@ export class TicketTransferReportComponent implements OnInit {
       this.search();
       this.isticketCreatorFilterApplied = false;
     }
-
     if (
       this.ticketReceivertext.length >= 3 &&
       event.key === 'Enter' &&
@@ -943,7 +802,6 @@ export class TicketTransferReportComponent implements OnInit {
       this.search();
       this.isticketReceiverFilterApplied = false;
     }
-
     if (
       this.ticketTransfertext.length >= 3 &&
       event.key === 'Enter' &&
@@ -959,7 +817,6 @@ export class TicketTransferReportComponent implements OnInit {
       this.search();
       this.isticketTransferFilterApplied = false;
     }
-
     if (
       this.ticketReceiverAgenttext.length >= 3 &&
       event.key === 'Enter' &&
@@ -975,7 +832,6 @@ export class TicketTransferReportComponent implements OnInit {
       this.search();
       this.isticketReceiverAgentFilterApplied = false;
     }
-
     if (
       this.ticketAnswerAgenttext.length >= 3 &&
       event.key === 'Enter' &&
@@ -992,33 +848,25 @@ export class TicketTransferReportComponent implements OnInit {
       this.isansweredAgentFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   ticketCreatorVisible: boolean = false;
   isticketCreatorFilterApplied = false;
   ticketCreatortext: string = '';
-
   ticketReceiverVisible: boolean = false;
   isticketReceiverFilterApplied = false;
   ticketReceivertext: string = '';
-
   ticketTransferVisible: boolean = false;
   isticketTransferFilterApplied = false;
   ticketTransfertext: string = '';
-
   ticketReceiverAgentVisible: boolean = false;
   isticketReceiverAgentFilterApplied = false;
   ticketReceiverAgenttext: string = '';
-
   answeredAgentVisible: boolean = false;
   isansweredAgentFilterApplied = false;
   ticketAnswerAgenttext: string = '';
-
   reset(): void {
     this.searchText = '';
     this.ticketCreatortext = '';
@@ -1028,16 +876,13 @@ export class TicketTransferReportComponent implements OnInit {
     this.ticketReceivertext = '';
     this.search();
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'CREATOR_EMPLOYEE_NAME',
@@ -1110,18 +955,14 @@ export class TicketTransferReportComponent implements OnInit {
       placeholder: 'Enter Answer Agent',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -1129,11 +970,9 @@ export class TicketTransferReportComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -1156,7 +995,6 @@ export class TicketTransferReportComponent implements OnInit {
         obj1['Answered Agent'] = this.excelData[i]['ANSWER_AGENT']
           ? this.excelData[i]['ANSWER_AGENT']
           : '-';
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(

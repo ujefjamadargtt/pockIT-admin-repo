@@ -1,48 +1,258 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-.select{
-width: 200px;
-padding: 8px;
-display: block;
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-.ant-drawer{
+.ant-drawer {
   z-index: 999 !important;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%;
   display: inline-block;
+}
+.back-arrow-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.action-column-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-button-item {
+  width: 47px;
+}
+.new-technician-button-item {
+  margin-right: 0px;
+}
+.filter-content-row {
+  padding-top: 0px;
+}
+.loading-container {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-text {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions-container {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-icon {
+  font-size: 10px !important;
+}
+.filter-view-tag {
+  margin-right: 0px;
+}
+.no-data-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-button {
+  margin-right: 10px;
+}
+.new-filter-button {
+  margin-right: 10px;
+}
+.action-header {
+  text-align: center;
+}
+.map-pincodes-header {
+  text-align: center;
+}
+.map-skills-header {
+  text-align: center;
+}
+.overview-header {
+  text-align: center;
+}
+.calendar-header {
+  text-align: center;
+}
+.map-languages-header {
+  text-align: center;
+}
+.configuration-header {
+  text-align: center;
+}
+.reset-login-header {
+  text-align: center;
+}
+.type-header {
+  text-align: center;
+}
+.technician-name-header {
+  text-align: left;
+}
+.email-header {
+  text-align: left;
+}
+.mobile-header {
+  text-align: center;
+}
+.gender-header {
+  text-align: center;
+}
+.vendor-name-header {
+  text-align: center;
+}
+.aadhar-header {
+  text-align: center;
+}
+.experience-header {
+  text-align: center;
+}
+.profile-photo-header {
+  font-weight: bold;
+  text-align: center;
+}
+.address-header {
+  text-align: center;
+}
+.country-header {
+  text-align: center;
+}
+.state-header {
+  text-align: center;
+}
+.district-header {
+  text-align: center;
+}
+.pincode-header {
+  text-align: center;
+}
+.own-vehicle-header {
+  text-align: center;
+}
+.vehicle-type-header {
+  text-align: left;
+}
+.vehicle-no-header {
+  text-align: center;
+}
+.status-header {
+  text-align: center;
+}
+.active-status-header {
+  text-align: center;
+}
+.action-tag-style {
+  cursor: pointer;
+}
+.action-icon-size {
+  font-size: 15px;
+}
+.type-cell {
+  text-align: left;
+}
+.gender-cell {
+  text-align: left;
+}
+.experience-cell {
+  text-align: left;
+}
+.vehicle-type-cell {
+  text-align: left;
+}
+.status-tag-online {
+  cursor: pointer;
+}
+.status-tag-offline {
+  cursor: pointer;
+}
+.job-edit-tag {
+  cursor: pointer;
+}
+.job-edit-icon {
+  font-size: 15px;
+}
+.job-row-margin-top {
+  margin-top: 10px;
+}
+.technician-table-preline {
+  white-space: pre-line;
+}
+.vendor-select-fullwidth {
+  width: 100%;
+}
+.tech-confirm-title {
+  font-size: 15px;
+}
+.filter-text-center {
+  text-align: center;
+}
+.image-preview-wrapper {
+  height: 300px;
+  overflow: auto;
+}
+.image-preview-media {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600;
+  max-height: 400;
 }

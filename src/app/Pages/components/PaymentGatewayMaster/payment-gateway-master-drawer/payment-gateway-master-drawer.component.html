@@ -4,35 +4,15 @@
       <div nz-row nzGutter="20">
         <div nz-col nzSpan="24">
           <div nz-row class="my-box">
-            <!-- <div nz-col nzSpan="12">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Gateway Name</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Gateway Name">
-                  <input nz-input name="GATEWAY_NAME" placeholder="Enter Gateway Name" required
-                    (keypress)="this.commonFunction.alphaOnly($event)" [(ngModel)]="data.GATEWAY_NAME"
-                    autocomplete="off" maxlength="128" />
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                                      data.GATEWAY_NAME != undefined &&
-                                      data.GATEWAY_NAME != null &&
-                                     data.GATEWAY_NAME != ''
-                                    ">
-                    {{ data.GATEWAY_NAME.length }}/128
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
-
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Gateway Name</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Gateway Name">
-                  <!-- Gateway Name Input -->
                   <input nz-input name="GATEWAY_NAME" placeholder="Enter Gateway Name" required
                     (keypress)="this.commonFunction.alphaOnly($event)" [(ngModel)]="data.GATEWAY_NAME"
                     autocomplete="off" maxlength="128" (focus)="isFocused = 'GATEWAY_NAME'" (blur)="isFocused = ''" />
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'GATEWAY_NAME' ||
                     (data.GATEWAY_NAME && isFocused === 'GATEWAY_NAME')
                   ">
@@ -40,36 +20,15 @@
                 </h6>
               </nz-form-item>
             </div>
-
-            <!-- <div nz-col nzSpan="12">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Gateway Type</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Gateway Type">
-                  <input nz-input name="GATEWAY_TYPE" placeholder="Enter Gateway Type" required
-                    (keypress)="this.commonFunction.alphaOnly($event)" [(ngModel)]="data.GATEWAY_TYPE"
-                    autocomplete="off" maxlength="128" />
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                          data.GATEWAY_TYPE != undefined &&
-                          data.GATEWAY_TYPE != null &&
-                          data.GATEWAY_TYPE != ''
-                        ">
-                    {{ data.GATEWAY_TYPE.length }}/128
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
-
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Gateway Type</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Gateway Type">
-                  <!-- Gateway Type Input -->
                   <input nz-input name="GATEWAY_TYPE" placeholder="Enter Gateway Type" required
                     (keypress)="this.commonFunction.alphaOnly($event)" [(ngModel)]="data.GATEWAY_TYPE"
                     autocomplete="off" maxlength="128" (focus)="isFocused = 'GATEWAY_TYPE'" (blur)="isFocused = ''" />
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'GATEWAY_TYPE' ||
                     (data.GATEWAY_TYPE && isFocused === 'GATEWAY_TYPE')
                   ">
@@ -77,36 +36,15 @@
                 </h6>
               </nz-form-item>
             </div>
-
-            <!-- <div nz-col nzSpan="12">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Api Secret</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Api Secret">
-                  <input nz-input name="API_SECRET" placeholder="Enter Api Secret" required
-                    [(ngModel)]="data.API_SECRET" (keypress)="commonFunction.allowOnly($event)" autocomplete="off"
-                    maxlength="128" />
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                data.API_SECRET!= undefined &&
-                data.API_SECRET!= null &&
-                data.API_SECRET!= ''
-              ">
-                    {{ data.API_SECRET.length }}/128
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
-
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Api Secret</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Api Secret">
-                  <!-- API Secret Input -->
                   <input nz-input name="API_SECRET" placeholder="Enter Api Secret" required
                     [(ngModel)]="data.API_SECRET" (keypress)="commonFunction.allowOnly($event)" autocomplete="off"
                     maxlength="128" (focus)="isFocused = 'API_SECRET'" (blur)="isFocused = ''" />
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'API_SECRET' ||
                     (data.API_SECRET && isFocused === 'API_SECRET')
                   ">
@@ -114,36 +52,15 @@
                 </h6>
               </nz-form-item>
             </div>
-
-            <!-- <div nz-col nzSpan="12">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Merchant</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Merchant Id">
-                  <input nz-input name="MERCHANT_ID" placeholder="Enter Merchant Id" required
-                    (keypress)="this.commonFunction.numchar($event)" [(ngModel)]="data.MERCHANT_ID" autocomplete="off"
-                    maxlength="128" />
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                      data.MERCHANT_ID!= undefined &&
-                      data.MERCHANT_ID!= null &&
-                      data.MERCHANT_ID!= ''
-                    ">
-                    {{ data.MERCHANT_ID.length }}/128
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
-
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Merchant</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Merchant Id">
-                  <!-- Merchant ID Input -->
                   <input nz-input name="MERCHANT_ID" placeholder="Enter Merchant Id" required
                     (keypress)="this.commonFunction.numchar($event)" [(ngModel)]="data.MERCHANT_ID" autocomplete="off"
                     maxlength="128" (focus)="isFocused = 'MERCHANT_ID'" (blur)="isFocused = ''" />
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'MERCHANT_ID' ||
                     (data.MERCHANT_ID && isFocused === 'MERCHANT_ID')
                   ">
@@ -151,35 +68,15 @@
                 </h6>
               </nz-form-item>
             </div>
-
-            <!-- <div nz-col nzSpan="24">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Api Key</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Api Key">
-                  <input nz-input name="API_KEY" placeholder="Enter Api Key" required [(ngModel)]="data.API_KEY"
-                    (keypress)="commonFunction.allowOnly($event)" autocomplete="off" maxlength="128" />
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                        data.API_KEY != undefined &&
-                        data.API_KEY != null &&
-                        data.API_KEY != ''
-                      ">
-                    {{ data.API_KEY.length }}/128
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
-
             <div nz-col nzSpan="24">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Api Key</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Api Key">
-                  <!-- API Key Input -->
                   <input nz-input name="API_KEY" placeholder="Enter Api Key" required [(ngModel)]="data.API_KEY"
                     (keypress)="commonFunction.allowOnly($event)" autocomplete="off" maxlength="128"
                     (focus)="isFocused = 'API_KEY'" (blur)="isFocused = ''" />
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'API_KEY' ||
                     (data.API_KEY && isFocused === 'API_KEY')
                   ">
@@ -187,36 +84,15 @@
                 </h6>
               </nz-form-item>
             </div>
-
-            <!-- <div nz-col nzSpan="24">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Encryption Key</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Encryption Key">
-                  <input nz-input name="ENCRYPTION_KEY" placeholder="Enter Encryption Key" required
-                    (keypress)="commonFunction.allowOnly($event)" [(ngModel)]="data.ENCRYPTION_KEY" autocomplete="off"
-                    maxlength="128" />
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                  data.ENCRYPTION_KEY!= undefined &&
-                  data.ENCRYPTION_KEY!= null &&
-                  data.ENCRYPTION_KEY!= ''
-                ">
-                    {{ data.ENCRYPTION_KEY.length }}/128
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
-
             <div nz-col nzSpan="24">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Encryption Key</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Encryption Key">
-                  <!-- Encryption Key Input -->
                   <input nz-input name="ENCRYPTION_KEY" placeholder="Enter Encryption Key" required
                     [(ngModel)]="data.ENCRYPTION_KEY" (keypress)="commonFunction.allowOnly($event)" autocomplete="off"
                     maxlength="128" (focus)="isFocused = 'ENCRYPTION_KEY'" (blur)="isFocused = ''" />
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'ENCRYPTION_KEY' ||
                     (data.ENCRYPTION_KEY && isFocused === 'ENCRYPTION_KEY')
                   ">
@@ -227,44 +103,20 @@
           </div>
         </div>
       </div>
-
       <div nz-row nzGutter="20">
         <div nz-col nzSpan="24">
           <div nz-row class="my-box">
-            <!-- <div nz-col nzSpan="24">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Endpoint Url</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Endpoint Url">
-                  <nz-input-group nzAddOnBefore="http://">
-                    <input nz-input name="ENDPOINT_URL" placeholder="Enter Endpoint Url" required
-                      (keypress)="this.commonFunction.alphaOnly($event)" [(ngModel)]="data.ENDPOINT_URL"
-                      autocomplete="off" maxlength="128" />
-                  </nz-input-group>
-
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-           data.ENDPOINT_URL!= undefined &&
-           data.ENDPOINT_URL!= null &&
-           data.ENDPOINT_URL!= ''
-      ">
-                    {{ data.ENDPOINT_URL.length }}/128
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
-
             <div nz-col nzSpan="24">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Endpoint Url</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Endpoint Url">
-                  <!-- Endpoint URL Input with Add-On Before -->
                   <nz-input-group nzAddOnBefore="http://">
                     <input nz-input name="ENDPOINT_URL" placeholder="Enter Endpoint Url" required
                       [(ngModel)]="data.ENDPOINT_URL" (keypress)="this.commonFunction.alphaOnly($event)"
                       autocomplete="off" maxlength="128" (focus)="isFocused = 'ENDPOINT_URL'" (blur)="isFocused = ''" />
                   </nz-input-group>
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'ENDPOINT_URL' ||
                     (data.ENDPOINT_URL && isFocused === 'ENDPOINT_URL')
                   ">
@@ -272,43 +124,17 @@
                 </h6>
               </nz-form-item>
             </div>
-
-            <!-- <div nz-col nzSpan="24">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Webhook Url</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Webhook Url">
-                  <nz-input-group nzAddOnBefore="http://">
-                    <input nz-input name="WEBHOOK_URL" placeholder="Enter Webhook Url" required
-                      (keypress)="this.commonFunction.alphaOnly($event)" [(ngModel)]="data.WEBHOOK_URL"
-                      autocomplete="off" maxlength="128" />
-                  </nz-input-group>
-
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-            data.WEBHOOK_URL!= undefined &&
-            data.WEBHOOK_URL!= null &&
-            data.WEBHOOK_URL!= ''
-          ">
-                    {{ data.WEBHOOK_URL.length }}/128
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-
-
-            </div> -->
-
             <div nz-col nzSpan="24">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Webhook Url</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Webhook Url">
-                  <!-- Webhook URL Input with Add-On Before -->
                   <nz-input-group nzAddOnBefore="http://">
                     <input nz-input name="WEBHOOK_URL" placeholder="Enter Webhook Url" required
                       [(ngModel)]="data.WEBHOOK_URL" (keypress)="this.commonFunction.alphaOnly($event)"
                       autocomplete="off" maxlength="128" (focus)="isFocused = 'WEBHOOK_URL'" (blur)="isFocused = ''" />
                   </nz-input-group>
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'WEBHOOK_URL' ||
                     (data.WEBHOOK_URL && isFocused === 'WEBHOOK_URL')
                   ">
@@ -319,24 +145,9 @@
           </div>
         </div>
       </div>
-
       <div nz-row>
         <div nz-col nzSpan="24" class="my-box">
           <div nz-row>
-            <!-- <div nz-col nzSpan="8">
-            <nz-form-item>
-              <nz-form-label nzRequired nzNoColon>Supported Currencies</nz-form-label>
-              <nz-form-control nzHasFeedback nzErrorTip="Please Select currencies">
-                <nz-select nzAllowClear nzPlaceHolder="Select Currencies" name="SUPPORTED_CURRENCIES"
-                  [(ngModel)]="data.SUPPORTED_CURRENCIES" nzShowSearch required nzMode="multiple" [nzMaxTagCount]="2">
-                  <nz-option *ngFor="let currency of CurrencyData" [nzValue]="currency.CURRENCY_NAME"
-                    [nzLabel]="currency.CURRENCY_NAME">
-                  </nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
-          </div> -->
-
             <div nz-col nzSpan="8">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Supported Currencies</nz-form-label>
@@ -350,33 +161,10 @@
                 </nz-form-control>
               </nz-form-item>
             </div>
-
-            <!-- <div nz-col nzSpan="8">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Minimum Amount</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Minimum Amount">
-                  <nz-input-group nzAddOnAfter="₹">
-                    <input nz-input name="MIN_AMOUNT" placeholder="Enter Minimum Amount" required
-                      [(ngModel)]="data.MIN_AMOUNT" (keypress)="commonFunction.forCostFunction($event)" (paste)="commonFunction.handlePaste($event)"
-                      autocomplete="off" maxlength="10" />
-                  </nz-input-group>
-
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                    data.MIN_AMOUNT!= undefined &&
-                    data.MIN_AMOUNT!= null &&
-                    data.MIN_AMOUNT!= ''
-                  ">
-                    {{ data.MIN_AMOUNT.length }}/10
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
-
             <div nz-col nzSpan="8">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Minimum Amount</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Minimum Amount">
-                  <!-- Minimum Amount Input with Add-On After -->
                   <nz-input-group nzAddOnAfter="₹">
                     <input nz-input name="MIN_AMOUNT" placeholder="Enter Minimum Amount" required
                       [(ngModel)]="data.MIN_AMOUNT" (keypress)="commonFunction.forCostFunction($event)"
@@ -384,8 +172,7 @@
                       (focus)="isFocused = 'MIN_AMOUNT'" (blur)="isFocused = ''" />
                   </nz-input-group>
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'MIN_AMOUNT' ||
                     (data.MIN_AMOUNT && isFocused === 'MIN_AMOUNT')
                   ">
@@ -393,32 +180,10 @@
                 </h6>
               </nz-form-item>
             </div>
-
-            <!-- <div nz-col nzSpan="8">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Maximum Amount</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Maximum Amount">
-                  <nz-input-group nzAddOnAfter="₹">
-                    <input nz-input name="MAX_AMOUNT" placeholder="Enter Maximum Amount" required
-                      [(ngModel)]="data.MAX_AMOUNT" (keypress)="commonFunction.onlynumdot($event)" autocomplete="off"
-                      maxlength="16" />
-                  </nz-input-group>
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                    data.MAX_AMOUNT!= undefined &&
-                    data.MAX_AMOUNT!= null &&
-                    data.MAX_AMOUNT!= ''
-                  ">
-                    {{ data.MAX_AMOUNT.length }}/16
-                  </h6>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
-
             <div nz-col nzSpan="8">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Maximum Amount</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Maximum Amount">
-                  <!-- Maximum Amount Input with Add-On After -->
                   <nz-input-group nzAddOnAfter="₹">
                     <input nz-input name="MAX_AMOUNT" placeholder="Enter Maximum Amount" required
                       [(ngModel)]="data.MAX_AMOUNT" (keypress)="commonFunction.forCostFunction($event)"
@@ -426,8 +191,7 @@
                       (focus)="isFocused = 'MAX_AMOUNT'" (blur)="isFocused = ''" />
                   </nz-input-group>
                 </nz-form-control>
-                <!-- Dynamic Character Count -->
-                <h6 style="color: red; font-size: 10px" *ngIf="
+                <h6 class="heading-txt" *ngIf="
                     isFocused === 'MAX_AMOUNT' ||
                     (data.MAX_AMOUNT && isFocused === 'MAX_AMOUNT')
                   ">
@@ -436,7 +200,6 @@
               </nz-form-item>
             </div>
           </div>
-
           <div nz-row>
             <div nz-col nzSpan="24">
               <div nz-row>
@@ -445,11 +208,6 @@
                     <nz-form-label nzNoColon>Settlement Time</nz-form-label>
                     <nz-form-control>
                       <nz-input-group nzSuffix="(Hrs)">
-                        <!-- <nz-select nzAllowClear="true" nzPlaceHolder="Select Settlement Time" name="settlementtime"
-                      [(ngModel)]="data.SETTLEMENT_TIME" nzShowSearch required>
-                      <nz-option *ngFor="let time of TimeData" [nzValue]="time.value"
-                        [nzLabel]="time.label"></nz-option>
-                    </nz-select> -->
                         <input nz-input name="SETTLEMENT_TIME" placeholder="Enter Settlement Time" required
                           (keypress)="this.numberOnly($event)" [(ngModel)]="data.SETTLEMENT_TIME" autocomplete="off"
                           maxlength="128" />
@@ -457,7 +215,6 @@
                     </nz-form-control>
                   </nz-form-item>
                 </div>
-
                 <div nz-col nzSpan="8">
                   <nz-form-item>
                     <nz-form-label nzNoColon>Mode</nz-form-label>
@@ -470,7 +227,6 @@
                     </nz-form-control>
                   </nz-form-item>
                 </div>
-
                 <div nz-col nzSpan="4">
                   <nz-form-item>
                     <nz-form-label nzNoColon>Status</nz-form-label>
@@ -488,25 +244,23 @@
     </nz-spin>
   </form>
 </div>
-
 <div class="footer">
-  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn footer-btn-margin-12">
     Cancel
   </button>
-
   <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
     (click)="save(false, websitebannerPage)" class="ant-btn ant-btn-primary">
     Save & Close
   </button>
-
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu>
-      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
-        <a class="footer-button" style="color: white!important" (click)="save(true, websitebannerPage)">Save & New</a>
+      <li nz-menu-item class="menuc footer-dropdown-item-white">
+        <a class="footer-button footer-dropdown-link-white" (click)="save(true, websitebannerPage)">
+          Save & New
+        </a>
       </li>
     </ul>
   </nz-dropdown-menu>
-
   <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
     (click)="save(false, websitebannerPage)">
     <span>Update & Close</span>

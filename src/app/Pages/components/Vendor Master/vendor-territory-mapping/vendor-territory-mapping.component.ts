@@ -4,7 +4,6 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 export class Data {
   COUNTRY_ID: any;
   COUNTRY_NAME: any;
@@ -12,7 +11,6 @@ export class Data {
   TERRITORY_NAME: any;
   IS_ACTIVE: boolean = true;
 }
-
 @Component({
   selector: 'app-vendor-territory-mapping',
   templateUrl: './vendor-territory-mapping.component.html',
@@ -24,41 +22,31 @@ export class VendorTerritoryMappingComponent {
   @Input() ROLE_ID;
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   COUNTRY_ID;
   isSpinning;
-
   countryData: any;
   territoryData: any;
-
   pageIndex = 1;
   pageSize = 10;
   sortValue: string = 'desc';
   sortKey: string = 'COUNTRY_NAME';
-
-  // Loading
   isLoading = true;
   countryloading = false;
   territoryloading = false;
   btnLoading = false;
   loadingRecords = false;
-
   dataList: any = [];
   addData: any = new Data();
   mappedTerritoryIds: number[] = [];
-
   ngOnInit(): void {
     this.getCountryData();
-    // this.getMappedData();
   }
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private modal: NzModalService
   ) { }
   changestatus(data, event) {
-
     if (!data.TERRITORY_IS_ACTIVE) {
       this.message.info('Territory is inactive', '');
       setTimeout(() => {
@@ -67,7 +55,6 @@ export class VendorTerritoryMappingComponent {
     } else {
     }
   }
-  // Coutry
   getCountryData() {
     this.countryloading = true;
     this.api.getAllCountryMaster(0, 0, '', 'asc', '').subscribe(
@@ -94,13 +81,10 @@ export class VendorTerritoryMappingComponent {
       }
     );
   }
-
-  // Fetch Territory based on country ID
   getTeritoryByCountry(countryId: any) {
     if (!countryId) {
-      // Reset territory if country is cleared or not selected
       this.addData.TERITORY_ID = null;
-      this.territoryData = []; // Reset the territory data
+      this.territoryData = []; 
       return;
     }
     var terFilt = '';
@@ -119,8 +103,6 @@ export class VendorTerritoryMappingComponent {
             this.mappedTerritoryIds = this.dataList.map(
               (item) => item.TERITORY_ID
             );
-
-            // Filter out the territories that are already mapped
             this.territoryData = fetchedTerritory.filter(
               (territory) => !this.mappedTerritoryIds.includes(territory.ID)
             );
@@ -144,21 +126,16 @@ export class VendorTerritoryMappingComponent {
         }
       );
   }
-
   Cancel() { }
-
   reset(TerritoryMappingForm: any) {
     this.addData.COUNTRY_ID = null;
     this.addData.TERITORY_ID = [];
-
     TerritoryMappingForm.form.markAsPristine();
     TerritoryMappingForm.form.markAsUntouched();
   }
-
   close() {
     this.drawerClose();
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -167,22 +144,18 @@ export class VendorTerritoryMappingComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.getMappedData();
   }
-
   getMappedData() {
     this.loadingRecords = true;
     var sort: string;
@@ -191,7 +164,6 @@ export class VendorTerritoryMappingComponent {
     } catch (error) {
       sort = '';
     }
-
     this.api
       .getVendorTerritoryMappedData(
         0,
@@ -205,7 +177,6 @@ export class VendorTerritoryMappingComponent {
           if (data['code'] == 200) {
             this.dataList = data['data'];
             this.originalMappingData = [...this.dataList];
-
             this.loadingRecords = false;
           } else {
             this.dataList = [];
@@ -227,7 +198,6 @@ export class VendorTerritoryMappingComponent {
         }
       );
   }
-
   add(TerritoryMappingForm: any): void {
     if (
       this.addData.COUNTRY_ID == 0 ||
@@ -245,7 +215,6 @@ export class VendorTerritoryMappingComponent {
       return;
     } else {
       this.btnLoading = true;
-
       const selectedTerritory = this.addData.TERITORY_ID.map((territoryId) => {
         const territory = this.territoryData.find(
           (ter) => ter.ID === territoryId
@@ -258,56 +227,40 @@ export class VendorTerritoryMappingComponent {
       const selectedCountry = this.countryData.find(
         (data) => data.ID === this.addData.COUNTRY_ID
       )?.NAME;
-
       selectedTerritory.forEach((territory) => {
         const entry = {
           COUNTRY_NAME: selectedCountry,
           COUNTRY_ID: this.addData.COUNTRY_ID,
           ...territory,
-          IS_ACTIVE: true, // Default status
+          IS_ACTIVE: true, 
         };
-
-        // Prevent duplicate entries
         const exists = this.dataList.some(
           (item) =>
             item.COUNTRY_ID === entry.COUNTRY_ID &&
             item.TERITORY_ID === entry.TERITORY_ID
         );
-
         if (!exists) {
           this.dataList.push(entry);
         }
-        //
         this.dataList = [...[], ...this.dataList];
       });
-
-      // Reset the inputs
       this.addData.TERITORY_ID = null;
       this.addData.COUNTRY_ID = null;
-
-      // Notify success
       this.message.success('Territory added successfully.', '');
       this.btnLoading = false;
       this.territoryData = [];
       this.reset(TerritoryMappingForm);
     }
   }
-
-  // Save Function
   save() {
     this.isSpinning = true;
-
-    // Proceed with saving data if all entries are valid
     const dataToSave = this.dataList.map((data) => ({
       TERITORY_ID: data.TERITORY_ID,
       IS_ACTIVE: data.IS_ACTIVE,
     }));
-
-    // Call the API to save the task mapping data
     if (dataToSave.length >= 1) {
       this.api.mapVendorTerritoryMapping(this.data.ID, this.data.USER_ID, this.data.NAME, 1, dataToSave).subscribe(
         (successCode) => {
-
           if (successCode['code'] === 200) {
             this.message.success(
               'Territory successfully mapped to the vendor.',
@@ -330,11 +283,9 @@ export class VendorTerritoryMappingComponent {
       this.isSpinning = false;
     }
   }
-
   originalMappingData: any[] = [];
   searchmappeddata;
   filtereddatalist1: any[] = [];
-
   handleEnterKey(event: any): void {
     if (event.key === 'Enter') {
       this.isSpinning = true;
@@ -361,7 +312,6 @@ export class VendorTerritoryMappingComponent {
       this.isSpinning = false;
     }
   }
-
   SearchMappingdata(data: string): void {
     if (data.trim().length >= 3) {
       this.isSpinning = true;

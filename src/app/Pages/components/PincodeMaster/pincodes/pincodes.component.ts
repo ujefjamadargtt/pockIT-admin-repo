@@ -64,41 +64,37 @@ export class PincodesComponent {
     this.getPincodeData();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
   isCountryFilterApplied = false;
   onCountryChange(): void {
-    //this.search();
     if (this.selectedCountries?.length) {
       this.search();
-      this.isCountryFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isCountryFilterApplied = true; 
     } else {
       this.search();
-      this.isCountryFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isCountryFilterApplied = false; 
     }
   }
   isStateFilterApplied = false;
   onStateChange(): void {
-    //this.search();
     if (this.selectedStates?.length) {
       this.search();
-      this.isStateFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isStateFilterApplied = true; 
     } else {
       this.search();
-      this.isStateFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isStateFilterApplied = false; 
     }
   }
   isDistFilterApplied = false;
   onDistChange(): void {
-    //this.search();
     if (this.selectedDist?.length) {
       this.search();
-      this.isDistFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isDistFilterApplied = true; 
     } else {
       this.search();
-      this.isDistFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isDistFilterApplied = false; 
     }
   }
   sort(params: NzTableQueryParams): void {
@@ -106,20 +102,16 @@ export class PincodesComponent {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
@@ -127,7 +119,6 @@ export class PincodesComponent {
   selectedStates: any = [];
   selectedDist: any = [];
   selectedPincodes: any = [];
-
   disttext: string = '';
   isPincodeFilterApplied = false;
   distkeyup(event) {
@@ -177,7 +168,6 @@ export class PincodesComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
@@ -188,20 +178,15 @@ export class PincodesComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -212,62 +197,42 @@ export class PincodesComponent {
           .join(' OR ') +
         ')';
     }
-
-    // Country Filter
     if (this.selectedCountries.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; 
     }
-
-    // State Filter
     if (this.selectedStates.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`; 
     }
-
     if (this.selectedDist.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `DISTRICT_NAME IN ('${this.selectedDist.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `DISTRICT_NAME IN ('${this.selectedDist.join("','")}')`; 
     }
-    // if (this.Officetext !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') +
-    //     `OFFICE_NAME LIKE '%${this.Officetext.trim()}%'`;
-    // }
-
-    // City Filter
     if (this.Pincodetext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `PINCODE_NUMBER LIKE '%${this.Pincodetext.trim()}%'`;
     }
-
-    // Pincode Filter
     if (this.pincodeFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `PINCODE_FOR = '${this.pincodeFilter}'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-    // Call API with updated search query
     this.api
       .getAllPincode(
         this.pageIndex,
@@ -283,8 +248,6 @@ export class PincodesComponent {
             this.totalRecords = data['count'];
             this.dataList = data['data'];
             this.TabId = data['TAB_ID'];
-
-            //this.loadFilters();
           } else if (data['code'] == 400) {
             this.loadingRecords = false;
             this.dataList = [];
@@ -311,45 +274,36 @@ export class PincodesComponent {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   add(): void {
     this.drawerTitle = 'Create New Pincode';
     this.drawerData = new pincode();
     this.drawerVisible = true;
   }
-
   edit(data: pincode): void {
     this.drawerTitle = 'Update Pincode Details';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   close(): void {
     this.visible = false;
   }
-
   close1(accountMasterPage: NgForm) {
     this.drawerVisible1 = false;
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
-
   nametext: string = '';
   emailtext: string = '';
   statusFilter: string | undefined = undefined;
@@ -357,41 +311,34 @@ export class PincodesComponent {
   countryVisible: boolean = false;
   stateVisible: boolean = false;
   PINCODEVisible: boolean = false;
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
   onSortClick(event: MouseEvent) {
-    event.stopPropagation(); // Prevent sort from firing when clicking the header
+    event.stopPropagation(); 
   }
   showcolumn = [
     { label: 'Country Name', key: 'COUNTRY_NAME', visible: true },
     { label: 'State Name', key: 'STATE_NAME', visible: true },
     { label: 'District Name', key: 'DISTRICT_NAME', visible: true },
-    // { label: 'Office Name', key: 'OFFICE_NAME', visible: true },
     { label: 'Pincode', key: 'PINCODE_NUMBER', visible: true },
     { label: 'Status', key: 'IS_ACTIVE', visible: true },
   ];
-
-  // Check if the column is visible
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   reset(): void {
     this.searchText = '';
     this.nametext = '';
     this.search();
   }
-
   reset1(): void {
     this.searchText = '';
     this.emailtext = '';
     this.search();
   }
-
   countryData: any = [];
   getCountyData() {
     this.api
@@ -425,7 +372,6 @@ export class PincodesComponent {
       }
     );
   }
-
   stateData: any = [];
   getStateData() {
     this.api
@@ -460,15 +406,12 @@ export class PincodesComponent {
         }
       });
   }
-
   navigateToMastersMenu(): void {
     this.router.navigate(['/masters/menu']);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   isfilterapply: boolean = false;
   distinctData: any = [];
   onFilterClick(columnKey: string): void {
@@ -486,7 +429,6 @@ export class PincodesComponent {
       }
     );
   }
-  // new filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -498,15 +440,12 @@ export class PincodesComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
   filterData: any;
   currentClientId = 1;
-
   openfilter() {
     this.drawerTitle = 'Pincode Filter';
     this.drawerFilterVisible = true;
-
     this.filterFields[0]['options'] = this.countryData;
     this.filterFields[1]['options'] = this.stateData;
     this.filterFields[2]['options'] = this.distData;
@@ -518,13 +457,9 @@ export class PincodesComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -541,7 +476,6 @@ export class PincodesComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -559,11 +493,9 @@ export class PincodesComponent {
       },
     ];
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'COUNTRY_NAME',
@@ -610,20 +542,6 @@ export class PincodesComponent {
       options: [],
       placeholder: 'Select District',
     },
-    // {
-    //   key: 'OFFICE_NAME',
-    //   label: 'Office Name',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Office Name',
-    // },
     {
       key: 'PINCODE_NUMBER',
       label: 'Pincode',
@@ -653,7 +571,6 @@ export class PincodesComponent {
       ],
       placeholder: 'Select Pincode For',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -669,7 +586,6 @@ export class PincodesComponent {
       placeholder: 'Select Status',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
@@ -678,8 +594,7 @@ export class PincodesComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -693,53 +608,39 @@ export class PincodesComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with ' AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  //TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
   TabId: number;
-
   whichbutton: any;
-
   updateButton: any;
   updateBtn: any;
   filterloading: boolean = false;
   isDeleting: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -747,13 +648,12 @@ export class PincodesComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -768,21 +668,15 @@ export class PincodesComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -796,7 +690,6 @@ export class PincodesComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -805,7 +698,6 @@ export class PincodesComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -822,9 +714,7 @@ export class PincodesComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -850,14 +740,11 @@ export class PincodesComponent {
       }
     );
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
@@ -868,10 +755,7 @@ export class PincodesComponent {
     return this.drawerfilterClose.bind(this);
   }
   isLoading = false;
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -880,8 +764,6 @@ export class PincodesComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -898,7 +780,6 @@ export class PincodesComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -915,8 +796,6 @@ export class PincodesComponent {
       groups: [],
     },
   ];
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
@@ -926,7 +805,6 @@ export class PincodesComponent {
     this.filterFields[2]['options'] = this.distData;
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -934,15 +812,11 @@ export class PincodesComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-  //pincodeFilter
   pincodeFilter: string | undefined = undefined;
-
   onPincodeFilterChange(selectedStatus: string) {
     this.pincodeFilter = selectedStatus;
     this.search(true);
   }
-
   listOfPincodeFilter: any[] = [
     { text: 'For Service', value: 'S' },
     { text: 'For Shop', value: 'I' },

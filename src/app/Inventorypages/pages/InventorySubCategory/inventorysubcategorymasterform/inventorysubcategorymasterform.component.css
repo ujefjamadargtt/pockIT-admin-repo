@@ -1,17 +1,73 @@
-
-  .header {
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    border-top: 1px solid rgb(232, 232, 232);
-    padding: 10px 16px;
-    text-align: right;
-    right: 0px;
-  }
-  
-  nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+.header {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  right: 0px;
+}
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.invsubcatform-select-width {
+  width: 100%;
+}
+.invsubcatform-char-count {
+  color: red;
+  font-size: 10px;
+}
+.invsubcatform-switch-line {
+  line-height: 1.9;
+}
+.invsubcatform-delete-icon {
+  cursor: pointer;
+  color: red;
+  margin-left: 10px;
+}
+.invsubcatform-upload-btn {
+  height: 28px;
+  padding: 0px 7px;
+  font-size: 10px;
+  width: 40%;
+}
+.invsubcatform-file-hidden {
+  display: none !important;
+}
+.invsubcatform-image-mt {
+  margin-top: 10px;
+}
+.invsubcatform-image-uploaded {
+  width: 128px;
+  height: auto;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+.invsubcatform-image-center {
+  align-items: center;
+}
+.invsubcatform-image-preview {
+  height: 128px;
+  width: 128px;
+  overflow: auto;
+}
+.invsubcatform-cancel-btn {
+  margin-right: 8px;
+}
+.invsubcatform-menu-item {
+  border-radius: 4px;
+  color: white !important;
+}
+.invsubcatform-menu-link {
+  color: white !important;
+}
+.invsubcatform-crop-container {
+  height: 500px;
+  overflow: scroll;
+}
+.invsubcatform-text-center {
+  text-align: center;
+}

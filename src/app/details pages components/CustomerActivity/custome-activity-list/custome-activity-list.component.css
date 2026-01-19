@@ -1,41 +1,238 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select{
 width: 200px;
 padding: 8px;
 display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.header-row {
+  margin-bottom: 16px;
+}
+.back-arrow-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-controls {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-button-container {
+  width: 47px;
+}
+.filter-toggle-btn {
+  width: 100%;
+}
+.search-container {
+  margin-right: 0px;
+}
+.search-input-group {
+  min-width: 250px;
+}
+.search-input {
+  width: 100%;
+}
+.search-btn {
+  padding: 0 12px;
+}
+.filter-content-row {
+  padding-top: 0px;
+}
+.filter-loading-container {
+  text-align: center;
+  padding: 20px;
+}
+.filter-grid {
+  margin-bottom: 16px;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+  min-height: 40px;
+}
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+  flex: 1;
+}
+.truncated-filter-name,
+.full-filter-name {
+  display: inline-block;
+}
+.empty-filter-name {
+  display: inline-block;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0;
+  flex: 1;
+  min-width: 60px;
+  text-align: center;
+  white-space: nowrap;
+}
+.tag-icon {
+  font-size: 10px !important;
+}
+.no-filters-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  padding: 20px;
+}
+.filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-btn {
+  margin-right: 10px;
+}
+.new-filter-btn {
+  margin-right: 10px;
+}
+.data-table {
+  white-space: pre-line;
+  margin-top: 16px;
+}
+.view-jobs-header,
+.customer-name-header,
+.email-header,
+.mobile-header,
+.customer-type-header,
+.status-header {
+  font-weight: bold;
+  text-align: center;
+}
+.table-row {
+  text-align: center;
+}
+.view-jobs-cell {
+  white-space: nowrap;
+}
+.view-jobs-tag {
+  cursor: pointer;
+  font-weight: 600;
+}
+.view-jobs-icon {
+  font-size: 15px;
+}
+.customer-name-cell {
+  text-align: left;
+}
+.truncated-customer-name,
+.full-customer-name {
+  cursor: pointer;
+}
+.empty-value {
+  color: #999;
+}
+.email-cell {
+  text-align: left;
+}
+.email-content {
+  text-align: left;
+  display: block;
+}
+.truncated-email,
+.full-email {
+  display: inline-block;
+}
+.empty-value-center {
+  text-align: center;
+  color: #999;
+}
+.mobile-cell {
+  text-align: center;
+}
+.mobile-content {
+  white-space: nowrap;
+}
+.customer-type-cell {
+  text-align: center;
+}
+.customer-type-content {
+  font-weight: 500;
+}
+.status-cell {
+  text-align: center;
+}
+.status-icon-active,
+.status-icon-inactive {
+  font-size: 18px;
+}
+.filter-icon {
+  margin-left: 4px;
+  cursor: pointer;
+}
+.filter-search-input {
+  width: 100%;
+}
+.clear-filter-icon {
+  cursor: pointer;
+  color: #999;
+}
+.search-filter-icon {
+  color: #999;
+}
+.filter-text-display {
+  text-align: center;
+  font-size: 14px;
+  word-wrap: break-word;
+  padding: 8px;
 }

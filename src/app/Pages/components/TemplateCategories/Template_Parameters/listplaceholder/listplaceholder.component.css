@@ -1,11 +1,140 @@
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
-
   .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
+    max-width: 100%; 
     display: inline-block;
   }
+.back-arrow-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.flex-end-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-button-container {
+  width: 47px;
+}
+.new-button-container {
+  margin-right: 0px;
+}
+.filter-row-top {
+  padding-top: 0px;
+}
+.spin-center-container {
+  text-align: center;
+}
+.filter-grid {
+  margin-bottom: 8px;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card-custom {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.filter-card-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-text {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-tags-row {
+  margin-top: 7px;
+}
+.filter-tags-container {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-tag-edit, .filter-tag-apply, .filter-tag-clear, .filter-tag-delete, .filter-tag-view {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-tag-icon {
+  font-size: 10px !important;
+}
+.filter-tag-view {
+  margin-right: 0px;
+}
+.no-data-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-actions-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-btn {
+  margin-right: 10px;
+}
+.new-filter-btn {
+  margin-right: 10px;
+}
+.table-row-margin {
+  margin-top: 10px;
+}
+.action-header {
+  font-weight: bold;
+  text-align: center;
+}
+.label-header {
+  text-align: center;
+}
+.template-header {
+  font-weight: bold;
+  text-align: center;
+}
+.status-header {
+  font-weight: bold;
+  text-align: center;
+}
+.table-row-center {
+  text-align: center;
+}
+.edit-tag {
+  cursor: pointer;
+}
+.edit-icon {
+  font-size: 15px;
+}
+.label-cell {
+  text-align: center;
+}
+.status-cell {
+  text-align: center;
+}
+.full-width-select {
+  width: 100%;
+}
+.center-text {
+  text-align: center;
+}
+.drawerBodyStyle {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}

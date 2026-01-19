@@ -1,219 +1,430 @@
 .container {
   padding: 16px;
 }
-
 .header-row {
   margin-bottom: 16px;
 }
-
 .map-marker {
   padding: 8px;
   background: #f5f5f5;
   margin-bottom: 16px;
   border: 1px solid #d9d9d9;
 }
-
 .route span {
   display: inline-block;
   margin-right: 8px;
 }
-
-
 :host ::ng-deep .ant-card-head {
   border-bottom: none;
   padding: 0px 15px;
   min-height: 0px;
 }
-
 :host ::ng-deep .ant-card-head-title {
   border-bottom: none;
   padding: 10px 0px 5px 0px;
 }
-
 :host ::ng-deep .ant-card-body {
   padding: 0px 0px;
 }
 .truncate-text {
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-max-width: 100%;
-/* Adjust as needed */
-display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
 }
-
-/* width */
 ::-webkit-scrollbar {
-width: 5px;
-height: 5px;
+  width: 5px;
+  height: 5px;
 }
-
-/* Track */
 ::-webkit-scrollbar-track {
-box-shadow: inset 0 0 5px grey; 
-border-radius: 10px;
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
 }
-
-/* Handle */
 ::-webkit-scrollbar-thumb {
-background: grey; 
-border-radius: 10px;
+  background: grey;
+  border-radius: 10px;
 }
-
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-background: grey; 
+  background: grey;
 }
-
-.cardstyle{
-background-color: #fff;
+.cardstyle {
+  background-color: #fff;
   cursor: pointer;
   padding: 15px;
   box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
   border: 1px solid #efefef;
   border-radius: 10px;
 }
-
-.cardstyle1111{
-background-color: #c1c8df33;
+.cardstyle1111 {
+  background-color: #c1c8df33;
   cursor: pointer;
   padding: 8px;
-  /* box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset; */
-  /* box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px; */
-  /* box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; */
   border: 1px solid #efefef;
   border-radius: 10px;
 }
-
-
 .mainnam {
-/* color: #000; */
-font-size: 11px !important;
-font-weight: 600;
-
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
+  font-size: 11px !important;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
 .subname {
-color: #4c4c4ceb;
-font-size: 12px !important;
-font-weight: 500;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
+  color: #4c4c4ceb;
+  font-size: 12px !important;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .subnam {
-color: #4c4c4ceb;
-font-size: 12px !important;
-font-weight: 500;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
+  color: #4c4c4ceb;
+  font-size: 12px !important;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
 .mbsc-fr-inline.mbsc-calendar .mbsc-fr-w {
-background: #fff;
+  background: #fff;
 }
-
-
-
-
 .checkbox-label {
-
-width:220px;
-max-height: 100px; /* Adjust the height based on how much you want to show */
-overflow-y: auto; /* Enables vertical scrolling */
-display: flex;
-/* flex-direction: column;  */
+  width: 220px;
+  max-height: 100px;
+  overflow-y: auto;
+  display: flex;
 }
-
 .checkbox-item {
-margin-right: 30px;
-display: flex;
-flex-direction: column; /* Aligns each checkbox in a vertical stack */
+  margin-right: 30px;
+  display: flex;
+  flex-direction: column;
 }
-
 .nz-checkbox-group {
-margin-right: 30px;
-display: flex;
-/* flex-direction: column; */
-gap: 10px; /* Adjust gap between each checkbox */
+  margin-right: 30px;
+  display: flex;
+  gap: 10px;
 }
 .ant-checkbox-group-item {
-margin-right: 40px !important;
+  margin-right: 40px !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .check-container {
-max-height: 336px; /* Adjust this height as needed */
-overflow-y: auto; /* Adds vertical scrollbar if content overflows */
-scrollbar-width: thin; /* For Firefox */
-scrollbar-color: #888 #f1f1f1; /* For Firefox */
+  max-height: 336px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 }
-
-/* Custom styles for WebKit browsers (Chrome, Safari) */
 .check-container::-webkit-scrollbar {
-width: 8px; /* Width of the scrollbar */
+  width: 8px;
 }
-
 .check-container::-webkit-scrollbar-track {
-background: #f1f1f1; /* Background color of the scrollbar track */
+  background: #f1f1f1;
 }
-
 .check-container::-webkit-scrollbar-thumb {
-background: #888; /* Color of the scrollbar thumb */
-border-radius: 4px; /* Rounded corners for the scrollbar thumb */
+  background: #888;
+  border-radius: 4px;
 }
-
 .check-container::-webkit-scrollbar-thumb:hover {
-background: #555; /* Color of the scrollbar thumb on hover */
+  background: #555;
 }
-
 .check-container {
-height: 100%;
-max-height: 165px; /* Adjust height as needed */
-overflow-y: auto; /* Add vertical scroll if content overflows */
-padding: 8px; /* Add padding */
-border: 1px solid #d9d9d9; /* Light border */
-border-radius: 4px; /* Rounded corners */
-background-color: #fafafa; /* Light background color */
+  height: 100%;
+  max-height: 165px;
+  overflow-y: auto;
+  padding: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background-color: #fafafa;
 }
-
 .checkbox-container {
-display: flex;
-align-items: center;
-margin-bottom: 5px; /* Space between checkboxes */
-padding: 4px; /* Space inside each checkbox container */
-border-radius: 4px; /* Rounded corners */
-transition: background-color 0.3s ease; /* Smooth background color transition */
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
-
 .checkbox-container:hover {
-background-color: #e6f7ff; /* Highlight color on hover */
+  background-color: #e6f7ff;
 }
-
 .chapter-checkbox {
-display: flex;
-/* align-items: center; */
-width: 100%; /* Ensure it takes full width */
+  display: flex;
+  width: 100%;
 }
-
-
 :host::ng-deep .ant-picker-suffix {
-display: none;
+  display: none;
+}
+.sched-col-left-border {
+  padding: 10px;
+  border: 1px solid #0000001f;
+}
+.sched-form-item-mb4 {
+  margin-bottom: 4px !important;
+}
+.sched-width-full {
+  width: 100%;
+}
+.sched-text-center {
+  text-align: center;
+}
+.sched-text-end {
+  text-align: end;
+}
+.sched-pending-jobs-header {
+  font-weight: 600;
+  font-size: 12px;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+.sched-scrollable-container {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 10px;
+  max-height: 55vh;
+  overflow: auto;
+}
+.sched-order-card {
+  margin-bottom: 5px;
+}
+.sched-order-header {
+  padding-bottom: 5px;
+}
+.sched-order-number {
+  font-weight: 600;
+  font-size: 12px !important;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+.sched-estimated-time-text {
+  font-size: 9px !important;
+}
+.sched-schedule-order-tag {
+  font-size: 9px !important;
+}
+.sched-job-card-item {
+  margin-bottom: 5px;
+}
+.sched-text-start {
+  text-align: start;
+}
+.sched-order-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+  font-size: 11px !important;
+}
+.sched-customer-info {
+  font-size: 10px !important;
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-start;
+}
+.sched-service-amount {
+  font-size: 10px !important;
+  margin-top: 4px;
+  text-align: end;
+  font-weight: 600;
+}
+.sched-location-icon {
+  align-self: center;
+  margin-bottom: -6px;
+}
+.sched-service-address-text {
+  font-size: 10px !important;
+}
+.sched-pincode-text {
+  font-size: 10px !important;
+}
+.sched-territory-text {
+  font-size: 10px !important;
+  text-align: end;
+}
+.sched-service-name-text {
+  font-size: 10px !important;
+  text-align: start;
+}
+.sched-expected-date-text {
+  font-size: 10px !important;
+  text-align: start;
+}
+.sched-estimated-time-start {
+  font-size: 10px !important;
+  text-align: start;
+}
+.sched-remote-job-end {
+  font-size: 10px !important;
+  text-align: end;
+}
+.sched-remote-job-badge {
+  border: 1px solid #ffa0af !important;
+  padding: 0px 5px;
+  border-radius: 8px;
+  color: #ff7676 !important;
+  font-weight: 500;
+}
+.sched-action-start {
+  font-size: 10px !important;
+  text-align: start;
+  margin-top: 5px;
+}
+.sched-action-center {
+  font-size: 10px !important;
+  text-align: center;
+  margin-top: 5px;
+}
+.sched-schedule-tag {
+  border-top-left-radius: 40%;
+  border-top-right-radius: 40%;
+  font-size: 10px !important;
+}
+.sched-action-end {
+  font-size: 12px !important;
+  text-align: end;
+  margin-top: 5px;
+}
+.sched-col-right-border {
+  padding: 10px;
+  border: 1px solid #0000001f;
+}
+.sched-form-item-margin-zero {
+  margin: 0px !important;
+}
+.sched-text-right {
+  text-align: right;
+}
+.sched-date-picker-center {
+  text-align: center;
+  align-content: space-evenly;
+  justify-content: center;
+  justify-items: center;
+  text-align-last: center;
+}
+.sched-text-left {
+  text-align: left;
+}
+.sched-time-display {
+  justify-items: end;
+  align-self: center;
+  text-align: end;
+}
+.sched-time-text {
+  font-weight: 800;
+  text-decoration: underline;
+}
+.sched-table-max-height {
+  max-height: 70vh;
+}
+.sched-table-margin-top {
+  margin-top: 10px;
+}
+.sched-table-header-name {
+  font-size: 11px !important;
+  padding: 5px 6px 5px 6px;
+  background-color: #f0f0f0;
+  width: 150px;
+  z-index: 20;
+}
+.sched-table-header-column {
+  font-size: 10px !important;
+  padding: 1px;
+  width: 44px;
+}
+.sched-table-body-name {
+  font-size: 10px !important;
+  padding: 5px 2px 5px 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid #ccc;
+  width: 150px;
+  z-index: 20;
+}
+.sched-table-body-cell {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  font-size: 10px !important;
+  padding: 0px;
+  border: 1px solid #ccc;
+  width: 44px;
+}
+.sched-table-cell-bar {
+  position: absolute;
+  top: 11px;
+  z-index: 10;
+  border-radius: 13px;
+  transform: translate(-50%, -50%);
+  background-color: lightgray;
+  max-height: 16px;
+  min-height: 16px;
+  padding: 1px 0px;
+  font-weight: normal;
+}
+.sched-cell-text-small {
+  font-size: 10px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  display: block;
+  width: 100%;
+  text-overflow: ellipsis !important;
+}
+.sched-cell-text-medium {
+  font-size: 10px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: block;
+  width: 100%;
+}
+.sched-cell-text-large {
+  font-size: 10px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: block;
+  width: 100%;
+}
+.sched-popover-padding {
+  padding: 5px !important;
+}
+.sched-popover-jobno {
+  font-size: 11px !important;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+.sched-popover-tech-name {
+  font-size: 10px !important;
+}
+.sched-popover-actions {
+  margin-top: 2px;
+}
+.sched-popover-tag-cursor {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.sched-stats-container {
+  text-align: end;
+  margin-top: 10px;
+}
+.sched-modal-title {
+  font-size: 15px;
+}
+.sched-modal-hr {
+  margin: 8px 0;
+}
+.sched-modal-p {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.sched-modal-link-container {
+  text-align: center;
+  margin-top: 5px;
+}
+.sched-modal-link-tag {
+  font-size: 9px !important;
+  padding: 2px 10px;
+  color: #e76118 !important;
+}
+.sched-modal-link {
+  color: #e76118 !important;
 }

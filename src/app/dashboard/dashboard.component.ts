@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonFunctionService } from '../Service/CommonFunctionService';
 import { ApiServiceService } from '../Service/api-service.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -10,7 +9,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class DashboardComponent implements OnInit {
   public commonFunction = new CommonFunctionService();
-
   userName = sessionStorage.getItem('userName');
   decreptedUserName = this.userName
     ? this.commonFunction.decryptdata(this.userName)
@@ -54,13 +52,9 @@ export class DashboardComponent implements OnInit {
                 data['body']['data'][0] != undefined
               ) {
                 this.is_show = true;
-                // const unsafeUrl =
-                //   data['body']['data'][0]['SNAPSHOT_LINK'] +
-                //   '?theme=light&fullscreen=true&kiosk=1';
                 const unsafeUrl =
                   data['body']['data'][0]['SNAPSHOT_LINK'] +
                   '?theme=light&fullscreen=true&kiosk';
-                // 'http://localhost:3000/dashboard/snapshot/4yrnlZwN1mtAinuLDHAmcQ5oOu4TrpeR?theme=light&fullscreen=true&kiosk=1';
                 this.grafanaUrl =
                   this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
               }
@@ -69,7 +63,6 @@ export class DashboardComponent implements OnInit {
           (err) => { }
         );
     }
-
     if (
       this.rolemainname == null ||
       this.rolemainname == undefined ||

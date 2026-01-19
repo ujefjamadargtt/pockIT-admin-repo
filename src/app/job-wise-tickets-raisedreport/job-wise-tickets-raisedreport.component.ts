@@ -8,7 +8,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-job-wise-tickets-raisedreport',
   templateUrl: './job-wise-tickets-raisedreport.component.html',
@@ -16,7 +15,6 @@ import { ExportService } from 'src/app/Service/export.service';
 })
 export class JobWiseTicketsRaisedreportComponent {
   formTitle = 'Job Details Report';
-
   pageIndex = 1;
   pageSize = 10;
   totalRecords = 1;
@@ -38,21 +36,14 @@ export class JobWiseTicketsRaisedreportComponent {
     ['SUB_CATEGORY_NAME', 'SUB_CATEGORY_NAME'],
     ['SERVICE_NAME', 'SERVICE_NAME'],
   ];
-
   isSpinning = false;
   filterClass: string = 'filter-invisible';
   today = new Date();
-  // current = new Date()
-
   CurrentValue: any = new Date();
   START_DATE: any = new Date();
   END_DATE: any = new Date();
-
   endOpen = false;
   startOpen = false;
-
-  //Edit Code 3
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -69,7 +60,6 @@ export class JobWiseTicketsRaisedreportComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
@@ -78,23 +68,17 @@ export class JobWiseTicketsRaisedreportComponent {
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   ngOnInit(): void {
-    // this.selectedDate[0] = new Date();
-    // this.selectedDate[1] = new Date();
     const now = new Date();
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
     const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-
     this.selectedDate[0] = firstDay;
     this.selectedDate[1] = lastDay;
     this.search();
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -108,93 +92,67 @@ export class JobWiseTicketsRaisedreportComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-  // startOpen: boolean = false
-
   onStartChange(date: Date): void {
     this.START_DATE = date;
   }
   onEndChange(date: Date): void {
     this.END_DATE = date;
   }
-
   handleStartOpenChange(open: boolean): void {
     if (!open) {
       this.endOpen = true;
     }
   }
-
   handleEndOpenChange(open: boolean): void {
     this.endOpen = open;
   }
-
   disabledStartDate = (START_DATE: Date): boolean => {
     if (!START_DATE || !this.END_DATE) {
       return false;
     }
     return START_DATE.getTime() > this.END_DATE;
   };
-
   current = new Date();
-
   disabledEndDate = (END_DATE: Date): boolean => {
     if (!END_DATE) {
       return false;
     }
-
     var previousDate = new Date(this.START_DATE);
     previousDate.setDate(previousDate.getDate() + -1);
-
     return END_DATE <= new Date(previousDate);
   };
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
-  // START_DATE: any = this.datePipe.transform(this.START_DATE, 'yyyy-MM-dd')
-  // END_DATE: any = this.datePipe.transform(this.END_DATE, 'yyyy-MM-dd')
-
   applyFilter() {
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     this.filterQuery = '';
     this.START_DATE = this.datePipe.transform(this.START_DATE, 'yyyy-MM-dd');
     this.END_DATE = this.datePipe.transform(this.END_DATE, 'yyyy-MM-dd');
-
     var filter = '';
     filter = this.filterQuery;
     var likeQuery = '';
-
-    // if (this.SUPPORT_USERS != null || this.SUPPORT_USERS.length > 0 ) {
-    //   this.USER_ID = this.SUPPORT_USERS
-    // }
     if (this.START_DATE != null) {
       this.START_DATE = this.START_DATE;
     }
     if (this.END_DATE != null) {
       this.END_DATE = this.END_DATE;
     }
-
     this.search(true);
     this.isFilterApplied = 'primary';
   }
-
   clearFilter() {
     this.filterClass = 'filter-invisible';
     this.isFilterApplied = 'default';
     this.filterQuery = '';
-    // this.START_DATE = '';
-    // this.END_DATE = '';
     this.START_DATE = new Date();
     this.END_DATE = new Date();
     this.START_DATE = this.datePipe.transform(this.START_DATE, 'yyyy-MM-dd');
@@ -202,19 +160,15 @@ export class JobWiseTicketsRaisedreportComponent {
     const now = new Date();
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
     const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-
     this.selectedDate[0] = firstDay;
     this.selectedDate[1] = lastDay;
-
     this.search(true);
   }
   branchData = [];
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   onKeyup(event: KeyboardEvent, eventttt: any): void {
     if (
       this.JobCardNoText.length >= 3 &&
@@ -231,7 +185,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isJobCardNoFilterApplied = false;
     }
-
     if (
       this.OrderNoText.length >= 3 &&
       event.key === 'Enter' &&
@@ -247,7 +200,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isOrderNoFilterApplied = false;
     }
-
     if (
       this.TechnicianNameText.length >= 3 &&
       event.key === 'Enter' &&
@@ -263,7 +215,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isTechnicianNameFilterApplied = false;
     }
-
     if (
       this.TechMobText.length >= 3 &&
       event.key === 'Enter' &&
@@ -279,7 +230,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isTechMobFilterApplied = false;
     }
-
     if (
       this.CustNameText.length >= 3 &&
       event.key === 'Enter' &&
@@ -295,7 +245,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isCustNameFilterApplied = false;
     }
-
     if (
       this.CustMobileText.length >= 3 &&
       event.key === 'Enter' &&
@@ -311,7 +260,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isCustMobFilterApplied = false;
     }
-
     if (
       this.CustTypeText.length >= 3 &&
       event.key === 'Enter' &&
@@ -327,7 +275,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isCustTypeFilterApplied = false;
     }
-
     if (
       this.TerritoryNameText.length >= 3 &&
       event.key === 'Enter' &&
@@ -343,7 +290,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isTerritoryNameFilterApplied = false;
     }
-
     if (
       this.ServiceNameText.length >= 3 &&
       event.key === 'Enter' &&
@@ -359,7 +305,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isServiceFilterApplied = false;
     }
-
     if (
       this.ServiceAmountText.length >= 3 &&
       event.key === 'Enter' &&
@@ -375,7 +320,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isServiceAmountFilterApplied = false;
     }
-
     if (
       this.ServiceAddressText.length >= 3 &&
       event.key === 'Enter' &&
@@ -391,7 +335,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
       this.isServiceAddressFilterApplied = false;
     }
-
     if (
       this.RemarkText.length >= 3 &&
       event.key === 'Enter' &&
@@ -408,12 +351,10 @@ export class JobWiseTicketsRaisedreportComponent {
       this.isRemarkFilterApplied = false;
     }
   }
-
   reset() {
     this.JobCardNoText = '';
     this.jobcardDateText = null;
     this.RemarkText = '';
-
     this.AssignedDateText = '';
     this.JobDateText = '';
     this.CustMobileText = '';
@@ -431,7 +372,6 @@ export class JobWiseTicketsRaisedreportComponent {
     this.JobDateVisible = false;
     this.scheduledDateVisible = false;
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -439,31 +379,16 @@ export class JobWiseTicketsRaisedreportComponent {
     if (reset) {
       this.pageIndex = 1;
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     this.START_DATE = this.datePipe.transform(this.START_DATE, 'yyyy-MM-dd');
     this.END_DATE = this.datePipe.transform(this.END_DATE, 'yyyy-MM-dd');
-    // var likeQuery = '';
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND (';
-
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    //   likeQuery = likeQuery + ')';
-    // }
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -474,9 +399,7 @@ export class JobWiseTicketsRaisedreportComponent {
           .join(' OR ') +
         ')';
     }
-
     var filterQuery = '';
-
     if (this.JobCardNoText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -485,7 +408,6 @@ export class JobWiseTicketsRaisedreportComponent {
     } else {
       this.isJobCardNoFilterApplied = false;
     }
-
     if (this.OrderNoText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -494,7 +416,6 @@ export class JobWiseTicketsRaisedreportComponent {
     } else {
       this.isOrderNoFilterApplied = false;
     }
-
     if (this.TechnicianNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -503,8 +424,6 @@ export class JobWiseTicketsRaisedreportComponent {
     } else {
       this.isTechnicianNameFilterApplied = false;
     }
-
-
     if (this.CustNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -513,7 +432,6 @@ export class JobWiseTicketsRaisedreportComponent {
     } else {
       this.isCustNameFilterApplied = false;
     }
-
     if (this.CustMobileText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -522,8 +440,6 @@ export class JobWiseTicketsRaisedreportComponent {
     } else {
       this.isCustMobFilterApplied = false;
     }
-
-
     if (this.TerritoryNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -532,7 +448,6 @@ export class JobWiseTicketsRaisedreportComponent {
     } else {
       this.isJobCardNoFilterApplied = false;
     }
-
     if (this.ServiceNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -541,7 +456,6 @@ export class JobWiseTicketsRaisedreportComponent {
     } else {
       this.isServiceFilterApplied = false;
     }
-
     if (this.RemarkText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -550,7 +464,6 @@ export class JobWiseTicketsRaisedreportComponent {
     } else {
       this.isRemarkFilterApplied = false;
     }
-
     var dateeefilter = '';
     if (this.selectedDate.length == 2) {
       dateeefilter =
@@ -560,12 +473,11 @@ export class JobWiseTicketsRaisedreportComponent {
         this.datePipe.transform(this.selectedDate[1], 'yyyy-MM-dd') +
         "'";
     }
-
     if (this.createdDate && this.createdDate.length === 2) {
       const [start, end] = this.createdDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `ORDER_ACCEPTED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -574,38 +486,24 @@ export class JobWiseTicketsRaisedreportComponent {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `JOB_CREATED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-
     if (this.sheduledDate && this.sheduledDate.length === 2) {
       const [start, end] = this.sheduledDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `SHEDULED_DATETIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-    // if (this.scheduledselectedDate.length == 2) {
-    //   likeQuery +=
-    //     "DATE (SHEDULED_DATETIME) BETWEEN '" +
-    //     this.datePipe.transform(this.scheduledselectedDate[0], 'yyyy-MM-dd') +
-    //     "' AND' " +
-    //     this.datePipe.transform(this.scheduledselectedDate[1], 'yyyy-MM-dd') +
-    //     "'";
-    // }
-
-
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.loadingRecords = true;
       this.isSpinning = true;
@@ -624,12 +522,10 @@ export class JobWiseTicketsRaisedreportComponent {
               this.totalRecords = data['body']['count'];
               this.TabId = data['body']['TAB_ID'];
               this.dataList = data['body']['data'];
-
               this.isSpinning = false;
               this.filterClass = 'filter-invisible';
               this.loadingRecords = false;
             } else if (data['status'] == 400) {
-
               this.isSpinning = false;
               this.filterClass = 'filter-invisible';
               this.loadingRecords = false;
@@ -649,7 +545,6 @@ export class JobWiseTicketsRaisedreportComponent {
         );
     } else {
       this.exportLoading = true;
-
       this.api
         .detailedJobReport(
           0,
@@ -664,13 +559,11 @@ export class JobWiseTicketsRaisedreportComponent {
               this.exportLoading = false;
               this.TabId = data['body']['TAB_ID'];
               this.branchData = data['body']['data'];
-
               if (this.branchData.length > 0) {
                 this.convertInExcel();
               } else {
                 this.message.info('no data', '');
               }
-
               this.exportLoading = false;
             }
           },
@@ -681,26 +574,21 @@ export class JobWiseTicketsRaisedreportComponent {
         );
     }
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -741,8 +629,6 @@ export class JobWiseTicketsRaisedreportComponent {
       obj1['Service Name'] = this.branchData[i]['SERVICE_NAME'];
       obj1['Category'] = this.branchData[i]['CATEGORY_NAME'];
       obj1['Sub Category'] = this.branchData[i]['SUB_CATEGORY_NAME'];
-      // obj1['Remark'] = this.branchData[i]['REMARK'];
-
       arry1.push(Object.assign({}, obj1));
       if (i == this.branchData.length - 1) {
         this._exportService.exportExcel1(
@@ -753,92 +639,68 @@ export class JobWiseTicketsRaisedreportComponent {
       }
     }
   }
-
   JobCreatedVisible: boolean = false;
   isJobCreatedFilterApplied: boolean = false;
   jobcardDateText: any = null;
-
   JobCardNoVisible: boolean = false;
   isJobCardNoFilterApplied: boolean = false;
   JobCardNoText: string = '';
-
   OrderNoVisible: boolean = false;
   isOrderNoFilterApplied: boolean = false;
   OrderNoText: string = '';
-
   TechnicianNameVisible: boolean = false;
   isTechnicianNameFilterApplied: boolean = false;
   TechnicianNameText: string = '';
-
   TechMobVisible: boolean = false;
   isTechMobFilterApplied: boolean = false;
   TechMobText: string = '';
-
   AssignedDateVisible: boolean = false;
   isAssignedDateFilterApplied: boolean = false;
   AssignedDateText: any = null;
-
   JobDateVisible: boolean = false;
   isJobDateFilterApplied: boolean = false;
   JobDateText: any = null;
-
   selectedDateText: any = null;
-
   scheduledDateVisible: boolean = false;
   isScheduledDateFilterApplied: boolean = false;
   scheduledDateText: any = null;
-
   CustMobVisible: boolean = false;
   isCustMobFilterApplied: boolean = false;
   CustNameText: string = '';
-
   CustNameVisible: boolean = false;
   isCustNameFilterApplied: boolean = false;
   CustMobileText: string = '';
-
   CustTypeVisible: boolean = false;
   isCustTypeFilterApplied: boolean = false;
   CustTypeText: string = '';
-
   TerritoryNameVisible: boolean = false;
   isTerritoryNameFilterApplied: boolean = false;
   TerritoryNameText: string = '';
-
   ServiceVisible: boolean = false;
   isServiceFilterApplied: boolean = false;
   ServiceNameText: string = '';
-
   ServiceAmountVisible: boolean = false;
   isServiceAmountFilterApplied: boolean = false;
   ServiceAmountText: string = '';
-
   ServiceAddressVisible: boolean = false;
   isServiceAddressFilterApplied: boolean = false;
   ServiceAddressText: string = '';
-
   RemarkVisible: boolean = false;
   isRemarkFilterApplied: boolean = false;
   RemarkText: string = '';
-
   selectedDate: any = [];
-
   assignedselectedDate: any = [];
   jobselectedDate: any = [];
-
   scheduledselectedDate: any = [];
-
   statusFilter: string | undefined = undefined;
-
   listOfFilter: any[] = [
     { text: 'Individual(B2C)', value: 'I' },
     { text: 'Business(B2B)', value: 'B' },
   ];
-
   onTypeFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   onassignedDateChange(assignedselectedDate: any): void {
     if (this.AssignedDateText && this.AssignedDateText.length === 2) {
       this.search();
@@ -863,7 +725,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.issheduledDateFilterApplied = false;
     }
   }
-
   submittedDateVisible = false;
   isSubmittedDateFilterApplied: boolean = false;
   StartDate: any = [];
@@ -876,7 +737,7 @@ export class JobWiseTicketsRaisedreportComponent {
         this.isSubmittedDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isSubmittedDateFilterApplied = false;
     }
@@ -897,7 +758,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.iscreatedDateFilterApplied = false;
     }
   }
-
   onscheduledselectedDateChange(scheduledselectedDate: any): void {
     if (this.scheduledDateText && this.scheduledDateText.length === 2) {
       this.search();
@@ -906,7 +766,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
     }
   }
-
   onselectedDateChange(selectedDate: any): void {
     if (this.selectedDateText && this.selectedDateText.length === 2) {
       this.search();
@@ -915,10 +774,6 @@ export class JobWiseTicketsRaisedreportComponent {
       this.search();
     }
   }
-
-  //New Filter
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -940,12 +795,10 @@ export class JobWiseTicketsRaisedreportComponent {
   oldFilter: any[] = [];
   isModalVisible = false;
   selectedQuery: string = '';
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   drawerTitle!: string;
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -954,10 +807,8 @@ export class JobWiseTicketsRaisedreportComponent {
       this.loadFilters();
     }
   }
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -965,13 +816,12 @@ export class JobWiseTicketsRaisedreportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -986,18 +836,15 @@ export class JobWiseTicketsRaisedreportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1011,9 +858,7 @@ export class JobWiseTicketsRaisedreportComponent {
       );
     this.filterQuery = '';
   }
-
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1021,7 +866,6 @@ export class JobWiseTicketsRaisedreportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1030,7 +874,6 @@ export class JobWiseTicketsRaisedreportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -1047,9 +890,7 @@ export class JobWiseTicketsRaisedreportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -1075,35 +916,26 @@ export class JobWiseTicketsRaisedreportComponent {
       }
     );
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   openfilter() {
     this.drawerTitle = 'Job Details Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1120,7 +952,6 @@ export class JobWiseTicketsRaisedreportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1137,7 +968,6 @@ export class JobWiseTicketsRaisedreportComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1147,7 +977,6 @@ export class JobWiseTicketsRaisedreportComponent {
       FILTER_JSON: {},
     };
   }
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -1164,7 +993,6 @@ export class JobWiseTicketsRaisedreportComponent {
       groups: [],
     },
   ];
-
   filterFields: any[] = [
     {
       key: 'JOB_CREATED_DATE',
@@ -1180,7 +1008,6 @@ export class JobWiseTicketsRaisedreportComponent {
       ],
       placeholder: 'Select Job Created Date',
     },
-
     {
       key: 'JOB_CARD_NO',
       label: 'Job No',
@@ -1237,7 +1064,6 @@ export class JobWiseTicketsRaisedreportComponent {
       ],
       placeholder: 'Enter Technician Name',
     },
-
     {
       key: 'ORDER_ACCEPTED_DATE',
       label: 'Assigned Date',
@@ -1266,9 +1092,6 @@ export class JobWiseTicketsRaisedreportComponent {
       ],
       placeholder: 'Enter Customer Name',
     },
-
-
-
     {
       key: 'SERVICE_NAME',
       label: 'Service Name',
@@ -1310,28 +1133,22 @@ export class JobWiseTicketsRaisedreportComponent {
       ],
       placeholder: 'Enter Sub-Category Name',
     },
-
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1339,9 +1156,7 @@ export class JobWiseTicketsRaisedreportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -1351,4 +1166,3 @@ export class JobWiseTicketsRaisedreportComponent {
     }
   }
 }
-

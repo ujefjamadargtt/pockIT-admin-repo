@@ -9,7 +9,7 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
   selector: 'app-roles',
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.css'],
-  encapsulation: ViewEncapsulation.None, // Make styles global
+  encapsulation: ViewEncapsulation.None,
 })
 export class RolesComponent implements OnInit {
   formTitle = 'Manage Roles';

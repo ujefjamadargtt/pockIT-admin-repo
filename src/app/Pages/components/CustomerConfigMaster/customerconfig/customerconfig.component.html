@@ -3,7 +3,6 @@
         <nz-spin [nzSpinning]="isSpinning">
             <div class="my-box">
                 <div nz-row>
-                    <!-- Customer Type -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Customer Type</nz-form-label>
@@ -16,8 +15,6 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-
-                    <!-- Customer Category -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Customer Category</nz-form-label>
@@ -31,9 +28,7 @@
                         </nz-form-item>
                     </div>
                 </div>
-
                 <div nz-row>
-                    <!-- Default Language -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Default Language</nz-form-label>
@@ -46,8 +41,6 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-
-                    <!-- Timezone -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Timezone</nz-form-label>
@@ -62,9 +55,7 @@
                         </nz-form-item>
                     </div>
                 </div>
-
                 <div nz-row>
-                    <!-- Notification Preferences -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Notification Preferences</nz-form-label>
@@ -78,8 +69,6 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-
-                    <!-- Enable Push Notifications -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzNoColon>Support Access Level</nz-form-label>
@@ -93,11 +82,7 @@
                         </nz-form-item>
                     </div>
                 </div>
-
-
-
                 <div nz-row>
-                    <!-- Preferred Contact Method -->
                     <div nz-col nzSpan="24">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Preferred Contact Method</nz-form-label>
@@ -111,8 +96,6 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-
-                    <!-- Default Payment Method -->
                     <div nz-col nzSpan="24">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Default Payment Method</nz-form-label>
@@ -126,11 +109,9 @@
                         </nz-form-item>
                     </div>
                 </div>
-
             </div>
             <div class="my-box">
                 <div nz-row>
-                    <!-- Enable SMS Notifications -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzNoColon>Enable SMS Notifications</nz-form-label>
@@ -140,8 +121,6 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-
-                    <!-- Enable Email Notifications -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzNoColon>Enable Email Notifications</nz-form-label>
@@ -154,8 +133,6 @@
                     </div>
                 </div>
                 <div nz-row>
-                    <!-- Support Access Level -->
-
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzNoColon>Enable Push Notifications</nz-form-label>
@@ -165,7 +142,6 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-                    <!-- Service History Access -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzNoColon>Service History Access</nz-form-label>
@@ -176,9 +152,7 @@
                         </nz-form-item>
                     </div>
                 </div>
-
                 <div nz-row>
-                    <!-- Account Status -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzNoColon>Account Status</nz-form-label>
@@ -190,22 +164,20 @@
                     </div>
                 </div>
             </div>
-
-
         </nz-spin>
     </form>
     <div class="footer">
-        <button type="button" nz-button (click)="Close()" class="ant-btn" style="margin-right: 8px">
+        <button type="button" nz-button (click)="Close()" class="ant-btn footer-cancel-spacing">
             <span>Cancel</span>
         </button>
-        <button type="button" class="ant-btn ant-btn-primary" nz-button nz-dropdown
-            style="border-radius: 4px; color: white;" [nzDropdownMenu]="menu" [nzLoading]="isSpinning">
+        <button type="button" class="ant-btn ant-btn-primary footer-primary-btn" nz-button nz-dropdown
+            [nzDropdownMenu]="menu" [nzLoading]="isSpinning">
             <span>Save & Close</span>
         </button>
         <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu>
-                <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
-                    <a style="color: white!important;">Save & New</a>
+                <li nz-menu-item class="menuc footer-menu-rounded footer-menu-white-text">
+                    <a class="footer-menu-white-text">Save & New</a>
                 </li>
             </ul>
         </nz-dropdown-menu>

@@ -1,4 +1,3 @@
-
 @import '~@ctrl/ngx-emoji-mart/picker';
 .my-box {
   border: 1px dashed #e9e9e9;
@@ -7,70 +6,41 @@
   margin-top: 12px;
   margin-bottom: 12px;
   background-color: #fafafa;
-
 }
-
 #Gstno {
-
   text-transform: lowercase;
   text-transform: '_';
   white-space: nowrap;
-  /* Prevent line breaks */
   overflow: hidden;
-  /* Hide overflowing text */
   text-overflow: ellipsis;
-  /* Add ellipsis (...) for long text */
-
-
 }
-
 #Gstno::placeholder {
-
   text-transform: initial;
-  /* Set it to "initial" to reset the transformation for the placeholder */
-
 }
-
-
 #Gstno::before {
   content: attr(data-text);
-  /* Display the original text as a data attribute */
 }
-
 #Gstno::after {
   content: '_';
-  /* Display underscores after spaces */
   white-space: pre;
-  /* Preserve whitespace, including spaces and underscores */
 }
-
 nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 .vertical-card {
   width: 300px;
   border-radius: 5px;
   margin: 0;
   padding: 0;
   background-image: url('/assets/whatsapp.jpg');
-  /* Replace with your background image URL */
   background-repeat: repeat;
-  /* You can use 'repeat', 'repeat-x', or 'repeat-y' to create a pattern */
   background-size: cover;
-  /* Adjust to fit your design */
-  /* font-family: Arial, sans-serif; */
-  /* background-color:  rgb(250, 250, 250); */
   font-family: 'Roboto', sans-serif !important;
-
 }
-
 .vertical {
-
-  /* font-family: Helvetica; */
   font-family: 'Roboto', sans-serif !important;
   background-color: rgb(255, 255, 255);
   border-radius: 20px;
@@ -79,31 +49,21 @@ nz-form-item {
   position: relative;
   overflow-wrap: break-word;
   padding: 10px;
-
 }
-
 .image {
   margin: 0;
   padding: 0;
   background-image: url('/assets/whatsapp.png');
-  /* Replace with your background image URL */
   background-repeat: repeat;
-  /* You can use 'repeat', 'repeat-x', or 'repeat-y' to create a pattern */
   background-size: cover;
-  /* Adjust to fit your design */
-  /* font-family: Arial, sans-serif; */
   font-family: 'Roboto', sans-serif !important;
-
 }
-
 .phone-select {
   width: 70px;
 }
-
 #textArea strong {
   display: none;
 }
-
 p {
   display: block;
   margin-block-start: 1em;
@@ -112,9 +72,6 @@ p {
   margin-inline-end: 0px;
   unicode-bidi: isolate;
 }
-
-
-
 .emoji-mart {
   font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,sans-serif;
   font-size: 16px;
@@ -125,4 +82,195 @@ p {
   background: #fff;
   height: 345px;
   min-width: 100% !important;
+}
+.form-description {
+    text-align: center;
+}
+.form-label-bold {
+    font-weight: bold;
+}
+.character-count {
+    color: red;
+    font-size: 10px;
+}
+.sample-values-select {
+    width: 100%;
+}
+.upload-button {
+    height: 28px;
+    padding: 0px 7px;
+    font-size: 12px;
+}
+.file-input {
+    display: none;
+}
+.remove-file-icon {
+    cursor: pointer;
+    color: red;
+    margin-top: -19px;
+    margin-left: 90px;
+}
+.video-file-name-container {
+    margin-top: -39px;
+}
+.remove-video-icon {
+    cursor: pointer;
+    color: red;
+    margin-top: 38px;
+}
+.document-file-name-container {
+    margin-top: -39px;
+    margin-left: 10px;
+}
+.remove-document-icon {
+    cursor: pointer;
+    color: red;
+    margin-top: 38px;
+}
+.media-upload-note {
+    color: blue;
+    font-size: 10px;
+    margin-left: 10px;
+}
+.format-button {
+    color: #efefef;
+    width: 40px;
+}
+.format-button-text {
+    color: black;
+}
+.emoji-button {
+    font-size: 15px;
+    color: #efefef;
+    width: 38px;
+}
+.emoji-icon {
+    color: black;
+}
+.body-textarea {
+    margin-top: 5px;
+}
+.button-type-select {
+    width: 100%;
+}
+.button-description {
+    font-size: 11px;
+}
+.add-button-button {
+    margin-top: 25px;
+}
+.remove-custom-button {
+    margin-left: 10px;
+    cursor: pointer;
+    color: red;
+    margin-top: 38px;
+}
+.warning-message {
+    color: #faad14;
+}
+.warning-icon {
+    width: 17px;
+    height: 17px;
+    color: #faad14;
+}
+.url-type-select {
+    width: 100%;
+}
+.url-prefix-select {
+    width: 89px;
+}
+.remove-button-icon {
+    cursor: pointer;
+    color: red;
+    margin-top: 38px;
+}
+.phone-input-group {
+    display: flex;
+}
+.button-note {
+    color: blue;
+    font-size: 10px;
+    margin-left: 10px;
+}
+.table-remove-icon {
+    cursor: pointer;
+    color: red;
+    text-align: center;
+}
+.preview-header {
+    margin-top: 10px;
+    margin-left: 12px;
+    margin-bottom: 10px;
+}
+.preview-header-text {
+    font-size: 13px;
+}
+.image-preview-container {
+    background-color: #fff;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #efefef;
+    border-radius: 10px;
+}
+.video-preview-container {
+    background-color: #fff;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #efefef;
+    border-radius: 10px;
+}
+.preview-video {
+    width: 100%;
+    height: 100px;
+}
+.document-preview-container {
+    background-color: #fdfdfd;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid #efefef;
+    padding: 6px;
+    border-radius: 10px;
+    text-align: left;
+}
+.document-size {
+    font-weight: lighter;
+    font-size: x-small;
+}
+.preview-body {
+    font-size: 13px;
+}
+.preview-footer {
+    font-size: 11px;
+    font-weight: lighter;
+    color: #938370b0;
+}
+.preview-button-row {
+    display: flex;
+    text-align: center;
+    width: 100%;
+}
+.button-spacer {
+    width: 40px;
+}
+.button-content {
+    width: 130px;
+    text-align: left;
+}
+.preview-time {
+    font-size: 11px;
+    font-weight: lighter;
+    color: #0a0a09b0;
+    float: right;
+}
+.cancel-button {
+    margin-right: 8px;
+}
+.save-button {
+    border-radius: 4px;
+    color: white;
 }

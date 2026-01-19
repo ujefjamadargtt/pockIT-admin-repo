@@ -5,9 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { differenceInCalendarDays } from 'date-fns';
 import { DatePipe } from '@angular/common';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 declare const google: any;
-
 @Component({
   selector: 'app-list-technicain-map',
   templateUrl: './list-technicain-map.component.html',
@@ -19,11 +17,9 @@ export class ListTechnicainMapComponent implements OnInit {
   selectedDate: any;
   selectedterritory2: any = 0;
   selectedTechnicianDropdown: string = 'tech1';
-
   techniciansdata: any[] = [];
   timelineData: any[] = [];
   technician: any[] = [];
-
   todaydate = new Date();
   vendor_id: any = 0;
   roleids: any;
@@ -41,10 +37,7 @@ export class ListTechnicainMapComponent implements OnInit {
   ) { }
   public commonFunction = new CommonFunctionService();
   ngOnInit(): void {
-    // this.getTeritorydata();
-
     this.spinnnnnnn = true;
-
     var userid = this.commonFunction.decryptdata(
       sessionStorage.getItem('userId') || ''
     );
@@ -55,7 +48,6 @@ export class ListTechnicainMapComponent implements OnInit {
       sessionStorage.getItem('Vid') || ''
     );
     this.decreptedvendorId = vidd;
-
     this.decreptedroleIDString = this.roleID
       ? this.commonFunction.decryptdata(this.roleID)
       : '';
@@ -82,13 +74,11 @@ export class ListTechnicainMapComponent implements OnInit {
       var filterrrr = '';
     }
     this.roleids = roleid;
-
     if (roleid == '1' || roleid == '8') {
       this.api.getTeritory(0, 0, '', '', ' AND IS_ACTIVE=1').subscribe(
         (data) => {
           if (data['code'] == 200) {
             this.territorydata = data['data'];
-
             if (
               sessionStorage.getItem('territoryid') != '' &&
               sessionStorage.getItem('territoryid') != null &&
@@ -103,7 +93,6 @@ export class ListTechnicainMapComponent implements OnInit {
                   'Territory_Schedular'
                 );
                 sessionStorage.setItem('territoryid', dessionvalue);
-
                 this.getpendingjobdatafilter2(0);
               } else {
                 this.getpendingjobdatafilter2(0);
@@ -118,11 +107,9 @@ export class ListTechnicainMapComponent implements OnInit {
                   'Territory_Schedular'
                 );
                 sessionStorage.setItem('territoryid', dessionvalue);
-
                 this.getpendingjobdatafilter2(0);
               } else {
                 sessionStorage.setItem('territoryid', this.territorydata[0].ID);
-
                 this.getpendingjobdatafilter2(0);
               }
             }
@@ -159,11 +146,9 @@ export class ListTechnicainMapComponent implements OnInit {
                         var dataaaaaa = dataaa['data'];
                         if (dataaaaaa.length > 0) {
                           var dd = dataaaaaa.map((item) => item.TERITORY_ID);
-
                           var filterformap = '';
                           if (dd != null && dd != undefined && dd != '') {
                             filterformap = ' AND ID IN (' + dd + ')';
-
                             this.api
                               .getTeritory(
                                 0,
@@ -176,7 +161,6 @@ export class ListTechnicainMapComponent implements OnInit {
                                 (data) => {
                                   if (data['code'] == 200) {
                                     this.territorydata = data['data'];
-
                                     if (
                                       sessionStorage.getItem('territoryid') !=
                                       '' &&
@@ -209,7 +193,6 @@ export class ListTechnicainMapComponent implements OnInit {
                                         this.getpendingjobdatafilter2(0);
                                       }
                                     } else {
-                                      // this.openModal = true;
                                       if (
                                         sessionStorage.getItem(
                                           'Territory_Schedular'
@@ -314,11 +297,9 @@ export class ListTechnicainMapComponent implements OnInit {
                         var dataaaaaa = dataaa['data'];
                         if (dataaaaaa.length > 0) {
                           var dd = dataaaaaa.map((item) => item.TERITORY_ID);
-
                           var filterformap = '';
                           if (dd != null && dd != undefined && dd != '') {
                             filterformap = ' AND ID IN (' + dd + ')';
-
                             this.api
                               .getTeritory(
                                 0,
@@ -331,7 +312,6 @@ export class ListTechnicainMapComponent implements OnInit {
                                 (data) => {
                                   if (data['code'] == 200) {
                                     this.territorydata = data['data'];
-
                                     if (
                                       sessionStorage.getItem('territoryid') !=
                                       '' &&
@@ -364,7 +344,6 @@ export class ListTechnicainMapComponent implements OnInit {
                                         this.getpendingjobdatafilter2(0);
                                       }
                                     } else {
-                                      // this.openModal = true;
                                       if (
                                         sessionStorage.getItem(
                                           'Territory_Schedular'
@@ -450,7 +429,6 @@ export class ListTechnicainMapComponent implements OnInit {
           }
         );
       }
-
       this.api.getBackOfficeData(0, 0, '', '', filterrrr).subscribe(
         (dataaa1) => {
           if (dataaa1['code'] == 200) {
@@ -470,11 +448,9 @@ export class ListTechnicainMapComponent implements OnInit {
                       var dataaaaaa = dataaa['data'];
                       if (dataaaaaa.length > 0) {
                         var dd = dataaaaaa.map((item) => item.TERITORY_ID);
-
                         var filterformap = '';
                         if (dd != null && dd != undefined && dd != '') {
                           filterformap = ' AND ID IN (' + dd + ')';
-
                           this.api
                             .getTeritory(
                               0,
@@ -487,7 +463,6 @@ export class ListTechnicainMapComponent implements OnInit {
                               (data) => {
                                 if (data['code'] == 200) {
                                   this.territorydata = data['data'];
-
                                   if (
                                     sessionStorage.getItem('territoryid') !=
                                     '' &&
@@ -520,7 +495,6 @@ export class ListTechnicainMapComponent implements OnInit {
                                       this.getpendingjobdatafilter2(0);
                                     }
                                   } else {
-                                    // this.openModal = true;
                                     if (
                                       sessionStorage.getItem(
                                         'Territory_Schedular'
@@ -603,13 +577,9 @@ export class ListTechnicainMapComponent implements OnInit {
         }
       );
     }
-
-    // this.getpendingjobdata()
-
     this.selectedDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -625,17 +595,14 @@ export class ListTechnicainMapComponent implements OnInit {
     } else {
       this.schollength = '1400px';
     }
-
     return this.schollength;
   }
   openModal = false;
   ColorArray: any = [];
   uniqueValues: any = [];
   sheduledataarray = [];
-
-  searchValue: string = ''; // Two-way bound to the input field
-  originalTechniciansData: any[] = []; // To preserve the original list
-
+  searchValue: string = ''; 
+  originalTechniciansData: any[] = []; 
   onSearchChange(value: string): void {
     this.searchValue = value;
     if (value.length >= 3) {
@@ -647,7 +614,6 @@ export class ListTechnicainMapComponent implements OnInit {
     } else {
     }
   }
-
   range(start: number, end: number): number[] {
     const result: number[] = [];
     for (let i = start; i < end; i++) {
@@ -655,19 +621,13 @@ export class ListTechnicainMapComponent implements OnInit {
     }
     return result;
   }
-
-  // Disable dates only, not time
   disabledDate = (current: Date): boolean => {
-    // Disable all dates after the selected date
     return differenceInCalendarDays(current, this.selectedDate) > 0;
   };
-
   dateformat(data: any) {
     this.selectedDate = this.datepipe.transform(data, 'yyyy-MM-dd');
   }
-
   technicianName: any;
-
   handleHttpError(err: HttpErrorResponse) {
     this.loadingRecords = false;
     if (err.status === 0) {
@@ -679,11 +639,8 @@ export class ListTechnicainMapComponent implements OnInit {
       this.message.error('Something Went Wrong.', '');
     }
   }
-
   initMap(): void {
-    // For technician travel map
     const technician = this.technician;
-
     if (technician) {
       const locations = technician
         .map((loc: any) => ({
@@ -693,14 +650,12 @@ export class ListTechnicainMapComponent implements OnInit {
           time: new Date(loc.CREATED_MODIFIED_DATE).toLocaleString(),
         }))
         .filter(
-          (loc: any) => !isNaN(loc.latitude) && !isNaN(loc.longitude) // Filter out invalid locations
+          (loc: any) => !isNaN(loc.latitude) && !isNaN(loc.longitude) 
         );
-
       if (locations.length === 0) {
         this.message.error('No valid locations found for the technician.', '');
-        return; // Exit if no valid locations
+        return; 
       }
-
       const mapCenter = {
         lat:
           locations.reduce((sum: number, loc: any) => sum + loc.latitude, 0) /
@@ -709,29 +664,24 @@ export class ListTechnicainMapComponent implements OnInit {
           locations.reduce((sum: number, loc: any) => sum + loc.longitude, 0) /
           locations.length,
       };
-
       if (isNaN(mapCenter.lat) || isNaN(mapCenter.lng)) {
-        return; // Exit if map center is invalid
+        return; 
       }
-
       const mapElement = document.getElementById('map');
       if (mapElement) {
         const map = new google.maps.Map(mapElement as HTMLElement, {
           center: mapCenter,
           zoom: 14,
         });
-
         locations.forEach((location: any) => {
           const marker = new google.maps.Marker({
             position: { lat: location.latitude, lng: location.longitude },
             map: map,
           });
-
           const convertedDate = this.datepipe.transform(
             location.time,
             'h:mm a'
           );
-
           const infoWindow = new google.maps.InfoWindow({
             content: `
             <div style="width: 150px; padding: 10px; font-size: 14px; color: #333; 
@@ -739,18 +689,13 @@ export class ListTechnicainMapComponent implements OnInit {
             <p style="font-size: 12px; margin: 5px 0;">${convertedDate}</p>
             </div>`,
           });
-
-          // Show the InfoWindow on hover
           marker.addListener('mouseover', () => {
             infoWindow.open(map, marker);
           });
-
-          // Close the InfoWindow when the mouse leaves the marker
           marker.addListener('mouseout', () => {
             infoWindow.close();
           });
         });
-
         new google.maps.Polyline({
           path: locations.map(
             (location: any) =>
@@ -764,17 +709,11 @@ export class ListTechnicainMapComponent implements OnInit {
         });
       }
     }
-
-    // For all technicians location map
-
-    // Check for valid technician data with proper latitude and longitude
     const validLocations = this.techniciansdata.filter(
       (location) =>
         !isNaN(parseFloat(location.LOCATION_LATITUDE)) &&
         !isNaN(parseFloat(location.LOCATION_LONG))
     );
-
-    // Calculate the center only if there are valid locations
     const map2Center = {
       lat:
         validLocations.length > 0
@@ -791,14 +730,12 @@ export class ListTechnicainMapComponent implements OnInit {
           ) / validLocations.length
           : 0,
     };
-
     const map2Element = document.getElementById('map1');
     if (map2Element) {
       const map2 = new google.maps.Map(map2Element as HTMLElement, {
         center: map2Center,
         zoom: 14,
       });
-
       validLocations.forEach((location: any) => {
         const marker = new google.maps.Marker({
           position: {
@@ -807,32 +744,25 @@ export class ListTechnicainMapComponent implements OnInit {
           },
           map: map2,
         });
-
         const infoWindow = new google.maps.InfoWindow({
           content: `
       <div style="width: 150px; padding: 10px; font-size: 14px; color: #333; 
           background-color: #fff; border-radius: 5px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);">
         <h6>${location.NAME}</h6>
         <p>${location.MOBILE_NUMBER}</p>
-       
       </div>`,
         });
-
         infoWindow.open(map2, marker);
-
         marker.addListener('mouseover', () => {
           infoWindow.open(map2, marker);
         });
-
         marker.addListener('mouseout', () => {
           infoWindow.close();
         });
       });
     }
   }
-  // <p>${location.CITY_NAME}</p>
   date = new Date();
-
   selectedSkills: { [key: number]: boolean } = {};
   skillData: any = [];
   getSkillData() {
@@ -850,7 +780,6 @@ export class ListTechnicainMapComponent implements OnInit {
       }
     );
   }
-
   columnssssss: string[][] = [
     ['SERVICE_SKILLS', 'SERVICE_SKILLS'],
     ['ORDER_NO', 'ORDER_NO'],
@@ -862,31 +791,24 @@ export class ListTechnicainMapComponent implements OnInit {
     ['JOB_CARD_NO', 'JOB_CARD_NO'],
   ];
   jobdatss: any = [];
-
   selectedterritory: any;
   terriotrystarttime: any = '';
   terriotryendtime: any = '';
-
   terriotrystarttime1: any = '';
   terriotryendtime1: any = '';
-
   filterdate: any = new Date();
   groupedData: { [key: string]: any[] } = {};
   getpendingjobdatafilter(event: any) {
-    //
     var filterterritory = this.territorydata.filter(
       (x: any) => x.ID == Number(event)
     );
-
     if (filterterritory.length > 0) {
       this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
       this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
-
       const currentDate = new Date(this.todaydate);
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
       const day = currentDate.getDate();
-
       const dateWithTime = new Date(
         year,
         month,
@@ -899,17 +821,13 @@ export class ListTechnicainMapComponent implements OnInit {
         day,
         ...filterterritory[0].END_TIME.split(':').map(Number)
       );
-
       this.terriotrystarttime1 = new Date(dateWithTime);
       this.terriotryendtime1 = new Date(dateWithTime1);
-
       this.columns = this.generateTimeColumnsFromRange();
     }
-
     if (event != '' && event != null && event != undefined) {
       sessionStorage.setItem('territoryid', event);
       this.spinnnnnnn = true;
-      // this.filterdate=" AND DATE(EXPECTED_DATE_TIME)='"+this.datepipe.transform(this.filterdate,'yyyy-MM-dd')+"'"
       this.filterdate = '';
       var likeQuery = '';
       if (this.searchValue != '') {
@@ -932,8 +850,6 @@ export class ListTechnicainMapComponent implements OnInit {
       this.getcalenderdata(event, this.todaydate);
       sessionStorage.removeItem('Territory_Schedular');
       this.spinnnnnnn = false;
-
-
     } else {
       this.openModal = true;
       this.selectedterritory = null;
@@ -954,17 +870,12 @@ export class ListTechnicainMapComponent implements OnInit {
         (x: any) => x.ID == Number(this.selectedterritory)
       );
       if (filterterritory.length > 0) {
-        // this.terriotrystarttime = filterterritory[0].START_TIME;
-
-        // this.terriotryendtime = filterterritory[0].END_TIME;
          this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
         this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
-
         const currentDate = new Date(this.todaydate);
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
         const day = currentDate.getDate();
-
         const dateWithTime = new Date(
           year,
           month,
@@ -977,13 +888,10 @@ export class ListTechnicainMapComponent implements OnInit {
           day,
           ...filterterritory[0].END_TIME.split(':').map(Number)
         );
-
         this.terriotrystarttime1 = new Date(dateWithTime);
         this.terriotryendtime1 = new Date(dateWithTime1);
-
         this.columns = this.generateTimeColumnsFromRange();
       }
-
       if (
         this.selectedterritory != '' &&
         this.selectedterritory != null &&
@@ -991,7 +899,6 @@ export class ListTechnicainMapComponent implements OnInit {
       ) {
         sessionStorage.setItem('territoryid', this.selectedterritory);
         this.spinnnnnnn = true;
-        // this.filterdate=" AND DATE(EXPECTED_DATE_TIME)='"+this.datepipe.transform(this.filterdate,'yyyy-MM-dd')+"'"
         this.filterdate = '';
         var likeQuery = '';
         if (this.searchValue != '') {
@@ -1012,8 +919,6 @@ export class ListTechnicainMapComponent implements OnInit {
             "'";
         }
         this.pageindexxx = 1;
-        // this.pageindexxx,
-        //     this.pageSize,
         var trIds: any = [];
         this.territorydata.forEach((element) => {
           trIds.push(element.ID);
@@ -1040,7 +945,6 @@ export class ListTechnicainMapComponent implements OnInit {
                 this.jobdatss = data['data'];
                 sessionStorage.removeItem('Territory_Schedular');
                 this.groupedData = this.groupByOrderNo(this.jobdatss);
-
                 this.tempCount = data['count'];
                 this.openModal = false;
                 this.spinnnnnnn = false;
@@ -1056,26 +960,19 @@ export class ListTechnicainMapComponent implements OnInit {
             }
           );
       } else {
-        // this.openModal = true;
         this.selectedterritory = null;
       }
     } else {
       var filterterritory = this.territorydata.filter(
         (x: any) => x.ID == Number(event)
       );
-
       if (filterterritory.length > 0) {
-        // this.terriotrystarttime = filterterritory[0].START_TIME;
-
-        // this.terriotryendtime = filterterritory[0].END_TIME;
          this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
         this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
-
         const currentDate = new Date(this.todaydate);
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
         const day = currentDate.getDate();
-
         const dateWithTime = new Date(
           year,
           month,
@@ -1088,17 +985,13 @@ export class ListTechnicainMapComponent implements OnInit {
           day,
           ...filterterritory[0].END_TIME.split(':').map(Number)
         );
-
         this.terriotrystarttime1 = new Date(dateWithTime);
         this.terriotryendtime1 = new Date(dateWithTime1);
-
         this.columns = this.generateTimeColumnsFromRange();
       }
-
       if (event != '' && event != null && event != undefined) {
         sessionStorage.setItem('territoryid', event);
         this.spinnnnnnn = true;
-        // this.filterdate=" AND DATE(EXPECTED_DATE_TIME)='"+this.datepipe.transform(this.filterdate,'yyyy-MM-dd')+"'"
         this.filterdate = '';
         var likeQuery = '';
         if (this.searchValue != '') {
@@ -1119,8 +1012,6 @@ export class ListTechnicainMapComponent implements OnInit {
             "'";
         }
         this.pageindexxx = 1;
-        // this.pageindexxx,
-        //     this.pageSize,
         this.api
           .getJobCardsForSchedular(
             this.pageindexxx,
@@ -1180,7 +1071,6 @@ export class ListTechnicainMapComponent implements OnInit {
       }
     );
   }
-
   jobdetaildrawerTitle = '';
   jobdetailsshow = false;
   jobdetailsdata: any;
@@ -1191,7 +1081,6 @@ export class ListTechnicainMapComponent implements OnInit {
     this.jobdetaildrawerTitle = 'Job details of ' + data.JOB_CARD_NO;
     this.jobdetailsshow = true;
   }
-
   drawersize = '100%';
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
@@ -1207,19 +1096,15 @@ export class ListTechnicainMapComponent implements OnInit {
     }
     this.jobedit = false;
   }
-  //Drawer Methods
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }
-
   sheduledata: any = [];
-
   columns: any = [];
   generateTimeColumns(): string[] {
     const columns: string[] = [];
     for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute < 60; minute += 10) {
-        // Format hours and minutes as "HH:MM"
         const formattedTime = `${hour.toString().padStart(2, '0')}:${minute
           .toString()
           .padStart(2, '0')}`;
@@ -1228,10 +1113,8 @@ export class ListTechnicainMapComponent implements OnInit {
     }
     return columns;
   }
-
   getColorName(bookingID: string): string {
     var index = this.uniqueValues.indexOf(bookingID);
-
     if (index < 0) {
       return 'rgb(207, 251, 207)';
     } else {
@@ -1243,44 +1126,32 @@ export class ListTechnicainMapComponent implements OnInit {
     }
     return 'rgb(207, 251, 207)';
   }
-
   getWidth(cnt: any, data: any) {
     var w = Number(cnt) * 44 - 2;
     return w + 'px';
   }
-
   getLeft(cnt: any, data: any) {
     var w = (Number(cnt) * 44) / 2 + 0;
     return w + 'px';
   }
-
   generateColorCode() {
     var r = Math.floor(Math.random() * 155) + 100;
     var g = Math.floor(Math.random() * 155) + 100;
     var b = Math.floor(Math.random() * 155) + 100;
-
     var colorCode = 'rgb(' + r + ',' + g + ',' + b + ')';
     return colorCode;
   }
-
   mainCellMergeArray: any = [];
-
   mergecelss() {
     let tempCellMergeArray: any = [];
     let mainCellMergeArray: any = [];
-
     for (let i = 0; i < this.sheduledata.length; i++) {
       tempCellMergeArray = [];
       let previousValue = '';
-
-      // Generate array to find occurance
       let tempArrayToFindOccurance: any = [];
-
       for (let j = 0; j < this.columns.length; j++) {
         tempArrayToFindOccurance.push(this.sheduledata[i][this.columns[j]]);
       }
-
-      // Replace booking ID with occurance
       for (let j = 0; j < this.columns.length; j++) {
         if (
           this.sheduledata[i][this.columns[j]] != null &&
@@ -1288,7 +1159,6 @@ export class ListTechnicainMapComponent implements OnInit {
         ) {
           if (previousValue != this.sheduledata[i][this.columns[j]]) {
             previousValue = this.sheduledata[i][this.columns[j]];
-
             tempCellMergeArray.push(
               tempArrayToFindOccurance.filter(
                 (item) => item === this.sheduledata[i][this.columns[j]]
@@ -1301,28 +1171,20 @@ export class ListTechnicainMapComponent implements OnInit {
           tempCellMergeArray.push('0');
         }
       }
-
       mainCellMergeArray.push(Object.assign({}, tempCellMergeArray));
       this.mainCellMergeArray = [];
-
       this.mainCellMergeArray = mainCellMergeArray;
     }
   }
-
   jobassignshow: boolean = false;
   JobassigndrawerTitle: any = '';
   onsearchload: boolean = false;
   JobassignsdrawerClose(): void {
     this.jobassignshow = false;
     this.getpendingjobdatafilter2(this.selectedterritory2);
-    // } else {
-    //   this.openModal = true;
-    // }
     this.jobedit = false;
   }
-
   Jobassignsdata: any = [];
-  //Drawer Methods
   get JobassignscloseCallback() {
     return this.JobassignsdrawerClose.bind(this);
   }
@@ -1341,7 +1203,6 @@ export class ListTechnicainMapComponent implements OnInit {
       LONGITUDE: this.Jobassignsdata.LONGITUDE,
       SERVICE_SKILLS: this.Jobassignsdata.SERVICE_SKILLS,
     };
-
     this.JobassigndrawerTitle =
       'Assign the ' + data.JOB_CARD_NO + ' number to the technician';
     var filterterritory = this.territorydata.filter(
@@ -1353,7 +1214,6 @@ export class ListTechnicainMapComponent implements OnInit {
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
       const day = currentDate.getDate();
-
       const dateWithTime = new Date(
         year,
         month,
@@ -1366,13 +1226,10 @@ export class ListTechnicainMapComponent implements OnInit {
         day,
         ...filterterritory[0].END_TIME.split(':').map(Number)
       );
-
       this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
       this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
-
       var terriotryendtime = new Date(dateWithTime1);
       var terriotrystarttime = new Date(dateWithTime);
-
       this.Territorytime =
         'Territory Time : ' +
         this.datepipe.transform(terriotrystarttime, 'hh:mm a') +
@@ -1381,7 +1238,6 @@ export class ListTechnicainMapComponent implements OnInit {
     }
     this.jobassignshow = true;
   }
-
   navigateForward(): void {
     this.todaydate = new Date(this.todaydate);
     this.todaydate.setDate(this.todaydate.getDate() + 1);
@@ -1390,18 +1246,14 @@ export class ListTechnicainMapComponent implements OnInit {
       this.datepipe.transform(this.todaydate, 'yyyy-MM-dd')
     );
   }
-
-  // Navigate backward by 1 day
   navigateBackward(): void {
     this.todaydate = new Date(this.todaydate);
     this.todaydate.setDate(this.todaydate.getDate() - 1);
-
     this.getcalenderdata(
       this.selectedterritory,
       this.datepipe.transform(this.todaydate, 'yyyy-MM-dd')
     );
   }
-
   oncalenderdatechange(event: any) {
     this.getcalenderdata(
       this.selectedterritory,
@@ -1428,25 +1280,17 @@ export class ListTechnicainMapComponent implements OnInit {
       (data) => {
         if (data['code'] == 200) {
           this.sheduledata = data['data'];
-
           if (this.sheduledata.length == 0) {
           } else {
             var dataaaaaaaa = this.filterDataByTime('', '');
-
             this.sheduledata = dataaaaaaaa;
           }
-
-          // var dataaa = this.extractJobDetails(this.sheduledata);
-          // Call the service method
-          //
-
           this.api
             .gettechnicianjobshedulecount(0, 0, '', '', filterQuery11 + this.customerMangeer, this.datepipe.transform(date, 'yyyy-MM-dd'))
             .subscribe(
               (data) => {
                 if (data['code'] == 200) {
                   this.shedulecount = data['data'];
-                  //
                 } else {
                   this.shedulecount = [];
                 }
@@ -1455,9 +1299,7 @@ export class ListTechnicainMapComponent implements OnInit {
                 this.message.error('Something Went Wrong', '');
               }
             );
-
           this.mergecelss();
-
           this.uniqueValues = Array.from(
             new Set(
               this.sheduledata.flatMap((item) =>
@@ -1465,9 +1307,7 @@ export class ListTechnicainMapComponent implements OnInit {
               )
             )
           );
-
           this.ColorArray = [];
-
           for (let i = 0; i < this.uniqueValues.length; i++) {
             this.ColorArray.push(this.generateColorCode());
           }
@@ -1482,7 +1322,6 @@ export class ListTechnicainMapComponent implements OnInit {
       }
     );
   }
-
   filterClass = 'filter-invisible';
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
@@ -1491,16 +1330,12 @@ export class ListTechnicainMapComponent implements OnInit {
       this.filterClass = 'filter-visible';
     }
   }
-
   applyFilter() {
     this.showMainFilter();
     this.filterClassss = true;
   }
-
   filterClassss: boolean = false;
-
   showHoverCard = false;
-
   currentPopoverData: any = [];
   jobno: any;
   jobnoedit: any;
@@ -1511,16 +1346,11 @@ export class ListTechnicainMapComponent implements OnInit {
     this.custidHover = Number(aa.split(',')[2]);
     this.currentPopoverData = data;
   }
-
   extractJobDetails(data: any[]): any[] {
     let jobDetails: any[] = [];
-
     data.forEach((entry) => {
-      let jobData: any = {}; // Object to hold the job data
-
-      // Loop through each key-value pair in the entry
+      let jobData: any = {}; 
       Object.keys(entry).forEach((key) => {
-        // Skip keys that are related to time slots (ID, TERRITORY_ID, TECHNICIAN_ID, etc.)
         if (
           key !== 'ID' &&
           key !== 'TERRITORY_ID' &&
@@ -1531,17 +1361,13 @@ export class ListTechnicainMapComponent implements OnInit {
           key !== 'ARCHIVE_FLAG' &&
           key !== 'CLIENT_ID'
         ) {
-          // If the value is not null, add the key-value pair to the jobData object
           if (entry[key] !== null) {
             jobData[key] = entry[key];
           }
         }
       });
-
-      // Add the job data object to the jobDetails array
       jobDetails.push(jobData);
     });
-
     return jobDetails;
   }
   jobdataforedit: any;
@@ -1567,7 +1393,6 @@ export class ListTechnicainMapComponent implements OnInit {
             ) {
               this.jobedit = true;
               this.Jobassignsdata = this.jobdataforedit;
-
               this.SERVICE_DATA = {
                 TERRITORY_ID: this.Jobassignsdata.TERRITORY_ID,
                 EXPECTED_DATE_TIME: this.Jobassignsdata.EXPECTED_DATE_TIME,
@@ -1614,7 +1439,6 @@ export class ListTechnicainMapComponent implements OnInit {
   }
   getpendingjobdata() {
     if (this.filterdate.length == 2) {
-      // var filterQuery = ' AND SCHEDULED_DATE_TIME=' + dateee + " AND STATUS='P' AND ORDER_STATUS !='CA'";
       var filterQuery = " AND STATUS='P' AND ORDER_STATUS !='CA'";
       var likeQuery = '';
       if (this.searchValue != '') {
@@ -1635,9 +1459,6 @@ export class ListTechnicainMapComponent implements OnInit {
           "'";
       }
       this.pageindexxx = 1;
-      // this.filterdate=" AND DATE(EXPECTED_DATE_TIME)='"+this.datepipe.transform(this.filterdate,'yyyy-MM-dd')+"'"
-
-      // var filterQuery = " AND SCHEDULED_DATE_TIME BETWEEN '" + dateee + "' AND' " + dateee + "'"
       this.api
         .getJobCardsForSchedular(
           this.pageindexxx,
@@ -1668,7 +1489,6 @@ export class ListTechnicainMapComponent implements OnInit {
   }
   getpendingjobdataforfilter() {
     var dateee = this.datepipe.transform(this.todaydate, 'yyyy-MM-dd');
-    // var filterQuery = ' AND SCHEDULED_DATE_TIME=' + dateee + " AND STATUS='P' AND ORDER_STATUS !='CA'";
     var filterQuery = " AND STATUS='P' AND ORDER_STATUS !='CA'";
     var likeQuery = '';
     if (this.searchValue != '') {
@@ -1687,9 +1507,7 @@ export class ListTechnicainMapComponent implements OnInit {
         this.datepipe.transform(this.filterdate[1], 'yyyy-MM-dd') +
         "'";
     }
-    // this.filterdate=" AND DATE(EXPECTED_DATE_TIME)='"+this.datepipe.transform(this.filterdate,'yyyy-MM-dd')+"'"
     this.pageindexxx = 1;
-    // var filterQuery = " AND SCHEDULED_DATE_TIME BETWEEN '" + dateee + "' AND' " + dateee + "'"
     this.api
       .getJobCardsForSchedular(
         this.pageindexxx,
@@ -1709,7 +1527,6 @@ export class ListTechnicainMapComponent implements OnInit {
           } else {
             this.jobdatss = [];
             this.groupedData = {};
-
             this.message.error('Failed to get pending job data', '');
           }
         },
@@ -1718,7 +1535,6 @@ export class ListTechnicainMapComponent implements OnInit {
         }
       );
   }
-
   jobviewdetails() {
     this.api
       .getJobCardsForSchedular(
@@ -1745,12 +1561,9 @@ export class ListTechnicainMapComponent implements OnInit {
         }
       );
   }
-
   tableloading: boolean = false;
-
   getpendingjobdataforfilterforsearch() {
     var dateee = this.datepipe.transform(this.todaydate, 'yyyy-MM-dd');
-    // var filterQuery = ' AND SCHEDULED_DATE_TIME=' + dateee + " AND STATUS='P' AND ORDER_STATUS !='CA'";
     var filterQuery = " AND STATUS='P' AND ORDER_STATUS !='CA'";
     var likeQuery = '';
     if (this.searchValue != '') {
@@ -1769,9 +1582,6 @@ export class ListTechnicainMapComponent implements OnInit {
         this.datepipe.transform(this.filterdate[1], 'yyyy-MM-dd') +
         "'";
     }
-    // this.filterdate=" AND DATE(EXPECTED_DATE_TIME)='"+this.datepipe.transform(this.filterdate,'yyyy-MM-dd')+"'"
-
-    // var filterQuery = " AND SCHEDULED_DATE_TIME BETWEEN '" + dateee + "' AND' " + dateee + "'"
     this.spinnnnnnn = true;
     this.pageindexxx = 1;
     this.api
@@ -1804,11 +1614,9 @@ export class ListTechnicainMapComponent implements OnInit {
         }
       );
   }
-
   filterDataByTime(startTime: string, endTime: string): void {
     const startMinutes = this.convertToMinutes(this.terriotrystarttime);
     const endMinutes = this.convertToMinutes(this.terriotryendtime);
-
     var filteredData = this.sheduledata.map((record) => {
       const filteredRecord = Object.entries(record)
         .filter(([key, value]) => {
@@ -1822,14 +1630,11 @@ export class ListTechnicainMapComponent implements OnInit {
           acc[key] = value;
           return acc;
         }, {});
-
-      // Add non-time fields back to the filtered record
       Object.entries(record).forEach(([key, value]) => {
         if (!this.isTimeString(key)) {
           filteredRecord[key] = value;
         }
       });
-
       return filteredRecord;
     });
     return filteredData;
@@ -1839,30 +1644,22 @@ export class ListTechnicainMapComponent implements OnInit {
     return hours * 60 + minutes;
   }
   private isTimeString(key: string): boolean {
-    return /^\d{2}:\d{2}$/.test(key); // Matches "HH:MM" format
+    return /^\d{2}:\d{2}$/.test(key); 
   }
-
   generateTimeColumnsFromRange(): string[] {
     const columns: string[] = [];
-
-    // Convert startTime and endTime to minutes
     const startMinutes = this.convertToMinutes(this.terriotrystarttime);
     const endMinutes = this.convertToMinutes(this.terriotryendtime);
-
     for (let time = startMinutes; time <= endMinutes; time += 10) {
       const hours = Math.floor(time / 60);
       const minutes = time % 60;
-
-      // Format hours and minutes as "HH:MM"
       const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes
         .toString()
         .padStart(2, '0')}`;
       columns.push(formattedTime);
     }
-
     return columns;
   }
-
   onscrolldata: any = '';
   onScroll(event: any) {
     if (this.spinnnnnnn == false) {
@@ -1873,14 +1670,12 @@ export class ListTechnicainMapComponent implements OnInit {
         scrollContainer.scrollHeight - 20
       ) {
         if (this.tempCount == this.jobdatss.length) {
-          // Display message: 'All Employee Load'
         } else {
           this.getpendingjobdatafilter11(sessionStorage.getItem('territoryid'));
         }
       }
     }
   }
-
   pageindexxx = 1;
   pageSize = 20;
   tempCount: any;
@@ -1935,22 +1730,19 @@ export class ListTechnicainMapComponent implements OnInit {
               );
               this.jobdatss = [...this.jobdatss, ...newData];
               this.groupedData = this.groupByOrderNo(this.jobdatss);
-
               if (checkcondition) {
                 if (this.onscrolldata != '') {
                   setTimeout(() => {
                     this.onscrolldata.scrollTo({
                       top: 0,
-                      behavior: 'smooth', // Smooth scrolling
+                      behavior: 'smooth', 
                     });
                   }, 0);
                 }
               } else {
               }
-
               this.openModal = false;
               this.spinnnnnnn = false;
-              // this.getcalenderdata(event, this.todaydate);
             } else {
               this.jobdatss = [];
               this.groupedData = {};
@@ -1968,7 +1760,6 @@ export class ListTechnicainMapComponent implements OnInit {
       this.selectedterritory = null;
     }
   }
-
   schollength: any = '';
   getdataaaaa() {
     if (this.columns.length > 0) {
@@ -1977,10 +1768,8 @@ export class ListTechnicainMapComponent implements OnInit {
     } else {
       this.schollength = '1400px';
     }
-
     return this.schollength;
   }
-
   Territorytime: any;
   gettime() {
     if (this.terriotryendtime1 && this.terriotrystarttime1) {
@@ -1996,29 +1785,19 @@ export class ListTechnicainMapComponent implements OnInit {
       return '';
     }
   }
-
   isTextOverflowing(element: HTMLElement): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
-
   groupByOrderNo(data: any[]): any {
     return data.reduce((result, currentItem) => {
-      // Get the ORDER_NO of the current item
       const orderNo = currentItem.ORDER_NO;
-
-      // Check if the ORDER_NO already exists in the result object
       if (!result[orderNo]) {
-        // If not, create a new array for this ORDER_NO
         result[orderNo] = [];
       }
-
-      // Push the current item to the array
       result[orderNo].push(currentItem);
-
       return result;
     }, {});
   }
-
   getKeys(obj: any): string[] {
     return Object.keys(obj);
   }
@@ -2044,7 +1823,6 @@ export class ListTechnicainMapComponent implements OnInit {
               this.alljobdata = [];
               this.alljobdata = data['data'];
               this.Jobassignsdata = data['data'][0];
-
               if (this.alljobdata.length > 0) {
                 this.SERVICE_DATA = {
                   TERRITORY_ID: this.Jobassignsdata.TERRITORY_ID,
@@ -2072,8 +1850,6 @@ export class ListTechnicainMapComponent implements OnInit {
                 this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN =
                   this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN + addmin;
               }
-              // this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN=this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN*this.alljobdata.length>1?this.alljobdata.length - 1 * 10:0
-
               this.IS_ORDER_JOB = 'O';
               this.JobassigndrawerTitle =
                 'Assign the Order ' + orderno + ' number to the technician';
@@ -2089,14 +1865,12 @@ export class ListTechnicainMapComponent implements OnInit {
         );
     }
   }
-
   getistimatetime(event) {
     if (event) {
       var timeee = event.reduce(
         (total, item) => total + item.ESTIMATED_TIME_IN_MIN,
         0
       );
-
       if (event.length > 1) {
         var lenggth = event.length - 1;
         var addmin = lenggth * 10;

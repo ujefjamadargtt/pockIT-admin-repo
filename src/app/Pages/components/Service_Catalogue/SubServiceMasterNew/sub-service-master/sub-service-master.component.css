@@ -4,17 +4,13 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 5px;
 }
-
 .mainnam {
-  /* color: #000; */
   font-size: 12px !important;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .subname {
   color: #4c4c4ceb;
   font-size: 11px !important;
@@ -22,4 +18,164 @@ nz-form-item {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.sub-service-form-container {
+    margin-top: 10px;
+}
+.character-counter {
+    color: red;
+    font-size: 10px;
+}
+.description-editor {
+    resize: none;
+    color: black;
+}
+.description-error {
+    color: red;
+    font-size: 11px;
+}
+.hidden-field {
+    display: none;
+}
+.upload-image-button {
+    padding: 0px 7px;
+    font-size: 10px;
+}
+.upload-details-image-button {
+    height: 28px;
+    padding: 0px 7px;
+    font-size: 12px;
+}
+.hidden-file-input {
+    display: none;
+}
+.file-link {
+    color: #092b9c;
+    margin-right: 9px;
+}
+.file-name-text {
+    color: #092b9c;
+}
+.icon-clickable {
+    cursor: pointer;
+}
+.icon-clickable-no-margin {
+    cursor: pointer;
+    margin-left: 0px;
+}
+.icon-clickable-left {
+    cursor: pointer;
+    margin-left: 10px;
+}
+.details-image-container {
+    display: flex;
+    justify-content: left;
+}
+.service-cost-wrapper {
+    padding-right: 5px;
+}
+.full-width-select {
+    width: 100%;
+}
+.express-toggle-container {
+    display: flex;
+}
+.service-details-box {
+    padding-left: 5px;
+    height: auto;
+    margin-right: 5px;
+}
+.quantity-input {
+    width: 40%;
+    padding: 4.7px 11px !important;
+}
+.unit-select {
+    width: 60%;
+}
+.hsn-select {
+    width: 100%;
+}
+.duration-container,
+.preparation-container {
+    display: flex;
+}
+.duration-hours,
+.preparation-hours {
+    margin-right: 10px;
+}
+.minutes-select-container {
+    display: flex;
+}
+.duration-minutes-select,
+.preparation-minutes-select {
+    width: 100px !important;
+}
+.minutes-label-button {
+    padding: 0px 11px !important;
+    background: #fafafa !important;
+    color: #393d39 !important;
+    border-color: #d9d9d9 !important;
+    border-left: none !important;
+    border-top-left-radius: 0px !important;
+    cursor: none !important;
+    box-shadow: none;
+    border-bottom-left-radius: 0px !important;
+}
+.skills-select {
+    width: 100%;
+}
+.service-operation-box {
+    padding-left: 5px;
+    height: 260px;
+}
+.timepicker-fullwidth {
+    width: 100%;
+}
+.form-footer {
+    display: flex;
+    margin-top: 20px;
+}
+.cancel-button {
+    margin-right: 12px;
+}
+.save-button,
+.update-button {
+    background-color: #1890ff;
+    border-color: #1890ff;
+    color: white;
+}
+.save-button:hover,
+.update-button:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+}
+.menu-item {
+    border-radius: 4px;
+    color: white !important;
+}
+.footer-menu-link {
+    color: white !important;
+}
+.image-preview-small {
+    height: 300px;
+    overflow: hidden;
+}
+.image-iframe-small {
+    width: 300px;
+    height: 300px;
+}
+.image-preview-large {
+    height: 400px;
+    overflow: auto;
+}
+.image-iframe-large {
+    width: 832px;
+    height: 396px;
+}
+.crop-container {
+    height: 500px;
+    overflow: scroll;
+}
+.cropped-preview {
+    text-align: center;
 }

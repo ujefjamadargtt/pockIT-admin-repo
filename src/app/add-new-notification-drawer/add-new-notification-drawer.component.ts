@@ -8,7 +8,6 @@ import { HttpEventType } from '@angular/common/http';
 import { appkeys } from '../app.constant';
 import { CommonFunctionService } from '../Service/CommonFunctionService';
 import { PDFDocument } from 'pdf-lib';
-
 @Component({
   selector: 'app-add-new-notification-drawer',
   templateUrl: './add-new-notification-drawer.component.html',
@@ -38,23 +37,16 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   loadingList: boolean = false;
   percentImageOne: number;
   progressBarImageOne: boolean;
-  hidePincode: boolean = false; // Set it to true to hide the div
-
-
+  hidePincode: boolean = false; 
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private cookie: CookieService,
     private datePipe: DatePipe
   ) { }
-
-
-
-
   ngOnInit() {
     this.changeRadioButton('1');
     this.getCountyData();
-
   }
   countryData: any = [];
   getCountyData() {
@@ -77,7 +69,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   getStatesByCountry(countryId: any, value: boolean) {
     if (value == true) {
       this.StateData = [];
-      // this.DistrictData = [];
     }
     this.api
       .getState(
@@ -94,7 +85,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
           } else {
             this.StateData = [];
             this.message.error('Failed to get state data.', '');
-            // this.isStateSpinning = false;
           }
         },
         () => {
@@ -102,22 +92,18 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         }
       );
   }
-
   reset(myForm: NgForm) {
     myForm.form.reset();
   }
-
   close(myForm: NgForm): void {
     this.drawerClose();
     this.reset(myForm);
   }
-
   btnIndividualStatus = false;
   btnDepartmentStatus = false;
   btnBranchStatus = false;
   btnDesignationStatus = false;
   btnEntireOrganisationStatus = false;
-
   disableRadioButtons() {
     if (this.roleId == 12) {
       this.btnIndividualStatus = true;
@@ -131,15 +117,12 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       this.btnBranchStatus = false;
       this.btnDesignationStatus = false;
       this.btnEntireOrganisationStatus = false;
-
       if (this.deptId == 0) {
         this.btnDepartmentStatus = true;
       }
-
       if (this.designationId == 0) {
         this.btnDesignationStatus = true;
       }
-
       if (this.branchId == 0) {
         this.btnBranchStatus = true;
       }
@@ -157,7 +140,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
     this.SELECT_ALL = false;
     if (btnValue == '1') {
       this.heading = 'Select Vendor';
-
       this.api.getVendorData(0, 0, '', 'desc', ' AND STATUS=1').subscribe(
         (data) => {
           if (data['code'] == 200) {
@@ -171,7 +153,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       );
     } else if (btnValue == '2') {
       this.heading = 'Select Backoffice Members';
-
       this.api.getBackOfficeData(0, 0, '', 'desc', '').subscribe(
         (data) => {
           if (data['code'] == 200) {
@@ -185,7 +166,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       );
     } else if (btnValue == '3') {
       this.heading = 'Select Customers';
-
       this.api
         .getAllCustomer(0, 0, '', 'desc', ' AND ACCOUNT_STATUS=1')
         .subscribe(
@@ -201,7 +181,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         );
     } else if (btnValue == '4') {
       this.heading = 'Select Technicians';
-
       this.api
         .getTechnicianData(0, 0, '', 'desc', ' AND TECHNICIAN_STATUS=1')
         .subscribe(
@@ -218,7 +197,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
     } else if (btnValue == '5') {
       this.heading = 'Select Pincode';
       this.notificationType = 'T';
-
       this.api
         .getAllPincode(
           this.pageIndex,
@@ -280,7 +258,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   loadMore(): void {
     if (this.sharingMode == '5') {
       this.loadingList = true;
-      // this.pageIndex += 1;
       this.pageSize += 10;
       var query = '';
       if (this.searchTextPincode) {
@@ -330,25 +307,18 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   async reduceFileSize(file: File, targetSizeMB: number): Promise<File> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-
       reader.onload = async (event: any) => {
         let data = event.target.result as string;
-
-        // Reduce file size (Simple Base64 Truncation)
         const maxSizeBytes = targetSizeMB * 1024 * 1024;
         if (data.length > maxSizeBytes) {
           data = data.slice(0, maxSizeBytes);
         }
-
-        // Convert back to Blob & File
         const compressedBlob = new Blob([data], { type: file.type });
         const compressedFile = new File([compressedBlob], file.name, {
           type: file.type,
         });
-
         resolve(compressedFile);
       };
-
       reader.onerror = (error) => reject(error);
       reader.readAsDataURL(file);
     });
@@ -357,19 +327,15 @@ export class AddNewNotificationDrawerComponent implements OnInit {
     return new Promise((resolve) => {
       const img = new Image();
       const reader = new FileReader();
-
       reader.onload = (event) => {
         img.src = event.target?.result as string;
       };
-
       img.onload = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-
         const scaleFactor = Math.sqrt((targetSizeMB * 1024 * 1024) / file.size);
         canvas.width = img.width * scaleFactor;
         canvas.height = img.height * scaleFactor;
-
         ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
         canvas.toBlob(
           (blob) => {
@@ -379,17 +345,15 @@ export class AddNewNotificationDrawerComponent implements OnInit {
             resolve(compressedFile);
           },
           file.type,
-          0.6 // Adjust quality (0.1 - 1)
+          0.6 
         );
       };
-
       reader.readAsDataURL(file);
     });
   }
   async compressTextFile(file: File): Promise<File> {
     const text = await file.text();
-    const compressedText = text.replace(/\s+/g, ' ').trim(); // Remove extra spaces
-
+    const compressedText = text.replace(/\s+/g, ' ').trim(); 
     const compressedFile = new File([compressedText], file.name, {
       type: file.type,
     });
@@ -398,30 +362,19 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   pdfSrc: string | ArrayBuffer = '';
   isFocused = '';
   @ViewChild('image1') myElementRef!: ElementRef;
-
   async compressPdf(file: File) {
     const arrayBuffer: any = await file.arrayBuffer();
     const pdfDoc: any = await PDFDocument.load(arrayBuffer);
-
-    // Remove unnecessary metadata
     pdfDoc.setTitle('');
     pdfDoc.setAuthor('');
     pdfDoc.setSubject('');
-
-    // Re-save the PDF with optimizations
     const compressedPdfBytes: any = await pdfDoc.save();
-
     return new Blob([compressedPdfBytes], { type: 'application/pdf' });
   }
   showConfirm(): void {
-    //
     this.isSpinning = true;
     if (this.referenceForFile.type.startsWith('image/')) {
       this.compressImage(this.referenceForFile, 1).then((compressedFile) => {
-        //
-        // this.message.success('Image Compression Successfull','')
-        //
-
         const number = Math.floor(100000 + Math.random() * 900000);
         const fileExt = compressedFile.name.split('.').pop();
         const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
@@ -448,11 +401,8 @@ export class AddNewNotificationDrawerComponent implements OnInit {
             } else if (res.type == 4 && res.status == 200) {
               if (res.body['code'] == 200) {
                 this.isVisibleMiddle = false;
-
-                // this.message.success('Profile Photo Uploaded Successfully...', '');
                 this.message.success('Successfully Uploaded Attachment', '');
                 this.isSpinning = false;
-                // this.progressBarImageOne = false;
                 this.selectedFileName = this.urlImageOne;
                 this.progressBarImageOne = false;
               } else {
@@ -466,11 +416,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       });
     } else if (this.referenceForFile.type === 'application/pdf') {
       this.compressPdf(this.referenceForFile).then((compressedFile) => {
-        //
-        //
-
         const number = Math.floor(100000 + Math.random() * 900000);
-        // const fileExt = compressedFile.name.split('.').pop();
         const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
         this.urlImageOne = `${d ?? ''}${number}.${'pdf'}`;
         this.selectedFileName = this.urlImageOne;
@@ -495,10 +441,8 @@ export class AddNewNotificationDrawerComponent implements OnInit {
             } else if (res.type == 4 && res.status == 200) {
               if (res.body['code'] == 200) {
                 this.isVisibleMiddle = false;
-                // this.message.success('Profile Photo Uploaded Successfully...', '');
                 this.message.success('Successfully Uploaded Attachment', '');
                 this.isSpinning = false;
-                // this.progressBarImageOne = false;
                 this.selectedFileName = this.urlImageOne;
                 this.progressBarImageOne = false;
               } else {
@@ -512,7 +456,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       });
     } else if (this.referenceForFile.type.startsWith('text/')) {
       this.compressTextFile(this.referenceForFile).then((compressedFile) => {
-        //
         this.isVisibleMiddle = false;
         const number = Math.floor(100000 + Math.random() * 900000);
         const fileExt = compressedFile.name.split('.').pop();
@@ -539,9 +482,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
               this.selectedFileName = null;
             } else if (res.type == 4 && res.status == 200) {
               if (res.body['code'] == 200) {
-                // this.message.success('Profile Photo Uploaded Successfully...', '');
                 this.message.success('Successfully Uploaded Attachment', '');
-                // this.progressBarImageOne = false;
                 this.isVisibleMiddle = false;
                 this.isSpinning = false;
                 this.selectedFileName = this.urlImageOne;
@@ -560,7 +501,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         .split('.')
         .pop()
         ?.toLowerCase();
-
       if (['mp3', 'mp4'].includes(fileExtension)) {
         const number = Math.floor(100000 + Math.random() * 900000);
         const fileExt = this.referenceForFile.name.split('.').pop();
@@ -591,10 +531,8 @@ export class AddNewNotificationDrawerComponent implements OnInit {
               this.selectedFileName = null;
             } else if (res.type == 4 && res.status == 200) {
               if (res.body['code'] == 200) {
-                // this.message.success('Profile Photo Uploaded Successfully...', '');
                 this.message.success('Successfully Uploaded Attachment', '');
                 this.isSpinning = false;
-                // this.progressBarImageOne = false;
                 this.selectedFileName = this.urlImageOne;
                 this.progressBarImageOne = false;
                 this.isVisibleMiddle = false;
@@ -608,8 +546,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
           });
       } else {
         this.reduceFileSize(this.referenceForFile, 1).then((compressedFile) => {
-          //
-          // this.message.success('Other File Compression Successfull','')
           const number = Math.floor(100000 + Math.random() * 900000);
           const fileExt = compressedFile.name.split('.').pop();
           const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
@@ -639,10 +575,8 @@ export class AddNewNotificationDrawerComponent implements OnInit {
                 this.selectedFileName = null;
               } else if (res.type == 4 && res.status == 200) {
                 if (res.body['code'] == 200) {
-                  // this.message.success('Profile Photo Uploaded Successfully...', '');
                   this.message.success('Successfully Uploaded Attachment', '');
                   this.isSpinning = false;
-                  // this.progressBarImageOne = false;
                   this.selectedFileName = this.urlImageOne;
                   this.progressBarImageOne = false;
                   this.isVisibleMiddle = false;
@@ -659,7 +593,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
     }
   }
   referenceForFile;
-  // MediaType=''
   MEDIA_TYPE = '';
   onFileSelected(event: any) {
     this.isSpinning = true;
@@ -668,40 +601,33 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       const file = event.target.files[0];
       const fileName = file.name;
       const fileExtension = fileName.split('.').pop()?.toLowerCase();
-
       if (!fileExtension) {
         this.message.error('Invalid file selected', '');
         this.isSpinning = false;
         return;
       }
-
-      // Define valid extensions for each media type
       const videoExtensions = ['mp4', 'avi'];
       const imageExtensions = ['jpg', 'jpeg', 'png'];
       const audioExtensions = ['mp3'];
       const documentExtensions = ['pdf', 'docx', 'txt'];
-
       if (this.MEDIA_TYPE === 'V' && !videoExtensions.includes(fileExtension)) {
         this.message.error('Please upload a valid video (mp4, avi)', '');
         event.target.value = null;
         this.isSpinning = false;
         return;
       }
-
       if (this.MEDIA_TYPE === 'I' && !imageExtensions.includes(fileExtension)) {
         this.message.error('Please upload a valid image (jpg, jpeg, png)', '');
         this.isSpinning = false;
         event.target.value = null;
         return;
       }
-
       if (this.MEDIA_TYPE === 'A' && !audioExtensions.includes(fileExtension)) {
         this.message.error('Please upload a valid audio file (mp3)', '');
         this.isSpinning = false;
         event.target.value = null;
         return;
       }
-
       if (
         this.MEDIA_TYPE === 'T' &&
         !documentExtensions.includes(fileExtension)
@@ -714,8 +640,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         event.target.value = null;
         return;
       }
-
-      // If file type is valid
       this.isSpinning = true;
     }
     const allowedExtensions = [
@@ -729,13 +653,10 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       'mp4',
       'avi',
     ];
-    const file = event.target.files[0]; // Get selected file
-    // this.progressBarImageOne = true;
+    const file = event.target.files[0]; 
     if (file) {
-      //
       const fileName = file.name;
       const fileExtension = fileName.split('.').pop()?.toLowerCase();
-
       if (!fileExtension || !allowedExtensions.includes(fileExtension)) {
         this.message.error(
           'Invalid file type! Please select a valid file.',
@@ -746,16 +667,13 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         return;
       }
       if (file.size > 10 * 1024 * 1024) {
-        // Optional: Limit file size to 5MB
         this.isSpinning = false;
         this.message.info('File size should not exceed 10MB!', '');
         event.target.value = null;
         return;
       } else if (file.size > 1 * 1024 * 1024 && file.size < 10 * 1024 * 1024) {
-        //
         this.isVisibleMiddle = true;
         this.isSpinning = false;
-        // this.showConfirm(file);
       } else {
         const number = Math.floor(100000 + Math.random() * 900000);
         const fileExt = file.name.split('.').pop();
@@ -782,13 +700,10 @@ export class AddNewNotificationDrawerComponent implements OnInit {
               this.selectedFileName = null;
             } else if (res.type == 4 && res.status == 200) {
               if (res.body['code'] == 200) {
-                // this.message.success('Profile Photo Uploaded Successfully...', '');
                 this.message.success('Successfully Uploaded Attachment', '');
                 this.isSpinning = false;
-                // this.progressBarImageOne = false;
                 this.selectedFileName = this.urlImageOne;
                 this.progressBarImageOne = false;
-                // this.isVisibleMiddle = false;
               } else {
                 this.isSpinning = false;
                 this.progressBarImageOne = false;
@@ -798,7 +713,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
             }
           });
       }
-      // this.selectedFileName = file.name; // Store file name
     }
   }
   getInitial(empName) {
@@ -809,8 +723,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   selectedCountyId;
   selectedStateId;
   onNotificationTypeChange(eve) {
-    // if(eve=='P'){
-    // }
     this.hidePincode = false
   }
   onTechnicianWiseChange(event) {
@@ -874,9 +786,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
     }
   }
   loadMore2(): void {
-    // if (this.sharingMode == '5') {
     this.loadingList = true;
-    // this.pageIndex += 1;
     this.pageSize += 10;
     var query = '';
     if (this.searchTextPincode2) {
@@ -908,14 +818,9 @@ export class AddNewNotificationDrawerComponent implements OnInit {
           if (err['ok'] == false) this.message.error('Server Not Found', '');
         }
       );
-    // }
   }
   getPincodesByCity(districtId: number) {
-    // if (value === true) {
-    //   this.data.PINCODE_ID = null;
-    //   this.data.PINCODE = null;
-    // }
-    this.isPincodeSpinning = true; // Set loading to true when fetching data
+    this.isPincodeSpinning = true; 
     this.api
       .getAllPincode(
         this.pageIndex,
@@ -928,16 +833,15 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         (data) => {
           if (data['code'] === 200) {
             this.PincodeData2 = data['data'];
-            // this.PINCODE_ID = Number(this.PINCODE_ID);
           } else {
             this.PincodeData2 = [];
             this.message.error('Failed To Get Pincode Data...', '');
           }
-          this.isPincodeSpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isPincodeSpinning = false; 
         },
         () => {
           this.message.error('Something went wrong.', '');
-          this.isPincodeSpinning = false; // Ensure spinning state is turned off on error
+          this.isPincodeSpinning = false; 
         }
       );
   }
@@ -945,7 +849,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   save(addNew: boolean, myForm: NgForm): void {
     let isOk = true;
     this.isSpinning = true;
-    // Validate User Selection
     if (
       this.radiogroup == 'P' &&
       !this.selectedCountyId &&
@@ -989,36 +892,27 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         '5': 'Please Select Pincode',
       };
       this.isSpinning = false;
-
       this.message.error(
         messageMap[this.sharingMode] || 'Please Select a User',
         ''
       );
     }
-
-    // Validate Title
     else if (!this.TITLE?.trim()) {
       isOk = false;
       this.isSpinning = false;
-
       this.message.error('Please Enter Valid Notification Title', '');
     } else if (!this.api.checkTextBoxIsValid(this.TITLE)) {
       isOk = false;
       this.isSpinning = false;
-
       this.message.error('Invalid characters in Title', '');
     }
-
-    // Validate Description
     else if (!this.DESCRIPTION?.trim()) {
       isOk = false;
       this.isSpinning = false;
-
       this.message.error('Please Enter Valid Notification Description', '');
     } else if (this.MEDIA_TYPE?.trim() !== '' && !this.selectedFileName) {
       isOk = false;
       this.isSpinning = false;
-
       this.message.error('Please Select Valid Attachment', '');
     }
     if (isOk) {
@@ -1098,7 +992,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       let userId = rawUserId
         ? Number(this.commonFunction.decryptdata(rawUserId))
         : null;
-
       this.api
         .notiDetailsAddBulk(
           this.TITLE,
@@ -1131,7 +1024,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         );
     }
   }
-
   SELECT_ALL: boolean = false;
   radiogroup = '';
   radiogroup1: any = 'ALL';
@@ -1152,11 +1044,6 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       ids = [];
       this.notificationType = 'C';
     }
-    // this.notificationType='C'
     this.USER_IDS = ids;
   }
-
-
-
-
 }

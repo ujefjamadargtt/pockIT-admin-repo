@@ -3,7 +3,6 @@
     <div nz-col nzSpan="24">
       <nz-form-item>
         <nz-form-label nzRequired nzNoColon> Employee Name </nz-form-label>
-
         <nz-form-control>
           <nz-select
             nzShowSearch
@@ -11,7 +10,7 @@
             nzPlaceHolder="Please Select Employee"
             name="empid"
             [(ngModel)]="EMPLOYEE_ID"
-            style="width: 100%"
+            class="w-100"
             required
           >
             <nz-option
@@ -26,18 +25,15 @@
     </div>
   </div>
 </form>
-
 <div class="footer">
   <button
     type="button"
     nz-button
     (click)="close(myForm)"
-    class="ant-btn"
-    style="margin-right: 8px"
+    class="ant-btn mt-8"
   >
     <span>Cancel</span>
   </button>
-
   <button
     type="button"
     class="ant-btn ant-btn-primary"

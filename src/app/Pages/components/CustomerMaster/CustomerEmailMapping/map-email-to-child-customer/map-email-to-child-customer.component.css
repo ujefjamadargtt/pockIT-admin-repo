@@ -4,7 +4,66 @@ nz-form-item {
     width: -webkit-fill-available;
     padding: 0px 5px;
 }
-
+*:focus {
+    outline: none;
+}
+.territory-container {
+    margin-top: 10px;
+}
+.form-item-full {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0 5px;
+}
+.full-width-input {
+    width: 100%;
+}
+.btn-add {
+    width: 100%;
+    margin-top: 5px;
+    padding: 0 10px;
+    height: 30px;
+}
+.search-container {
+    text-align: right;
+    padding-right: 20px;
+    width: 100% !important;
+}
+.search-input-group {
+    margin-left: 26px;
+}
+.search-input {
+    height: 32px;
+}
+.btn-search {
+    height: 32px;
+}
+.table-header-center {
+    font-weight: bold;
+    text-align: center;
+}
+.table-cell-center {
+    text-align: center;
+}
+.table-cell-left {
+    text-align: left;
+}
+.table-cell-right {
+    text-align: right;
+}
+.tag-edit {
+    cursor: pointer;
+}
+.icon-edit {
+    font-size: 15px;
+}
+.footer {
+    margin-top: 15px;
+}
+.btn-cancel {
+    margin-right: 8px;
+}
 *:focus {
     outline: none;
 }

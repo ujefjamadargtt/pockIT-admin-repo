@@ -2,42 +2,203 @@ th {
   text-align: center !important;
   vertical-align: middle !important;
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%;
   display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.back-icon-style {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-width {
+  width: 47px;
+}
+.row-padding-zero {
+  padding-top: 0px;
+}
+.spin-center {
+  text-align: center;
+}
+.filter-item-margin {
+  margin-bottom: 8px;
+}
+.filter-item-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-item-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-item-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-item-check {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-margin {
+  margin-top: 7px;
+}
+.filter-actions-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-icon {
+  font-size: 10px !important;
+}
+.filter-action-tag-last {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.no-filter-found {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-btns-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.filter-btn-margin {
+  margin-right: 10px;
+}
+.status-header {
+  font-weight: bold;
+  text-align: center;
+}
+.map-tag {
+  cursor: pointer;
+}
+.map-icon {
+  font-size: 15px;
+}
+.select-full {
+  width: 100%;
+}
+.modal-center-title {
+  text-align: center;
+}
+.image-container {
+  height: 300px;
+  overflow: auto;
+}
+.preview-image {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600;
+  max-height: 400;
+}
+.text-left-padding {
+  text-align: left;
+  padding-left: 10px;
+}
+.text-right-padding {
+  text-align: right;
+  padding-right: 5px;
+}
+.inline-form-flex {
+  display: inline-flex;
+}
+.form-item-margin {
+  margin-bottom: 0px !important;
+}
+.input-margin-left {
+  margin-left: 26px !important;
+}
+.input-height {
+  height: 32px;
+}
+.position-relative {
+  position: relative;
+}
+.table-preline {
+  white-space: pre-line;
+}
+.padding-top-ten {
+  padding-top: 10px;
+}
+.cell-center {
+  text-align: center;
+}
+.center-alignment {
+  align-self: center;
+  text-align: center;
+  align-items: center;
+}
+.icon-size-large {
+  font-size: 26px !important;
+}
+.mapping-header-row {
+  display: flex;
+  justify-content: space-between;
+}
+.mapping-left-section {
+  display: flex;
+}
+.mapping-left-text {
+  text-align: left;
+  padding-left: 10px;
+}
+.switch-preline {
+  white-space: pre-line;
+}
+.mapping-right-section {
+  text-align: right;
+  padding-right: 5px;
+}
+.footer-right {
+  float: right;
+}
+.cancel-btn-margin {
+  margin-right: 8px;
 }

@@ -8,7 +8,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-faq-heads',
   templateUrl: './faq-heads.component.html',
@@ -27,11 +26,9 @@ export class FaqHeadsComponent implements OnInit {
   filterQuery: string = '';
   isFilterApplied: any = 'default';
   columns: string[][] = [
-    // ['PARENT_NAME', 'Parent Name'],
     ['NAME', 'FAQ Head Name'],
   ];
   applicationId = Number(this.cookie.get('applicationId'));
-  //drawer Variables
   drawerVisible: boolean;
   drawerTitle: string;
   drawerData: Faqhead = new Faqhead();
@@ -51,11 +48,7 @@ export class FaqHeadsComponent implements OnInit {
       groups: [],
     },
   ];
-
-  //New Advance Filter
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -72,7 +65,6 @@ export class FaqHeadsComponent implements OnInit {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private cookie: CookieService,
@@ -82,16 +74,7 @@ export class FaqHeadsComponent implements OnInit {
   ngOnInit() {
     this.search();
   }
-
-  // Basic Methods
-  // sort(sort: { key: string; value: string }): void {
-  //   this.sortKey = sort.key;
-  //   this.sortValue = sort.value;
-  //   this.search(true);
-  // }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -105,51 +88,29 @@ export class FaqHeadsComponent implements OnInit {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
     }
-
     this.loadingRecords = true;
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
-    // var likeQuery = ' ';
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND (';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
-    // }
-
-    // if (likeQuery)
-    //   this.filterQuery = ' AND APPLICATION_ID=' + this.applicationId + likeQuery;
-    // else this.filterQuery = ' AND APPLICATION_ID=' + this.applicationId;
-
     var likeQuery = '';
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -160,7 +121,6 @@ export class FaqHeadsComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (this.FAQHeadNametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -169,32 +129,19 @@ export class FaqHeadsComponent implements OnInit {
     } else {
       this.isFAQHeadNameFilterApplied = false;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS = ${this.statusFilter}`;
     }
-
-    // Parent Filter
-    // if (this.parentFilter) {
-    //   if (likeQuery !== '') {
-    //     likeQuery += ' AND ';
-    //   }
-    //   likeQuery += `IS_PARENT = ${this.parentFilter}`;
-    // }
-
     if (this.headtypeFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `FAQ_HEAD_TYPE = '${this.headtypeFilter}'`;
     }
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getAllFaqHeads(
         this.pageIndex,
@@ -209,7 +156,6 @@ export class FaqHeadsComponent implements OnInit {
           this.totalRecords = data.body['count'];
           this.dataList = data.body['data'];
           this.TabId = data.body['TAB_ID'];
-
           if (this.totalRecords == 0) {
             data.body['SEQUENCE_NO'] = 1;
           } else {
@@ -220,20 +166,13 @@ export class FaqHeadsComponent implements OnInit {
         (err) => { }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
-  // @ViewChild(FaqHeadComponent, { static: false })
-  // FaqHeadComponentVar: FaqHeadComponent;
-
   add(): void {
     this.drawerVisible = true;
-
     this.drawerTitle = 'Create New FAQ Head';
     this.drawerData = new Faqhead();
-
     this.api.getAllFaqHeads(1, 1, 'SEQUENCE_NO', 'desc', '').subscribe(
       (data) => {
         if (data['body']['count'] == 0) {
@@ -245,56 +184,42 @@ export class FaqHeadsComponent implements OnInit {
       },
       (err) => { }
     );
-
     this.drawerData.ORG_ID = null;
     this.drawerData.PARENT_ID = null;
     this.drawerData.NAME = null;
     this.drawerData.DESCRIPTION = null;
-
-    // this.FaqHeadComponentVar.loadFaqHeads1();
   }
-
   edit(data: Faqhead): void {
     this.drawerTitle = 'Update FAQ Head';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
-
-    // this.FaqHeadComponentVar.loadFaqHeads1();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   FAQHeadNameVisible: boolean = false;
   isFAQHeadNameFilterApplied = false;
   FAQHeadNametext: string = '';
-
   reset(): void {
     this.searchText = '';
     this.FAQHeadNametext = '';
-
     this.search();
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.searchText.length >= 3 && event.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length == 0 && event.key === 'Backspace') {
       this.search(true);
     }
-
     if (this.FAQHeadNametext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.FAQHeadNametext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
@@ -302,49 +227,37 @@ export class FaqHeadsComponent implements OnInit {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   statusFilter: string | undefined = undefined;
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   listOfparentFilter: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   listOfheadtypeFilter: any[] = [
     { text: 'Customer', value: 'C' },
     { text: 'Technician', value: 'T' },
   ];
-
   parentFilter: string | undefined = undefined;
-
   onparentFilterChange(selectedStatus: string) {
     this.parentFilter = selectedStatus;
     this.search(true);
   }
-
   headtypeFilter: string | undefined = undefined;
-
   onheadtypeFilterChange(selectedStatus: string) {
     this.headtypeFilter = selectedStatus;
     this.search(true);
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -352,11 +265,9 @@ export class FaqHeadsComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -365,8 +276,6 @@ export class FaqHeadsComponent implements OnInit {
       this.loadFilters();
     }
   }
-
-  // Advance Filter
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
@@ -382,14 +291,11 @@ export class FaqHeadsComponent implements OnInit {
   isModalVisible: any;
   filterClass: string = 'filter-invisible';
   filterloading: boolean = false;
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -397,13 +303,12 @@ export class FaqHeadsComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -418,21 +323,15 @@ export class FaqHeadsComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -446,9 +345,7 @@ export class FaqHeadsComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -464,7 +361,6 @@ export class FaqHeadsComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
@@ -489,9 +385,7 @@ export class FaqHeadsComponent implements OnInit {
       }
     );
   }
-
   selectedFilter: string | null = null;
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -500,7 +394,6 @@ export class FaqHeadsComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -509,19 +402,14 @@ export class FaqHeadsComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   applyCondition: any;
   openfilter() {
     this.drawerTitle = 'FAQ  Filter';
     this.applyCondition = '';
-    // this.filterFields[3]['options'] = this.categoryData;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -530,14 +418,10 @@ export class FaqHeadsComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
     this.drawerFilterVisible = true;
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -554,7 +438,6 @@ export class FaqHeadsComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -572,48 +455,38 @@ export class FaqHeadsComponent implements OnInit {
       },
     ];
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
-
     this.EditQueryData = data;
     this.filterData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Query';
     this.drawerFilterVisible = true;
-    // this.filterFields[3]['options'] = this.categoryData;
   }
   oldFilter: any[] = [];
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   drawerflterClose(buttontype, updateButton) {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get filtercloseCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'NAME',
@@ -629,20 +502,6 @@ export class FaqHeadsComponent implements OnInit {
       ],
       placeholder: 'Enter FAQ Head Name',
     },
-    // {
-    //   key: 'IS_PARENT',
-    //   label: 'Is Parent ?',
-    //   type: 'select',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //   ],
-    //   options: [
-    //     { value: '1', display: 'Yes' },
-    //     { value: '0', display: 'No' },
-    //   ],
-    //   placeholder: 'Is Parent ?',
-    // },
     {
       key: 'FAQ_HEAD_TYPE',
       label: 'FAQ Head Type',
@@ -672,12 +531,10 @@ export class FaqHeadsComponent implements OnInit {
       placeholder: 'Status',
     },
   ];
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }

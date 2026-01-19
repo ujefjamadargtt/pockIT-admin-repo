@@ -3,11 +3,121 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
 }
- 
- 
 :host::ng-deep .ant-card-body {
     padding: 0px;
+}
+.row-padding-top-12 {
+    padding-top: 12px;
+}
+.arrow-clickable {
+    font-weight: bold;
+    cursor: pointer;
+}
+.flex-end-col {
+    display: flex;
+    justify-content: flex-end;
+}
+.excel-button {
+    color: white;
+}
+.filter-button-width {
+    width: 47px;
+}
+.row-padding-top-0 {
+    padding-top: 0px;
+}
+.text-center {
+    text-align: center;
+}
+.saved-filter-col {
+    margin-bottom: 8px;
+}
+.saved-filter-card {
+    display: flex;
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    border-radius: 7px;
+}
+.saved-filter-content {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+    position: relative;
+}
+.filter-name {
+    color: black;
+    text-align: center;
+    font-size: 25px;
+    white-space: nowrap;
+}
+.check-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.mt-7 {
+    margin-top: 7px;
+}
+.filter-tags-row {
+    display: flex;
+    justify-content: space-between;
+}
+.filter-tag {
+    cursor: pointer;
+    font-size: 10px !important;
+}
+.tag-icon {
+    font-size: 10px !important;
+}
+.no-data-text {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.filter-buttons-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: left;
+    margin-top: 10px;
+}
+.filter-action-btn {
+    margin-right: 10px;
+}
+.truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: inline-block;
+}
+:host::ng-deep .ant-card-body {
+    padding: 0px;
+}
+.table-row-center {
+    text-align: center;
+}
+.pre-line {
+    white-space: pre-line;
+}
+.filter-applied {
+    color: #092B9C !important;
+}
+.row-padding-top-12 { padding-top: 12px; }
+.row-padding-top-0 { padding-top: 0px; }
+.text-center { text-align: center; }
+.arrow-clickable { font-weight: bold; cursor: pointer; }
+.flex-end-col { display: flex; justify-content: flex-end; }
+.excel-button { color: white; }
+.filter-button-width { width: 47px; }
+.width-300px {
+  width: 300px;
+}
+.width-280px {
+  width: 280px;
 }

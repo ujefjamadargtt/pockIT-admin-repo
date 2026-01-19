@@ -10,7 +10,6 @@ import { appkeys } from "src/app/app.constant";
 import { BackOfficeMasterData } from "src/app/Pages/Models/BackOfficeMasterData";
 import { ApiServiceService } from "src/app/Service/api-service.service";
 import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
-
 @Component({
   selector: "app-back-office-master-drawer",
   templateUrl: "./back-office-master-drawer.component.html",
@@ -24,12 +23,10 @@ export class BackOfficeMasterDrawerComponent {
   fullImageUrl: string;
   retriveimgUrl = appkeys.retriveimgUrl;
   uploadedImage: any = "";
-
   public commonFunction = new CommonFunctionService();
   @Input() data: BackOfficeMasterData = new BackOfficeMasterData();
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   roleNames: any = [];
   emailPattern: RegExp =
     /^(?!.*\.\..*)(?!.*--.*)(?!.*-\.|-\@|\.-|\@-)[a-zA-Z0-9]([a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z]{2,})+$/;
@@ -49,21 +46,12 @@ export class BackOfficeMasterDrawerComponent {
       this.uploadedImage = this.data.PROFILE_PHOTO;
     } else {
     }
-
-    // if (this.data.ROLE_ID === 25) {
-    //   this.reportingid = 25;
-    //   this.getreportingperson(25, true);
-    // }
     this.organizationid = sessionStorage.getItem("orgId");
     this.data.ORG_ID = 1
-
-    // Format the COUNTRY_CODE
     if (this.data.COUNTRY_CODE) {
       this.data.COUNTRY_CODE = this.data.COUNTRY_CODE;
     }
-
     this.getroles();
-
     if (
       this.data.COUNTRY_CODE == "" ||
       this.data.COUNTRY_CODE == undefined ||
@@ -72,14 +60,12 @@ export class BackOfficeMasterDrawerComponent {
       this.data.COUNTRY_CODE = "+91";
     }
   }
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer
   ) { }
-
   isFocused: string = "";
   roleData: any[] = [];
   rolseloading: boolean = false;
@@ -99,7 +85,6 @@ export class BackOfficeMasterDrawerComponent {
                 return data.ID != Number(vendorroleid);
               });
             }
-
             this.rolseloading = false;
           } else {
             this.roleData = [];
@@ -130,7 +115,6 @@ export class BackOfficeMasterDrawerComponent {
       (data) => {
         if (data["code"] === 200) {
           this.backofficedata = data["data"];
-          //this.data.STATE_ID = "";
           this.backoffice = false;
         } else {
           this.backofficedata = [];
@@ -151,7 +135,6 @@ export class BackOfficeMasterDrawerComponent {
     BackOfficeForm.form.markAsUntouched();
   }
   CropImageModalVisible = false;
-  // CropImageModalFooter: string|TemplateRef<{}>|ModalButtonOptions<any>[]|null|undefined;
   isSpinningCrop = false;
   cropimageshow: any;
   @ViewChild("image1") myElementRef!: ElementRef;
@@ -174,114 +157,82 @@ export class BackOfficeMasterDrawerComponent {
   imageChangedEvent: any = "";
   croppedImage: any = "";
   fileChangeEvent(event: any): void {
-    //
-
     this.CropImageModalVisible = true;
     this.cropimageshow = true;
-
     this.imageChangedEvent = event;
   }
-
   cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
   imageCropped(event: any) {
     this.enhanceImageQuality(event.base64, 128, 128)
     this.imageWidth = event?.original?.size.width;
     this.imageHeight = event?.original?.size.height;
   }
-
   async enhanceImageQuality(base64: any, finalWidth: number, finalHeight: number): Promise<void> {
     try {
       this.croppedImage = await new Promise((resolve, reject) => {
         const img = new Image();
         img.src = base64;
-        img.crossOrigin = "Anonymous"; // Prevents tainted canvas issues.
-
+        img.crossOrigin = "Anonymous"; 
         img.onload = async () => {
-          await img.decode(); // Ensures the image is fully loaded
-
-          // **Create initial high-resolution canvas**
+          await img.decode(); 
           const tempCanvas = document.createElement("canvas");
           const tempCtx = tempCanvas.getContext("2d");
-
           if (!tempCtx) return reject("Canvas context not available");
-
-          tempCanvas.width = img.width * 2; // Upscale before downscaling
+          tempCanvas.width = img.width * 2; 
           tempCanvas.height = img.height * 2;
-
           tempCtx.imageSmoothingEnabled = true;
           tempCtx.imageSmoothingQuality = "high";
-          tempCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+          tempCtx.fillStyle = 'white'; 
           tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
           tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
-
-          // **Stepwise Downscaling**
           const downscaleCanvas = (sourceCanvas: HTMLCanvasElement, width: number, height: number): HTMLCanvasElement => {
             const newCanvas = document.createElement("canvas");
             const newCtx = newCanvas.getContext("2d");
-
             if (!newCtx) return sourceCanvas;
-
             newCanvas.width = width;
             newCanvas.height = height;
-
             newCtx.imageSmoothingEnabled = true;
             newCtx.imageSmoothingQuality = "high";
-            newCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+            newCtx.fillStyle = 'white'; 
             newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
             newCtx.drawImage(sourceCanvas, 0, 0, width, height);
-
             return newCanvas;
           };
-
           let currentCanvas = tempCanvas;
           const downscaleSteps = [
-            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], // Step 1
-            [finalWidth * 2, finalHeight * 2], // Step 2
-            [finalWidth, finalHeight] // Final resolution
+            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], 
+            [finalWidth * 2, finalHeight * 2], 
+            [finalWidth, finalHeight] 
           ];
-
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
           }
-
-          // **Convert to PNG at Max Quality**
           resolve(currentCanvas.toDataURL("image/png", 1.0));
         };
-
         img.onerror = (err) => reject(`Image load error: ${err}`);
       });
-
     } catch (error) {
-      // console.error("Image enhancement failed:", error);
     }
   }
-
-  // Function to compress image and ensure size < 1MB
   compressImage(canvas: HTMLCanvasElement, quality: number) {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-
-        const sizeInMB = blob.size / (1024 * 1024); // Convert to MB
-
+        const sizeInMB = blob.size / (1024 * 1024); 
         if (sizeInMB > 1 && quality > 0.1) {
-          // If size is still >1MB, reduce quality and try again
           this.compressImage(canvas, quality - 0.1);
         } else {
-          // Final compressed image (size is now below 1MB)
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             this.croppedImage = reader.result as string;
-            //
           };
         }
       },
       "image/jpeg",
       quality
-    ); // Convert to JPEG with given quality
+    ); 
   }
-
   imageWidth: number = 0;
   imageHeight: number = 0;
   imageLoaded(event) {
@@ -291,26 +242,14 @@ export class BackOfficeMasterDrawerComponent {
     this.imagePreview = this.croppedImage;
     this.imageWidth = event.original.size.width;
     this.imageHeight = event.original.size.height;
-    // Image loaded successfully
   }
-
   cropperReady(event) {
-    //
-    // Cropper ready
-    // event.height = 128;
-    // event.width = 128;
   }
-
   loadImageFailed() {
-    // Image failed to load
   }
-
   save(addNew: boolean, BackOfficeForm: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
-
-
     if (
       (this.data.ROLE_ID == null || this.data.ROLE_ID == undefined) &&
       (this.data.NAME == null ||
@@ -377,15 +316,6 @@ export class BackOfficeMasterDrawerComponent {
       this.isOk = false;
       this.message.error("Please enter a valid mobile number.", "");
     }
-    // else if (
-    //   this.data.ROLE_ID === 25 &&
-    //   (this.data.REPORTING_HEAD_ID == null ||
-    //     this.data.REPORTING_HEAD_ID == undefined ||
-    //     this.data.REPORTING_HEAD_ID == 0)
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error("Please select Reporting Head Name.", "");
-    // }
     else if (
       (this.data.PASSWORD == null ||
         this.data.PASSWORD == undefined ||
@@ -401,22 +331,18 @@ export class BackOfficeMasterDrawerComponent {
       this.isOk = false;
       this.message.error("Please enter a valid password.", "");
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
         this.data.ORG_ID = 1;
-
         if (this.fileURL) {
           const number = Math.floor(100000 + Math.random() * 900000);
           const fileExt = this.fileURL.name.split(".").pop();
           const d = this.datePipe.transform(new Date(), "yyyyMMdd");
           var url = `${d ?? ""}${number}.${fileExt}`;
           const uploadedfileExt = this.uploadedImage.split(".").pop();
-
           if (this.data.ID) {
             if (uploadedfileExt == fileExt) {
-              //
               this.UrlImageOne = this.uploadedImage;
             } else {
               this.UrlImageOne = url;
@@ -424,14 +350,11 @@ export class BackOfficeMasterDrawerComponent {
           } else {
             this.UrlImageOne = url;
           }
-
           this.api
             .onUpload("BackofficeProfile", this.fileURL, this.UrlImageOne)
             .subscribe((res) => {
               if (res.type === HttpEventType.Response && res.status === 200) {
                 this.data.PROFILE_PHOTO = this.UrlImageOne;
-
-                // this.message.success('Icon Uploaded Successfully...', '');
                 this.handleSaveOperation(addNew, BackOfficeForm);
               } else if (res.type === HttpEventType.Response) {
                 this.message.error("Failed to Upload Profile Photo.", "");
@@ -444,7 +367,6 @@ export class BackOfficeMasterDrawerComponent {
       }
     }
   }
-
   handleSaveOperation(addNew: boolean, BackOfficeForm: NgForm): void {
     if (this.data.ID) {
       this.api.updateBackOffice(this.data).subscribe(
@@ -504,11 +426,9 @@ export class BackOfficeMasterDrawerComponent {
       );
     }
   }
-
   close() {
     this.drawerClose();
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -516,7 +436,6 @@ export class BackOfficeMasterDrawerComponent {
     }
     return true;
   }
-
   countryCodes = [
     { label: "+91 (India)", value: "+91" },
     { label: "+92 (Pakistan)", value: "+92" },
@@ -755,9 +674,6 @@ export class BackOfficeMasterDrawerComponent {
     { label: "Kyrgyzstan (+996)", value: "+996" },
     { label: "Uzbekistan (+998)", value: "+998" },
   ];
-
-  // Profile Photo
-
   imageshow: any = null;
   selectedFile: any;
   imagePreview: any;
@@ -772,44 +688,34 @@ export class BackOfficeMasterDrawerComponent {
   sanitizedLink: any = "";
   sanitizedFileURL: SafeUrl | null = null;
   imagePreviewURL;
-
   imageDeleteConfirm(data: any) {
     this.fileURL = null;
     this.UrlImageOne = null;
     this.data.PROFILE_PHOTO = " ";
     this.fileURL = null;
   }
-
   deleteCancel() { }
-
   onFileSelected(event: any): void {
-    const maxFileSize = 1 * 1024 * 1024; // 1 MB
+    const maxFileSize = 1 * 1024 * 1024; 
     const allowedWidth = 128;
     const allowedHeight = 128;
-
     if (event.target.files[0]?.type.match(/image\/(jpeg|jpg|png)/)) {
       this.fileURL = this.base64ToFile(this.croppedImage, "cropped-image.png");
-
       if (this.fileURL.size > maxFileSize) {
         this.message.error("File size should not exceed 1MB.", "");
         this.fileURL = null;
         return;
       }
-
-      // Validate image dimensions
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const img = new Image();
         img.src = this.croppedImage;
         const input = event.target as HTMLInputElement;
-
         if (input?.files?.length) {
           this.selectedFile = input.files[0];
-
-          // Generate a preview of the selected image
           const reader = new FileReader();
           reader.onload = () => {
-            this.imagePreview = this.croppedImage; // Base64 image data
+            this.imagePreview = this.croppedImage; 
           };
           reader.readAsDataURL(this.selectedFile);
         }
@@ -822,7 +728,6 @@ export class BackOfficeMasterDrawerComponent {
             this.fileURL = null;
             this.sanitizedFileURL = null;
           } else {
-            // Sanitize the file URL for preview
             this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
               URL.createObjectURL(this.fileURL)
             );
@@ -830,7 +735,6 @@ export class BackOfficeMasterDrawerComponent {
           }
         };
       };
-
       reader.readAsDataURL(this.fileURL);
       this.CropImageModalVisible = false;
     } else {
@@ -843,29 +747,24 @@ export class BackOfficeMasterDrawerComponent {
       this.sanitizedFileURL = null;
     }
   }
-
   removeImage1(): void {
     this.data.PROFILE_PHOTO = null;
     this.fileURL = null;
     this.imagePreviewURL = null;
     this.message.success("Profie Photo removed successfully.", "");
   }
-
   openImageInNewWindow(): void {
     if (this.fileURL) {
-      const imageURL = URL.createObjectURL(this.fileURL); // Get blob URL
+      const imageURL = URL.createObjectURL(this.fileURL); 
       window.open(imageURL, "_blank");
     } else {
       alert("No Profile Photo selected to view.");
     }
   }
-
   deleteImage(): void {
-    // Remove selected file and its preview
     this.fileURL = null;
     this.sanitizedFileURL = null;
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }

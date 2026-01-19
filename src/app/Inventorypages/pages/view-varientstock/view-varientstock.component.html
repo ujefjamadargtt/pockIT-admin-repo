@@ -1,14 +1,12 @@
 <div nz-row nzType="flex">
-  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style="display: flex; justify-content: flex-start">
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" class="flex-start-container">
     <form [nzLayout]="'inline'" nz-form>
       <nz-form-item>
         <nz-form-label>Warehouse</nz-form-label>
-
         <nz-form-control nzErrorTip="Select Warehouse">
           <nz-select nzShowSearch [(ngModel)]="WAREHOUSE_ID" name="WAREHOUSE_ID" nzPlaceHolder="Select Warehouse"
-            [nzLoading]="iswarehouseLoading" (ngModelChange)="wareousechanged($event)" style="min-width: 350px"
+            [nzLoading]="iswarehouseLoading" (ngModelChange)="wareousechanged($event)" class="warehouse-select-width"
             [nzMaxTagCount]="3" nzMode="multiple">
-            <!-- <nz-option [nzValue]="0" [nzLabel]="'All Warehouses'"> </nz-option> -->
             <nz-option *ngFor="let item of Loadwarehouse" [nzValue]="item.ID" [nzLabel]="item.NAME">
             </nz-option>
           </nz-select>
@@ -16,51 +14,16 @@
       </nz-form-item>
     </form>
   </div>
-  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style="display: flex; justify-content: flex-end"
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" class="flex-end-container"
     *ngIf="dataList != undefined && dataList.length > 0">
-    <span style="
-        padding: 0px 8px;
-        border: 1px solid #ff9d64;
-        margin-right: 5px;
-        font-size: 12px !important;
-        border-radius: 16px;
-        font-weight: 600;
-        background: #fff9ed;
-        display: flex;
-        align-items: center;
-        height: 26px;
-      ">Alert Level
-      <span style="font-size: 19px !important; font-weight: 300; margin: 0px 5px">|</span>
+    <span class="stock-level-badge alert-level-badge">Alert Level
+      <span class="level-separator">|</span>
       {{ dataList[0].ALERT_STOCK_LEVEL }}</span>
-
-    <span style="
-        padding: 0px 8px;
-        border: 1px solid #6464ff;
-        margin-right: 5px;
-        font-size: 12px !important;
-        border-radius: 16px;
-        font-weight: 600;
-        background: #ededff;
-        display: flex;
-        align-items: center;
-        height: 26px;
-      ">Re-Order Level
-      <span style="font-size: 19px !important; font-weight: 300; margin: 0px 5px">|</span>
+    <span class="stock-level-badge reorder-level-badge">Re-Order Level
+      <span class="level-separator">|</span>
       {{ dataList[0].REORDER_STOCK_LEVEL }}</span>
-
-    <span style="
-        padding: 0px 8px;
-        border: 1px solid #00e810;
-        margin-right: 5px;
-        font-size: 12px !important;
-        border-radius: 16px;
-        font-weight: 600;
-        background: #d4ffdc;
-        display: flex;
-        align-items: center;
-        height: 26px;
-      ">Avg. Level
-      <span style="font-size: 19px !important; font-weight: 300; margin: 0px 5px">|</span>
+    <span class="stock-level-badge avg-level-badge">Avg. Level
+      <span class="level-separator">|</span>
       {{ dataList[0].AVG_LEVEL }}</span>
   </div>
 </div>
@@ -68,69 +31,37 @@
   <div nz-col nzSpan="24">
     <nz-table #tableeeeeeee [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords"
       [nzSize]="'small'" [nzScroll]="{ y: '60vh' }" nzShowSizeChanger="false" class="my-scroll no-wrap1" nzBordered
-      style="white-space: pre-line">
+      class="table-whitespace">
       <thead>
         <tr>
-          <!-- <th nzWidth="150px" style="font-weight: bold; text-align: center">
-            Status
-          </th> -->
-          <th nzWidth="200px" style="font-weight: bold; text-align: center" nzColumnKey="ITEM_NAME" nzCustomFilter>
+          <th nzWidth="200px" class="th-bold th-center" nzColumnKey="ITEM_NAME" nzCustomFilter>
             Item Name
           </th>
-          <th nzWidth="200px" style="font-weight: bold; text-align: center" nzColumnKey="BATCH_NO" nzCustomFilter>
+          <th nzWidth="200px" class="th-bold th-center" nzColumnKey="BATCH_NO" nzCustomFilter>
             Batch No.
           </th>
-          <th nzWidth="200px" style="font-weight: bold; text-align: center" nzColumnKey="SERIAL_NO" nzCustomFilter>
+          <th nzWidth="200px" class="th-bold th-center" nzColumnKey="SERIAL_NO" nzCustomFilter>
             Serial No.
           </th>
-          <th nzWidth="200px" style="font-weight: bold; text-align: center" nzColumnKey="WAREHOUSE_NAME" nzCustomFilter>
+          <th nzWidth="200px" class="th-bold th-center" nzColumnKey="WAREHOUSE_NAME" nzCustomFilter>
             Warehouse Name
           </th>
-
-          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="CURRENT_STOCK" nzCustomFilter>
+          <th nzWidth="150px" class="th-bold th-center" nzColumnKey="CURRENT_STOCK" nzCustomFilter>
             Current Stock
           </th>
-          <!-- <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="ALERT_STOCK_LEVEL"
-            nzCustomFilter>
-            Alert Level
-          </th>
-          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="AVG_LEVEL" nzCustomFilter>
-            Avg. Level
-          </th>
-          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="REORDER_STOCK_LEVEL"
-            nzCustomFilter>
-            Re-Order Level
-          </th> -->
         </tr>
       </thead>
-
       <tbody>
-        <tr *ngFor="let data of tableeeeeeee.data; let i = index" style="text-align: center">
-          <!-- <td align="center">
-            <span *ngIf="data.CURRENT_STOCK > data.AVG_LEVEL">
-              Stock Available</span>
-
-            <span style="color: rgb(255, 157, 0)" class="blinking-text" *ngIf="
-                data.CURRENT_STOCK > 0 &&
-                (data.CURRENT_STOCK <= data.ALERT_STOCK_LEVEL ||
-                  data.CURRENT_STOCK <= data.REORDER_STOCK_LEVEL)
-              ">
-              Stock Is Low
-            </span>
-            <span style="color: rgb(255, 0, 0)" *ngIf="data.CURRENT_STOCK == 0">
-              Out Of Stock
-            </span>
-          </td> -->
+        <tr *ngFor="let data of tableeeeeeee.data; let i = index" class="tbody-tr-center">
           <td align="left">
             {{ data.ITEM_NAME }} <br />
-            <span *ngIf="data['VARIANT_NAME']" style="font-size: 11px !important">
+            <span *ngIf="data['VARIANT_NAME']" class="variant-text">
               {{
               data["VARIANT_NAME"].length > 18
               ? (data["VARIANT_NAME"] | slice : 0 : 18) + "..."
               : data["VARIANT_NAME"]
               }}
             </span>
-
             <span *ngIf="!data['VARIANT_NAME']">-</span>
           </td>
           <td align="left">
@@ -140,32 +71,20 @@
           <td align="left">
             {{ data.WAREHOUSE_NAME }}
           </td>
-
           <td align="right">
-            <span style="color: rgb(255, 0, 0)" *ngIf="data.CURRENT_STOCK == 0">
+            <span class="out-of-stock-text" *ngIf="data.CURRENT_STOCK == 0">
               Out Of Stock
             </span>
             <span *ngIf="data.CURRENT_STOCK > 0">
               {{ data.CURRENT_STOCK }}
-
               ({{ data.ACTUAL_UNIT_NAME }})
             </span>
           </td>
-          <!-- <td align="right">
-            {{ data.ALERT_STOCK_LEVEL }} ({{ data.ACTUAL_UNIT_NAME }})
-          </td>
-          <td align="right">
-            {{ data.AVG_LEVEL }} ({{ data.ACTUAL_UNIT_NAME }})
-          </td>
-          <td align="right">
-            {{ data.REORDER_STOCK_LEVEL }} ({{ data.ACTUAL_UNIT_NAME }})
-          </td> -->
         </tr>
       </tbody>
     </nz-table>
   </div>
 </div>
-
 <div *ngIf="drawerinventorylogs">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(105% - 55px)',
@@ -179,7 +98,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-
 <div *ngIf="drawerStockDetails">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(105% - 55px)',

@@ -5,7 +5,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { endOfMonth, startOfYear, endOfYear, startOfMonth } from 'date-fns';
 import { Router } from '@angular/router';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-actionlogs',
   templateUrl: './actionlogs.component.html',
@@ -27,25 +26,20 @@ export class ActionlogsComponent {
   @Input() CUSTOMER_ID: any = '';
   filterdata: any = '';
   filterdataVen: any = '';
-
   filterdata1: any;
-
   CustomersData: any;
   TechData: any;
   filterQuery: any = '';
   filterQueryDate: any;
-
   filterQuery1: string = '';
   filterQuery2: string = '';
   filterQuery3: string = '';
-
   isFilterApplied: any = 'default';
   filterClass: any = 'filter-invisible';
   Customers: any = [];
   Technician: any = [];
   selectedDate: Date[] = [];
   custidss: any = []
-
   date1 =
     new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + 1;
   value1: any = '';
@@ -99,8 +93,6 @@ export class ActionlogsComponent {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using DatePipe
     const formattedStartDate: any = this.datePipe.transform(
       startOfMonth,
       'yyyy-MM-dd'
@@ -109,8 +101,6 @@ export class ActionlogsComponent {
       endOfMonth,
       'yyyy-MM-dd'
     );
-
-    // Store the formatted dates in the selectedDate array
     this.selectedDate = [formattedStartDate, formattedEndDate];
     this.getCustomers();
     setTimeout(() => {
@@ -127,7 +117,6 @@ export class ActionlogsComponent {
               (data) => {
                 if (data['code'] == 200) {
                   this.loaddata = false;
-
                   data['data'].forEach((element) => {
                     if (element.ID) TECH_IDS.push(element.ID);
                   });
@@ -147,7 +136,6 @@ export class ActionlogsComponent {
               }
             );
         } else {
-          //
           if (this.TYPE != 'TECHNICIAN') {
             this.getTechinitialdata();
           } else {
@@ -162,7 +150,6 @@ export class ActionlogsComponent {
         }
       }
     }, 5000);
-
   }
   getCustomers() {
     var f = '';
@@ -202,7 +189,6 @@ export class ActionlogsComponent {
         .subscribe(
           (data) => {
             if (data['code'] == 200) {
-              // this.loadactionlogs = false;
               this.CustomersData = data['data'];
             } else {
               this.loadactionlogs = false;
@@ -215,15 +201,12 @@ export class ActionlogsComponent {
           }
         );
     }
-
   }
-
   getTechinitialdata() {
     if (this.roleID == '9') {
       this.vendorid = this.commonFunction.decryptdata(
         sessionStorage.getItem('vendorId') || ''
       );
-
       this.api
         .getTechnicianData(0, 0, '', '', ' AND VENDOR_ID =' + this.vendorid)
         .subscribe((successdata2) => {
@@ -308,7 +291,6 @@ export class ActionlogsComponent {
       var tec = Array.from(new Set(this.TECHNICIAN_ID));
       filter = ' AND ID in(' + tec.toString() + ')';
     }
-
     this.api
       .getTechnicianData(0, 0, 'NAME', 'desc', ' AND IS_ACTIVE=1' + filter)
       .subscribe(
@@ -320,7 +302,6 @@ export class ActionlogsComponent {
               this.roleID != 6 &&
               this.roleID != 8
             ) {
-              // this.Technician = tec[0];
               this.getActionLog();
             }
           } else {
@@ -332,7 +313,6 @@ export class ActionlogsComponent {
         }
       );
   }
-
   getTECH1(filt: any) {
     this.api
       .getTechnicianData(0, 0, 'NAME', 'desc', ' AND IS_ACTIVE=1' + filt)
@@ -349,7 +329,6 @@ export class ActionlogsComponent {
         }
       );
   }
-
   clearFilter() {
     this.filterQuery = '';
     this.filterQuery1 = '';
@@ -362,8 +341,6 @@ export class ActionlogsComponent {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using DatePipe
     const formattedStartDate: any = this.datePipe.transform(
       startOfMonth,
       'yyyy-MM-dd'
@@ -372,14 +349,10 @@ export class ActionlogsComponent {
       endOfMonth,
       'yyyy-MM-dd'
     );
-
-    // Store the formatted dates in the selectedDate array
     this.selectedDate = [formattedStartDate, formattedEndDate];
     this.value1 = this.datePipe.transform(new Date(), 'yyyy-MM-01');
     this.value2 = this.datePipe.transform(new Date(), 'yyyy-MM-31');
-
     if (this.TYPE != 'JOB' && this.TYPE != 'ORDER') this.Customers = null;
-
     this.Technician = null;
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
@@ -456,9 +429,7 @@ export class ActionlogsComponent {
           }
         });
     }
-
   }
-
   getjovVendor() {
     if (
       this.Vendorfilterquery1 !== null &&
@@ -468,7 +439,6 @@ export class ActionlogsComponent {
       this.filterdataVen =
         ' AND TECHNICIAN_ID IN (' + this.Vendorfilterquery1 + ')';
     }
-
     if (this.decreptedroleID == 7) {
       this.api
         .getpendinjobsdataa(0, 0, '', '', this.filterdataVen + ' AND CUSTOMER_MANAGER_ID=' + this.decreptedbackofficeId)
@@ -498,12 +468,10 @@ export class ActionlogsComponent {
           }
         });
     }
-
   }
   isSpinning: boolean = false;
   actionlog: any;
   customermfilt: any;
-
   Actiontyoe: any = [];
   customersFilter: any;
   techniciansFilter: any;
@@ -511,7 +479,6 @@ export class ActionlogsComponent {
   actionLogTypeFilter: any;
   vendornewfilt: any;
   loadactionlogs: boolean = false;
-
   getActionLog() {
     if (this.selectedDate == undefined || this.selectedDate.length == 0) {
       this.filterQueryDate = '';
@@ -529,7 +496,6 @@ export class ActionlogsComponent {
             },
           }
           : {};
-      // Filter for TECHNICIANS
       this.techniciansFilter =
         this.Technician != null &&
           this.Technician != undefined &&
@@ -548,8 +514,6 @@ export class ActionlogsComponent {
               },
             }
             : {};
-
-      // Filter for JOB_CARD_ID
       this.jobCardFilter =
         this.JOB != null && this.JOB != undefined && this.JOB != ''
           ? {
@@ -558,7 +522,6 @@ export class ActionlogsComponent {
             },
           }
           : {};
-
       this.customermfilt =
         this.custidss != null && this.custidss != undefined && this.custidss != ''
           ? {
@@ -567,14 +530,13 @@ export class ActionlogsComponent {
             },
           }
           : {};
-      // Filter for ACTION_LOG_TYPE (multi-select filter)
       this.actionLogTypeFilter =
         this.Actiontyoe != null &&
           this.Actiontyoe != undefined &&
           this.Actiontyoe != ''
           ? {
             ACTION_LOG_TYPE: {
-              $in: this.Actiontyoe, // Multi-select filter applied
+              $in: this.Actiontyoe, 
             },
           }
           : {};
@@ -585,14 +547,13 @@ export class ActionlogsComponent {
         this.FILTER_ID != ''
       ) {
         this.actionlog = {};
-
         this.filterdata1 =
           this.FILTER_ID != null &&
             this.FILTER_ID != undefined &&
             this.FILTER_ID != ''
             ? {
               CUSTOMER_ID: {
-                $in: [this.FILTER_ID], // Multi-select filter applied
+                $in: [this.FILTER_ID], 
               },
             }
             : {};
@@ -611,17 +572,16 @@ export class ActionlogsComponent {
               'Skill Request',
               'Technician',
               'System',
-            ], // Multi-select filter applied
+            ], 
           },
         };
-
         this.filterdata1 =
           this.FILTER_ID != null &&
             this.FILTER_ID != undefined &&
             this.FILTER_ID != ''
             ? {
               JOB_CARD_ID: {
-                $in: [this.FILTER_ID], // Multi-select filter applied
+                $in: [this.FILTER_ID], 
               },
             }
             : {};
@@ -640,10 +600,9 @@ export class ActionlogsComponent {
               'Skill Request',
               'Technician',
               'System',
-            ], // Multi-select filter applied
+            ], 
           },
         };
-
         this.filterdata1 =
           this.FILTER_ID != null &&
             this.FILTER_ID != undefined &&
@@ -662,7 +621,7 @@ export class ActionlogsComponent {
       ) {
         this.actionlog = {
           ACTION_LOG_TYPE: {
-            $in: ['Technician', 'User'], // Multi-select filter applied
+            $in: ['Technician', 'User'], 
           },
         };
         this.filterdata1 =
@@ -675,13 +634,10 @@ export class ActionlogsComponent {
               },
             }
             : {};
-
-
       } else {
         this.filterdata1 = {};
         this.actionlog = {};
       }
-
       this.filterQueryDate = JSON.stringify({
         $and: [
           {
@@ -695,7 +651,7 @@ export class ActionlogsComponent {
                         date: '$DATE_TIME',
                       },
                     },
-                    this.value1, // Start date, e.g., "2025-01-14"
+                    this.value1, 
                   ],
                 },
                 {
@@ -706,7 +662,7 @@ export class ActionlogsComponent {
                         date: '$DATE_TIME',
                       },
                     },
-                    this.value2, // End date, e.g., "2025-01-15"
+                    this.value2, 
                   ],
                 },
               ],
@@ -722,8 +678,6 @@ export class ActionlogsComponent {
         ],
       });
     }
-
-    // + this.actionlog + this.filterQueryDate +
     this.loadactionlogs = true;
     if (this.decreptedroleID === 7) {
       if (this.custidss.length > 0) {
@@ -769,9 +723,7 @@ export class ActionlogsComponent {
           }
         );
     }
-
   }
-
   getActionLog1() {
     if (this.selectedDate == undefined || this.selectedDate.length == 0) {
       this.filterQueryDate = '';
@@ -789,7 +741,6 @@ export class ActionlogsComponent {
             },
           }
           : {};
-      // Filter for TECHNICIANS
       this.techniciansFilter =
         this.Technician != null &&
           this.Technician != undefined &&
@@ -808,7 +759,6 @@ export class ActionlogsComponent {
               },
             }
             : {};
-      // Filter for JOB_CARD_ID
       this.jobCardFilter =
         this.JOB != null && this.JOB != undefined && this.JOB != ''
           ? {
@@ -817,14 +767,13 @@ export class ActionlogsComponent {
             },
           }
           : {};
-      // Filter for ACTION_LOG_TYPE (multi-select filter)
       this.actionLogTypeFilter =
         this.Actiontyoe != null &&
           this.Actiontyoe != undefined &&
           this.Actiontyoe != ''
           ? {
             ACTION_LOG_TYPE: {
-              $in: this.Actiontyoe, // Multi-select filter applied
+              $in: this.Actiontyoe, 
             },
           }
           : {};
@@ -834,9 +783,7 @@ export class ActionlogsComponent {
         this.FILTER_ID != undefined &&
         this.FILTER_ID != ''
       ) {
-        // this.filterdata = " AND CUSTOMER_ID=" + this.FILTER_ID;
         this.actionlog = {};
-
         this.filterdata1 =
           this.FILTER_ID != null &&
             this.FILTER_ID != undefined &&
@@ -862,10 +809,9 @@ export class ActionlogsComponent {
               'Skill Request',
               'Technician',
               'System',
-            ], // Multi-select filter applied
+            ], 
           },
         };
-
         this.filterdata1 =
           this.FILTER_ID != null &&
             this.FILTER_ID != undefined &&
@@ -891,7 +837,7 @@ export class ActionlogsComponent {
               'Skill Request',
               'Technician',
               'System',
-            ], // Multi-select filter applied
+            ], 
           },
         };
         this.filterdata1 =
@@ -919,7 +865,7 @@ export class ActionlogsComponent {
               'Skill Request',
               'Technician',
               'System',
-            ], // Multi-select filter applied
+            ], 
           },
         };
         this.filterdata1 =
@@ -952,7 +898,6 @@ export class ActionlogsComponent {
             },
           }
           : {};
-
       this.filterQueryDate = JSON.stringify({
         $and: [
           {
@@ -966,7 +911,7 @@ export class ActionlogsComponent {
                         date: '$DATE_TIME',
                       },
                     },
-                    this.value1, // Start date, e.g., "2025-01-14"
+                    this.value1, 
                   ],
                 },
                 {
@@ -977,7 +922,7 @@ export class ActionlogsComponent {
                         date: '$DATE_TIME',
                       },
                     },
-                    this.value2, // End date, e.g., "2025-01-15"
+                    this.value2, 
                   ],
                 },
               ],
@@ -993,7 +938,6 @@ export class ActionlogsComponent {
         ],
       });
     }
-
     this.loadactionlogs = true;
     if (this.decreptedroleID === 7) {
       if (this.custidss.length > 0) {
@@ -1040,12 +984,11 @@ export class ActionlogsComponent {
         );
     }
   }
-
   formatTimelineData(data: any[]): any[] {
     return data.map((day) => ({
       date: day._id,
       events: day.ACTION_LOGS.map((log) => ({
-        icon: this.getStatusIcon(log.ORDER_STATUS || ''), // Adjust icon logic as needed
+        icon: this.getStatusIcon(log.ORDER_STATUS || ''), 
         title: log.ACTION_DETAILS || 'Action performed',
         time: log.DATE_TIME
           ? new Date(log.DATE_TIME).toLocaleTimeString()
@@ -1054,7 +997,6 @@ export class ActionlogsComponent {
           log.ACTION_LOG_TYPE == 'Technician' || log.ACTION_LOG_TYPE == 'T'
             ? log.TECHNICIAN_NAME
             : log.USER_NAME,
-        // description: log.TASK_DESCRIPTION || '',
         ACTION_LOG_TYPE: log.ACTION_LOG_TYPE,
       })),
     }));
@@ -1079,15 +1021,12 @@ export class ActionlogsComponent {
         return 'ℹ️';
     }
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   applyFilter() {
-    // this.loadingRecords = true;
     if (this.selectedDate != null && this.selectedDate.length === 2) {
       this.value1 = this.datePipe.transform(this.selectedDate[0], 'yyyy-MM-dd');
       this.value2 = this.datePipe.transform(this.selectedDate[1], 'yyyy-MM-dd');
@@ -1114,31 +1053,24 @@ export class ActionlogsComponent {
     this.value1 = this.datePipe.transform(value[0], 'yyyy-MM-dd');
     this.value2 = this.datePipe.transform(value[1], 'yyyy-MM-dd');
   }
-
   sortEventsByTime(data: any[]): any[] {
     return data
-      .sort((a, b) => b.date.localeCompare(a.date)) // Sort by date
+      .sort((a, b) => b.date.localeCompare(a.date)) 
       .map((dateObj) => {
         return {
           ...dateObj,
           events: dateObj.events.sort((a: any, b: any) => {
-            // Convert time strings to Date objects for proper AM/PM sorting
             const timeA = new Date(`1970-01-01 ${a.time}`);
             const timeB = new Date(`1970-01-01 ${b.time}`);
-            return timeB.getTime() - timeA.getTime(); // Sort descending
+            return timeB.getTime() - timeA.getTime(); 
           }),
         };
       });
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   getActionLog123() {
-    // if (this.selectedDate == undefined || this.selectedDate.length == 0) {
-    //   this.filterQueryDate = '';
-    // } else {
     this.customersFilter = {
       ORDER_ID: {
         $in: [this.FILTER_ID],
@@ -1149,43 +1081,12 @@ export class ActionlogsComponent {
         $in: ['order', 'Order', 'Cart'],
       },
     };
-
     this.filterQueryDate = JSON.stringify({
       $and: [
-        // {
-        //   $expr: {
-        //     $and: [
-        //       {
-        //         $gte: [
-        //           {
-        //             $dateToString: {
-        //               format: '%Y-%m-%d',
-        //               date: '$DATE_TIME',
-        //             },
-        //           },
-        //           this.value1, // Start date, e.g., "2025-01-14"
-        //         ],
-        //       },
-        //       {
-        //         $lte: [
-        //           {
-        //             $dateToString: {
-        //               format: '%Y-%m-%d',
-        //               date: '$DATE_TIME',
-        //             },
-        //           },
-        //           this.value2, // End date, e.g., "2025-01-15"
-        //         ],
-        //       },
-        //     ],
-        //   },
-        // },
         this.customersFilter,
         this.actionlog,
       ],
     });
-    // }
-
     this.loadactionlogs = true;
     this.api
       .getActionLogforshoppp(1, 0, 'DATE_TIME', 'desc', this.filterQueryDate)

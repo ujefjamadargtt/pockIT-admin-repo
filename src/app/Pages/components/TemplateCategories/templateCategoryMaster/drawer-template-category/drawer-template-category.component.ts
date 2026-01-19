@@ -4,7 +4,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { TemplateCategoryMaster } from 'src/app/Pages/Models/templateCategory';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-drawer-template-category',
   templateUrl: './drawer-template-category.component.html',
@@ -15,7 +14,6 @@ export class DrawerTemplateCategoryComponent {
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
   public commonFunction = new CommonFunctionService();
-
   isSpinning = false;
   isOk = true;
   isStateSpinning = false;
@@ -24,7 +22,6 @@ export class DrawerTemplateCategoryComponent {
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   resetDrawer(teritorymaster: NgForm) {
     this.data = new TemplateCategoryMaster();
     teritorymaster.form.markAsPristine();
@@ -36,9 +33,7 @@ export class DrawerTemplateCategoryComponent {
       this.getStateData(this.data.COUNTRY_ID);
     }
   }
-
   onCountryChange(countryId: number | null): void {
-    // Reset states when the country is cleared or changed
     this.data.STATE_ID = null;
     this.stateData = [];
     this.data.NAME = '';
@@ -47,7 +42,6 @@ export class DrawerTemplateCategoryComponent {
     }
   }
   stateData: any = [];
-
   getStateData(countryId: number) {
     if (!countryId) {
       this.stateData = [];
@@ -55,7 +49,6 @@ export class DrawerTemplateCategoryComponent {
       this.data.NAME = '';
       return;
     }
-
     this.isStateSpinning = true;
     this.api
       .getState(
@@ -82,7 +75,6 @@ export class DrawerTemplateCategoryComponent {
         }
       );
   }
-
   countryData: any = [];
   isCountrySpinning = true;
   getCountryData() {
@@ -108,12 +100,10 @@ export class DrawerTemplateCategoryComponent {
   save(addNew: boolean, teritorymaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       (this.data.NAME.trim() == '' ||
         this.data.NAME == null ||
         this.data.NAME == undefined) &&
-
       (this.data.SEQ_NO == undefined ||
         this.data.SEQ_NO == null ||
         this.data.SEQ_NO == 0)
@@ -135,7 +125,6 @@ export class DrawerTemplateCategoryComponent {
       this.isOk = false;
       this.message.error('Please Enter Sequence No.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -167,7 +156,6 @@ export class DrawerTemplateCategoryComponent {
               else {
                 this.data = new TemplateCategoryMaster();
                 this.resetDrawer(teritorymaster);
-
                 this.api.getTemplateCategoryData(1, 1, 'SEQ_NO', 'desc', '').subscribe(
                   (data) => {
                     if (data['code'] == 200) {
@@ -199,16 +187,14 @@ export class DrawerTemplateCategoryComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   ondistChange() { }

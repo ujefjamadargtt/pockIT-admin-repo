@@ -1,52 +1,153 @@
 .filter-box nz-form-item {
-    margin-top: 0px;
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 5px;
+  margin-top: 0px;
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 5px;
 }
-
 th {
-    text-align: center !important;
-    vertical-align: middle !important;
-    /* font-weight: bold; */
-  }
-  
-  .select {
-    width: 200px;
-    padding: 8px;
-    display: block;
-  }
-  
-  .search-box {
-    padding: 8px;
-  }
-  
-  .search-box input {
-    width: 188px;
-    display: block;
-  }
-  
-  .search-box button {
-    width: 90px;
-  }
-  
-  .search-button {
-    margin-right: 8px;
-  }
-  
-  nz-select {
-    width: 100%;
-  }
-  
-  :host::ng-deep .ant-card-body {
-    padding: 0px;
-  }
-  
-  .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
-    display: inline-block;
-  }
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
+}
+.search-box {
+  padding: 8px;
+}
+.search-box input {
+  width: 188px;
+  display: block;
+}
+.search-box button {
+  width: 90px;
+}
+.search-button {
+  margin-right: 8px;
+}
+nz-select {
+  width: 100%;
+}
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+.clickable-bold-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.white-text-btn {
+  color: white;
+}
+.search-box {
+  padding: 8px;
+}
+.search-box input,
+.search-input {
+  width: 188px;
+  display: block;
+}
+.search-box button,
+.search-button {
+  width: 90px;
+  margin-right: 8px;
+}
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
+}
+nz-select {
+  width: 100%;
+}
+th {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.filter-box nz-form-item {
+  margin-top: 0;
+  display: inline-block;
+  margin-bottom: 5px;
+  width: 100%;
+  padding: 0 5px;
+}
+.full-width-select {
+  width: 98%;
+}
+.date-picker-container {
+  display: flex;
+  gap: 5px;
+}
+.date-picker {
+  width: 40%;
+}
+.start-date {
+  margin-right: 5px;
+}
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  padding-left: 10px;
+  align-self: center;
+  margin-top: 20px;
+}
+.flexicons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.clickable-bold-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.table-container {
+  margin-top: 8px;
+}
+.filter-applied {
+  color: #092B9C;
+}
+.text-center {
+  text-align: center !important;
+}
+.search-box {
+  padding: 8px;
+}
+.search-box input,
+.search-input {
+  width: 188px;
+}
+.search-box button,
+.search-button {
+  width: 90px;
+  margin-right: 8px;
+}
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
+}
+nz-select,
+.full-width-select {
+  width: 100%;
+}
+.flex-align-center {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.full-width-time-picker {
+  width: 100%;
+  margin: 0 8px;
+}

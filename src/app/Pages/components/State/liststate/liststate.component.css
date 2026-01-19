@@ -1,48 +1,123 @@
-th {
+.cm-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.cm-header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.cm-filter-btn-width {
+  width: 47px;
+}
+.cm-new-btn {
+  margin-right: 0;
+}
+.cm-filter-row-top {
+  padding-top: 0;
+}
+.cm-text-center {
+  text-align: center;
+}
+.cm-filter-card-col {
+  margin-bottom: 8px;
+}
+.cm-filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.cm-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.cm-filter-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.cm-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.cm-filter-action-row {
+  margin-top: 7px;
+}
+.cm-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.cm-filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.cm-icon-sm {
+  font-size: 10px !important;
+}
+.cm-icon-md {
+  font-size: 15px;
+}
+.cm-no-margin-right {
+  margin-right: 0;
+}
+.cm-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.cm-filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.cm-margin-right-10 {
+  margin-right: 10px;
+}
+.cm-table-margin-top {
+  margin-top: 10px;
+}
+.cm-th-center {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
+.cm-th-center-bold {
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-weight: bold;
+}
+.cm-td-center {
+  text-align: center;
+}
+.cm-pointer {
+  cursor: pointer;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
-.search-box button {
-  width: 90px;
+.w-100{
+  width: 100%
 }
-
-.search-button {
-  margin-right: 8px;
-}
-
-nz-select {
-  width: 100%;
-}
-
-.margin-row {
-  margin: 10px 0px;
-}
-
-:host::ng-deep .ant-card-body {
-  padding: 0px;
-}
-
-.truncate-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
-  display: inline-block;
+.text-center{
+  text-align: center
 }

@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-technician-performance-report',
   templateUrl: './technician-performance-report.component.html',
@@ -21,7 +20,6 @@ export class TechnicianPerformanceReportComponent {
     public datepipe: DatePipe,
     private _exportService: ExportService
   ) { }
-
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -45,7 +43,6 @@ export class TechnicianPerformanceReportComponent {
   Seqtext: any;
   excelData: any = [];
   exportLoading: boolean = false;
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -62,7 +59,6 @@ export class TechnicianPerformanceReportComponent {
       groups: [],
     },
   ];
-
   onKeyupS(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -76,17 +72,7 @@ export class TechnicianPerformanceReportComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // keyup(event) {
-  //   if (this.searchText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.searchText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  // }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -105,57 +91,8 @@ export class TechnicianPerformanceReportComponent {
       this.search();
       this.isCustomerNameApplied = false;
     }
-
-    // if (this.orderCountText.length >= 0 && event.key === 'Enter') {
-    //   this.search();
-    //   this.isOrderCountApplied = true;
-    // } else if (this.orderCountText.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isOrderCountApplied = false;
-    // }
-
-    // if (this.completedText.length >= 0 && event.key === 'Enter') {
-    //   this.search();
-    //   this.isCompletedApplied = true;
-    // } else if (this.completedText.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isCompletedApplied = false;
-    // }
-
-    // if (this.pendingText.length >= 0 && event.key === 'Enter') {
-    //   this.search();
-    //   this.isPendingApplied = true;
-    // } else if (this.pendingText.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isPendingApplied = false;
-    // }
-
-    // if (this.cancelledText.length >= 0 && event.key === 'Enter') {
-    //   this.search();
-    //   this.isCancelledApplied = true;
-    // } else if (this.cancelledText.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isCancelledApplied = false;
-    // }
-
-    // if (this.rejectedText.length >= 0 && event.key === 'Enter') {
-    //   this.search();
-    //   this.isRejectedApplied = true;
-    // } else if (this.rejectedText.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isRejectedApplied = false;
-    // }
-
-    // if (this.finalAmountText.length >= 0 && event.key === 'Enter') {
-    //   this.search();
-    //   this.isFinalAmountApplied = true;
-    // } else if (this.finalAmountText.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isFinalAmountApplied = false;
-    // }
   }
   filterQuery: string = '';
-  // Search function to apply filters and fetch data
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -165,14 +102,12 @@ export class TechnicianPerformanceReportComponent {
       this.sortKey = 'NAME';
       this.sortValue = 'desc';
     }
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -185,36 +120,13 @@ export class TechnicianPerformanceReportComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.nameText.trim()) {
       likeQuery += `NAME LIKE '%${this.nameText.trim()}%'`;
     }
-    // if (this.orderCountText.trim()) {
-    //   likeQuery += likeQuery ? ` AND order_count LIKE '%${this.orderCountText.trim()}%'` : `order_count LIKE '%${this.orderCountText.trim()}%'`;
-    // }
-    // if (this.completedText.trim()) {
-    //   likeQuery += likeQuery ? ` AND COMPLETED LIKE '%${this.completedText.trim()}%'` : `COMPLETED LIKE '%${this.completedText.trim()}%'`;
-    // }
-    // if (this.pendingText.trim()) {
-    //   likeQuery += likeQuery ? ` AND PENDING LIKE '%${this.pendingText.trim()}%'` : `PENDING LIKE '%${this.pendingText.trim()}%'`;
-    // }
-    // if (this.cancelledText.trim()) {
-    //   likeQuery += likeQuery ? ` AND CANCELLED LIKE '%${this.cancelledText.trim()}%'` : `CANCELLED LIKE '%${this.cancelledText.trim()}%'`;
-    // }
-    // if (this.rejectedText.trim()) {
-    //   likeQuery += likeQuery ? ` AND REJECTED LIKE '%${this.rejectedText.trim()}%'` : `REJECTED LIKE '%${this.rejectedText.trim()}%'`;
-    // }
-    // if (this.finalAmountText.trim()) {
-    //   likeQuery += likeQuery ? ` AND FINAL_AMOUNT LIKE '%${this.finalAmountText.trim()}%'` : `FINAL_AMOUNT LIKE '%${this.finalAmountText.trim()}%'`;
-    // }
-
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.loadingRecords = true;
-
       this.api
         .getTechnicianPerformanceReport(
           this.pageIndex,
@@ -251,7 +163,6 @@ export class TechnicianPerformanceReportComponent {
     } else {
       this.exportLoading = true;
       this.loadingRecords = true;
-
       this.api
         .getTechnicianPerformanceReport(
           0,
@@ -280,8 +191,6 @@ export class TechnicianPerformanceReportComponent {
         );
     }
   }
-
-  // Sorting function
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -290,40 +199,32 @@ export class TechnicianPerformanceReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
-    this.search(); // Perform search again with sorting applied
+    this.search(); 
   }
-
   close() {
     this.drawervisible = false;
   }
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
-  //For Input
   countrytext: string = '';
   orderNumberText: string = '';
   orderDateText: string = '';
   finalAmountText: string = '';
   orderStatusText: string = '';
-  // Filter Visibility
   nameVisible = false;
   orderCountVisible = false;
   completedVisible = false;
@@ -331,7 +232,6 @@ export class TechnicianPerformanceReportComponent {
   cancelledVisible = false;
   rejectedVisible = false;
   finalAmountVisible = false;
-
   Shortcodetext: string = '';
   ShortCodevisible = false;
   Seqvisible = false;
@@ -351,7 +251,6 @@ export class TechnicianPerformanceReportComponent {
     this.finalAmountText = '';
     this.search(true);
   }
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -363,35 +262,24 @@ export class TechnicianPerformanceReportComponent {
   ];
   dataList: any = [];
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Customer Name', value: 'NAME' },
   ];
-
-  // new filter
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
   applyCondition: any;
-
   isLoading = false;
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   userId = sessionStorage.getItem('userId');
   USER_ID: number;
   savedFilters: any;
   currentClientId = 1;
-
-  // new  Main filter
   isfilterapply: boolean = false;
   drawerTitle!: string;
-
   filterClass: string = 'filter-invisible';
   filterloading: boolean = false;
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -403,10 +291,8 @@ export class TechnicianPerformanceReportComponent {
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -414,13 +300,12 @@ export class TechnicianPerformanceReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -435,21 +320,15 @@ export class TechnicianPerformanceReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -463,7 +342,6 @@ export class TechnicianPerformanceReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -472,7 +350,6 @@ export class TechnicianPerformanceReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -489,18 +366,13 @@ export class TechnicianPerformanceReportComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   openfilter() {
     this.drawerTitle = 'Technician Performance Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -517,7 +389,6 @@ export class TechnicianPerformanceReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -534,7 +405,6 @@ export class TechnicianPerformanceReportComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -544,14 +414,11 @@ export class TechnicianPerformanceReportComponent {
       FILTER_JSON: {},
     };
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
@@ -561,7 +428,6 @@ export class TechnicianPerformanceReportComponent {
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'NAME',
@@ -578,16 +444,12 @@ export class TechnicianPerformanceReportComponent {
       placeholder: 'Enter Name',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -604,9 +466,7 @@ export class TechnicianPerformanceReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -632,9 +492,7 @@ export class TechnicianPerformanceReportComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -643,20 +501,16 @@ export class TechnicianPerformanceReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
     this.isModalVisible = true;
   }
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -664,12 +518,10 @@ export class TechnicianPerformanceReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -677,11 +529,9 @@ export class TechnicianPerformanceReportComponent {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -713,7 +563,6 @@ export class TechnicianPerformanceReportComponent {
     }
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -722,27 +571,21 @@ export class TechnicianPerformanceReportComponent {
       tooltip.hide();
     }
   }
-
-  // day logs drawer
   jobdetaildrawerTitle = '';
   jobdetailsshow = false;
   jobdetailsdata: any;
-
   opentechperformacedetails(data: any) {
     this.jobdetailsdata = data;
     this.getTechniciansJobs(data);
     this.jobdetaildrawerTitle = `View details of ${data.NAME}`;
   }
-
   drawersize = '100%';
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
   }
-  //Drawer Methods
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }
-
   techId: any;
   getTechniciansJobs(data) {
     this.techId = data.ID;

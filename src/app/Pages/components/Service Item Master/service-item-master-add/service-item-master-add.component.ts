@@ -7,7 +7,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
 import { HttpEventType } from '@angular/common/http';
 import { ServiceItemMaster } from 'src/app/Pages/Models/ServiceItemMaster';
-
 @Component({
   selector: 'app-service-item-master-add',
   templateUrl: './service-item-master-add.component.html',
@@ -18,25 +17,20 @@ export class ServiceItemMasterAddComponent {
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
   public commonFunction = new CommonFunctionService();
-
   isSpinning = false;
   isOk = true;
-
   UrlImageOne;
   progressBarImageOne: boolean = false;
   percentImageOne = 0;
   timer: any;
   urlImageOneShow: boolean = false;
   fileURL: any = "";
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer
   ) {}
-
-
   ngOnInit(){
     this.getServiceData();
   }
@@ -45,8 +39,6 @@ export class ServiceItemMasterAddComponent {
     Servicemaster.form.markAsPristine();
     Servicemaster.form.markAsUntouched();
   }
-
-
   serviceData: any = [];
   getServiceData() {
     this.api.getServiceCatData(0, 0, '', '', '').subscribe(
@@ -63,8 +55,6 @@ export class ServiceItemMasterAddComponent {
       }
     );
   }
- 
- 
   save(addNew: boolean, Servicemaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -78,7 +68,6 @@ export class ServiceItemMasterAddComponent {
         (this.data.DESCRIPTION == ' ' ||
         this.data.DESCRIPTION == null ||
         this.data.DESCRIPTION == undefined) &&
-        
         (this.data.PRICE_B2B== ' ' ||
         this.data.PRICE_B2B == null ||
         this.data.PRICE_B2B == undefined) &&
@@ -100,10 +89,6 @@ export class ServiceItemMasterAddComponent {
         (this.data.TIME_ESTIMATE == undefined ||
           this.data.TIME_ESTIMATE == null ||
           this.data.TIME_ESTIMATE == 0)&&
-          
-      // (this.data.ITEM_IMAGE_URL == undefined ||
-      //   this.data.ITEM_IMAGE_URL == null ||
-      //   this.data.ITEM_IMAGE_URL == '')&&
         (this.data.MAX_STOCK_QUANTITY == undefined ||
           this.data.MAX_STOCK_QUANTITY == null ||
           this.data.MAX_STOCK_QUANTITY == 0)&&
@@ -112,7 +97,6 @@ export class ServiceItemMasterAddComponent {
             this.data.SHORT_CODE == undefined ||
             this.data.SHORT_CODE == 0
           )&&
-        
       (this.data.SEQ_NO == undefined ||
         this.data.SEQ_NO == null ||
         this.data.SEQ_NO == 0)
@@ -132,18 +116,15 @@ export class ServiceItemMasterAddComponent {
       this.data.NAME == undefined ||
       this.data.NAME.trim() == ''
     ) {
-
       this.isOk = false;
       this.message.error(' Please Enter Service Item Name.', '');
     }
-   
     else if(this.data.DESCRIPTION == ' '||
     this.data.DESCRIPTION == null ||
     this.data.DESCRIPTION == undefined) {
       this.isOk = false;
       this.message.error(' Please Enter Description.', '');
     }
-    
     else if(this.data.PRICE_B2B == ' '||
     this.data.PRICE_B2B == null ||
     this.data.PRICE_B2B == undefined){
@@ -208,20 +189,9 @@ export class ServiceItemMasterAddComponent {
       this.isOk = false;
       this.message.error('Please Enter Sequence No.', '');
     }
-    // else if(this.data.ITEM_IMAGE_URL == undefined ||
-    //   this.data.ITEM_IMAGE_URL == null ||
-    //   this.data.ITEM_IMAGE_URL == ''){
-    //   this.isOk = false;
-    //   this.message.error(' Please Select Item Image.', '');
-    // }
-    
-
     if (this.isOk) {
       this.isSpinning = true;
-   
       {
-      
-        
         if (this.data.ID) {
           this.api.updateServiceItem(this.data).subscribe((successCode: any) => {
             if (successCode.code == '200') {
@@ -241,7 +211,6 @@ export class ServiceItemMasterAddComponent {
               else {
                 this.data = new ServiceItemMaster();
                 this.resetDrawer(Servicemaster);
-
                 this.api.getServiceItem(1, 1, 'SEQ_NO', 'desc', '').subscribe(
                   (data) => {
                     if (data['code'] == 200) {
@@ -267,33 +236,25 @@ export class ServiceItemMasterAddComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }
-
-
   deleteCancel() {}
   removeImage() {
     this.data.ITEM_IMAGE_URL = " ";
     this.fileURL = null;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
   image1DeleteConfirm(data: any) {
-    
     this.UrlImageOne = null;
     this.data.ITEM_IMAGE_URL = " ";
-    
     this.fileURL = null;
   }
   viewImage(imageURL: string): void {
-
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
@@ -303,16 +264,11 @@ export class ServiceItemMasterAddComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
   imageshow;
   onFileSelected(event: any) {
-    
-    
     const maxFileSize = 1 * 1024 * 1024;
-
     if (
       event.target.files[0].type == "image/jpeg" ||
       event.target.files[0].type == "image/jpg" ||
@@ -344,7 +300,6 @@ export class ServiceItemMasterAddComponent {
         .onUpload("Item", this.fileURL, this.UrlImageOne)
         .subscribe((res) => {
           this.data.ITEM_IMAGE_URL = this.UrlImageOne;
-
           if (res.type === HttpEventType.Response) {
           }
           if (res.type === HttpEventType.UploadProgress) {
@@ -355,11 +310,9 @@ export class ServiceItemMasterAddComponent {
               setTimeout(() => {
                 this.progressBarImageOne = false;
               }, 2000);
-              
             }
           } else if (res.type == 2 && res.status != 200) {
             this.message.error("Failed To Upload Image...", "");
-
             this.isSpinning = false;
             this.progressBarImageOne = false;
             this.percentImageOne = 0;
@@ -375,7 +328,6 @@ export class ServiceItemMasterAddComponent {
               this.percentImageOne = 0;
               this.data.ITEM_IMAGE_URL = null;
             }
-
           }
         });
     } else {

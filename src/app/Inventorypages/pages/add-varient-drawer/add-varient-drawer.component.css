@@ -4,10 +4,214 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
-
 .disabled-row {
   pointer-events: none;
   opacity: 0.6;
   background-color: #eee;
+}
+.character-counter {
+  color: red;
+  font-size: 10px;
+}
+.button-col {
+  margin-top: 26px;
+}
+.search-col {
+  margin-top: 37px;
+}
+.search-input {
+  height: 33px;
+}
+.search-button {
+  height: 33px !important;
+}
+.table-row {
+  margin-top: 10px;
+}
+.variant-table {
+  white-space: pre-line;
+}
+.action-header,
+.variant-header,
+.values-header {
+  text-align: center;
+}
+.action-header {
+  width: 40px;
+}
+.variant-header {
+  width: 150px;
+}
+.values-header {
+  width: 300px;
+}
+.action-cell,
+.variant-name-cell,
+.variant-values-cell {
+  text-align: center;
+}
+.edit-tag {
+  cursor: pointer;
+}
+.edit-icon {
+  font-size: 15px;
+}
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 0;
+}
+.cancel-button,
+.next-button {
+  margin-right: 8px;
+}
+.variant-details-table {
+  white-space: pre-line;
+}
+.map-units-header,
+.add-images-header,
+.name-header,
+.base-unit-header,
+.quantity-header,
+.base-price-header,
+.tax-preference-header,
+.tax-slab-header,
+.selling-price-header,
+.discount-allowed-header,
+.discounted-price-header,
+.average-level-header,
+.reorder-level-header,
+.alert-level-header,
+.sku-code-header,
+.inventory-tracking-header,
+.warranty-allowed-header,
+.warranty-period-header,
+.warranty-card-header,
+.guarantee-allowed-header,
+.guarantee-period-header,
+.expiry-allowed-header,
+.expected-delivery-header,
+.expected-charges-header,
+.inventory-image-header,
+.short-code-header,
+.status-header {
+  font-weight: bold;
+  text-align: center;
+}
+.base-unit-select,
+.tax-preference-select,
+.tax-slab-select,
+.inventory-tracking-select {
+  width: 100%;
+  font-weight: 500;
+}
+.quantity-input,
+.base-price-input,
+.discounted-price-input,
+.average-level-input,
+.reorder-level-input,
+.alert-level-input,
+.sku-code-input,
+.warranty-period-input,
+.guarantee-period-input,
+.expected-delivery-input,
+.expected-charges-input,
+.selling-price-input {
+  width: 100%;
+}
+.variant-details-row {
+  text-align: center;
+}
+.map-units-cell,
+.add-images-cell,
+.variant-name-details,
+.unit-select-cell,
+.quantity-input-cell,
+.base-price-cell,
+.tax-preference-cell,
+.tax-slab-cell,
+.selling-price-cell,
+.discount-allowed-cell,
+.discounted-price-cell,
+.average-level-cell,
+.reorder-level-cell,
+.alert-level-cell,
+.sku-code-cell,
+.inventory-tracking-cell,
+.warranty-allowed-cell,
+.warranty-period-cell,
+.warranty-card-cell,
+.guarantee-allowed-cell,
+.guarantee-period-cell,
+.expiry-allowed-cell,
+.expected-delivery-cell,
+.expected-charges-cell,
+.inventory-image-cell,
+.short-code-cell,
+.status-cell {
+  text-align: center;
+}
+.map-unit-tag,
+.add-images-tag {
+  cursor: pointer;
+}
+.link-icon,
+.plus-icon {
+  font-size: 15px;
+}
+.unit-select,
+.tax-preference-select-field,
+.tax-slab-select-field,
+.inventory-tracking-select-field {
+  width: 100%;
+}
+.quantity-input-field,
+.base-price-input-field,
+.selling-price-input-field,
+.discounted-price-input-field,
+.average-level-input-field,
+.reorder-level-input-field,
+.alert-level-input-field,
+.sku-code-input-field,
+.warranty-period-input-field,
+.guarantee-period-input-field,
+.expected-delivery-input-field,
+.expected-charges-input-field,
+.short-code-input-field {
+  width: 100%;
+  text-align: right;
+}
+.upload-button {
+  height: 28px;
+  padding: 0px 7px;
+  font-size: 10px;
+  width: 100%;
+}
+.file-input {
+  display: none ! important;
+}
+.file-name-display {
+  color: blue;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.file-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.view-file-link {
+  color: blue;
+  margin-right: 9px;
+}
+.delete-file-button {
+  cursor: pointer;
+  color: red;
+  margin-left: 10px;
+}
+.previous-button,
+.cancel-details-button,
+.save-close-button {
+  margin-right: 8px;
 }

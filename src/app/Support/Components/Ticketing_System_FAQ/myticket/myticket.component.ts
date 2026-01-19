@@ -15,7 +15,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-myticket',
   templateUrl: './myticket.component.html',
@@ -28,9 +27,6 @@ export class MyticketComponent implements OnInit {
   pageSize = 10;
   totalRecords = 1;
   dataList: any = [];
-  // userId = this.cookie.get('userId');
-  // userId = Number(sessionStorage.getItem('userId'));
-  // userId = sessionStorage.getItem('userId');
   userId = sessionStorage.getItem('userId');
   userroleid: any;
   userroleid1: any;
@@ -41,7 +37,6 @@ export class MyticketComponent implements OnInit {
   filterQuery: string = '';
   DatefilterQuery: string = '';
   isFilterApplied: any = 'default';
-  // columns: string[][] = [["DEPARTMENT_NAME", "Department"], ["TICKET_NO", "Ticket No."], ["QUESTION", "Question"], ["IS_TAKEN", "Is Taken"], ["TICKET_TAKEN_USER_NAME", "Taken By"], ["LAST_RESPONDED", "Last Responded Date"], ["STATUS", "Status"]]
   columns: string[][] = [
     ['DEPARTMENT_NAME', 'Department'],
     ['TICKET_NO', 'Ticket No.'],
@@ -79,7 +74,6 @@ export class MyticketComponent implements OnInit {
   GRPNAME: any = '';
   bread: any = [];
   dateFormatMMM = 'dd/MM/yyyy';
-
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
@@ -91,21 +85,14 @@ export class MyticketComponent implements OnInit {
     this.router.navigate(['/masters/menu']);
   }
   public commonFunction = new CommonFunctionService();
-
   ngOnInit() {
     this.userroleid = this.commonFunction.decryptdata(
       sessionStorage.getItem('roleId') || ''
     );
     this.userroleid1 = parseInt(this.userroleid, 10);
     this.search();
-
-    // var roleid = this.commonFunction.decryptdata(
-    //   sessionStorage.getItem('roleId') || ''
-    // );
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -117,25 +104,19 @@ export class MyticketComponent implements OnInit {
   departmentVisible: boolean = false;
   isnameFilterApplied: boolean = false;
   departmentText: string = '';
-
   ticketnoVisible: boolean = false;
   isticketnoFilterApplied: boolean = false;
   ticketnoText: string = '';
-
   questionVisible: boolean = false;
   isquestionFilterApplied: boolean = false;
   questionText: string = '';
-
   istakenVisible: boolean = false;
   istakenstatusFilterApplied: boolean = false;
-  // questionText: string = '';
-
   lastrespondedDateVisible: boolean = false;
   isscheduleDateFilterApplied: boolean = false;
   lastDateText: string = '';
   StartDate: any = [];
   EndDate: any = [];
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -144,12 +125,11 @@ export class MyticketComponent implements OnInit {
         this.isscheduleDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isscheduleDateFilterApplied = false;
     }
   }
-
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -159,7 +139,6 @@ export class MyticketComponent implements OnInit {
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   statusFilter1: string | undefined = undefined;
   onStatusFilterChange1(selectedStatus: string) {
     this.statusFilter1 = selectedStatus;
@@ -174,13 +153,11 @@ export class MyticketComponent implements OnInit {
     { text: 'Banned', value: 'B' },
     { text: 'On-Hold', value: 'H' },
   ];
-
   reset() {
     this.departmentText = '';
     this.ticketnoText = '';
     this.questionText = '';
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.departmentText.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -196,7 +173,6 @@ export class MyticketComponent implements OnInit {
       this.search();
       this.isticketnoFilterApplied = false;
     }
-
     if (this.questionText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isquestionFilterApplied = true;
@@ -204,22 +180,11 @@ export class MyticketComponent implements OnInit {
       this.search();
       this.isquestionFilterApplied = false;
     }
-    // if (this.lastDateText.length >= 3 && event.key === 'Enter') {
-    //   this.search();
-    //   this.isnameFilterApplied = true;
-    // } else if (this.lastDateText.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isnameFilterApplied = false;
-    // }
   }
-
   disabledDate = (current: Date): boolean => {
-    // Disable dates before today and more than one month ago
     const today = new Date();
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(today.getMonth() - 1);
-
-    // Convert dates to midnight for accurate comparison
     const currentDate = new Date(
       current.getFullYear(),
       current.getMonth(),
@@ -227,44 +192,25 @@ export class MyticketComponent implements OnInit {
     );
     today.setHours(0, 0, 0, 0);
     oneMonthAgo.setHours(0, 0, 0, 0);
-
     return currentDate > today;
   };
-
-  // sort(sort: { key: string; value: string }): void {
-  //   this.sortKey = sort.key;
-  //   this.sortValue = sort.value;
-  //   this.search(true);
-  // }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   clearFilter() {
     this.STATUS = 'U';
-    // this.filterQuery = "";
-    // this.selectedDate = null;
-    // this.value1 = '';
-    // this.value2 = '';
-    // this.filterClass = "filter-invisible";
-    // this.applyFilter();
-
     this.filterClass = 'filter-invisible';
     this.filterQuery = '';
     this.selectedDate = '';
@@ -273,12 +219,10 @@ export class MyticketComponent implements OnInit {
     this.DatefilterQuery = '';
     this.search(true);
   }
-
   changeDate(value) {
     this.value1 = this.datePipe.transform(value[0], 'yyyy-MM-dd');
     this.value2 = this.datePipe.transform(value[1], 'yyyy-MM-dd');
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -286,21 +230,18 @@ export class MyticketComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     if (this.searchText != '') {
       likeQuery = ' AND (';
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
     }
     var filterQuery =
@@ -312,39 +253,33 @@ export class MyticketComponent implements OnInit {
     } else {
       filterQuery += " AND STATUS='" + this.STATUS + "'";
     }
-
     var filterQuery5 = '';
-
     if (this.departmentText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `DEPARTMENT_NAME LIKE '%${this.departmentText.trim()}%'`;
     }
-
     if (this.ticketnoText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `TICKET_NO LIKE '%${this.ticketnoText.trim()}%'`;
     }
-
     if (this.questionText !== '') {
       filterQuery5 +=
         (filterQuery5 ? ' AND ' : '') +
         `QUESTION LIKE '%${this.questionText.trim()}%'`;
     }
-
     if (this.statusFilter) {
       if (filterQuery5 !== '') {
         filterQuery5 += ' AND ';
       }
       filterQuery5 += `IS_TAKEN = ${this.statusFilter}`;
     }
-
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         filterQuery5 +=
           (filterQuery5 ? ' AND ' : '') +
           `LAST_RESPONDED BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -353,11 +288,8 @@ export class MyticketComponent implements OnInit {
     } else {
       this.isscheduleDateFilterApplied = false;
     }
-
     filterQuery5 = filterQuery5 ? ' AND ' + filterQuery5 : '';
-
     if (filterQuery != undefined) this.loadingRecords = true;
-
     this.api
       .getAllTickets(
         this.pageIndex,
@@ -369,7 +301,6 @@ export class MyticketComponent implements OnInit {
       .subscribe(
         (response: HttpResponse<any>) => {
           const statusCode = response.status;
-          // const headers = response.headers;
           if (statusCode === 200) {
             this.loadingRecords = false;
             this.totalRecords = response.body.count;
@@ -388,29 +319,13 @@ export class MyticketComponent implements OnInit {
               ''
             );
           } else {
-            // this.message.error(
-            //   `HTTP Error: ${err.status}. Something Went Wrong.`,
-            //   ''
-            // );
           }
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
-  // searchSet() {
-  //   const scrollDownElement = document.getElementById('button1');
-  //   if (scrollDownElement) {
-  //     scrollDownElement.focus();
-  //   }
-
-  //   // document.getElementById('button1').focus();
-  //   this.search(true);
-  // }
-
   searchSet(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
@@ -432,64 +347,34 @@ export class MyticketComponent implements OnInit {
       this.filterClass = 'filter-visible';
     }
   }
-
-  // applyFilter() {
-
-  //   this.filterQuery = "";
-  //   //var filterQuery=" AND IS_TAKEN='0' AND STATUS = '"+this.STATUS+"' AND APPLICATION_ID="+this.applicationId + " AND DEPARTMENT_ID="+this.departmentId
-  //   if (this.selectedDate == undefined || this.selectedDate.length == 0) {
-  //     this.filterQuery = "";
-
-  //   } else {
-  //     this.filterQuery = " AND (DATE BETWEEN '" + this.value1 + ":00:00:00" + "' AND '" + this.value2 + ":23:59:59" + "') ";
-  //   }
-
-  //   this.search(true);
-  //   this.isSpinning = false;
-  //   this.filterClass = "filter-invisible";
-  // }
-
   formattedStartDate: any;
   formattedEndDate: any;
   dateRangeQuery: any;
   formatDatabaseDate(date: string): string {
     return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
-
   formatDatabaseDate1(date: string): string {
     return this.datePipe.transform(date, 'yyyy-MM-dd 23:59:59') || '';
   }
-
   applyFilter() {
     this.isFilterApplied = 'primary';
     this.loadingRecords = false;
-    // Check if a date range is selected
-
     if (this.selectedDate && this.selectedDate.length === 2) {
       const startDate = this.selectedDate[0];
       const endDate = this.selectedDate[1];
-
-      // Format dates
       this.formattedStartDate = this.formatDatabaseDate(startDate);
       this.formattedEndDate = this.formatDatabaseDate1(endDate);
-
-      // Construct date range filter
       this.dateRangeQuery = `AND DATE BETWEEN '${this.formattedStartDate}' AND '${this.formattedEndDate}'`;
-
       if (this.dateRangeQuery != null && this.dateRangeQuery !== '') {
         this.DatefilterQuery = this.dateRangeQuery;
       }
     }
-    // Perform the search
     this.search();
     this.filterClass = 'filter-invisible';
   }
-
   uniqueDateArry: any = [];
-
   @ViewChild(ViewchatticketComponent, { static: false })
   ViewchatticketComponentVar: ViewchatticketComponent;
-
   ngAfterViewInit() {
     if (this.ViewchatticketComponentVar) {
     } else {
@@ -497,39 +382,26 @@ export class MyticketComponent implements OnInit {
   }
   ViewDetails(data: Ticket) {
     this.isSpinning = true;
-
     this.newData2 = [];
     this.data1 = [];
     this.uniqueDateArry = [];
     this.drawerTitle = 'Ticket No. ' + data.TICKET_NO;
-    // this.drawerVisible = true;
     this.drawerData = Object.assign({}, data);
-
     var filterQuery1 = ' AND TICKET_MASTER_ID = ' + data.ID + '';
-
-    // this.ViewchatticketComponentVar.isSpinning = true;
-
     this.api
       .getAllTicketDetails(0, 0, 'CREATED_MODIFIED_DATE', 'asc', filterQuery1)
       .subscribe(
         (data: HttpResponse<any>) => {
-          // this.isSpinning = true;
-
           if (data.status == 200) {
             data = data.body;
-            // this.ViewchatticketComponentVar.isSpinning = false;
             this.totalRecords = data['count'];
             this.data1 = data['data'];
             this.isSpinning = false;
-
-            // this.grpid = this.data1[0]['TICKET_GROUP_ID'];
             if (data['count'] > 0) {
               this.grpid = this.data1[0]['TICKET_GROUP_ID'];
             } else {
               this.grpid = 0;
             }
-
-            // Getting Unique dates
             for (var i = 0; i < this.data1.length; i++) {
               this.uniqueDateArry.push(
                 this.datePipe.transform(
@@ -538,10 +410,8 @@ export class MyticketComponent implements OnInit {
                 )
               );
             }
-
             this.uniqueDateArry = [...new Set(this.uniqueDateArry)];
             this.uniqueDateArry.sort();
-
             this.uniqueDateArry.forEach((d1) => {
               this.newData2.push({
                 key: d1,
@@ -554,10 +424,7 @@ export class MyticketComponent implements OnInit {
                 ),
               });
             });
-
             this.data1 = this.newData2;
-            // this.ViewchatticketComponentVar.scrollIntoViewFunction();
-
             this.api
               .getBreadInChat(0, 0, 'ID', 'desc', '', '', this.grpid)
               .subscribe(
@@ -565,11 +432,8 @@ export class MyticketComponent implements OnInit {
                   if (data.status == 200) {
                     data = data.body;
                     this.bread = data['data'];
-                    // this.isSpinning = false;
-
                     this.newstr = '';
                     this.GRPNAME = '';
-
                     for (var i = 0; i < this.bread.length; i++) {
                       this.GRPNAME =
                         this.GRPNAME + '>' + this.bread[i]['VALUE'];
@@ -579,38 +443,30 @@ export class MyticketComponent implements OnInit {
                   }
                 },
                 (err) => {
-                  // this.isSpinning = false;
                 }
               );
           }
           this.isSpinning = false;
         },
         (err) => {
-          // this.isSpinning = false;
         }
       );
-
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   @ViewChild(CreateticketComponent, { static: false })
   CreateticketComponentVar: CreateticketComponent;
   add() {
     this.isSpinning = true;
     this.index = 0;
-    // var filterQuery = " AND PARENT_ID=0 AND TYPE='Q'";
     var filterQuery = " AND PARENT_ID=0 AND TYPE='Q'";
-
     this.api.getAllTicketGroups(0, 0, 'id', 'ASC', filterQuery).subscribe(
       (response: HttpResponse<any>) => {
         const ticketGroups = response.status;
         this.isSpinning = true;
-
         if (response.status == 200) {
           if (response.body.data[0]?.length == 0) {
             this.ticketQuestion = {};
@@ -618,11 +474,8 @@ export class MyticketComponent implements OnInit {
             this.isSpinning = false;
           } else {
             this.ticketQuestion = response.body.data[0];
-
-            // var filterQuery2 = " AND PARENT_ID=" + response.body.data[0]['ID'] + " AND TYPE='O'";
             var filterQuery2 =
               ' AND PARENT_ID=' + response.body.data[0]['ID'] + " AND TYPE='O'";
-
             this.api
               .getAllTicketGroups(
                 0,
@@ -638,7 +491,6 @@ export class MyticketComponent implements OnInit {
           }
         }
       },
-
       (err: HttpErrorResponse) => {
         this.loadingRecords = false;
         if (err.status === 0) {
@@ -648,71 +500,40 @@ export class MyticketComponent implements OnInit {
           );
           this.isSpinning = false;
         } else {
-          // this.message.error(
-          //   `HTTP Error: ${err.status}. Something Went Wrong.`,
-          //   ''
-          // );
           this.isSpinning = false;
         }
       }
     );
-
     this.drawerVisible2 = true;
     this.drawerTitle2 = 'Create New Ticket';
     this.drawerData2 = new Ticket();
   }
-
   drawerClose1(): void {
     this.search();
     this.drawerVisible2 = false;
   }
-
   get closeCallback1() {
     return this.drawerClose1.bind(this);
   }
-
   changeRadioButton(event) {
     this.pageIndex = 1;
     this.pageSize = 10;
     this.applyFilter();
   }
-
   onTicketDeleteCancel() { }
-
   onTicketDeleteConfirm(data: Ticket) {
     data.STATUS = 'C';
-
-    // this.api.updateTicket(data).subscribe(successCode => {
-    //   if (successCode['code'] == 200) {
-    //     this.message.success("Ticket Closed successfully", "");
-    //     this.STATUS = 'U';
-    //     this.applyFilter();
-
-    //   } else {
-    //     this.STATUS = 'U';
-    //     this.applyFilter();
-    //     this.message.error("Failed to Ticket Close", "");
-    //   }
-
-    // }, err => {
-    //   this.STATUS = 'U';
-    //   this.applyFilter();
-    // });
-
     this.api
       .updateTicketGroup(data)
       .subscribe((response: HttpResponse<any>) => {
         const statusCode = response.status;
         const responseBody = response.body;
-
         if (statusCode === 200) {
           this.message.success('Ticket Closed successfully', '');
           this.STATUS = 'U';
           this.applyFilter();
-
           this.isSpinning = false;
         } else {
-          // this.message.error('Information Not Updated', '');
           this.STATUS = 'U';
           this.applyFilter();
           this.message.error('Failed to Ticket Close', '');
@@ -720,7 +541,6 @@ export class MyticketComponent implements OnInit {
         }
       });
   }
-
   closeTicket() {
     this.api.autoCloseTicket().subscribe(
       (successCode) => {

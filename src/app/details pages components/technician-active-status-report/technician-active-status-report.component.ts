@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { TechnicianMasterData } from 'src/app/Pages/Models/TechnicianMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-technician-active-status-report',
   templateUrl: './technician-active-status-report.component.html',
@@ -19,8 +18,7 @@ export class TechnicianActiveStatusReportComponent {
     private message: NzNotificationService,
     private modal: NzModalService,
     private router: Router
-  ) {}
-
+  ) { }
   formTitle = 'Technician Activities';
   searchText: string = '';
   pageIndex = 1;
@@ -43,7 +41,6 @@ export class TechnicianActiveStatusReportComponent {
     ['VEHICLE_NO', 'VEHICLE_NO'],
     ['BUISNESS_NAME', 'BUISNESS_NAME'],
     ['ADDRESS_LINE1', 'ADDRESS_LINE1'],
-    // ['CITY_NAME', 'CITY_NAME'],
     ['COUNTRY_NAME', 'COUNTRY_NAME'],
     ['DISTRICT_NAME', 'DISTRICT_NAME'],
     ['NAME', 'NAME'],
@@ -54,16 +51,13 @@ export class TechnicianActiveStatusReportComponent {
     ['EXPERIENCE_LEVEL', 'EXPERIENCE_LEVEL'],
     ['MOBILE_NUMBER', 'MOBILE_NUMBER'],
   ];
-
   ReportingPersonVisible: boolean = false;
   dataList: any = [];
   visible = false;
   filterQuery: string = '';
-  // Main filter
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   columns1: { label: string; value: string }[] = [
-    // { label: 'Type', value: 'TYPE' },
     { label: 'Technician Name', value: 'NAME' },
     { label: 'Email', value: 'EMAIL_ID' },
     { label: 'Mobile No.', value: 'MOBILE_NUMBER' },
@@ -90,10 +84,9 @@ export class TechnicianActiveStatusReportComponent {
       ? this.commonFunction.decryptdata(this.roleIDs)
       : '';
     this.decreptedroleID = parseInt(this.decreptedroleIDString, 10);
-
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0';
     this.USER_ID = Number(decryptedUserId);
     var decreptedbackofficeId = this.backofficeId
       ? this.commonFunction.decryptdata(this.backofficeId)
@@ -101,7 +94,6 @@ export class TechnicianActiveStatusReportComponent {
     this.decreptedbackofficeId = parseInt(decreptedbackofficeId, 10);
     this.customerMangeer = this.decreptedbackofficeId;
     this.teritoryIds = [];
-
     this.getCountyData();
     this.getStateData();
     this.getCityData();
@@ -144,13 +136,10 @@ export class TechnicianActiveStatusReportComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   onStateChange(): void {
     this.search();
   }
@@ -163,17 +152,14 @@ export class TechnicianActiveStatusReportComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -185,7 +171,6 @@ export class TechnicianActiveStatusReportComponent {
         ')';
     }
     this.loadingRecords = true;
-
     if (this.isownvehicleFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -204,41 +189,30 @@ export class TechnicianActiveStatusReportComponent {
       }
       likeQuery += `TYPE = '${this.typeFilter}'`;
     }
-
     if (this.genderFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `GENDER = '${this.genderFilter}'`;
     }
-    //  if (this.selectevehical .length > 0) {
-    //       likeQuery += (likeQuery ? ' AND ' : '') +
-    //      `VEHICLE_TYPE LIKE '%${this.selectevehical}%'`;
-
-    //     }
-
     if (this.selectedServices.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      // Wrap each value in single quotes for SQL syntax
       const formattedValues = this.selectedServices
         .map((sep: string) => `'${sep}'`)
         .join(',');
       likeQuery += `EXPERIENCE_LEVEL IN (${formattedValues})`;
     }
-
     if (this.selectevehical.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      // Wrap each value in single quotes for SQL syntax
       const formattedValues = this.selectevehical
         .map((sep: string) => `'${sep}'`)
         .join(',');
       likeQuery += `VEHICLE_TYPE IN (${formattedValues})`;
     }
-
     if (this.Techniciantext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -278,26 +252,23 @@ VEHICLE_NO
         (likeQuery ? ' AND ' : '') +
         `VEHICLE_DETAILS LIKE '%${this.Detailstext.trim()}%'`;
     }
-
     if (this.selectedPincode.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `PINCODE IN ('${this.selectedPincode.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `PINCODE IN ('${this.selectedPincode.join("','")}')`;
     }
-
     if (this.selectedVendorName.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `VENDOR_ID IN (${this.selectedVendorName.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `VENDOR_ID IN (${this.selectedVendorName.join(',')})`;
     }
-
     if (this.selectedCountries.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`;
     }
     if (this.selectedDistricties.length > 0) {
       if (likeQuery !== '') {
@@ -305,24 +276,15 @@ VEHICLE_NO
       }
       likeQuery += `DISTRICT_NAME IN ('${this.selectedDistricties.join(
         "','"
-      )}')`; // Update with actual field name in the DB
+      )}')`;
     }
-    // if (this.selectedCities.length > 0) {
-    //   if (likeQuery !== '') {
-    //     likeQuery += ' AND ';
-    //   }
-    //   likeQuery += `CITY_NAME IN ('${this.selectedCities.join("','")}')`; // Update with actual field name in the DB
-    // }
-
     if (this.selectedStates.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`;
     }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (this.decreptedroleID === 7) {
       if (this.mappedtechs.length > 0) {
         this.api
@@ -332,13 +294,12 @@ VEHICLE_NO
             this.sortKey,
             sort,
             likeQuery +
-              this.filterQuery +
-              ' AND ID IN(' +
-              this.mappedtechs +
-              ')'
+            this.filterQuery +
+            ' AND ID IN(' +
+            this.mappedtechs +
+            ')'
           )
           .subscribe(
-            // " AND TYPE='R'" +
             (data) => {
               if (data['code'] == 200) {
                 this.loadingRecords = false;
@@ -387,7 +348,6 @@ VEHICLE_NO
           likeQuery + this.filterQuery
         )
         .subscribe(
-          //  likeQuery + this.filterQuery + " AND TYPE='R'"
           (data) => {
             if (data['code'] == 200) {
               this.loadingRecords = false;
@@ -451,7 +411,6 @@ VEHICLE_NO
         }
       },
       () => {
-        // this.message.error('Something Went Wrong', '');
       }
     );
   }
@@ -463,22 +422,18 @@ VEHICLE_NO
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     if (this.decreptedroleID === 7) {
       this.customerMangeer = this.decreptedbackofficeId;
-
       this.api
         .getAllCustomer(
           0,
@@ -486,7 +441,7 @@ VEHICLE_NO
           '',
           'desc',
           ' AND ACCOUNT_STATUS=1 AND CUSTOMER_MANAGER_ID=' +
-            this.customerMangeer
+          this.customerMangeer
         )
         .subscribe(
           (datas) => {
@@ -495,7 +450,6 @@ VEHICLE_NO
               datas['data'].forEach((element) => {
                 t.push(element.ID);
               });
-
               if (t.length > 0) {
                 this.api
                   .getCustomerTechnicianmapdata(
@@ -504,8 +458,8 @@ VEHICLE_NO
                     this.sortKey,
                     '',
                     " AND STATUS='M' AND IS_ACTIVE=1 AND CUSTOMER_ID IN (" +
-                      t +
-                      ')'
+                    t +
+                    ')'
                   )
                   .subscribe(
                     (datass) => {
@@ -514,7 +468,6 @@ VEHICLE_NO
                         datass['data'].forEach((element) => {
                           this.mappedtechs.push(element.TECHNICIAN_ID);
                         });
-
                         this.search();
                       } else {
                         this.mappedtechs = [];
@@ -554,24 +507,20 @@ VEHICLE_NO
       this.search();
     }
   }
-
   jobdetaildrawerTitle = '';
   jobdetailsshow = false;
   jobdetailsdata: any;
   invoicefilter = '';
   ratingfilter = '';
-
   openjobcarddetails(data: TechnicianMasterData) {
     this.jobdetailsdata = data;
     this.getTechniciansJobs(data);
     this.jobdetaildrawerTitle = `View details of ${data.NAME}`;
   }
-
   drawersize = '100%';
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
   }
-  //Drawer Methods
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }
@@ -582,7 +531,6 @@ VEHICLE_NO
     this.jobId = data.ID;
     this.jobdetailsshow = true;
   }
-
   ExperienceData = [
     { Id: 'F', Name: 'Fresher' },
     { Id: 'J', Name: 'Junior' },
@@ -591,7 +539,6 @@ VEHICLE_NO
     { Id: 'L', Name: 'Lead' },
     { Id: 'E', Name: 'Expert' },
   ];
-
   Techniciantext: string = '';
   TechnicianVisible = false;
   Emailtext: string = '';
@@ -628,7 +575,6 @@ VEHICLE_NO
   selectedStates: any[] = [];
   selectedVendorName: number[] = [];
   selectedDistricties: any[] = [];
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -640,7 +586,6 @@ VEHICLE_NO
       this.search();
       this.isnameFilterApplied = false;
     }
-
     if (this.Emailtext.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isemailFilterApplied = true;
@@ -648,7 +593,6 @@ VEHICLE_NO
       this.search();
       this.isemailFilterApplied = false;
     }
-
     if (this.Mobiletext.length > 0 && event.key === 'Enter') {
       this.search();
       this.ismobileFilterApplied = true;
@@ -663,7 +607,6 @@ VEHICLE_NO
       this.search();
       this.isaddressFilterApplied = false;
     }
-
     if (this.Aadhaartext.length > 0 && event.key === 'Enter') {
       this.search();
       this.isadharFilterApplied = true;
@@ -679,16 +622,13 @@ VEHICLE_NO
       this.isvehiclenoFilterApplied = false;
     }
   }
-
   reset(): void {
     this.searchText = '';
     this.Techniciantext = '';
-
     this.Emailtext = '';
     this.Mobiletext = '';
     this.search();
   }
-
   isnameFilterApplied: boolean = false;
   isemailFilterApplied: boolean = false;
   ismobileFilterApplied: boolean = false;
@@ -703,44 +643,36 @@ VEHICLE_NO
   iscityFilterApplied: boolean = false;
   ispincodeFilterApplied: boolean = false;
   isvehicletypeFilterApplied: boolean = false;
-
   nameFilter() {
     if (this.Techniciantext.trim() === '') {
       this.searchText = '';
     } else if (this.Techniciantext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   emailFilter() {
     if (this.Emailtext.trim() === '') {
       this.searchText = '';
     } else if (this.Emailtext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   mobileFilter() {
     if (this.Mobiletext.trim() === '') {
       this.searchText = '';
     } else if (this.Mobiletext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   adharFilter() {
     if (this.Aadhaartext.trim() === '') {
       this.searchText = '';
     } else if (this.Aadhaartext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   addressFilter() {
@@ -749,7 +681,6 @@ VEHICLE_NO
     } else if (this.Addresstext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   vehiclenoFilter() {
@@ -758,16 +689,13 @@ VEHICLE_NO
     } else if (this.Vehicletext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   isownvehicleFilter: string | undefined = undefined;
   onisownvehicleFilterChange(selectedStatus: string) {
     this.isownvehicleFilter = selectedStatus;
@@ -781,7 +709,6 @@ VEHICLE_NO
       this.search();
       this.isvehicletypeFilterApplied = false;
     }
-    // this.search();
   }
   onPincodeChange() {
     if (this.selectedPincode?.length) {
@@ -791,7 +718,6 @@ VEHICLE_NO
       this.search();
       this.ispincodeFilterApplied = false;
     }
-    // this.search();
   }
   onCountryChange() {
     if (this.selectedCountries?.length) {
@@ -801,7 +727,6 @@ VEHICLE_NO
       this.search();
       this.iscountryFilterApplied = false;
     }
-    // this.search();
   }
   oncityChange() {
     if (this.selectedCities?.length) {
@@ -811,7 +736,6 @@ VEHICLE_NO
       this.search();
       this.iscityFilterApplied = false;
     }
-    // this.search();
   }
   onStateChanged() {
     if (this.selectedStates?.length) {
@@ -821,7 +745,6 @@ VEHICLE_NO
       this.search();
       this.isstateFilterApplied = false;
     }
-    // this.search();
   }
   onVendorNameChange() {
     if (this.selectedVendorName?.length) {
@@ -831,7 +754,6 @@ VEHICLE_NO
       this.search();
       this.isvendornameFilterApplied = false;
     }
-    // this.search();
   }
   onDistrictChange() {
     if (this.selectedDistricties?.length) {
@@ -841,9 +763,7 @@ VEHICLE_NO
       this.search();
       this.isdistrictFilterApplied = false;
     }
-    // this.search();
   }
-
   ReportingVisible = false;
   selectedServices: string[] = [];
   onServiceChange(): void {
@@ -854,7 +774,6 @@ VEHICLE_NO
       this.search();
       this.isexplevelFilterApplied = false;
     }
-    // this.search();
   }
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
@@ -866,12 +785,10 @@ VEHICLE_NO
     { text: 'Vendor Managed', value: 'V' },
     { text: 'Freelancer', value: 'F' },
   ];
-
   listOfFilter3: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   VehicleData = [
     { ID: 'T', NAME: 'Two-Wheeler' },
     { ID: 'TR', NAME: 'Three-Wheeler' },
@@ -882,7 +799,6 @@ VEHICLE_NO
     this.typeV = selectedStatus;
     this.search(true);
   }
-
   ontypeFilterChange(selectedStatus: string) {
     this.typeFilter = selectedStatus;
     this.search(true);
@@ -896,7 +812,6 @@ VEHICLE_NO
     this.genderFilter = selectedStatus;
     this.search(true);
   }
-
   distinctData: any = [];
   onFilterClick(columnKey: string): void {
     this.api.getDistinctData(114, columnKey).subscribe(
@@ -909,7 +824,6 @@ VEHICLE_NO
         }
       },
       () => {
-        // this.message.error('Something Went Wrong', '');
       }
     );
   }
@@ -971,11 +885,9 @@ VEHICLE_NO
             this.CityData = data['data'];
           } else {
             this.CityData = [];
-            // this.message.error('Failed To Get City Data', '');
           }
         },
         () => {
-          // this.message.error('Something Went Wrong', '');
         }
       );
   }
@@ -994,7 +906,6 @@ VEHICLE_NO
       }
     });
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -1002,7 +913,6 @@ VEHICLE_NO
     }
     return true;
   }
-
   isSpinning = false;
   isOk = true;
   Disabled = true;
@@ -1029,23 +939,11 @@ VEHICLE_NO
       }
     }
   }
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
   applyCondition: any;
   drawerTitle = '';
-  // openfilter() {
-  //   this.drawerTitle = 'Technician Activities Filter';
-  //   this.applyCondition = '';
-  //   this.filterFields[5]['options'] = this.VendorData1;
-  //   this.filterFields[9]['options'] = this.countryData;
-  //   this.filterFields[10]['options'] = this.StateData;
-  //   this.filterFields[11]['options'] = this.districtData;
-  //   this.filterFields[12]['options'] = this.PincodeData;
-  //   this.drawerFilterVisible = true;
-  // }
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -1078,7 +976,6 @@ VEHICLE_NO
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
@@ -1089,12 +986,9 @@ VEHICLE_NO
     this.filterFields[10]['options'] = this.StateData;
     this.filterFields[11]['options'] = this.districtData;
     this.filterFields[12]['options'] = this.PincodeData;
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1111,7 +1005,6 @@ VEHICLE_NO
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1128,7 +1021,6 @@ VEHICLE_NO
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1145,37 +1037,18 @@ VEHICLE_NO
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
-    // {
-    //   key: 'TYPE',
-    //   label: 'Type',
-    //   type: 'select',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //   ],
-    //   options: [
-    //     { value: 'O', display: 'On Payroll' },
-    //     { value: 'V', display: 'Vendor Managed' },
-    //     { value: 'F', display: 'Freelancer' },
-    //   ],
-    //   placeholder: 'Select Type',
-    // },
     {
       key: 'NAME',
       label: 'Technician Name',
@@ -1190,7 +1063,6 @@ VEHICLE_NO
       ],
       placeholder: 'Enter Name',
     },
-
     {
       key: 'EMAIL_ID',
       label: 'Email ID',
@@ -1233,21 +1105,6 @@ VEHICLE_NO
       ],
       placeholder: 'Select Gender',
     },
-    // {
-    //   key: 'BUISNESS_NAME',
-    //   label: 'Vendor Name',
-    //   type: 'search',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   options: [],
-    //   placeholder: 'Enter Vendor Name',
-    // },
     {
       key: 'AADHAR_NUMBER',
       label: 'Aadhar Number',
@@ -1280,110 +1137,6 @@ VEHICLE_NO
       ],
       placeholder: 'Select Experience Level',
     },
-
-    // {
-    //   key: 'ADDRESS_LINE1',
-    //   label: 'Address',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Address',
-    // },
-    // {
-    //   key: 'COUNTRY_NAME',
-    //   label: 'Country',
-    //   type: 'search',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   options: [],
-    //   placeholder: 'Enter Country Name',
-    // },
-    // {
-    //   key: 'STATE_NAME',
-    //   label: 'State',
-    //   type: 'search',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   options: [],
-    //   placeholder: 'Enter State Name',
-    // },
-    // {
-    //   key: 'DISTRICT_NAME',
-    //   label: 'District',
-    //   type: 'search',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   options: [],
-    //   placeholder: 'Enter District Name',
-    // },
-    // {
-    //   key: 'PINCODE',
-    //   label: 'Pincode',
-    //   type: 'search',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   options: [],
-    //   placeholder: 'Enter Pincode',
-    // },
-    // {
-    //   key: 'IS_OWN_VEHICLE',
-    //   label: 'Is Own Vehicle ?',
-    //   type: 'select',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //   ],
-    //   options: [
-    //     { value: '1', display: 'Yes' },
-    //     { value: '0', display: 'No' },
-    //   ],
-    //   placeholder: 'Select Is Own Vehicle ?',
-    // },
-    // {
-    //   key: 'VEHICLE_TYPE',
-    //   label: 'Vehicle Type',
-    //   type: 'select',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //   ],
-    //   options: [
-    //     { value: 'T', display: 'Two-Wheeler' },
-    //     { value: 'TR', display: 'Three-Wheeler' },
-    //     { value: 'F', display: 'Four-Wheeler' },
-    //   ],
-    //   placeholder: 'Select Vehicle Type',
-    // },
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -1399,12 +1152,9 @@ VEHICLE_NO
       placeholder: 'Select Status',
     },
   ];
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
@@ -1428,8 +1178,7 @@ VEHICLE_NO
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value;
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -1443,42 +1192,27 @@ VEHICLE_NO
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND ');
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
-
-  // filterQuery = '';
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false;
+  selectedQuery: string = '';
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false;
+    this.selectedQuery = '';
   }
-
   handleOk1(): void {
     this.isSpinning = true;
-
-    // Toggle the IS_ACTIVE value
     this.data.IS_ACTIVE = this.data.IS_ACTIVE === 1 ? 0 : 1;
-
-    // Call the API to update the technician's data
     this.api.updateTechnicianData(this.data).subscribe(
       (response: any) => {
         this.isSpinning = false;
@@ -1486,7 +1220,7 @@ VEHICLE_NO
           const statusMessage =
             this.data.IS_ACTIVE === 1 ? 'online' : 'offline';
           this.message.success(`Technician is now ${statusMessage}`, '');
-          this.isVisible = false; // Close the modal
+          this.isVisible = false;
           this.search();
         } else {
           this.message.error(`Failed to update technician status.`, '');
@@ -1504,27 +1238,21 @@ VEHICLE_NO
   isVisible: boolean;
   modalTitle: string;
   showConfirm1(data: any): void {
-    this.data = { ...data }; // Clone the data to avoid mutating the original object
+    this.data = { ...data };
     this.modalTitle =
-      data.IS_ACTIVE === 1 ? `Disable ${data.NAME}` : `Enable ${data.NAME}`; // Set the dynamic title
-    this.isVisible = true; // Show the modal
+      data.IS_ACTIVE === 1 ? `Disable ${data.NAME}` : `Enable ${data.NAME}`;
+    this.isVisible = true;
   }
-
   handleCancel1(): void {
-    this.isVisible = false; // Close the modal
+    this.isVisible = false;
   }
-
-  // filterloading: boolean = false;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  // currentClientId = 1; // Set the client ID
-  TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId');
+  USER_ID: number;
+  savedFilters: any;
+  TabId: number;
   public commonFunction = new CommonFunctionService();
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1532,16 +1260,12 @@ VEHICLE_NO
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      )
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-            //
-            //
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1562,14 +1286,9 @@ VEHICLE_NO
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1583,7 +1302,6 @@ VEHICLE_NO
       );
     this.filterQuery = '';
   }
-
   isDeleting: boolean = false;
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
@@ -1601,7 +1319,6 @@ VEHICLE_NO
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
@@ -1637,9 +1354,7 @@ VEHICLE_NO
     this.search();
   }
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1647,13 +1362,10 @@ VEHICLE_NO
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true;
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -1662,13 +1374,11 @@ VEHICLE_NO
       this.loadFilters();
     }
   }
-
   viewJobsWidth: string = '100%';
   viewJobsDrawerVisible = false;
   viewJobsdrawerTitle = '';
   viewjobsdata: any;
   technicianId: any;
-
   viewJobs(data: TechnicianMasterData) {
     if (this.teritoryIds.length > 0) {
       this.viewJobsDrawerVisible = true;
@@ -1693,11 +1403,9 @@ VEHICLE_NO
   viewJobsdrawerClose(): void {
     this.viewJobsDrawerVisible = false;
   }
-
   get viewJobscloseCallback() {
     return this.viewJobsdrawerClose.bind(this);
   }
-
   getViewJobs(data) {
     this.technicianId = data.ID;
     this.viewJobsDrawerVisible = true;

@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-customer-coupon-summary-report',
   templateUrl: './customer-coupon-summary-report.component.html',
@@ -37,7 +36,6 @@ export class CustomerCouponSummaryReportComponent {
     ['TOTAL_COUPON_USED', 'Total Coupons Used'],
   ];
   date: Date[] = [];
-
   isExportloading = false;
   coursesNodes = [];
   VIDEO_ID = '';
@@ -61,7 +59,6 @@ export class CustomerCouponSummaryReportComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -78,10 +75,8 @@ export class CustomerCouponSummaryReportComponent {
       groups: [],
     },
   ];
-
   isloadSpinning = false;
   dataList1 = [];
-
   pageSize2 = 10;
   selectedDate: Date[] = [];
   value1: string = '';
@@ -96,45 +91,12 @@ export class CustomerCouponSummaryReportComponent {
     private router: Router
   ) { }
   ngOnInit() {
-    // this.search();
     this.selectedDate = [new Date(), new Date()];
-    // this.changeDate(this.selectedDate);
-
-    // this.loadAllCourses();
-
-    // this.logtext = 'OPENED - Student Coupon Summary KEYWORD[O - Chapters] ';
-    // this.api.addLog('A', this.logtext, this.api.emailId)
-    //   .subscribe(successCode => {
-    //     if (successCode['code'] == "200") {
-    //
-    //     }
-    //     else {
-    //
-    //     }
-    //   });
   }
-  // changeDate(value) {
-  //   this.value1 = this.datePipe.transform(value[0], 'yyyy-MM-dd');
-  //   this.value2 = this.datePipe.transform(value[1], 'yyyy-MM-dd');
-  // }
-
-  // loadAllCourses() {
-  //   this.api.getAllStudents(0, 0, 'ID', 'ASC', ' ').subscribe(
-  //     (localName) => {
-  //       this.coursesNodes = localName['data'];
-  //       // this.filterValue = this.coursesNodes[0]['ID']
-  //     },
-  //     (err) => {
-  //
-  //     }
-  //   );
-  // }
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   keyup(keys: any) {
-    // this.search();
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
@@ -144,42 +106,25 @@ export class CustomerCouponSummaryReportComponent {
       this.search(true);
     }
   }
-
-  // Basic Methods
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize2 != pageSize) {
       this.pageIndex = 1;
       this.pageSize2 = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search(false);
   }
-
-  // onKeyDownEvent(event) {
-  //   if (event.key == 'Enter') {
-  //     event.preventDefault();
-  //   }
-
-  //   this.isFilterApplied = 'default';
-  //   this.filterClass = 'filter-invisible';
-  //   this.search(true);
-  // }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
@@ -192,43 +137,17 @@ export class CustomerCouponSummaryReportComponent {
       const [startDate, endDate] = this.date;
       const start = startDate.toISOString().split('T')[0];
       const end = endDate.toISOString().split('T')[0];
-
-      // if(dateQuery!=='') dateQuery+=' AND ';
       dateQuery += ` AND  DATE(CREATED_MODIFIED_DATE) BETWEEN '${start}' AND '${end}' `
     }
     this.loadingRecords = true;
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
-
-      // this.logtext =
-      //   'Filter Applied - Student Video Student Details"+ sort +" "+this.sortKey +" KEYWORD [F - Chapters] ';
-      // this.api
-      //   .addLog('A', this.logtext, this.api.emailId)
-      //   .subscribe((successCode) => {
-      //     if (successCode['code'] == '200') {
-      //
-      //     } else {
-      //
-      //     }
-      //   });
     } catch (error) {
       sort = '';
     }
-
-    // if (this.searchText != '') {
-    //   var likeQuery = ' AND (';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
-
-    // }
-
     var likeQuery = '';
-
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -239,25 +158,13 @@ export class CustomerCouponSummaryReportComponent {
           .join(' OR ') +
         ')';
     }
-
     this.logtext =
       'Filter Applied - Customer Coupon Summary' +
       likeQuery +
       ' KEYWORD [F - Chapters] ';
-    // this.api.addLog('A', this.logtext, this.api.emailId)
-    //   .subscribe(successCode => {
-    //     if (successCode['code'] == "200") {
-    //
-    //     }
-    //     else {
-    //
-    //     }
-    //   });
-
     var filter = '';
     if (likeQuery) filter = this.filterQuery + likeQuery;
     else filter = this.filterQuery;
-
     if (this.nametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -266,7 +173,6 @@ export class CustomerCouponSummaryReportComponent {
     } else {
       this.isCustNameFilterApplied = false;
     }
-
     if (this.mobiletext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -275,7 +181,6 @@ export class CustomerCouponSummaryReportComponent {
     } else {
       this.isMobileVisibleFilterApplied = false;
     }
-
     if (this.emailtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `EMAIL LIKE '%${this.emailtext.trim()}%'`;
@@ -283,7 +188,6 @@ export class CustomerCouponSummaryReportComponent {
     } else {
       this.isEmailVisibleFilterApplied = false;
     }
-
     if (this.TotCouponUsedtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -292,11 +196,8 @@ export class CustomerCouponSummaryReportComponent {
     } else {
       this.isTotCouponUsedVisibleFilterApplied = false;
     }
-
     this.isloadSpinning = true;
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.api
         .getCustomerCouponSummaryReport(
@@ -308,7 +209,6 @@ export class CustomerCouponSummaryReportComponent {
         )
         .subscribe(
           (data) => {
-            //
             this.isloadSpinning = false;
             this.loadingRecords = false;
             if (data['code'] == '200') {
@@ -324,11 +224,9 @@ export class CustomerCouponSummaryReportComponent {
             } else {
               this.isloadSpinning = false;
               this.loadingRecords = false;
-
             }
           },
           (err) => {
-
             if (err['status'] == 400) {
               this.isloadSpinning = false;
               this.loadingRecords = false;
@@ -338,7 +236,6 @@ export class CustomerCouponSummaryReportComponent {
               this.isloadSpinning = false;
               this.loadingRecords = false;
               this.dataList = [];
-              // this.message.error('Failed To Get Inventory Records', '');
             }
           }
         );
@@ -354,7 +251,6 @@ export class CustomerCouponSummaryReportComponent {
         )
         .subscribe(
           (data) => {
-            //
             this.isloadSpinning = false;
             this.loadingRecords = false;
             if (data['code'] == '200') {
@@ -373,23 +269,11 @@ export class CustomerCouponSummaryReportComponent {
         );
     }
   }
-
   showFilter(): void {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
-  // applyFilter() {
-  //   if (this.filterValue == '') this.filterQuery = '';
-  //   else this.filterQuery = ' AND CUSTOMER_ID=' + this.filterValue;
-
-  //   this.isFilterApplied = 'primary';
-  //   this.filterClass = 'filter-invisible';
-
-  //   this.search(true);
-  // }
-
   clearFilter() {
     this.filterValue = '';
     this.filterQuery = '';
@@ -398,23 +282,18 @@ export class CustomerCouponSummaryReportComponent {
     this.filterClass = 'filter-invisible';
     this.search(true);
   }
-
   nametext: string = '';
   CustNameVisible: boolean = false;
   isCustNameFilterApplied = false;
-
   mobiletext: string = '';
   mobileVisible: boolean = false;
   isMobileVisibleFilterApplied = false;
-
   emailtext: string = '';
   emailVisible: boolean = false;
   isEmailVisibleFilterApplied = false;
-
   TotCouponUsedtext: string = '';
   TotCouponUsedVisible: boolean = false;
   isTotCouponUsedVisibleFilterApplied = false;
-
   reset(): void {
     this.searchText = '';
     this.nametext = '';
@@ -423,14 +302,12 @@ export class CustomerCouponSummaryReportComponent {
     this.TotCouponUsedtext = '';
     this.search();
   }
-
   onKeyup(keys: any, type: string): void {
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length == 0 && keys.key === 'Backspace') {
       this.search(true);
     }
-
     if (type == 'name' && this.nametext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isCustNameFilterApplied = true;
@@ -442,7 +319,6 @@ export class CustomerCouponSummaryReportComponent {
       this.search();
       this.isCustNameFilterApplied = false;
     }
-
     if (
       type == 'mobile' &&
       this.mobiletext.length >= 3 &&
@@ -458,7 +334,6 @@ export class CustomerCouponSummaryReportComponent {
       this.search();
       this.isMobileVisibleFilterApplied = false;
     }
-
     if (type == 'email' && this.emailtext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isEmailVisibleFilterApplied = true;
@@ -470,7 +345,6 @@ export class CustomerCouponSummaryReportComponent {
       this.search();
       this.isEmailVisibleFilterApplied = false;
     }
-
     if (
       type == 'totalcoupons' &&
       this.TotCouponUsedtext.length > 0 &&
@@ -487,14 +361,10 @@ export class CustomerCouponSummaryReportComponent {
       this.isTotCouponUsedVisibleFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -505,10 +375,7 @@ export class CustomerCouponSummaryReportComponent {
   drawerTitle;
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
-  // filterQuery: string = "";
-  // filterClass: string = "filter-invisible";
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -517,13 +384,10 @@ export class CustomerCouponSummaryReportComponent {
       this.loadFilters();
     }
   }
-
   isDeleting: boolean = false;
   filterloading: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -531,13 +395,12 @@ export class CustomerCouponSummaryReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -552,21 +415,15 @@ export class CustomerCouponSummaryReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -580,7 +437,6 @@ export class CustomerCouponSummaryReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -589,7 +445,6 @@ export class CustomerCouponSummaryReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -606,9 +461,7 @@ export class CustomerCouponSummaryReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -634,15 +487,11 @@ export class CustomerCouponSummaryReportComponent {
       }
     );
   }
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Customer Coupon Summary Report Filter';
-    // this.applyCondition = "";
-
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -651,13 +500,9 @@ export class CustomerCouponSummaryReportComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -674,7 +519,6 @@ export class CustomerCouponSummaryReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -692,29 +536,23 @@ export class CustomerCouponSummaryReportComponent {
       },
     ];
   }
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'CUSTOMER_NAME',
@@ -730,7 +568,6 @@ export class CustomerCouponSummaryReportComponent {
       ],
       placeholder: 'Enter Customer Name',
     },
-
     {
       key: 'MOBILE_NO',
       label: 'Mobile Number',
@@ -774,16 +611,12 @@ export class CustomerCouponSummaryReportComponent {
       placeholder: 'Enter Total Coupon Used',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -792,23 +625,18 @@ export class CustomerCouponSummaryReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -816,16 +644,13 @@ export class CustomerCouponSummaryReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -835,7 +660,6 @@ export class CustomerCouponSummaryReportComponent {
         obj1['Mobile No'] = this.excelData[i]['MOBILE_NO'];
         obj1['Email'] = this.excelData[i]['EMAIL'];
         obj1['Total Coupon Used'] = this.excelData[i]['TOTAL_COUPON_USED'];
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -849,9 +673,7 @@ export class CustomerCouponSummaryReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

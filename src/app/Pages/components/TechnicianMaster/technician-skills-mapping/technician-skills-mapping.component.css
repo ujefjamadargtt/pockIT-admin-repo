@@ -11,13 +11,77 @@ nz-form-item {
   transform: translate(-50%, -50%);
   z-index: 10;
   display: flex;
-  flex-direction: column; /* Vertical alignment */
+  flex-direction: column;
   align-items: center;
-  gap: 10px; /* Adds space between spinner and text */
+  gap: 10px;
 }
-
 .custom-spin-text {
   font-size: 16px;
   font-weight: 500;
-  color: #092B9C; /* Optional: Matches Ant Design's theme */
+  color: #092B9C;
+}
+.table-header-left {
+  text-align: left;
+  padding-left: 10px;
+}
+.table-header-right {
+  text-align: right;
+  padding-right: 10px;
+}
+.form-inline {
+  display: inline-flex;
+}
+.search-input-group {
+  margin-left: 26px;
+}
+.search-input {
+  height: 32px;
+}
+.search-btn {
+  cursor: pointer;
+}
+.relative-container {
+  position: relative;
+}
+.table-preline {
+  white-space: pre-line;
+}
+.table-center {
+  text-align: center;
+}
+.table-left {
+  text-align: left;
+}
+.center-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-outline {
+  font-size: 26px;
+}
+.bo-center-arrow {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.bo-map-arrow-icon {
+  font-size: 26px !important;
+  cursor: default;
+}
+.bo-map-arrow-clickable {
+  cursor: pointer;
+}
+.icon-fill {
+  font-size: 26px;
+}
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+.flex-left {
+  display: flex;
+  align-items: center;
 }

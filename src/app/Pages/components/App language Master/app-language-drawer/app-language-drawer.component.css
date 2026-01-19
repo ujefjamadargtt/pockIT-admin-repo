@@ -4,3 +4,30 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
+.field-counter-text {
+  color: red;
+  font-size: 10px;
+}
+.footer-cancel-spacing {
+  margin-right: 8px;
+}
+.footer-menu-rounded {
+  border-radius: 4px;
+}
+.footer-menu-white-text {
+  color: white !important;
+}
+.footer-transparent-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: white !important;
+}
+.image-preview-container {
+  height: 400px;
+  overflow: auto;
+}
+.image-preview-frame {
+  width: 832px;
+  height: 396px;
+}

@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { bannermodal } from 'src/app/Pages/Models/bannermodal';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-bannermasterlist',
   templateUrl: './bannermasterlist.component.html',
@@ -15,23 +14,19 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 })
 export class BannermasterlistComponent implements OnInit {
   adminId: any;
-
   ngOnInit(): void {
     this.adminId = Number(sessionStorage.getItem('roleId'));
     this.loadingRecords = false;
-
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
   }
-
   img: any;
   visible = false;
   drawerVisible!: boolean;
   drawerTitle!: string;
   drawerData: bannermodal = new bannermodal();
-
   @Input()
   dataList: any[] = [];
   loadingRecords = true;
@@ -50,14 +45,12 @@ export class BannermasterlistComponent implements OnInit {
   width: any;
   mapdrawerVisible: boolean = false;
   mapdrawerTitle!: string;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router,
     private sanitizer: DomSanitizer
   ) { }
-
   columns: string[][] = [
     ['TITLE', 'TITLE'],
     ['SUB_TITLE', 'SUB_TITLE'],
@@ -67,7 +60,6 @@ export class BannermasterlistComponent implements OnInit {
   back() {
     this.router.navigate(['/masters/menu']);
   }
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -84,7 +76,6 @@ export class BannermasterlistComponent implements OnInit {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -102,19 +93,13 @@ export class BannermasterlistComponent implements OnInit {
     },
   ];
   showcloumnVisible: boolean = false;
-
   showcolumn = [
     { label: 'Title', key: 'TITLE', visible: true },
-    // { label: 'Title Color', key: 'TITLE_COLOR', visible: true },
     { label: 'Description', key: 'SUB_TITLE', visible: true },
-    // { label: 'Description Color', key: 'SUB_TITLE_COLOR', visible: true },
-    // { label: 'Sub Title 1', key: 'SUB_TITLE_1', visible: true },
-    // { label: 'Sub Title Color 1', key: 'SUB_TITLE_COLOR_1', visible: true },
     { label: 'Sequence No.', key: 'SEQ_NO', visible: true },
     { label: 'Status', key: 'STATUS', visible: true },
     { label: 'Is For Shop', key: 'IS_FOR_SHOP', visible: true },
   ];
-  // Check if the column is visible
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
@@ -122,38 +107,29 @@ export class BannermasterlistComponent implements OnInit {
   TitleVisible = false;
   titletext: string = '';
   istitleFilterApplied: boolean = false;
-
   TitlecolorVisible = false;
   titlecolortext: string = '';
   istitlecolorFilterApplied: boolean = false;
-
   subTitleVisible = false;
   subtitletext: string = '';
   issubtitleFilterApplied: boolean = false;
-
   subTitlecolorVisible = false;
   subtitlecolortext: string = '';
   issubtitlecolorFilterApplied: boolean = false;
-
   subTitleVisible1 = false;
   subtitletext1: string = '';
   issubtitleFilterApplied1: boolean = false;
-
   subTitlecolorVisible1 = false;
   subtitlecolortext1: string = '';
   subistitlecolorFilterApplied1: boolean = false;
-
   seqvisible = false;
   seqtext: string = '';
   isseqfilterapplied: boolean = false;
-
-  //status Filter
   statusFilter: string | undefined = undefined;
   isForShopFilter: string | undefined = undefined;
   isTypeShopFilter: string | undefined = undefined;
   isForFilter: string | undefined = undefined;
   isForCustTypeFilter: string | undefined = undefined;
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
@@ -166,43 +142,35 @@ export class BannermasterlistComponent implements OnInit {
     this.isTypeShopFilter = selectedisfortype;
     this.search(true);
   }
-
   onForFilterChange(selectedisforFor: string) {
     this.isForFilter = selectedisforFor;
     this.search(true);
   }
-
   onCustTypeFilterChange(selectedisforCustType: string) {
     this.isForCustTypeFilter = selectedisforCustType;
     this.search(true);
   }
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   listOfShopFilter: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   listOfTypeFilter: any[] = [
     { text: 'Main Banner', value: 'M' },
     { text: 'Offer Banner', value: 'O' },
   ];
-
   listOfForFilter: any[] = [
     { text: 'Website', value: 'W' },
     { text: 'Mobile', value: 'M' },
   ];
-
   listOfCustTypeFilter: any[] = [
     { text: 'B2B', value: 'BB' },
     { text: 'B2C', value: 'BC' },
     { text: 'Both', value: 'BO' },
   ];
-
   reset(): void {
     this.searchText = '';
     this.titlecolortext = '';
@@ -212,29 +180,25 @@ export class BannermasterlistComponent implements OnInit {
     this.subtitlecolortext1 = '';
     this.subtitletext1 = '';
     this.seqtext = '';
-
     this.search();
   }
-
   onKeyup(keys: any, type: string): void {
     const element = window.document.getElementById('button');
-
     if (
       type === 'titlee' &&
       this.titletext.length >= 3 &&
       keys.key === 'Enter'
     ) {
-      this.search(); // Trigger the search method
-      this.istitleFilterApplied = true; // Set to true if conditions are met
+      this.search(); 
+      this.istitleFilterApplied = true; 
     } else if (
       type === 'titlee' &&
       this.titletext.length === 0 &&
       keys.key === 'Backspace'
     ) {
-      this.search(); // Trigger the search method
-      this.istitleFilterApplied = false; // Reset when input is cleared
+      this.search(); 
+      this.istitleFilterApplied = false; 
     }
-
     if (
       type == 'titlecolorr' &&
       this.titlecolortext.length >= 3 &&
@@ -250,7 +214,6 @@ export class BannermasterlistComponent implements OnInit {
       this.search();
       this.istitlecolorFilterApplied = false;
     }
-
     if (
       type == 'subtitlee' &&
       this.subtitletext.length >= 3 &&
@@ -266,7 +229,6 @@ export class BannermasterlistComponent implements OnInit {
       this.search();
       this.issubtitleFilterApplied = false;
     }
-
     if (
       type == 'subtitlecolorr' &&
       this.subtitlecolortext.length >= 3 &&
@@ -282,7 +244,6 @@ export class BannermasterlistComponent implements OnInit {
       this.search();
       this.issubtitlecolorFilterApplied = false;
     }
-
     if (
       type == 'subtitlee1' &&
       this.subtitletext1.length >= 3 &&
@@ -298,7 +259,6 @@ export class BannermasterlistComponent implements OnInit {
       this.search();
       this.issubtitleFilterApplied1 = false;
     }
-
     if (
       type == 'subtitlecolorr1' &&
       this.subtitlecolortext1.length >= 3 &&
@@ -314,7 +274,6 @@ export class BannermasterlistComponent implements OnInit {
       this.search();
       this.subistitlecolorFilterApplied1 = false;
     }
-
     if (type == 'seqno' && this.seqtext.length > 0 && keys.key === 'Enter') {
       this.search();
       this.isseqfilterapplied = true;
@@ -336,12 +295,10 @@ export class BannermasterlistComponent implements OnInit {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
   }
-
   add(): void {
     this.drawerTitle = 'Add New Banner';
     this.drawerData = new bannermodal();
@@ -357,42 +314,31 @@ export class BannermasterlistComponent implements OnInit {
     );
     this.drawerVisible = true;
   }
-
   adID: any;
   MAP_TYPE: any[] = [];
-
   keyup(event: any) {
     this.search();
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get CloseMapbanner() {
     return this.drawerClose1.bind(this);
   }
-
   drawerClose1(): void {
     this.search();
     this.mapdrawerVisible = false;
   }
-
   SPECIAL_WORD: any;
   edit(data: bannermodal): void {
     this.drawerTitle = 'Update Banner';
     this.drawerData = Object.assign({}, data);
-    // if (this.drawerData.TITLE_COLOR != null) {
-    //   this.drawerData.TITLE_COLOR = data.TITLE_COLOR.toString();
-    // }
     this.drawerVisible = true;
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -409,10 +355,8 @@ export class BannermasterlistComponent implements OnInit {
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -424,34 +368,21 @@ export class BannermasterlistComponent implements OnInit {
         ')';
     }
     this.loadingRecords = true;
-
     if (this.titletext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `TITLE LIKE '%${this.titletext.trim()}%'`;
-      this.istitleFilterApplied = true; // Set to true if filter is applied
+      this.istitleFilterApplied = true; 
     } else {
-      this.istitleFilterApplied = false; // Reset if filter is not applied
+      this.istitleFilterApplied = false; 
     }
-
     if (this.titlecolortext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TITLE_COLOR LIKE '%${this.titlecolortext.trim()}%'`;
-      this.istitlecolorFilterApplied = true; // Set to true if filter is applied
+      this.istitlecolorFilterApplied = true; 
     } else {
-      this.istitlecolorFilterApplied = false; // Reset if filter is not applied
+      this.istitlecolorFilterApplied = false; 
     }
-
-    // if (this.titlecolortext !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') +
-    //     `TITLE_COLOR LIKE '%${this.titlecolortext.trim()}%'`;
-
-    //   this.istitlecolorFilterApplied = true;
-    // } else {
-    //   this.istitlecolorFilterApplied = false;
-    // }
-
     if (this.subtitletext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -460,7 +391,6 @@ export class BannermasterlistComponent implements OnInit {
     } else {
       this.issubtitleFilterApplied = false;
     }
-
     if (this.subtitlecolortext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -469,7 +399,6 @@ export class BannermasterlistComponent implements OnInit {
     } else {
       this.issubtitlecolorFilterApplied = false;
     }
-
     if (this.subtitletext1 !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -478,7 +407,6 @@ export class BannermasterlistComponent implements OnInit {
     } else {
       this.issubtitleFilterApplied1 = false;
     }
-
     if (this.subtitlecolortext1 !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -487,7 +415,6 @@ export class BannermasterlistComponent implements OnInit {
     } else {
       this.subistitlecolorFilterApplied1 = false;
     }
-
     if (this.seqtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `SEQ_NO LIKE '%${this.seqtext.trim()}%'`;
@@ -495,35 +422,30 @@ export class BannermasterlistComponent implements OnInit {
     } else {
       this.isseqfilterapplied = false;
     }
-
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS = ${this.statusFilter}`;
     }
-
     if (this.isForShopFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_FOR_SHOP = ${this.isForShopFilter}`;
     }
-
     if (this.isTypeShopFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `BANNER_TYPE = '${this.isTypeShopFilter}'`;
     }
-
     if (this.isForFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `BANNER_FOR = '${this.isForFilter}'`;
     }
-
     if (this.isForCustTypeFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -531,7 +453,6 @@ export class BannermasterlistComponent implements OnInit {
       likeQuery += `CUSTOMER_TYPE = '${this.isForCustTypeFilter}'`;
     }
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getAllBannerMaster(
         this.pageIndex,
@@ -573,34 +494,25 @@ export class BannermasterlistComponent implements OnInit {
         }
       );
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-    //
-
-    //
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -610,10 +522,8 @@ export class BannermasterlistComponent implements OnInit {
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
-  // filterQuery: string = '';
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -622,16 +532,11 @@ export class BannermasterlistComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   filterloading: boolean = false;
-
   whichbutton: any;
-
   updateButton: any;
   updateBtn: any;
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -640,10 +545,8 @@ export class BannermasterlistComponent implements OnInit {
       tooltip.hide();
     }
   }
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -651,13 +554,12 @@ export class BannermasterlistComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -672,21 +574,15 @@ export class BannermasterlistComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -700,7 +596,6 @@ export class BannermasterlistComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -709,7 +604,6 @@ export class BannermasterlistComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -726,9 +620,7 @@ export class BannermasterlistComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -754,25 +646,20 @@ export class BannermasterlistComponent implements OnInit {
       }
     );
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   get filtercloseCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -781,7 +668,6 @@ export class BannermasterlistComponent implements OnInit {
   openfilter() {
     this.drawerTitle = 'Banner Filter';
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -790,13 +676,9 @@ export class BannermasterlistComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -813,7 +695,6 @@ export class BannermasterlistComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -831,7 +712,6 @@ export class BannermasterlistComponent implements OnInit {
       },
     ];
   }
-
   filterFields: any[] = [
     {
       key: 'TITLE',
@@ -847,21 +727,6 @@ export class BannermasterlistComponent implements OnInit {
       ],
       placeholder: 'Enter Title',
     },
-
-    // {
-    //   key: 'TITLE_COLOR',
-    //   label: 'Title Color',
-    //   type: 'text',
-    //   comparators: [
-    //     '=',
-    //     '!=',
-    //     'Contains',
-    //     'Does Not Contains',
-    //     'Starts With',
-    //     'Ends With',
-    //   ],
-    //   placeholder: 'Enter Title Color',
-    // },
     {
       key: 'SUB_TITLE',
       label: 'Description',
@@ -876,50 +741,6 @@ export class BannermasterlistComponent implements OnInit {
       ],
       placeholder: 'Enter Description',
     },
-
-    // {
-    //   key: 'SUB_TITLE_COLOR',
-    //   label: 'Description Color',
-    //   type: 'text',
-    //   comparators: [
-    //     '=',
-    //     '!=',
-    //     'Contains',
-    //     'Does Not Contains',
-    //     'Starts With',
-    //     'Ends With',
-    //   ],
-    //   placeholder: 'Enter Description Color',
-    // },
-    // {
-    //   key: 'SUB_TITLE_1',
-    //   label: 'Sub Title 1',
-    //   type: 'text',
-    //   comparators: [
-    //     '=',
-    //     '!=',
-    //     'Contains',
-    //     'Does Not Contains',
-    //     'Starts With',
-    //     'Ends With',
-    //   ],
-    //   placeholder: 'Enter Sub Title 1',
-    // },
-
-    // {
-    //   key: 'SUB_TITLE_COLOR_1',
-    //   label: 'Sub Title Color 1',
-    //   type: 'text',
-    //   comparators: [
-    //     '=',
-    //     '!=',
-    //     'Contains',
-    //     'Does Not Contains',
-    //     'Starts With',
-    //     'Ends With',
-    //   ],
-    //   placeholder: 'Enter Sub Title Color 1',
-    // },
     {
       key: 'SEQ_NO',
       label: 'Sequence no.',
@@ -962,7 +783,6 @@ export class BannermasterlistComponent implements OnInit {
       ],
       placeholder: 'Select Is For Shop',
     },
-
     {
       key: 'BANNER_TYPE',
       label: 'Banner Type',
@@ -977,7 +797,6 @@ export class BannermasterlistComponent implements OnInit {
       ],
       placeholder: 'Select Banner Type',
     },
-
     {
       key: 'BANNER_FOR',
       label: 'Banner For',
@@ -992,7 +811,6 @@ export class BannermasterlistComponent implements OnInit {
       ],
       placeholder: 'Select Banner For',
     },
-
     {
       key: 'CUSTOMER_TYPE',
       label: 'Customer Type',
@@ -1009,18 +827,13 @@ export class BannermasterlistComponent implements OnInit {
       placeholder: 'Select Customer Type',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -1029,23 +842,18 @@ export class BannermasterlistComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1053,22 +861,17 @@ export class BannermasterlistComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
   isSpinning = false;
-
-  // profile photo
   ViewImage: any;
   ImageModalVisible: boolean = false;
   imageshow;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
@@ -1076,11 +879,9 @@ export class BannermasterlistComponent implements OnInit {
   sanitizedLink: any = '';
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + 'BannerImages/' + link;
-
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
 }

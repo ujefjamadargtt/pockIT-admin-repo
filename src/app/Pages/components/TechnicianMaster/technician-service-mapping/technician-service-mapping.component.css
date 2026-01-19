@@ -1,6 +1,24 @@
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.service-select-fullwidth {
+  width: 100%;
+}
+.service-add-btn {
+  margin-top: 26px;
+}
+.relative-container {
+  position: relative;
+}
+.table-preline {
+  white-space: pre-line;
+}
+.date-picker-fullwidth {
+  width: 100%;
+}
+.footer-btn-cancel {
+  margin-right: 8px;
+}

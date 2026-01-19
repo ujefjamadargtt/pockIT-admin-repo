@@ -1,102 +1,38 @@
 <div nz-row>
-  <!-- <div nz-col nzSpan="24">
-    <nz-form-item>
-      <nz-form-label nzNoColon>Can view job pool ?</nz-form-label>
-      <nz-form-control style="text-align: end !important;">
-        <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-          [(ngModel)]="data.CAN_VIEW_JOB_POOL"></nz-switch>
-      </nz-form-control>
-    </nz-form-item>
-  </div> -->
-  <!-- <div nz-col nzSpan="24">
-    <nz-form-item>
-      <nz-form-label nzNoColon>Can assign express order ?</nz-form-label>
-      <nz-form-control style="text-align: end !important;">
-        <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-          [(ngModel)]="data.CAN_ASSIGN_EXPRESS_ORDER"></nz-switch>
-      </nz-form-control>
-    </nz-form-item>
-  </div> -->
-  <!-- <div nz-col nzSpan="24">
-    <nz-form-item>
-      <nz-form-label nzNoColon>Can assign order forcefully ?</nz-form-label>
-      <nz-form-control style="text-align: end !important;">
-        <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-          [(ngModel)]="data.CAN_ASSIGN_ORDERS_FORCEFULLY"></nz-switch>
-      </nz-form-control>
-    </nz-form-item>
-  </div> -->
   <div nz-col nzSpan="24">
     <nz-form-item>
-      <!-- <nz-form-label nzNoColon>Can view service prices summary ?</nz-form-label> -->
       <nz-form-label nzNoColon>Allow access to earnings summary?</nz-form-label>
-      <nz-form-control style="text-align: end !important;">
+      <nz-form-control class="cfg-switch-align-end">
         <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-          [(ngModel)]="data.CAN_VIEW_SERVICE_PRICES_SUMMARY"></nz-switch>
+          [(ngModel)]="data.CAN_VIEW_SERVICE_PRICES_SUMMARY">
+        </nz-switch>
       </nz-form-control>
     </nz-form-item>
   </div>
   <div nz-col nzSpan="24">
     <nz-form-item>
-      <!-- <nz-form-label nzNoColon>Can accept job ?</nz-form-label> -->
       <nz-form-label nzNoColon>Allow access to accept job ?</nz-form-label>
-      <nz-form-control style="text-align: end !important;">
-        <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-          [(ngModel)]="data.CAN_ACCEPT_JOB"></nz-switch>
+      <nz-form-control class="cfg-switch-align-end">
+        <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No" [(ngModel)]="data.CAN_ACCEPT_JOB">
+        </nz-switch>
       </nz-form-control>
     </nz-form-item>
   </div>
   <div nz-col nzSpan="24">
     <nz-form-item>
-      <!-- <nz-form-label nzNoColon>Can have access to add skills ?</nz-form-label> -->
       <nz-form-label nzNoColon>Allow to add skills ?</nz-form-label>
-      <nz-form-control style="text-align: end !important;">
-        <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-          [(ngModel)]="data.CAN_EDIT_SKILL"></nz-switch>
+      <nz-form-control class="cfg-switch-align-end">
+        <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No" [(ngModel)]="data.CAN_EDIT_SKILL">
+        </nz-switch>
       </nz-form-control>
     </nz-form-item>
   </div>
-  <!-- <div nz-col nzSpan="24">
-    <nz-form-item>
-      <nz-form-label nzNoColon>Can edit pincode ?</nz-form-label>
-      <nz-form-control style="text-align: end !important;">
-        <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-          [(ngModel)]="data.CAN_EDIT_PINCODE"></nz-switch>
-      </nz-form-control>
-    </nz-form-item>
-  </div> -->
 </div>
-
-<!-- <nz-form-control style="text-align: end !important;" nzHasFeedback nzErrorTip="Please Select Pincodes">
-  <nz-select
-    nzAllowClear="true"
-    nzPlaceHolder="Select Pincodes"
-    name="PINCODE"
-    [(ngModel)]="saveData.PINCODE_ID"
-    nzShowSearch
-    required
-    nzMode="multiple"
-    [nzMaxTagCount]="3"
-    [nzLoading]="isPincodeSpinning"
-  >
-    <nz-option
-      *ngFor="let data of pincodeData"
-      [nzValue]="data.ID"
-      [nzLabel]="data.PINCODE"
-    ></nz-option>
-  </nz-select>
-</nz-form-control> -->
-
-
-
 <div class="footer">
-  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn cfg-footer-cancel-btn">
     Cancel
   </button>
-
   <button nz-button nzType="primary" [nzLoading]="isSpinning" (click)="save()" class="ant-btn ant-btn-primary">
     Change Configuration
   </button>
-
-
 </div>

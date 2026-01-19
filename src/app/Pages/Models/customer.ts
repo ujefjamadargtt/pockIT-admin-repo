@@ -26,14 +26,14 @@ export class customer {
   CURRENT_ADDRESS_ID: any;
   PROFILE_PHOTO: any;
   CUSTOMER_MASTER_ID: any;
-
   IS_HAVE_GST: boolean = false;
   INDIVIDUAL_COMPANY_NAME: any;
   COMPANY_ADDRESS: any;
-  PASSWORD:any
-  PARENT_ID:any
+  PASSWORD: any
+  PARENT_ID: any
+  IS_CHILD_SELF_REG: boolean = false
+  DOMAINS: any
 }
-
 export class SlotsMappingToCustomer {
   ID: number;
   ORG_ID: number = 0;

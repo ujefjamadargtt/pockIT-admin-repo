@@ -4,7 +4,6 @@ import { NzNotificationService } from "ng-zorro-antd/notification";
 import { HSN_SAC_Master } from "src/app/Pages/Models/HSN_SAC_Master";
 import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
 import { ApiServiceService } from "src/app/Service/api-service.service";
-
 @Component({
   selector: "app-add-hsn-sac-master",
   templateUrl: "./add-hsn-sac-master.component.html",
@@ -21,18 +20,15 @@ export class AddHSNSACMASTERComponent {
   isOk = true;
   codepatt = /^[0-9\s,._-]+/;
   isFocused: string = "";
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService
   ) { }
   public commonFunction = new CommonFunctionService();
-
   ngOnInit() { }
   close(): void {
     this.drawerClose();
   }
-
   save(addNew: boolean, HSN_SAC: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -63,7 +59,6 @@ export class AddHSNSACMASTERComponent {
         this.message.error(" Please Enter Sequence No.", "");
       }
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       if (this.data.ID) {

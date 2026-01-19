@@ -1,109 +1,67 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-
-<nz-layout *ngIf="isLogedIn && pageName == 'job-completed'; else maindisplayBlock"
-  style="height: 100vh !important; overflow: hidden !important">
+<nz-layout *ngIf="isLogedIn && pageName == 'job-completed'; else maindisplayBlock" class="job-completion-layout">
   <app-job-completionpopup></app-job-completionpopup>
 </nz-layout>
 <ng-template #maindisplayBlock>
-  <nz-layout class="app-layout" *ngIf="isLogedIn" style="width: 100%">
+  <nz-layout class="app-layout" *ngIf="isLogedIn">
     <nz-layout>
       <nz-header>
-        <div nz-row style="display: flex; align-items: center" class="app-header">
-          <div nz-col nzSpan="8" style="padding-left: 40px; padding-top: 0px">
-            <div style="display: flex">
-              <div *ngIf="decreptedroleId !==27">
-                <span style="
-                    font-size: 25px !important;
-                    margin-right: 20px;
-                    cursor: pointer;
-                    color: #202020;
-                  " nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="Master Menu" nz-icon nzType="menu"
-                  nzTheme="outline" (click)="open()">
+        <div nz-row class="app-header-container">
+          <div nz-col nzSpan="8" class="header-left-section">
+            <div class="header-left-content">
+              <div *ngIf="decreptedroleId !== 27">
+                <span class="menu-icon" nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="Master Menu" nz-icon
+                  nzType="menu" nzTheme="outline" (click)="open()">
                 </span>
               </div>
-              <div style="display: flex">
-                <span style="
-                    font-size: 25px !important;
-                    margin-right: 0px;
-                    cursor: pointer;
-                    color: #202020;
-                  ">
-                  <img (click)="openDashboard()" src="/assets/PockIT_Logo.png" alt="Logo"
-                    style="height: 41px; margin-bottom: 9px" />
+              <div class="logo-section">
+                <span class="logo-container">
+                  <img (click)="openDashboard()" src="/assets/PockIT_Logo.png" alt="Logo" class="logo-image" />
                 </span>
-                <!-- -->
-                <!-- <span  *ngIf="
-                appUrl === 'https://20.197.51.80:7849/' ||
-                appUrl === 'https://pockit.pockitengineers.com/auth/'
-              ">
-                  <nz-tag nzColor="#cd201f" style="margin-right: 0px; margin-left: 10px">
-                  
-                    <span style="font-size: 11px !important">Pre-Production</span>
-                  </nz-tag>
-                </span> -->
                 <span *ngIf="
-                appUrl === 'https://20.197.51.80:7849/' ||
-                appUrl === 'https://pockit.pockitengineers.com/auth/'
-              ">
-                  <nz-tag nzColor="#cd201f" style="
-                      display: flex;
-                      flex-direction: column;
-                     text-align: center;
-                      margin-left: 10px;
-                      margin-top: 10px;
-                      position: relative;
-                    ">
-                    <span style="font-size: 11px !important">Pre-Production</span>
-                    <span style="font-size: 11px !important"> V.{{ currentApplicationVersion }}</span>
+                    appUrl === 'https://20.197.51.80:7849/' ||
+                    appUrl === 'https://pockit.pockitengineers.com/auth/'
+                  ">
+                  <nz-tag nzColor="#cd201f" class="pre-production-tag">
+                    <span class="tag-text">Pre-Production</span>
+                    <span class="tag-text">
+                      V.{{ currentApplicationVersion }}</span>
                   </nz-tag>
-                  <!-- <span style="
-                      font-size: 12px !important;
-                      margin-left: 42px;
-                      color: #202020;
-                      position: relative;
-                      top: -20px;
-                    ">
-                   
-                  </span> -->
                 </span>
               </div>
             </div>
           </div>
-          <div nz-col nzSpan="8" style="display: flex; position: relative;" *ngIf="decreptedroleId !==27">
-            <nz-select [(ngModel)]="selectedMaster1" name="category" style="width: 170px">
+          <div nz-col nzSpan="8" class="header-center-section" *ngIf="decreptedroleId !== 27">
+            <nz-select [(ngModel)]="selectedMaster1" name="category" class="master-select">
               <nz-option *ngFor="let master of masters" [nzValue]="master" [nzLabel]="master"></nz-option>
             </nz-select>
-            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-              <input nz-input placeholder="Type min 3 characters and press enter to search...."
-                style="width: 100%; height: 32px; border-left: none" name="searchQuery" autocomplete="off"
-                [(ngModel)]="searchQuery" (keydown)="onKeyDown($event)" (focus)="showResults = true"
-                (blur)="hideResults($event)" />
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" class="search-input-group">
+              <input nz-input placeholder="Type min 3 characters and press enter to search...." class="search-input"
+                name="searchQuery" autocomplete="off" [(ngModel)]="searchQuery" (keydown)="onKeyDown($event)"
+                (focus)="showResults = true" (blur)="hideResults($event)" />
               <ng-template #suffixIconButton>
-                <button (click)="onKeyDown3()" style="height: 32px !important" nz-button nzType="primary" nzSearch>
+                <button (click)="onKeyDown3()" class="search-button" nz-button nzType="primary" nzSearch>
                   <span nz-icon nzType="search"></span>
                 </button>
               </ng-template>
             </nz-input-group>
-
             <div class="search-results" *ngIf="showResults">
               <nz-spin [nzSpinning]="isSpining">
                 <div>
-                  <div style="max-height: 70vh; overflow-y: auto">
+                  <div class="search-results-container">
                     <div>
-                      <!-- <div nz-col nzSpan="4"></div> -->
                       <div class="card-container">
                         <div *ngIf="
                             searchQuery != '' &&
                             searchQuery.length >= 3 &&
                             matchedRecord.length == 0
                           ">
-                          <nz-empty [nzNotFoundContent]="contentTpl" style="margin: 60px"></nz-empty>
+                          <nz-empty [nzNotFoundContent]="contentTpl" class="no-results-empty"></nz-empty>
                           <ng-template #contentTpl>
                             <span> No Matching Records Found. </span>
                           </ng-template>
                         </div>
-                        <div style="padding: 10px; line-height: 10px"
-                          *ngIf="searchQuery == '' || searchQuery.length < 3">
+                        <div class="search-instruction" *ngIf="searchQuery == '' || searchQuery.length < 3">
                           <span>Type min 3 characters and press enter to
                             search....</span>
                         </div>
@@ -112,33 +70,23 @@
                             searchQuery.length >= 3 &&
                             matchedRecord.length > 0
                           ">
-                          <div style="padding: 10px" *ngIf="selectedMaster == 'All'">
+                          <div class="search-results-all" *ngIf="selectedMaster == 'All'">
                             <div *ngFor="let record of matchedRecord">
-                              <div style="line-height: 24px">
-                                <span style="font-weight: 600; color: #8c8c8c">{{ record["CATEGORY"] }}s</span>
+                              <div class="category-title">
+                                <span>{{ record["CATEGORY"] }}s</span>
                               </div>
                               <div *ngFor="
                                   let record2 of record['MATCHED_RECORDS']
                                 " class="cardstyle">
-                                <div nz-row style="cursor: pointer" (click)="onMatchedRecordClick(record2)">
+                                <div nz-row class="matched-record-item" (click)="onMatchedRecordClick(record2)">
                                   <div nz-col nzSpan="24" *ngIf="
                                       record['CATEGORY'] != 'Job' &&
                                       record['CATEGORY'] != 'Order'
-                                    " style="
-                                      font-size: 14px;
-                                      color: #2d3748;
-                                      font-weight: 500;
-                                      height: 20px;
-                                      line-height: 16px;
-                                    ">
+                                    " class="record-title">
                                     {{ record2.TITLE }}
                                   </div>
-
-                                  <div *ngIf="record['CATEGORY'] == 'Customer'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Customer'" nz-col nzSpan="24"
+                                    class="customer-details">
                                     {{
                                     record2.DATA.CUSTOMER_TYPE == "I"
                                     ? ""
@@ -151,32 +99,20 @@
                                     : "Business(B2B)"
                                     }}
                                   </div>
-
-                                  <div *ngIf="record['CATEGORY'] == 'Vendor'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Vendor'" nz-col nzSpan="24" class="vendor-details">
                                     {{ record2.DATA.EMAIL_ID }},
                                     {{ record2.DATA.MOBILE_NUMBER }},
                                     {{ record2.DATA.DISTRICT_NAME }}-
                                     {{ record2.DATA.PINCODE }}
                                   </div>
-                                  <div *ngIf="record['CATEGORY'] == 'Technician'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Technician'" nz-col nzSpan="24"
+                                    class="technician-details">
                                     {{ record2.DATA.EMAIL_ID }},
                                     {{ record2.DATA.MOBILE_NUMBER }},
                                     {{ record2.DATA.DISTRICT_NAME }}-
                                     {{ record2.DATA.PINCODE }}
                                   </div>
-                                  <div *ngIf="record['CATEGORY'] == 'Jobbbb'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Jobbbb'" nz-col nzSpan="24" class="jobbbb-details">
                                     {{ record2.DATA.CUSTOMER_NAME }},
                                     {{ record2.DATA.ORDER_NO }},
                                     {{ record2.DATA.SERVICE_NAME }}, Address-{{
@@ -184,60 +120,34 @@
                                     }}
                                     ({{ record2.DATA.TERRITORY_NAME }}),
                                   </div>
-
                                   <div nz-col nzSpan="24" *ngIf="record['CATEGORY'] == 'Job'">
-                                    <div nz-row style="line-height: 15px !important">
-                                      <div class="mainnam" nz-col nzSpan="9" style="text-align: start">
-                                        <span [attr.title]='record2.DATA.ORDER_NO' style="
-                                            color: #1d39c4 !important;
-                                            background: #f0f5ff !important;
-                                            border-color: #adc6ff !important;
-                                            padding: 5px;
-                                            font-size: 11px !important;
-                                          ">
+                                    <div nz-row class="job-record-content">
+                                      <div class="mainnam" nz-col nzSpan="9" class="order-no-container">
+                                        <span [attr.title]="record2.DATA.ORDER_NO" class="order-no-tag">
                                           {{ record2.DATA.ORDER_NO }}</span>
                                       </div>
-                                      <div class="subnam" nz-col nzSpan="6" style="
-                                          font-size: 12px !important;
-                                          text-align: center;
-                                          margin-top: -10px;
-                                        ">
+                                      <div class="subnam" nz-col nzSpan="6" class="job-status-container">
                                         <nz-tag *ngIf="record2.DATA.STATUS == 'P'" [nzColor]="'orange'">Pending</nz-tag>
                                         <nz-tag *ngIf="
                                             record2.DATA.STATUS == 'AS' ||
                                             record2.DATA.STATUS == 'AC'
                                           " [nzColor]="'blue'">Assigned</nz-tag>
-
                                         <nz-tag *ngIf="record2.DATA.STATUS == 'CO'"
                                           [nzColor]="'green'">Completed</nz-tag>
                                       </div>
-                                      <div class="mainnam" nz-col nzSpan="9" style="text-align: end">
-                                        <span [attr.title]='record2.DATA.JOB_CARD_NO' style="
-                                            color: #1d39c4 !important;
-                                            background: #f0f5ff !important;
-                                            border-color: #adc6ff !important;
-                                            padding: 5px;
-                                            font-size: 11px !important;
-                                          ">
+                                      <div class="mainnam" nz-col nzSpan="9" class="job-card-container">
+                                        <span [attr.title]="
+                                            record2.DATA.JOB_CARD_NO
+                                          " class="job-card-tag">
                                           {{ record2.DATA.JOB_CARD_NO }}</span>
                                       </div>
-
-                                      <div class="subnam" nz-col nzSpan="16" style="
-                                          font-size: 11px !important;
-                                          margin-top: 4px;
-                                          font-weight: 500;
-                                        ">
+                                      <div class="subnam" nz-col nzSpan="16" class="customer-name">
                                         <span nz-icon nzType="user" nzTheme="outline"></span>
-
                                         {{ record2.DATA.CUSTOMER_NAME }}
                                       </div>
-
                                       <div nz-col nzSpan="24">
                                         <div nz-row>
-                                          <div nz-col nzSpan="1" style="
-                                              align-self: center;
-                                              margin-bottom: -6px;
-                                            ">
+                                          <div nz-col nzSpan="1" class="location-icon-container">
                                             <svg viewBox="0 0 600 600" xml:space="preserve"
                                               xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 600 600">
                                               <path
@@ -245,15 +155,13 @@
                                                 fill="#ff1612" class="fill-ff7979"></path>
                                             </svg>
                                           </div>
-                                          <div class="subnam" nz-col nzSpan="23" style="font-size: 10px !important">
-                                            <span class="subnam" style="font-size: 10px !important" *ngIf="
+                                          <div class="subnam" nz-col nzSpan="23" class="service-address">
+                                            <span class="subnam service-address-text" *ngIf="
                                                 record2.DATA[
                                                   'SERVICE_ADDRESS'
                                                 ] != null
                                               ">
-                                              <span style="
-                                                  font-size: 10px !important;
-                                                " *ngIf="
+                                              <span class="service-address-truncated" *ngIf="
                                                   record2.DATA[
                                                     'SERVICE_ADDRESS'
                                                   ].length >= 65
@@ -278,9 +186,7 @@
                                                 : ""
                                                 }}
                                               </span>
-                                              <span style="
-                                                  font-size: 10px !important;
-                                                " *ngIf="
+                                              <span class="service-address-full" *ngIf="
                                                   record2.DATA[
                                                     'SERVICE_ADDRESS'
                                                   ].length < 65
@@ -311,24 +217,18 @@
                                           </div>
                                         </div>
                                       </div>
-                                      <div class="subnam" nz-col nzSpan="24" style="
-                                          font-size: 10px !important;
-                                          text-align: start;
-                                        ">
+                                      <div class="subnam" nz-col nzSpan="24" class="service-name">
                                         Service :
                                         {{ record2.DATA.SERVICE_NAME }}
                                       </div>
-                                      <div class="subnam" nz-col nzSpan="24" style="font-size: 10px !important">
+                                      <div class="subnam" nz-col nzSpan="24" class="territory-name">
                                         Territory Name :
                                         {{ record2.DATA.TERRITORY_NAME }}
                                       </div>
                                     </div>
                                   </div>
-                                  <div *ngIf="record['CATEGORY'] == 'Orderrrr'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Orderrrr'" nz-col nzSpan="24"
+                                    class="orderrrr-details">
                                     {{ record2.DATA.CUSTOMER_NAME }},
                                     {{ record2.DATA.EMAIL }},
                                     {{ record2.DATA.MOBILE_NO }}, Address-{{
@@ -336,49 +236,30 @@
                                     }}
                                     ({{ record2.DATA.TERRITORY_NAME }}),
                                   </div>
-
                                   <div nz-col nzSpan="24" *ngIf="record['CATEGORY'] == 'Order'">
-                                    <div nz-row style="line-height: 15px !important">
+                                    <div nz-row class="order-record-content">
                                       <div nz-col nzSpan="24">
                                         <div nz-row>
-                                          <div class="mainnam" nz-col nzSpan="24" style="text-align: start">
-                                            <span style="
-                                                color: #1d39c4 !important;
-                                                background: #f0f5ff !important;
-                                                border-color: #adc6ff !important;
-                                                padding: 5px;
-                                              " [attr.title]='record2.DATA.ORDER_NUMBER'>
+                                          <div class="mainnam" nz-col nzSpan="24" class="order-number-container">
+                                            <span class="order-number-tag" [attr.title]="
+                                                record2.DATA.ORDER_NUMBER
+                                              ">
                                               {{
                                               record2.DATA.ORDER_NUMBER
                                               }}</span>
                                           </div>
-
-                                          <div class="subnam" nz-col nzSpan="16" style="
-                                              font-size: 11px !important;
-                                              margin-top: 4px;
-                                            ">
+                                          <div class="subnam" nz-col nzSpan="16" class="order-customer-name">
                                             <span nz-icon nzType="user" nzTheme="outline"></span>
-
                                             {{ record2.DATA.CUSTOMER_NAME }}
                                           </div>
-                                          <div class="subnam" nz-col nzSpan="8" style="
-                                              font-size: 11px !important;
-                                              margin-top: 4px;
-                                              text-align: end;
-                                            ">
+                                          <div class="subnam" nz-col nzSpan="8" class="order-mobile-number">
                                             <span nz-icon nzType="phone" nzTheme="fill"></span>
-                                            <a style="
-                                                font-size: 11px !important;
-                                                color: black;
-                                              " href="tel:+9762417537">
+                                            <a class="mobile-link" href="tel:+9762417537">
                                               {{ record2.DATA.MOBILE_NO }}</a>
                                           </div>
-                                          <div nz-col nzSpan="24" style="border-color: black">
+                                          <div nz-col nzSpan="24" class="order-address-container">
                                             <div nz-row>
-                                              <div nz-col nzSpan="1" style="
-                                                  align-self: center;
-                                                  margin-bottom: -6px;
-                                                ">
+                                              <div nz-col nzSpan="1" class="order-location-icon-container">
                                                 <svg viewBox="0 0 600 600" xml:space="preserve"
                                                   xmlns="http://www.w3.org/2000/svg"
                                                   enable-background="new 0 0 512 512">
@@ -387,19 +268,13 @@
                                                     fill="#ff1612" class="fill-ff7979"></path>
                                                 </svg>
                                               </div>
-                                              <div class="subnam" nz-col nzSpan="23" style="
-                                                  font-size: 10px !important;
-                                                ">
-                                                <span class="subnam" style="
-                                                    font-size: 10px !important;
-                                                  " *ngIf="
+                                              <div class="subnam" nz-col nzSpan="23" class="order-service-address">
+                                                <span class="subnam order-service-address-text" *ngIf="
                                                     record2.DATA[
                                                       'SERVICE_ADDRESS'
                                                     ] != null
                                                   ">
-                                                  <span style="
-                                                      font-size: 10px !important;
-                                                    " *ngIf="
+                                                  <span class="order-service-address-truncated" *ngIf="
                                                       record2.DATA[
                                                         'SERVICE_ADDRESS'
                                                       ].length >= 55
@@ -424,9 +299,7 @@
                                                     : ""
                                                     }}
                                                   </span>
-                                                  <span style="
-                                                      font-size: 10px !important;
-                                                    " *ngIf="
+                                                  <span class="order-service-address-full" *ngIf="
                                                       record2.DATA[
                                                         'SERVICE_ADDRESS'
                                                       ].length < 55
@@ -457,8 +330,7 @@
                                               </div>
                                             </div>
                                           </div>
-
-                                          <div class="subnam" nz-col nzSpan="24" style="font-size: 10px !important">
+                                          <div class="subnam" nz-col nzSpan="24" class="order-territory-name">
                                             Territory:
                                             {{ record2.DATA.TERRITORY_NAME }}
                                           </div>
@@ -470,36 +342,26 @@
                               </div>
                               <nz-divider class="custom-divider"></nz-divider>
                             </div>
-                            <div style="text-align: center; padding-top: 10px" *ngIf="totaldataLength < totalRecord">
+                            <div class="load-more-container" *ngIf="totaldataLength < totalRecord">
                               <button nz-button nzType="primary" nzSize="small" (click)="loadMore()">
                                 Show More Results
                               </button>
                             </div>
                           </div>
-                          <div style="padding: 10px" *ngIf="selectedMaster != 'All'">
+                          <div class="search-results-specific" *ngIf="selectedMaster != 'All'">
                             <div *ngFor="let record of matchedRecord">
                               <div *ngFor="
                                   let record2 of record['MATCHED_RECORDS']
                                 " class="cardstyle">
-                                <div nz-row style="cursor: pointer" (click)="onMatchedRecordClick(record2)">
+                                <div nz-row class="matched-record-item" (click)="onMatchedRecordClick(record2)">
                                   <div nz-col nzSpan="24" *ngIf="
                                       record['CATEGORY'] != 'Job' &&
                                       record['CATEGORY'] != 'Order'
-                                    " style="
-                                      font-size: 14px;
-                                      color: #2d3748;
-                                      font-weight: 500;
-                                      height: 20px;
-                                      line-height: 16px;
-                                    ">
+                                    " class="record-title">
                                     {{ record2.TITLE }}
                                   </div>
-
-                                  <div *ngIf="record['CATEGORY'] == 'Customer'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Customer'" nz-col nzSpan="24"
+                                    class="customer-details">
                                     {{
                                     record2.DATA.CUSTOMER_TYPE == "I"
                                     ? ""
@@ -512,32 +374,20 @@
                                     : "Business(B2B)"
                                     }}
                                   </div>
-
-                                  <div *ngIf="record['CATEGORY'] == 'Vendor'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Vendor'" nz-col nzSpan="24" class="vendor-details">
                                     {{ record2.DATA.EMAIL_ID }},
                                     {{ record2.DATA.MOBILE_NUMBER }},
                                     {{ record2.DATA.DISTRICT_NAME }}-
                                     {{ record2.DATA.PINCODE }}
                                   </div>
-                                  <div *ngIf="record['CATEGORY'] == 'Technician'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Technician'" nz-col nzSpan="24"
+                                    class="technician-details">
                                     {{ record2.DATA.EMAIL_ID }},
                                     {{ record2.DATA.MOBILE_NUMBER }},
                                     {{ record2.DATA.DISTRICT_NAME }}-
                                     {{ record2.DATA.PINCODE }}
                                   </div>
-                                  <div *ngIf="record['CATEGORY'] == 'Jobbb'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Jobbb'" nz-col nzSpan="24" class="jobbb-details">
                                     {{ record2.DATA.CUSTOMER_NAME }},
                                     {{ record2.DATA.ORDER_NO }},
                                     {{ record2.DATA.SERVICE_NAME }}, Address-{{
@@ -545,53 +395,31 @@
                                     }}
                                     ({{ record2.DATA.TERRITORY_NAME }}),
                                   </div>
-
                                   <div nz-col nzSpan="24" *ngIf="record['CATEGORY'] == 'Job'">
-                                    <div nz-row style="line-height: 15px !important">
-                                      <div class="mainnam" nz-col nzSpan="9" style="text-align: start">
-                                        <span style="
-                                            color: #1d39c4 !important;
-                                            background: #f0f5ff !important;
-                                            border-color: #adc6ff !important;
-                                            padding: 5px;
-                                            font-size: 11px !important;
-                                          " [attr.title]='record2.DATA.ORDER_NO'>
+                                    <div nz-row class="job-record-content">
+                                      <div class="mainnam" nz-col nzSpan="9" class="order-no-container">
+                                        <span class="order-no-tag" [attr.title]="record2.DATA.ORDER_NO">
                                           {{ record2.DATA.ORDER_NO }}</span>
                                       </div>
-                                      <div class="subnam" nz-col nzSpan="6" style="
-                                          font-size: 12px !important;
-                                          text-align: center;
-                                          margin-top: -10px;
-                                        ">
+                                      <div class="subnam" nz-col nzSpan="6" class="job-status-container">
                                         <nz-tag *ngIf="record2.DATA.STATUS == 'P'" [nzColor]="'orange'">Pending</nz-tag>
                                         <nz-tag *ngIf="
                                             record2.DATA.STATUS == 'AS' ||
                                             record2.DATA.STATUS == 'AC'
                                           " [nzColor]="'blue'">Assigned</nz-tag>
-
                                         <nz-tag *ngIf="record2.DATA.STATUS == 'CO'"
                                           [nzColor]="'green'">Completed</nz-tag>
                                       </div>
-                                      <div class="mainnam" nz-col nzSpan="9" style="text-align: end">
-                                        <span style="
-                                            color: #1d39c4 !important;
-                                            background: #f0f5ff !important;
-                                            border-color: #adc6ff !important;
-                                            padding: 5px;
-                                            font-size: 11px !important;
-                                          " [attr.title]='record2.DATA.JOB_CARD_NO'>
+                                      <div class="mainnam" nz-col nzSpan="9" class="job-card-container">
+                                        <span class="job-card-tag" [attr.title]="
+                                            record2.DATA.JOB_CARD_NO
+                                          ">
                                           {{ record2.DATA.JOB_CARD_NO }}</span>
                                       </div>
-
-                                      <div class="subnam" nz-col nzSpan="24" style="
-                                          font-size: 11px !important;
-                                          margin-top: 4px;
-                                          font-weight: 500;
-                                        ">
+                                      <div class="subnam" nz-col nzSpan="24" class="customer-name">
                                         <span *ngIf="
                                             record2.DATA.CUSTOMER_TYPE == 'I'
                                           " nz-icon nzType="user" nzTheme="outline"></span>
-
                                         <svg *ngIf="
                                             record2.DATA.CUSTOMER_TYPE != 'I'
                                           " enable-background="new 0 0 55 55" height="17px" id="Layer_1" version="1.1"
@@ -601,23 +429,11 @@
                                             d="M6,47V20c0-2.209,1.791-4,4-4l0,0v-4c0-1.104,0.896-2,2-2h2V2c0-0.552,0.447-1,1-1  s1,0.448,1,1v8h2c1.104,0,2,0.896,2,2v4l0,0l0,0c2.209,0,4,1.791,4,4v8h7v-6h4v-3h6v3h1v25H6z M18,13c0-0.552-0.447-1-1-1h-4  c-0.553,0-1,0.448-1,1v3h6V13z M22,20c0-1.104-0.896-2-2-2H10c-1.104,0-2,0.896-2,2v25h14V20z M31,30h-7v15h7V30z M40,24h-7v21h7V24  z M36,27h1c0.553,0,1,0.447,1,1v1c0,0.553-0.447,1-1,1h-1c-0.553,0-1-0.447-1-1v-1C35,27.447,35.447,27,36,27z M36,33h1  c0.553,0,1,0.447,1,1v1c0,0.553-0.447,1-1,1h-1c-0.553,0-1-0.447-1-1v-1C35,33.447,35.447,33,36,33z M36,39h1c0.553,0,1,0.447,1,1v1  c0,0.553-0.447,1-1,1h-1c-0.553,0-1-0.447-1-1v-1C35,39.447,35.447,39,36,39z M27,33h1c0.553,0,1,0.447,1,1v1c0,0.553-0.447,1-1,1  h-1c-0.553,0-1-0.447-1-1v-1C26,33.447,26.447,33,27,33z M27,39h1c0.553,0,1,0.447,1,1v1c0,0.553-0.447,1-1,1h-1  c-0.553,0-1-0.447-1-1v-1C26,39.447,26.447,39,27,39z M18,42h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1  v1C19,41.553,18.553,42,18,42z M18,36h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C19,35.553,18.553,36,18,36z M18,30h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C19,29.553,18.553,30,18,30z M18,24h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C19,23.553,18.553,24,18,24z M13,42h-1c-0.553,0-1-0.447-1-1v-1c0-0.553,0.447-1,1-1h1c0.553,0,1,0.447,1,1v1  C14,41.553,13.553,42,13,42z M13,36h-1c-0.553,0-1-0.447-1-1v-1c0-0.553,0.447-1,1-1h1c0.553,0,1,0.447,1,1v1  C14,35.553,13.553,36,13,36z M13,30h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C14,29.553,13.553,30,13,30z M13,24h-1c-0.553,0-1-0.447-1-1v-1c0-0.552,0.447-1,1-1h1c0.553,0,1,0.448,1,1v1  C14,23.553,13.553,24,13,24z"
                                             fill-rule="evenodd" />
                                         </svg>
-
                                         {{ record2.DATA.CUSTOMER_NAME }}
                                       </div>
-                                      <!-- <div class="subnam" nz-col nzSpan="8" style="
-                                          font-size: 10px !important;
-                                          margin-top: 4px;
-                                          text-align: end;
-                                          font-weight: 600;
-                                        ">
-                                        ₹ {{ record2.DATA.SERVICE_AMOUNT }}
-                                      </div> -->
                                       <div nz-col nzSpan="24">
                                         <div nz-row>
-                                          <div nz-col nzSpan="1" style="
-                                              align-self: center;
-                                              margin-bottom: -6px;
-                                            ">
+                                          <div nz-col nzSpan="1" class="location-icon-container">
                                             <svg viewBox="0 0 600 600" xml:space="preserve"
                                               xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 600 600">
                                               <path
@@ -625,15 +441,13 @@
                                                 fill="#ff1612" class="fill-ff7979"></path>
                                             </svg>
                                           </div>
-                                          <div class="subnam" nz-col nzSpan="23" style="font-size: 10px !important">
-                                            <span class="subnam" style="font-size: 10px !important" *ngIf="
+                                          <div class="subnam" nz-col nzSpan="23" class="service-address">
+                                            <span class="subnam service-address-text" *ngIf="
                                                 record2.DATA[
                                                   'SERVICE_ADDRESS'
                                                 ] != null
                                               ">
-                                              <span style="
-                                                  font-size: 10px !important;
-                                                " *ngIf="
+                                              <span class="service-address-truncated" *ngIf="
                                                   record2.DATA[
                                                     'SERVICE_ADDRESS'
                                                   ].length >= 65
@@ -658,9 +472,7 @@
                                                 : ""
                                                 }}
                                               </span>
-                                              <span style="
-                                                  font-size: 10px !important;
-                                                " *ngIf="
+                                              <span class="service-address-full" *ngIf="
                                                   record2.DATA[
                                                     'SERVICE_ADDRESS'
                                                   ].length < 65
@@ -691,69 +503,18 @@
                                           </div>
                                         </div>
                                       </div>
-                                      <!-- <div class="subnam" nz-col nzSpan="12" style="font-size: 10px !important">
-                                        Pincode : {{ record2.DATA.PINCODE }}
-                                      </div> -->
-                                      <div class="subnam" nz-col nzSpan="24" style="
-                                          font-size: 10px !important;
-                                          text-align: start;
-                                        ">
+                                      <div class="subnam" nz-col nzSpan="24" class="service-name">
                                         Service :
                                         {{ record2.DATA.SERVICE_NAME }}
                                       </div>
-                                      <div class="subnam" nz-col nzSpan="24" style="font-size: 10px !important">
+                                      <div class="subnam" nz-col nzSpan="24" class="territory-name">
                                         Territory Name :
                                         {{ record2.DATA.TERRITORY_NAME }}
                                       </div>
-
-                                      <!-- <div class="subnam" nz-col nzSpan="14" style="
-                                          font-size: 10px !important;
-                                          text-align: start;
-                                        ">
-                                        Expected Date:
-                                        {{
-                                        record2.DATA.EXPECTED_DATE_TIME
-                                        | date : "dd/MM/yyyy HH:mm a"
-                                        }}
-                                      </div> -->
-                                      <!-- <div class="subnam" nz-col nzSpan="10" style="
-                                          font-size: 10px !important;
-                                          text-align: end;
-                                        ">
-                                        Estimated Time:
-                                        {{ record2.DATA.ESTIMATED_TIME_IN_MIN }}
-                                        min.
-                                      </div>
-                                      <div *ngIf="record2.DATA.STATUS != 'P'" nz-col nzSpan="24" class="subname" style="
-                                          font-size: 10px !important;
-                                          text-align: start;
-                                        ">
-                                        Technician Name :
-                                        {{ record2.DATA.TECHNICIAN_NAME }}
-                                      </div> -->
-
-                                      <!-- <div *ngIf="record2.DATA.STATUS != 'P'" class="subnam" nz-col nzSpan="24" style="
-                                          font-size: 10px !important;
-                                          text-align: start;
-                                        ">
-                                        Scheduled on:
-                                        {{
-                                        record2.DATA.SCHEDULED_DATE_TIME
-                                        | date : "dd/MM/yyyy"
-                                        }}
-                                        &nbsp;&nbsp;&nbsp; Start Time :
-                                        {{ record2.DATA.START_TIME }}
-                                        &nbsp;&nbsp;&nbsp; End Time :
-                                        {{ record2.DATA.END_TIME }}
-                                      </div> -->
                                     </div>
                                   </div>
-
-                                  <div *ngIf="record['CATEGORY'] == 'Orderrrr'" nz-col nzSpan="24" style="
-                                      font-size: 12px;
-                                      color: #979797;
-                                      line-height: 16px;
-                                    ">
+                                  <div *ngIf="record['CATEGORY'] == 'Orderrrr'" nz-col nzSpan="24"
+                                    class="orderrrr-details">
                                     {{ record2.DATA.CUSTOMER_NAME }},
                                     {{ record2.DATA.EMAIL }},
                                     {{ record2.DATA.MOBILE_NO }}, Address-{{
@@ -762,60 +523,29 @@
                                     ({{ record2.DATA.TERRITORY_NAME }}),
                                   </div>
                                   <div nz-col nzSpan="24" *ngIf="record['CATEGORY'] == 'Order'">
-                                    <div nz-row style="line-height: 15px !important">
+                                    <div nz-row class="order-record-content">
                                       <div nz-col nzSpan="24">
                                         <div nz-row>
-                                          <div class="mainnam" nz-col nzSpan="12" style="text-align: start">
-                                            <span style="
-                                                color: #1d39c4 !important;
-                                                background: #f0f5ff !important;
-                                                border-color: #adc6ff !important;
-                                                padding: 5px;
-                                              " [attr.title]='record2.DATA.ORDER_NUMBER'>
+                                          <div class="mainnam" nz-col nzSpan="12" class="order-number-container">
+                                            <span class="order-number-tag" [attr.title]="
+                                                record2.DATA.ORDER_NUMBER
+                                              ">
                                               {{
                                               record2.DATA.ORDER_NUMBER
                                               }}</span>
                                           </div>
-                                          <!-- <div class="mainnam" nz-col nzSpan="12" style="text-align: end">
-                                            <span style="
-                                                color: #1d39c4 !important;
-                                                background: #f0f5ff !important;
-                                                border-color: #adc6ff !important;
-                                                padding: 5px;
-                                              ">
-                                              {{
-                                              record2.DATA.ORDER_DATE_TIME
-                                              | date : "dd/MM/yyyy HH:mm a"
-                                              }}</span>
-                                          </div> -->
-
-                                          <div class="subnam" nz-col nzSpan="16" style="
-                                              font-size: 11px !important;
-                                              margin-top: 4px;
-                                            ">
+                                          <div class="subnam" nz-col nzSpan="16" class="order-customer-name">
                                             <span nz-icon nzType="user" nzTheme="outline"></span>
-
                                             {{ record2.DATA.CUSTOMER_NAME }}
-                                            <!-- <span nz-icon nzType="wechat" nzTheme="outline"></span> -->
                                           </div>
-                                          <div class="subnam" nz-col nzSpan="8" style="
-                                              font-size: 11px !important;
-                                              margin-top: 4px;
-                                              text-align: end;
-                                            ">
+                                          <div class="subnam" nz-col nzSpan="8" class="order-mobile-number">
                                             <span nz-icon nzType="mobile" nzTheme="outline"></span>
-                                            <a style="
-                                                font-size: 11px !important;
-                                                color: black;
-                                              " href="tel:+9762417537">
+                                            <a class="mobile-link" href="tel:+9762417537">
                                               {{ record2.DATA.MOBILE_NO }}</a>
                                           </div>
-                                          <div nz-col nzSpan="24" style="border-color: black">
+                                          <div nz-col nzSpan="24" class="order-address-container">
                                             <div nz-row>
-                                              <div nz-col nzSpan="1" style="
-                                                  align-self: center;
-                                                  margin-bottom: -6px;
-                                                ">
+                                              <div nz-col nzSpan="1" class="order-location-icon-container">
                                                 <svg viewBox="0 0 600 600" xml:space="preserve"
                                                   xmlns="http://www.w3.org/2000/svg"
                                                   enable-background="new 0 0 512 512">
@@ -824,19 +554,13 @@
                                                     fill="#ff1612" class="fill-ff7979"></path>
                                                 </svg>
                                               </div>
-                                              <div class="subnam" nz-col nzSpan="23" style="
-                                                  font-size: 10px !important;
-                                                ">
-                                                <span class="subnam" style="
-                                                    font-size: 10px !important;
-                                                  " *ngIf="
+                                              <div class="subnam" nz-col nzSpan="23" class="order-service-address">
+                                                <span class="subnam order-service-address-text" *ngIf="
                                                     record2.DATA[
                                                       'SERVICE_ADDRESS'
                                                     ] != null
                                                   ">
-                                                  <span style="
-                                                      font-size: 10px !important;
-                                                    " *ngIf="
+                                                  <span class="order-service-address-truncated" *ngIf="
                                                       record2.DATA[
                                                         'SERVICE_ADDRESS'
                                                       ].length >= 55
@@ -861,9 +585,7 @@
                                                     : ""
                                                     }}
                                                   </span>
-                                                  <span style="
-                                                      font-size: 10px !important;
-                                                    " *ngIf="
+                                                  <span class="order-service-address-full" *ngIf="
                                                       record2.DATA[
                                                         'SERVICE_ADDRESS'
                                                       ].length < 55
@@ -894,88 +616,6 @@
                                               </div>
                                             </div>
                                           </div>
-                                          <!-- <div class="subnam" nz-col nzSpan="8" style="font-size: 10px !important">
-                                            Service :
-                                            {{ record2.DATA.SERVICE_COUNT }}
-                                          </div> -->
-                                          <!-- <div class="subnam" nz-col nzSpan="16" style="
-                                              font-size: 10px !important;
-                                              text-align: end;
-                                            ">
-                                            Scheduled on:
-                                            {{
-                                            record2.DATA.EXPECTED_DATE_TIME
-                                            | date : "dd/MM/yyyy HH:mm a"
-                                            }}
-                                          </div> -->
-                                          <!-- <div class="subnam" nz-col nzSpan="8" style="
-                                              font-size: 10px !important;
-                                              text-align: start;
-                                              margin-top: 5px;
-                                            ">
-                                            <span style="
-                                                color: #1d39c4 !important;
-                                                background: #f0f5ff !important;
-                                                border-color: #adc6ff !important;
-                                                padding: 1px;
-                                              ">
-                                              ₹
-                                              {{
-                                              record2.DATA.TOTAL_AMOUNT
-                                              }}</span>
-                                            {{ record2.DATA.PAYMENT_MODE }}
-                                          </div> -->
-                                          <!-- <div class="subnam" nz-col nzSpan="8" style="
-                                              font-size: 10px !important;
-                                              text-align: center;
-                                              margin-top: 5px;
-                                            ">
-                                            <nz-tag *ngIf="
-                                                record2.DATA['IS_EXPRESS'] ==
-                                                true
-                                              " style="
-                                                border-top-left-radius: 40%;
-                                                border-top-right-radius: 40%;
-                                                font-size: 10px !important;
-                                              " nzColor="volcano">Express</nz-tag>
-                                          </div> -->
-
-                                          <!-- <div class="subnam" nz-col nzSpan="8" style="
-                                              font-size: 10px !important;
-                                              text-align: end;
-                                              margin-top: 5px;
-                                            ">
-                                            <nz-tag *ngIf="
-                                                record2.DATA['ORDER_STATUS'] ==
-                                                'OP'
-                                              " [nzColor]="'#ff9d19'">Order Placed</nz-tag>
-                                            <nz-tag *ngIf="
-                                                record2.DATA['ORDER_STATUS'] ==
-                                                'OA'
-                                              " [nzColor]="'#00b778'">Order Accepted</nz-tag>
-                                            <nz-tag *ngIf="
-                                                record2.DATA['ORDER_STATUS'] ==
-                                                'ON'
-                                              " [nzColor]="'#0351ea'">Order Ongoing</nz-tag>
-                                            <nz-tag *ngIf="
-                                                record2.DATA['ORDER_STATUS'] ==
-                                                'OR'
-                                              " [nzColor]="'#e50000'">Order Rejected</nz-tag>
-                                            <nz-tag *ngIf="
-                                                record2.DATA['ORDER_STATUS'] ==
-                                                'OS'
-                                              " [nzColor]="'#0351ea'">Order Scheduled</nz-tag>
-                                            <nz-tag *ngIf="
-                                                record2.DATA['ORDER_STATUS'] ==
-                                                  'OC' ||
-                                                record2.DATA['ORDER_STATUS'] ==
-                                                  'CO'
-                                              " [nzColor]="'#028d00'">Order Completed</nz-tag>
-                                            <nz-tag *ngIf="
-                                                record2.DATA['ORDER_STATUS'] ==
-                                                'C'
-                                              " [nzColor]="'#028d00'">Order Cancelled</nz-tag>
-                                          </div> -->
                                         </div>
                                       </div>
                                     </div>
@@ -983,7 +623,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div style="text-align: center; padding-top: 10px" *ngIf="totaldataLength < totalRecord">
+                            <div class="load-more-container" *ngIf="totaldataLength < totalRecord">
                               <button nz-button nzType="primary" nzSize="small" (click)="loadMore()">
                                 Show More Results
                               </button>
@@ -997,45 +637,21 @@
               </nz-spin>
             </div>
           </div>
-
-          <div nz-col [nzSpan]="decreptedroleId !==27 ? 8:16" style="text-align: right; padding-right: 10px;">
-            <!-- <ng-container *ngFor="let menu of clickedIcons; let i = index">
-            
-              <span *ngIf="i < 5" nz-tooltip nzTooltipTitle="{{ menu.title }}" (click)="onIconClick(menu)"
-                nzTooltipPlacement="bottom" style="cursor: pointer; margin-right: 10px">
-                <nz-avatar [nzIcon]="menu.icon" style="
-                    height: 37px;
-                    width: 37px;
-                    margin-top: -8px;
-                    border-radius: 50%;
-                    background-color: #092b9c;
-                  "></nz-avatar>
-              </span>
-            </ng-container> -->
+          <div nz-col class="header-right-section" [nzSpan]="decreptedroleId !== 27 ? 8 : 16">
             <ng-container *ngFor="let menu of clickedIcons; let i = index">
-              <span class="icon-container" style="position: relative">
+              <span class="icon-container">
                 <span nz-tooltip nzTooltipTitle="{{ menu.title }}" (click)="onIconClick(menu)"
                   nzTooltipPlacement="bottom" class="icon-wrapper">
                   <nz-avatar [nzIcon]="menu.icon" class="avatar-icon">
                   </nz-avatar>
-
-                  <!-- Cross icon using CSS hover -->
                   <span class="cross-icon" (click)="onCrossClick(menu, i)">✖</span>
                 </span>
               </span>
             </ng-container>
-
-            <!-- Plus Icon -->
-            <span *ngIf="decreptedroleId !==27" nzTooltipPlacement="bottom" nz-tooltip nzTooltipTitle="Add Form"
+            <span *ngIf="decreptedroleId !== 27" nzTooltipPlacement="bottom" nz-tooltip nzTooltipTitle="Add Form"
               (click)="toggleDropdown()" nz-dropdown nzTrigger="click" nzPlacement="bottomRight" [nzDropdownMenu]="menu"
-              style="cursor: pointer; margin-right: 10px">
-              <nz-avatar nzIcon="plus" style="
-                  height: 37px;
-                  width: 37px;
-                  margin-top: -8px;
-                  border-radius: 50%;
-                  background-color: #092b9c;
-                "></nz-avatar>
+              class="add-form-icon">
+              <nz-avatar nzIcon="plus" class="plus-avatar"></nz-avatar>
               <nz-dropdown-menu #menu="nzDropdownMenu">
                 <ul nz-menu>
                   <ng-container *ngFor="let menu of menus">
@@ -1056,379 +672,152 @@
                 </ul>
               </nz-dropdown-menu>
             </span>
-            <!-- <span style="
-                cursor: pointer;
-                font-weight: 600;
-                background: #092b9c;
-                border-radius: 50%;
-                color: white;
-                width: 38px;
-                height: 39px;
-                display: inline-flex;
-                justify-content: center;
-                align-items: center;
-                margin-right: 10px;
-                font-size: 18px !important;
-              " nz-icon nzTheme="outline" nzType="plus" nzTooltipPlacement="bottom" nz-tooltip
-              nzTooltipTitle="Add Form" (click)="toggleDropdown()" nz-dropdown nzTrigger="click"
-              nzPlacement="bottomRight" [nzDropdownMenu]="menu">
-              <nz-dropdown-menu #menu="nzDropdownMenu">
-                <ul nz-menu>
-                  <ng-container *ngFor="let menu of menus">
-                    <li *ngIf="menu.children && menu.children.length" nz-submenu [nzTitle]="menu.title"
-                      [ngClass]="{ 'selected-item': isSelectedParent(menu) }">
-                      <ul class="custom-submenu">
-                        <li *ngFor="let child of menu.children" nz-menu-item (click)="onChildMenuClick(child, menu)"
-                          [ngClass]="{ 'selected-item': isSelected(child) }">
-                          <a>{{ child.title }}</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li *ngIf="!menu.children || !menu.children.length" nz-menu-item
-                      (click)="onChildMenuClick(menu, null)" [ngClass]="{ 'selected-item': isSelected(menu) }">
-                      <a>{{ menu.title }}</a>
-                    </li>
-                  </ng-container>
-                </ul>
-              </nz-dropdown-menu>
-            </span> -->
-
-            <!-- <span style="
-                cursor: pointer;
-                font-weight: 600;
-                background: #092b9c;
-                border-radius: 50%;
-                color: white;
-                width: 38px;
-                height: 39px;
-                display: inline-flex;
-                justify-content: center;
-                align-items: center;
-                margin-right: 10px;
-                font-size: 18px !important;
-              " nz-tooltip nzTooltipTitle="Notifications" nz-icon nzType="bell" nzTheme="outline"
-              (click)="isNotification()"></span> -->
-            <span *ngIf="decreptedroleId == 8" (click)="showApkVersionModal()"
-              style="cursor: pointer; margin-right: 10px">
-              <nz-avatar nzIcon="android" nz-tooltip nzTooltipTitle="APK Version" style="
-                  height: 37px;
-                  width: 37px;
-                  margin-top: -8px;
-                  border-radius: 50%;
-                  background-color: #092b9c;
-                ">
+            <span *ngIf="decreptedroleId == 8" (click)="showApkVersionModal()" class="apk-version-icon">
+              <nz-avatar nzIcon="android" nz-tooltip nzTooltipTitle="APK Version" class="android-avatar">
               </nz-avatar>
             </span>
-            <span *ngIf="decreptedroleId !==27" nz-tooltip nzTooltipTitle="Notifications" (click)="isNotification()"
-              style="cursor: pointer; margin-right: 10px">
+            <span *ngIf="decreptedroleId !== 27" nz-tooltip nzTooltipTitle="Notifications" (click)="isNotification()"
+              class="notification-icon">
               <nz-badge [nzCount]="notificationCount" [nzOverflowCount]="10" nzSize="small" [nzShowZero]="false">
-                <nz-avatar nzIcon="bell" style="
-                    height: 37px;
-                    width: 37px;
-                    margin-top: -8px;
-                    border-radius: 50%;
-                    background-color: #092b9c;
-                  ">
-                </nz-avatar>
+                <nz-avatar nzIcon="bell" class="bell-avatar"> </nz-avatar>
               </nz-badge>
             </span>
-            <!-- Profile Icon -->
-
             <span *ngIf="
                 imagePath != null && imagePath != undefined && imagePath != '';
                 else showAvtar
-              " (click)="isProfile()" nz-tooltip nzTooltipTitle="Profile" style="cursor: pointer">
-              <nz-avatar nzIcon="user" [nzSrc]="imagePath" style="
-                  height: 37px;
-                  width: 37px;
-                  margin-top: -8px;
-                  border-radius: 50%;
-                  background-color: #092b9c;
-                "></nz-avatar>
+              " (click)="isProfile()" nz-tooltip nzTooltipTitle="Profile" class="profile-avatar-container">
+              <nz-avatar nzIcon="user" [nzSrc]="imagePath" class="profile-avatar"></nz-avatar>
             </span>
             <ng-template #showAvtar>
-              <span style="
-                  cursor: pointer;
-                  font-weight: 600;
-                  background: #092b9c;
-                  border-radius: 50%;
-                  color: white;
-                  width: 38px;
-                  height: 39px;
-                  display: inline-flex;
-                  justify-content: center;
-                  align-items: center;
-                  margin-right: 10px;
-                  font-size: 18px !important;
-                " nz-tooltip nzTooltipTitle="Profile" nz-icon nzType="user" nzTheme="outline" (click)="isProfile()">
-                <!-- <span style="font-size: 28px !important">
-                  <nz-avatar [nzShape]="'circle'" [nzSize]="'large'" [nzIcon]="'user'" style="
-                      height: 37px;
-                      width: 37px;
-                      margin-top: -8px;
-                      border-radius: 50%;
-                      background-color: #092b9c;
-                    "></nz-avatar>
-                </span> -->
+              <span class="default-avatar" nz-tooltip nzTooltipTitle="Profile" nz-icon nzType="user" nzTheme="outline"
+                (click)="isProfile()">
               </span>
             </ng-template>
-            <!-- </ng-template> -->
           </div>
         </div>
       </nz-header>
-
-      <nz-content [ngClass]="screenwidth > 768 ? '' : 'nzcontent'">
-        <div [ngClass]="'inner-content'">
+      <nz-content [ngClass]="screenwidth > 768 ? '' : 'mobile-content'">
+        <div class="inner-content">
           <router-outlet></router-outlet>
         </div>
       </nz-content>
     </nz-layout>
   </nz-layout>
 </ng-template>
-
-<nz-layout *ngIf="!isLogedIn" style="height: 100vh !important; overflow: hidden !important">
+<nz-layout *ngIf="!isLogedIn" class="login-layout">
   <app-login></app-login>
 </nz-layout>
-
-<!-- Drawer for Notification -->
-<!-- Drawer for Notification -->
 <nz-drawer nzMaskClosable="false" [nzClosable]="true" [nzVisible]="isNotificationVisible" nzPlacement="right"
   nzTitle="Notifications" (nzOnClose)="isNotificationCancel()" nzWidth="40%">
   <ng-container *nzDrawerContent>
-    <div class="header">
+    <div class="notification-header">
       <button *ngIf="decreptedroleId == 8" nz-button nzType="primary" nzTooltipTitle="Push Notifications"
         nzTooltipPlacement="bottom" [nzSize]="'small'" nz-tooltip (click)="openSendNotiDrawer()"
-        style="border-radius: 6px;margin-left: 1px;height: 28px;">
+        class="push-notification-btn">
         Push Notifications &nbsp;
-        <img src="/assets/sendIcon.png" style="
-            height: 13px;
-            width: 13px;
-            padding-bottom: 2px;
-            margin-left: 2px;
-          " />
+        <img src="/assets/sendIcon.png" class="send-icon" />
       </button>
-
-      <!-- &nbsp;
-      <button nz-button nzType="primary" nzTooltipTitle="Send Email" nzTooltipPlacement="bottom" nz-tooltip
-          nzShape="circle" (click)="openSendEmailDrawer()">
-          <i nz-icon nzType="mail" nzTheme="outline"></i>
-      </button> -->
     </div>
-
     <div>
       <form nz-form #resetform="ngForm" *ngIf="!showConfirmPassword">
         <nz-spin [nzSpinning]="resetPasswordLoading">
-          <div class="notification-filter-tabs d-flex gap-2 px-2 mb-3">
-            <button class="btn btn-outline-primary btn-sm tab-btn" [class.active]="selectedType === 'All'"
-              (click)="filterNotificationstab('All')">All</button>
-
-            <button class="btn btn-outline-primary btn-sm tab-btn" [class.active]="selectedType === 'O'"
-              (click)="filterNotificationstab('O')">Order</button>
-            <button class="btn btn-outline-primary btn-sm tab-btn" [class.active]="selectedType === 'SH'"
-              (click)="filterNotificationstab('SH')">Shop</button>
-            <button class="btn btn-outline-primary btn-sm tab-btn" [class.active]="selectedType === 'J'"
-              (click)="filterNotificationstab('J')">Job</button>
-            <button class="btn btn-outline-primary btn-sm tab-btn" [class.active]="selectedType === 'PJ'"
-              (click)="filterNotificationstab('PJ')">Pending Job</button>
-
-            <button class="btn btn-outline-primary btn-sm tab-btn" [class.active]="selectedType === 'TA'"
-              (click)="filterNotificationstab('TA')">Approval Requests </button>
-
-            <button class="btn btn-outline-primary btn-sm tab-btn" [class.active]="selectedType === 'IR'"
-              (click)="filterNotificationstab('IR')">Inventory Requests</button>
-
-
-            <button class="btn btn-outline-primary btn-sm tab-btn" [class.active]="selectedType === 'F'"
-              (click)="filterNotificationstab('F')">Feedbacks</button>
+          <div class="notification-filter-tabs">
+            <button class="tab-btn" [class.active]="selectedType === 'All'" (click)="filterNotificationstab('All')">
+              All
+            </button>
+            <button class="tab-btn" [class.active]="selectedType === 'O'" (click)="filterNotificationstab('O')">
+              Order
+            </button>
+            <button class="tab-btn" [class.active]="selectedType === 'SH'" (click)="filterNotificationstab('SH')">
+              Shop
+            </button>
+            <button class="tab-btn" [class.active]="selectedType === 'J'" (click)="filterNotificationstab('J')">
+              Job
+            </button>
+            <button class="tab-btn" [class.active]="selectedType === 'PJ'" (click)="filterNotificationstab('PJ')">
+              Pending Job
+            </button>
+            <button class="tab-btn" [class.active]="selectedType === 'TA'" (click)="filterNotificationstab('TA')">
+              Approval Requests
+            </button>
+            <button class="tab-btn" [class.active]="selectedType === 'IR'" (click)="filterNotificationstab('IR')">
+              Inventory Requests
+            </button>
+            <button class="tab-btn" [class.active]="selectedType === 'F'" (click)="filterNotificationstab('F')">
+              Feedbacks
+            </button>
           </div>
-          <!-- Search Bar -->
-
-
-          <nz-input-group nzSearch style="margin-bottom: 10px">
+          <nz-input-group nzSearch class="notification-search">
             <input type="text" name="notification" id="notification" (keyup)="onKeyupS($event)"
               (keydown.enter)="searchNotification($event)" (keydown.enter)="onEnterKey($event)" [(ngModel)]="searchTerm"
               autocomplete="off" nz-input placeholder="Search notifications" />
           </nz-input-group>
-
-          <!-- Tabs -->
-          <!-- <nz-tabset (nzSelectChange)="onTabChange($event.index)">
-            <nz-tab nzTitle="All"></nz-tab>
-            <nz-tab nzTitle="Orders"></nz-tab>
-            <nz-tab nzTitle="Jobs"></nz-tab>
-          </nz-tabset> -->
-
-          <!-- Notifications -->
           <ng-container *ngIf="notifications.length > 0; else noNotifications">
-
-
-            <div style="padding-top: 10px">
-              <!-- <div *ngFor="let notification of notifications" style="margin-bottom: 10px; position: relative">
-
-                <nz-alert nzType="info" [nzMessage]="Title" [nzDescription]="nzDescription">
-
-
-                  <ng-template #Title>
-                    <div style="
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        ">
-                      <div class="notification-icon-wrapper" [ngClass]="getNotificationIconClass(notification)">
-                        <i [class]="getNotificationIcon(notification)"></i>
-                      </div>
-
-                      <div style="
-            flex: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-left: 10px;
-          ">
-                        <span style="
-              color: #000000d9;
-              font-size: 13px !important;
-              font-weight: 500;
-            " nz-popover [nzPopoverTitle]="
-              notification?.TITLE.length > 60 ? notification?.TITLE : ''
-            ">
-                          {{
-                          notification?.TITLE.length > 60
-                          ? (notification?.TITLE | slice: 0:60) + '...'
-                          : notification?.TITLE
-                          }}
-                        </span>
-
-                        <button *ngIf="notification?.ATTACHMENT?.trim() !== ''" nz-button nzType="default"
-                          nzShape="circle" (click)="downloadDocument(notification.ATTACHMENT)"
-                          nz-tooltip="Download Attachment" style="margin-left: 8px">
-                          <i nz-icon nzType="download" nzTheme="outline"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </ng-template>
-
-                  <ng-template #nzDescription>
-                    <p style="margin-bottom: 2px; margin-top: 4px">
-                      <span *ngIf="!expandedNotifications[notification?.ID]">
-                        {{ getTruncatedText(notification?.DESCRIPTION) }}
-                        <a *ngIf="notification?.DESCRIPTION.length > 100" (click)="toggleExpand(notification?.ID)">
-                          Read More
-                        </a>
-                      </span>
-                      <span *ngIf="expandedNotifications[notification?.ID]">
-                        {{ notification?.DESCRIPTION }}
-                        <a *ngIf="notification?.DESCRIPTION.length > 100" (click)="toggleExpand(notification?.ID)">
-                          Read Less
-                        </a>
-                      </span>
-                    </p>
-
-                    <p style="margin-bottom: 2px" *ngIf="notification?.ORDER_NO">
-                      Order No.: {{ notification?.ORDER_NO }}
-                    </p>
-                    <p style="margin-bottom: 2px" *ngIf="notification?.JOB_CARD_NO">
-                      Job Card No.: {{ notification?.JOB_CARD_NO }}
-                    </p>
-                    <p style="
-                        margin-bottom: 2px;
-                        margin-top: 5px;
-                        font-size: 10px;
-                      " *ngIf="notification?.CREATED_MODIFIED_DATE">
-                      {{
-                      notification?.CREATED_MODIFIED_DATE
-                      | date : "dd/MM/yyyy HH:mm a"
-                      }}
-                    </p>
-                  </ng-template>
-                </nz-alert>
-
-
-
-
-
-              </div> -->
-
-              <div *ngFor="let notification of notifications" style="margin-bottom: 12px">
-                <nz-card [nzBordered]="false" [nzBodyStyle]="{ padding: '12px' }" class="notification-card">
-                  <div style="display: flex; align-items: flex-start">
-
-                    <!-- Custom Icon -->
-                    <div class="notification-icon-wrapper" [ngClass]="getNotificationIconClass(notification)"
-                      style="margin-top: 4px">
+            <div class="notifications-list">
+              <div *ngFor="let notification of notifications" class="notification-item">
+                <nz-card [nzBordered]="false" class="notification-card">
+                  <div class="notification-content">
+                    <div class="notification-icon-wrapper" [ngClass]="getNotificationIconClass(notification)">
                       <i [class]="getNotificationIcon(notification)"></i>
                     </div>
-
-                    <!-- Content Area -->
-                    <div style="flex: 1; margin-left: 12px">
-                      <!-- Title Row with optional download -->
-                      <div style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          ">
-                        <span style="font-size: 13px; font-weight: 500; color: #000000d9" nz-popover [nzPopoverTitle]="
-              notification?.TITLE.length > 60 ? notification?.TITLE : ''
-            ">
+                    <div class="notification-details">
+                      <div class="notification-title-row">
+                        <span class="notification-title" nz-popover [nzPopoverTitle]="
+                            notification?.TITLE.length > 60
+                              ? notification?.TITLE
+                              : ''
+                          ">
                           {{
                           notification?.TITLE.length > 60
-                          ? (notification?.TITLE | slice: 0 : 60) + '...'
+                          ? (notification?.TITLE | slice : 0 : 60) + "..."
                           : notification?.TITLE
                           }}
                         </span>
-
-                        <!-- Download Button -->
                         <button *ngIf="notification?.ATTACHMENT?.trim() !== ''" nz-button nzType="default"
                           nzShape="circle" nz-tooltip="Download Attachment"
-                          (click)="downloadDocument(notification.ATTACHMENT)">
+                          (click)="downloadDocument(notification.ATTACHMENT)" class="attachment-download-btn">
                           <i nz-icon nzType="download" nzTheme="outline"></i>
                         </button>
                       </div>
-
-                      <!-- Description Text -->
-                      <p style="margin-top: 6px; margin-bottom: 4px; font-size: 12px">
+                      <p class="notification-description">
                         <span *ngIf="!expandedNotifications[notification?.ID]">
                           {{ getTruncatedText(notification?.DESCRIPTION) }}
                           <a *ngIf="notification?.DESCRIPTION.length > 100" (click)="toggleExpand(notification?.ID)"
-                            style="cursor: pointer">
+                            class="read-more-link">
                             Read More
                           </a>
                         </span>
                         <span *ngIf="expandedNotifications[notification?.ID]">
                           {{ notification?.DESCRIPTION }}
                           <a *ngIf="notification?.DESCRIPTION.length > 100" (click)="toggleExpand(notification?.ID)"
-                            style="cursor: pointer">
+                            class="read-more-link">
                             Read Less
                           </a>
                         </span>
                       </p>
-
-                      <!-- Optional Fields -->
-                      <p *ngIf="notification?.ORDER_NO" style="margin: 0; font-size: 12px">
+                      <p *ngIf="notification?.ORDER_NO" class="notification-order-no">
                         Order No.: {{ notification?.ORDER_NO }}
                       </p>
-                      <p *ngIf="notification?.JOB_CARD_NO" style="margin: 0; font-size: 12px">
+                      <p *ngIf="notification?.JOB_CARD_NO" class="notification-job-no">
                         Job No.: {{ notification?.JOB_CARD_NO }}
                       </p>
-                      <p *ngIf="notification?.CREATED_MODIFIED_DATE"
-                        style="margin-top: 4px; font-size: 10px; color: #888">
-                        {{ notification?.CREATED_MODIFIED_DATE | date: 'dd/MM/yyyy HH:mm a' }}
+                      <p *ngIf="notification?.CREATED_MODIFIED_DATE" class="notification-date">
+                        {{
+                        notification?.CREATED_MODIFIED_DATE
+                        | date : "dd/MM/yyyy HH:mm a"
+                        }}
                       </p>
                     </div>
                   </div>
                 </nz-card>
               </div>
-
-              <!-- Load More Button -->
-              <div style="display: flex; justify-content: center; margin-top: 15px"
-                *ngIf="totalRecords > notifications.length">
+              <div class="load-more-notifications" *ngIf="totalRecords > notifications.length">
                 <button nz-button nzType="primary" (click)="loadMore1()">
                   Load More
                 </button>
               </div>
             </div>
           </ng-container>
-
-          <!-- Empty State -->
           <ng-template #noNotifications>
             <div class="no-notifications-container">
               <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
@@ -1442,285 +831,122 @@
     </div>
   </ng-container>
 </nz-drawer>
-
-<!-- Drawer for Profile -->
 <nz-drawer nzMaskClosable="false" [nzClosable]="false" [nzVisible]="isProfileVisible" nzPlacement="right"
   (nzOnClose)="isProfileCancel()" nzWidth="30%" [nzBodyStyle]="{ padding: '0' }">
   <ng-container *nzDrawerContent>
     <form nz-form #resetform="ngForm" *ngIf="!showConfirmPassword">
-      <nz-card class="custom-card" style="
-          border: none;
-          background-color: #497be8 !important;
-          padding: 12px 12px;
-        ">
-        <!-- Close Button -->
-        <button nz-button nzType="text" nzShape="circle" style="
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: white;
-            font-size: 16px;
-          " (click)="isProfileCancel()">
+      <nz-card class="profile-header-card">
+        <button nz-button nzType="text" nzShape="circle" class="profile-close-btn" (click)="isProfileCancel()">
           <span nz-icon nzType="close" nzTheme="outline"></span>
         </button>
         <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="titleTemplate"
           [nzDescription]="descriptionTemplate"></nz-card-meta>
-
         <ng-template #titleTemplate>
-          <h5 style="font-size: 17px; margin-bottom: 1px; color: white">
+          <h5 class="profile-user-name">
             {{ decreptedUserName }}
           </h5>
         </ng-template>
-
         <ng-template #descriptionTemplate>
-          <div style="
-              font-size: 12px;
-              margin-bottom: 1px;
-              font-weight: 500;
-              color: white;
-            ">
+          <div class="profile-email">
             {{ "Email ID: " + decryptedEmail }}
           </div>
-          <!-- <div style="
-              font-size: 12px;
-              margin-bottom: 8px;
-              font-weight: 600;
-              padding-bottom: 3px;
-              color: #ffffff;
-            ">
-            Last Login:
-            {{ decryptedLastLogin | date : "dd/MM/yyyy HH:mm:ss a" }}
-          </div> -->
-          <!-- <div style="
-              font-size: 12px;
-              margin-bottom: 8px;
-              font-weight: 600;
-              padding-bottom: 3px;
-              color: #ffffff;
-            ">
-            Version {{currentApplicationVersion}}
-          </div> -->
-          <div style="margin-top: 10px !important;">
-            <button nz-button nzType="primary" *ngIf="decreptedroleId !==27" style="
-                margin-right: 10px;
-                background: #051856 !important;
-                border: 1px solid #051856 !important;border-radius: 6px;padding: 5px 10px;
-              " (click)="isChangePassword()">
+          <div class="profile-action-buttons">
+            <button nz-button nzType="primary" *ngIf="decreptedroleId !== 27" class="change-password-btn"
+              (click)="isChangePassword()">
               Change Password
             </button>
-            <button nz-button style="border-radius: 6px;padding: 5px 10px;" nzType="default" [nzLoading]="loadlogout"
-              (click)="logout()">
+            <button nz-button class="logout-btn" [nzLoading]="loadlogout" (click)="logout()">
               <span nz-icon nzType="logout" nzTheme="outline"></span> Logout
             </button>
           </div>
         </ng-template>
-
         <ng-template #avatarTemplate>
-          <nz-avatar [nzSize]="70" class="custom-avatar" [nzShape]="'circle'" [nzSrc]="imagePath" [nzText]="
+          <nz-avatar [nzSize]="70" class="profile-avatar-large" [nzShape]="'circle'" [nzSrc]="imagePath" [nzText]="
               !imagePath && decreptedUserName
                 ? decreptedUserName.charAt(0).toUpperCase()
                 : ''
             "></nz-avatar>
         </ng-template>
       </nz-card>
-
-      <!-- <nz-card class="custom-card" style="border: none; background-color: #e6f7ff; padding: 15px; display: flex; flex-direction: column; align-items: center;">
-              <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-                <nz-avatar class="custom-avatar" [nzText]="decreptedUserName ? decreptedUserName.charAt(0).toUpperCase() : ''"
-                  nzShape="circle" style="font-size: 24px;"></nz-avatar>
-              </div>
-              <div style="text-align: center; margin-bottom: 10px;">
-                <h5 style="font-size: 20px; margin-bottom: 3px;">{{ decreptedUserName }}</h5>
-              </div>
-              <div style="text-align: center; margin-top: 10px;">
-                <button nz-button nzType="primary" style="margin-right: 5px;" (click)="isChangePassword()">Change Password</button>
-                <button nz-button nzType="default" (click)="logout()">Logout</button>
-              </div>
-            </nz-card> -->
-
-      <nz-card *ngIf="decreptedroleId !==27" class="custom-card2"
-        style="margin: 10px; background-color: #f0f0f0; border-radius: 10px">
-        <h5 style="margin-bottom: 10px; font-size: 16px"><b>Need Help?</b></h5>
+      <nz-card *ngIf="decreptedroleId !== 27" class="help-card">
+        <h5 class="help-title"><b>Need Help?</b></h5>
         <div class="help-options">
-          <div style="display: flex; justify-content:space-between;">
-            <div style="text-align: center; cursor: pointer;width: 30%;font-size: 12px;" (click)="viewHelpGuide()">
-              <span _ngcontent-tft-c99="" nz-icon="" nztype="read" nztheme="outline" ng-reflect-nz-type="read"
-                ng-reflect-nz-theme="outline" class="anticon anticon-read" style="
-                  display: inline-block;
-                  width: 50px;
-                  height: 50px;margin: auto;
-                  background-color: #ffffff;
-                  border-radius: 40%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  margin-bottom: 5px;
-                ">
+          <div class="help-options-container">
+            <div class="help-option-item" (click)="viewHelpGuide()">
+              <span nz-icon nztype="read" nztheme="outline" class="help-icon read-icon">
                 <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="2em" height="2em"
                   data-icon="read" aria-hidden="true">
                   <path
                     d="M928 161H699.2c-49.1 0-97.1 14.1-138.4 40.7L512 233l-48.8-31.3A255.2 255.2 0 00324.8 161H96c-17.7 0-32 14.3-32 32v568c0 17.7 14.3 32 32 32h228.8c49.1 0 97.1 14.1 138.4 40.7l44.4 28.6c1.3.8 2.8 1.3 4.3 1.3s3-.4 4.3-1.3l44.4-28.6C602 807.1 650.1 793 699.2 793H928c17.7 0 32-14.3 32-32V193c0-17.7-14.3-32-32-32zM324.8 721H136V233h188.8c35.4 0 69.8 10.1 99.5 29.2l48.8 31.3 6.9 4.5v462c-47.6-25.6-100.8-39-155.2-39zm563.2 0H699.2c-54.4 0-107.6 13.4-155.2 39V298l6.9-4.5 48.8-31.3c29.7-19.1 64.1-29.2 99.5-29.2H888v488zM396.9 361H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5zm223.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0-4.1-3.2-7.5-7.1-7.5H627.1c-3.9 0-7.1 3.4-7.1 7.5zM396.9 501H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5zm416 0H627.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5z">
                   </path>
                 </svg>
-
               </span>
-              <!-- <div style="font-size: 13px; font-weight: 500; color: #595959"> -->
               Help Guide
-              <!-- </div> -->
             </div>
-
-            <!-- <div style="text-align: center; cursor: pointer" (click)="viewfaqs()">
-              <span (click)="viewfaqs()" nztype="question-circle" nztheme="outline" ng-reflect-nz-type="question-circle"
-                ng-reflect-nz-theme="outline" class="anticon anticon-question-circle" style="
-                  display: inline-block;
-                  width: 50px;
-                  height: 50px;
-                  background-color: #ffffff;
-                  border-radius: 40%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  margin-bottom: 5px;
-                "><svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="2em" height="2em"
-                  data-icon="question-circle" aria-hidden="true">
-                  <path
-                    d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z">
-                  </path>
-                  <path
-                    d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z">
-                  </path>
-                </svg></span>
-              <div style="font-size: 13px; font-weight: 500; color: #595959">
-                FAQs
-              </div>
-            </div> -->
-
-            <div style="text-align: center; cursor: pointer;width: 35%;font-size: 12px;" (click)="viewknowledge()">
-              <span (click)="viewknowledge()" _ngcontent-tft-c99="" nz-icon="" nztype="read" nztheme="outline"
-                ng-reflect-nz-type="read" ng-reflect-nz-theme="outline" class="anticon anticon-read" style="
-                  display: inline-block;
-                  width: 50px;
-                  height: 50px;margin: auto;
-                  background-color: #ffffff;
-                  border-radius: 40%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  margin-bottom: 5px;
-                ">
+            <div class="help-option-item" (click)="viewknowledge()">
+              <span (click)="viewknowledge()" nz-icon nztype="read" nztheme="outline" class="help-icon knowledge-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="3em" height="3em" viewBox="0 0 100 100">
                   <path
                     d="m32 59h13c1.1 0 2-0.9 2-2v-30c0-2.2-2-4-4-4h-10.7c-1.3 0-2.3 1-2.3 2.3v31.7c0 1.1 0.9 2 2 2z m44-30v32c0 2.2-1.8 4-4 4h-44c-2.2 0-4-1.8-4-4v-32c-3.3 0-6 2.7-6 6v30c0 3.3 2.7 6 6 6h19c1.1 0 2 0.9 2 2s0.9 2 2 2h6c1.1 0 2-0.9 2-2s0.9-2 2-2h19c3.3 0 6-2.7 6-6v-30c0-3.3-2.7-6-6-6z m-21 30h12.7c1.3 0 2.3-1 2.3-2.3v-31.7c0-1.1-0.9-2-2-2h-11c-2 0-4 1.8-4 4v30c0 1.1 0.9 2 2 2z" />
                 </svg>
               </span>
-              <!-- <div style="font-size: 13px; font-weight: 500; color: #595959"> -->
               Knowledge Base
-              <!-- </div> -->
             </div>
-
-            <div style="text-align: center; cursor: pointer;width: 30%;font-size: 12px;" (click)="openDrawer()">
-              <span style="
-                  display: inline-block;
-                  width: 50px;
-                  height: 50px;margin: auto;
-                  background-color: #ffffff;
-                  border-radius: 40%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  margin-bottom: 5px;
-                ">
+            <div class="help-option-item" (click)="openDrawer()">
+              <span class="help-icon time-slot-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M12 7V12H15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
                     stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </span>
-              <!-- <div style="font-size: 13px; font-weight: 500; color: #595959"> -->
               Time Slot
-              <!-- </div> -->
             </div>
           </div>
         </div>
       </nz-card>
-
-      <nz-card *ngIf="decreptedroleId === 9" class="custom-card2"
-        style="margin: 10px; background-color: #f0f0f0; border-radius: 10px">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h5 style="margin-bottom: 10px; font-size: 16px"><b>Earnings</b></h5>
-
-          <nz-tag nzColor="#051856" (click)="ViewVendorReport()"
-            style="cursor: pointer;border-radius: 6px;padding: 5px 10px;" nz-tooltip nzTooltipTitle="View Details">
-            <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px"></span>
+      <nz-card *ngIf="decreptedroleId === 9" class="earnings-card">
+        <div class="earnings-header">
+          <h5 class="earnings-title"><b>Earnings</b></h5>
+          <nz-tag nzColor="#051856" (click)="ViewVendorReport()" class="view-details-tag" nz-tooltip
+            nzTooltipTitle="View Details">
+            <span nz-icon nzType="eye" nzTheme="outline" class="eye-icon"></span>
             &nbsp;&nbsp;View Details
           </nz-tag>
         </div>
-
-        <div nz-row>
+        <div nz-row class="earnings-content">
           <div nz-col nzSpan="11">
-            <div style="
-              display: flex;
-              justify-content: space-between;
-              gap: 10px;
-              margin-top: 10px;
-            ">
-              <div style="
-                flex: 1;
-                background-color: #323d85;
-                color: white;
-                padding: 15px;
-                text-align: center;
-                border-radius: 5px;
-              ">
-                <p style="margin: 0; font-size: 24px; font-weight: bold">
+            <div class="earnings-box-container">
+              <div class="earnings-box">
+                <p class="earnings-amount">
                   {{ earningdata[0]?.TODAYS_EARNINGS ?? 0 }}
                 </p>
-                <p style="margin: 0; font-size: 14px">Today's</p>
+                <p class="earnings-label">Today's</p>
               </div>
             </div>
           </div>
-          <div nz-col nzSpan="2"></div>
+          <div nz-col nzSpan="2" class="earnings-spacer"></div>
           <div nz-col nzSpan="11">
-            <div style="
-              display: flex;
-              justify-content: space-between;
-              gap: 10px;
-              margin-top: 10px;
-            ">
-              <div style="
-                flex: 1;
-                background-color: #323d85;
-                color: white;
-                padding: 15px;
-                text-align: center;
-                border-radius: 5px;
-              ">
-                <p style="margin: 0; font-size: 24px; font-weight: bold">
+            <div class="earnings-box-container">
+              <div class="earnings-box">
+                <p class="earnings-amount">
                   {{ earningdata[0]?.TOTAL_EARNINGS ?? 0 }}
                 </p>
-                <p style="margin: 0; font-size: 14px">Total</p>
+                <p class="earnings-label">Total</p>
               </div>
             </div>
           </div>
         </div>
       </nz-card>
-
-
-
-
-
-
-
-      <!--Drawer for Vendor Report-->
       <div *ngIf="drawerVendorReportVisible">
         <nz-drawer [nzBodyStyle]="{
-    height: 'calc(100% - 55px)',
-    overflow: 'auto',
-    'padding-bottom': '53px',
-    'padding-top': '0px',
-    'padding-left': '15px',
-    'padding-right': '15px'
-  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'100%'"
+            height: 'calc(100% - 55px)',
+            overflow: 'auto',
+            'padding-bottom': '53px',
+            'padding-top': '0px',
+            'padding-left': '15px',
+            'padding-right': '15px'
+          }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'100%'"
           [nzVisible]="drawerVendorReportVisible" [nzTitle]="drawerTitle" (nzOnClose)="drawerCloseVendorReport()"
           (nzKeyboard)="(true)">
           <ng-container *nzDrawerContent>
@@ -1733,29 +959,22 @@
     </form>
   </ng-container>
 </nz-drawer>
-
 <nz-modal [nzStyle]="{ top: '30px' }" nzWidth="400px" nzMaskClosable="false" [(nzVisible)]="visiblesave"
   nzTitle="Change Password" (nzOnCancel)="handleCancelTop()" (nzOnOk)="handleOkTop()" [nzOkText]="'Save'">
   <ng-container *nzModalContent>
     <form nz-form #resetform="ngForm">
       <nz-spin [nzSpinning]="resetPasswordLoading">
         <div nz-row>
-          <!-- Current Password Field -->
           <div nz-col nzSpan="24">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Current Password</nz-form-label>
-
               <nz-form-control>
                 <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplatePassword">
-                  <input style="border: none" nz-input [type]="passwordVisible ? 'text' : 'password'" name="currpass"
+                  <input class="password-input" nz-input [type]="passwordVisible ? 'text' : 'password'" name="currpass"
                     [(ngModel)]="PASSWORD" #oldpass="ngModel" placeholder="Enter Current Password" maxlength="20"
                     autocomplete="off" required />
                 </nz-input-group>
-                <h6 style="
-                    color: red;
-                    font-size: 10px;
-                    margin-bottom: 0px !important;
-                  " *ngIf="PASSWORD">
+                <h6 class="password-length-indicator" *ngIf="PASSWORD">
                   {{ PASSWORD.length }}/20
                 </h6>
                 <ng-template #suffixTemplatePassword>
@@ -1763,21 +982,11 @@
                     (click)="passwordVisible = !passwordVisible"></i>
                 </ng-template>
               </nz-form-control>
-              <div style="color: #ff4d4f; font-size: 10px; text-align: left">
+              <div class="password-error">
                 <span *ngIf="oldpass.errors?.['required'] && oldpass.touched">Current password is required.</span>
-                <!-- <span *ngIf="oldpass.errors?.['minlength'] && oldpass.touched">Password must be at least 8
-                  characters
-                  long.</span>
-                <span *ngIf="oldpass.errors?.['maxlength'] && oldpass.touched">Password cannot exceed 20
-                  characters.</span>
-                <span
-                  *ngIf="!oldpass.errors?.['minlength'] && oldpass.errors?.['pattern'] && oldpass.touched">Password
-                  must meet the specified pattern requirements.</span> -->
               </div>
             </nz-form-item>
           </div>
-
-          <!-- New Password -->
           <div nz-col nzSpan="24">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>New Password &nbsp;
@@ -1787,27 +996,21 @@
                   </i>
                 </span>
               </nz-form-label>
-              <nz-form-control style="text-align: left" nzRequired>
+              <nz-form-control class="new-password-control" nzRequired>
                 <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplateNewPassword">
                   <input nz-input [type]="newPasswordVisible ? 'text' : 'password'" name="password"
                     [(ngModel)]="NEWPASSWORD" #newpassword="ngModel" placeholder="Enter New Password" required
                     maxlength="20" minlength="8" [pattern]="passwordPattern" autocomplete="off" />
                 </nz-input-group>
-                <h6 style="
-                    color: red;
-                    font-size: 10px;
-                    margin-bottom: 0px !important;
-                  " *ngIf="NEWPASSWORD">
+                <h6 class="password-length-indicator" *ngIf="NEWPASSWORD">
                   {{ NEWPASSWORD.length }}/20
                 </h6>
-
                 <ng-template #suffixTemplateNewPassword>
                   <i nz-icon [nzType]="newPasswordVisible ? 'eye' : 'eye-invisible'"
                     (click)="newPasswordVisible = !newPasswordVisible"></i>
                 </ng-template>
               </nz-form-control>
-
-              <div style="color: #ff4d4f; font-size: 10px; text-align: left">
+              <div class="password-error">
                 <span *ngIf="newpassword.errors?.['required'] && newpassword.touched">New password is required.</span>
                 <span *ngIf="newpassword.errors?.['minlength'] && newpassword.touched">Password must be at least 8
                   characters long.</span>
@@ -1819,26 +1022,18 @@
               </div>
             </nz-form-item>
           </div>
-
-          <!-- Confirm Password Field -->
           <div nz-col nzSpan="24">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Confirm Password</nz-form-label>
-
               <nz-form-control>
                 <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplateReEnterNewPassword">
-                  <input style="border: none" nz-input #confpassword="ngModel"
+                  <input class="password-input" nz-input #confpassword="ngModel"
                     [type]="reEnterNewPasswordVisible ? 'text' : 'password'" name="confpass" [(ngModel)]="CONFPASSWORD"
                     placeholder="Re-Enter New Password" minlength="8" maxlength="20" autocomplete="off" required />
                 </nz-input-group>
-                <h6 style="
-                    color: red;
-                    font-size: 10px;
-                    margin-bottom: 0px !important;
-                  " *ngIf="CONFPASSWORD">
+                <h6 class="password-length-indicator" *ngIf="CONFPASSWORD">
                   {{ CONFPASSWORD.length }}/20
                 </h6>
-
                 <ng-template #suffixTemplateReEnterNewPassword>
                   <i nz-icon [nzType]="
                       reEnterNewPasswordVisible ? 'eye' : 'eye-invisible'
@@ -1847,16 +1042,13 @@
                     "></i>
                 </ng-template>
               </nz-form-control>
-              <div style="color: #ff4d4f; font-size: 10px; text-align: left">
+              <div class="password-error">
                 <span *ngIf="confpassword.errors?.['required'] && confpassword.touched">Confirm password is
                   required.</span>
                 <span *ngIf="confpassword.errors?.['minlength'] && confpassword.touched">Password must be at least 8
                   characters long.</span>
                 <span *ngIf="confpassword.errors?.['maxlength'] && confpassword.touched">Password cannot exceed 20
                   characters.</span>
-                <!-- <span
-                  *ngIf="!confpassword.errors?.['minlength'] && confpassword.errors?.['pattern'] && confpassword.touched">Password
-                  must meet the specified pattern requirements.</span> -->
               </div>
             </nz-form-item>
           </div>
@@ -1865,7 +1057,6 @@
     </form>
   </ng-container>
 </nz-modal>
-
 <div *ngIf="orgdrawerVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -1880,15 +1071,12 @@
     </ng-container>
   </nz-drawer>
 </div>
-
 <nz-drawer [nzClosable]="false" [nzVisible]="visible" [nzPlacement]="placement" nzTitle="Menu List"
-  (nzOnClose)="close()" [nzWidth]="widthMenu" [nzClosable]="true" [nzMask]="true"
-  style="overflow-y: hidden !important;">
-  <ng-container *nzDrawerContent style="overflow-y: hidden !important;">
+  (nzOnClose)="close()" [nzWidth]="widthMenu" [nzClosable]="true" [nzMask]="true" class="menu-drawer">
+  <ng-container *nzDrawerContent>
     <app-master-menu-list (menuClick)="close()"></app-master-menu-list>
   </ng-container>
 </nz-drawer>
-<!-- Customer -->
 <div *ngIf="drawerVisibleCustomers">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -1904,7 +1092,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-<!-- Order -->
 <div *ngIf="drawerVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -1920,7 +1107,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-<!-- Job -->
 <div *ngIf="jobdetailsshow">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -1935,7 +1121,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-<!-- Technician -->
 <div *ngIf="Techniciansdetailsshow">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -1951,8 +1136,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-
-<!-- Vendor -->
 <div *ngIf="drawerVisibleVendors">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -1968,8 +1151,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-
-<!--Drawer-->
 <div *ngIf="drawerTimeSlotVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -2002,22 +1183,16 @@
     </ng-container>
   </nz-drawer>
 </div>
-
 <nz-modal [nzWidth]="700" [(nzVisible)]="isApkVersionModalVisible" [nzTitle]="apkVersionModalTitle"
   [nzContent]="apkVersionModalContent" [nzFooter]="apkVersionModalFooter" (nzOnCancel)="handleApkVersionModalCancel()"
   [nzMaskClosable]="false">
   <ng-template #apkVersionModalContent>
     <form nz-form #myFormAPK="ngForm">
       <div nz-row>
-        <!-- <div nz-col nzSpan="24" *ngIf="isProgressVisible"
-          style="text-align: center; font-size: 50px; font-weight: bold">
-          {{ uploadProgress }} %
-        </div> -->
         <div nz-col nzSpan="24">
           <nz-spin [nzSpinning]="isApkVersionModalConfirmLoading">
             <div nz-row>
               <nz-divider nzText="Customer"></nz-divider>
-
               <div nz-col nzSpan="8">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Previous Version</nz-form-label>
@@ -2057,15 +1232,7 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-              <!-- <div nz-col nzSpan="23" *ngIf="fileURL != null" style="overflow: hidden; font-size: 13px">
-                {{ fileURL.name }}
-              </div> -->
-              <!-- <div nz-col nzSpan="1" *ngIf="fileURL != null">
-                <i nz-icon nzType="delete" (click)="clear()" [nzTheme]="'twotone'" [nzTwotoneColor]="'#ff0000'"></i>
-              </div> -->
-
               <nz-divider nzText="Technician"></nz-divider>
-
               <div nz-col nzSpan="8">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Previous Version</nz-form-label>
@@ -2105,12 +1272,6 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-              <!-- <div nz-col nzSpan="23" *ngIf="fileURL != null" style="overflow: hidden; font-size: 13px">
-                {{ fileURL.name }}
-              </div>
-              <div nz-col nzSpan="1" *ngIf="fileURL != null">
-                <i nz-icon nzType="delete" (click)="clear()" [nzTheme]="'twotone'" [nzTwotoneColor]="'#ff0000'"></i>
-              </div> -->
             </div>
           </nz-spin>
         </div>

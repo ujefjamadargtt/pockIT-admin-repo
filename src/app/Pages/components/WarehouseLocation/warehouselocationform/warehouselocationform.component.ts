@@ -6,7 +6,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { warehouselocation } from 'src/app/Pages/Models/warehouselocations';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-warehouselocationform',
   templateUrl: './warehouselocationform.component.html',
@@ -21,11 +20,10 @@ export class WarehouselocationformComponent {
   isOk = true;
   isFocused: string = '';
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   emailpattern =
@@ -48,7 +46,6 @@ export class WarehouselocationformComponent {
   date;
   inventoryList: any = [];
   Warehouselist: any = [];
-
   UnitList: any = [];
   warehouseList: any = [];
   constructor(
@@ -62,8 +59,6 @@ export class WarehouselocationformComponent {
     this.data.SHORT_CODE = '';
   }
   ngOnInit() {
-    // this.getSubCategory()
-    // this.getUnits()
     this.getWarehouses();
   }
   getWarehouses() {
@@ -81,26 +76,13 @@ export class WarehouselocationformComponent {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
     this.add();
   }
-
   add(): void {
-    // this.api.getAllBranch(1, 1, 'SEQ_NO', 'desc', '').subscribe(data => {
-    //   if (data['count'] == 0) {
-    //     this.data.SEQ_NO = 1;
-    //   } else {
-    //     this.data.SEQ_NO = Number(data['data'][0]['SEQ_NO']) + 1;
-    //     this.data.IS_ACTIVE = true;
-    //   }
-    // }, err => {
-    //
-    // })
   }
-
   alphanumchar(event) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -114,7 +96,6 @@ export class WarehouselocationformComponent {
     }
     return true;
   }
-
   alphaOnly(event) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -127,7 +108,6 @@ export class WarehouselocationformComponent {
     }
     return true;
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -135,11 +115,9 @@ export class WarehouselocationformComponent {
     }
     return true;
   }
-
   save(addNew: boolean, accountMasterPage: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       (this.data.WAREHOUSE_ID === undefined ||
         this.data.WAREHOUSE_ID === null ||
@@ -177,13 +155,6 @@ export class WarehouselocationformComponent {
       this.isOk = false;
       this.message.error('Please Enter Short Code', '');
     }
-    // else if (
-    //   this.data.LOCATION_DESCRIPTION &&
-    //   this.data.LOCATION_DESCRIPTION.length > 512
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Location Description exceeds maximum length of 512 characters', '');
-    // }
     else if (this.data.SHORT_CODE.length > 10) {
       this.isOk = false;
       this.message.error(
@@ -193,15 +164,11 @@ export class WarehouselocationformComponent {
     } else {
       this.isOk = true;
     }
-
-    // Proceed with the operation if all validations pass
     if (this.isOk) {
       this.isSpinning = true;
-
       if (this.data.LOCATION_DESCRIPTION == '') {
         this.data.LOCATION_DESCRIPTION = null;
       }
-
       if (this.data.ID) {
         this.api
           .updateWarehousesLocation(this.data)
@@ -212,7 +179,6 @@ export class WarehouselocationformComponent {
                 ''
               );
               this.isSpinning = false;
-
               if (!addNew) this.close(accountMasterPage);
             } else {
               this.message.error('Warehouse Location Updation Failed', '');
@@ -232,7 +198,6 @@ export class WarehouselocationformComponent {
             if (successCode['code'] === 200) {
               this.message.success('Warehouse Location Saved Successfully', '');
               this.isSpinning = false;
-
               if (!addNew) {
                 this.close(accountMasterPage);
               } else {

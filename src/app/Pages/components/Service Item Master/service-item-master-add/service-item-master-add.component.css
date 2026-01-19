@@ -1,6 +1,72 @@
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.heading-txt {
+  color: red;
+  font-size: 10px
+}
+.margin-top-10 {
+  margin-top: 10px;
+}
+.full-width{
+  width: 100%
+}
+.pad-t-10{
+  padding-top: 10px;
+}
+.col-padding-left-7 {
+  padding-left: 7px;
+}
+.shortcode-char-counter {
+    color: red;
+    font-size: 10px !important;
+}
+.item-upload-button {
+    height: 28px;
+    padding: 0px 7px;
+    font-size: 10px;
+    width: 23%;
+}
+.item-file-hidden {
+    display: none;
+}
+.item-image-warning {
+    color: red;
+    font-size: 10px !important;
+    display: block;
+    margin-top: 5px;
+}
+.item-image-link {
+    color: blue;
+}
+.item-image-link-margin {
+    margin-right: 9px;
+}
+.item-delete-icon-pointer {
+    cursor: pointer;
+    color: red;
+}
+.item-delete-margin-left {
+    margin-left: 10px;
+}
+.footer-cancel-button-margin {
+    margin-right: 12px;
+}
+.footer-dropdown-menu-item {
+    border-radius: 4px;
+    color: white !important;
+}
+.footer-button-white {
+    color: white !important;
+}
+.footer-modal-content {
+    height: 400px;
+    overflow: auto;
+}
+.footer-modal-iframe {
+    width: 832px;
+    height: 396px;
+}

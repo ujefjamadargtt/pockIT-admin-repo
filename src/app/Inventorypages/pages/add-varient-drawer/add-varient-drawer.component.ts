@@ -17,7 +17,6 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { appkeys } from 'src/app/app.constant';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AddInventoryImagesComponent } from '../add-inventory-images/add-inventory-images.component';
-
 @Component({
   selector: 'app-add-varient-drawer',
   templateUrl: './add-varient-drawer.component.html',
@@ -48,7 +47,6 @@ export class AddVarientDrawerComponent {
     ? this.commonFunction.decryptdata(this.roleId)
     : '';
   decreptedroleId = parseInt(this.decreptedroleIdString, 10);
-
   isSpinning = false;
   isOk = true;
   isFocused = '';
@@ -71,57 +69,44 @@ export class AddVarientDrawerComponent {
   AppLanguagevisible = false;
   NAME;
   VARIANT_VALUES;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer
   ) { }
-
   ngOnInit() {
     this.getUnits();
     this.gettaxdata();
-    // this.getWarehouses();
     this.getpreviousdata();
   }
-
   validateInput(event: KeyboardEvent): void {
     const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/;
     const char = event.key;
-
     if (!allowedPattern.test(char)) {
       event.preventDefault();
     }
   }
-
   validateVariantValues(event: KeyboardEvent): void {
     const pattern = /^[a-zA-Z0-9 ._-]+$/;
     const char = event.key;
-
     if (!pattern.test(char)) {
       event.preventDefault();
     }
   }
-
   handleVariantChange(): void {
-    const uniqueValues = new Map<string, string>(); // Store lowercase as key and original as value
-
+    const uniqueValues = new Map<string, string>(); 
     this.data.VARIENT_VALUES.forEach((value) => {
       const lowerCaseValue = value.toLowerCase();
       if (!uniqueValues.has(lowerCaseValue)) {
         uniqueValues.set(lowerCaseValue, value);
       }
     });
-
     this.data.VARIENT_VALUES = Array.from(uniqueValues.values());
   }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
-
     if (element != null) element.focus();
-
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
@@ -129,12 +114,10 @@ export class AddVarientDrawerComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -143,53 +126,41 @@ export class AddVarientDrawerComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
     }
-
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-
     if (this.searchText != '') {
       likeQuery = ' AND';
-
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
     }
-
     this.loadingRecordss = true;
     this.api
       .getVarientData(
@@ -216,7 +187,6 @@ export class AddVarientDrawerComponent {
         (err: HttpErrorResponse) => {
           this.loadingRecordss = false;
           this.loadingRecords = false;
-
           if (err.status === 0) {
             this.message.error(
               'Unable to connect. Please check your internet or server connection and try again shortly.',
@@ -228,11 +198,9 @@ export class AddVarientDrawerComponent {
         }
       );
   }
-
   addvarient(addNew: boolean, websitebannerPage1: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       (this.data.NAME.trim() == '' ||
         this.data.NAME == null ||
@@ -258,14 +226,12 @@ export class AddVarientDrawerComponent {
       this.isOk = false;
       this.message.error('Please Enter Values.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
         this.data.CLIENT_ID = 1;
         this.data.INVENTORY_ID = this.Inventorydata.ID;
         this.data.VARIENT_VALUES = this.data.VARIENT_VALUES.join(',');
-
         if (this.data.ID) {
           this.api.updateVarientData(this.data).subscribe(
             (successCode: any) => {
@@ -312,13 +278,11 @@ export class AddVarientDrawerComponent {
       }
     }
   }
-
   resetDrawer(websitebannerPage1: NgForm) {
     this.data = new AddVarient();
     websitebannerPage1.form.markAsPristine();
     websitebannerPage1.form.markAsUntouched();
   }
-
   edit(data) {
     this.data = Object.assign({}, data);
     this.data.VARIENT_VALUES = data.VARIENT_VALUES
@@ -330,9 +294,7 @@ export class AddVarientDrawerComponent {
       this.activeTabIndex = 1;
       this.switchValue = true;
     }
-
     this.generateCombinations();
-
     this.dataList.forEach((data) => {
       if (
         !data.BASE_QUANTITY ||
@@ -350,7 +312,6 @@ export class AddVarientDrawerComponent {
   }
   next() {
     this.isOk = true;
-
     if (
       !this.AddVarientData ||
       this.AddVarientData.length === 0 ||
@@ -364,39 +325,31 @@ export class AddVarientDrawerComponent {
       this.switchValue = false;
     }
   }
-
   variantCombinations: any = [];
   UnitList: any = [];
-
   close() {
     this.drawerClose();
   }
-
   back() {
     this.activeTabIndex = 0;
     this.isnext = true;
     this.dataList = [];
     this.getpreviousdata();
   }
-
   cancel() { }
   previousVariantCombinations: any = [];
-
   cartesianProduct(arrays: string[][]): string[] {
     return arrays.reduce((acc, currentArray) => {
       if (acc.length === 0) return currentArray;
       let result: string[] = [];
-
       acc.forEach((prev) => {
         currentArray.forEach((curr) => {
           result.push(prev + '-' + curr);
         });
       });
-
       return result;
     });
   }
-
   Combination_valuesss: any = [];
   searchText11: string = '';
   pageIndex11 = 1;
@@ -405,32 +358,25 @@ export class AddVarientDrawerComponent {
   sortValue11: string = 'desc';
   loadingRecords11 = false;
   totalRecords11 = 1;
-  // dataList: any = [];
-
   sort11(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex11 = pageIndex;
     this.pageSize11 = pageSize;
-
     if (this.pageSize11 != pageSize) {
       this.pageIndex11 = 1;
       this.pageSize11 = pageSize;
     }
-
     if (this.sortKey11 != sortField) {
       this.pageIndex11 = 1;
       this.pageSize11 = pageSize;
     }
-
     this.sortKey11 = sortField;
     this.sortValue11 = sortOrder;
     this.search11();
   }
-
   search11(reset: boolean = false) {
     if (
       this.searchText11.trim().length < 3 &&
@@ -438,32 +384,25 @@ export class AddVarientDrawerComponent {
     ) {
       return;
     }
-
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
-
     this.api.getInventory(0, 0, this.sortKey, sort, likeQuery).subscribe(
       (data) => {
         if (data['code'] == 200) {
           this.loadingRecords11 = false;
           this.totalRecords11 = data['count'];
-          // this.dataList = data['data'];
         } else {
-          // this.dataList = [];
           this.loadingRecords11 = false;
           this.message.error('Failed to get Inventory Records', '');
         }
@@ -475,17 +414,13 @@ export class AddVarientDrawerComponent {
       }
     );
   }
-
   warehouseList: any = [];
   taxData: any = [];
-
   addcombinationvalues() {
     if (this.Combination_valuesss.length == 0) {
       this.message.error('Please Select Combination Values', '');
       return;
     }
-    // console.log("1")
-
     var array: any = [];
     this.Combination_valuesss.forEach((element) => {
       array.push({
@@ -493,14 +428,13 @@ export class AddVarientDrawerComponent {
         ID: null,
         ITEM_NAME: this.Inventorydata.ITEM_NAME || null,
         IS_REFURBISHED: this.Inventorydata.IS_REFURBISHED || false,
-
         BRAND_ID: this.Inventorydata.BRAND_ID || null,
         BRAND_NAME: this.Inventorydata.BRAND_NAME || null,
         INVENTORY_CATEGORY_ID: this.Inventorydata.INVENTORY_CATEGORY_ID || null,
         INVENTRY_SUB_CATEGORY_ID:
           this.Inventorydata.INVENTRY_SUB_CATEGORY_ID || null,
         UNIT_ID: null,
-        DATE_OF_ENTRY: new Date(), // Ensure new Date() is used correctly
+        DATE_OF_ENTRY: new Date(), 
         STATUS: true,
         RETURN_ALOW: false,
         BASE_UNIT_ID: null,
@@ -528,17 +462,13 @@ export class AddVarientDrawerComponent {
         INVENTORY_TRACKING_TYPE: 'N',
       });
     });
-
     this.Combination_valuesss = [];
     this.dataList = [...this.dataList, ...array];
     this.totalRecords11 = this.dataList.length;
   }
-
   Unitload: boolean = false;
-
   getUnits() {
     this.Unitload = true;
-
     this.api.getUnitData(0, 0, 'SEQ_NO', 'asc', ' AND IS_ACTIVE = 1').subscribe(
       (unitdata) => {
         if (unitdata.code == 200) {
@@ -559,7 +489,6 @@ export class AddVarientDrawerComponent {
       }
     );
   }
-
   gettaxdata() {
     this.api
       .getTaxData(0, 0, 'ID', 'desc', ' AND IS_ACTIVE = 1')
@@ -571,9 +500,6 @@ export class AddVarientDrawerComponent {
         }
       });
   }
-
-  // warehouseList: any = [];
-
   getWarehouses() {
     this.api.getWarehouses(0, 0, 'NAME', 'ASC', ' AND STATUS = 1').subscribe(
       (data) => {
@@ -588,26 +514,20 @@ export class AddVarientDrawerComponent {
       }
     );
   }
-
   onSetChange(event: any, i: any) {
     this.dataList[i].BASE_QUANTITY = null;
   }
-
   onTaxPreferenceChange(event: any, i: any) {
     if (event == 'NT') this.dataList[i].TAX_ID = null;
-
     this.onChangeTax(this.dataList[i].TAX_ID, i);
   }
-
   updateSingleRow(dataaaaa: any, ii: any) {
     if (dataaaaa.WAREHOUSE_ID) {
       dataaaaa.WAREHOUSE_ID = dataaaaa.WAREHOUSE_ID.join(',');
     } else {
       dataaaaa.WAREHOUSE_ID = null;
     }
-
     this.loadingRecords11 = true;
-
     if (
       dataaaaa.BASE_UNIT_ID === null ||
       dataaaaa.BASE_UNIT_ID === undefined ||
@@ -775,7 +695,6 @@ export class AddVarientDrawerComponent {
       dataaaaa.BASE_UNIT_NAME = this.UnitList.find(
         (x: any) => x.ID == dataaaaa.BASE_UNIT_ID
       )?.NAME;
-
       if (dataaaaa.ID) {
         this.api.updateInventory(dataaaaa).subscribe(
           (successCode: HttpResponse<any>) => {
@@ -804,7 +723,6 @@ export class AddVarientDrawerComponent {
           dataaaaa.DATE_OF_ENTRY,
           'yyyy-MM-dd'
         );
-
         this.api.createInventory(dataaaaa).subscribe(
           (successCode: HttpResponse<any>) => {
             if (successCode.status === 200) {
@@ -831,11 +749,8 @@ export class AddVarientDrawerComponent {
       }
     }
   }
-
   Savealldata() {
-    // this.loadingRecords11 = true;
     this.isOk = true;
-
     for (var i = 0; i < this.dataList.length; i++) {
       if (
         this.dataList[i].BASE_UNIT_ID === null ||
@@ -1105,7 +1020,6 @@ export class AddVarientDrawerComponent {
         );
         return;
       }
-
       this.dataList[i].DATE_OF_ENTRY = this.datePipe.transform(
         this.dataList[i].DATE_OF_ENTRY,
         'yyyy-MM-dd'
@@ -1113,7 +1027,6 @@ export class AddVarientDrawerComponent {
       this.dataList[i].BASE_UNIT_NAME = this.UnitList.find(
         (x: any) => x.ID == this.dataList[i].BASE_UNIT_ID
       )?.NAME;
-
       if (i == this.dataList.length - 1) {
         if (this.isOk) {
           this.switchValue = false;
@@ -1124,26 +1037,20 @@ export class AddVarientDrawerComponent {
       }
     }
   }
-
   cancelFinal() {
     this.loadingRecords11 = false;
     this.isSpinning = false;
   }
-
   switchValue = true;
-
   saveFinal() {
     this.loadingRecords11 = true;
     this.isSpinning = true;
-
     if (this.isOk) {
       var dataaaaaa: any = [...this.dataList];
-      // Convert WAREHOUSE_ID array to a comma-separated string for each item
       dataaaaaa.forEach((item: any) => {
         item.WAREHOUSE_ID = Array.isArray(item.WAREHOUSE_ID)
           ? item.WAREHOUSE_ID.join(',')
           : item.WAREHOUSE_ID;
-
         item.REPLACEMENT_ALLOW =
           item.REPLACEMENT_ALLOW == null ||
             item.REPLACEMENT_ALLOW == undefined ||
@@ -1157,11 +1064,9 @@ export class AddVarientDrawerComponent {
             ? 0
             : 1;
       });
-
       var dataa2 = {
         DATA: dataaaaaa,
       };
-
       this.api.addupdatebulkdata(dataa2).subscribe(
         (successCode: HttpResponse<any>) => {
           if (successCode.status === 200 && successCode.body.code === 200) {
@@ -1196,10 +1101,8 @@ export class AddVarientDrawerComponent {
     }
   }
   dataList111: any = [];
-
   getpreviousdata() {
     this.isSpinning = true;
-
     this.api
       .getInventory(0, 0, '', '', ' AND PARENT_ID = ' + this.Inventorydata.ID)
       .subscribe(
@@ -1214,7 +1117,6 @@ export class AddVarientDrawerComponent {
             this.isSpinning = false;
           } else {
             this.previousVariantCombinations = [];
-            // this.dataList = [];
             this.loadingRecords = false;
             this.message.error('Failed to get Inventory Records', '');
             this.previousVariantCombinations = [];
@@ -1225,21 +1127,16 @@ export class AddVarientDrawerComponent {
           this.previousVariantCombinations = [];
           this.loadingRecords = false;
           this.isSpinning = false;
-          // this.dataList = [];
           this.message.error('Failed To Get Inventory Records', '');
         }
       );
   }
-
   onWarehousechange(warehouseid: any) {
     if (warehouseid && warehouseid.length > 0) {
-      // Filter all selected warehouses based on IDs
       let selectedWarehouses = this.warehouseList.filter((warehouse) =>
         warehouseid.includes(warehouse.ID)
       );
-
       if (selectedWarehouses.length > 0) {
-        // Extract names of selected warehouses and join them into a string
         this.data.WAREHOUSE_NAME = selectedWarehouses
           .map((w) => w.NAME)
           .join(', ');
@@ -1250,22 +1147,16 @@ export class AddVarientDrawerComponent {
       this.data.WAREHOUSE_NAME = null;
     }
   }
-
   generateCombinations() {
     this.loadingRecords11 = true;
-
     let variantArrays = this.AddVarientData.map((item) =>
       item.VARIENT_VALUES.split(',').map((value) => value.toLowerCase())
     );
-
     let newCombinations = this.cartesianProduct(variantArrays);
-
     let previousSet = new Set(
       this.previousVariantCombinations.map((item) => item.VARIANT_COMBINATION)
     );
-
     let updatedCombinations: any = [];
-
     newCombinations.forEach((combination) => {
       if (!previousSet.has(combination)) {
         updatedCombinations.push(
@@ -1273,12 +1164,10 @@ export class AddVarientDrawerComponent {
         );
       }
     });
-
     this.previousVariantCombinations.forEach((oldCombination) => {
       let isDisabled = !newCombinations.includes(
         oldCombination.VARIANT_COMBINATION
       );
-
       updatedCombinations.push(
         this.createVariantObject(
           oldCombination.VARIANT_COMBINATION,
@@ -1287,20 +1176,17 @@ export class AddVarientDrawerComponent {
         )
       );
     });
-
     this.variantCombinations = updatedCombinations;
     this.previousVariantCombinations = [...updatedCombinations];
     this.dataList = this.previousVariantCombinations;
     this.loadingRecords11 = false;
   }
-
   dataList: any = [
     {
-      BASE_QUANTITY: 0, // Initialize with a default value
-      WAREHOUSE_ID: [] as number[], // Ensure it is an array
+      BASE_QUANTITY: 0, 
+      WAREHOUSE_ID: [] as number[], 
     },
   ];
-
   createVariantObject(
     variantCombination: any,
     isDisabled: any,
@@ -1375,10 +1261,7 @@ export class AddVarientDrawerComponent {
       SHORT_CODE: oldData.SHORT_CODE || null,
       EXPECTED_DELIVERY_CHARGES: oldData.EXPECTED_DELIVERY_CHARGES || 0,
     };
-
-
   }
-
   ItemId: any;
   Unitid: any;
   itemcategoryis: any;
@@ -1386,7 +1269,6 @@ export class AddVarientDrawerComponent {
   Unitname: any;
   ItemMappingDrawerVisible: boolean = false;
   drawerData: any;
-
   ItemMapping(data: any, i: any): void {
     this.Unitname = data.UNIT_CODE;
     this.Unitid = data.BASE_UNIT_ID;
@@ -1396,16 +1278,13 @@ export class AddVarientDrawerComponent {
     this.ItemMappingDrawerTitle = 'Unit Mapping To ' + data.ITEM_NAME;
     this.ItemMappingDrawerVisible = true;
   }
-
   ItemMappingDrawerClose(): void {
     this.search();
     this.ItemMappingDrawerVisible = false;
   }
-
   get ItemMappingCloseCallback() {
     return this.ItemMappingDrawerClose.bind(this);
   }
-
   setDefaultBaseQuantity(index: number) {
     if (
       !this.dataList[index].BASE_QUANTITY ||
@@ -1414,7 +1293,6 @@ export class AddVarientDrawerComponent {
       this.dataList[index].BASE_QUANTITY = '1';
     }
   }
-
   changeTrackingType(event: any, rowData: any) {
     if (event === 'B') {
       rowData.WARRANTY_ALLOWED = false;
@@ -1463,15 +1341,12 @@ export class AddVarientDrawerComponent {
       if (item.ID == null) item['BASE_UNIT_ID'] = Number(data);
     });
   }
-
   TAX_PREFERENCE;
   onGlobalTaxableChange(data: any): void {
     this.dataList.map((item: any, index) => {
       if (item.ID == null) item['TAX_PREFERENCE'] = data;
       if (data == 'NT') {
-        // this.dataList.map((item: any) => {
         if (item.ID == null) item['TAX_ID'] = null;
-        // });
         this.TAX_ID = null;
       }
       this.onChangeTax(item['TAX_PREFERENCE'], index);
@@ -1494,28 +1369,24 @@ export class AddVarientDrawerComponent {
     this.dataList[index].SELLING_PRICE = null;
     this.dataList[index].DISCOUNTED_PRICE = 0;
     if (event === 'T') {
-      // this.ShowTax = true;
     } else {
       this.dataList[index].TAX_ID = 0;
       this.dataList[index].SELLING_PRICE = this.dataList[index].BASE_PRICE;
       if (this.dataList[index].DISCOUNT_ALLOWED) {
         this.dataList[index].DISCOUNTED_PRICE = 0;
       }
-      // this.ShowTax = false;
     }
   }
   onChangeTax2(event: any) {
     this.PURCHASE_PRICE = null;
     this.DISCOUNT_PRICE_ALL = 0;
     if (event === 'T') {
-      // this.ShowTax = true;
     } else {
       this.TAX_ID = 0;
       this.PURCHASE_PRICE = this.BASE_PRICE;
       if (this.IS_DISCOUNT_ALLOWED_ALL) {
         this.DISCOUNT_PRICE_ALL = 0;
       }
-      // this.ShowTax = false;
     }
   }
   onTaxChange2(selectedId: any): void {
@@ -1528,8 +1399,6 @@ export class AddVarientDrawerComponent {
         selectedProduct != undefined &&
         selectedProduct != ''
       ) {
-        // this.data.BASE_UNIT_NAME = selectedProduct[0]['NAME'];
-
         if (this.BASE_PRICE && this.BASE_PRICE > 0) {
           this.PURCHASE_PRICE = this.calculateTotalPrice(
             this.BASE_PRICE,
@@ -1541,7 +1410,6 @@ export class AddVarientDrawerComponent {
         }
       } else {
       }
-      // this.BASE_UNIT_ID = selectedId;
       this.TAX_ID = selectedId;
     } else {
       this.PURCHASE_PRICE = this.BASE_PRICE;
@@ -1561,7 +1429,6 @@ export class AddVarientDrawerComponent {
         selectedProduct != undefined &&
         selectedProduct != ''
       ) {
-        // this.data.BASE_UNIT_NAME = selectedProduct[0]['NAME'];
         this.dataList[index].TAX_NAME = selectedProduct['NAME'];
         if (
           this.dataList[index].BASE_PRICE &&
@@ -1578,7 +1445,6 @@ export class AddVarientDrawerComponent {
       } else {
         this.dataList[index].TAX_NAME = null;
       }
-      // this.dataList[index].BASE_UNIT_ID = selectedId;
       this.dataList[index].TAX_ID = selectedId;
     } else {
       this.dataList[index].TAX_NAME = null;
@@ -1595,7 +1461,6 @@ export class AddVarientDrawerComponent {
       if (item.ID == null) item['SKU_CODE'] = data;
     });
   }
-
   BASE_PRICE;
   onGlobalBASE_PRICEChange(data: any): void {
     this.onBasePriceChange2(data);
@@ -1616,8 +1481,6 @@ export class AddVarientDrawerComponent {
         selectedProduct != undefined &&
         selectedProduct != ''
       ) {
-        // this.dataList[index].BASE_UNIT_NAME = selectedProduct[0]['NAME'];
-        // this.dataList[index].TAX_NAME = selectedProduct['NAME'];
         if (
           this.dataList[index].BASE_PRICE &&
           this.dataList[index].BASE_PRICE > 0
@@ -1635,14 +1498,12 @@ export class AddVarientDrawerComponent {
         if (this.dataList[index].DISCOUNT_ALLOWED) {
           this.dataList[index].DISCOUNTED_PRICE = 0;
         }
-        // this.dataList[index].DISCOUNTED_PRICE = 0;
       }
     } else {
       this.dataList[index].SELLING_PRICE = event;
       if (this.dataList[index].DISCOUNT_ALLOWED) {
         this.dataList[index].DISCOUNTED_PRICE = 0;
       }
-      // this.dataList[index].DISCOUNTED_PRICE = 0;
     }
   }
   onBasePriceChange2(event) {
@@ -1655,8 +1516,6 @@ export class AddVarientDrawerComponent {
         selectedProduct != undefined &&
         selectedProduct != ''
       ) {
-        // this.BASE_UNIT_NAME = selectedProduct[0]['NAME'];
-        // this.TAX_NAME = selectedProduct['NAME'];
         if (this.BASE_PRICE && this.BASE_PRICE > 0) {
           this.PURCHASE_PRICE = this.calculateTotalPrice(
             this.BASE_PRICE,
@@ -1671,14 +1530,12 @@ export class AddVarientDrawerComponent {
         if (this.IS_DISCOUNT_ALLOWED_ALL) {
           this.DISCOUNT_PRICE_ALL = 0;
         }
-        // this.DISCOUNT_PRICE_ALL = 0;
       }
     } else {
       this.PURCHASE_PRICE = event;
       if (this.IS_DISCOUNT_ALLOWED_ALL) {
         this.DISCOUNT_PRICE_ALL = 0;
       }
-      // this.DISCOUNTED_PRICE = 0;
     }
   }
   onSellingPriceChange2(event) {
@@ -1695,7 +1552,6 @@ export class AddVarientDrawerComponent {
   calculateTax(price: number, taxRate: number): number {
     return (Number(price) * Number(taxRate)) / 100;
   }
-
   PURCHASE_PRICE;
   onGlobalPURCHASE_PRICEChange(data: any): void {
     this.onSellingPriceChange2(data);
@@ -1733,7 +1589,6 @@ export class AddVarientDrawerComponent {
       if (item.ID == null) item['BASE_QUANTITY'] = data;
     });
   }
-
   AVG_LEVEL;
   onGlobalAVG_LEVELChange(data: any): void {
     this.dataList.map((item: any) => {
@@ -1746,27 +1601,23 @@ export class AddVarientDrawerComponent {
       if (item.ID == null) item['REORDER_STOCK_LEVEL'] = data;
     });
   }
-
   ALERT_STOCK_LEVEL;
   onGlobalALERT_STOCK_LEVELChange(data: any): void {
     this.dataList.map((item: any) => {
       if (item.ID == null) item['ALERT_STOCK_LEVEL'] = data;
     });
   }
-
   INVENTORY_TRACKING_TYPE;
   onGlobaltrackingtypeChange(data: any): void {
     this.dataList.map((item: any) => {
       if (item.ID == null) item['INVENTORY_TRACKING_TYPE'] = data;
       if (data == 'N') {
-        // this.dataList.map((item: any) => {
         if (item.ID == null) item['WARRANTY_ALLOWED'] = false;
         if (item.ID == null) item['WARRANTY_PERIOD'] = 0;
         if (item.ID == null) item['GUARANTEE_ALLOWED'] = false;
         if (item.ID == null) item['GUARANTEE_PERIOD'] = 0;
         item['WARRANTY_CARD'] = null;
         item['fileURL'] = null;
-        // });
         this.WARRANTY_ALLOWED_ALL = false;
         this.GUARANTEE_ALLOWED_ALL = false;
         this.WARRANTY_PERIOD_ALL = 0;
@@ -1778,7 +1629,6 @@ export class AddVarientDrawerComponent {
         if (item.ID == null) item['GUARANTEE_PERIOD'] = 0;
         item['WARRANTY_CARD'] = null;
         item['fileURL'] = null;
-        // });
         this.WARRANTY_ALLOWED_ALL = false;
         this.GUARANTEE_ALLOWED_ALL = false;
         this.WARRANTY_PERIOD_ALL = 0;
@@ -1787,26 +1637,10 @@ export class AddVarientDrawerComponent {
     });
   }
   WARRANTY_ALLOWED_ALL;
-  // onGlobalWarrantyAllowdedChange(event) {
-  //   this.dataList.map((item: any) => {
-  //     if (item.ID == null) item['WARRANTY_ALLOWED'] = event;
-  //     if (!event) {
-  //       if (item.ID == null) {
-  //         item['WARRANTY_PERIOD'] = 0;
-  //         item['WARRANTY_CARD'] = null;
-  //         item['fileURL'] = null;
-  //       }
-  //     }
-  //   });
-  //   this.WARRANTY_ALLOWED_ALL = event;
-  //   this.WARRANTY_PERIOD_ALL = 0;
-  // }
   onGlobalWarrantyAllowdedChange(event) {
     this.dataList.map((item: any) => {
       if (item.INVENTORY_TRACKING_TYPE === 'S') {
-        // ✅ Update only if INVENTORY_TRACKING_TYPE == 'S'
         if (item.ID == null) item['WARRANTY_ALLOWED'] = event;
-
         if (!event) {
           if (item.ID == null) {
             item['WARRANTY_PERIOD'] = 0;
@@ -1822,7 +1656,6 @@ export class AddVarientDrawerComponent {
         item['WARRANTY_ALLOWED'] = false;
         this.WARRANTY_PERIOD_ALL = 0;
       }
-      // ✅ Else keep data unchanged (do nothing for other items)
     });
     this.WARRANTY_ALLOWED_ALL = event;
     this.WARRANTY_PERIOD_ALL = 0;
@@ -1863,12 +1696,8 @@ export class AddVarientDrawerComponent {
   onGlobalExpiryAllowdedChange(event) {
     this.dataList.map((item: any) => {
       if (item.ID == null) item['EXPIRY_DATE_ALLOWED'] = event;
-      // if (!event) {
-      //   item['WARRANTY_PERIOD'] = 0;
-      // }
     });
     this.EXPIRY_DATE_ALLOWED = event;
-    // this.WARRANTY_PERIOD_ALL=0
   }
   STATUS: boolean = true;
   onGlobalstatusAllowdedChange(event: boolean) {
@@ -1877,14 +1706,6 @@ export class AddVarientDrawerComponent {
     });
     this.STATUS = event;
   }
-  // onGlobalstatusAllowdedChange(event: boolean) {
-  //   this.dataList = this.dataList.map((item: any) => ({
-  //     ...item,
-  //     STATUS: event
-  //   }));
-  //   this.STATUS = event;
-  // }
-
   IS_RETURN_ALOW_ALL;
   onGlobalreturnAllowdedChange(event) {
     this.dataList.map((item: any) => {
@@ -1895,43 +1716,35 @@ export class AddVarientDrawerComponent {
       }
     });
     this.IS_RETURN_ALOW_ALL = event;
-    // this.WARRANTY_PERIOD_ALL=0
   }
   RETURN_ALLOW_PERIOD_ALL;
   onGlobalReturnPeriodChange(event) {
     this.dataList.map((item: any) => {
-      // item['RETURN_ALOW'] = event;
       if (item['RETURN_ALOW']) {
         if (item.ID == null) item['RETURN_ALLOW_PERIOD'] = event;
       }
     });
     this.RETURN_ALLOW_PERIOD_ALL = event;
   }
-
   IS_DISCOUNT_ALLOWED_ALL;
   onGlobaldiscountAllowdedChange(event) {
     this.dataList.map((item: any) => {
       if (item.ID == null) item['DISCOUNT_ALLOWED'] = event;
       if (!event) {
         if (item.ID == null) item['DISCOUNTED_PRICE'] = 0;
-        // this.RETURN_ALLOW_PERIOD_ALL = 0;
         this.DISCOUNT_PRICE_ALL = 0;
       }
     });
     this.IS_DISCOUNT_ALLOWED_ALL = event;
-    // this.WARRANTY_PERIOD_ALL=0
   }
   DISCOUNT_PRICE_ALL;
   onGlobalDiscountPriceChange(event) {
     this.dataList.map((item: any) => {
-      // item['DISCOUNT_ALLOWED'] = event;
       if (item['DISCOUNT_ALLOWED']) {
         if (item.ID == null) item['DISCOUNTED_PRICE'] = event;
-        // this.RETURN_ALLOW_PERIOD_ALL = 0;
       }
     });
     this.DISCOUNT_PRICE_ALL = event;
-    // this.WARRANTY_PERIOD_ALL=0
   }
   onChangeDiscountAllowed(event, i) {
     if (!event) {
@@ -1944,7 +1757,6 @@ export class AddVarientDrawerComponent {
       if (item.ID == null) item['REPLACEMENT_ALLOW'] = event;
       if (!event) {
         if (item.ID == null) item['REPLACEMENT_PERIOD'] = 0;
-        // this.RETURN_ALLOW_PERIOD_ALL = 0;
         this.DISCOUNT_PRICE_ALL = 0;
         this.REPLACEMENT_PERIOD_ALL = 0;
       }
@@ -1954,10 +1766,8 @@ export class AddVarientDrawerComponent {
   REPLACEMENT_PERIOD_ALL;
   onGlobalreplacemenrPriceChange(event) {
     this.dataList.map((item: any) => {
-      // item['DISCOUNT_ALLOWED'] = event;
       if (item['REPLACEMENT_ALLOW']) {
         if (item.ID == null) item['REPLACEMENT_PERIOD'] = event;
-        // this.RETURN_ALLOW_PERIOD_ALL = 0;
       }
     });
     this.REPLACEMENT_PERIOD_ALL = event;
@@ -1970,15 +1780,10 @@ export class AddVarientDrawerComponent {
   IS_ALL_EXPECTED;
   onGlobalExpectedChange(event) {
     this.dataList.map((item: any) => {
-      // item['DISCOUNT_ALLOWED'] = event;
-      // if (item['REPLACEMENT_ALLOW']) {
       if (item.ID == null) item['EXPECTED_DELIVERY_IN_DAYS'] = event;
-      // this.RETURN_ALLOW_PERIOD_ALL = 0;
-      // }
     });
     this.IS_ALL_EXPECTED = event;
   }
-
   EXPECTED_DELIVERY_CHARGES;
   onGlobalExpectedChargeChange(event) {
     this.dataList.map((item: any) => {
@@ -1989,21 +1794,18 @@ export class AddVarientDrawerComponent {
   CropImageModalVisible = false;
   isSpinningCrop = false;
   cropimageshow: any;
-
   @ViewChild('image1') myElementRef!: ElementRef;
   CropImageModalCancel() {
     this.CropImageModalVisible = false;
     this.cropimageshow = false;
     this.myElementRef.nativeElement.value = null;
   }
-
   UrlImageOne;
   progressBarImageOne: boolean = false;
   percentImageOne = 0;
   timer: any;
   urlImageOneShow: boolean = false;
   fileURL: any = '';
-
   deleteCancel() { }
   removeImage(i) {
     this.data.WARRANTY_CARD = ' ';
@@ -2011,7 +1813,6 @@ export class AddVarientDrawerComponent {
   }
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
@@ -2019,8 +1820,6 @@ export class AddVarientDrawerComponent {
     this.dataList[i]['fileURL'] = null;
     this.UrlImageOne = null;
     this.dataList[i].WARRANTY_CARD = ' ';
-    // this.data.ICON = "";
-
     this.dataList[i]['fileURL'] = null;
   }
   viewImage(imageURL: string): void {
@@ -2029,10 +1828,7 @@ export class AddVarientDrawerComponent {
   }
   sanitizedUrl2;
   viewImage2(imageURL: string): void {
-    // this.ViewImage = 1;
-    // this.GetImage(imageURL);
     let imagePath = this.api.retriveimgUrl + 'WarrantyCard/' + imageURL;
-    // this.sanitizedUrl2 =
     this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedUrl2;
     this.ImageModalVisible = true;
@@ -2044,23 +1840,16 @@ export class AddVarientDrawerComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
   sanitizedFileURL: SafeUrl | null = null;
   sanitizedFileURL1: SafeUrl | null = null;
   imageshow;
-
-  // imagePreview: any;
   selectedFile: any;
   onFileSelected(event: any, i): void {
-    const maxFileSize = 1 * 1024 * 1024; // 1 MB
-
+    const maxFileSize = 1 * 1024 * 1024; 
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-
-      // Validate file type
       if (!file.type.match(/(image\/(jpeg|jpg|png)|application\/pdf|application\/msword|application\/vnd.openxmlformats-officedocument.wordprocessingml.document)/)) {
         this.message.error(
           'Please select a valid image or PDF file (PNG, JPG, JPEG, PDF).',
@@ -2069,18 +1858,13 @@ export class AddVarientDrawerComponent {
         event.target.value = null;
         return;
       }
-
-      // Validate file size
       if (file.size > maxFileSize) {
         this.message.error('File size should not exceed 1MB.', '');
         event.target.value = null;
         return;
       }
-
       this.dataList[i]['fileURL'] = file;
       this.dataList[i]['loading'] = true;
-
-      // Handle PDF file
       if (file.type === 'application/pdf') {
         this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
           URL.createObjectURL(file)
@@ -2090,7 +1874,6 @@ export class AddVarientDrawerComponent {
         var fileExt = this.dataList[i]['fileURL'].name.split('.').pop();
         var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
         var url = d == null ? '' : d + number + '.' + fileExt;
-
         if (
           this.dataList[i].WARRANTY_CARD != undefined &&
           this.dataList[i].WARRANTY_CARD.trim() !== ''
@@ -2117,17 +1900,13 @@ export class AddVarientDrawerComponent {
             this.progressBarImageOne = false;
             this.percentImageOne = 0;
             this.dataList[i]['loading'] = false;
-            // this.selectedFileName = null;
           } else if (res.type == 4 && res.status == 200) {
             if (res.body['code'] == 200) {
-              // this.message.success('Profile Photo Uploaded Successfully...', '');
               this.message.success('Successfully Uploaded Attachment', '');
               this.isSpinning = false;
-              // this.progressBarImageOne = false;
               this.dataList[i].WARRANTY_CARD = url;
               this.progressBarImageOne = false;
               this.dataList[i]['loading'] = false;
-              // this.isVisibleMiddle = false;
             } else {
               this.isSpinning = false;
               this.progressBarImageOne = false;
@@ -2138,15 +1917,11 @@ export class AddVarientDrawerComponent {
         });
         return;
       }
-
-      // Handle image file
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.imagePreview = e.target.result; // Base64 data for preview
-
+        this.imagePreview = e.target.result; 
         const img = new Image();
         img.src = e.target.result;
-
         img.onload = () => {
           this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
             URL.createObjectURL(this.dataList[i]['fileURL'])
@@ -2155,7 +1930,6 @@ export class AddVarientDrawerComponent {
           var fileExt = this.dataList[i]['fileURL'].name.split('.').pop();
           var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
           var url = d == null ? '' : d + number + '.' + fileExt;
-
           if (
             this.dataList[i].WARRANTY_CARD != undefined &&
             this.dataList[i].WARRANTY_CARD.trim() !== ''
@@ -2182,17 +1956,13 @@ export class AddVarientDrawerComponent {
               this.progressBarImageOne = false;
               this.dataList[i]['loading'] = false;
               this.percentImageOne = 0;
-              // this.selectedFileName = null;
             } else if (res.type == 4 && res.status == 200) {
               if (res.body['code'] == 200) {
-                // this.message.success('Profile Photo Uploaded Successfully...', '');
                 this.message.success('Successfully Uploaded Attachment', '');
                 this.dataList[i]['loading'] = false;
                 this.isSpinning = false;
-                // this.progressBarImageOne = false;
                 this.dataList[i].WARRANTY_CARD = url;
                 this.progressBarImageOne = false;
-                // this.isVisibleMiddle = false;
               } else {
                 this.isSpinning = false;
                 this.progressBarImageOne = false;
@@ -2203,11 +1973,9 @@ export class AddVarientDrawerComponent {
           });
         };
       };
-
       reader.readAsDataURL(file);
     }
   }
-
   base64ToFile(base64String: string, filename: string): File {
     const arr = base64String.split(',');
     const mime = arr[0].match(/:(.*?);/)![1];
@@ -2222,60 +1990,44 @@ export class AddVarientDrawerComponent {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   fileChangeEvent(event: any): void {
-    //
-
     this.CropImageModalVisible = true;
     this.cropimageshow = true;
-
     this.imageChangedEvent = event;
   }
-
   cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
   imageCropped(event: ImageCroppedEvent) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-
     if (!ctx) return;
-
     canvas.width = 128;
     canvas.height = 128;
-
     const img: any = new Image();
     img.src = event.base64;
     img.onload = () => {
-      ctx.fillStyle = '#ffffff'; // Change this color if needed
+      ctx.fillStyle = '#ffffff'; 
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, 128, 128);
-
-      // Convert to JPEG with reduced quality
-      this.compressImage(canvas, 0.7); // Start with 70% quality
+      this.compressImage(canvas, 0.7); 
     };
   }
-
-  // Function to compress image and ensure size < 1MB
   compressImage(canvas: HTMLCanvasElement, quality: number) {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-
-        const sizeInMB = blob.size / (1024 * 1024); // Convert to MB
-
+        const sizeInMB = blob.size / (1024 * 1024); 
         if (sizeInMB > 1 && quality > 0.1) {
-          // If size is still >1MB, reduce quality and try again
           this.compressImage(canvas, quality - 0.1);
         } else {
-          // Final compressed image (size is now below 1MB)
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             this.croppedImage = reader.result as string;
-            //
           };
         }
       },
       'image/jpeg',
       quality
-    ); // Convert to JPEG with given quality
+    ); 
   }
   uploadedImage: any = '';
   fullImageUrl: string;
@@ -2293,45 +2045,36 @@ export class AddVarientDrawerComponent {
   imageWidth: number = 0;
   imageHeight: number = 0;
   imageLoaded(event) {
-    //
     setTimeout(() => {
       this.cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
     }, 50);
     this.imagePreview = this.croppedImage;
   }
   cropperReady(event) { }
-
   loadImageFailed() { }
-
   isTextOverflowing(element: HTMLElement): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
-
   itemImagesDrawerVisible: boolean = false;
   itemImagesDrawerTitle: string = '';
   addImageDrawerData: any;
   @ViewChild(AddInventoryImagesComponent)
   AddInventoryImagesComponentVar!: AddInventoryImagesComponent;
-
   openItemImagesDrawer(data: any): void {
     this.addImageDrawerData = Object.assign({}, data);
     this.itemImagesDrawerTitle = 'Inventory Image(s)';
     this.itemImagesDrawerVisible = true;
-
     setTimeout(() => {
       this.AddInventoryImagesComponentVar.getPreviousImages(data.ID);
     });
   }
-
   itemImagesDrawerClose(): void {
     this.itemImagesDrawerVisible = false;
     this.search(false);
   }
-
   get itemImagesDrawerCloseCallback() {
     return this.itemImagesDrawerClose.bind(this);
   }
-
   imageshow1;
   imagePreview1: any;
   selectedFile1: any;
@@ -2344,14 +2087,10 @@ export class AddVarientDrawerComponent {
   uploadedImage1: any = '';
   ViewImage1: any;
   ImageModalVisible1 = false;
-
   onFileSelected1(event: any, i): void {
-    const maxFileSize = 1 * 1024 * 1024; // 1 MB
-
+    const maxFileSize = 1 * 1024 * 1024; 
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-
-      // Validate file type
       if (!file.type.match(/(image\/(jpeg|jpg|png))/)) {
         this.message.error(
           'Please select a valid image or PDF file (PNG, JPG, JPEG).',
@@ -2360,25 +2099,18 @@ export class AddVarientDrawerComponent {
         event.target.value = null;
         return;
       }
-
-      // Validate file size
       if (file.size > maxFileSize) {
         this.message.error('File size should not exceed 1MB.', '');
         event.target.value = null;
         return;
       }
-
       this.dataList[i]['fileURL1'] = file;
       this.dataList[i]['loading'] = true;
-
-      // Handle image file
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.imagePreview1 = e.target.result; // Base64 data for preview
-
+        this.imagePreview1 = e.target.result; 
         const img = new Image();
         img.src = e.target.result;
-
         img.onload = () => {
           this.sanitizedFileURL1 = this.sanitizer.bypassSecurityTrustUrl(
             URL.createObjectURL(this.dataList[i]['fileURL1'])
@@ -2387,7 +2119,6 @@ export class AddVarientDrawerComponent {
           var fileExt = this.dataList[i]['fileURL1'].name.split('.').pop();
           var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
           var url = d == null ? '' : d + number + '.' + fileExt;
-
           if (
             this.dataList[i].INVENTORY_DETAILS_IMAGE != undefined &&
             this.dataList[i].INVENTORY_DETAILS_IMAGE.trim() !== ''
@@ -2397,7 +2128,6 @@ export class AddVarientDrawerComponent {
               url = arr[5];
             }
           }
-
           this.api
             .onUpload('InventoryDetailsImage', file, url)
             .subscribe((res) => {
@@ -2417,17 +2147,13 @@ export class AddVarientDrawerComponent {
                 this.progressBarImageOne1 = false;
                 this.dataList[i]['loading'] = false;
                 this.percentImageOne1 = 0;
-                // this.selectedFileName = null;
               } else if (res.type == 4 && res.status == 200) {
                 if (res.body['code'] == 200) {
-                  // this.message.success('Profile Photo Uploaded Successfully...', '');
                   this.message.success('Successfully Uploaded Image', '');
                   this.dataList[i]['loading'] = false;
                   this.isSpinning = false;
-                  // this.progressBarImageOne = false;
                   this.dataList[i].INVENTORY_DETAILS_IMAGE = url;
                   this.progressBarImageOne1 = false;
-                  // this.isVisibleMiddle = false;
                 } else {
                   this.isSpinning = false;
                   this.progressBarImageOne1 = false;
@@ -2438,7 +2164,6 @@ export class AddVarientDrawerComponent {
             });
         };
       };
-
       reader.readAsDataURL(file);
     }
   }
@@ -2447,17 +2172,13 @@ export class AddVarientDrawerComponent {
     this.GetImage1(imageURL);
   }
   sanitizedLink1: any = '';
-
   GetImage1(link: string) {
     let imagePath = this.api.retriveimgUrl + 'InventoryDetailsImage/' + link;
     this.sanitizedLink1 =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow1 = this.sanitizedLink1;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible1 = true;
   }
-
   deleteCancel1() { }
   removeImage1() {
     this.data.INVENTORY_DETAILS_IMAGE = '';
@@ -2467,21 +2188,10 @@ export class AddVarientDrawerComponent {
     this.percentImageOne1 = 0;
     this.data.INVENTORY_DETAILS_IMAGE = null;
   }
-  // image1DeleteConfirm1(data: any) {
-  //   this.data.INVENTORY_DETAILS_IMAGE = '';
-  //   this.fileURL1 = null;
-  //   this.isSpinning = false;
-  //   this.progressBarImageOne1 = false;
-  //   this.percentImageOne1 = 0;
-  //   this.data.INVENTORY_DETAILS_IMAGE = null;
-  // }
-
   image1DeleteConfirm1(data: any, i) {
     this.dataList[i]['fileURL1'] = null;
     this.UrlImageOne1 = null;
     this.dataList[i].INVENTORY_DETAILS_IMAGE = ' ';
-    // this.data.ICON = "";
-
     this.dataList[i]['fileURL1'] = null;
   }
   ImageModalCancel1() {

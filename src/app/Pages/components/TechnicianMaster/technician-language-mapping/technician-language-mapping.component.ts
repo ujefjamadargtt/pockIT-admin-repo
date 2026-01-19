@@ -26,7 +26,7 @@ export class TechnicianLanguageMappingComponent {
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
-    private datePipe: DatePipe // private modal: NzModalService
+    private datePipe: DatePipe 
   ) { }
   LANGUAGE_PROFICIENCY_LEVEL = [
     { Id: 'B', Name: 'Beginner' },
@@ -34,14 +34,12 @@ export class TechnicianLanguageMappingComponent {
     { Id: 'A', Name: 'Advanced' },
     { Id: 'P', Name: 'Proficient or Native' },
   ];
-
   ngOnInit(): void {
     this.getLanguageData();
     this.getLanguageDataforMapping();
   }
   getLanguageData() {
     const technicianId = this.data.ID;
-
     if (!technicianId) {
       this.message.error('Invalid Technician ID', '');
       return;
@@ -85,7 +83,6 @@ export class TechnicianLanguageMappingComponent {
           if (data['code'] == 200) {
             this.LanguagessMappingdata = data['data'];
             this.isLoading = false;
-
           } else {
             this.LanguagessMappingdata = [];
             this.message.error('Failed To Get Language Data', '');
@@ -100,39 +97,30 @@ export class TechnicianLanguageMappingComponent {
   saveData: any = new Data();
   issaveSpinning = false;
   isSkillSpinning = false;
-
   add(Languagemaster: NgForm): void {
     if (!this.saveData.LANGUAGE_ID || this.saveData.LANGUAGE_ID.length === 0) {
       this.message.error('Please select language.', '');
       return;
     }
-
     this.issaveSpinning = true;
-
-    // Iterate through the selected LANGUAGE_IDs
     const newEntries = this.saveData.LANGUAGE_ID.map((LanguageId: number) => {
       const selectedLanguage = this.Languagedata.find(
         (Language) => Language.ID === LanguageId
       );
-
       if (!selectedLanguage) {
-        return null; // Skip invalid skills
+        return null; 
       }
-
       return {
         LANGUAGE_NAME: selectedLanguage.NAME,
         LANGUAGE_ID: LanguageId,
-        IS_ACTIVE: true, // Default status
+        IS_ACTIVE: true, 
       };
-    }).filter((entry) => entry !== null); // Filter out invalid entries
-
+    }).filter((entry) => entry !== null); 
     if (newEntries.length === 0) {
       this.message.error('Invalid Language selection.', '');
       this.issaveSpinning = false;
       return;
     }
-
-    // Prevent duplicate entries
     newEntries.forEach((entry) => {
       const exists = this.LanguagessMappingdata.some(
         (item) => item.LANGUAGE_ID === entry.LANGUAGE_ID
@@ -141,17 +129,11 @@ export class TechnicianLanguageMappingComponent {
         this.LanguagessMappingdata.push(entry);
       }
     });
-
-    // Update the data array and reset the form
     this.LanguagessMappingdata = [...this.LanguagessMappingdata];
-
     this.resetDrawer(Languagemaster);
-
-    // Notify success
     this.message.success('Language added successfully.', '');
     this.issaveSpinning = false;
   }
-
   resetDrawer(technicianmaster: NgForm) {
     this.saveData.LANGUAGE_ID = null;
     technicianmaster.form.markAsPristine();
@@ -160,56 +142,8 @@ export class TechnicianLanguageMappingComponent {
   close() {
     this.drawerClose();
   }
-  // save() {
-  //   this.isSpinning = true;
-
-  //   // Proceed with saving data if all entries are valid
-
-  //   const dataToSave = this.LanguagessMappingdata.filter(
-  //     (data) => data.IS_ACTIVE === true || data.IS_ACTIVE == '1'
-  //   ).map((data) => ({
-  //     LANGUAGE_ID: data.LANGUAGE_ID,
-  //     PROFICIENCY_LEVEL: data.PROFICIENCY_LEVEL,
-  //     IS_PRIMARY:
-  //       data.IS_PRIMARY == null ||
-  //       data.IS_PRIMARY == false ||
-  //       data.IS_PRIMARY == undefined
-  //         ? 0
-  //         : 1,
-  //     IS_ACTIVE:
-  //       data.IS_ACTIVE == null ||
-  //       data.IS_ACTIVE == false ||
-  //       data.IS_ACTIVE == undefined
-  //         ? 0
-  //         : 1,
-  //   }));
-
-  //   this.api
-  //     .addsLanguagesTeachniacianMapping(this.data.ID, dataToSave)
-  //     .subscribe(
-  //       (successCode) => {
-  //         if (successCode['code'] === 200) {
-  //           this.message.success(
-  //             'Technican Successfully Mapped to the Language.',
-  //             ''
-  //           );
-  //           this.isSpinning = false;
-  //           this.drawerClose();
-  //         } else {
-  //           this.message.error('Failed to Map Technician to the Language', '');
-  //         }
-  //         this.isSpinning = false;
-  //       },
-  //       () => {
-  //         this.isSpinning = false;
-  //         this.message.error('Something Went Wrong.', '');
-  //       }
-  //     );
-  // }
   save() {
     this.isSpinning = true;
-
-    // Filter and prepare data to save
     const dataToSave = this.LanguagessMappingdata.filter(
       (data) => data.IS_ACTIVE === true || data.IS_ACTIVE == '1'
     ).map((data) => ({
@@ -228,22 +162,11 @@ export class TechnicianLanguageMappingComponent {
           ? 0
           : 1,
     }));
-
-    // Check if there's data in the table
     if (this.LanguagessMappingdata.length === 0) {
       this.isSpinning = false;
       this.message.error('At least one language needs to be added.', '');
-      return; // Exit early
+      return; 
     }
-
-    // // Check if there's data to save
-    // if (dataToSave.length === 0) {
-    //   this.isSpinning = false;
-    //   this.message.error('At least one language needs to be active.', '');
-    //   return; // Exit early
-    // }
-
-    // Call API to save data
     this.api
       .addsLanguagesTeachniacianMapping(this.data.ID, dataToSave)
       .subscribe(
@@ -266,12 +189,8 @@ export class TechnicianLanguageMappingComponent {
         }
       );
   }
-
-
-
   onPrimaryChange(selectedData: any): void {
     if (selectedData.IS_PRIMARY) {
-      // Set all other IS_PRIMARY values to false
       this.LanguagessMappingdata.forEach((item) => {
         if (item !== selectedData) {
           item.IS_PRIMARY = false;
@@ -279,7 +198,4 @@ export class TechnicianLanguageMappingComponent {
       });
     }
   }
-
-
-
 }

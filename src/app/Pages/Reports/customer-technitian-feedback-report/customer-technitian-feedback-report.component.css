@@ -1,11 +1,124 @@
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%; 
   display: inline-block;
+}
+.fb-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.fb-header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.fb-excel-btn {
+  color: white;
+}
+.fb-filter-width {
+  width: 47px;
+}
+.fb-filter-row {
+  padding-top: 0px;
+}
+.fb-loading-center {
+  text-align: center;
+}
+.fb-filter-grid {
+  margin-bottom: 8px;
+}
+.fb-filter-item {
+  margin-bottom: 8px;
+}
+.fb-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.fb-filter-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.fb-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.fb-check-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.fb-filter-actions {
+  margin-top: 7px;
+}
+.fb-action-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.fb-edit-tag,
+.fb-apply-tag,
+.fb-clear-tag,
+.fb-delete-tag,
+.fb-view-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.fb-edit-tag {
+  margin-right: 0px;
+}
+.fb-tag-icon {
+  font-size: 10px !important;
+}
+.fb-view-tag {
+  margin-right: 0px;
+}
+.fb-buttons-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.fb-reset-btn,
+.fb-new-btn {
+  margin-right: 10px;
+}
+.fb-table-container {
+  margin-top: 8px;
+}
+.fb-date-header,
+.fb-cust-header,
+.fb-tech-header,
+.fb-rating-header,
+.fb-comment-header {
+  text-align: center;
+}
+.fb-date-cell,
+.fb-rating-cell {
+  text-align: center;
+}
+.fb-tooltip-cell {
+  text-align: left;
+}
+.fb-date-picker {
+  width: 100%;
+}
+.fb-modal-title {
+  text-align: center;
+}
+.fb-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
 }

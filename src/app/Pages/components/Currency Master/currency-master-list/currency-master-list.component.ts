@@ -6,7 +6,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { CurrencyMaster } from 'src/app/Pages/Models/CurrencyMaster';
 import { Router } from '@angular/router';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-currency-master-list',
   templateUrl: './currency-master-list.component.html',
@@ -21,7 +20,6 @@ export class CurrencyMasterListComponent {
   pageSize = 10;
   sortValue: string = 'desc';
   sortKey: string = 'NAME';
-
   isLoading = true;
   columns: string[][] = [
     ['CURRENCY_NAME', 'CURRENCY_NAME'],
@@ -38,14 +36,11 @@ export class CurrencyMasterListComponent {
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
-
   countryVisible: boolean = false;
   selectedCountries: number[] = [];
   decimalseleratorVisible: boolean = false;
-  // selectedDecimalSeperator: any;
   selectedDecimalSeperator: string[] = [];
   thousandseleratorVisible: boolean = false;
-  // selectedthousandSeperator: any;
   selectedthousandSeperator: string[] = [];
   currencyName: string = '';
   visible = false;
@@ -67,11 +62,9 @@ export class CurrencyMasterListComponent {
     { text: 'Inactive', value: '0' },
   ];
   showcloumnVisible: boolean = false;
-
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   filterQuery: string = '';
-
   isnameFilterApplied: boolean = false;
   iscountrynameFilterApplied: boolean = false;
   isdecimalspaceFilterApplied: boolean = false;
@@ -80,35 +73,20 @@ export class CurrencyMasterListComponent {
   isdecimalseperatorFilterApplied: boolean = false;
   isthousandseperateFilterApplied: boolean = false;
   isexchangerateFilterApplied: boolean = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Currency Name', value: 'CURRENCY_NAME' },
     { label: 'Country Name', value: 'COUNTRY_ID' },
-    // { label: 'Decimal Seperator', value: 'DECIMAL_SEPARATOR' },
-    // { label: 'Thousand Seperator', value: 'THOUSAND_SEPERATOR' },
     { label: 'Exchange Rate', value: 'EXCHANGE_RATE' },
-    // { label: 'Decimal Place', value: 'DECIMAL_SPACE' },
     { label: 'Symbol', value: 'SYMBOL' },
     { label: 'Short Code', value: 'SHORT_CODE' },
     { label: 'Sequence No.', value: 'SEQ_NO' },
     { label: 'Status', value: 'IS_ACTIVE' },
   ];
-
   showcolumn = [
-    // { label: 'Service Item Name', key: 'DESCRIPTION', visible: true },
-    // { label: 'Currency Name', key: 'CURRENCY_NAME', visible: true },
-    // { label: 'Country Name', key: 'COUNTRY_ID', visible: true },
-    // { label: 'Decimal Seperator', key: 'DECIMAL_SEPARATOR', visible: true },
-    // { label: 'Thousand Seperator', key: 'THOUSAND_SEPERATOR', visible: true },
     { label: 'Exchange Rate', key: 'EXCHANGE_RATE', visible: true },
-    // { label: 'Decimal Place', key: 'DECIMAL_SPACE', visible: true },
-    // { label: 'Symbol', key: 'SYMBOL', visible: true },
     { label: 'Short Code', key: 'SHORT_CODE', visible: true },
     { label: 'Sequence No.', key: 'SEQ_NO', visible: true },
-    // { label: 'Status', key: 'IS_ACTIVE', visible: true },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -125,9 +103,7 @@ export class CurrencyMasterListComponent {
       groups: [],
     },
   ];
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -144,7 +120,6 @@ export class CurrencyMasterListComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -153,15 +128,7 @@ export class CurrencyMasterListComponent {
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   keyup(keys) {
-    // if (this.searchText.length >= 3) {
-    //   this.search();
-    // } else if (this.searchText.length === 0) {
-    //   this.dataList = [];
-    //   this.search();
-    // }
-
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
@@ -171,7 +138,6 @@ export class CurrencyMasterListComponent {
       this.search(true);
     }
   }
-  // Check if the column is visible
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
@@ -203,12 +169,6 @@ export class CurrencyMasterListComponent {
       this.search();
       this.isshortcodeFilterApplied = false;
     }
-    // if (this.exchangerate.length > 0 && event.key === 'Enter') {
-    //   this.search();
-    // }
-    // else if (this.exchangerate.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    // }
     if (this.decimalspace.length > 0 && event.key === 'Enter') {
       this.search();
       this.isdecimalspaceFilterApplied = true;
@@ -217,40 +177,22 @@ export class CurrencyMasterListComponent {
       this.isdecimalspaceFilterApplied = false;
     }
   }
-  // onKeypressEvent(keys) {
-  //   const element = window.document.getElementById('button');
-  //   if (element != null) element.focus();
-  //   if (this.searchText.length >= 3 && keys.key === 'Enter') {
-  //     this.search();
-  //   }
-  //   else if (this.searchText.length === 0 && keys.key == 'Backspace') {
-  //     this.dataList = []
-  //     this.search()
-  //   }
-  // }
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   reset(): void {
     this.searchText = '';
     this.currencyName = '';
-    // this.exchangerate = ''
-    // this.toexchangerate = '';
     this.decimalspace = '';
     this.Symbol = '';
     this.shortcode = '';
     this.seqno = '';
     this.likeQuery1 = '';
-    // this.selectedthousandSeperator = ''
-    // this.selectedDecimalSeperator = ''
     this.search();
   }
   DECIMAL_SEPARATOR = [
@@ -262,7 +204,6 @@ export class CurrencyMasterListComponent {
     { Id: '.', Name: 'Period (.)' },
     { Id: ',', Name: 'Comma (,)' },
   ];
-
   SYMBOL = [
     { Id: '$', Name: '$' },
     { Id: '€', Name: '€' },
@@ -292,48 +233,38 @@ export class CurrencyMasterListComponent {
         }
       });
   }
-
   onCountryChange(): void {
-    // this.search();
     if (this.selectedCountries?.length) {
       this.search();
-      this.iscountrynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.iscountrynameFilterApplied = true; 
     } else {
       this.search();
-      this.iscountrynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.iscountrynameFilterApplied = false; 
     }
-    // this.search();
   }
-
   onDecimalSeleratorChange(): void {
     if (this.selectedDecimalSeperator?.length) {
       this.search();
-      this.isdecimalseperatorFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isdecimalseperatorFilterApplied = true; 
     } else {
       this.search();
-      this.isdecimalseperatorFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isdecimalseperatorFilterApplied = false; 
     }
-    // this.search();
   }
-
   onthousandSeleratorChange(): void {
     if (this.selectedthousandSeperator?.length) {
       this.search();
-      this.isthousandseperateFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isthousandseperateFilterApplied = true; 
     } else {
       this.search();
-      this.isthousandseperateFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isthousandseperateFilterApplied = false; 
     }
-    // this.search();
   }
-
   likeQuery1 = '';
   filteredCurrencyData: any[] = [];
-
   applyExchangeRateFilter() {
     const fromRate = parseFloat(this.exchangerate);
     const toRate = parseFloat(this.toexchangerate);
-
     if (fromRate > toRate) {
       this.message.error(
         'From exchange rate must be less than or equal to To exchange rate.',
@@ -341,21 +272,17 @@ export class CurrencyMasterListComponent {
       );
       return;
     }
-
     if (!fromRate || !toRate) {
       this.message.error('Please enter valid From and To exchange rates.', '');
       return;
     }
-
     this.likeQuery1 = `EXCHANGE_RATE BETWEEN ${fromRate} AND ${toRate}`;
-    this.isexchangerateFilterApplied = true; // Set the flag to true if filter is applied
-
+    this.isexchangerateFilterApplied = true; 
     this.search();
   }
-
   onInputChange() {
     if (!this.exchangerate && !this.toexchangerate) {
-      this.isexchangerateFilterApplied = false; // Reset the flag if inputs are cleared
+      this.isexchangerateFilterApplied = false; 
       this.search();
     }
   }
@@ -375,18 +302,15 @@ export class CurrencyMasterListComponent {
       }
     );
   }
-
   nameFilter() {
     if (this.currencyName.trim() === '') {
       this.searchText = '';
     } else if (this.currencyName.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -401,7 +325,6 @@ export class CurrencyMasterListComponent {
     } else if (this.decimalspace.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   symbolFilter() {
@@ -410,7 +333,6 @@ export class CurrencyMasterListComponent {
     } else if (this.Symbol.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   shortcodeFilter() {
@@ -419,10 +341,8 @@ export class CurrencyMasterListComponent {
     } else if (this.shortcode.length > 0) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -432,18 +352,14 @@ export class CurrencyMasterListComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -455,102 +371,63 @@ export class CurrencyMasterListComponent {
         ')';
     }
     this.loadingRecords = true;
-
-    // CURRENCY_NAME Filter
-
     if (this.currencyName !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `CURRENCY_NAME LIKE '%${this.currencyName.trim()}%'`;
     }
-    // // exchangerate Filter
-    // if (this.exchangerate !== '') {
-    //   likeQuery += (likeQuery ? ' AND ' : '') + `EXCHANGE_RATE LIKE '%${this.exchangerate.trim()}%'`;
-    // }
     if (this.exchangerate !== '' && this.toexchangerate !== '') {
       likeQuery += this.likeQuery1;
     } else {
-      // likeQuery=''
     }
-
-    // decimalspace Filter
     if (this.decimalspace !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DECIMAL_SPACE LIKE '%${this.decimalspace.trim()}%'`;
     }
-
-    // Country Filter
     if (this.selectedCountries.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; 
     }
-
-    // DECIMAL_SEPARATOR Filter
-
-    // if (this.selectedDecimalSeperator !== '' && this.selectedDecimalSeperator != null && this.selectedDecimalSeperator != undefined) {
-    //   likeQuery += (likeQuery ? ' AND ' : '') +
-    //  `DECIMAL_SEPARATOR LIKE '%${this.selectedDecimalSeperator}%'`;
-
-    // }
-
     if (this.selectedDecimalSeperator.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      // Wrap each value in single quotes for SQL syntax
       const formattedValues = this.selectedDecimalSeperator
         .map((sep: string) => `'${sep}'`)
         .join(',');
       likeQuery += `DECIMAL_SEPARATOR IN (${formattedValues})`;
     }
-    // THOUSAND_SEPERATOR Filter
-
-    // if (this.selectedthousandSeperator !== '' && this.selectedthousandSeperator != null && this.selectedthousandSeperator != undefined) {
-    //   likeQuery += (likeQuery ? ' AND ' : '') + `THOUSAND_SEPERATOR LIKE '%${this.selectedthousandSeperator}%'`;
-    // }
-
     if (this.selectedthousandSeperator.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      // Wrap each value in single quotes for SQL syntax
       const formattedValues = this.selectedthousandSeperator
         .map((sep: string) => `'${sep}'`)
         .join(',');
       likeQuery += `THOUSAND_SEPERATOR IN (${formattedValues})`;
     }
-    // SYMBOL Filter
-
     if (this.Symbol !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `SYMBOL LIKE '%${this.Symbol.trim()}%'`;
     }
-
-    // shortcode Filter
     if (this.shortcode !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SHORT_CODE LIKE '%${this.shortcode.trim()}%'`;
     }
-
-    // seqno Filter
     if (this.seqno !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `SEQ_NO LIKE '%${this.seqno.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     const finalDataList =
       this.filteredCurrencyData.length > 0
@@ -597,12 +474,10 @@ export class CurrencyMasterListComponent {
         }
       );
   }
-
   add(): void {
     this.drawerTitle = 'Add New Currency';
     this.drawerData = new CurrencyMaster();
     this.drawerVisible = true;
-
     this.api.getCurrency(1, 1, 'SEQ_NO', 'desc', '').subscribe(
       (data) => {
         if (data['code'] == 200) {
@@ -628,7 +503,6 @@ export class CurrencyMasterListComponent {
       }
     );
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -637,38 +511,30 @@ export class CurrencyMasterListComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   edit(data: CurrencyMaster): void {
     this.drawerTitle = 'Update Currency';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
-  // new filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -680,21 +546,14 @@ export class CurrencyMasterListComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   openfilter() {
     this.drawerTitle = 'Currency Filter';
-    // this.applyCondition = "";
     this.filterFields[1]['options'] = this.countryData;
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -703,7 +562,6 @@ export class CurrencyMasterListComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -720,7 +578,6 @@ export class CurrencyMasterListComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -738,15 +595,12 @@ export class CurrencyMasterListComponent {
       },
     ];
   }
-
   drawerflterClose(): void {
     this.drawerFilterVisible = false;
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'CURRENCY_NAME',
@@ -777,35 +631,6 @@ export class CurrencyMasterListComponent {
       options: [],
       placeholder: 'Enter Country Name',
     },
-    // {
-    //   key: 'DECIMAL_SEPARATOR',
-    //   label: 'Decimal Seperator',
-    //   type: 'select',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //   ],
-    //   options: [
-    //     { value: '.', display: 'Period (.)' },
-    //     { value: ',', display: 'Comma (,)' },
-    //     { value: '_', display: 'Underscore (_)' },
-    //   ],
-    //   placeholder: 'Select Decimal Seperator',
-    // },
-    // {
-    //   key: 'THOUSAND_SEPERATOR',
-    //   label: 'Thousand Seperator',
-    //   type: 'select',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //   ],
-    //   options: [
-    //     { value: '.', display: 'Period (.)' },
-    //     { value: ',', display: 'Comma (,)' },
-    //   ],
-    //   placeholder: 'Select Thousand Seperator',
-    // },
     {
       key: 'EXCHANGE_RATE',
       label: 'Exchange Rate',
@@ -820,20 +645,6 @@ export class CurrencyMasterListComponent {
       ],
       placeholder: 'Enter Exchange Rate',
     },
-    // {
-    //   key: 'DECIMAL_SPACE',
-    //   label: 'Decimal Place',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Decimal Place',
-    // },
     {
       key: 'SYMBOL',
       label: 'Symbol',
@@ -876,7 +687,6 @@ export class CurrencyMasterListComponent {
       ],
       placeholder: 'Enter Sequence Number',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -892,7 +702,6 @@ export class CurrencyMasterListComponent {
       placeholder: 'Select Status',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose();
@@ -901,8 +710,7 @@ export class CurrencyMasterListComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -916,31 +724,22 @@ export class CurrencyMasterListComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
   isDeleting: boolean = false;
-
   BtnDelete: any;
   ButtonDelete;
   deleteItem(item: any): void {
-    //  
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -956,12 +755,10 @@ export class CurrencyMasterListComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //  
           } else {
             this.isfilterapply = true;
           }
@@ -984,11 +781,8 @@ export class CurrencyMasterListComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -996,48 +790,32 @@ export class CurrencyMasterListComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   drawerfilterClose(buttontype, updateButton): void {
-    //  
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-      //  
-      //  
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-      //  
       this.loadFilters();
     }
   }
-
   get filtercloseCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterloading: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1045,16 +823,12 @@ export class CurrencyMasterListComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1075,14 +849,9 @@ export class CurrencyMasterListComponent {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1096,7 +865,6 @@ export class CurrencyMasterListComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1105,38 +873,30 @@ export class CurrencyMasterListComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   public commonFunction = new CommonFunctionService();
   ngOnInit() {
     this.getCountyData();
-    // Ensure USER_ID is assigned a valid number
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
   TabId: number;
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterFields[1]['options'] = this.countryData;
-
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;

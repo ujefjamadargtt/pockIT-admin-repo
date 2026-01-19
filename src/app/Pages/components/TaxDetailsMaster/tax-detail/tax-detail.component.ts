@@ -6,7 +6,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CookieService } from 'ngx-cookie-service';
 import { differenceInCalendarDays, setHours } from 'date-fns';
 import { taxes } from 'src/app/Pages/Models/taxes';
-
 @Component({
   selector: 'app-tax-detail',
   templateUrl: './tax-detail.component.html',
@@ -42,35 +41,26 @@ export class TaxDetailComponent {
   time1
   time2
   date
-
   constructor(private api: ApiServiceService, private cookie: CookieService, private datePipe: DatePipe, private message: NzNotificationService) {
   }
-
   ngOnInit() {
   }
-
   omit(event: any) {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
-
     return true;
   }
-
   close(accountMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     this.data = new taxes();
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
-
   }
-
-
   save(addNew: boolean, accountMasterPage: NgForm): void {
     this.isOk = true;
     if (this.data.TAX_ID == undefined && this.data.TYPE == undefined
@@ -107,54 +97,39 @@ export class TaxDetailComponent {
       this.isOk = false
       this.message.error('Please Enter Description', '')
     }
-
-
     if (this.isOk) {
       this.isSpinning = true;
       this.orgId = this.cookie.get('orgId');
-
       if (this.data.ID) {
-
         this.api.updateTaxDetails(this.data).subscribe(successCode => {
           if (successCode['code'] == 200) {
             this.message.success("Tax Details Updated Successfully", "");
-
             if (!addNew)
               this.drawerClose();
-
             this.isSpinning = false;
             this.resetDrawer(accountMasterPage);
-
           } else {
             this.message.error("Tax details Updation Failed", "");
             this.isSpinning = false;
           }
         });
-
-
-
       } else {
-
         this.api.createTaxDetails(this.data).subscribe(successCode => {
           if (successCode['code'] == 200) {
             this.isSpinning = false;
             this.message.success("Tax details information saved successfully", "");
-
             if (!addNew) {
               this.drawerClose();
               this.resetDrawer(accountMasterPage);
-
             } else {
               this.data = new taxes();
               this.resetDrawer(accountMasterPage);
             }
-
           } else {
             this.message.error("Cannot save tax details information", "");
             this.isSpinning = false;
           }
         });
-
       }
     }
   }

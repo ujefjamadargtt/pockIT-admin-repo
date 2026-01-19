@@ -9,14 +9,12 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { JobCardMasterData } from 'src/app/Pages/Models/JobCardMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-job-card-status-table',
   templateUrl: './job-card-status-table.component.html',
   styleUrls: ['./job-card-status-table.component.css']
 })
 export class JobCardStatusTableComponent {
-
   drawerVisible: boolean = false;
   drawerData: JobCardMasterData = new JobCardMasterData();
   searchText: string = '';
@@ -36,47 +34,30 @@ export class JobCardStatusTableComponent {
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
-
   statusFilter: string | undefined = undefined;
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' }
   ];
-
-
   jobtext: string = '';
   jobdesctext: string = '';
-
-
   jobVisible: boolean = false;
   jobdescVisible: boolean = false;
-
   isStatusTitleFilterApplied = false;
-
   isStatusDescFilterApplied = false;
-
-
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Status Title', value: 'NAME' },
     { label: 'Description', value: 'DESCRIPTION' },
     { label: 'Status', value: 'IS_ACTIVE' },
-
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router
   ) { }
-
-
-
   onKeyup(keys): void {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     }
@@ -84,36 +65,27 @@ export class JobCardStatusTableComponent {
       this.dataList = []
       this.search(true)
     }
-
     if (this.jobtext.length >= 3 && keys.key === 'Enter') {
       this.search();
     }
     else if (this.jobtext.length == 0 && keys.key === 'Backspace') {
       this.search();
     }
-
     if (this.jobdesctext.length >= 3 && keys.key === 'Enter') {
       this.search();
     }
     else if (this.jobdesctext.length == 0 && keys.key === 'Backspace') {
       this.search();
     }
-
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -126,32 +98,25 @@ export class JobCardStatusTableComponent {
     if (this.searchText.trim().length < 3 && this.searchText.trim().length !== 0) {
       return;
     }
-
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery = ' AND (' + this.columns.map((column) => {
         return `${column[0]} like '%${this.searchText}%'`;
       }).join(' OR ') + ')';
     }
-
     if (this.jobtext !== '') {
       likeQuery += (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.jobtext.trim()}%'`;
       this.isStatusTitleFilterApplied = true
@@ -159,7 +124,6 @@ export class JobCardStatusTableComponent {
     else {
       this.isStatusTitleFilterApplied = false
     }
-
     if (this.jobdesctext !== '') {
       likeQuery += (likeQuery ? ' AND ' : '') + `DESCRIPTION LIKE '%${this.jobdesctext.trim()}%'`;
       this.isStatusDescFilterApplied = true
@@ -167,20 +131,13 @@ export class JobCardStatusTableComponent {
     else {
       this.isStatusDescFilterApplied = false
     }
-
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-    // Call API with updated search query
     this.api
       .getJobCardStatusData(this.pageIndex, this.pageSize, this.sortKey, sort, likeQuery + this.filterQuery)
       .subscribe(
@@ -216,86 +173,6 @@ export class JobCardStatusTableComponent {
         }
       );
   }
-
-  // search(reset: boolean = false) {
-  //   if (reset) {
-  //     this.pageIndex = 1;
-  //     this.sortKey = 'id';
-  //     this.sortValue = 'desc';
-  //   }
-
-  //   var sort: string;
-  //   try {
-  //     sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
-  //   } catch (error) {
-  //     sort = '';
-  //   }
-  //   this.loadingRecords = true;
-  //   let likeQuery = '';
-  //   let globalSearchQuery = '';
-
-  //   // Global Search (using searchText)
-  //   if (this.searchText !== '') {
-  //     globalSearchQuery = ' AND (' + this.columns.map((column) => {
-  //       return `${column[0]} like '%${this.searchText}%'`;
-  //     }).join(' OR ') + ')';
-  //   }
-
-  //   if (this.jobtext !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.jobtext.trim()}%'`;
-  //   }
-
-  //   if (this.jobdesctext !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `DESCRIPTION LIKE '%${this.jobdesctext.trim()}%'`;
-  //   }
-
-
-  //   // Status Filter
-  //   if (this.statusFilter) {
-  //     if (likeQuery !== '') {
-  //       likeQuery += ' AND ';
-  //     }
-  //     likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
-  //   }
-
-
-  //   // Combine global search query and column-specific search query
-  //   likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-  //   this.api
-  //     .getJobCardStatusData(
-  //       this.pageIndex,
-  //       this.pageSize,
-  //       this.sortKey,
-  //       sort,
-  //       likeQuery
-  //     )
-  //     .subscribe(
-  //       (data) => {
-  //         if (data['code'] == 200) {
-  //           this.loadingRecords = false;
-  //           this.totalRecords = data['count'];
-  //           this.dataList = data['data'];
-  //         } else {
-  //           this.loadingRecords = false;
-  //           this.dataList = [];
-  //           this.message.error('Something Went Wrong ...', '');
-  //         }
-  //       },
-  //       (err: HttpErrorResponse) => {
-  //         this.loadingRecords = false;
-  //         if (err.status === 0) {
-  //           this.message.error(
-  //             'Network error: Please check your internet connection.',
-  //             ''
-  //           );
-  //         } else {
-  //           this.message.error('Something Went Wrong.', '');
-  //         }
-  //       }
-  //     );
-  // }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -304,40 +181,30 @@ export class JobCardStatusTableComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
-
-
   add(): void {
     this.drawerTitle = 'Add New Job Status';
     this.drawerData = new JobCardMasterData();
     this.drawerVisible = true;
-
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   edit(data: JobCardMasterData): void {
     this.drawerTitle = 'Update Job Status';
     this.drawerData = Object.assign({}, data);
@@ -360,8 +227,7 @@ export class JobCardStatusTableComponent {
     },
   ];
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -382,12 +248,8 @@ export class JobCardStatusTableComponent {
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
-    // this.filterFields[0]["options"] = this.countryData;
-    // this.filterFields[1]["options"] = this.stateData;
-
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -401,18 +263,13 @@ export class JobCardStatusTableComponent {
     this.jobdesctext = ''
     this.search();
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   orderData: any;
   filterdrawerTitle!: string;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -423,7 +280,6 @@ export class JobCardStatusTableComponent {
   filterQuery: string = '';
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = []
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -431,18 +287,13 @@ export class JobCardStatusTableComponent {
       this.filterClass = 'filter-visible';
       this.loadFilters()
     }
-
   }
-
   filterloading: boolean = false;
-
   whichbutton: any;
-
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -450,16 +301,12 @@ export class JobCardStatusTableComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -474,22 +321,15 @@ export class JobCardStatusTableComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -503,8 +343,6 @@ export class JobCardStatusTableComponent {
       );
     this.filterQuery = '';
   }
-
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -513,12 +351,8 @@ export class JobCardStatusTableComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
-
   isDeleting: boolean = false;
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -534,20 +368,14 @@ export class JobCardStatusTableComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           }
           else {
             this.isfilterapply = true;
           }
-
-
         } else {
           this.message.error('Failed to delete filter.', '');
           this.isDeleting = false;
@@ -567,9 +395,7 @@ export class JobCardStatusTableComponent {
       }
     );
   }
-
   applyfilter(item) {
-
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -577,31 +403,17 @@ export class JobCardStatusTableComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
-
-
   drawerflterClose(buttontype, updateButton): void {
-
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
-
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-
       this.loadFilters();
     }
   }
-
-
-
   openfilter() {
     this.drawerTitle = 'Job Status Filter';
     this.drawerFilterVisible = true;
@@ -613,13 +425,9 @@ export class JobCardStatusTableComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -636,7 +444,6 @@ export class JobCardStatusTableComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -654,15 +461,10 @@ export class JobCardStatusTableComponent {
       },
     ];
   }
-
-
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
-
     {
       key: 'NAME',
       label: 'Status Title Name',
@@ -677,7 +479,6 @@ export class JobCardStatusTableComponent {
       ],
       placeholder: 'Enter Status Title Name',
     },
-
     {
       key: 'DESCRIPTION',
       label: 'Description',
@@ -692,7 +493,6 @@ export class JobCardStatusTableComponent {
       ],
       placeholder: 'Enter Description',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -708,32 +508,20 @@ export class JobCardStatusTableComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
-
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-
 }

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -18,7 +17,6 @@ export class ReportComponent implements OnInit {
   formsSeq13: any[] = [];
   formsSeq14: any[] = [];
   public commonFunction = new CommonFunctionService();
-
   constructor(public router: Router, public api: ApiServiceService, public message: NzNotificationService) { }
   @Output() menuClick = new EventEmitter<void>();
   roleId = sessionStorage.getItem('roleId');
@@ -29,35 +27,23 @@ export class ReportComponent implements OnInit {
   titleWiseChildren2: Record<string, any[]> = {};
   titleWiseChildren3: Record<string, any[]> = {};
   titleWiseChildren4: Record<string, any[]> = {};
-
-  // constructor(private router: Router) { }
-
   onMenuClick(): void {
     this.menuClick.emit();
   }
-
   objectKeys(obj: any): string[] {
     return Object.keys(obj);
   }
-
-
   ngOnInit() {
     this.api.getForms(this.decreptedroleId).subscribe(
       (data) => {
         if (data['code'] == 200 && data['data']) {
           this.loadingRecords = false;
-
-          // Filter for SEQ_NO 10
           const filteredForms = data['data'].filter(form => form.SEQ_NO === 10);
           this.forms = filteredForms.sort((a, b) => a.SEQ_NO - b.SEQ_NO);
-
-          // Filter for SEQ_NO 11, 12, 13, 14 separately
           this.formsSeq11 = data['data'].filter(form => form.SEQ_NO === 11);
           this.formsSeq12 = data['data'].filter(form => form.SEQ_NO === 12);
           this.formsSeq13 = data['data'].filter(form => form.SEQ_NO === 13);
           this.formsSeq14 = data['data'].filter(form => form.SEQ_NO === 14);
-
-          // Create an object that maps each title to its corresponding children
           this.titleWiseChildren = this.forms.reduce((acc, item) => {
             const sortedChildren = item.children?.sort((a, b) => a.SEQ_NO - b.SEQ_NO) || [];
             acc[item.title] = sortedChildren;
@@ -97,27 +83,10 @@ export class ReportComponent implements OnInit {
         }
       }
     );
-
   }
-
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
-
-  // reports = [
-  //   { title: 'Order Summary', route: '/masters/order-summary-report' },
-  //   { title: 'Order Details', route: '/masters/order-detailed-report' },
-  //   { title: 'Order Cancellation Details', route: '/masters/order-cancellation-report' },
-  //   { title: 'B2B Customer Summary', route: '/masters/b2b-customer-service-summary-report' },
-  //   { title: 'Assigned Jobs', route: '/masters/job-assignment-report' },
-  //   { title: 'Technician Wise Job Card details', route: '/masters/technician-wise-job-card-report' },
-  //   { title: 'Technician Performance Details', route: '/masters/technician-performance-report' },
-  //   { title: 'Refund Details', route: '/masters/refund-report' }
-  // ];
-
-
   navigateTo(route: string) {
     this.router.navigate([route]);
   }

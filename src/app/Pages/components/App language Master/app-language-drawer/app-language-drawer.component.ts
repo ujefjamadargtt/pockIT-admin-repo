@@ -7,7 +7,6 @@ import { HttpEventType } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AppLanguageData } from 'src/app/Pages/Models/ApplanguageMaster';
-
 @Component({
   selector: 'app-app-language-drawer',
   templateUrl: './app-language-drawer.component.html',
@@ -27,13 +26,11 @@ export class AppLanguageDrawerComponent {
   isSpinning = false;
   isOk = true;
   isFocused = '';
-
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   resetDrawer(LanguageDrawer: NgForm) {
@@ -79,7 +76,6 @@ export class AppLanguageDrawerComponent {
       this.isOk = false;
       this.message.error('Please Enter Seq No.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -98,7 +94,6 @@ export class AppLanguageDrawerComponent {
                 this.message.error('App Language Updation Failed', '');
                 this.isSpinning = false;
               }
-
             }, (err) => {
               this.message.error(
                 'Something went wrong, please try again later',
@@ -110,18 +105,14 @@ export class AppLanguageDrawerComponent {
           this.api
             .createAppLanguageData(this.data)
             .subscribe((successCode: any) => {
-
               if (successCode.status == '200') {
                 this.message.success('App Language Created Successfully', '');
                 if (!addNew) this.drawerClose();
                 else {
-                  // this.data = new AppLanguageData();
                   this.resetDrawer(LanguageDrawer);
                   this.api.getAppLanguageData(0, 0, '', 'desc', '').subscribe(
                     (data) => {
                       if (data['code'] == 200) {
-
-
                         if (data['count'] == 0) {
                           this.data.SEQ_NO = 1;
                         } else {
@@ -139,7 +130,6 @@ export class AppLanguageDrawerComponent {
                 this.message.error('App Language Creation Failed...', '');
                 this.isSpinning = false;
               }
-
             }, (err) => {
               this.message.error(
                 'Something went wrong, please try again later',
@@ -151,7 +141,6 @@ export class AppLanguageDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }
@@ -160,17 +149,14 @@ export class AppLanguageDrawerComponent {
     this.data.ICON = ' ';
     this.fileURL = null;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
   image1DeleteConfirm(data: any) {
     this.UrlImageOne = null;
     this.data.ICON = ' ';
-
     this.fileURL = null;
   }
   viewImage(imageURL: string): void {
@@ -183,14 +169,11 @@ export class AppLanguageDrawerComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
   imageshow;
   onFileSelected(event: any) {
     const maxFileSize = 1 * 1024 * 1024;
-
     if (
       event.target.files[0].type == 'image/jpeg' ||
       event.target.files[0].type == 'image/jpg' ||
@@ -222,7 +205,6 @@ export class AppLanguageDrawerComponent {
         .onUpload('AppLanguageIcon', this.fileURL, this.UrlImageOne)
         .subscribe((res) => {
           this.data.ICON = this.UrlImageOne;
-
           if (res.type === HttpEventType.Response) {
           }
           if (res.type === HttpEventType.UploadProgress) {
@@ -236,7 +218,6 @@ export class AppLanguageDrawerComponent {
             }
           } else if (res.type == 2 && res.status != 200) {
             this.message.error('Failed to upload file', '');
-
             this.isSpinning = false;
             this.progressBarImageOne = false;
             this.percentImageOne = 0;
@@ -244,7 +225,6 @@ export class AppLanguageDrawerComponent {
           } else if (res.type == 4 && res.status == 200) {
             if (res.body['code'] == 200) {
               this.message.success('File Uploaded Successfully...', '');
-
               this.isSpinning = false;
               this.data.ICON = this.UrlImageOne;
             } else {

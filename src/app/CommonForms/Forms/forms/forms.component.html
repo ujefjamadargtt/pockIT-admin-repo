@@ -1,27 +1,45 @@
 <div nz-row nzType="flex">
   <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
     <h2 class="formname">
-      <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
-        style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp;{{ formTitle }}
+      <span
+        (click)="back()"
+        nz-icon
+        nzType="arrow-left"
+        nzTheme="outline"
+        class="back-arrow-icon"
+      ></span
+      >&nbsp;&nbsp;{{ formTitle }}
     </h2>
   </div>
-
-  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex; justify-content: flex-end">
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    class="search-action-container"
+  >
     <form nz-form [nzLayout]="'inline'">
       <nz-form-item>
         <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-          <input type="text" name="search" nz-input placeholder="Min 3 chars required." [(ngModel)]="searchText"
-            (keyup)="keyup($event)" autocomplete="off" />
+          <input
+            type="text"
+            name="search"
+            nz-input
+            placeholder="Min 3 chars required."
+            [(ngModel)]="searchText"
+            (keyup)="keyup($event)"
+            autocomplete="off"
+          />
         </nz-input-group>
-
         <ng-template #suffixIconButton>
           <button nz-button nzType="primary" (click)="search(true)" nzSearch>
             <i nz-icon nzType="search"></i>
           </button>
         </ng-template>
       </nz-form-item>
-
-      <nz-form-item style="margin-right: 0px">
+      <nz-form-item class="new-form-button-container">
         <button nz-button nzType="primary" (click)="add()" nzJustify="end">
           <i nz-icon nzType="plus"></i>New Form
         </button>
@@ -29,12 +47,25 @@
     </form>
   </div>
 </div>
-<div nz-row style="padding-top: 10px">
+<div nz-row class="table-container">
   <div nz-col nzSpan="24">
-    <nz-table class="my-scroll no-wrap1" nzBordered #leaveTypeTable nzShowSizeChanger [nzFrontPagination]="false"
-      [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
-      [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" style="white-space: pre-line"
-      (nzPageSizeChange)="search(true)" [nzSize]="'small'" [nzScroll]="{ y: '50vh' }" (nzQueryParams)="sort($event)">
+    <nz-table
+      class="my-scroll no-wrap1 data-table"
+      nzBordered
+      #leaveTypeTable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      [nzSize]="'small'"
+      [nzScroll]="{ y: '50vh' }"
+      (nzQueryParams)="sort($event)"
+    >
       <thead>
         <tr>
           <th nzWidth="50px">Action</th>
@@ -48,13 +79,19 @@
       </thead>
       <tbody>
         <tr *ngFor="let data of leaveTypeTable.data">
-          <td align="center" style="white-space: pre-line">
-            <a (click)="edit(data)">
-              <span nz-icon nzType="edit" nzTooltipTitle="Edit" nz-tooltip nzTheme="twotone"
-                style="font-size: 15px"></span>
+          <td align="center" class="action-cell">
+            <a (click)="edit(data)" class="edit-link">
+              <span
+                nz-icon
+                nzType="edit"
+                nzTooltipTitle="Edit"
+                nz-tooltip
+                nzTheme="twotone"
+                class="edit-icon"
+              ></span>
             </a>
           </td>
-          <td *ngFor="let column of columns" style="white-space: pre-line">
+          <td *ngFor="let column of columns" class="data-cell">
             {{ data[column[0]] }}
           </td>
         </tr>
@@ -63,12 +100,21 @@
   </div>
 </div>
 <div *ngIf="drawerVisible">
-  <nz-drawer [nzBodyStyle]="{
+  <nz-drawer
+    [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
       overflow: 'auto',
       'padding-bottom': '53px'
-    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="320" [nzVisible]="drawerVisible"
-    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="320"
+    [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerClose()"
+    (nzKeyboard)="(true)"
+  >
     <ng-container *nzDrawerContent>
       <app-form [drawerClose]="closeCallback" [data]="drawerData"></app-form>
     </ng-container>

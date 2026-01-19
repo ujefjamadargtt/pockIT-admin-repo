@@ -4,13 +4,72 @@ nz-form-item {
     width: -webkit-fill-available;
     padding: 0px 10px;
   }
-  
-
   .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
+}
+.subcategory-tree-width-c1 {
+  width: 100%;
+}
+.subcategory-action-col-c1 {
+  padding-right: 4px;
+}
+.subcategory-apply-btn-c1 {
+  margin-top: 26px;
+}
+.inventory-left-info-c1 {
+  text-align: left;
+  padding-left: 10px;
+}
+.inventory-right-search-c1 {
+  text-align: right;
+  padding-right: 10px;
+}
+.inline-form-c1 {
+  display: inline-flex;
+}
+.search-group-offset-c1 {
+  margin-left: 26px !important;
+}
+.search-input-height-c1 {
+  height: 32px;
+}
+.relative-container-c1 {
+  position: relative;
+}
+.table-preline-c1 {
+  white-space: pre-line;
+}
+.center-text-c1 {
+  text-align: center;
+}
+.mapping-arrow-col-c1 {
+  align-self: center;
+  text-align: center;
+  align-items: center;
+}
+.mapping-arrow-icon-c1 {
+  font-size: 26px !important;
+}
+.mapped-header-row-c1 {
+  display: flex;
+  justify-content: space-between;
+}
+.mapped-header-left-c1 {
+  display: flex;
+}
+.mapped-count-c1 {
+  text-align: left;
+  padding-left: 10px;
+}
+.mapped-switch-c1 {
+  text-align: left;
+  padding-left: 10px;
+}
+.mapped-search-right-c1 {
+  text-align: right;
+  padding-right: 10px;
 }

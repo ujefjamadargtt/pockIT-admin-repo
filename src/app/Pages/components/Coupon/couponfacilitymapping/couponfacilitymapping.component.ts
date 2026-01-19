@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { TerritoryMaster } from 'src/app/Pages/Models/TerritoryMaster';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 export class Data {
   PINCODE_ID: any = [];
   PINCODE: any = [];
@@ -14,7 +13,6 @@ export class Data {
   CITY_ID: number;
   CITY_NAME: string;
   STATUS: boolean = true;
-
   COUPON_ID: any;
   SUB_CATEGORY_ID: any;
   SERVICE_ID;
@@ -22,7 +20,6 @@ export class Data {
   CLIENT_ID;
   SERVICE_CATELOG_ID;
 }
-
 @Component({
   selector: 'app-couponfacilitymapping',
   templateUrl: './couponfacilitymapping.component.html',
@@ -40,7 +37,6 @@ export class CouponfacilitymappingComponent implements OnInit {
   pageSize = 10;
   PincodeMappingdata: any[] = [];
   PincodeMappingdatass: any[] = [];
-
   mappedPincodeIds: number[] = [];
   searchText: string = '';
   isSpinning = false;
@@ -55,7 +51,6 @@ export class CouponfacilitymappingComponent implements OnInit {
   selectedPincode: any[] = [];
   city: any[] = [];
   state: any[] = [];
-  // filterQuery: string = '';
   filterQuery: any = {};
   constructor(
     private api: ApiServiceService,
@@ -64,7 +59,6 @@ export class CouponfacilitymappingComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.getStateData();
-    // this.PincodeMapping();
     this.allChecked = this.mappingdata.every((item) => item.STATUS);
   }
   subcategoryData: any = [];
@@ -90,49 +84,20 @@ export class CouponfacilitymappingComponent implements OnInit {
       }
     );
   }
-
   pincodeData: any = [];
-
   searchPincode: string = '';
   datalist2: any[] = [];
-  // handleEnterPincodeKey(event: Event): void {
-  //   const keyboardEvent = event as KeyboardEvent; // Explicitly cast to KeyboardEvent
-
-  //   if (keyboardEvent.key === 'Enter') {
-  //     keyboardEvent.preventDefault();
-  //     if (this.searchPincode.trim().length >= 3) {
-  //       this.SearchPincode(this.searchPincode);
-  //     }
-  //   }
-
-  //   // Handle Backspace key press
-  //   if (keyboardEvent.key === 'Backspace') {
-  //     setTimeout(() => {
-  //       // Use a small delay to ensure the model updates
-  //       if (this.searchPincode.trim().length === 0) {
-  //         this.PincodeMapping111(); // Call PincodeMapping111 when search text is cleared
-  //       }
-  //     }, 0);
-  //   }
-  // }
   handleEnterPincodeKey(event: any): void {
     const keyboardEvent = event as KeyboardEvent;
-
-    // Handle Enter key press
     if (keyboardEvent.key === 'Enter') {
-      keyboardEvent.preventDefault(); // Prevent default form submission
-
-      // Call SearchPincode if input length is >= 3
+      keyboardEvent.preventDefault(); 
       if (this.searchPincode.trim().length >= 3) {
         this.SearchPincode(this.searchPincode);
       } else {
       }
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
-        // Use a small delay to ensure the model updates
         if (this.searchPincode.trim().length === 0) {
           this.mappingdata = this.originalTraineeData1;
           this.PincodeMapping111();
@@ -140,44 +105,10 @@ export class CouponfacilitymappingComponent implements OnInit {
       }, 0);
     }
   }
-  // SearchPincode(data: any) {
-  //   this.isSpinning = true;
-
-  //   if (data.length >= 3) {
-  //     const searchTerm = data.toLowerCase();
-
-  //     // Filter the data across multiple fields
-  //     this.datalist2 = this.mappingdata.filter((record) => {
-  //       return (
-  //         (record.SERVICE_NAME &&
-  //           record.SERVICE_NAME.toLowerCase().includes(searchTerm)) ||
-  //         (record.CATEGORY_NAME &&
-  //           record.CATEGORY_NAME.toLowerCase().includes(searchTerm)) ||
-  //         (record.SUB_CATEGORY_NAME &&
-  //           record.SUB_CATEGORY_NAME.toLowerCase().includes(searchTerm))
-  //       );
-  //     });
-
-  //     this.isSpinning = false;
-  //     this.mappingdata = this.datalist2.slice();
-  //   } else if (data.trim().length === 0) {
-  //     // Reset the table data to the original dataset
-  //     this.isSpinning = false;
-  //     this.mappingdata = this.mappingdataMain;
-  //   } else {
-  //     // If less than 3 characters, do not filter and show the original data
-  //     this.isSpinning = false;
-  //     this.mappingdata = this.mappingdataMain;
-  //   }
-  // }
   SearchPincode(data: any) {
     this.isSpinning = true;
-
     if (data && data.trim().length >= 3) {
-      // Convert the search term to lowercase for case-insensitive comparison
       const searchTerm = data.toLowerCase();
-
-      // Filter the data based on the SKILL_NAME field
       this.mappingdata = this.originalTraineeData1.filter((record) => {
         return (
           (record.SERVICE_NAME &&
@@ -190,51 +121,37 @@ export class CouponfacilitymappingComponent implements OnInit {
       });
       this.isSpinning = false;
     } else if (data.trim().length === 0) {
-      // Reset the table data to the original dataset
       this.isSpinning = false;
       this.mappingdata = [...this.originalTraineeData1];
     } else {
-      // If less than 3 characters, do not filter and show the original data
       this.isSpinning = false;
     }
   }
   datalist1: any[] = [];
   originalTraineeData: any[] = [];
   originalTraineeData1: any[] = [];
-
   handleEnterKey(event: any): void {
     const keyboardEvent = event as KeyboardEvent;
-
-    // Handle Enter key press
-
     if (keyboardEvent.key === 'Enter') {
       keyboardEvent.preventDefault();
       if (this.searchText.trim().length >= 3) {
         this.SearchOffice(this.searchText);
       }
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
         if (this.searchText.trim().length === 0) {
-          // Reset to original data and sort selected records to the top
           this.PincodeMappingdata = this.originalTraineeData.map((record) => ({
             ...record,
             selected: this.selectedPincodeSet.has(record.ID),
           }));
-
           this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
-
-          // Update selection states
           this.updateSelectionStates();
         }
       }, 0);
     }
   }
-
   pincodemappingdata() {
-    //this.isSpinning = true;
     this.isSpinning11 = true;
     var sort: string;
     try {
@@ -242,8 +159,6 @@ export class CouponfacilitymappingComponent implements OnInit {
     } catch (error) {
       sort = '';
     }
-
-    // Call the API with the constructed query
     this.api
       .getUnmappedcouponservices(
         this.data.ID,
@@ -253,19 +168,19 @@ export class CouponfacilitymappingComponent implements OnInit {
         0,
         this.sortKey,
         sort,
-        ''
+        '',
+        this.servieTypeFilter
       )
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
             this.PincodeMappingdata = data['data'];
             this.originalTraineeData = [...this.PincodeMappingdata];
-
             this.selectedPincode = [];
           } else {
             this.PincodeMappingdata = [];
             this.selectedPincode = [];
-            this.message.error('Failed To Get Pincode Mapping Data...', '');
+            this.message.error('Failed To Get service Mapping Data...', '');
           }
           this.isSpinning = false;
           this.isSpinning11 = false;
@@ -280,36 +195,36 @@ export class CouponfacilitymappingComponent implements OnInit {
   splitddata: any;
   SUB_CATEGORY_NAME: any;
   CATEGORY_NAME: any;
-  getNamesCatAndSub(selectedKey: any): void {
-    if (selectedKey != null && selectedKey != undefined && selectedKey !== '') {
-      // Find the selected subcategory and its parent category
-      let parentCategoryName = null;
-      let subCategoryName = null;
-      let CategoryNameId = null;
-      this.subcategoryData.forEach((category) => {
-        if (category.children) {
-          const subCategory = category.children.find(
-            (child) => child.key === selectedKey
-          );
-          if (subCategory) {
-            parentCategoryName = category.title; // Parent category name
-            subCategoryName = subCategory.title; // Subcategory name
-            CategoryNameId = category.key; // Subcategory name
-            this.CATEGORY_NAME = parentCategoryName;
-            this.SUB_CATEGORY_NAME = subCategoryName;
-            this.CATEGORY_ID = CategoryNameId;
-            this.splitddata = subCategory.key;
-            this.SUB_CATEGORY_ID = this.splitddata;
+  selectedCategories: any[] = [];
+  getNamesCatAndSub(selectedKeys: any[]): void {
+    console.log('Selected Keys:', selectedKeys);
+    this.selectedCategories = [];        
+    this.CATEGORY_ID = [];               
+    if (!selectedKeys || selectedKeys.length === 0) {
+      this.CATEGORY_NAME = null;
+      this.SUB_CATEGORY_NAME = null;
+      this.CATEGORY_ID = [];
+      this.SUB_CATEGORY_ID = [];
+      this.PincodeMappingdata = [];
+      return;
+    }
+    selectedKeys.forEach(selectedKey => {
+      this.subcategoryData.forEach(parent => {
+        if (parent.children && parent.children.length > 0) {
+          const sub = parent.children.find(c => c.key === selectedKey);
+          if (sub) {
+            if (!this.CATEGORY_ID.includes(parent.key)) {
+              this.CATEGORY_ID.push(parent.key);
+            }
+            this.selectedCategories.push({
+              CATEGORY_ID: parent.key,
+              CATEGORY_NAME: parent.title,
+              SUB_CATEGORY_ID: sub.key,
+            });
           }
         }
       });
-    } else {
-      // Clear values if no subcategory is selected
-      this.data.INVENTORY_CATEGORY_NAME = null;
-      this.data.INVENTRY_SUB_CATEGORY_NAME = null;
-      this.data.INVENTORY_CATEGORY_ID = null;
-      this.data.INVENTRY_SUB_CATEGORY_ID = null;
-    }
+    });
   }
   sort(params: NzTableQueryParams) {
     if (this.CATEGORY_ID && this.SUB_CATEGORY_ID) {
@@ -345,26 +260,23 @@ export class CouponfacilitymappingComponent implements OnInit {
     teritorymaster.form.markAsPristine();
     teritorymaster.form.markAsUntouched();
   }
-
-  // select all pincode toggle button
   isSelectAll: boolean = false;
   toggleSelectAll(isSelectAll: boolean): void {
     if (isSelectAll) {
-      // Select all available pincodes
       this.saveData.SERVICE_ID = this.pincodeData.map((pincode) => pincode.ID);
     } else {
-      // Deselect all pincodes
       this.saveData.SERVICE_ID = [];
     }
   }
-
   apply() {
-    // this.isSpinning = true
     this.isSpinning11 = true;
-    // this.filterQuery = {};
-
     this.selectedPincodeSet.clear();
-
+    this.tableIndeterminate = false;
+    if (this.SUB_CATEGORY_ID == null || this.SUB_CATEGORY_ID.length == 0) {
+      this.isSpinning = false;
+      this.isSpinning11 = false;
+      return;
+    }
     if (
       this.SUB_CATEGORY_ID == null ||
       this.SUB_CATEGORY_ID == undefined ||
@@ -374,6 +286,7 @@ export class CouponfacilitymappingComponent implements OnInit {
       this.message.error('Please select sub category.', '');
       this.isSpinning = false;
       this.isSpinning11 = false;
+      return;
     }
     if (
       this.SUB_CATEGORY_ID ||
@@ -391,18 +304,14 @@ export class CouponfacilitymappingComponent implements OnInit {
       this.pincodemappingdata();
     }
   }
-
   clear(filter) {
     this.city = [];
     this.state = [];
-    // this.filterQuery = '';
     this.filterQuery = {};
     this.pincodemappingdata();
   }
-
   allSelected1: any;
   selectedPincode111: any;
-
   selectedPincode11: any = [];
   onPincodeSelecttable11(data: any, selected: boolean): void {
     data.selected = selected;
@@ -410,17 +319,23 @@ export class CouponfacilitymappingComponent implements OnInit {
     const selectedRows = this.mappingdata.filter(
       (item) => item.selected
     ).length;
-
-    // Update Select All and Indeterminate states
     this.allSelected1 = selectedRows === totalRows && totalRows > 0;
     this.tableIndeterminate11 = selectedRows > 0 && selectedRows < totalRows;
-
-    // Update selected pincodes
     this.selectedPincode11 = this.mappingdata
       .filter((item) => item.selected)
       .map((item) => item.SERVICE_ID);
   }
-
+  listOfFilter1: any[] = [
+    { text: 'B2B', value: 'B' },
+    { text: 'B2C', value: 'C' },
+    { text: 'Both', value: 'O' },
+  ];
+  typeFilter: string | undefined = undefined;
+  servieTypeFilter: any = '';
+  ontypeFilterChange(selectedStatus: string) {
+    this.servieTypeFilter = selectedStatus || null;
+    this.pincodemappingdata();
+  }
   sort11(params: NzTableQueryParams) {
     this.isSpinning = true;
     this.isSpinning22 = true;
@@ -442,26 +357,19 @@ export class CouponfacilitymappingComponent implements OnInit {
     this.sortValue = sortOrder;
     this.PincodeMapping111();
   }
-
   mappingdata: any = [];
   mappingdataMain: any = [];
-
   isSpinning22: boolean = false;
   isSpinning11: boolean = false;
   PincodeMapping111() {
     this.isSpinning = true;
     this.isSpinning22 = true;
     var sort: string;
-    // this.sortKey = 'NAME';
-    // sort = 'asc';
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
-    // Call the API with the constructed query
     this.api
       .getmappedcouponservice(
         0,
@@ -476,7 +384,6 @@ export class CouponfacilitymappingComponent implements OnInit {
             this.mappingdata = data['data'];
             this.mappingdataMain = data['data'];
             this.originalTraineeData1 = [...this.mappingdata];
-
             this.totoalrecordsss = this.mappingdata.length;
             this.selectedPincode11 = [];
             this.allChecked =
@@ -497,11 +404,8 @@ export class CouponfacilitymappingComponent implements OnInit {
       );
   }
   totoalrecordsss = 0;
-
   mapdatatopincode() {
     this.isSpinning = true;
-
-    // Ensure only the selected pincodes are included in the request
     if (this.selectedPincode.length > 0) {
       this.api
         .addBulkServicesForCoupon(this.data.ID, this.selectedPincode)
@@ -513,7 +417,6 @@ export class CouponfacilitymappingComponent implements OnInit {
                 ''
               );
               this.isSpinning = false;
-              // Clear the selected pincodes
               this.selectedPincode = [];
               this.selectedPincodeSet = new Set();
               this.PincodeMapping111();
@@ -532,104 +435,64 @@ export class CouponfacilitymappingComponent implements OnInit {
           }
         );
     } else {
-      // Handle case where no pincode is selected
       this.message.error('No services selected for mapping.', '');
       this.isSpinning = false;
     }
   }
-
   onPincodeSelecttable11111(data: any, selected: boolean): void {
     data.STATUS = selected;
-
-    // const dataToSend = [
-    //   {
-    //     COUPON_ID: this.data.ID,
-    //     SERVICE_ID: data.ID,
-    //     COUNTRY_ID: this.data.COUNTRY_ID,
-    //     STATUS: selected,
-    //     CLIENT_ID: 1,
-    //     ID: data.ID,
-    //     CATEGORY_ID: data.CATEGORY_ID,
-    //     SUB_CATEGORY_ID: data.SUB_CATEGORY_ID,
-    //     SERVICE_CATELOG_ID: data.SERVICE_CATELOG_ID
-    //   },
-    // ];
     this.isSpinning = true;
-
     this.api.UnmappSingleCoupons(data).subscribe(
       (response) => {
         if (response.code === 200) {
-          // Update the active status of the current data
           data.STATUS = selected;
-
-          // Recalculate `allChecked` state
           this.allChecked = this.mappingdata.every((item) => item.STATUS);
-
-          // Show success message based on selection
           const successMessage = selected
             ? 'Service Successfully mapped to the Coupon.'
             : 'Service Successfully Unmapped to the Coupon.';
           this.message.success(successMessage, '');
-
-          // Reset state variables
           this.isSpinning = false;
           this.selectedPincode11 = [];
           this.allSelected1 = false;
         } else if (response.code === 300) {
-          // Handle error for specific code
-          data.STATUS = false; // Ensure STATUS is set to false
+          data.STATUS = false; 
           this.isSpinning = false;
           this.message.error(response.message, '');
         } else {
-          // General failure message
           this.isSpinning = false;
           this.message.error('Failed to Map Service to the Coupon', '');
         }
       },
       (error) => {
-        // Handle API error
         this.isSpinning = false;
         this.message.error('Something Went Wrong.', '');
       }
     );
   }
-
   selectedPincodeSet: Set<number> = new Set();
-
   SearchOffice(data: string): void {
     this.isSpinning = true;
-
     if (data && data.trim().length >= 3) {
-      // Filter the data based on the search input
       this.datalist1 = this.PincodeMappingdata.filter((record) => {
         return (
           record.NAME && record.NAME.toLowerCase().includes(data.toLowerCase())
         );
       });
-
-      // Map the filtered data to include the selected state
       this.PincodeMappingdata = this.datalist1.map((record) => ({
         ...record,
         selected: this.selectedPincodeSet.has(record.ID),
       }));
-
-      // Sort selected records to the top
       this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
     } else if (data.trim().length === 0) {
-      // Reset to the original data and sort selected records to the top
       this.PincodeMappingdata = this.originalTraineeData.map((record) => ({
         ...record,
         selected: this.selectedPincodeSet.has(record.ID),
       }));
-
       this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
     }
-
     this.isSpinning = false;
   }
-
   onPincodeSelecttable(data: any, selected: boolean): void {
-    // Track selected items based on checkbox status
     var selectedItem: any = {
       COUPON_ID: this.data.ID,
       SERVICE_ID: data.ID,
@@ -640,7 +503,6 @@ export class CouponfacilitymappingComponent implements OnInit {
       SUB_CATEGORY_ID: data.SUB_CATEGORY_ID,
       SERVICE_CATELOG_ID: data.SERVICE_CATELOG_ID,
     };
-
     if (selected) {
       this.selectedPincodeSet.add(data.ID);
       this.selectedPincode.push(selectedItem);
@@ -650,21 +512,13 @@ export class CouponfacilitymappingComponent implements OnInit {
         (element) => element.SERVICE_ID !== data.ID
       );
     }
-
     this.updateSelectionStates();
   }
-
   isLoading: boolean = false;
-
   async toggleAll(selectAll: boolean): Promise<void> {
     this.isLoading = true;
-    // this.loadingMessage = selectAll
-    //   ? 'Selecting all records. Please wait...'
-    //   : 'Deselecting all records. Please wait...';
-
     const batchSize = 50;
     const totalRecords = this.PincodeMappingdata.length;
-
     const processBatch = async (startIndex: number) => {
       for (
         let i = startIndex;
@@ -672,7 +526,6 @@ export class CouponfacilitymappingComponent implements OnInit {
         i++
       ) {
         const item = this.PincodeMappingdata[i];
-
         if (selectAll) {
           const selectedItem: any = {
             COUPON_ID: this.data.ID,
@@ -693,7 +546,6 @@ export class CouponfacilitymappingComponent implements OnInit {
           item.selected = false;
         }
       }
-
       if (startIndex + batchSize < totalRecords) {
         setTimeout(() => processBatch(startIndex + batchSize), 0);
       } else {
@@ -701,19 +553,14 @@ export class CouponfacilitymappingComponent implements OnInit {
         this.isLoading = false;
       }
     };
-
     processBatch(0);
   }
   updateSelectionStates(): void {
-    const visibleRecords = this.PincodeMappingdata; // Currently displayed data in the table
+    const visibleRecords = this.PincodeMappingdata; 
     const totalVisibleRecords = visibleRecords.length;
-
-    // Count selected records in the visible data
     const totalSelectedVisibleRecords = visibleRecords.filter((record) =>
       this.selectedPincodeSet.has(record.ID)
     ).length;
-
-    // Update allSelected and indeterminate states based on visible data
     this.allSelected =
       totalSelectedVisibleRecords === totalVisibleRecords &&
       totalVisibleRecords > 0;
@@ -721,14 +568,10 @@ export class CouponfacilitymappingComponent implements OnInit {
       totalSelectedVisibleRecords > 0 &&
       totalSelectedVisibleRecords < totalVisibleRecords;
   }
-
   allChecked = false;
-
   allChange(selected: boolean): void {
-    this.allChecked = selected; // Set allChecked state
+    this.allChecked = selected; 
     this.isSpinning = true;
-
-    // Prepare data for batch update
     const dataToSend = this.mappingdata.map((item) => ({
       SERVICE_ID: item.SERVICE_ID,
       STATUS: selected,
@@ -740,11 +583,6 @@ export class CouponfacilitymappingComponent implements OnInit {
       SERVICE_CATELOG_ID: item.SERVICE_CATELOG_ID,
     }));
     var dataid: any = '';
-    // if (this.Type == 'Map') {
-    //   dataid = this.data.SERVICE_ID;
-    // } else {
-    //   dataid = this.data.ID;
-    // }
     this.api.UnmappBulkCoupons(this.data.ID, dataToSend).subscribe(
       (response) => {
         if (response.code === 200) {
@@ -758,10 +596,10 @@ export class CouponfacilitymappingComponent implements OnInit {
         } else {
           this.message.error('Failed to Update Services.', '');
         }
-        this.isSpinning = false; // Hide spinner
+        this.isSpinning = false; 
       },
       (error) => {
-        this.isSpinning = false; // Hide spinner on error
+        this.isSpinning = false; 
         this.message.error('Something Went Wrong.', '');
       }
     );

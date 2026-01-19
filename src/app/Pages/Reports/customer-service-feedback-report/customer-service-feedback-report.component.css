@@ -1,17 +1,126 @@
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%;
   display: inline-block;
 }
-
-.select{
+.select {
   width: 200px;
   padding: 8px;
   display: block;
-  }
+}
+.back-icon-heavy {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-right-flex {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-white-color {
+  color: white;
+}
+.filter-btn-width {
+  width: 47px;
+}
+.filter-row-zero-pad {
+  padding-top: 0px;
+}
+.spin-text-center {
+  text-align: center;
+}
+.filter-item-bottom {
+  margin-bottom: 8px;
+}
+.filter-card-align {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-header-flexbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-span-large {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.check-icon-absolute {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-tag-topspace {
+  margin-top: 7px;
+}
+.filter-tag-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.edit-tag-cursor,
+.apply-tag-cursor,
+.clear-tag-cursor,
+.delete-tag-cursor {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.view-tag-right {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.edit-icon-small,
+.search-icon-small,
+.close-icon-small,
+.delete-icon-small,
+.eye-icon-small {
+  font-size: 10px !important;
+}
+.no-data-red-bold {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-btn-margin,
+.new-btn-margin {
+  margin-right: 10px;
+}
+.table-spacing-top {
+  margin-top: 8px;
+}
+.feedback-date-center,
+.cust-name-center,
+.service-name-center,
+.rating-center,
+.comments-center {
+  text-align: center;
+}
+.feedback-date-cell {
+  text-align: center;
+}
+.rating-cell-center {
+  text-align: center;
+}
+.date-range-width {
+  width: 100%;
+}
+.query-title-center {
+  text-align: center;
+}

@@ -1,25 +1,14 @@
 <div nz-row>
-  <div nz-col nzSpan="24" style="display: flex; justify-content: right">
+  <div nz-col nzSpan="24" class="bo-search-row">
     <form nz-form [nzLayout]="'inline'">
-      <nz-form-item style="margin-right: 0px">
+      <nz-form-item class="bo-search-form-item">
         <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-          <input
-            type="text"
-            name="postsearch"
-            [(ngModel)]="searchText"
-            (ngModelChange)="searchGoods($event)"
-            nz-input
-            placeholder="Search Record"
-            autocomplete="off"
-          />
+          <input type="text" name="postsearch" [(ngModel)]="searchText" (ngModelChange)="searchGoods($event)" nz-input
+            placeholder="Search Record" autocomplete="off" />
         </nz-input-group>
+
         <ng-template #suffixIconButton>
-          <button
-            nz-button
-            nzType="primary"
-            id="button"
-            (click)="searchGoods($event)"
-          >
+          <button nz-button nzType="primary" id="button" (click)="searchGoods($event)">
             <i nz-icon nzType="search"></i>
           </button>
         </ng-template>
@@ -30,16 +19,8 @@
 
 <div nz-row>
   <div nz-col nzSpan="24">
-    <nz-table
-      class="my-scroll no-wrap1"
-      [nzLoading]="loadForm"
-      nzBordered
-      #table
-      [nzData]="roleDetailsData"
-      [nzSize]="'small'"
-      [nzFrontPagination]="false"
-      style="white-space: pre-line"
-    >
+    <nz-table class="my-scroll no-wrap1 bo-table-nowrap" [nzLoading]="loadForm" nzBordered #table
+      [nzData]="roleDetailsData" [nzSize]="'small'" [nzFrontPagination]="false">
       <thead>
         <tr>
           <th nzWidth="80px">Is Allowed</th>
@@ -52,35 +33,22 @@
 
       <tbody>
         <tr *ngFor="let data of table.data; let i = index">
-          <td align="center" style="white-space: pre-line">
-            <nz-switch
-              name="IS_ALLOWED"
-              (ngModelChange)="event1($event, i)"
-              [(ngModel)]="data['IS_ALLOWED']"
-            >
-            </nz-switch>
+          <td align="center" class="bo-table-cell">
+            <nz-switch name="IS_ALLOWED" (ngModelChange)="event1($event, i)"
+              [(ngModel)]="data['IS_ALLOWED']"></nz-switch>
           </td>
 
-          <td align="center" style="white-space: pre-line">
-            <nz-switch
-              name="SHOW_IN_MENU"
-              (ngModelChange)="event2($event, i)"
-              [(ngModel)]="data.SHOW_IN_MENU"
-            >
-            </nz-switch>
+          <td align="center" class="bo-table-cell">
+            <nz-switch name="SHOW_IN_MENU" (ngModelChange)="event2($event, i)"
+              [(ngModel)]="data.SHOW_IN_MENU"></nz-switch>
           </td>
 
-          <td style="white-space: pre-line">{{ data.NAME }}</td>
-          <td style="white-space: pre-line">{{ data.LINK }}</td>
+          <td class="bo-table-cell">{{ data.NAME }}</td>
+          <td class="bo-table-cell">{{ data.LINK }}</td>
 
-          <td style="white-space: pre-line">
-            <input
-              nz-input
-              name="saq_no"
-              maxlength="10"
-              (ngModelChange)="event3($event, i)"
-              [(ngModel)]="data.SEQ_NO"
-            />
+          <td class="bo-table-cell">
+            <input nz-input name="saq_no" maxlength="10" (ngModelChange)="event3($event, i)"
+              [(ngModel)]="data.SEQ_NO" />
           </td>
         </tr>
       </tbody>
@@ -89,24 +57,12 @@
 </div>
 
 <div class="footer">
-  <button
-    type="button"
-    nz-button
-    (click)="close()"
-    class="ant-btn"
-    style="margin-right: 8px"
-  >
+  <button type="button" nz-button (click)="close()" class="ant-btn bo-footer-cancel">
     <span>Cancel</span>
   </button>
 
-  <button
-    type="button"
-    class="ant-btn ant-btn-primary"
-    nz-button
-    [nzLoading]="isSpinning"
-    *ngIf="data.ID"
-    (click)="save()"
-  >
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save()">
     <span>Save & Close</span>
   </button>
 </div>

@@ -12,7 +12,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzTreeComponent } from 'ng-zorro-antd/tree';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-ticketgroup',
   templateUrl: './ticketgroup.component.html',
@@ -81,28 +80,22 @@ export class TicketgroupComponent implements OnInit {
   faqdataList: any = [];
   @ViewChild('treeComponent', { static: false })
   treeComponent!: NzTreeComponent;
-
   public commonFunction = new CommonFunctionService();
-  // userId = Number(this.cookie.get('userId'))
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   decrepteduserID = parseInt(this.decrepteduserIDString, 10);
-
   emailId = sessionStorage.getItem('emailId');
   decryptedEmail = this.emailId
     ? this.commonFunction.decryptdata(this.emailId)
     : '';
-
   MobileNo = sessionStorage.getItem('mobile');
-
   constructor(
     private api: ApiServiceService,
     private cookie: CookieService,
     private datePipe: DatePipe,
     private router: Router,
-
     private message: NzNotificationService
   ) { }
   ngOnInit() {
@@ -110,7 +103,6 @@ export class TicketgroupComponent implements OnInit {
     this.loadDepartments();
     var filterQuery = ' AND PARENT_ID=0 ';
     this.loadTicketGroups(filterQuery);
-
     this.api
       .getAllFaqHeads(
         0,
@@ -140,31 +132,24 @@ export class TicketgroupComponent implements OnInit {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
-    // this.search();
   }
-
   setFilter(event) {
     this.FAQHead = event;
     this.mapFaq3(this.ticketGroupId);
   }
-
   isFocused: any = '';
   Visible(n) {
     this.is_first = n;
     this.ticketData = Object.assign({}, this.ticketDat2);
     this.parentTicketGroups = [];
-
     if (this.ticketData.ID) {
       this.addFirstQuestion = true;
       this.newId = this.ticketData.PARENT_ID;
@@ -182,10 +167,8 @@ export class TicketgroupComponent implements OnInit {
       this.addFirstQuestion = true;
     }
   }
-
   loadDepartments() {
     var filter1 = ' AND APPLICATION_ID=' + this.applicationId;
-
     this.api
       .getAllDepartments(
         0,
@@ -204,56 +187,44 @@ export class TicketgroupComponent implements OnInit {
         }
       );
   }
-
   drawerClose(): void {
     this.is_first = 0;
     this.addFirstQuestion = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   drawerClose1(): void {
     this.addOptionVisible = false;
   }
-
   get closeCallback1() {
     return this.drawerClose1.bind(this);
   }
-
   drawerClose2(): void {
     this.mapFaqVisible = false;
   }
-
   get closeCallback2() {
     return this.drawerClose2.bind(this);
   }
-
   loadTicketGroups(filter?) {
     this.loadingRecords = true;
     this.parentLoading = true;
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     if (this.searchText != '') {
       var likeQuery = this.filterQuery + ' AND ';
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
       filter = likeQuery;
     }
-
     this.dataList = [];
     this.ticketDat2 = new Ticketgroup();
-
     this.api
       .getAllTicketGroups(0, 0, '', '', filter + ' AND ORG_ID= 1')
       .subscribe(
@@ -275,7 +246,6 @@ export class TicketgroupComponent implements OnInit {
                   department: ticketGroups.body['data'][0]['DEPARTMENT_ID'],
                   islast: ticketGroups.body['data'][0]['IS_LAST_STATUS'],
                   parentID: ticketGroups.body['data'][0]['PARENT_ID'],
-
                   expanded:
                     ticketGroups.body['data'][0]['IS_LAST_STATUS'] == 'No'
                       ? true
@@ -293,13 +263,11 @@ export class TicketgroupComponent implements OnInit {
             } else {
               this.ticketDat2 = new Ticketgroup();
             }
-
             this.loadingRecords = false;
             this.totalRecords = ticketGroups.body['count'];
             this.ticketGroups = ticketGroups.body['data'];
             this.dataList = ticketGroups.body['data'];
           }
-
           this.parentLoading = false;
         },
         (err) => {
@@ -308,7 +276,6 @@ export class TicketgroupComponent implements OnInit {
         }
       );
   }
-
   loadTicketGroups2(filter?) {
     this.loadingRecords = true;
     this.parentLoading = false;
@@ -318,18 +285,15 @@ export class TicketgroupComponent implements OnInit {
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     if (this.searchText != '') {
       var likeQuery = this.filterQuery + ' AND ';
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
       filter = likeQuery;
     }
-
     this.ticketGroups = [];
     this.ticketQuestion = [];
     this.api
@@ -358,33 +322,22 @@ export class TicketgroupComponent implements OnInit {
         }
       );
   }
-
   onFileSelectedURL(event) {
     this.fileDataLOGO_URL = <File>event.target.files[0];
     var fileExt = this.fileDataLOGO_URL.name.split('.').pop();
   }
-
   close(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
     this.addFirstQuestion = false;
   }
-
   close2() {
     this.addFirstQuestion = false;
-    // if (this.is_first == 1) {
     this.filterQuery = ' AND PARENT_ID=0';
-    // AND APPLICATION_ID=" + this.applicationId;
     this.loadTicketGroups(this.filterQuery);
-    // } else {
-    //   this.filterQuery = " AND PARENT_ID=" + this.parentId
-    //   this.loadTicketGroups2(this.filterQuery);
-    // }
   }
-
   save(addNew: boolean, accountMasterPage: NgForm) {
     var ok = true;
     this.ticketData['ORG_ID'] = Number(1);
-
     if (
       this.ticketData.VALUE != undefined &&
       this.ticketData.VALUE.toString().trim() != ''
@@ -399,7 +352,6 @@ export class TicketgroupComponent implements OnInit {
           this.message.error('Please Select Priority', '');
         }
       }
-
       if (this.ticketData.TYPE == 'O') {
         if (
           this.ticketData.SEQ_NO == undefined ||
@@ -411,7 +363,6 @@ export class TicketgroupComponent implements OnInit {
       } else {
         this.ticketData.SEQ_NO = 0;
       }
-
       if (this.ticketData.IS_LAST == 1) {
         if (
           this.ticketData.DEPARTMENT_ID == undefined ||
@@ -425,7 +376,6 @@ export class TicketgroupComponent implements OnInit {
       } else {
         this.ticketData.DEPARTMENT_ID = 0;
       }
-
       if (ok) {
         this.isSpinning = true;
         if (this.ticketData.ID) {
@@ -445,17 +395,6 @@ export class TicketgroupComponent implements OnInit {
           } else {
             this.ticketData.URL = '';
           }
-
-          // this.ticketData = {
-          //   TICKET_GROUP_ID:this.ID ,
-          //   TICKET_NO: ,
-          //   USER_ID: this.decrepteduserID,
-          //   MOBILE_NO: this.MobileNo,
-          //   EMAIL_ID: this.emailId,
-          //   CLOUD_ID: 1,
-          //   QUESTION: ,
-          // };
-
           this.api
             .updateTicketGroup1(this.ticketData)
             .subscribe((successCode) => {
@@ -463,7 +402,6 @@ export class TicketgroupComponent implements OnInit {
                 this.message.success('Ticket group update Successfully', '');
                 accountMasterPage.form.reset();
                 this.close2();
-                // this.expandFirstNode();
                 setTimeout(() => this.expandFirstNode(), 1000);
                 this.isSpinning = false;
               } else {
@@ -480,11 +418,9 @@ export class TicketgroupComponent implements OnInit {
           } else {
             this.ticketData.URL = '';
           }
-
           this.ticketData.URL = '';
           this.ticketData.PRIORITY = 'M';
           this.ticketData.ALERT_MSG = '';
-
           this.api
             .createTicketGroup(this.ticketData)
             .subscribe((successCode) => {
@@ -518,7 +454,6 @@ export class TicketgroupComponent implements OnInit {
       this.isSpinning = false;
     }
   }
-
   genarateKeyLOGO_URL() {
     var number = Math.floor(100000 + Math.random() * 900000);
     var fileExt = this.fileDataLOGO_URL.name.split('.').pop();
@@ -527,12 +462,10 @@ export class TicketgroupComponent implements OnInit {
     this.ticketData.URL = this.api.retriveimgUrl + this.folderName + '/' + url;
     return this.ticketData.URL;
   }
-
   nzEvent(event) {
     if (event['eventName'] == 'expand') {
       let node = event['node'];
       this.clickedParentID = node.origin.parentID;
-
       if (node['key'] != undefined) {
         this.filterQuery = ' AND PARENT_ID=' + node['key'];
         this.api
@@ -541,7 +474,6 @@ export class TicketgroupComponent implements OnInit {
             if (ticketGroups.body['count'] > 0) {
               node.clearChildren(childrens);
               var childrens = ticketGroups.body['data'];
-
               for (var index = 0; index < ticketGroups.body['count']; index++) {
                 childrens = [
                   {
@@ -560,7 +492,6 @@ export class TicketgroupComponent implements OnInit {
                     islast: ticketGroups.body['data'][index]['IS_LAST_STATUS'],
                   },
                 ];
-
                 node.addChildren(childrens);
               }
             } else {
@@ -569,32 +500,12 @@ export class TicketgroupComponent implements OnInit {
           });
       }
     }
-
-    // if (event['eventName'] == "click") {
-    //   this.addOptionVisible = true;
-
-    //   this.ID = event['node']['origin']['key']
-    //   this.type = event['node']['origin']['type']
-    //   this.title = event['node']['origin']['title']
-    //   this.clickedParentID = event['node']['origin']['parentID'];
-    //   this.loadingRecords = true;
-    //   this.parentId = this.ID;
-
-    //   if (this.type == 'O')
-    //     this.formTitleHead = "View Questions";
-    //   else
-    //     this.formTitleHead = "View Options";
-
-    //   this.filterQuery = " AND PARENT_ID=" + this.ID + " AND APPLICATION_ID=" + this.applicationId
-    //   this.loadTicketGroups2(this.filterQuery);
-    // }
   }
   expandFirstNode(): void {
     if (this.treeComponent) {
       const treeNodes = this.treeComponent.getTreeNodes();
       if (treeNodes.length > 0) {
-        const firstNode = treeNodes[0]; // Get first node dynamically
-
+        const firstNode = treeNodes[0]; 
         const fakeEvent = {
           node: firstNode,
           expanded: true,
@@ -602,14 +513,13 @@ export class TicketgroupComponent implements OnInit {
           keys: treeNodes.map((n) => n.key),
           nodes: treeNodes,
         };
-        firstNode.isExpanded = true; // Expand the node
-
+        firstNode.isExpanded = true; 
         this.treeComponent.nzExpandChange.emit(fakeEvent);
       }
     }
   }
   ngAfterViewInit(): void {
-    setTimeout(() => this.expandFirstNode(), 1500); // Ensure tree is initialized
+    setTimeout(() => this.expandFirstNode(), 1500); 
   }
   editOption(event) {
     this.ID = event;
@@ -626,8 +536,6 @@ export class TicketgroupComponent implements OnInit {
       .subscribe((ticketGroups) => {
         if (ticketGroups['status'] == 200) {
           data = ticketGroups.body['data'][0];
-          // this.clickedParentID = data.PARENT_ID;
-
           this.api
             .getAllTicketGroups(
               1,
@@ -651,7 +559,6 @@ export class TicketgroupComponent implements OnInit {
         }
       });
   }
-
   add() {
     this.is_first = 0;
     this.clearData();
@@ -674,23 +581,19 @@ export class TicketgroupComponent implements OnInit {
         }
       );
   }
-
   add2(event, type, node) {
     this.is_first = 0;
-
     this.clearData();
     this.newId = 0;
     this.name1 = 'None';
     this.ticketData.PARENT_ID = Number(node.origin.key);
     this.ticketData.TYPE = type;
-
     this.ticketData.STATUS = true;
     this.ticketData.DEPARTMENT_ID = node.origin.department;
     this.clickedParentID = node.origin.parentID;
     this.ID = Number(node.origin.key);
     this.Title = type == 'O' ? 'Add New Option' : 'Add New Question';
     this.filterQuery = ' AND PARENT_ID=' + node.origin['key'];
-
     if (type == 'Q') {
       this.api
         .getAllTicketGroups(0, 0, '', '', this.filterQuery + ' AND ORG_ID= 1')
@@ -743,7 +646,6 @@ export class TicketgroupComponent implements OnInit {
             this.message.error('Something went wrong. Please try again later.', '');
           }
         );
-
       this.api
         .getAllTicketGroups(
           0,
@@ -767,7 +669,6 @@ export class TicketgroupComponent implements OnInit {
         );
     }
   }
-
   clearData() {
     this.ticketData.ID = undefined;
     this.ticketData.DEPARTMENT_ID = undefined;
@@ -776,7 +677,6 @@ export class TicketgroupComponent implements OnInit {
     this.ticketData.PRIORITY = 'M';
     this.ticketData.ALERT_MSG = '';
   }
-
   edit(data: Ticketgroup) {
     this.ticketData = data;
     this.ticketData['PARENT_ID'] = Number(data.PARENT_ID);
@@ -798,15 +698,12 @@ export class TicketgroupComponent implements OnInit {
           this.message.error('Something went wrong. Please try again later.', '');
         }
       );
-
     this.addFirstQuestion = true;
   }
-
   mapFaq(data: Ticketgroup) {
     this.loadingRecordsFaqs = true;
     this.ticketGroupId = data.ID;
     this.Question = data.VALUE;
-
     this.api.getMappingFaqs(data.ID, this.FAQHead, 'C').subscribe(
       (data) => {
         if ((data['status'] = '200')) {
@@ -824,12 +721,10 @@ export class TicketgroupComponent implements OnInit {
       }
     );
   }
-
   mapFaq2(node) {
     this.loadingRecordsFaqs = true;
     this.ticketGroupId = node.key;
     this.Question = node.title;
-
     this.api.getMappingFaqs(node.key, this.FAQHead, 'C').subscribe(
       (data) => {
         if ((data['status'] = '200')) {
@@ -847,11 +742,9 @@ export class TicketgroupComponent implements OnInit {
       }
     );
   }
-
   mapFaq3(node) {
     this.loadingRecordsFaqs = true;
     this.ticketGroupId = node;
-
     this.api.getMappingFaqs(node, this.FAQHead, 'C').subscribe(
       (data) => {
         if ((data['status'] = '200')) {
@@ -869,7 +762,6 @@ export class TicketgroupComponent implements OnInit {
       }
     );
   }
-
   closeFaqMap() {
     this.mapFaqVisible = false;
   }
@@ -887,10 +779,8 @@ export class TicketgroupComponent implements OnInit {
         break;
       }
     }
-
     if (this.isOk) {
       this.isSpinning = true;
-
       this.api
         .addMappingFaqs(this.ticketGroupId, this.faqs)
         .subscribe((successCode) => {

@@ -9,7 +9,6 @@ import {
 } from 'src/app/Inventorypages/inventorymodal/technicianMovement';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-customerto-tech-stock-move-drawer',
   templateUrl: './customerto-tech-stock-move-drawer.component.html',
@@ -40,7 +39,6 @@ export class CustomertoTechStockMoveDrawerComponent {
   LoadGodownMain: any = [];
   Itemdata: any[] = [];
   LoadGodown: any[] = [];
-  // LoadGodown1: any[] = [];
   serialNoData: any = [];
   batchData: any = [];
   @Input()
@@ -53,7 +51,6 @@ export class CustomertoTechStockMoveDrawerComponent {
   deletedItemData1: any = [];
   newItemTableData: any[] = [];
   public commonFunction = new CommonFunctionService();
-
   supplierlist: any = [];
   INNERTABLEDATA: any = new InnerTableCust();
   index = -1;
@@ -61,40 +58,33 @@ export class CustomertoTechStockMoveDrawerComponent {
   pageSize = 1;
   pageIndex = 1;
   roleID: number;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private datePipe: DatePipe
   ) { }
-  roleid = sessionStorage.getItem('roleId'); // Retrieve userId from session storage
+  roleid = sessionStorage.getItem('roleId'); 
   toGodownName: any;
   tempSelectedItemData: any;
   @Input() category: any;
   isFromGodownLoading1: boolean = false;
   tempSelectedUnitData: any;
   itemWiseUnitList: any;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
+  userId = sessionStorage.getItem('userId'); 
   USER_ID: number;
-
   ngOnInit(): void {
     this.data.DATE = new Date();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-
     const decryptedUserId1 = this.roleid
       ? this.commonFunction.decryptdata(this.roleid)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.roleID = Number(decryptedUserId1);
     this.newItemTableData = this.item2.map((item) => item);
     this.GodownMaster();
-
-
   }
-
-
   technicianData: any = [];
   getTechnician(event: any) {
     this.data.TECHNICIAN_ID = null;
@@ -117,10 +107,7 @@ export class CustomertoTechStockMoveDrawerComponent {
         this.technicianData = [];
       });
   }
-
   loadItems(): void {
-
-
     this.Itemdata = [];
     let wmanager;
     let TechnicianId;
@@ -132,7 +119,6 @@ export class CustomertoTechStockMoveDrawerComponent {
         wmanager = null;
         TechnicianId = null;
       }
-
       this.api
         .getInventoryHirarchyInwardFilterWise2cust(
           this.data.CUSTOMER_ID,
@@ -152,11 +138,9 @@ export class CustomertoTechStockMoveDrawerComponent {
         );
     }
   }
-
   GodownMaster(): void {
     this.LoadGodown = [];
     var userMainId = '';
-
     if (
       this.USER_ID != null &&
       this.USER_ID != undefined &&
@@ -166,7 +150,6 @@ export class CustomertoTechStockMoveDrawerComponent {
     } else {
       userMainId = '';
     }
-
     if (this.roleID == 1 || this.roleID == 8) {
       this.isFromGodownLoading = true;
       this.api.getcustomertransfer(0, 0, 'ID', 'desc', '').subscribe(
@@ -187,12 +170,6 @@ export class CustomertoTechStockMoveDrawerComponent {
         }
       );
     } else {
-      // this.api
-      //   .getBackOfficeData(0, 0, '', 'desc', ' AND IS_ACTIVE=1' + userMainId)
-      //   .subscribe(
-      //     (datat) => {
-      //       if (datat['code'] == 200) {
-      //         if (datat['count'] > 0) {
       this.isFromGodownLoading = true;
       this.api
         .getcustomertransfer(
@@ -218,53 +195,29 @@ export class CustomertoTechStockMoveDrawerComponent {
             this.message.error('Server Not Found', '');
           }
         );
-      // } else {
-      //   this.isFromGodownLoading = false;
-      //   this.LoadGodown = [];
-      // }
-      //     } else {
-      //       this.isFromGodownLoading = false;
-      //       this.LoadGodown = [];
-      //     }
-      //   },
-      //   (err: HttpErrorResponse) => {
-      //     this.isFromGodownLoading = false;
-      //     this.LoadGodown = [];
-      //   }
-      // );
     }
   }
-
   onUnitSelection(key: number): void {
     this.tempSelectedUnitData = this.itemWiseUnitList.filter(
       (val: any) => val.UNIT_ID === key
     );
   }
-
   gettechname(event: any) {
     var custname: any = this.technicianData.filter(
       (val: any) => val.ID === event
     );
-
     this.data.TECHNICIAN_NAME = custname[0].NAME;
-    // this.data.TECHNICIAN_NAME = this.technicianData.filter(
-    //   (val: any) => val.ID === event
-    // );
   }
   getcustname(event: any) {
     var custname: any = this.LoadGodown.filter(
       (val: any) => val.ID === event
     );
-
     this.data.CUSTOMER_NAME = custname[0].NAME;
   }
-
   IS_FIRST = 0;
   changeFromGodown(event) {
     this.data2.UNIT_ID = null;
     this.data2.ID = null;
-
-    // this.data2.RATE = null;
     this.data2.INVENTORY_TRACKING_TYPE = null;
     this.data2.INVENTORY_NAME = null;
     this.data2.INVENTORY_ID = null;
@@ -283,16 +236,13 @@ export class CustomertoTechStockMoveDrawerComponent {
       this.data2.INVENTORY_CAT_NAME = null,
       this.data2.INVENTROY_SUB_CAT_ID = null,
       this.data2.INVENTROY_SUB_CAT_NAME = null,
-      // this.data2.VARIANT_ID = null
       this.radioValue = '';
     if (event && this.data.TECHNICIAN_ID && this.data.CUSTOMER_ID) {
       this.loadItems()
     }
-    // this.getFilteredDestinationGodowns();
     this.INNERTABLEDATA = {};
     this.items = [];
   }
-
   save(addNew: boolean, form1: NgForm): void {
     this.isOk = true;
     if (
@@ -303,14 +253,6 @@ export class CustomertoTechStockMoveDrawerComponent {
       this.isOk = false;
       this.message.error('Please select date', '');
     }
-    // else if (
-    //   this.data.MOVEMENT_NUMBER === undefined ||
-    //   this.data.MOVEMENT_NUMBER === null ||
-    //   this.data.MOVEMENT_NUMBER <= 0
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Enter Movement Request No.', '');
-    // }
     else if (
       this.data.CUSTOMER_ID === undefined ||
       this.data.CUSTOMER_ID === null ||
@@ -329,44 +271,17 @@ export class CustomertoTechStockMoveDrawerComponent {
       this.isOk = false;
       this.message.error('Please add atleast 1 part', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
-
       this.data.USER_ID = Number(this.USER_ID);
       this.data.USER_NAME = this.commonFunction.decryptdata(
         sessionStorage.getItem('userName') || ''
       );
-
-      // this.data.AUTHORISED_DATETIME = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss')
-      // this.data.CONFIRMED_DATETIME = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss')
-      // this.data.TOTAL_ITEMS = this.items.length;
       this.data.CUSTOMER_ID = Number(this.data.CUSTOMER_ID);
       this.data.MOVEMENT_TYPE = 'M'
-
-      // this.data.DESTINATION_WAREHOUSE_ID = Number(
-      //   this.data.DESTINATION_WAREHOUSE_ID
-      // );
       this.data.STATUS = 'P';
-      // this.data.STATUS = 'D'
-
-
-      // this.deletedItemData1 = this.newItemTableData.filter(
-      //   (newItem) => !this.items.some((item) => item.ITEM_ID == newItem.ITEM_ID)
-      // );
-
-      // this.deletedItemData1.forEach((newItem) => {
-      //   this.deletedItemData.push({
-      //     ITEM_ID: newItem.ITEM_ID,
-      //     ITEM_CATEGORY_ID: newItem.ITEM_CATEGORY_ID,
-      //     REQUESTED_QTY_UNIT_ID: newItem.REQUESTED_QTY_UNIT_ID,
-      //   });
-      // });
-
       this.data.ITEM_IDS = this.items.map(item => item.ID).join(',');
       this.data.INVENTORY_DETAILS_ID = this.items.map(item => item.INVENTORY_DETAILS_ID).join(',');
-
-      // this.data.MOVEMENT_TYPE=this.radioValue
       if (this.data.ID) {
         this.data.DATE = this.datePipe.transform(
           new Date(),
@@ -379,19 +294,15 @@ export class CustomertoTechStockMoveDrawerComponent {
           this.data.DATE,
           'yyyy-MM-dd HH:mm:ss'
         );
-
         const techician = this.technicianData.find(
           (val: any) => val.ID === this.data.TECHNICIAN_ID
         );
-
         this.data.TECHNICIAN_NAME = techician ? techician.NAME : null;
-
         this.data.USER_NAME = this.commonFunction.decryptdata(
           sessionStorage.getItem('userName') || ''
         );
         this.data.INVENTORY_DETAILS = this.items;
         this.data.deletedItemData = this.deletedItemData;
-
         this.api.TechnicianStockRequpdatecust(this.data).subscribe(
           (successCode) => {
             if (successCode['status'] == 200) {
@@ -434,8 +345,6 @@ export class CustomertoTechStockMoveDrawerComponent {
           this.data.DATE,
           'yyyy-MM-dd HH:mm:ss'
         );
-
-
         this.api.createTechnicianMovementcust(this.data).subscribe(
           (successCode) => {
             if (successCode['status'] == 200) {
@@ -443,15 +352,12 @@ export class CustomertoTechStockMoveDrawerComponent {
                 'Customer to technician stock transfer successfully',
                 ''
               );
-
               if (!addNew) this.drawerClose();
               else {
                 this.data = new TechnicianRequestMovementCust();
                 this.resetDrawer(form1);
-                // this.newRequestNo();
                 this.items = [];
               }
-
               this.isSpinning = false;
             } else {
               this.message.error('Failed to transfer customer to technician stock', '');
@@ -476,15 +382,12 @@ export class CustomertoTechStockMoveDrawerComponent {
               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')[
               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/').length - 1
               ];
-
             let currentYear = new Date().getFullYear();
             let previousID =
               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/')[
               data['body']['data'][0]['MOVEMENT_NUMBER'].split('/').length - 2
               ];
-
             let lastID = 0;
-
             if (!previousID) {
               lastID = 1;
             } else {
@@ -496,7 +399,6 @@ export class CustomertoTechStockMoveDrawerComponent {
                   ]
                 ) + 1;
             }
-
             if (lastYear === currentYear) {
               this.data.MOVEMENT_NUMBER =
                 'REQ/' +
@@ -535,9 +437,7 @@ export class CustomertoTechStockMoveDrawerComponent {
     if (SelectedInventory !== null && SelectedInventory !== undefined && SelectedInventory !== '' && SelectedInventory.length > 0) {
       this.data2.UNIT_ID = SelectedInventory[0].ACTUAL_UNIT_ID;
       this.data2.ID = SelectedInventory[0].ID;
-
       this.data2.INVENTORY_ID = SelectedInventory[0].ITEM_ID;
-
       this.data2.UNIT_NAME = SelectedInventory[0].ACTUAL_UNIT_NAME;
       this.data2.IS_VERIENT = SelectedInventory[0].IS_VERIENT,
         this.data2.IS_VARIANT = SelectedInventory[0].IS_VARIANT,
@@ -555,13 +455,9 @@ export class CustomertoTechStockMoveDrawerComponent {
         this.data2.BATCH_NO = SelectedInventory[0].BATCH_NO;
       this.data2.SERIAL_NO = SelectedInventory[0].SERIAL_NO;
       this.data2.JOB_CARD_ID = SelectedInventory[0].JOB_CARD_ID;
-      // this.data2.RATE = SelectedInventory[0].RATE;
-
-      //   this.data2.VARIANT_ID = SelectedInventory[0].VARIANT_ID
     } else {
       this.data2.UNIT_ID = null;
       this.data2.ID = null;
-      // this.data2.RATE = null;
       this.data2.INVENTORY_ID = null;
       this.data2.INVENTORY_TRACKING_TYPE = null;
       this.data2.INVENTORY_NAME = null;
@@ -580,28 +476,22 @@ export class CustomertoTechStockMoveDrawerComponent {
         this.data2.INVENTORY_CAT_NAME = null,
         this.data2.INVENTROY_SUB_CAT_ID = null,
         this.data2.INVENTROY_SUB_CAT_NAME = null
-      // this.data2.VARIANT_ID = null
     }
-
   }
   resetDrawer(form1: NgForm) {
     this.data = new TechnicianRequestMovementCust();
     form1.form.markAsPristine();
     form1.form.markAsUntouched();
   }
-
-
   addData(isAdd: boolean, form2: NgForm): void {
     if (!this.data2.INVENTORY_ID || this.data2.INVENTORY_ID <= 0) {
       this.isOk = false;
       this.message.error('Please Select Part Name', '');
       return;
     }
-
     if (this.editdata) {
       this.data2.INVENTORY_ID = this.data2.INVENTORY_ID
     }
-    // Check if an item with the same INVENTORY_ID, UNIT_ID, SERIAL_NO, and BATCH_NO already exists
     let existingIndex = this.items.findIndex(
       (element: any) =>
         Number(element.ID) === Number(this.data2.ID) &&
@@ -612,26 +502,12 @@ export class CustomertoTechStockMoveDrawerComponent {
           (!element.BATCH_NO && !this.data2.BATCH_NO))
     );
     if (existingIndex > -1) {
-      // If item exists, update its quantity
-      // let existingItem = this.items[existingIndex];
-
-      // if (existingItem.STOCK < existingItem.QUANTITY + this.data2.QUANTITY) {
-      //   this.message.error(
-      //     'Quantity should be less than or equal to available stock',
-      //     ''
-      //   );
-      //   return;
-      // }
-
-      // existingItem.QUANTITY += Number(this.data2.QUANTITY);
-      this.items = [...this.items]; // Ensures Angular detects changes
+      this.items = [...this.items]; 
     } else
       if (this.index > -1) {
         this.items[this.index] = Object.assign({}, this.data2);
         this.items = [...this.items];
       } else {
-
-
         this.INNERTABLEDATA = {
           INVENTORY_ID: this.data2.INVENTORY_ID,
           QUANTITY: Number(this.data2.QUANTITY),
@@ -644,7 +520,6 @@ export class CustomertoTechStockMoveDrawerComponent {
           BATCH_NO: this.data2.BATCH_NO,
           JOB_CARD_ID: this.data2.JOB_CARD_ID,
           IS_VARIANT: this.data2.IS_VARIANT,
-          // RATE: this.data2.RATE,
           IS_VERIENT: this.data2.IS_VERIENT,
           PARENT_ID: this.data2.PARENT_ID,
           VARIANT_NAME: this.data2.VARIANT_NAME,
@@ -654,52 +529,36 @@ export class CustomertoTechStockMoveDrawerComponent {
           INVENTORY_CAT_NAME: this.data2.INVENTORY_CAT_NAME,
           INVENTROY_SUB_CAT_ID: this.data2.INVENTROY_SUB_CAT_ID,
           INVENTROY_SUB_CAT_NAME: this.data2.INVENTROY_SUB_CAT_NAME,
-          // VARIANT_ID: this.data2.VARIANT_ID,
         };
-
         this.items.push(this.INNERTABLEDATA);
-        this.items = [...this.items]; // Ensures Angular detects changes
+        this.items = [...this.items]; 
       }
-
     this.index = -1;
     this.totaldata = this.items.length;
     this.editdata = false;
-    // Reset form AFTER ensuring all updates are completed
     form2.form.reset();
   }
-
-
   removedItems: any[] = [];
   edit(data2: InnerTableCust, i: number): void {
     this.editdata = true;
     this.index = i;
-
-
-    // data2.VARIANT_ID = data2['VARIENT_ID'];
     this.radioValue = data2['INVENTORY_TRACKING_TYPE'];
     this.INVENTORY_ID = data2.ID
     this.data2 = Object.assign({}, data2);
   }
-
   delete(data: any, i: number): void {
     this.items = this.items.filter(
       (dat, idx) => !(idx === i && dat.INVENTORY_ID === data.INVENTORY_ID)
     );
   }
-
   cancel(): void { }
-
   close(): void {
     this.drawerClose();
   }
-
-  // onGenericChange()
   PARENT_ID;
   child;
-
   reject() {
     this.isSpinning = true;
-
     if (
       this.data.REASON == null ||
       this.data.REASON == undefined ||
@@ -709,18 +568,14 @@ export class CustomertoTechStockMoveDrawerComponent {
       this.isSpinning = false;
       return;
     }
-
     this.data.APPROVE_REJECTED_BY_NAME = this.commonFunction.decryptdata(
       sessionStorage.getItem('userName') || ''
     );
-
     this.data.APPROVE_REJECTED_DATE = this.datePipe.transform(
       new Date(),
       'yyyy-MM-dd HH:mm:ss'
     );
-
     this.data.APPROVE_REJECTED_BY_ID = this.USER_ID;
-
     this.data.STATUS = 'R';
     this.data.DETAILS_DATA = this.items;
     this.api.approverejectmomentreq(this.data).subscribe(
@@ -730,9 +585,7 @@ export class CustomertoTechStockMoveDrawerComponent {
             'Stock transfer request rejected successfully',
             ''
           );
-
           this.drawerClose();
-
           this.isSpinning = false;
         } else {
           this.message.error('Stock Movement Request Rejected Failed', '');
@@ -745,9 +598,7 @@ export class CustomertoTechStockMoveDrawerComponent {
       }
     );
   }
-
   showreject: boolean = false;
-
   reject111() {
     this.showreject = true;
   }

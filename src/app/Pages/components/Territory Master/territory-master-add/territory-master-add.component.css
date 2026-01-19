@@ -1,6 +1,50 @@
+.territory-form-wrapper {
+  margin-top: 10px;
+}
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0 10px;
+}
+.char-counter {
+  color: red;
+  font-size: 10px;
+}
+.seq-input {
+  width: 150px;
+}
+.territory-footer {
+  display: flex;
+  align-items: center;
+}
+.footer-cancel-btn {
+  margin-right: 12px;
+}
+.footer-dropdown-item {
+  border-radius: 4px;
+  background-color: #1890ff;
+}
+.footer-dropdown-link {
+  color: #fff !important;
+}
+.territory-form-wrapper {
+  margin-top: 10px;
+}
+.territory-char-counter {
+  color: red;
+  font-size: 10px;
+}
+.territory-seq-input-width {
+  width: 150px;
+}
+.territory-footer-cancel-margin {
+  margin-right: 12px;
+}
+.territory-footer-dropdown-item {
+  border-radius: 4px;
+  color: white !important;
+}
+.territory-footer-button-white {
+  color: white !important;
+}

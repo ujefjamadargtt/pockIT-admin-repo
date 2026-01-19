@@ -60,7 +60,6 @@ import { CurrentmaplocationComponent } from '../details pages components/current
 import { ActionlogsComponent } from '../details pages components/actionlogs/actionlogs.component';
 import { LocationComponent } from '../map/location/location.component';
 import { techniciansdetailsDetailsComponent } from '../details pages components/techniciansdetails/techniciansdetails.component';
-// import { technicainslistComponent } from '../TechnicainMap/technicainslist/technicainslist.component';
 import { ShareedcomComponent } from './shareedcom/shareedcom.component';
 import { SharedRoutingModule } from './shared-routing.module';
 import { PaymenttransactionpageComponent } from '../details pages components/paymenttransactionpage/paymenttransactionpage.component';
@@ -74,7 +73,6 @@ import { OrderdetailsdrawerComponent } from '../orderpages/orderdetailsdrawer/or
 import { OrderlistComponent } from '../orderpages/orderlist/orderlist.component';
 import { ViewCustomerRatingComponent } from '../orderpages/view-customer-rating/view-customer-rating.component';
 import { ViewPastOrderDrawerComponent } from '../orderpages/view-past-order-drawer/view-past-order-drawer.component';
-// import { ListTechnicainMapComponent } from '../TechnicainMap/list-technicain-map/list-technicain-map.component';
 import { VendorOverviewListComponent } from '../details pages components/vendor-overview-list/vendor-overview-list.component';
 import { VendorOverviewDetailsComponent } from '../details pages components/vendor-overview-details/vendor-overview-details.component';
 import { CustomerOverviewListComponent } from '../Pages/components/CustomerOverview/customer-overview-list/customer-overview-list.component';
@@ -100,7 +98,6 @@ import { BrandMasterFormComponent } from '../Pages/components/brandmaster/brand-
 import { BrandMasterTableComponent } from '../Pages/components/brandmaster/brand-master-table/brand-master-table.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { VendorDetailedReportComponent } from '../Pages/Reports/vendor-detailed-report/vendor-detailed-report.component';
-
 @NgModule({
   declarations: [
     DetailsjobComponent,
@@ -123,7 +120,6 @@ import { VendorDetailedReportComponent } from '../Pages/Reports/vendor-detailed-
     PaymenttransactionpageComponent,
     CancelorderreqComponent,
     CancelshoporderreqComponent,
-    // CustomerActionsComponent,
     VendorOverviewListComponent,
     VendorOverviewDetailsComponent,
     CustomerViewInvoicesComponent,
@@ -216,7 +212,6 @@ import { VendorDetailedReportComponent } from '../Pages/Reports/vendor-detailed-
     InvoicepageComponent,
     CustomerrattingComponent,
     TechnicianrattingComponent,
-    // CustomerActionsComponent,
     MainFilterComponent,
     TechnicianViewJobsComponent,
     CustomerViewInvoicesComponent,
@@ -239,7 +234,6 @@ import { VendorDetailedReportComponent } from '../Pages/Reports/vendor-detailed-
     ViewPastOrderDrawerComponent,
     OrdercreatedrawerComponent,
     OrderFilterComponent,
-    // ListTechnicainMapComponent,
     CustomeActivityListComponent,
     CustomersjobslistComponent,
     AddressaddComponent,

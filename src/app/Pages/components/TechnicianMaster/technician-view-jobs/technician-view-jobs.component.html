@@ -1,107 +1,69 @@
 <div nz-row nzType="flex">
-  <!-- <div nz-col nzSpan="12">
-      <div class="formname">
-        <span
-          (click)="back()"
-          nz-icon
-          nzType="arrow-left"
-          nzTheme="outline"
-          style="font-weight: bold; cursor: pointer"
-        ></span
-        >&nbsp;&nbsp;
-      </div>
-    </div> -->
-
-  <div nz-col nzSpan="24" style="display: flex; justify-content: flex-end">
-    <form nz-form nzLayout="inline">
-      <nz-form-item style="width: 47px">
+  <div nz-col nzSpan="24" class="flex-end">
+    <form nz-form nzLayout="inline" class="form-inline">
+      <nz-form-item class="filter-btn-item">
         <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip
-          [nzType]="isfilterapply ? 'primary' : 'default'" [style.backgroundColor]="isfilterapply ? 'default' : ''"
-          (click)="showMainFilter()">
+          [nzType]="isfilterapply ? 'primary' : 'default'" (click)="showMainFilter()">
           <i nz-icon nzType="filter"></i>
         </button>
       </nz-form-item>
-      <nz-form-item>
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+      <nz-form-item class="search-item">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" class="search-input-group">
           <input type="text" name="search" nz-input placeholder="Min 3 chars required." [(ngModel)]="searchText"
-            autocomplete="off" (keyup)="onKeyup($event)" (keydown.enter)="onEnterKey($event)" />
+            autocomplete="off" (keyup)="onKeyup($event)" (keydown.enter)="onEnterKey($event)" class="search-input" />
         </nz-input-group>
       </nz-form-item>
-
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch (click)="searchopen()">
+        <button nz-button nzType="primary" nzSearch (click)="searchopen()" class="search-btn">
           <i nz-icon nzType="search"></i>
         </button>
       </ng-template>
     </form>
   </div>
 </div>
-
-<!-- Main Filter -->
 <div nz-row>
   <div nz-col nzSpan="24">
     <div class="filter {{ filterClass }}">
       <div class="filter-box">
-        <div nz-row style="padding-top: 10px">
+        <div nz-row class="filter-content-row">
           <div nz-col [nzSpan]="24">
-            <div style="
-                border: 1px dashed black;
-                border-radius: 5px;
-                padding: 10px;
-              ">
+            <div class="filter-container">
               <ng-container *ngIf="filterloading; else filtersContent">
-                <div style="text-align: center">
+                <div class="filter-loading">
                   <nz-spin nzSimple></nz-spin>
                 </div>
               </ng-container>
               <ng-template #filtersContent>
                 <ng-container *ngIf="savedFilters && savedFilters.length > 0; else noData">
                   <ng-container *ngFor="let item of savedFilters">
-                    <nz-tag [style.backgroundColor]="
-                        selectedFilter === item.ID ? '#e6f7ff' : 'white'
-                      " style="
-                        margin: 5px;
-                        display: inline-flex;
-                        align-items: center;
-
-                        background-color: white;
-                      ">
-                      <span style="color: black; margin-right: 10px">{{
-                        item.FILTER_NAME
-                        }}</span>
-                      <span>
+                    <nz-tag [ngClass]="{'filter-selected': selectedFilter === item.ID}" class="filter-tag">
+                      <span class="filter-tag-text">{{ item.FILTER_NAME }}</span>
+                      <span class="filter-tag-actions">
                         <i nz-icon nzType="search" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'Apply Filter'"
-                          (click)="applyfilter(item)" style="color: #01ac5c; margin-right: 8px"></i>
+                          (click)="applyfilter(item)" class="icon-apply"></i>
                         <i nz-icon nzType="delete" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'Delete'"
-                          style="color: red; margin-right: 8px" nz-popconfirm
-                          nzPopconfirmTitle="Are you sure to delete this record?" nzPopconfirmPlacement="top"
-                          (nzOnConfirm)="deleteItem(item)">
-                        </i>
+                          nz-popconfirm nzPopconfirmTitle="Are you sure to delete this record?"
+                          nzPopconfirmPlacement="top" (nzOnConfirm)="deleteItem(item)" class="icon-delete"></i>
                         <i nz-icon nzType="eye" nzTheme="outline" nz-tooltip [nzTooltipTitle]="'Show Query'"
-                          (click)="toggleLiveDemo(item)" style="color: blue"></i>
+                          (click)="toggleLiveDemo(item)" class="icon-eye"></i>
                       </span>
                     </nz-tag>
                   </ng-container>
                 </ng-container>
               </ng-template>
               <ng-template #noData>
-                <div style="text-align: center; color: red; font-weight: bold">
+                <div class="filter-no-data">
                   No Previous Filters Are Found
                 </div>
               </ng-template>
             </div>
           </div>
-          <div nz-col [nzSpan]="24" style="
-              display: flex;
-              justify-content: flex-end;
-              align-items: left;
-              margin-top: 10px;
-            ">
+          <div nz-col [nzSpan]="24" class="filter-actions">
             <button *ngIf="savedFilters && savedFilters.length > 0" nz-button nzType="primary" nzSize="small"
-              (click)="Clearfilter()" style="margin-right: 10px">
+              (click)="Clearfilter()" class="btn-action">
               Clear Applied Filter
             </button>
-            <button nz-button nzType="primary" nzSize="small" (click)="openfilter()" style="margin-right: 10px">
+            <button nz-button nzType="primary" nzSize="small" (click)="openfilter()" class="btn-action">
               Add New Filter
             </button>
           </div>
@@ -110,287 +72,116 @@
     </div>
   </div>
 </div>
-<!-- End Main Filter -->
-
-<!-- Table -->
 <div nz-row>
   <div nz-col nzSpan="24">
-    <nz-table class="my-scroll no-wrap1" #table [nzData]="dataList" [nzLoading]="loadingRecords"
+    <nz-table class="my-scroll no-wrap1 job-table" #table [nzData]="dataList" [nzLoading]="loadingRecords"
       [nzTotal]="totalRecords" nzBordered [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
       (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)" [nzSize]="'small'"
       nzShowSizeChanger [nzFrontPagination]="false" [nzScroll]="{ y: '70vh', x: '2000px' }">
       <thead>
         <tr>
-          <th nzWidth="150px" style="font-weight: bold" nzShowSort align="center" nzColumnKey="JOB_CREATED_DATE"
+          <th nzWidth="150px" class="header-center" nzShowSort align="center" nzColumnKey="JOB_CREATED_DATE"
             [nzSortFn]="true" nzCustomFilter nzLeft>
             Job Created Date
             <nz-filter-trigger [(nzVisible)]="JobCreatedDateVisible" [nzDropdownMenu]="JobCreatedDate">
-              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                  color: isJobCreatedDateFilterApplied ? '#092B9C!important' : 'inherit'
-                }"></span>
+              <span class="filter-icon" [ngClass]="{ 'filter-applied': isJobCreatedDateFilterApplied }"></span>
             </nz-filter-trigger>
           </th>
-
-          <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'JOB_CARD_NO' }}" [nzSortFn]="true" nzLeft
-            nzCustomFilter>
+          <th nzWidth="150px" class="header-center" nzShowSort align="center" nzColumnKey="JOB_CARD_NO"
+            [nzSortFn]="true" nzCustomFilter nzLeft>
             Job No.
             <nz-filter-trigger [(nzVisible)]="JobCardNoVisible" [nzDropdownMenu]="JobCardNo">
-              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                  color: isJobCardNoFilterApplied ? '#092B9C!important' : 'inherit'
-                }"></span>
+              <span class="filter-icon" [ngClass]="{ 'filter-applied': isJobCardNoFilterApplied }"></span>
             </nz-filter-trigger>
           </th>
-
-          <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'ORDER_NO' }}" [nzSortFn]="true" nzLeft
-            nzCustomFilter>
+          <th nzWidth="150px" class="header-center" nzShowSort align="center" nzColumnKey="ORDER_NO" [nzSortFn]="true"
+            nzCustomFilter nzLeft>
             Order No.
             <nz-filter-trigger [(nzVisible)]="OrderNoVisible" [nzDropdownMenu]="OrderNo">
-              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                  color: isOrderNoFilterApplied ? '#092B9C!important' : 'inherit'
-                }"></span>
+              <span class="filter-icon" [ngClass]="{ 'filter-applied': isOrderNoFilterApplied }"></span>
             </nz-filter-trigger>
           </th>
-
-          <th nzWidth="170px" nzShowSort align="center" nzColumnKey="{{ 'ASSIGNED_DATE' }}" [nzSortFn]="true"
-            nzCustomFilter nzLeft>
+          <th nzWidth="170px" class="header-center" nzShowSort align="center" nzColumnKey="ASSIGNED_DATE"
+            [nzSortFn]="true" nzCustomFilter nzLeft>
             Assigned Date
             <nz-filter-trigger [(nzVisible)]="AssignedDateVisible" [nzDropdownMenu]="AssignedDate">
-              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                  color: isAssignedDateFilterApplied ? '#092B9C!important' : 'inherit'
-                }"></span>
+              <span class="filter-icon" [ngClass]="{ 'filter-applied': isAssignedDateFilterApplied }"></span>
             </nz-filter-trigger>
           </th>
-
-          <th nzWidth="170px" nzShowSort align="center" nzColumnKey="{{ 'SCHEDULED_DATE_TIME' }}" [nzSortFn]="true"
-            nzCustomFilter>
+          <th nzWidth="170px" class="header-center" nzShowSort align="center" nzColumnKey="SCHEDULED_DATE_TIME"
+            [nzSortFn]="true" nzCustomFilter>
             Scheduled Date
             <nz-filter-trigger [(nzVisible)]="ScheduledDateVisible" [nzDropdownMenu]="ScheduledDate">
-              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                  color: isSchedulaedDateFilterApplied ? '#092B9C!important' : 'inherit'
-                }"></span>
+              <span class="filter-icon" [ngClass]="{ 'filter-applied': isSchedulaedDateFilterApplied }"></span>
             </nz-filter-trigger>
           </th>
-
-          <th nzWidth="220px" nzShowSort align="center" nzColumnKey="{{ 'SERVICE_NAME' }}" [nzSortFn]="true"
+          <th nzWidth="220px" class="header-left" nzShowSort align="center" nzColumnKey="SERVICE_NAME" [nzSortFn]="true"
             nzCustomFilter>
             Service Name
             <nz-filter-trigger [(nzVisible)]="ServiceNameVisible" [nzDropdownMenu]="ServiceName">
-              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                  color: isServiceNameFilterApplied ? '#092B9C!important' : 'inherit'
-                }"></span>
+              <span class="filter-icon" [ngClass]="{ 'filter-applied': isServiceNameFilterApplied }"></span>
             </nz-filter-trigger>
           </th>
-
-          <th nzWidth="270px" nzShowSort align="center" nzColumnKey="{{ 'SERVICE_ADDRESS' }}" [nzSortFn]="true"
-            nzCustomFilter>
+          <th nzWidth="270px" class="header-left" nzShowSort align="center" nzColumnKey="SERVICE_ADDRESS"
+            [nzSortFn]="true" nzCustomFilter>
             Service Address
             <nz-filter-trigger [(nzVisible)]="ServiceAddVisible" [nzDropdownMenu]="ServiceAdd">
-              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                  color: isServiceAddFilterApplied ? '#092B9C!important' : 'inherit'
-                }"></span>
+              <span class="filter-icon" [ngClass]="{ 'filter-applied': isServiceAddFilterApplied }"></span>
             </nz-filter-trigger>
           </th>
-
-          <th nzWidth="200px" nzShowSort align="center" nzColumnKey="{{ 'CUSTOMER_NAME' }}" [nzSortFn]="true"
-            nzCustomFilter>
+          <th nzWidth="200px" class="header-left" nzShowSort align="center" nzColumnKey="CUSTOMER_NAME"
+            [nzSortFn]="true" nzCustomFilter>
             Customer Name
-
             <nz-filter-trigger [(nzVisible)]="CustNameVisible" [nzDropdownMenu]="CustName">
-              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                  color: isCustNameFilterApplied ? '#092B9C!important' : 'inherit'
-                }"></span>
+              <span class="filter-icon" [ngClass]="{ 'filter-applied': isCustNameFilterApplied }"></span>
             </nz-filter-trigger>
           </th>
-
-          <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'CUSTOMER_MOBILE_NUMBER' }}" [nzSortFn]="true"
-            nzCustomFilter>
+          <th nzWidth="150px" class="header-center" nzShowSort align="center" nzColumnKey="CUSTOMER_MOBILE_NUMBER"
+            [nzSortFn]="true" nzCustomFilter>
             Customer Mobile
             <nz-filter-trigger [(nzVisible)]="CustMobVisible" [nzDropdownMenu]="CustMob">
-              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
-                  color: isCustMobFilterApplied ? '#092B9C!important' : 'inherit'
-                }"></span>
+              <span class="filter-icon" [ngClass]="{ 'filter-applied': isCustMobFilterApplied }"></span>
             </nz-filter-trigger>
           </th>
-
-          <th nzWidth="150px" nzAlign="center" nzColumnKey="CUSTOMER_TYPE" [nzSortFn]="true"
+          <th nzWidth="150px" class="header-center" nzColumnKey="CUSTOMER_TYPE" [nzSortFn]="true"
             [nzFilters]="listofCustType" [nzFilterFn]="true" [nzFilterMultiple]="false"
             (nzFilterChange)="onCustTypeFilterChange($event)">
             Customer Type
           </th>
         </tr>
       </thead>
-
       <tbody>
         <tr *ngFor="let data of table.data">
-          <td nzLeft align="center">
-            {{
-            (data["JOB_CREATED_DATE"] | date : "dd/MM/yyyy HH:mm a") ?? "-"
-            }}
-          </td>
-
+          <td nzLeft align="center">{{ (data.JOB_CREATED_DATE | date: 'dd/MM/yyyy HH:mm a') ?? '-' }}</td>
           <td align="center" nzLeft>
-            <span *ngIf="data['JOB_CARD_NO'] != null">
-              <span *ngIf="data['JOB_CARD_NO'].length >= 60" nz-popover [nzPopoverContent]="data['JOB_CARD_NO']"
+            <span *ngIf="data.JOB_CARD_NO">
+              <span *ngIf="data.JOB_CARD_NO.length >= 60" nz-popover [nzPopoverContent]="data.JOB_CARD_NO"
                 nzPopoverPlacement="topLeft">
-                {{
-                data["JOB_CARD_NO"] == null
-                ? "-"
-                : (data["JOB_CARD_NO"] | slice : 0 : 60)
-                }}{{ data["JOB_CARD_NO"].length > 60 ? "..." : "" }}
+                {{ data.JOB_CARD_NO | slice:0:60 }}{{ data.JOB_CARD_NO.length > 60 ? '...' : '' }}
               </span>
-              <span *ngIf="data['JOB_CARD_NO'].length < 60">
-                {{
-                data["JOB_CARD_NO"] == null
-                ? "-"
-                : (data["JOB_CARD_NO"] | slice : 0 : 60)
-                }}
-                {{ data["JOB_CARD_NO"].length > 60 ? "..." : "" }}
-              </span>
+              <span *ngIf="data.JOB_CARD_NO.length < 60">{{ data.JOB_CARD_NO }}</span>
             </span>
-            <span *ngIf="data['JOB_CARD_NO'] == null">-</span>
+            <span *ngIf="!data.JOB_CARD_NO">-</span>
           </td>
-
-          <td align="center" nzLeft>
-            <span *ngIf="data['ORDER_NO'] != null">
-              <span *ngIf="data['ORDER_NO'].length >= 60" nz-popover [nzPopoverContent]="data['ORDER_NO']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["ORDER_NO"] == null
-                ? "-"
-                : (data["ORDER_NO"] | slice : 0 : 60)
-                }}{{ data["ORDER_NO"].length > 60 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['ORDER_NO'].length < 60">
-                {{
-                data["ORDER_NO"] == null
-                ? "-"
-                : (data["ORDER_NO"] | slice : 0 : 60)
-                }}
-                {{ data["ORDER_NO"].length > 60 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['ORDER_NO'] == null">-</span>
-          </td>
-
-          <td align="center" nzLeft>
-            {{ (data["ASSIGNED_DATE"] | date : "dd/MM/yyyy HH:mm a") ?? "-" }}
-          </td>
-
-          <td align="center">
-            {{
-            (data["SCHEDULED_DATE_TIME"] | date : "dd/MM/yyyy HH:mm a") ?? "-"
-            }}
-          </td>
-
-          <td align="left">
-            <span *ngIf="data['SERVICE_NAME'] != null">
-              <span *ngIf="data['SERVICE_NAME'].length >= 30" nz-popover [nzPopoverContent]="data['SERVICE_NAME']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["SERVICE_NAME"] == null
-                ? "-"
-                : (data["SERVICE_NAME"] | slice : 0 : 30)
-                }}{{ data["SERVICE_NAME"].length > 30 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['SERVICE_NAME'].length < 30">
-                {{
-                data["SERVICE_NAME"] == null
-                ? "-"
-                : (data["SERVICE_NAME"] | slice : 0 : 30)
-                }}
-                {{ data["SERVICE_NAME"].length > 30 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['SERVICE_NAME'] == null">-</span>
-          </td>
-
-          <td align="left">
-            <span *ngIf="data['SERVICE_ADDRESS'] != null">
-              <span *ngIf="data['SERVICE_ADDRESS'].length >= 40" nz-popover [nzPopoverContent]="data['SERVICE_ADDRESS']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["SERVICE_ADDRESS"] == null
-                ? "-"
-                : (data["SERVICE_ADDRESS"] | slice : 0 : 40)
-                }}{{ data["SERVICE_ADDRESS"].length > 40 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['SERVICE_ADDRESS'].length < 40">
-                {{
-                data["SERVICE_ADDRESS"] == null
-                ? "-"
-                : (data["SERVICE_ADDRESS"] | slice : 0 : 40)
-                }}
-                {{ data["SERVICE_ADDRESS"].length > 40 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['SERVICE_ADDRESS'] == null">-</span>
-          </td>
-
-          <td align="left">
-            <span *ngIf="data['CUSTOMER_NAME'] != null">
-              <span *ngIf="data['CUSTOMER_NAME'].length >= 20" nz-popover [nzPopoverContent]="data['CUSTOMER_NAME']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["CUSTOMER_NAME"] == null
-                ? "-"
-                : (data["CUSTOMER_NAME"] | slice : 0 : 20)
-                }}{{ data["CUSTOMER_NAME"].length > 20 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['CUSTOMER_NAME'].length < 20">
-                {{
-                data["CUSTOMER_NAME"] == null
-                ? "-"
-                : (data["CUSTOMER_NAME"] | slice : 0 : 20)
-                }}
-                {{ data["CUSTOMER_NAME"].length > 20 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['CUSTOMER_NAME'] == null">-</span>
-          </td>
-
-          <td align="center">
-            <span *ngIf="data['CUSTOMER_MOBILE_NUMBER'] != null">
-              <span *ngIf="data['CUSTOMER_MOBILE_NUMBER'].length >= 15" nz-popover
-                [nzPopoverContent]="data['CUSTOMER_MOBILE_NUMBER']" nzPopoverPlacement="topLeft">
-                {{
-                data["CUSTOMER_MOBILE_NUMBER"] == null
-                ? "-"
-                : (data["CUSTOMER_MOBILE_NUMBER"] | slice : 0 : 15)
-                }}{{ data["CUSTOMER_MOBILE_NUMBER"].length > 15 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['CUSTOMER_MOBILE_NUMBER'].length < 15">
-                {{
-                data["CUSTOMER_MOBILE_NUMBER"] == null
-                ? "-"
-                : (data["CUSTOMER_MOBILE_NUMBER"] | slice : 0 : 15)
-                }}
-                {{ data["CUSTOMER_MOBILE_NUMBER"].length > 15 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['CUSTOMER_MOBILE_NUMBER'] == null">-</span>
-          </td>
-
-          <td align="center">
-            <span *ngIf="data.CUSTOMER_TYPE != null">
-              <span *ngIf="data['CUSTOMER_TYPE'] == 'I'"> Individual(B2C) </span>
-              <span *ngIf="data['CUSTOMER_TYPE'] == 'B'"> Business(B2B) </span>
-            </span>
-            <span *ngIf="data.CUSTOMER_TYPE == null">-</span>
-          </td>
+          <td align="center" nzLeft>{{ data.ORDER_NO || '-' }}</td>
+          <td align="center" nzLeft>{{ data.ASSIGNED_DATE | date: 'dd/MM/yyyy HH:mm a' }}</td>
+          <td align="center">{{ data.SCHEDULED_DATE_TIME | date: 'dd/MM/yyyy HH:mm a' }}</td>
+          <td align="left">{{ data.SERVICE_NAME || '-' }}</td>
+          <td align="left">{{ data.SERVICE_ADDRESS || '-' }}</td>
+          <td align="left">{{ data.CUSTOMER_NAME || '-' }}</td>
+          <td align="center">{{ data.CUSTOMER_MOBILE_NUMBER || '-' }}</td>
+          <td align="center">{{ data.CUSTOMER_TYPE === 'I' ? 'Individual(B2C)' : data.CUSTOMER_TYPE === 'B' ?
+            'Business(B2B)' : '-' }}</td>
         </tr>
       </tbody>
     </nz-table>
-
-    <!-- Job Created Date Dropdown -->
     <nz-dropdown-menu #JobCreatedDate="nzDropdownMenu">
       <div class="select">
         <nz-range-picker [nzShowTime]="{ nzFormat: 'HH:mm a', nzUse12Hours: true }" name="JobCreatedDateTime"
-          [(ngModel)]="selectedJobCreatedDate" style="width: 100%" (ngModelChange)="search()" required
+          [(ngModel)]="selectedJobCreatedDate" class="wt-100" (ngModelChange)="search()" required
           nzFormat="dd/MM/yyyy HH:mm a" (ngModelChange)="onDateRangeChange()"></nz-range-picker>
       </div>
     </nz-dropdown-menu>
-
-    <!-- Job Card No Dropdown -->
     <nz-dropdown-menu #JobCardNo="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
@@ -406,8 +197,6 @@
         </div>
       </div>
     </nz-dropdown-menu>
-
-    <!-- Order No Dropdown -->
     <nz-dropdown-menu #OrderNo="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
@@ -423,26 +212,20 @@
         </div>
       </div>
     </nz-dropdown-menu>
-
-    <!-- Assigned Date Dropdown -->
     <nz-dropdown-menu #AssignedDate="nzDropdownMenu">
       <div class="select">
         <nz-range-picker [nzShowTime]="{ nzFormat: 'HH:mm a', nzUse12Hours: true }" name="AssignedDateTime"
-          [(ngModel)]="selectedAssignedDate" style="width: 100%" (ngModelChange)="search()" required
+          [(ngModel)]="selectedAssignedDate" class="wt-100" (ngModelChange)="search()" required
           nzFormat="dd/MM/yyyy HH:mm a" (ngModelChange)="onAssignedDateRangeChange()"></nz-range-picker>
       </div>
     </nz-dropdown-menu>
-
-    <!-- Scheduled Date Dropdown -->
     <nz-dropdown-menu #ScheduledDate="nzDropdownMenu">
       <div class="select">
         <nz-range-picker [nzShowTime]="{ nzFormat: 'HH:mm a', nzUse12Hours: true }" name="ScheduledDateTime"
-          [(ngModel)]="selectedScheduledDate" style="width: 100%" (ngModelChange)="search()" required
+          [(ngModel)]="selectedScheduledDate" class="wt-100" (ngModelChange)="search()" required
           nzFormat="dd/MM/yyyy HH:mm a" (ngModelChange)="onScheduledDateRangeChange()"></nz-range-picker>
       </div>
     </nz-dropdown-menu>
-
-    <!--Service Name Dropdown -->
     <nz-dropdown-menu #ServiceName="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
@@ -458,8 +241,6 @@
         </div>
       </div>
     </nz-dropdown-menu>
-
-    <!--Service Address Dropdown -->
     <nz-dropdown-menu #ServiceAdd="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
@@ -475,8 +256,6 @@
         </div>
       </div>
     </nz-dropdown-menu>
-
-    <!--Customer Name  Dropdown -->
     <nz-dropdown-menu #CustName="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
@@ -492,8 +271,6 @@
         </div>
       </div>
     </nz-dropdown-menu>
-
-    <!--Customer Mobile  Dropdown -->
     <nz-dropdown-menu #CustMob="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
@@ -511,8 +288,6 @@
     </nz-dropdown-menu>
   </div>
 </div>
-
-<!-- Drawer -->
 <div *ngIf="drawerFilterVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -524,9 +299,8 @@
       <app-main-filter [drawerClose]="filtercloseCallback" [filterGroups]="[]" [TabId]="TabId" [fields]="filterFields"
         (filterApplied)="onFilterApplied($event)"></app-main-filter> </ng-container></nz-drawer>
 </div>
-
 <nz-modal [(nzVisible)]="isModalVisible" [nzTitle]="'Query Details'" [nzFooter]="null"
   (nzOnCancel)="handleCancel()"><ng-container *nzModalContent>
-    <h6 style="text-align: center">{{ selectedQuery }}</h6>
+    <h6 class="text-center">{{ selectedQuery }}</h6>
   </ng-container>
 </nz-modal>

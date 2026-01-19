@@ -15,7 +15,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { Ticket } from 'src/app/Support/Models/TicketingSystem';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-ticket-group-wise-summary',
   templateUrl: './ticket-group-wise-summary.component.html',
@@ -28,14 +27,12 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
   totalRecords = 1;
   fileName = 'DeptWise.xlsx';
   dataList = [];
-  // dataListForExport = [];
   loadingRecords: boolean = true;
   sortValue: string = 'desc';
   sortKey: string = 'TICKET_GROUP_ID';
   searchText: string = '';
   filterQuery: string = '';
   isFilterApplied: string = 'default';
-  // columns: string[][] = [["TICKET_GROUP_VALUE", "Ticket Group"], ["TOTAL", "Total Ticket(s)"], ["CREATED", "Pending"], ["ASSIGNED", "Assigned"], ["ANSWERED", "Answered"], ["RE_OPEN", "Re-Opened"], ["CLOSED", "Closed"], ["BANNED", "Banned"], ["ON_HOLD", "On Hold"]];
   columns: string[][] = [['TICKET_GROUP_VALUE', 'Ticket Group']];
   STATUS = 'AL';
   TICKET_GROUP = [];
@@ -54,7 +51,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
   value2: any = '';
   ticketGroups = [];
   supportusers = [];
-  // userId = Number(this.cookie.get('userId'));
   roleId = Number(this.cookie.get('roleId'));
   orgId = Number(this.cookie.get('orgId'));
   deptId = Number(this.cookie.get('deptId'));
@@ -82,7 +78,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
   CLOSED: number = 0;
   BANNED: number = 0;
   ON_HOLD: number = 0;
-
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
@@ -92,22 +87,18 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
     private datepipe: DatePipe,
     private router: Router
   ) { }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   disabledToDate = (current: Date): boolean =>
     differenceInCalendarDays(
       current,
       this.date1 == null ? this.today : this.date1
     ) < 0;
-
   onFromDateChange(fromDate) {
     if (fromDate == null) this.date1 = new Date();
     else this.date1 = new Date(fromDate);
   }
-
   setDateForDeptWiseFilter() {
     this.date = [];
     let currentDate = new Date();
@@ -115,10 +106,8 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
     this.date1 = new Date(previous15thDayDate);
     this.date2 = new Date();
   }
-
   ngOnInit() {
     this.setDateForDeptWiseFilter();
-
     this.api
       .getAllTicketGroups(0, 0, 'VALUE', 'ASC', ' AND ORG_ID=1')
       .subscribe(
@@ -129,22 +118,15 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
         },
         (err) => { }
       );
-
     if (this.roleId == 6) this.getDepartmentToShowReport();
-
     if (this.roleId == 4) this.getDepartmentSupportAgentWise();
-
     if (this.roleId != 4 && this.roleId != 6) this.search(true);
-
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
   }
-
   supportAgentWiseDeptArray: any = [];
-
   getDepartmentSupportAgentWise() {
     this.supportAgentWiseDeptArray = [];
-
     this.api
       .getbackOfficeDepartmentMapping(
         0,
@@ -156,25 +138,20 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       .subscribe((data) => {
         if (data['status'] == 200) {
           var supportAgentWiseDept = data['data'];
-
           for (var i = 0; i < supportAgentWiseDept.length; i++) {
             this.supportAgentWiseDeptArray.push(
               supportAgentWiseDept[i]['DEPARTMENT_ID']
             );
           }
-
           if (this.roleId == 4) {
             this.search(true);
           }
         }
       });
   }
-
   deptWiseReport: any = [];
-
   getDepartmentToShowReport() {
     this.deptWiseReport = [];
-
     this.api
       .getbackOfficeDepartmentMapping(
         0,
@@ -186,24 +163,15 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       .subscribe((data) => {
         if (data['status'] == 200) {
           var departments = data['data'];
-
           for (var i = 0; i < departments.length; i++) {
             this.deptWiseReport.push(departments[i]['DEPARTMENT_ID']);
           }
-
           if (this.roleId == 6) {
             this.search(true);
           }
         }
       });
   }
-
-  // sort(sort: { key: string; value: string }): void {
-  //   this.sortKey = sort.key;
-  //   this.sortValue = sort.value;
-  //   this.search(true);
-  // }
-
   exportexcel(): void {
     let element = document.getElementById('summer');
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
@@ -211,12 +179,10 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, this.fileName);
   }
-
   changeDate(value) {
     this.value1 = this.datePipe.transform(value[0], 'yyyy-MM-dd');
     this.value2 = this.datePipe.transform(value[1], 'yyyy-MM-dd');
   }
-
   search(reset: boolean = false, exportToExcel: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
@@ -230,20 +196,8 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-    // if (this.searchText != "") {
-    //   likeQuery = " AND (";
-
-    //   this.columns.forEach(column => {
-    //     likeQuery += " " + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
-    // }
-
     let globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -254,83 +208,15 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (this.ticketGroupText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TICKET_GROUP_VALUE LIKE '%${this.ticketGroupText.trim()}%'`;
-
       this.isticketgroupFilterApplied = true;
     } else {
       this.isticketgroupFilterApplied = false;
     }
-
-    // if (this.totalText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") + `TOTAL LIKE '%${this.totalText.trim()}%'`;
-    //   this.istotalFilterApplied = true;
-    // } else {
-    //   this.istotalFilterApplied = false;
-    // }
-
-    // if (this.createdText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") + `CREATED LIKE '%${this.createdText.trim()}%'`;
-    //   this.iscreatedFilterApplied = true;
-    // } else {
-    //   this.iscreatedFilterApplied = false;
-    // }
-
-    // if (this.assignedText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") + `ASSIGNED LIKE '%${this.assignedText.trim()}%'`;
-    //   this.isassignedFilterApplied = true;
-    // } else {
-    //   this.isassignedFilterApplied = false;
-    // }
-
-    // if (this.answeredText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") + `ANSWERED LIKE '%${this.answeredText.trim()}%'`;
-    //   this.isansweredFilterApplied = true;
-    // } else {
-    //   this.isansweredFilterApplied = false;
-    // }
-
-    // if (this.reOpentext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") + `RE_OPEN LIKE '%${this.reOpentext.trim()}%'`;
-    //   this.isreopenFilterApplied = true;
-    // } else {
-    //   this.isreopenFilterApplied = false;
-    // }
-
-    // if (this.closeText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") + `CLOSED LIKE '%${this.closeText.trim()}%'`;
-    //   this.isclosedFilterApplied = true;
-    // } else {
-    //   this.isclosedFilterApplied = false;
-    // }
-
-    // if (this.bannedText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") + `BANNED LIKE '%${this.bannedText.trim()}%'`;
-    //   this.isbannedgroupFilterApplied = true;
-    // } else {
-    //   this.isbannedgroupFilterApplied = false;
-    // }
-
-    // if (this.onHoldText !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") + `ON_HOLD LIKE '%${this.onHoldText.trim()}%'`;
-    //   this.isonHoldgroupFilterApplied = true;
-    // } else {
-    //   this.isonHoldgroupFilterApplied = false;
-    // }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     var dateFilter = '';
     if (this.date1 != undefined && this.date2 != undefined) {
       dateFilter =
@@ -340,10 +226,8 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
         this.datePipe.transform(this.date2, 'yyyy-MM-dd') +
         "'";
     }
-
     if (exportToExcel) {
       this.loadingRecords = true;
-
       this.api
         .getTicketGroupWiseSummaryReport(
           0,
@@ -359,7 +243,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
             if (data['status'] == 200) {
               this.loadingRecords = false;
               this.excelData = data.body['data'];
-
               this.TabId = data['TAB_ID'];
               this.convertInExcel();
             }
@@ -396,7 +279,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
               let allClosed = 0;
               let allBanned = 0;
               let allOnHold = 0;
-
               for (var i = 0; i < tempData.length; i++) {
                 allTotal = allTotal + tempData[i]['TOTAL'];
                 allCreated = allCreated + tempData[i]['CREATED'];
@@ -407,7 +289,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
                 allBanned = allBanned + tempData[i]['BANNED'];
                 allOnHold = allOnHold + tempData[i]['ON_HOLD'];
               }
-
               this.allTotal = allTotal;
               this.allCreated = allCreated;
               this.allAssigned = allAssigned;
@@ -436,41 +317,13 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
             }
           }
         );
-      // // this.api.getTicketGroupWiseSummaryReport(0, 0, 'TICKET_GROUP_ID', 'desc', likeQuery + this.filterQuery, '', this.cookie.get('orgId')).subscribe(data => {
-      // this.api
-      //   .getTicketGroupWiseSummaryReport(
-      //     this.pageIndex,
-      //     this.pageSize,
-      //     this.sortKey,
-      //     sort,
-      //     likeQuery + this.filterQuery,
-      //     '',
-      //     this.cookie.get('orgId')
-      //   )
-      //   .subscribe(
-      //     (data) => {
-      //       if (data['status'] == 200) {
-      //         this.loadingRecords = false;
-      //         this.totalRecords = data.body['count'];
-
-      //         this.dataList = data.body['data'];
-      //         this.excelData = data.body['data'];
-      //         this.TabId = data.body['TAB_ID'];
-      //       }
-      //     },
-      //     (err) => {
-      //       if (err['ok'] == false) this.message.error('Server Not Found', '');
-      //     }
-      //   );
     }
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   clearFilter() {
     this.TICKET_GROUP = [];
     this.date = [];
@@ -484,43 +337,21 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
     this.search(true);
     this.SELECT_ALL = false;
   }
-
   exportLoading: boolean = false;
   ticketGroupID2: any;
-
   isPDFModalVisible: boolean = false;
   PDFModalTitle: string = 'Export in PDF';
   exportInPDFLoading: boolean = false;
   ticketGroupsToPrint: string = '';
-
-  // importInPDF(ticketGroupID) {
-  //   this.ticketGroupsToPrint = "";
-  //   this.search(false, false, true);
-  //   let tempTicketGroups = "";
-
-  //   for (var i = 0; i < ticketGroupID.length; i++) {
-  //     let ticketGroups = this.ticketGroups.filter(obj1 => {
-  //       return obj1['ID'] == ticketGroupID[i];
-  //     });
-
-  //     tempTicketGroups = tempTicketGroups + ticketGroups[0]["VALUE"] + ", ";
-  //   }
-
-  //   this.ticketGroupsToPrint = tempTicketGroups.substring(0, tempTicketGroups.length - 2);
-  // }
-
   handlePDFModalCancel() {
     this.isPDFModalVisible = false;
   }
-
   getCurrentDateTime() {
     return new Date();
   }
-
   getUserName() {
     return this.api.userName;
   }
-
   getTicketGroups() {
     if (
       this.ticketGroupsToPrint == '' ||
@@ -529,43 +360,33 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       return 'All';
     else return this.ticketGroupsToPrint;
   }
-
   pdfDownload: boolean = false;
-
   SELECT_ALL: boolean = false;
-
   onSelectAllChecked(event) {
     this.SELECT_ALL = event;
-    //
     let ids = [];
     if (this.SELECT_ALL == true) {
       for (var i = 0; i < this.ticketGroups.length; i++) {
         ids.push(this.ticketGroups[i]['ID']);
-        //
       }
     } else {
       ids = [];
     }
     this.TICKET_GROUP = ids;
   }
-
   onSelectOff(event) {
     var a = this.ticketGroups.length;
     var b = this.ticketGroups.length - event.length;
-
     if ((a! = b)) {
       this.SELECT_ALL = false;
     } else {
       this.SELECT_ALL = true;
     }
-
     this.TICKET_GROUP = event;
-
     if (this.TICKET_GROUP.length == 0) {
       this.SELECT_ALL = false;
     }
   }
-
   getTotal(index: number, size: number) {
     if (Number(index * size) >= Number(this.dataCount)) {
       return true;
@@ -573,61 +394,39 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       return false;
     }
   }
-
-  // nametext: string = "";
-  // iscustNameFilterApplied: boolean = false;
-  // custnamevisible = false;
-
   ticketGroupText: string = '';
   isticketgroupFilterApplied: boolean = false;
   ticketGroupVisible = false;
-
   totalText: string = '';
   istotalFilterApplied: boolean = false;
   totalVisible = false;
-
   createdText: string = '';
   iscreatedFilterApplied: boolean = false;
   createdpVisible = false;
-
   assignedText: string = '';
   assignedVisible = false;
   isassignedFilterApplied: boolean = false;
-
   answeredText: string = '';
   answeredVisible = false;
   isansweredFilterApplied: boolean = false;
-
   reOpentext: string = '';
   reopenVisible = false;
   isreopenFilterApplied: boolean = false;
-
   closeText: string = '';
   closedVisible = false;
   isclosedFilterApplied: boolean = false;
-
   bannedText: string = '';
   bannedGroupVisible = false;
   isbannedgroupFilterApplied: boolean = false;
-
   onHoldText: string = '';
   onHoldGroupVisible = false;
   isonHoldgroupFilterApplied: boolean = false;
-
   excelData: any = [];
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
     if (this.excelData.length > 0) {
       for (var i = 0; i < this.excelData.length; i++) {
-        // obj1["Feedback Date"] = this.excelData[i]["FEEDBACK_DATE_TIME"]
-        //   ? this.datepipe.transform(
-        //     this.excelData[i]["FEEDBACK_DATE_TIME"],
-        //     "dd/MM/yyyy hh:mm a"
-        //   )
-        //   : "-";
-
         obj1['Ticket Group Value'] = this.excelData[i]['TICKET_GROUP_VALUE']
           ? this.excelData[i]['TICKET_GROUP_VALUE']
           : '-';
@@ -652,7 +451,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
         obj1['On Hold'] = this.excelData[i]['ON_HOLD']
           ? this.excelData[i]['ON_HOLD']
           : '-';
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -666,7 +464,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       this.message.error('There is a No Data', '');
     }
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -675,21 +472,17 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   reset(): void {
     this.searchText = '';
   }
-
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
     if (this.ticketGroupText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isticketgroupFilterApplied = true;
@@ -698,24 +491,18 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       this.isticketgroupFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   isDeleting: boolean = false;
   savedFilters: any;
   selectedFilter: string | null = null;
   isfilterapply: boolean = false;
-
   public commonFunction = new CommonFunctionService();
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -732,9 +519,7 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -760,7 +545,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       }
     );
   }
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
@@ -768,14 +552,11 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   TabId: number;
   filterloading: boolean = false;
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -783,13 +564,12 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -804,21 +584,15 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -832,21 +606,17 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   EditQueryData = [];
   editButton: any = '';
   FILTER_NAME: any;
   drawerTitle: string = '';
   drawerFilterVisible: boolean = false;
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -863,12 +633,8 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       groups: [],
     },
   ];
-
-  //New Advance Filter
-
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -885,19 +651,16 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       groups: [],
     },
   ];
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.FILTER_NAME = data.FILTER_NAME;
-    //
     this.filterData = data;
     this.EditQueryData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Query';
     this.drawerFilterVisible = true;
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -906,7 +669,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -915,22 +677,18 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -940,26 +698,21 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
     sessionStorage.setItem('ID', item.ID);
   }
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
@@ -978,123 +731,8 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       ],
       placeholder: 'Ticket Group value',
     },
-
-    // {
-    //   key: "TOTAL",
-    //   label: "Total",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Total",
-    // },
-    // {
-    //   key: "CREATED",
-    //   label: "Created",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Created",
-    // },
-    // {
-    //   key: "ASSIGNED",
-    //   label: "Assigned",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Assigned",
-    // },
-    // {
-    //   key: "ANSWERED",
-    //   label: "Answered",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Answered",
-    // },
-    // {
-    //   key: "RE_OPEN",
-    //   label: "Re Open",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Answered",
-    // },
-    // {
-    //   key: "CLOSED",
-    //   label: "Closed",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Closed",
-    // },
-    // {
-    //   key: "BANNED",
-    //   label: "Banned",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Banned",
-    // },
-    // {
-    //   key: "ON_HOLD",
-    //   label: "On Hold",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter On Hold",
-    // },
   ];
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -1106,9 +744,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
   openfilter() {
     this.drawerTitle = 'Ticket Group Wise Summary Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1117,11 +752,9 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1138,7 +771,6 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1160,26 +792,4 @@ export class TicketGroupWiseSummaryComponent implements OnInit {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // var deptFilter = "";
-  // if (this.TICKET_GROUP.length > 0)
-  //   deptFilter = " AND TICKET_GROUP_ID IN (" + this.TICKET_GROUP + ")";
-
-  // var supportAgentWiseDept = "";
-  // if (this.roleId == 4) {
-  //   if (this.supportAgentWiseDeptArray.length > 0)
-  //     supportAgentWiseDept = " AND DEPARTMENT_ID IN (" + this.supportAgentWiseDeptArray + ")";
-
-  //   else
-  //     supportAgentWiseDept = "";
-  // }
-
-  // var deptAdminWiseDept = "";
-  // if (this.roleId == 6) {
-  //   if (this.deptWiseReport.length > 0)
-  //     deptAdminWiseDept = " AND DEPARTMENT_ID IN (" + this.deptWiseReport + ")";
-
-  //   else
-  //     deptAdminWiseDept = "";
-  // }
 }

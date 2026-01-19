@@ -9,14 +9,49 @@
     text-align: center;
     transition: transform 0.3s ease-in-out;
 }
-
 .flex-container {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
 }
-
 nz-divider {
     border-color: #7cb305 !important;
-  }
+}
+.img-upload-info-text {
+    color: rgb(45, 128, 223);
+    font-size: 12px;
+    padding-left: 10px;
+}
+.img-upload-clickable {
+    cursor: pointer;
+}
+.img-upload-plus-icon {
+    font-size: 30px !important;
+}
+.img-upload-hidden-input {
+    display: none !important;
+}
+.img-delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: red;
+    z-index: 10;
+}
+.img-preview-fit {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+.footer-cancel-spacing {
+    margin-right: 8px;
+}
+.img-cropper-container {
+    height: 500px;
+    overflow: scroll;
+}
+.img-cropped-center {
+    text-align: center;
+}

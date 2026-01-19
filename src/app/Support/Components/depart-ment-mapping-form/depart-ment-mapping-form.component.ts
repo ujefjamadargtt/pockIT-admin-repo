@@ -6,7 +6,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 export class BackOfficeMasterData {
   ID: any;
   NAME: string;
@@ -21,7 +20,6 @@ export class BackOfficeMasterData {
   CAN_CHANGE_SERVICE_PRICE: boolean = true;
   PROFILE_PHOTO: any;
 }
-
 @Component({
   selector: 'app-depart-ment-mapping-form',
   templateUrl: './depart-ment-mapping-form.component.html',
@@ -34,45 +32,33 @@ export class DepartMentMappingFormComponent {
   drawerData: BackOfficeMasterData = new BackOfficeMasterData();
   searchText: string = '';
   formTitle = 'Map Departments';
-
-  //   Manage Department Mapping
-  // Back Office Department Mapping
   pageIndex = 1;
   pageSize = 10;
   sortValue: string = 'desc';
   sortKey: string = 'NAME';
   chapters: any = [];
   isLoading = true;
-  // New main filter
   TabId: number;
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
-
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
   filterQuery: string = '';
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
-
   statusFilter: string | undefined = undefined;
-
   nametext: string = '';
   nameVisible: boolean = false;
-
   roleVisible: boolean = false;
   selectedRole: number[] = [];
-
   emailtext: string = '';
   emailVisible: boolean = false;
-
   mobiletext: string = '';
   mobileVisible: boolean = false;
-
   isSpinning = false;
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
@@ -86,14 +72,11 @@ export class DepartMentMappingFormComponent {
     ['MOBILE_NUMBER', 'MOBILE_NUMBER'],
     ['IS_ACTIVE', 'IS_ACTIVE'],
   ];
-
   loadingRecords = false;
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
   drawerMappingTitle!: string;
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -110,16 +93,13 @@ export class DepartMentMappingFormComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router,
     private sanitizer: DomSanitizer
   ) { }
-
   ngOnInit() {
-    // this.PincodeMapping();
   }
   roleidfilter: any;
   roleData: any[] = [];
@@ -136,14 +116,10 @@ export class DepartMentMappingFormComponent {
         (data) => {
           if (data['code'] == 200) {
             this.roleData = data['data'];
-
-            // Map the role data to options
             this.roleOptions = this.roleData.map((role: any) => ({
               value: String(role.ID),
               display: role.NAME,
             }));
-
-            // Update the ROLE_ID field options dynamically
             const roleField = this.filterFields.find(
               (field) => field.key === 'ROLE_ID'
             );
@@ -170,9 +146,7 @@ export class DepartMentMappingFormComponent {
         }
       );
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -181,14 +155,12 @@ export class DepartMentMappingFormComponent {
       tooltip.hide();
     }
   }
-
   shouldTruncateAt25(value: string): boolean {
-    const mCount = (value.match(/m/g) || []).length; // Count the number of 'm's
-    return value.length > 35 && mCount > 6; // Truncate at 25 if length > 25 and 'm' count > 4
+    const mCount = (value.match(/m/g) || []).length; 
+    return value.length > 35 && mCount > 6; 
   }
-
   mainsearchkeyup(event: KeyboardEvent) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault(); 
     if (
       this.searchText.length === 0 ||
       (event.key === 'Enter' && this.searchText.length >= 3)
@@ -196,14 +168,11 @@ export class DepartMentMappingFormComponent {
       this.search(true);
     }
   }
-
   isnametextApplied = false;
   isEmailApplied = false;
   isMobileApplied = false;
-
   onKeyup(event: KeyboardEvent, field: string): void {
-    const fieldValue = this[field]; // Dynamically access the field value
-
+    const fieldValue = this[field]; 
     if (event.key === 'Enter') {
       if (fieldValue.length >= 3) {
         this.search();
@@ -214,8 +183,6 @@ export class DepartMentMappingFormComponent {
       this.setFilterApplied(field, false);
     }
   }
-
-  // Helper method to set filter applied states dynamically
   setFilterApplied(field: string, value: boolean): void {
     switch (field) {
       case 'nametext':
@@ -231,33 +198,26 @@ export class DepartMentMappingFormComponent {
         break;
     }
   }
-
   isRoleFilterApplied = false;
-
   onRoleChange(): void {
     this.isRoleFilterApplied =
       this.selectedRole && this.selectedRole.length > 0;
     this.search();
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     var globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -268,14 +228,6 @@ export class DepartMentMappingFormComponent {
           .join(' OR ') +
         ')';
     }
-
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    // }
     var idfilter = '';
     this.loadingRecords = true;
     if (this.userroleid == '5') {
@@ -284,44 +236,35 @@ export class DepartMentMappingFormComponent {
         const likeConditions = this.territoryidfilter
           .map((id) => `TERITORY_IDS LIKE '%${id}%'`)
           .join(' OR ');
-
         idfilter += ` AND (${likeConditions})`;
       }
     }
-    // Country Filter
     if (this.selectedRole.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `ROLE_ID IN (${this.selectedRole.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `ROLE_ID IN (${this.selectedRole.join(',')})`; 
     }
-
     if (this.nametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.nametext.trim()}%'`;
     }
-
     if (this.emailtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `EMAIL_ID LIKE '%${this.emailtext.trim()}%'`;
     }
-
     if (this.mobiletext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `MOBILE_NUMBER LIKE '%${this.mobiletext.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     if (this.vendorroleid === '24') {
       var territory_filter: any = '';
@@ -409,7 +352,6 @@ export class DepartMentMappingFormComponent {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -418,25 +360,20 @@ export class DepartMentMappingFormComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.vendorroleid = this.commonFunction.decryptdata(
       sessionStorage.getItem('roleId') || ''
     );
-
     this.USER_ID = parseInt(this.decrepteduserIDString, 10);
-
     if (this.vendorroleid === '24') {
       var filterrrr = ' AND USER_ID=' + this.USER_ID;
       this.api.getBackOfficeData(0, 0, '', '', filterrrr).subscribe(
@@ -459,26 +396,21 @@ export class DepartMentMappingFormComponent {
       this.search();
     }
   }
-
   sort2(params: NzTableQueryParams) {
-    // this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.PincodeMapping();
@@ -489,25 +421,20 @@ export class DepartMentMappingFormComponent {
     event.preventDefault();
     this.searchInput.nativeElement.focus();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   draweMappingClose(): void {
     this.search();
     this.drawerMappigVisible = false;
   }
-
   get closeCallbackMapping() {
     return this.draweMappingClose.bind(this);
   }
-
   reset(): void {
     this.isnametextApplied = false;
     this.isEmailApplied = false;
@@ -516,15 +443,12 @@ export class DepartMentMappingFormComponent {
     this.nametext = '';
     this.mobiletext = '';
     this.emailtext = '';
-
     this.search();
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   mapDepartment(data: any) {
     this.drawerMappingTitle = `Map department to ${data.NAME}`;
     this.drawerData = Object.assign({}, data);
@@ -533,15 +457,13 @@ export class DepartMentMappingFormComponent {
     this.mapsearchskill = '';
     this.searchdepartment = '';
     this.PincodeMapping();
-    // ;
   }
   close(): void {
     this.drawerMappigVisible = false;
   }
   back() {
-    this.router.navigate(['/masters/menu']); // Navigates to the masters/menu route
+    this.router.navigate(['/masters/menu']); 
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -550,10 +472,8 @@ export class DepartMentMappingFormComponent {
       this.loadFilters();
     }
   }
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -561,16 +481,12 @@ export class DepartMentMappingFormComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -585,22 +501,15 @@ export class DepartMentMappingFormComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -614,7 +523,6 @@ export class DepartMentMappingFormComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -623,7 +531,6 @@ export class DepartMentMappingFormComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -640,20 +547,14 @@ export class DepartMentMappingFormComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
-
   openfilter() {
     this.drawerTitle = 'Department Mapping Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -670,7 +571,6 @@ export class DepartMentMappingFormComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -687,7 +587,6 @@ export class DepartMentMappingFormComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -701,34 +600,21 @@ export class DepartMentMappingFormComponent {
   filterloading: boolean = false;
   updateButton: any;
   updateBtn: any;
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
-    // {
-    //   key: 'ROLE_ID',
-    //   label: 'Role',
-    //   type: 'select',
-    //   comparators: ['=', '!='],
-    //   options: this.roleOptions,
-    //   placeholder: 'Select role',
-    // },
     {
       key: 'NAME',
       label: 'Team Member Name',
@@ -786,16 +672,12 @@ export class DepartMentMappingFormComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -806,16 +688,13 @@ export class DepartMentMappingFormComponent {
           this.savedFilters = this.savedFilters.filter(
             (filter) => filter.ID !== item.ID
           );
-
           this.message.success('Filter deleted successfully.', '');
           sessionStorage.removeItem('ID');
           this.filterloading = true;
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -839,11 +718,8 @@ export class DepartMentMappingFormComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -851,29 +727,22 @@ export class DepartMentMappingFormComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -881,26 +750,12 @@ export class DepartMentMappingFormComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-  // editQuery(data: any) {
-  //   this.filterGroups = JSON.parse(data.FILTER_JSON);
-  //   this.FILTER_NAME = data.FILTER_NAME;
-  //   //
-  //   this.EditQueryData = data;
-  //   this.editButton = 'Y';
-  //   this.drawerTitle = 'Edit Query';
-  //   this.drawerFilterVisible = true;
-  // }
-
-  // profile photo
   ViewImage: any;
   ImageModalVisible: boolean = false;
   imageshow;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
@@ -911,11 +766,8 @@ export class DepartMentMappingFormComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   selectedDepartment: any[] = [];
   DepartmentMappingdata: any[] = [];
   mappedPincodeIds: number[] = [];
@@ -936,17 +788,13 @@ export class DepartMentMappingFormComponent {
   data: any;
   allChecked;
   allSelected1: any;
-
   allChange(selected: boolean): void {
-    this.allChecked = selected; // Set allChecked state
+    this.allChecked = selected; 
     this.isSpinning22 = true;
-
-    // Prepare data for batch update
     const dataToSend = this.mappingdata.map((item) => ({
       DEPARTMENT_ID: item.DEPARTMENT_ID,
       IS_ACTIVE: selected,
     }));
-
     var dataid: any = '';
     if (this.Type == 'Map') {
       dataid = this.drawerData.ID;
@@ -966,10 +814,10 @@ export class DepartMentMappingFormComponent {
         } else {
           this.message.error('Failed to Update Departments.', '');
         }
-        this.isSpinning22 = false; // Hide spinner
+        this.isSpinning22 = false; 
       },
       (error) => {
-        this.isSpinning22 = false; // Hide spinner on error
+        this.isSpinning22 = false; 
         this.message.error('Something Went Wrong.', '');
       }
     );
@@ -995,9 +843,6 @@ export class DepartMentMappingFormComponent {
     this.sortValue = sortOrder;
     this.PincodeMapping111();
   }
-
-  // Call 1
-
   PincodeMapping() {
     this.isSpinning = true;
     this.isSpinning11 = true;
@@ -1007,12 +852,8 @@ export class DepartMentMappingFormComponent {
     } catch (error) {
       sort = '';
     }
-
-    // Call the API with the constructed query
     var dataid: any = '';
     if (this.Type == 'Map') {
-      // dataid = this.drawerData.SERVICE_ID;
-
       dataid = this.drawerData.ID;
     } else {
       dataid = this.drawerData.ID;
@@ -1023,7 +864,6 @@ export class DepartMentMappingFormComponent {
         (data) => {
           if (data['code'] == 200) {
             this.DepartmentMappingdata = data['data'];
-
             this.originalTraineeData = [...this.DepartmentMappingdata];
             this.selectedDepartment = [];
           } else {
@@ -1041,11 +881,8 @@ export class DepartMentMappingFormComponent {
         }
       );
   }
-
   onPincodeSelecttable(data: any, selected: boolean): void {
     data.selected = selected;
-
-    // Persist selected pincodes in a separate array
     if (selected) {
       if (
         !this.selectedDepartment.some((item) => item.DEPARTMENT_ID === data.ID)
@@ -1059,8 +896,6 @@ export class DepartMentMappingFormComponent {
         (item) => item.DEPARTMENT_ID !== data.ID
       );
     }
-
-    // Update Select All and Indeterminate states
     const totalSelected = this.DepartmentMappingdata.filter(
       (item) => item.selected
     ).length;
@@ -1072,22 +907,18 @@ export class DepartMentMappingFormComponent {
   updateSelectionStates(): void {
     const totalSelected = this.selectedPincodeSet.size;
     const totalPincodes = this.DepartmentMappingdata.length;
-
     this.allSelected = totalSelected === totalPincodes && totalPincodes > 0;
     this.tableIndeterminate =
       totalSelected > 0 && totalSelected < totalPincodes;
   }
-
   mapdatatopincode() {
     this.isSpinning = true;
     var dataid: any = '';
     if (this.Type == 'Map') {
-      // dataid = this.data.SERVICE_ID;
       dataid = this.drawerData.ID;
     } else {
       dataid = this.drawerData.ID;
     }
-
     this.api
       .addMappingDeptservice(dataid, this.drawerData.NAME, this.drawerData.USER_ID, this.selectedDepartment, 'M')
       .subscribe(
@@ -1098,7 +929,6 @@ export class DepartMentMappingFormComponent {
             this.selectedDepartment = [];
             this.selectedDepartments11 = [];
             this.selectedPincodeSet = new Set();
-
             this.PincodeMapping111();
             this.PincodeMapping();
             this.allSelected1 = false;
@@ -1115,15 +945,12 @@ export class DepartMentMappingFormComponent {
         }
       );
   }
-
   toggleAll(selectAll: boolean): void {
     this.allSelected = selectAll;
     this.tableIndeterminate = false;
-
     this.DepartmentMappingdata.forEach((item) => {
       item.selected = selectAll;
       if (selectAll) {
-        // Add to selectedDepartment if not already present
         this.selectedPincodeSet.add(item.ID);
         if (
           !this.selectedDepartment.some(
@@ -1133,26 +960,20 @@ export class DepartMentMappingFormComponent {
           this.selectedDepartment.push({ DEPARTMENT_ID: item.ID });
         }
       } else {
-        // Remove from selectedDepartment
         this.selectedPincodeSet.delete(item.ID);
         this.selectedDepartment = this.selectedDepartment.filter(
           (selected) => selected.DEPARTMENT_ID !== item.ID
         );
       }
     });
-    // this.updateSelectionStates();
   }
-
   onPincodeSelecttable11111(data: any, selected: boolean): void {
-    // Prepare data for the API call
     const dataToSend = [
       {
         DEPARTMENT_ID: data.DEPARTMENT_ID,
         IS_ACTIVE: selected,
       },
     ];
-
-    // Show spinner while processing
     this.isSpinning = true;
     var dataid: any = '';
     if (this.Type == 'Map') {
@@ -1160,11 +981,9 @@ export class DepartMentMappingFormComponent {
     } else {
       dataid = this.drawerData.ID;
     }
-    // Call the API
     this.api.MarkAsUnmarkDept(dataid, this.drawerData.NAME, this.drawerData.USER_ID, dataToSend).subscribe(
       (response) => {
         if (response.code == 200) {
-          // Success message based on selection state
           if (!selected) {
             this.message.success(
               'Departments Successfully Unmapped to the User.',
@@ -1176,24 +995,19 @@ export class DepartMentMappingFormComponent {
               ''
             );
           }
-
-          // Update the local data state
           data.IS_ACTIVE = selected;
-
-          // Recalculate 'Select All' state
           this.allChecked = this.mappingdata.every((item) => item.IS_ACTIVE);
         } else {
           this.message.error('Failed to Map Departments to the User.', '');
         }
-        this.isSpinning = false; // Hide spinner
+        this.isSpinning = false; 
       },
       (error) => {
-        this.isSpinning = false; // Hide spinner on error
+        this.isSpinning = false; 
         this.message.error('Something Went Wrong.', '');
       }
     );
   }
-
   PincodeMapping111() {
     this.isSpinning = true;
     this.isSpinning22 = true;
@@ -1209,7 +1023,6 @@ export class DepartMentMappingFormComponent {
     } else {
       dataid = this.drawerData.ID;
     }
-    // Call the API with the constructed query
     this.api
       .mappedDepartments(
         0,
@@ -1222,10 +1035,8 @@ export class DepartMentMappingFormComponent {
         (data) => {
           if (data['code'] == 200) {
             this.mappingdata = data['data'];
-
             this.totoalrecordsss = this.mappingdata.length;
             this.originalTraineeData1 = [...this.mappingdata];
-
             this.selectedDepartments11 = [];
             this.allChecked =
               this.mappingdata.length > 0 &&
@@ -1244,36 +1055,25 @@ export class DepartMentMappingFormComponent {
         }
       );
   }
-
   SearchDepartment(data: any) {
     this.isSpinning = true;
-
     if (data && data.trim().length >= 3) {
-      // Convert the search term to lowercase for case-insensitive comparison
       const searchTerm = data.toLowerCase();
-
-      // Filter the data based on the NAME field
       this.DepartmentMappingdata = this.originalTraineeData.filter((record) => {
         return record.NAME && record.NAME.toLowerCase().includes(searchTerm);
       });
       this.isSpinning = false;
     } else if (data.trim().length === 0) {
-      // Reset the table data to the original dataset
       this.isSpinning = false;
       this.DepartmentMappingdata = [...this.originalTraineeData];
     } else {
-      // If less than 3 characters, do not filter and show the original data
       this.isSpinning = false;
     }
   }
   SearchSkill(data: any) {
     this.isSpinning22 = true;
-
     if (data && data.trim().length >= 3) {
-      // Convert the search term to lowercase for case-insensitive comparison
       const searchTerm = data.toLowerCase();
-
-      // Filter the data based on the DEPARTMENT_NAME field
       this.mappingdata = this.originalTraineeData1.filter((record) => {
         return (
           record.DEPARTMENT_NAME &&
@@ -1282,35 +1082,24 @@ export class DepartMentMappingFormComponent {
       });
       this.isSpinning22 = false;
     } else if (data.trim().length === 0) {
-      // Reset the table data to the original dataset
       this.isSpinning22 = false;
       this.mappingdata = [...this.originalTraineeData1];
     } else {
-      // If less than 3 characters, do not filter and show the original data
       this.isSpinning22 = false;
     }
   }
-
   handleEnterKey(event: any): void {
     const keyboardEvent = event as KeyboardEvent;
-
-    // Handle Enter key press
     if (keyboardEvent.key === 'Enter') {
-      keyboardEvent.preventDefault(); // Prevent default form submission
-
-      // Call SearchOffice if input length is >= 3
+      keyboardEvent.preventDefault(); 
       if (this.searchdepartment.trim().length >= 3) {
         this.SearchDepartment(this.searchdepartment);
       } else {
       }
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
-        // Use a small delay to ensure the model updates
         if (this.searchdepartment.trim().length === 0) {
-          // Reset to original data and sort selected records to the top
           this.DepartmentMappingdata = this.originalTraineeData.map(
             (record) => ({
               ...record,
@@ -1318,35 +1107,25 @@ export class DepartMentMappingFormComponent {
             })
           );
           this.updateSelectionStates();
-
-          // Sort selected records to the top
           this.DepartmentMappingdata.sort((a, b) => b.selected - a.selected);
         }
       }, 0);
     }
   }
-
   handlepincodeEnterKey(event: any): void {
     const keyboardEvent = event as KeyboardEvent;
-
-    // Handle Enter key press
     if (keyboardEvent.key === 'Enter') {
-      keyboardEvent.preventDefault(); // Prevent default form submission
-
-      // Call SearchDepartment if input length is >= 3
+      keyboardEvent.preventDefault(); 
       if (this.mapsearchskill.trim().length >= 3) {
         this.SearchSkill(this.mapsearchskill);
       } else {
       }
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
-        // Use a small delay to ensure the model updates
         if (this.mapsearchskill.trim().length === 0) {
           this.mappingdata = this.originalTraineeData1;
-          this.PincodeMapping111(); // Call PincodeMapping111 when search text is cleared
+          this.PincodeMapping111(); 
         }
       }, 0);
     }

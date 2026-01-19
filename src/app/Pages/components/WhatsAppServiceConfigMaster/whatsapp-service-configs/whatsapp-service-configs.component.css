@@ -1,33 +1,174 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select{
 width: 200px;
 padding: 8px;
 display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
+.back-arrow {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.add-button-container {
+  margin-right: 0px;
+}
+.new-config-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.filter-top-row {
+  padding-top: 10px;
+}
+.filter-tags-container {
+  border: 1px dashed black;
+  border-radius: 5px;
+  padding: 10px;
+  min-height: 60px;
+}
+.filter-tag {
+  margin: 1px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+}
+.filter-name {
+  color: black;
+  margin-right: 10px;
+}
+.filter-actions {
+  display: flex;
+  align-items: center;
+}
+.filter-action-icon {
+  margin-right: 8px;
+  cursor: pointer;
+}
+.apply-filter {
+  color: #01ac5c;
+}
+.delete-filter {
+  color: red;
+}
+.view-query {
+  color: blue;
+}
+.no-filters-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+}
+.filter-button {
+  margin-right: 10px;
+}
+.clear-filter {
+  background-color: #ff4d4f;
+  border-color: #ff4d4f;
+}
+.add-filter {
+  background-color: #1890ff;
+  border-color: #1890ff;
+}
+.table-container {
+  margin-top: 10px;
+}
+.action-column {
+  text-align: center;
+}
+.status-column {
+  text-align: center;
+}
+.edit-tag {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+}
+.edit-icon {
+  font-size: 15px;
+}
+.status-icon {
+  font-size: 18px;
+}
+.status-icon.active {
+  color: #52c41a;
+}
+.status-icon.inactive {
+  color: #ff4d4f;
+}
+.column-checkbox {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+}
+.filter-search-input {
+  width: 100%;
+}
+.filter-select {
+  width: 100%;
+}
+.drawer-body-style {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.filter-drawer-body-style {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.query-details-text {
+  text-align: center;
+  margin: 0;
+  padding: 16px;
+  word-break: break-word;
+}
+.formname {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 0;
+}
+.ant-table-filter-dropdown {
+  padding: 12px;
+  min-width: 200px;
+}
+.search-box {
+  margin-bottom: 8px;
+}
+.select {
+  margin-bottom: 8px;
+}
+.ant-input-clear-icon {
+  cursor: pointer;
+}

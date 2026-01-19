@@ -2,21 +2,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 @Component({
   selector: 'app-view-past-order-drawer',
   templateUrl: './view-past-order-drawer.component.html',
   styleUrls: ['./view-past-order-drawer.component.css']
 })
 export class ViewPastOrderDrawerComponent {
-
   @Input() data: any;
   @Input()
   drawerVisiblepastorder: boolean = false;
   @Input() drawerClosepastorder: any = Function;
-
   date = new Date()
-
   searchText: string = '';
   pageIndex = 1;
   pageSize = 10;
@@ -25,7 +21,6 @@ export class ViewPastOrderDrawerComponent {
   chapters: any = [];
   isLoading = true;
   columns: string[][] = [
-
   ];
   loadingRecords = false;
   totalRecords = 1;
@@ -35,20 +30,14 @@ export class ViewPastOrderDrawerComponent {
   drawerVisible1: boolean = false;
   CUSTOMER_ID;
   ORDER_ID;
-
   constructor
     (
       private api: ApiServiceService,
       private message: NzNotificationService
     ) { }
-
-
   ngOnInit() {
-
     this.getAllPastOrders();
   }
-
-
   getAllPastOrders() {
     this.filterQuery = " AND ID !=" + this.data.ID + " AND CUSTOMER_ID=" + this.data.CUSTOMER_ID
     this.api.getAllPastOrders(this.pageIndex, this.pageSize, "", "", this.filterQuery)
@@ -76,7 +65,6 @@ export class ViewPastOrderDrawerComponent {
         }
       );
   }
-
   search(reset: boolean = false) {
     var likeQuery = "";
     if (this.searchText != "") {
@@ -87,9 +75,6 @@ export class ViewPastOrderDrawerComponent {
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
     }
     this.loadingRecords = true;
-
-
-
     this.api
       .getAllPastOrders(
         this.pageIndex,
@@ -103,7 +88,6 @@ export class ViewPastOrderDrawerComponent {
           if (data["code"] == 200) {
             this.loadingRecords = false;
             this.dataList = data["data"];
-
           } else {
             this.loadingRecords = false;
             this.dataList = [];
@@ -123,16 +107,8 @@ export class ViewPastOrderDrawerComponent {
         }
       );
   }
-
-
-
   loadMore(): void {
     this.pageSize += 10;
     this.getAllPastOrders();
-
   }
-
-
-
-
 }

@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment.prod';
 import { CommonFunctionService } from '../Service/CommonFunctionService';
 import { HttpErrorResponse } from '@angular/common/http';
 import { interval, takeWhile } from 'rxjs';
-
 export class PasswordData {
   TYPE: string;
   TYPE_VALUE: any;
@@ -16,7 +15,6 @@ export class PasswordData {
   RID: any;
   VID: any;
 }
-
 export class ChangePasswordData {
   TYPE: string;
   TYPE_VALUE: any;
@@ -24,7 +22,6 @@ export class ChangePasswordData {
   CONFIRM_PASSWORD: any;
   VID: any;
 }
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -44,22 +41,16 @@ export class LoginComponent implements OnInit {
   isloginSpinning: boolean = false;
   isLogedIn: boolean = false;
   isOk: boolean = true;
-  // roleId = localStorage.getItem('roleId');
-  // emailPattern: RegExp =
-  //   /^(?!.*\.\..*)(?!.*--.*)(?!.*-\.|-\@|\.-|\@-)[a-zA-Z0-9]([a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z]{2,})+$/;
   emailPattern: RegExp =
     /^(?!.*\.\..*)(?!.*--)(?!.*[-.]{2})(?!.*[-@][.@-])[a-zA-Z0-9]([a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z]{2,})+$/;
-
   passwordPattern: RegExp =
     /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z0-9!@#$%^&*(),.?\":{}|<>]{8,20}$/;
-
   constructor(
     private router: Router,
     private api: ApiServiceService,
     private message: NzNotificationService,
     private cookie: CookieService
   ) {}
-
   currentApplicationVersion: any;
   public commonFunction = new CommonFunctionService();
   showOTP: boolean = false;
@@ -71,13 +62,11 @@ export class LoginComponent implements OnInit {
     ? this.commonFunction.decryptdata(this.roleId)
     : '';
   decreptedroleId = parseInt(this.decreptedroleIdString, 10);
-
     userId = sessionStorage.getItem('userId');
   decrepteduserIdString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   decrepteduserId = parseInt(this.decrepteduserIdString, 10);
-
   ngOnInit(): void {
     this.currentApplicationVersion = environment.appVersioning.appVersion;
     if (this.cookie.get('token') === '' || this.cookie.get('token') === null) {
@@ -85,17 +74,10 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       this.isLogedIn = true;
-
-      // if(this.decreptedroleId===1 || this.decreptedroleId===9){
-      //   this.router.navigate(['/dashboard']);
-      // }else{
       this.router.navigate(['/dashboard']);
-      // }
     }
   }
-
   vendorsList: any[] = [];
-
   login(): void {
     if (this.EMAIL_ID == '' && this.PASSWORD == '') {
       this.isOk = false;
@@ -112,30 +94,22 @@ export class LoginComponent implements OnInit {
     } else {
       this.isloginSpinning = true;
       var cloudid = this.cookie.get('CLOUD_ID');
-
       this.api.login(this.EMAIL_ID, this.PASSWORD, cloudid, 'U').subscribe(
         (data) => {
           if (data['code'] == '200') {
-            // this.isloginSpinning = false;
             const subscribedChannels =
               data?.['data']?.[0]?.['UserData']?.[0]?.['SUBSCRIBED_CHANNELS'];
-            // const subscribedChannels =data?.['data']?.[0]?.['SUBSCRIBED_CHANNELS'];;
             if (subscribedChannels && Array.isArray(subscribedChannels)) {
               sessionStorage.setItem(
                 'subscribedChannels',
                 JSON.stringify(subscribedChannels)
               );
-
               sessionStorage.setItem(
                 'subscribedChannels1',
                 JSON.stringify(subscribedChannels)
               );
             }
-
             this.message.success('Successfully Logged In', '');
-
-
-
             this.cookie.set(
               'token',
               data['data'][0]['token'],
@@ -145,7 +119,6 @@ export class LoginComponent implements OnInit {
               false,
               'Strict'
             );
-            // this.cookie.get('orgId');
             this.cookie.set(
               'orgId',
               data['data'][0]['UserData'][0]['ORGANISATION_ID'],
@@ -168,12 +141,6 @@ export class LoginComponent implements OnInit {
                 )
               );
             }
-            // sessionStorage.setItem(
-            //   'mobile',
-            //   this.commonFunction.encryptdata(
-            //     data['data'][0]['UserData'][0]['MOBILE_NUMBER']
-            //   )
-            // );
             if (
               data['data'][0]['UserData'][0]['MOBILE_NUMBER'] != null &&
               data['data'][0]['UserData'][0]['MOBILE_NUMBER'] != undefined
@@ -266,18 +233,9 @@ export class LoginComponent implements OnInit {
                 )
               );
             }
-
-                                 
-     
-
-            // SUBSCRIBED_CHANNELS: []
             this.router.navigate(['/dashboard']).then(() => {
               window.location.reload();
             });
-
-         
-
-
           } else {
             this.isloginSpinning = false;
             this.message.error('You have entered wrong credentials', '');
@@ -286,39 +244,30 @@ export class LoginComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this.isloginSpinning = false;
           if (err.error instanceof ErrorEvent) {
-            // Client-side or network error
             this.message.error(
               'Network error: Please check your connection and try again.',
               ''
             );
           } else {
-            // Backend returned an unsuccessful response code
             this.message.error('Something went wrong.', '');
           }
         }
       );
     }
   }
-
   ForgetClick: boolean = false;
   sendOTPTrue: boolean = false;
   isSpinning: boolean = false;
-
   isSendOtpSpinning: boolean = false;
   isverifyOtpSpinning: boolean = false;
   isUpdatePassSpinning: boolean = false;
-
   emailDisabled: boolean = false;
-
   isOtpVerified: boolean = false;
   NEW_PASSWORD: any = '';
   CONFPASSWORD: any = '';
-
   newPasswordVisible: boolean = false;
   reEnterNewPasswordVisible: boolean = false;
-
   isFocused: string = '';
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -326,7 +275,6 @@ export class LoginComponent implements OnInit {
     }
     return true;
   }
-
   forgentPasswordClick() {
     this.ForgetClick = true;
     this.sendOTPTrue = false;
@@ -341,7 +289,6 @@ export class LoginComponent implements OnInit {
     this.CONFPASSWORD = '';
     this.NEW_PASSWORD = '';
   }
-
   sendOTP() {
     if (this.EMAIL_ID == '' && this.PASSWORD == '') {
       this.isOk = false;
@@ -353,8 +300,6 @@ export class LoginComponent implements OnInit {
       this.isOk = false;
       this.message.error('Please Enter Valid Email ID', '');
     } else {
-      // this.ForgetClick = false;
-
       this.isSendOtpSpinning = true;
       this.api.sendotpp(this.EMAIL_ID).subscribe(
         (successCode: any) => {
@@ -381,7 +326,6 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-
   verifyOTP() {
     if (this.EMAIL_ID == '' && this.PASSWORD == '') {
       this.isOk = false;
@@ -406,7 +350,6 @@ export class LoginComponent implements OnInit {
     } else {
       this.emailDisabled = true;
       this.isverifyOtpSpinning = true;
-
       this.api.verifyotpp(this.EMAIL_ID, this.OTP).subscribe(
         (successCode: any) => {
           if (successCode.body.code == 200) {
@@ -428,7 +371,6 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-
   changePassword() {
     if (
       this.NEW_PASSWORD == null ||
@@ -481,12 +423,10 @@ export class LoginComponent implements OnInit {
         );
     }
   }
-
   inputType: 'initial' | 'mobile' | 'email' = 'email';
   selectedCountryCode: string = '+91';
   countryCodeVisible: boolean = false;
   mobileNumberorEmail: any = '';
-
   getPlaceholder() {
     return this.inputType === 'email'
       ? 'Enter email address'
@@ -496,13 +436,10 @@ export class LoginComponent implements OnInit {
   }
   onIdentifierInput(event: any) {
     const value = event.target.value;
-
     if (!value || value.length < 6) {
       this.inputType = 'initial';
       return;
     }
-
-    // Check if input contains letters
     if (/[a-zA-Z]/.test(value)) {
       this.inputType = 'email';
     } else {
@@ -510,21 +447,17 @@ export class LoginComponent implements OnInit {
     }
   }
   CustLoginOpen: boolean = false;
-
   LoginAsCustomer() {
     this.IsCustomerLoginSet = true;
     this.showOtpModal = false;
     this.IsLoginSet = false
-
   }
-
   LoginAsAdmin() {
     this.IsCustomerLoginSet= false
     this.CustLoginOpen = false;
     this.IsLoginSet = true;
     this.showOtpModal = false;
   }
-
   @ViewChild('loginotpverficationModal')
   loginotpverficationModal!: TemplateRef<any>;
   isloginSendOTP: boolean = false;
@@ -544,21 +477,17 @@ export class LoginComponent implements OnInit {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailPattern.test(value);
   }
-
   resendforgotOtp(content: any) {
-    this.otpSent = false; // Resend OTP action
-    this.remainingTime = 60; // Reset timer
+    this.otpSent = false; 
+    this.remainingTime = 60; 
     this.startTimer();
   }
-
   startTimer(): void {
     if (this.timerSubscription) {
       return;
     }
-
-    const maxDuration = 30; // 30 seconds max
+    const maxDuration = 30; 
     this.remainingTime = Math.min(this.remainingTime, maxDuration);
-
     this.timerSubscription = interval(1000)
       .pipe(takeWhile(() => this.remainingTime > 0))
       .subscribe({
@@ -566,9 +495,7 @@ export class LoginComponent implements OnInit {
         complete: () => (this.timerSubscription = null),
       });
   }
-
   ngOnDestroy() {
-    // Unsubscribe from the timer when the component is destroyed
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
@@ -640,7 +567,6 @@ export class LoginComponent implements OnInit {
       this.message.error('Please enter a valid email ID', '');
     } else {
       this.loginSubmitted = true;
-      // Determine type based on input value
       this.type = this.isEmail(this.mobileNumberorEmail) ? 'E' : 'M';
       this.isloginSendOTP = true;
       this.api
@@ -693,7 +619,6 @@ export class LoginComponent implements OnInit {
           },
           error: (error) => {
             this.isloginSendOTP = false;
-            // Handle error if login fails
             if (error.status === 400) {
               this.message.error(
                 'The user is not registered or has been deactivated',
@@ -748,19 +673,16 @@ export class LoginComponent implements OnInit {
             if (successCode.body.message === 'Logged in successfully.') {
               const user = successCode.body.UserData[0];
               const subscribedChannels = [];
-              // const subscribedChannels =data?.['data']?.[0]?.['SUBSCRIBED_CHANNELS'];;
               if (subscribedChannels && Array.isArray(subscribedChannels)) {
                 sessionStorage.setItem(
                   'subscribedChannels',
                   JSON.stringify(subscribedChannels)
                 );
-
                 sessionStorage.setItem(
                   'subscribedChannels1',
                   JSON.stringify(subscribedChannels)
                 );
               }
-
               this.message.success('Successfully Logged In', '');
               this.cookie.set(
                 'token',
@@ -771,21 +693,17 @@ export class LoginComponent implements OnInit {
                 false,
                 'Strict'
               );
-              // this.cookie.get('orgId');
               this.cookie.set('orgId', '1', 365, '/', '', false, 'Strict');
-
               sessionStorage.setItem(
                 'backofficeId',
                 this.commonFunction.encryptdatacust('0')
               );
-
               sessionStorage.setItem(
                 'mobile',
                 this.commonFunction.encryptdatacust(
                   user.MOBILE_NUMBER.toString()
                 )
               );
-
               sessionStorage.setItem(
                 'vendorId',
                 this.commonFunction.encryptdatacust('0')
@@ -815,9 +733,7 @@ export class LoginComponent implements OnInit {
                 this.commonFunction.encryptdatacust('0')
               );
               sessionStorage.setItem('profile_url', '');
-
               var datee: any = new Date();
-
               sessionStorage.setItem(
                 'lastlogindate',
                 this.commonFunction.encryptdatacust(datee)
@@ -826,28 +742,11 @@ export class LoginComponent implements OnInit {
                 'stateId',
                 this.commonFunction.encryptdatacust('1')
               );
-
-              // var channelNames = user.SUBSCRIBED_CHANNELS.map(
-              //   (channel: any) => channel.CHANNEL_NAME
-              // );
-              // if (user.SUBSCRIBED_CHANNELS.length > 0) {
-              //   this.api
-              //     .subscribeToMultipleTopics(channelNames)
-              //     .subscribe((data) => {
-              //       if (data['code'] == '200') {
-              //       }
-              //     });
-              // }
-
-              // Store login status
               sessionStorage.setItem('LoggedCustoemr', 'customer');
-
               this.OTPCust = null;
-
               this.router.navigate(['/customer-dashboard']).then(() => {
                 window.location.reload();
               });
-
               this.statusCode = '';
             } else {
               this.isverifyOTP = false;
@@ -859,10 +758,8 @@ export class LoginComponent implements OnInit {
           },
           error: (errorResponse) => {
             this.isverifyOTP = false;
-
             if (errorResponse.error.code === 300) {
               this.message.error('Invalid OTP.', '');
-              //
               this.statusCode = 'invalid OTP';
             } else if (errorResponse.error.code === 301) {
               this.message.info(
@@ -877,7 +774,6 @@ export class LoginComponent implements OnInit {
         });
     }
   }
-
   resendOtp() {
     this.OTPCust = null;
     if (this.remainingTime > 0) {
@@ -885,50 +781,31 @@ export class LoginComponent implements OnInit {
         `Please wait ${this.remainingTime} seconds before resending OTP.`,
         ''
       );
-      return; // stop execution if timer is running
+      return; 
     }
     this.loginotpverification();
   }
-
-
-
-  //changes by sanjana 
-
   CEMAIL_ID = '';
   CPASSWORD = '';
   COTP=''
-
   CUSER_ID:any
   CUSER_NAME:any
-
   IsCustomerLoginSet:boolean = false
-
-
   cpasswordVisible: boolean = false;
   CForgetClick: boolean = false;
   CsendOTPTrue: boolean = false;
   CisSpinning: boolean = false;
-
   CisSendOtpSpinning: boolean = false;
   CisverifyOtpSpinning: boolean = false;
   CisUpdatePassSpinning: boolean = false;
-
   CemailDisabled: boolean = false;
-
   CisOtpVerified: boolean = false;
   CNEW_PASSWORD: any = '';
   CCONFPASSWORD: any = '';
-
   cnewPasswordVisible: boolean = false;
   creEnterNewPasswordVisible: boolean = false;
-
   CisloginSpinning: boolean = false;
   cnewpasswordVisible: boolean = false;
-
-
-
-
-
   backCustomeroption()
   {
     this.CForgetClick = false;
@@ -938,18 +815,12 @@ export class LoginComponent implements OnInit {
     this.CCONFPASSWORD = '';
     this.CNEW_PASSWORD = '';
   }
-
-
   CforgentPasswordClick() {
-  
     this.ForgetClick =false
     this.sendOTPTrue=false
     this.CForgetClick = true;
     this.CsendOTPTrue = false;
   }
-
-
-
     Clogin(): void {
     if (this.CEMAIL_ID == '' && this.CPASSWORD == '') {
       this.isOk = false;
@@ -966,28 +837,23 @@ export class LoginComponent implements OnInit {
     } else {
       this.CisloginSpinning = true;
       var cloudid = this.cookie.get('CLOUD_ID');
-
       this.api.Clogin(this.CEMAIL_ID, this.CPASSWORD, cloudid, 'U').subscribe(
         (data) => {
           if (data['code'] == '200') {
             this.CisloginSpinning = false;
             const subscribedChannels =
               data?.['data']?.[0]?.['UserData']?.[0]?.['SUBSCRIBED_CHANNELS'];
-            // const subscribedChannels =data?.['data']?.[0]?.['SUBSCRIBED_CHANNELS'];;
             if (subscribedChannels && Array.isArray(subscribedChannels)) {
               sessionStorage.setItem(
                 'subscribedChannels',
                 JSON.stringify(subscribedChannels)
               );
-
               sessionStorage.setItem(
                 'subscribedChannels1',
                 JSON.stringify(subscribedChannels)
               );
             }
-
             this.message.success('Successfully Logged In', '');
-
             this.cookie.set(
               'token',
               data['token'],
@@ -997,52 +863,6 @@ export class LoginComponent implements OnInit {
               false,
               'Strict'
             );
-            // // this.cookie.get('orgId');
-            // this.cookie.set(
-            //   'orgId',
-            //   data['data']['UserData'][0]['ORGANISATION_ID'],
-            //   365,
-            //   '/',
-            //   '',
-            //   false,
-            //   'Strict'
-            // );
-            // if (
-            //   data['data']['UserData'][0]['BACKOFFICE_TEAM_ID'] != null &&
-            //   data['data']['UserData'][0]['BACKOFFICE_TEAM_ID'] != undefined
-            // ) {
-            //   sessionStorage.setItem(
-            //     'backofficeId',
-            //     this.commonFunction.encryptdata(
-            //       data['data'][0]['UserData'][0][
-            //         'BACKOFFICE_TEAM_ID'
-            //       ].toString()
-            //     )
-            //   );
-            // }
-            // // sessionStorage.setItem(
-            // //   'mobile',
-            // //   this.commonFunction.encryptdata(
-            // //     data['data'][0]['UserData'][0]['MOBILE_NUMBER']
-            // //   )
-            // // );
-            // if (
-            //   data['data']['UserData'][0]['MOBILE_NUMBER'] != null &&
-            //   data['data']['UserData'][0]['MOBILE_NUMBER'] != undefined
-            // ) {
-            //   sessionStorage.setItem(
-            //     'mobile',
-            //     this.commonFunction.encryptdata(
-            //       data['data']['UserData'][0]['MOBILE_NUMBER'].toString()
-            //     )
-            //   );
-            // }
-            // sessionStorage.setItem(
-            //   'vendorId',
-            //   this.commonFunction.encryptdata(
-            //     data['data']['UserData'][0]['VENDOR_ID'].toString()
-            //   )
-            // );
             sessionStorage.setItem(
               'userId',
               this.commonFunction.encryptdata(
@@ -1067,61 +887,12 @@ export class LoginComponent implements OnInit {
                 data['UserData'][0]['EMAIL_ID']
               )
             );
-            // sessionStorage.setItem(
-            //   'orgId',
-            //   this.commonFunction.encryptdata(
-            //     data['data']['UserData'][0]['ORGANISATION_ID'].toString()
-            //   )
-            // );
-            // sessionStorage.setItem(
-            //   'CAN_CHANGE_SERVICE_PRICE',
-            //   this.commonFunction.encryptdata(
-            //     data['data']['UserData'][0][
-            //       'CAN_CHANGE_SERVICE_PRICE'
-            //     ].toString()
-            //   )
-            // );
             sessionStorage.setItem(
               'profile_url',
               data['UserData'][0]['PROFILE_PHOTO']
             );
-            // if (
-            //   data['data']['UserData'][0]['STATE_ID'] != null &&
-            //   data['data']['UserData'][0]['STATE_ID'] != undefined
-            // ) {
-            //   sessionStorage.setItem(
-            //     'stateId',
-            //     this.commonFunction.encryptdata(
-            //       data['data']['UserData'][0]['STATE_ID'].toString()
-            //     )
-            //   );
-            // }
-            // if (
-            //   data['data']['UserData'][0]['LAST_LOGIN_DATETIME'] != null &&
-            //   data['data']['UserData'][0]['LAST_LOGIN_DATETIME'] != undefined
-            // ) {
-            //   sessionStorage.setItem(
-            //     'lastlogindate',
-            //     this.commonFunction.encryptdata(
-            //       data['data']['UserData'][0]['LAST_LOGIN_DATETIME']
-            //     )
-            //   );
-            // }
-            // if (
-            //   data['data']['UserData'][0]['STATE_ID'] != null &&
-            //   data['data']['UserData'][0]['STATE_ID'] != undefined
-            // ) {
-            //   sessionStorage.setItem(
-            //     'stateId',
-            //     this.commonFunction.encryptdata(
-            //       data['data']['UserData'][0]['STATE_ID'].toString()
-            //     )
-            //   );
-            // }
-            // SUBSCRIBED_CHANNELS: []
             this.router.navigate(['/customer-dashboard']).then(() => {
               window.location.reload();
-              
             });
           } 
           else {
@@ -1132,20 +903,17 @@ export class LoginComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this.CisloginSpinning = false;
           if (err.error instanceof ErrorEvent) {
-            // Client-side or network error
             this.message.error(
               'Network error: Please check your connection and try again.',
               ''
             );
           } else {
-            // Backend returned an unsuccessful response code
             this.message.error('Something went wrong.', '');
           }
         }
       );
     }
   }
-
     CsendOTP() {
     if (this.CEMAIL_ID == '' && this.CPASSWORD == '') {
       this.isOk = false;
@@ -1157,8 +925,6 @@ export class LoginComponent implements OnInit {
       this.isOk = false;
       this.message.error('Please Enter Valid Email ID', '');
     } else {
-      // this.ForgetClick = false;
-
       this.CisSendOtpSpinning = true;
       this.api.Csendotpp(this.CEMAIL_ID).subscribe(
         (successCode: any) => {
@@ -1185,7 +951,6 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-
     CverifyOTP() {
     if (this.CEMAIL_ID == '' && this.CPASSWORD == '') {
       this.isOk = false;
@@ -1210,7 +975,6 @@ export class LoginComponent implements OnInit {
     } else {
       this.CemailDisabled = true;
       this.CisverifyOtpSpinning = true;
-
       this.api.Cverifyotpp(this.CEMAIL_ID, this.COTP).subscribe(
         (successCode: any) => {
           if (successCode.body.code == 200) {
@@ -1232,8 +996,6 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-
-
     CchangePassword() {
     if (
       this.CNEW_PASSWORD == null ||
@@ -1286,9 +1048,4 @@ export class LoginComponent implements OnInit {
         );
     }
   }
-
-
-
-
-
 }

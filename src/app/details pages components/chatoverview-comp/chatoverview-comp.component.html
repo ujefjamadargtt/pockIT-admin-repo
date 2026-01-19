@@ -1,28 +1,24 @@
 <div nz-row>
   <div nz-col nzSpan="4"></div>
   <div nz-col nzSpan="16">
-    <div nz-row class="select-container" style="justify-content: end;">
+    <div nz-row class="select-container justify-end">
       <div nz-col nzSpan="14">
         <div class="formname" *ngIf="TYPE==''">
           Chats History
         </div>
       </div>
       <div nz-col nzSpan="10">
-        <nz-form-item style="margin-bottom: 10px;" [ngStyle]="{ display: TYPE == 'JOB' ? 'none' : 'block' }">
-          <!-- <nz-form-label nzRequired nzNoColon>Select Job</nz-form-label> -->
+        <nz-form-item class="job-select-item" [ngStyle]="{ display: TYPE == 'JOB' ? 'none' : 'block' }">
           <nz-form-control nzHasFeedback nzErrorTip="Select Job">
-
-            <nz-select nzShowSearch nzAllowClear style="width: 100%" nzPlaceHolder="Select Job" [(ngModel)]="JOB"
+            <nz-select nzShowSearch nzAllowClear class="full-width" nzPlaceHolder="Select Job" [(ngModel)]="JOB"
               [nzOptionHeightPx]="80" name="customerName" (ngModelChange)="onTechnicianChange($event)">
               <nz-option nzCustomContent *ngFor="let customer of dataListOrder" [nzValue]="customer.ID"
                 [nzLabel]="customer.JOB_CARD_NO + ' ' + customer.SERVICE_NAME">
                 <div nz-row>
-                  <div nz-col nzSpan="12" style="font-size: 14px; color: #2D3748; font-weight: 500;">
-
+                  <div nz-col nzSpan="12" class="job-service-name">
                     Service Name : {{ customer.SERVICE_NAME }}
                   </div>
-                  <div nz-col nzSpan="24" style="font-size: 12px; color: #4A5568;">
-
+                  <div nz-col nzSpan="24" class="job-number">
                     Job No.: {{ customer.JOB_CARD_NO }}
                   </div>
                 </div>
@@ -33,13 +29,9 @@
       </div>
     </div>
     <nz-spin [nzSpinning]="loaddata">
-
-      <div class="chat-container" *ngIf="chantcount>0 else elseblock; ">
-        <!-- Scrollable area for messages -->
-        <div class="message-box" style="background-image: url('/assets/chat.png');
-        background-repeat: repeat;background-size: cover;" *ngIf="TYPE=='TECHNICIAN' else elsetechBlock">
+      <div class="chat-container" *ngIf="chantcount > 0; else elseblock">
+        <div class="message-box chat-bg" *ngIf="TYPE == 'TECHNICIAN'; else elsetechBlock">
           <div *ngFor="let data of chatDetailsdata">
-            <!-- Customer's message -->
             <div class="message customer-message" *ngIf="data.BY_CUSTOMER">
               <span class="customer-name" *ngIf="chatDetailsdata!=undefined">{{data.CUSTOMER_NAME}}</span>
               <div>
@@ -59,15 +51,12 @@
                           }}" />
                       </video>
                     </ng-template>
-
                   </div>
                 </div>
                 <div class="timestamp" *ngIf="chatDetailsdata!=undefined">{{data.SEND_DATE | date: 'dd/MM/yy HH:mm a'}}
                 </div>
               </div>
             </div>
-
-            <!-- Technician's message -->
             <div class="message technician-message" *ngIf="!data.BY_CUSTOMER">
               <span class="technician-name" *ngIf="chatDetailsdata!=undefined">{{ data.TECHNICIAN_NAME }}</span>
               <div class="box3 sb14" *ngIf="chatDetailsdata!=undefined">
@@ -86,21 +75,16 @@
                           }}" />
                     </video>
                   </ng-template>
-
                 </div>
               </div>
               <span class="timestamp" *ngIf="chatDetailsdata!=undefined">{{data.SEND_DATE | date: 'dd/MM/yy HH:mm
                 a'}}</span>
             </div>
-
-
           </div>
         </div>
         <ng-template #elsetechBlock>
-          <div class="message-box" style="background-image: url('/assets/chat.png');
-        background-repeat: repeat;background-size: cover;">
+          <div class="message-box chat-bg">
             <div *ngFor="let data of chatDetailsdata">
-              <!-- Customer's message -->
               <div class="message customer-message" *ngIf="!data.BY_CUSTOMER">
                 <span class="customer-name" *ngIf="chatDetailsdata!=undefined">{{data.TECHNICIAN_NAME}}</span>
                 <div>
@@ -120,7 +104,6 @@
                           }}" />
                         </video>
                       </ng-template>
-
                     </div>
                   </div>
                   <div class="timestamp" *ngIf="chatDetailsdata!=undefined">{{data.SEND_DATE | date: 'dd/MM/yy HH:mm
@@ -128,14 +111,10 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Technician's message -->
               <div class="message technician-message" *ngIf="data.BY_CUSTOMER">
                 <span class="technician-name" *ngIf="chatDetailsdata!=undefined">{{ data.CUSTOMER_NAME }}</span>
                 <div class="box3 sb14" *ngIf="chatDetailsdata!=undefined">
-                  <!-- {{ data.MESSAGE }} -->
                   <div [innerHTML]="transform(data['MESSAGE'])"></div>
-
                   <div *ngIf="
                     data['ATTACHMENT_URL'] != null &&
                     data['ATTACHMENT_URL'] != '' &&
@@ -155,18 +134,15 @@
                 <span class="timestamp" *ngIf="chatDetailsdata!=undefined">{{data.SEND_DATE | date: 'dd/MM/yy HH:mm
                   a'}}</span>
               </div>
-
-
             </div>
           </div>
         </ng-template>
       </div>
-
       <ng-template #elseblock>
-        <div nz-row style="height: 50vh;width: 100% !important;">
-          <div nz-col nzSpan="24" style="display: flex;justify-content: center;align-items: center;">
+        <div nz-row class="empty-wrapper">
+          <div nz-col nzSpan="24" class="empty-center">
             <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-              [nzNotFoundContent]="contentTpl43" [nzNotFoundFooter]="footerTpl43" style="margin-top: 38px">
+              [nzNotFoundContent]="contentTpl43" [nzNotFoundFooter]="footerTpl43" class="empty-margin-top">
               <ng-template #contentTpl43>
                 <span> Data Not Found</span>
               </ng-template>
@@ -177,7 +153,6 @@
         </div>
       </ng-template>
     </nz-spin>
-
   </div>
   <div nz-col nzSpan="4"></div>
 </div>

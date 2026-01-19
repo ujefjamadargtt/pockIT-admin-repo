@@ -11,8 +11,6 @@ export class Data {
   TERRITORY_NAME: any;
   IS_ACTIVE: boolean = true;
 }
-
-// {"WAREHOUSE_ID":"1","CLIENT_ID":1, "data":[{"TERITORY_ID":1,"STATUS":0}]}
 @Component({
   selector: 'app-warehouseterriorymapping',
   templateUrl: './warehouseterriorymapping.component.html',
@@ -21,42 +19,31 @@ export class Data {
 export class WarehouseterriorymappingComponent {
   COUNTRY_ID;
   isSpinning;
-
   countryData: any;
   territoryData: any;
-
   pageIndex = 1;
   pageSize = 10;
   sortValue: string = 'desc';
   sortKey: string = 'COUNTRY_NAME';
-
-  // Loading
   isLoading = true;
   countryloading = false;
   territoryloading = false;
   btnLoading = false;
   loadingRecords = false;
-
   dataList: any = [];
   addData: any = new Data();
   mappedTerritoryIds: number[] = [];
-
   ngOnInit(): void {
     this.getCountryData();
-    // this.getMappedData();
   }
-
   @Input() data;
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private modal: NzModalService
   ) { }
-
-  // Coutry
   getCountryData() {
     this.countryloading = true;
     this.api.getAllCountryMaster(0, 0, '', 'asc', '').subscribe(
@@ -83,17 +70,6 @@ export class WarehouseterriorymappingComponent {
       }
     );
   }
-  // changestatus(data, event) {
-
-  //   if (!data.TERRITORY_IS_ACTIVE) {
-  //     this.message.info('Territory is inactive', '');
-  //     setTimeout(() => {
-  //       data['IS_ACTIVE'] = false;
-  //     }, 100);
-  //   } else {
-  //   }
-  // }
-
   changestatus(data, event) {
     if (!data.TERRITORY_STATUS) {
       this.message.info('Territory is inactive', '');
@@ -111,7 +87,6 @@ export class WarehouseterriorymappingComponent {
     } catch (error) {
       sort = '';
     }
-
     this.api
       .getwarehouseTerritoryMappedData(
         0,
@@ -126,7 +101,6 @@ export class WarehouseterriorymappingComponent {
             this.dataList = data['data'];
             this.originalMappingData = [...this.dataList];
             this.originalMappingDataMain = [...this.dataList];
-
             this.loadingRecords = false;
           } else {
             this.dataList = [];
@@ -148,13 +122,10 @@ export class WarehouseterriorymappingComponent {
         }
       );
   }
-
-  // Fetch Territory based on country ID
   getTeritoryByCountry(countryId: any) {
     if (!countryId) {
-      // Reset territory if country is cleared or not selected
       this.addData.TERITORY_ID = null;
-      this.territoryData = []; // Reset the territory data
+      this.territoryData = []; 
       return;
     }
     this.territoryloading = true;
@@ -173,8 +144,6 @@ export class WarehouseterriorymappingComponent {
             this.mappedTerritoryIds = this.dataList.map(
               (item) => item.TERITORY_ID
             );
-
-            // Filter out the territories that are already mapped
             this.territoryData = fetchedTerritory.filter(
               (territory) => !this.mappedTerritoryIds.includes(territory.ID)
             );
@@ -198,7 +167,6 @@ export class WarehouseterriorymappingComponent {
         }
       );
   }
-
   add(TerritoryMappingForm: any): void {
     if (
       this.addData.COUNTRY_ID == 0 ||
@@ -216,7 +184,6 @@ export class WarehouseterriorymappingComponent {
       return;
     } else {
       this.btnLoading = true;
-
       const selectedTerritory = this.addData.TERITORY_ID.map((territoryId) => {
         const territory = this.territoryData.find(
           (ter) => ter.ID === territoryId
@@ -229,63 +196,45 @@ export class WarehouseterriorymappingComponent {
       const selectedCountry = this.countryData.find(
         (data) => data.ID === this.addData.COUNTRY_ID
       )?.NAME;
-
       selectedTerritory.forEach((territory) => {
         const entry = {
           COUNTRY_NAME: selectedCountry,
           COUNTRY_ID: this.addData.COUNTRY_ID,
           ...territory,
-          IS_ACTIVE: true, // Default status
+          IS_ACTIVE: true, 
         };
-
-        // Prevent duplicate entries
         const exists = this.dataList.some(
           (item) =>
             item.COUNTRY_ID === entry.COUNTRY_ID &&
             item.TERITORY_ID === entry.TERITORY_ID
         );
-
         if (!exists) {
           this.dataList.push(entry);
         }
-        //
         this.dataList = [...[], ...this.dataList];
         this.originalMappingDataMain = this.dataList;
       });
-
-      // Reset the inputs
       this.addData.TERITORY_ID = null;
       this.addData.COUNTRY_ID = null;
-
-      // Notify success
       this.message.success('Territory added successfully.', '');
       this.btnLoading = false;
       this.territoryData = [];
       this.reset(TerritoryMappingForm);
     }
   }
-
   Cancel() { }
-
   reset(TerritoryMappingForm: any) {
     this.addData.COUNTRY_ID = null;
     this.addData.TERITORY_ID = [];
-
     TerritoryMappingForm.form.markAsPristine();
     TerritoryMappingForm.form.markAsUntouched();
   }
-
-  // Save Function
   save() {
     this.isSpinning = true;
-
-    // Proceed with saving data if all entries are valid
     const dataToSave = this.dataList.map((data) => ({
       TERITORY_ID: data.TERITORY_ID,
       IS_ACTIVE: data.IS_ACTIVE,
     }));
-
-    // Call the API to save the task mapping data
     if (dataToSave.length >= 1) {
       this.api
         .mapwarehouseTerritoryMapping(
@@ -319,11 +268,9 @@ export class WarehouseterriorymappingComponent {
       this.isSpinning = false;
     }
   }
-
   close() {
     this.drawerClose();
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -332,22 +279,18 @@ export class WarehouseterriorymappingComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.getMappedData();
   }
-
   originalMappingData: any[] = [];
   searchmappeddata;
   filtereddatalist1: any[] = [];
@@ -357,7 +300,6 @@ export class WarehouseterriorymappingComponent {
       this.isSpinning = true;
       event.preventDefault();
       if (this.searchmappeddata.trim().length >= 3) {
-
         this.dataList = this.originalMappingData.filter((record) => {
           const countryName = record.COUNTRY_NAME?.toLowerCase() || '';
           const territoryName = record.TERRITORY_NAME?.toLowerCase() || '';
@@ -366,7 +308,6 @@ export class WarehouseterriorymappingComponent {
             territoryName.includes(this.searchmappeddata.toLowerCase())
           );
         });
-
         this.isSpinning = false;
       } else {
         this.isSpinning = false;
@@ -377,15 +318,12 @@ export class WarehouseterriorymappingComponent {
           this.dataList = [...this.originalMappingDataMain];
         }
       }, 0);
-
       this.isSpinning = false;
     }
   }
-
   SearchMappingdata(data: string): void {
     if (data.trim().length >= 3) {
       this.isSpinning = true;
-
       this.dataList = this.originalMappingData.filter((record) => {
         const countryName = record.COUNTRY_NAME?.toLowerCase() || '';
         const territoryName = record.TERRITORY_NAME?.toLowerCase() || '';
@@ -394,7 +332,6 @@ export class WarehouseterriorymappingComponent {
           territoryName.includes(data.toLowerCase())
         );
       });
-
       this.isSpinning = false;
     } else {
       this.isSpinning = false;

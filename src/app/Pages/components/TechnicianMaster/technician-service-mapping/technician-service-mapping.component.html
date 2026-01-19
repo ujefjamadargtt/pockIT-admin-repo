@@ -1,7 +1,6 @@
 <div>
   <form nz-form #Servicemaster="ngForm">
     <div nz-row class="my-box">
-      <!-- Service Catalog -->
       <div nz-col nzSpan="8">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon
@@ -10,84 +9,47 @@
           <nz-form-control
             nzHasFeedback
             nzErrorTip="Please select a Service Catalog Name."
-          >
+            >
             <nz-select
               nzAllowClear="true"
               nzPlaceHolder="Select Service Catalog Name"
               name="ID"
               [(ngModel)]="saveData.SERVICE_CATLOG_ID"
-              style="width: 100%"
               (ngModelChange)="getServiceData($event)"
               nzShowSearch
               required
-              [nzLoading]="isCatelogSpinning"
-            >
-              <nz-option
-                *ngFor="let data of CatalogData"
-                [nzValue]="data.ID"
-                [nzLabel]="data.NAME"
-              ></nz-option>
+              [nzLoading]="isCatelogSpinning" class="service-select-fullwidth">
+              <nz-option *ngFor="let data of CatalogData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <!-- Service Name -->
       <div nz-col nzSpan="8">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Service Name</nz-form-label>
-          <nz-form-control
-            nzHasFeedback
-            nzErrorTip="Please select a Service Name."
-          >
-            <nz-select
-              nzAllowClear="true"
-              nzPlaceHolder="Select Service Name"
-              name="SERVICE_ID"
-              [(ngModel)]="saveData.ID"
-              style="width: 100%"
-              nzShowSearch
-              required
-              [nzLoading]="isServiceSpinning"
-            >
-              <nz-option
-                *ngFor="let data of ServiceData"
-                [nzValue]="data.ID"
-                [nzLabel]="data.NAME"
-              ></nz-option>
+          <nz-form-control nzHasFeedback nzErrorTip="Please select a Service Name.">
+            <nz-select nzAllowClear="true" nzPlaceHolder="Select Service Name" name="SERVICE_ID"
+              [(ngModel)]="saveData.ID" nzShowSearch required [nzLoading]="isServiceSpinning"
+              class="service-select-fullwidth">
+              <nz-option *ngFor="let data of ServiceData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <!-- Submit Button -->
       <div nz-col nzSpan="8">
-        <button
-          style="margin-top: 26px"
-          nz-button
-          nzType="primary"
-          [nzLoading]="issaveSpinning"
-          (click)="add(Servicemaster)"
-        >
+        <button nz-button nzType="primary" [nzLoading]="issaveSpinning" (click)="add(Servicemaster)"
+          class="service-add-btn">
           Add Into Table
         </button>
       </div>
     </div>
   </form>
 </div>
-
 <div nz-row>
   <div nz-col nzSpan="24">
-    <div style="position: relative">
-      <nz-table
-        class="my-scroll no-wrap1"
-        nzBordered
-        #table
-        [nzData]="CatalogServiceMappingData"
-        [nzSize]="'small'"
-        [nzFrontPagination]="false"
-        style="white-space: pre-line"
-      >
+    <div class="relative-container">
+      <nz-table class="my-scroll no-wrap1 table-preline" nzBordered #table [nzData]="CatalogServiceMappingData"
+        [nzSize]="'small'" [nzFrontPagination]="false">
         <thead>
           <tr>
             <th nzWidth="300px" nzleft>Service Catalog Name</th>
@@ -101,136 +63,65 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of table.data; let i = index">
-            <!-- <td style="white-space: pre-line">{{ data.NAME }}</td> -->
             <td align="left">
               <span *ngIf="data['SERVICE_CATLOG_NAME'] != null">
-                <span
-                  *ngIf="data['SERVICE_CATLOG_NAME'].length >= 55"
-                  nz-popover
-                  [nzPopoverContent]="data['SERVICE_CATLOG_NAME']"
-                  nzPopoverPlacement="topLeft"
-                >
-                  {{
-                    data["SERVICE_CATLOG_NAME"] == null
-                      ? "-"
-                      : (data["SERVICE_CATLOG_NAME"] | slice : 0 : 55)
-                  }}{{ data["SERVICE_CATLOG_NAME"].length > 55 ? "..." : "" }}
+                <span *ngIf="data['SERVICE_CATLOG_NAME'].length >= 55" nz-popover
+                  [nzPopoverContent]="data['SERVICE_CATLOG_NAME']" nzPopoverPlacement="topLeft">
+                  {{ data['SERVICE_CATLOG_NAME'] | slice : 0 : 55 }}{{ data['SERVICE_CATLOG_NAME'].length > 55 ? "..." :
+                  "" }}
                 </span>
                 <span *ngIf="data['SERVICE_CATLOG_NAME'].length < 55">
-                  {{
-                    data["SERVICE_CATLOG_NAME"] == null
-                      ? "-"
-                      : (data["SERVICE_CATLOG_NAME"] | slice : 0 : 55)
-                  }}
-                  {{ data["SERVICE_CATLOG_NAME"].length > 55 ? "..." : "" }}
+                  {{ data['SERVICE_CATLOG_NAME'] | slice : 0 : 55 }}
                 </span>
               </span>
               <span *ngIf="data['SERVICE_CATLOG_NAME'] == null">-</span>
             </td>
             <td align="left">
               <span *ngIf="data['SERVICE_NAME'] != null">
-                <span
-                  *ngIf="data['SERVICE_NAME'].length >= 60"
-                  nz-popover
-                  [nzPopoverContent]="data['SERVICE_NAME']"
-                  nzPopoverPlacement="topLeft"
-                >
-                  {{
-                    data["SERVICE_NAME"] == null
-                      ? "-"
-                      : (data["SERVICE_NAME"] | slice : 0 : 60)
-                  }}{{ data["SERVICE_NAME"].length > 60 ? "..." : "" }}
+                <span *ngIf="data['SERVICE_NAME'].length >= 60" nz-popover [nzPopoverContent]="data['SERVICE_NAME']"
+                  nzPopoverPlacement="topLeft">
+                  {{ data['SERVICE_NAME'] | slice : 0 : 60 }}{{ data['SERVICE_NAME'].length > 60 ? "..." : "" }}
                 </span>
                 <span *ngIf="data['SERVICE_NAME'].length < 60">
-                  {{
-                    data["SERVICE_NAME"] == null
-                      ? "-"
-                      : (data["SERVICE_NAME"] | slice : 0 : 60)
-                  }}
-                  {{ data["SERVICE_NAME"].length > 60 ? "..." : "" }}
+                  {{ data['SERVICE_NAME'] | slice : 0 : 60 }}
                 </span>
               </span>
               <span *ngIf="data['SERVICE_NAME'] == null">-</span>
             </td>
-            <td align="center" style="white-space: pre-line">
-              <input
-                nz-input
-                placeholder="Enter Charges Type "
-                name="chargestype"
-                required
-                [(ngModel)]="data.CHARGES_TYPE"
-                #name="ngModel"
-                autocomplete="off"
-              />
+            <td align="center" class="table-preline">
+              <input nz-input placeholder="Enter Charges Type" name="chargestype" required
+                [(ngModel)]="data.CHARGES_TYPE" #name="ngModel" autocomplete="off" />
             </td>
-            <td style="white-space: pre-line" align="center">
-              <input
-                nz-input
-                placeholder="Enter Charges "
-                name="charges"
-                required
-                [(ngModel)]="data.CHARGES"
-                #name="ngModel"
-                autocomplete="off"
-              />
+            <td align="center" class="table-preline">
+              <input nz-input placeholder="Enter Charges" name="charges" required [(ngModel)]="data.CHARGES"
+                #name="ngModel" autocomplete="off" />
             </td>
-            <td style="white-space: pre-line">
-              <nz-date-picker
-                [(ngModel)]="data.EFFECTIVE_DATE"
-                name="datePicker"
-                nzPlaceHolder="Select Date"
-                nzFormat="dd/MM/yyyy"
-                style="width: 100%"
-              >
-              </nz-date-picker>
+            <td class="table-preline">
+              <nz-date-picker [(ngModel)]="data.EFFECTIVE_DATE" name="datePicker" nzPlaceHolder="Select Date"
+                nzFormat="dd/MM/yyyy" class="date-picker-fullwidth"></nz-date-picker>
             </td>
-            <td style="white-space: pre-line">
-              <nz-date-picker
-                [(ngModel)]="data.EXPIRY_DATE"
-                [nzDisabledDate]="commonFunction.disabledBeforeDatebefore"
-                name="datePicker"
-                nzPlaceHolder="Select Date"
-                nzFormat="dd/MM/yyyy"
-                style="width: 100%"
-              >
-              </nz-date-picker>
+            <td class="table-preline">
+              <nz-date-picker [(ngModel)]="data.EXPIRY_DATE" [nzDisabledDate]="commonFunction.disabledBeforeDatebefore"
+                name="datePicker" nzPlaceHolder="Select Date" nzFormat="dd/MM/yyyy"
+                class="date-picker-fullwidth"></nz-date-picker>
             </td>
-            <td align="center" style="white-space: pre-line">
-              <nz-switch
-                name="status"
-                [(ngModel)]="data['IS_ACTIVE']"
-              ></nz-switch>
+            <td align="center" class="table-preline">
+              <nz-switch name="status" [(ngModel)]="data['IS_ACTIVE']"></nz-switch>
             </td>
           </tr>
         </tbody>
       </nz-table>
-
-      <!-- Loading Message -->
       <div *ngIf="isSpinning" class="loading-overlay">
         <nz-spin nzTip="Please wait, processing right now..."></nz-spin>
       </div>
     </div>
   </div>
 </div>
-<!-- Footer -->
 <div class="footer">
-  <button
-    type="button"
-    nz-button
-    (click)="close()"
-    class="ant-btn"
-    style="margin-right: 8px"
-  >
+  <button type="button" nz-button class="ant-btn footer-btn-cancel">
     <span>Cancel</span>
   </button>
-
-  <button
-    type="button"
-    class="ant-btn ant-btn-primary"
-    nz-button
-    [nzLoading]="isSpinning"
-    (click)="save()"
-  >
+  <button type="button" nz-button class="ant-btn ant-btn-primary footer-btn-save" [nzLoading]="isSpinning">
     <span>Map & Close</span>
   </button>
 </div>

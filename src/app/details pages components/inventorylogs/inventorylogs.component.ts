@@ -5,7 +5,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { endOfMonth, startOfYear, endOfYear, startOfMonth } from 'date-fns';
 import { Router } from '@angular/router';
 import { NzTimelineMode } from 'ng-zorro-antd/timeline';
-
 @Component({
   selector: 'app-inventorylogs',
   templateUrl: './inventorylogs.component.html',
@@ -28,18 +27,14 @@ export class InventorylogsComponent {
   @Input() drawerCloset: any = Function;
   filterdata: any = '';
   filterdataVen: any = '';
-
   filterdata1: any;
-
   CustomersData: any;
   TechData: any;
   filterQuery: any = '';
   filterQueryDate: any;
-
   filterQuery1: string = '';
   filterQuery2: string = '';
   filterQuery3: string = '';
-
   isFilterApplied: any = 'default';
   filterClass: any = 'filter-invisible';
   Customers: any = [];
@@ -61,8 +56,6 @@ export class InventorylogsComponent {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using DatePipe
     const formattedStartDate: any = this.datePipe.transform(
       startOfMonth,
       'yyyy-MM-dd'
@@ -71,13 +64,9 @@ export class InventorylogsComponent {
       endOfMonth,
       'yyyy-MM-dd'
     );
-
-    // Store the formatted dates in the selectedDate array
     this.selectedDate = [formattedStartDate, formattedEndDate];
-
     this.getActionLog123();
   }
-
   clearFilter() {
     this.filterQuery = '';
     this.filterQuery1 = '';
@@ -90,8 +79,6 @@ export class InventorylogsComponent {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using DatePipe
     const formattedStartDate: any = this.datePipe.transform(
       startOfMonth,
       'yyyy-MM-dd'
@@ -100,8 +87,6 @@ export class InventorylogsComponent {
       endOfMonth,
       'yyyy-MM-dd'
     );
-
-    // Store the formatted dates in the selectedDate array
     this.selectedDate = [formattedStartDate, formattedEndDate];
     this.value1 = this.datePipe.transform(new Date(), 'yyyy-MM-01');
     this.value2 = this.datePipe.transform(new Date(), 'yyyy-MM-31');
@@ -109,10 +94,8 @@ export class InventorylogsComponent {
     this.Technician = null;
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
-
     this.getActionLog1();
   }
-
   isSpinning: boolean = false;
   actionlog: any;
   Actiontyoe: any = [];
@@ -122,7 +105,6 @@ export class InventorylogsComponent {
   actionLogTypeFilter: any;
   vendornewfilt: any;
   loadactionlogs: boolean = false;
-
   getActionLog1() {
     if (this.selectedDate == undefined || this.selectedDate.length == 0) {
       this.filterQueryDate = '';
@@ -139,7 +121,6 @@ export class InventorylogsComponent {
             $in: [this.FILTER_ID],
           },
         };
-
       this.filterQueryDate = {
         $and: [
           {
@@ -153,7 +134,7 @@ export class InventorylogsComponent {
                         date: '$ACTION_DATE',
                       },
                     },
-                    this.value1, // Start date, e.g., "2025-01-14"
+                    this.value1, 
                   ],
                 },
                 {
@@ -164,18 +145,16 @@ export class InventorylogsComponent {
                         date: '$ACTION_DATE',
                       },
                     },
-                    this.value2, // End date, e.g., "2025-01-15"
+                    this.value2, 
                   ],
                 },
               ],
             },
           },
-
           this.filterdata1,
         ],
       };
     }
-
     this.loadactionlogs = true;
     this.api
       .getInventoryLog(1, 0, 'ACTION_DATE', 'desc', this.filterQueryDate)
@@ -196,12 +175,10 @@ export class InventorylogsComponent {
         }
       );
   }
-
   formatTimelineData(data: any[]): any[] {
     return data.map((day) => ({
       date: day.ACTION_DATE,
       events: {
-        // icon: this.getStatusIcon(log.ORDER_STATUS || ''), // Adjust icon logic as needed
         title: day.ACTION_DETAILS || 'Action performed',
         time: day.ACTION_DATE
           ? new Date(day.ACTION_DATE).toLocaleTimeString()
@@ -236,21 +213,16 @@ export class InventorylogsComponent {
         return 'ℹ️';
     }
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   applyFilter() {
-    // this.loadingRecords = true;
     if (this.selectedDate != null && this.selectedDate.length === 2) {
       this.value1 = this.datePipe.transform(this.selectedDate[0], 'yyyy-MM-dd');
       this.value2 = this.datePipe.transform(this.selectedDate[1], 'yyyy-MM-dd');
-
       this.getActionLog1();
-
       this.filterClass = 'filter-invisible';
       this.isFilterApplied = 'primary';
     } else {
@@ -263,19 +235,14 @@ export class InventorylogsComponent {
     this.value1 = this.datePipe.transform(value[0], 'yyyy-MM-dd');
     this.value2 = this.datePipe.transform(value[1], 'yyyy-MM-dd');
   }
-
-
-
   sortEventsByTime(data: any[]): any[] {
     return data.sort((a, b) => {
       return b.date.localeCompare(a.date);
     });
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   getActionLog123() {
     if (this.selectedDate == undefined || this.selectedDate.length == 0) {
       this.filterQueryDate = '';
@@ -292,12 +259,6 @@ export class InventorylogsComponent {
             $in: [this.FILTER_ID],
           },
         };
-      // this.actionlog = {
-      //   LOG_TYPE: {
-      //     $in: ['order', 'Cart'],
-      //   },
-      // };
-
       this.filterQueryDate = {
         $and: [
           {
@@ -311,7 +272,7 @@ export class InventorylogsComponent {
                         date: '$ACTION_DATE',
                       },
                     },
-                    this.value1, // Start date, e.g., "2025-01-14"
+                    this.value1, 
                   ],
                 },
                 {
@@ -322,18 +283,16 @@ export class InventorylogsComponent {
                         date: '$ACTION_DATE',
                       },
                     },
-                    this.value2, // End date, e.g., "2025-01-15"
+                    this.value2, 
                   ],
                 },
               ],
             },
           },
           this.customersFilter,
-          // this.actionlog,
         ],
       };
     }
-
     this.loadactionlogs = true;
     this.api
       .getInventoryLog(1, 0, 'ACTION_DATE', 'desc', this.filterQueryDate)

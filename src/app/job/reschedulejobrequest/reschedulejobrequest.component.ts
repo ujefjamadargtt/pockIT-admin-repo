@@ -22,8 +22,6 @@ export class ReschedulejobrequestComponent {
   sortValue: string = 'desc';
   sortKey: string = 'id';
   searchText: string = '';
-  // filterQuery: string = "";
-
   columns: string[][] = [
     ['ORDER_NO', 'ORDER_NO'],
     ['CUSTOMER_NAME', 'CUSTOMER_NAME'],
@@ -35,7 +33,6 @@ export class ReschedulejobrequestComponent {
   visible1 = false;
   drawerVisible: boolean;
   drawerTitle: string;
-
   drawerVisible1: boolean;
   drawerTitle1: string;
   ROLES = [];
@@ -58,7 +55,6 @@ export class ReschedulejobrequestComponent {
   Mobilenovisible = false;
   customernamevisible = false;
   technamevisible = false;
-
   addressvisible = false;
   statusFilter: string | undefined = undefined;
   isnewFilter: string | undefined = undefined;
@@ -78,7 +74,6 @@ export class ReschedulejobrequestComponent {
     this.isnewFilter = selectedStatus;
     this.search(true);
   }
-
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   filterQuery: string = '';
@@ -94,8 +89,6 @@ export class ReschedulejobrequestComponent {
     { label: 'Territory Name', value: 'TERRITORY_NAME' },
   ];
   isFilterApplied: boolean = false;
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -112,7 +105,6 @@ export class ReschedulejobrequestComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -129,7 +121,6 @@ export class ReschedulejobrequestComponent {
       ? this.commonFunction.decryptdata(this.userId)
       : '0';
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
     var roleid = this.commonFunction.decryptdata(
       sessionStorage.getItem('roleId') || ''
     );
@@ -158,7 +149,6 @@ export class ReschedulejobrequestComponent {
     this.orderrno = '';
     this.customername = '';
     this.techname = '';
-
     this.mobilenooo = '';
     this.addressss = '';
     this.search();
@@ -175,7 +165,7 @@ export class ReschedulejobrequestComponent {
         this.isSubmittedDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isSubmittedDateFilterApplied = false;
     }
@@ -185,20 +175,16 @@ export class ReschedulejobrequestComponent {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
@@ -213,7 +199,6 @@ export class ReschedulejobrequestComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
     var sort: string;
     try {
@@ -222,7 +207,6 @@ export class ReschedulejobrequestComponent {
       sort = '';
     }
     var likeQuery = '';
-
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -238,14 +222,13 @@ export class ReschedulejobrequestComponent {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `REQUESTED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-    // category Filter
     if (this.orderrno !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -271,12 +254,10 @@ export class ReschedulejobrequestComponent {
         (likeQuery ? ' AND ' : '') +
         `SERVICE_ADDRESS LIKE '%${this.addressss.trim()}%'`;
     }
-
     if (this.reason !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `REASON LIKE '%${this.reason.trim()}%'`;
     }
-
     if (this.remark !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `REMARK LIKE '%${this.remark.trim()}%'`;
@@ -285,13 +266,10 @@ export class ReschedulejobrequestComponent {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; 
     }
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.ExtraQuery = " AND STATUS='" + this.VERIFIED_STATUS + "'";
-
     this.api
       .getjobreschedulereq(
         this.pageIndex,
@@ -305,10 +283,8 @@ export class ReschedulejobrequestComponent {
           if (data['status'] == 200) {
             this.loadingRecords = false;
             this.totalRecords = data['body']['count'];
-
             this.dataList = data['body']['data'];
             this.TabId = data['body']['TAB_ID'];
-
             this.api
               .getjobreqcount(
                 this.pageIndex,
@@ -321,7 +297,6 @@ export class ReschedulejobrequestComponent {
                 (dataaa) => {
                   if (dataaa['status'] == 200) {
                     this.loadingRecords = false;
-
                     this.approvedCount = dataaa['body']['data'][0]['APPROVED'];
                     this.pendingCount = dataaa['body']['data'][0]['PENDING'];
                     this.rejectedCount = dataaa['body']['data'][0]['REJECTED'];
@@ -336,14 +311,11 @@ export class ReschedulejobrequestComponent {
                 (err: HttpErrorResponse) => {
                   this.loadingRecords = false;
                   if (err.status === 0) {
-                    // Network error
                     this.message.error(
                       'Unable to connect. Please check your internet or server connection and try again shortly.',
                       ''
                     );
-                    // this.dataList = [];
                   } else {
-                    // Other errors
                     this.message.error('Server error: ' + err.message, '');
                   }
                 }
@@ -374,14 +346,12 @@ export class ReschedulejobrequestComponent {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
   isordernoFilterApplied = false;
   iscustnmFilterApplied = false;
   iscustnmFilterAppliedtech = false;
-
   ismobFilterApplied = false;
   Seqtext: string = '';
   customername: string = '';
@@ -399,7 +369,6 @@ export class ReschedulejobrequestComponent {
   isterritorynameFilterApplied = false;
   territoryVisible = false;
   selectedterritory: any[] = [];
-
   onKeyup(event: KeyboardEvent, field: string): void {
     if (
       this.orderrno.length >= 3 &&
@@ -472,7 +441,6 @@ export class ReschedulejobrequestComponent {
       this.search();
       this.isaddFilterApplied = false;
     }
-
     if (this.reason.length >= 3 && event.key === 'Enter' && field == 'REA') {
       this.search();
       this.isreasonFilterApplied = true;
@@ -484,7 +452,6 @@ export class ReschedulejobrequestComponent {
       this.search();
       this.isreasonFilterApplied = false;
     }
-
     if (this.remark.length >= 3 && event.key === 'Enter' && field == 'REM') {
       this.search();
       this.isremarkFilterApplied = true;
@@ -500,16 +467,13 @@ export class ReschedulejobrequestComponent {
   onCountryChange(): void {
     if (this.selectedterritory?.length) {
       this.search();
-      this.isterritorynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isterritorynameFilterApplied = true; 
     } else {
       this.search();
-      this.isterritorynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isterritorynameFilterApplied = false; 
     }
-    // this.search();
   }
-
   territoryData: any = [];
-
   getTeritory() {
     this.api.getTeritory(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -525,7 +489,6 @@ export class ReschedulejobrequestComponent {
       }
     );
   }
-
   territoryData1: any = [];
   getTeritory1() {
     this.api
@@ -546,25 +509,20 @@ export class ReschedulejobrequestComponent {
   navigateToMastersMenu(): void {
     this.router.navigate(['/masters/menu']);
   }
-
   close(): void {
     this.visible1 = false;
   }
-
   close1(accountMasterPage: NgForm) {
     this.drawerVisible1 = false;
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
@@ -581,10 +539,7 @@ export class ReschedulejobrequestComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // Main Filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -593,31 +548,26 @@ export class ReschedulejobrequestComponent {
       this.loadFilters();
     }
   }
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
   currentClientId = 1;
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -625,14 +575,11 @@ export class ReschedulejobrequestComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   oldFilter: any[] = [];
   isLoading = false;
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
   filterGroups2: any = [
     {
@@ -650,20 +597,14 @@ export class ReschedulejobrequestComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   openfilter() {
     this.drawerTitle = 'Cancel Order Request Filter';
-    // this.applyCondition = "";
     this.filterFields[9]['options'] = this.territoryData1;
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -680,7 +621,6 @@ export class ReschedulejobrequestComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -697,7 +637,6 @@ export class ReschedulejobrequestComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -707,7 +646,6 @@ export class ReschedulejobrequestComponent {
       FILTER_JSON: {},
     };
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -716,7 +654,6 @@ export class ReschedulejobrequestComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   whichbutton: any;
   filterloading: boolean = false;
   updateButton: any;
@@ -724,10 +661,8 @@ export class ReschedulejobrequestComponent {
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
@@ -741,18 +676,14 @@ export class ReschedulejobrequestComponent {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-  // drawerflterClose(): void {
-  //   this.drawerFilterVisible = false;
-  // }
   formatTime(time: any): any {
     if (time != undefined && time != null && time != '') {
       const [hours, minutes] = time.split(':').map(Number);
       const ampm = hours >= 12 ? 'PM' : 'AM';
-      const formattedHours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+      const formattedHours = hours % 12 || 12; 
       return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
     }
   }
-
   filterFields: any[] = [
     {
       key: 'REQUESTED_DATE',
@@ -898,10 +829,8 @@ export class ReschedulejobrequestComponent {
       placeholder: 'Enter Territory Name',
     },
   ];
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -909,16 +838,12 @@ export class ReschedulejobrequestComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -933,22 +858,15 @@ export class ReschedulejobrequestComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -962,11 +880,8 @@ export class ReschedulejobrequestComponent {
       );
     this.filterQuery = '';
   }
-
   isDeleting: boolean = false;
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -982,14 +897,10 @@ export class ReschedulejobrequestComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           } else {
             this.isfilterapply = true;
           }
@@ -1012,17 +923,13 @@ export class ReschedulejobrequestComponent {
       }
     );
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.filterFields[9]['options'] = this.territoryData1;
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1030,7 +937,6 @@ export class ReschedulejobrequestComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   rejectreason: any = '';
   appreorder(data: any, action: any) {
     this.isspinnnnnnn = true;
@@ -1043,14 +949,7 @@ export class ReschedulejobrequestComponent {
       this.message.error('Please enter rejection remark ', '');
       this.isspinnnnnnn = false;
     } else {
-      // Add ESTIMATED_TIME_IN_MIN (30 minutes)
-      // Convert REQUESTED_DATE to Date object
       let requestedDate = new Date(data.REQUESTED_DATE);
-
-      // Add ESTIMATED_TIME_IN_MIN (default to 30 minutes if undefined)
-      // let estimatedMinutes = data.ESTIMATED_TIME_IN_MIN || 30;
-      // let endTime = new Date(requestedDate.getTime() + estimatedMinutes * 60000);
-
       var dataaa = {
         ID: data.ID,
         REMARK: this.rejectreason == '' ? '' : this.rejectreason,
@@ -1068,12 +967,8 @@ export class ReschedulejobrequestComponent {
           ':00',
         START_TIME: data.START_TIME,
         END_TIME: data.END_TIME,
-
-        // START_TIME: this.datepipe.transform(data.REQUESTED_DATE, 'HH:mm') + ":00",
-        // END_TIME: this.datepipe.transform(endTime, 'HH:mm') + ":00",
         TERRITORY_ID: data.TERRITORY_ID,
       };
-
       this.api.approverejebtorder(dataaa).subscribe(
         (successCode: any) => {
           if (successCode.status == 200) {
@@ -1106,11 +1001,9 @@ export class ReschedulejobrequestComponent {
       );
     }
   }
-
   isspinnnnnnn: boolean = false;
   openmodell: boolean = false;
   openmodellRefund: boolean = false;
-
   cancelorderdata: any;
   action: any;
   opencancelmodal(event: any, action: any) {
@@ -1124,17 +1017,14 @@ export class ReschedulejobrequestComponent {
     this.isspinnnnnnn = false;
     this.cancelorderdata = '';
   }
-
   rejectedCount: any = 0;
   pendingCount: any = 0;
   approvedCount: any = 0;
   getcounts() { }
-
   selectStatus(event) {
     this.VERIFIED_STATUS = event;
     this.search(true);
   }
-
   appreorderRef(data: any) {
     this.isspinnnnnnn = true;
     var dataaa = {
@@ -1147,12 +1037,10 @@ export class ReschedulejobrequestComponent {
       PAYMENT_REFUND_STATUS: 'RF',
       PAYMENT_MODE: data.PAYMENT_MODE,
     };
-
     this.api.Refundorder(dataaa).subscribe(
       (successCode: any) => {
         if (successCode.code == 200) {
           this.message.success('Refund status updated successfully', '');
-
           this.openmodellRefund = false;
           this.isspinnnnnnn = false;
           this.search();
@@ -1167,9 +1055,7 @@ export class ReschedulejobrequestComponent {
       }
     );
   }
-
   jobedit: boolean = false;
-
   Jobassignsdata: any;
   getpendingjobsforedit(jobno: any) {
     this.api
@@ -1193,7 +1079,6 @@ export class ReschedulejobrequestComponent {
                 this.terriotrystarttime = filterterritory[0].START_TIME;
                 this.terriotryendtime = filterterritory[0].END_TIME;
               }
-
               this.IS_ORDER_JOB = 'P';
               this.alljobdata = [];
               this.Jobassignsdata = data['data'][0];
@@ -1222,7 +1107,6 @@ export class ReschedulejobrequestComponent {
         }
       );
   }
-
   JobassigndrawerTitle: any;
   SERVICE_DATA: any;
   terriotrystarttime: any;
@@ -1235,11 +1119,9 @@ export class ReschedulejobrequestComponent {
     this.jobassignshow = false;
     this.search();
   }
-
   get JobassignscloseCallback() {
     return this.JobassignsdrawerClose.bind(this);
   }
-
   todaydate = new Date();
   Territorytime: any;
 }

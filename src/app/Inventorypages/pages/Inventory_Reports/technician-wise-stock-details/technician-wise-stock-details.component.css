@@ -3,17 +3,108 @@
     padding: 8px;
     display: block;
 }
-
-
 .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
+  .header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.excel-btn {
+  color: white;
+}
+.filter-btn-item {
+  width: 47px;
+}
+.search-item {
+  margin-right: 0px;
+}
+.filter-row {
+  padding-top: 0px;
+}
+.loading-center {
+  text-align: center;
+}
+.filters-grid {
+  margin-bottom: 8px;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.custom-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.filter-name-text {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.selected-indicator {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.action-buttons-container {
+  display: flex;
+  justify-content: space-between;
+}
+.action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.tag-icon {
+  font-size: 10px !important;
+}
+.view-tag {
+  margin-right: 0px;
+}
+.no-data-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.action-buttons-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-btn, .new-filter-btn {
+  margin-right: 10px;
+}
+.table-container {
+  margin-top: 8px;
+}
+.table-scroll {
+  white-space: pre-line;
+}
+.query-title {
+  text-align: center;
+}

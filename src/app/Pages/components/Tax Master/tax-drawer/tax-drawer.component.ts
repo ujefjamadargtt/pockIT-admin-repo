@@ -4,7 +4,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { TaxMasterData } from 'src/app/Pages/Models/TaxmasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-tax-drawer',
   templateUrl: './tax-drawer.component.html',
@@ -18,13 +17,10 @@ export class TaxDrawerComponent {
   ngOnInit(): void {
     this.getCountyData();
   }
-
   public commonFunction = new CommonFunctionService();
-
   @Input() data: any = TaxMasterData;
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
@@ -51,11 +47,10 @@ export class TaxDrawerComponent {
       );
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   oncityChange() {
@@ -71,7 +66,6 @@ export class TaxDrawerComponent {
     Taxmaster.form.markAsPristine();
     Taxmaster.form.markAsUntouched();
   }
-
   save(addNew: boolean, Taxmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -150,7 +144,6 @@ export class TaxDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Short Code.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -164,7 +157,6 @@ export class TaxDrawerComponent {
               this.message.error('Tax Updation Failed', '');
               this.isSpinning = false;
             }
-
           }, (err) => {
             this.message.error(
               'Something went wrong, please try again later',
@@ -201,7 +193,6 @@ export class TaxDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }

@@ -5,34 +5,33 @@
     margin-top: 12px;
     margin-bottom: 12px;
     background-color: #fafafa;
-
   }
   .header {
-
     position: absolute;
- 
     top: 0px;
- 
-    /* bottom: 0px; */
- 
     width: 100%;
- 
     border-top: 1px solid rgb(232, 232, 232);
- 
     padding: 10px 16px;
- 
     text-align: right;
- 
-    /* left: 0px; */
- 
     right: 0px;
- 
-    /* background: #fff; */
- 
  }
 nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
+}
+.footer-btn-margin-8 {
+  margin-right: 8px;
+}
+.footer-primary-btn {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-dropdown-item-white {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-dropdown-link-white {
+  color: white !important;
 }

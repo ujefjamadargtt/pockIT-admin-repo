@@ -1,60 +1,30 @@
-<div nz-col nzSpan="24" class="vertical-card" style="padding-top: 14px">
-  <!-- <br/> -->
-
-  <div *ngIf="data.ID != 0" style="text-align: center" nz-popover [nzPopoverContent]="data.NAME"
+<div nz-col nzSpan="24" class="vertical-card message-template-container" class="pt-14">
+  <div *ngIf="data.ID != 0" class="template-name-container" nz-popover [nzPopoverContent]="data.NAME"
     nzPopoverPlacement="top">
     <span><b>Template Name</b> - {{ data.NAME | slice : 0 : 15
       }}{{ data.NAME.length > 15 ? "..." : "" }}</span>
   </div>
-  <!-- <br/> -->
   <div nz-row>
-    <!-- <div nz-col nzSpan="2"></div> -->
-    <div nz-col nzSpan="24" style="padding: 10px 20px 10px 20px">
+    <div nz-col nzSpan="24" class="card-content-wrapper">
       <nz-card class="vertical">
         <nz-form-item>
-          <span style="font-size: 13px" *ngIf="data.HEADER_TEXT != ''"><b>{{ data.HEADER_TEXT }}</b></span>
-          <div nz-col nzSpan="24" *ngIf="data.HEADER_TYPE == 'I'" style="
-              background-color: #fff;
-              position: relative;
-              width: 100%;
-              cursor: pointer;
-              padding: 10px;
-              border: 1px solid #efefef;
-              border-radius: 10px;
-            ">
+          <span class="header-text" *ngIf="data.HEADER_TEXT != ''"><b>{{ data.HEADER_TEXT }}</b></span>
+          <div nz-col nzSpan="24" *ngIf="data.HEADER_TYPE == 'I'" class="image-container">
             <img width="100%" height="150px" [src]="image" />
           </div>
-
-          <div nz-col *ngIf="data.HEADER_TYPE == 'V'" nzSpan="22" style="
-              background-color: #fff;
-              position: relative;
-              width: 100%;
-              cursor: pointer;
-              padding: 10px 10px 3px 10px;
-              border: 1px solid #efefef;
-              border-radius: 10px;
-            ">
-            <video style="width: 100%; height: 100px" controls>
+          <div nz-col *ngIf="data.HEADER_TYPE == 'V'" nzSpan="22" class="video-container">
+            <video class="video-element" controls>
               <source [src]="video" />
               <source [src]="video" />
               <source [src]="video" />
             </video>
             <br />
           </div>
-          <div nz-col nzSpan="24" *ngIf="data.HEADER_TYPE == 'D'" style="
-              background-color: #fdfdfd;
-              position: relative;
-              width: 100%;
-              cursor: pointer;
-              border: 1px solid #efefef;
-              padding: 6px;
-              border-radius: 10px;
-              text-align: left;
-            ">
+          <div nz-col nzSpan="24" *ngIf="data.HEADER_TYPE == 'D'" class="document-container">
             <div nz-row>
-              <div nz-col nzSpan="4">
+              <div nz-col nzSpan="4" class="document-icon-wrapper">
                 <svg *ngIf="TYPE == 'xlsx'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                  viewBox="0 0 79.996 98">
+                  viewBox="0 0 79.996 98" class="file-icon">
                   <g id="_3174396535664" transform="translate(-14272.2 -3469.67)">
                     <path id="Path_185" data-name="Path 185" d="M14272.2,5073.42l11.53,8.6v-8.6Z"
                       transform="translate(0 -1526.582)" fill="#6f7d30" fill-rule="evenodd" />
@@ -74,9 +44,8 @@
                       transform="translate(-675.068 -1112.745)" fill="#fefefe" />
                   </g>
                 </svg>
-
                 <svg *ngIf="TYPE == 'docx'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                  viewBox="0 0 80.002 98">
+                  viewBox="0 0 80.002 98" class="file-icon">
                   <g id="_3174394821168" transform="translate(-6866.51 -3469.67)">
                     <path id="Path_177" data-name="Path 177" d="M6866.519,5073.42l11.529,8.6v-8.6Z"
                       transform="translate(-0.009 -1526.583)" fill="#12567d" fill-rule="evenodd" />
@@ -96,9 +65,8 @@
                       transform="translate(-734.755 -1113.152)" fill="#fefefe" />
                   </g>
                 </svg>
-
                 <svg *ngIf="TYPE === 'txt'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                  viewBox="0 0 80.001 98">
+                  viewBox="0 0 80.001 98" class="file-icon">
                   <g id="_3174395074240" transform="translate(-4397.94 -3469.67)">
                     <path id="Path_182" data-name="Path 182" d="M4397.95,5073.42l11.529,8.6v-8.6Z"
                       transform="translate(-0.009 -1526.583)" fill="#707070" fill-rule="evenodd" />
@@ -112,16 +80,15 @@
                       d="M4668.563,4644.516a4.2,4.2,0,0,1-.024.507,1.3,1.3,0,0,1-.076.333.407.407,0,0,1-.128.187.256.256,0,0,1-.166.063h-3.288v10.6a.285.285,0,0,1-.066.184.5.5,0,0,1-.219.132,2.384,2.384,0,0,1-.413.079,6.667,6.667,0,0,1-1.29,0,2.375,2.375,0,0,1-.413-.079.5.5,0,0,1-.219-.132.285.285,0,0,1-.066-.184v-10.6h-3.288a.26.26,0,0,1-.173-.062.466.466,0,0,1-.121-.187,1.483,1.483,0,0,1-.076-.333,4.3,4.3,0,0,1-.024-.507,4.464,4.464,0,0,1,.024-.516,1.507,1.507,0,0,1,.076-.341.452.452,0,0,1,.121-.183.273.273,0,0,1,.173-.056h9.26a.274.274,0,0,1,.166.056.393.393,0,0,1,.128.183,1.32,1.32,0,0,1,.076.341A4.356,4.356,0,0,1,4668.563,4644.516Z"
                       transform="translate(-247.938 -1117.234)" fill="#fefefe" />
                     <path id="_1" data-name="1"
-                      d="M4886.671,4654.338a3.211,3.211,0,0,1,.239.569.307.307,0,0,1-.066.325.776.776,0,0,1-.44.143c-.215.02-.511.031-.888.031-.316,0-.569-.007-.749-.021a2.179,2.179,0,0,1-.43-.066.478.478,0,0,1-.229-.129.684.684,0,0,1-.122-.2l-2.477-4.748-2.455,4.748a.952.952,0,0,1-.131.2.484.484,0,0,1-.229.129,2.266,2.266,0,0,1-.44.066q-.281.021-.739.021c-.354,0-.628-.011-.822-.031a.625.625,0,0,1-.393-.143.33.33,0,0,1-.038-.325,2.93,2.93,0,0,1,.254-.569l3.145-5.744-2.926-5.4a4.129,4.129,0,0,1-.25-.586.3.3,0,0,1,.052-.326.757.757,0,0,1,.43-.132c.211-.017.51-.024.895-.024q.478,0,.76.021a2.236,2.236,0,0,1,.44.066.412.412,0,0,1,.229.128,1.085,1.085,0,0,1,.128.2l2.321,4.352,2.236-4.352a1.138,1.138,0,0,1,.128-.2.413.413,0,0,1,.211-.128,1.879,1.879,0,0,1,.406-.066c.173-.014.413-.021.718-.021.336,0,.6.007.8.024a.661.661,0,0,1,.406.139.323.323,0,0,1,.056.326,4,4,0,0,1-.229.579l-2.928,5.366Z"
+                      d="M4886.671,4654.338a3.211,3.211,0,0,1,.239.569.307.307,0,0,1-.066.325.776.776,0,0,1-.44.143c-.215.02-.511.031-.888.031-.316,0-.569-.007-.749-.021a2.179,2.179,0,0,1-.43-.066.478.478,0,0,1-.229-.129.684.684,0,0,1-.122-.2l-2.477-4.748-2.455,4.748a.952.952,0,0,1-.131.2.484.484,0,0,1-.229.129,2.266,2.266,0,0,1-.44.066q-.281.021-.739.021c-.354,0-.628-.011-.822-.031a.625.625,0,0,1-.393-.143.33.33,0,0,1-.038-.325,2.93,2.93,0,0,1,.254-.569l3.145-5.744-2.926-5.4a4.129,4.129,0,0,1-.25-.586.3.3,0,0,1,.052-.326.757.757,0,0,1,.43-.132c.211-.017.51-.024.895-.024q.478,0,.76.021a2.236,2.236,0,0,1,.440.066.412.412,0,0,1,.229.128,1.085,1.085,0,0,1,.128.2l2.321,4.352,2.236-4.352a1.138,1.138,0,0,1,.128-.2.413.413,0,0,1,.211-.128,1.879,1.879,0,0,1,.406-.066c.173-.014.413-.021.718-.021.336,0,.6.007.8.024a.661.661,0,0,1,.406.139.323.323,0,0,1,.056.326,4,4,0,0,1-.229.579l-2.928,5.366Z"
                       transform="translate(-455.106 -1116.007)" fill="#fefefe" />
                     <path id="_2" data-name="2"
                       d="M5117.433,4644.516a4.212,4.212,0,0,1-.024.507,1.318,1.318,0,0,1-.076.333.415.415,0,0,1-.128.187.257.257,0,0,1-.167.063h-3.288v10.6a.282.282,0,0,1-.065.184.5.5,0,0,1-.219.132,2.394,2.394,0,0,1-.413.079,6.672,6.672,0,0,1-1.29,0,2.384,2.384,0,0,1-.413-.079.5.5,0,0,1-.219-.132.288.288,0,0,1-.066-.184v-10.6h-3.287a.261.261,0,0,1-.173-.062.461.461,0,0,1-.121-.187,1.431,1.431,0,0,1-.076-.333,4.083,4.083,0,0,1-.025-.507,4.233,4.233,0,0,1,.025-.516,1.455,1.455,0,0,1,.076-.341.447.447,0,0,1,.121-.183.274.274,0,0,1,.173-.056h9.259a.277.277,0,0,1,.167.056.4.4,0,0,1,.128.183,1.323,1.323,0,0,1,.076.341A4.368,4.368,0,0,1,5117.433,4644.516Z"
                       transform="translate(-675.041 -1117.234)" fill="#fefefe" />
                   </g>
                 </svg>
-
                 <svg *ngIf="TYPE == 'pdf'" xmlns="http://www.w3.org/2000/svg" width="29" height="25"
-                  viewBox="0 0 79.999 98">
+                  viewBox="0 0 79.999 98" class="file-icon">
                   <g id="_3174384174496" transform="translate(-11803.7 -3469.67)">
                     <path id="Path_188" data-name="Path 188" d="M11803.7,5073.42l11.526,8.6v-8.6Z"
                       transform="translate(-0.001 -1526.584)" fill="#7a2f36" fill-rule="evenodd" />
@@ -141,9 +108,8 @@
                       transform="translate(-731.862 -1117.235)" fill="#fefefe" />
                   </g>
                 </svg>
-
                 <svg *ngIf="TYPE == 'pptx'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                  viewBox="0 0 79.995 98">
+                  viewBox="0 0 79.995 98" class="file-icon">
                   <g id="_3174394941968" transform="translate(-9335.08 -3469.67)">
                     <path id="Path_191" data-name="Path 191" d="M9335.09,5073.42l11.528,8.6v-8.6Z"
                       transform="translate(-0.009 -1526.582)" fill="#a35338" fill-rule="evenodd" />
@@ -163,39 +129,25 @@
                       transform="translate(-678.19 -1117.233)" fill="#fefefe" />
                   </g>
                 </svg>
-
                 <svg *ngIf="TYPE == 'D'" xmlns="http://www.w3.org/2000/svg" width="20" height="17"
-                  viewBox="0 0 384 512">
+                  viewBox="0 0 384 512" class="file-icon">
                   <path
                     d="M365.3 93.38l-74.63-74.64C278.6 6.742 262.3 0 245.4 0L64-.0001c-35.35 0-64 28.65-64 64l.0065 384c0 35.34 28.65 64 64 64H320c35.2 0 64-28.8 64-64V138.6C384 121.7 377.3 105.4 365.3 93.38zM336 448c0 8.836-7.164 16-16 16H64.02c-8.838 0-16-7.164-16-16L48 64.13c0-8.836 7.164-16 16-16h48V64h64V48.13h48.01L224 128c0 17.67 14.33 32 32 32h79.1V448zM176 96h-64v32h64V96zM176 160h-64v32h64V160zM176 224h-64l-30.56 116.5C73.51 379.5 103.7 416 144.3 416c40.26 0 70.45-36.3 62.68-75.15L176 224zM160 368H128c-8.836 0-16-7.164-16-16s7.164-16 16-16h32c8.836 0 16 7.164 16 16S168.8 368 160 368z" />
                 </svg>
               </div>
-              <div nz-col nzSpan="1"></div>
-              <div nz-col nzSpan="19">
+              <div nz-col nzSpan="1" class="document-spacer"></div>
+              <div nz-col nzSpan="19" class="document-content">
                 <span>{{ data.HEADER_VALUES }}&nbsp;&nbsp;<a> &nbsp;&nbsp;</a>
                   <br />
                 </span>
               </div>
             </div>
           </div>
-
-          <span style="
-              font-size: 11px;
-              white-space: pre-line !important;
-              display: inline-block;
-              word-wrap: break-word;
-              width: 100%;
-            " [innerHTML]="formattedBodyText"></span>
+          <span class="body-text" [innerHTML]="formattedBodyText"></span>
           <br />
-          <span style="
-              font-size: 11px;
-              font-weight: lighter;
-              color: #938370b0;
-              align-self: center;
-            ">{{ data.FOOTER_TEXT }}</span>
-          <span style="width: 211px; border-top: 1px solid rgb(232, 234, 242)"></span>
-          <div nz-row nzSpan="24" style="margin-top: 10px" *ngIf="data.BUTTON_VALUES != null"
-            style="text-align: center">
+          <span class="footer-text">{{ data.FOOTER_TEXT }}</span>
+          <span class="separator-line"></span>
+          <div nz-row nzSpan="24" class="button-container" *ngIf="data.BUTTON_VALUES != null">
             <div>
               <table>
                 <thead>
@@ -205,30 +157,27 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let button of data.BUTTON_VALUES" style="width: 100px">
-                    <td style="width: 150px">
+                  <tr *ngFor="let button of data.BUTTON_VALUES" class="button-row">
+                    <td class="button-cell">
                       <ng-container [ngSwitch]="button.type">
                         <ng-container *ngSwitchCase="'PHONE_NUMBER'">
                           <a><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 22 21"
                               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                              stroke-linejoin="round" class="feather feather-phone-call">
+                              stroke-linejoin="round" class="feather feather-phone-call button-icon">
                               <path
                                 d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
                               </path>
                             </svg></a>
                         </ng-container>
-
                         <ng-container *ngSwitchCase="'COPY_CODE'">
-                          <a><span nz-icon nzType="copy" nzTheme="outline"></span></a>
+                          <a><span nz-icon nzType="copy" nzTheme="outline" class="button-icon"></span></a>
                         </ng-container>
-
                         <ng-container *ngSwitchCase="'URL'">
-                          <a><span nz-icon nzType="link" nzTheme="outline"></span></a>
+                          <a><span nz-icon nzType="link" nzTheme="outline" class="button-icon"></span></a>
                         </ng-container>
-
                         <ng-container *ngSwitchCase="'QUICK_REPLY'">
                           <a><svg xmlns="http://www.w3.org/2000/svg" width="28" height="14" fill="none"
-                              stroke="currentColor" class="bi bi-box-arrow-up-left" viewBox="0 0 16 16">
+                              stroke="currentColor" class="bi bi-box-arrow-up-left button-icon" viewBox="0 0 16 16">
                               <path fill-rule="evenodd"
                                 d="M7.364 3.5a.5.5 0 0 1 .5-.5H14.5A1.5 1.5 0 0 1 16 4.5v10a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 3 14.5V7.864a.5.5 0 1 1 1 0V14.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-10a.5.5 0 0 0-.5-.5H7.864a.5.5 0 0 1-.5-.5z">
                               </path>
@@ -238,19 +187,14 @@
                             </svg></a>
                         </ng-container>
                       </ng-container>
-                      <a>{{ button.buttonText }}</a>
+                      <a class="button-text">{{ button.buttonText }}</a>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
-          <span style="
-              font-size: 11px;
-              font-weight: lighter;
-              color: #0a0a09b0;
-              float: right;
-            ">{{ Date | date : "hh:mm:a" }}
+          <span class="timestamp">{{ Date | date : "hh:mm:a" }}
           </span>
         </nz-form-item>
       </nz-card>

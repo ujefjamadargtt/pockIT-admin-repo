@@ -1,255 +1,221 @@
 <div>
-    <div *ngIf="!showFull"
-        style="width: 105%;margin-left: -25px;margin-top: -30px; background-color: white;padding: 10px;box-shadow: 4px 4px 3px #cbcaca;">
-        <h1 style="text-align: center;font-weight: bold;"><b>Hi, How can we help you?</b></h1>
-        <div style="max-width: 70%;margin: 10px auto;">
-            <nz-input-group nzSearch [nzPrefix]="suffixIconSearch">
-                <input type="text" nz-input [(ngModel)]="searchText"
-                    style=" border:none; border-radius: 8px;background-color: #f8f6f6;" placeholder="Search Here..."
-                    (keyup.enter)="search(searchText)" />
-            </nz-input-group>
-            <ng-template #suffixIconSearch>
-                <i nz-icon nzType="search" style="font-size: 20px;" (click)="search(searchText)"></i>
-            </ng-template>
-        </div>
+  <div *ngIf="!showFull" class="search-header">
+    <h1 class="main-title"><b>Hi, How can we help you?</b></h1>
+    <div class="search-container">
+      <nz-input-group nzSearch [nzPrefix]="suffixIconSearch">
+        <input
+          type="text"
+          nz-input
+          [(ngModel)]="searchText"
+          class="search-input"
+          placeholder="Search Here..."
+          (keyup.enter)="search(searchText)"
+        />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i
+          nz-icon
+          nzType="search"
+          class="search-icon"
+          (click)="search(searchText)"
+        ></i>
+      </ng-template>
     </div>
-
-    <div *ngIf="!showFull">
-        <div *ngIf="!issearched && faqHeads.length>0" class="example" nz-row
-            style="overflow: hidden;overflow-y: auto; height:50vh;">
-            <nz-breadcrumb style="margin-top: 15px;">
-                <nz-breadcrumb-item>
-                    <a> <i nz-icon nzType="left" (click)="back34()"></i></a>
-                </nz-breadcrumb-item>
-                <nz-breadcrumb-item>
-                    <span>{{searchText1}}</span>
-                </nz-breadcrumb-item>
-            </nz-breadcrumb>
-
-            <div nz-col nzSpan="8" *ngFor="let fhead of faqHeads;">
-                <nz-card nzHoverable
-                    style="border:none;border-radius: 6px; width:95%;height: 180px;overflow: hidden;margin-top: 10px;">
-                    <p (click)="search1(fhead)"
-                        style="cursor: pointer;margin-top: -11px; margin-bottom: 0px;font-size: 15px;font-weight: bold;color: black;">
-                        <b> {{fhead.NAME}}</b>
-                    </p>
-
-                    <h5 class="example" style="margin-top:5px;height:100px;overflow: hidden;overflow-y: auto;">
-                        {{fhead.DESCRIPTION}}
-                    </h5>
-
-                    <h5 *ngIf="fhead.IS_PARENT==0" style="margin-top:8px;"><a (click)="search(fhead.NAME)"
-                            style="color: #c8c5c5;">View All
-                            Questions</a></h5>
-                </nz-card>
-            </div>
-        </div>
-
-        <!-- <div *ngIf="!issearched && faqHeads.length>0" class="example" nz-row
-            style="overflow: hidden;overflow-y: auto; height:50vh;">
-            <div nz-col nzSpan="8" *ngFor="let fhead of faqHeads;">
-                <nz-card nzHoverable
-                    style="border:none;border-radius: 6px; width:95%;height: 180px;overflow: hidden;margin-top: 10px;">
-                    <p (click)="search1(fhead)"
-                        style="cursor: pointer;margin-top: -11px; margin-bottom: 0px;font-size: 15px;font-weight: bold;color: black;">
-                        <b> {{fhead.NAME}}</b>
-                    </p>
-
-                    <h5 class="example" style="margin-top:5px;height:100px;overflow: hidden;overflow-y: auto;">
-                        {{fhead.DESCRIPTION}}</h5>
-                    <h5 style="margin-top:8px;"><a (click)="search(fhead.NAME)" style="color: #c8c5c5;">View All
-                            Questions</a></h5>
-                </nz-card>
-            </div>
-        </div> -->
-
-        <div *ngIf="issearched && dataList.length>0" nz-row>
-            <div nz-col nzSpan="24" style="margin-top: 10px;">
-                <nz-breadcrumb>
-                    <nz-breadcrumb-item>
-                        <a> <i nz-icon nzType="left" (click)="back2()"></i></a>
-                    </nz-breadcrumb-item>
-
-                    <nz-breadcrumb-item>
-                        <span>{{searchText1}}</span>
-                    </nz-breadcrumb-item>
-                </nz-breadcrumb>
-            </div>
-
-            <div nz-col nzSpan="3" style="margin-top: 10px;">
-                <!-- <button nz-button nzType="primary" (click)="back2()">
-                    <i nz-icon nzType="arrow-left" nzTheme="outline"></i> Back</button> -->
-            </div>
-
-            <div nz-col nzSpan="18" style="overflow: hidden;overflow-y: auto; height:50vh; max-width: 611px;">
-                <nz-collapse style="margin-top: 13px;" *ngFor="let panel of dataList" nzAccordion>
-                    <nz-collapse-panel [nzHeader]="panel.QUESTION" [nzActive]="panel.active">
-                        <p (click)="expandFAQ(panel)">{{ panel.ANSWER }}</p>
-                    </nz-collapse-panel>
-                </nz-collapse>
-
-                <!-- <nz-list [nzDataSource]="dataList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'"
-                    [nzLoading]="loadingRecords">
-                    <ng-template #item let-item>
-                        <nz-list-item>
-                            <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDesc">
-                                <ng-template #nzTitle>
-                                    <p
-                                        style="margin-bottom: 0px;font-size: 11px;font-weight: bold;color: rgb(255, 38, 67);">
-                                        {{item.FAQ_HEAD_NAME}}</p>
-                                    <p (click)="expandFAQ(item)"
-                                        style="margin-bottom: 0px;font-size: 15px;font-weight: bold;color: rgb(22, 54, 145);">
-                                        {{ item.QUESTION }}</p>
-                                </ng-template>
-
-                                <ng-template #nzDesc>
-                                    <div style="height: 60px;overflow: hidden;">
-                                        <p style="
-                                        margin-bottom: 0px;font-size: 13px;font-weight: bold;color: rgb(53, 53, 53);">
-                                            {{ item.ANSWER}}</p>
-                                    </div>
-                                </ng-template>
-                            </nz-list-item-meta>
-                        </nz-list-item>
-                    </ng-template>
-                </nz-list> -->
-            </div>
-        </div>
-
-        <div *ngIf="issearched && dataList.length==0" nz-row>
-            <div nz-col nzSpan="24" style="padding: 20px 0px;">
-                <nz-empty [nzNotFoundImage]="
-        'https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original'
-      " [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
-                    <ng-template #contentTpl>
-                        <span> No Data Available</span>
-                    </ng-template>
-                    <ng-template #footerTpl>
-                        <button nz-button nzType="primary" (click)="back2()">
-                            <i nz-icon nzType="arrow-left" nzTheme="outline"></i>
-                            Back</button>
-                    </ng-template>
-                </nz-empty>
-            </div>
-        </div>
+  </div>
+  <div *ngIf="!showFull">
+    <div *ngIf="!issearched && faqHeads.length > 0" class="faq-heads-container">
+      <nz-breadcrumb class="breadcrumb-top">
+        <nz-breadcrumb-item>
+          <a> <i nz-icon nzType="left" (click)="back34()"></i></a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <span>{{ searchText1 }}</span>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <div
+        nz-col
+        nzSpan="8"
+        *ngFor="let fhead of faqHeads"
+        class="faq-head-card-col"
+      >
+        <nz-card nzHoverable class="faq-head-card">
+          <p (click)="search1(fhead)" class="faq-head-title">
+            <b> {{ fhead.NAME }}</b>
+          </p>
+          <h5 class="faq-head-description">
+            {{ fhead.DESCRIPTION }}
+          </h5>
+          <h5 *ngIf="fhead.IS_PARENT == 0" class="view-all-link">
+            <a (click)="search(fhead.NAME)" class="view-all-text"
+              >View All Questions</a
+            >
+          </h5>
+        </nz-card>
+      </div>
     </div>
-
-    <div *ngIf="showFull">
-        <div nz-row>
-            <div nz-col nzSpan="24" style="margin-top: 10px;  max-width: 750px;">
-                <nz-breadcrumb>
-                    <nz-breadcrumb-item>
-                        <a (click)="back()"><i nz-icon nzType="left" nzTheme="outline"></i></a>
-                    </nz-breadcrumb-item>
-
-                    <nz-breadcrumb-item>
-                        <a><span>
-                                {{faqDetails['FAQ_HEAD_NAME']}}
-                            </span></a>
-                    </nz-breadcrumb-item>
-                </nz-breadcrumb>
-            </div>
-
-            <div nz-col nzSpan="3" style=" max-width: 750px;">
-                <!-- <button nz-button nzType="primary" (click)="back()">
-                    <i nz-icon nzType="arrow-left" nzTheme="outline"></i>
-                    Back
-                </button> -->
-            </div>
-
-            <div nz-col nzSpan="18"
-                style="  max-width: 750px; margin-top: 20px; overflow: hidden;overflow-y: auto; height:6vh;">
-                <p style="margin-bottom: 5px;font-size: 14px;font-weight: bold;color: rgb(255, 38, 67);">
-                    {{faqDetails['FAQ_HEAD_NAME']}}
-                </p>
-            </div>
-            <div nz-col nzSpan="18"
-                style=" max-width: 750px;margin-top: 20px; overflow: hidden;overflow-y: auto; max-height: 20vh;;margin-left: 123px;">
-
-                <p style="margin-bottom: 10px;font-size: 20px;font-weight: bold;color: rgb(22, 54, 145);">
-                    {{ faqDetails.QUESTION }}
-                </p>
-            </div>
-
-            <div *ngIf="faqDetails.URL!=''">
-                <div nz-col nzSpan="24" style="text-align: center;      max-width: 943px;">
-
-                    <img style=" width:62%; height:318px;margin-top: 10px;"
-                        src="{{api.retriveimgUrl}}ticket/{{faqDetails.URL }}" />
-
-
-                </div>
-
-            </div>
-
-            <div *ngIf="faqDetails.URL==''">
-                <div nz-col nzSpan="24" style="text-align: center;margin-top:-40px; max-width: 750px;">
-                    <div style="margin-top: 21px;">
-
-                    </div>
-                    <!-- <img style=" width:62%; height:318px;"
-            src="{{api.retriveimgUrl}}ticket/{{faqDetails.URL }}" /> -->
-
-
-                </div>
-
-            </div>
-            <div nz-col nzSpan="18"
-                style=" max-width: 750px;margin-top: 20px; overflow: hidden;overflow-y: auto; height:28vh;margin-left: 123px;">
-
-                <p style="margin-bottom: 5px;font-size: 17px;color: rgb(53, 53, 53);">
-                    {{ faqDetails.ANSWER }}
-                </p>
-            </div>
-
-            <!-- <div nz-col nzSpan="24" style="margin-top: 10px;text-align: center;" *ngIf="!showSuggest">
-                <h3>Was this article helpful?</h3>
-
-                <button nz-button nzType="primary" nzShape="round" (click)="yes('Y')">
-                    Yes
-                </button>
-
-                <button style="margin-left: 20px;" nz-button nzType="default" nzShape="round" (click)="no()">
-                    No
-                </button>
-            </div> -->
-
-            <div *ngIf="!showSuggest">
-                <div nzGutter="4">
-                    <div nz-col nzSpan="24" style="text-align: center; ">
-                        <h3 style="font-weight: bold;">Was this article helpful? </h3>
-                    </div>
-                    <div nz-col nzSpan="10">
-                    </div>
-                    <div nz-col nzSpan="2" style="text-align: center; ">
-                        <i nz-icon nzType="like" style="padding-left: 5px;" (click)="yes('Y')" nzTheme="outline"></i>
-                        <h4>Yes</h4>
-                    </div>
-                    <div nz-col nzSpan="2" style="text-align: center; ">
-                        <i nz-icon nzType="dislike" (click)="no()" nzTheme="outline"></i>
-                        <h4>No</h4>
-                    </div>
-                    <div nz-col nzSpan="10">
-                    </div>
-                </div>
-            </div>
-
-            <div nz-col nzSpan="5" *ngIf="showSuggest">
-            </div>
-
-            <div nz-col nzSpan="14" *ngIf="showSuggest">
-                <h4>Any Suggestion :</h4>
-                <textarea rows="2" nz-input [(ngModel)]="inputValue"></textarea>
-                <div style="text-align: right; margin-top: 10px; max-width: 611px;">
-                    <button nz-button nzType="default" (click)="cancel()">
-                        Cancel
-                    </button>
-
-                    <button nz-button nzType="primary" style="margin-left: 20px; max-width: 611px; " (click)="yes('N')">
-                        Save
-                    </button>
-                </div>
-            </div>
-        </div>
+    <div *ngIf="issearched && dataList.length > 0" class="search-results">
+      <div nz-col nzSpan="24" class="search-breadcrumb">
+        <nz-breadcrumb>
+          <nz-breadcrumb-item>
+            <a> <i nz-icon nzType="left" (click)="back2()"></i></a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>
+            <span>{{ searchText1 }}</span>
+          </nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </div>
+      <div nz-col nzSpan="3" class="search-spacer"></div>
+      <div nz-col nzSpan="18" class="faq-collapse-container">
+        <nz-collapse
+          class="faq-collapse"
+          *ngFor="let panel of dataList"
+          nzAccordion
+        >
+          <nz-collapse-panel
+            [nzHeader]="panel.QUESTION"
+            [nzActive]="panel.active"
+          >
+            <p (click)="expandFAQ(panel)">{{ panel.ANSWER }}</p>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </div>
     </div>
+    <div *ngIf="issearched && dataList.length == 0" class="no-results">
+      <div nz-col nzSpan="24" class="no-results-content">
+        <nz-empty
+          [nzNotFoundImage]="
+            'https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original'
+          "
+          [nzNotFoundContent]="contentTpl"
+          [nzNotFoundFooter]="footerTpl"
+        >
+          <ng-template #contentTpl>
+            <span> No Data Available</span>
+          </ng-template>
+          <ng-template #footerTpl>
+            <button
+              nz-button
+              nzType="primary"
+              (click)="back2()"
+              class="back-button"
+            >
+              <i nz-icon nzType="arrow-left" nzTheme="outline"></i>
+              Back
+            </button>
+          </ng-template>
+        </nz-empty>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showFull" class="faq-details">
+    <div nz-row>
+      <div nz-col nzSpan="24" class="details-breadcrumb">
+        <nz-breadcrumb>
+          <nz-breadcrumb-item>
+            <a (click)="back()"
+              ><i nz-icon nzType="left" nzTheme="outline"></i
+            ></a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>
+            <a
+              ><span>
+                {{ faqDetails["FAQ_HEAD_NAME"] }}
+              </span></a
+            >
+          </nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </div>
+      <div nz-col nzSpan="3" class="details-spacer"></div>
+      <div nz-col nzSpan="18" class="faq-category-name">
+        <p class="category-text">
+          {{ faqDetails["FAQ_HEAD_NAME"] }}
+        </p>
+      </div>
+      <div nz-col nzSpan="18" class="faq-question-container">
+        <p class="question-text">
+          {{ faqDetails.QUESTION }}
+        </p>
+      </div>
+      <div *ngIf="faqDetails.URL != ''" class="faq-image-container">
+        <div nz-col nzSpan="24" class="faq-image-wrapper">
+          <img
+            class="faq-image"
+            src="{{ api.retriveimgUrl }}ticket/{{ faqDetails.URL }}"
+          />
+        </div>
+      </div>
+      <div *ngIf="faqDetails.URL == ''" class="empty-image-container">
+        <div nz-col nzSpan="24" class="empty-image-wrapper">
+          <div class="empty-image-spacer"></div>
+        </div>
+      </div>
+      <div nz-col nzSpan="18" class="faq-answer-container">
+        <p class="answer-text">
+          {{ faqDetails.ANSWER }}
+        </p>
+      </div>
+      <div *ngIf="!showSuggest" class="feedback-section">
+        <div nzGutter="4" class="feedback-grid">
+          <div nz-col nzSpan="24" class="feedback-title">
+            <h3 class="feedback-title-text">Was this article helpful?</h3>
+          </div>
+          <div nz-col nzSpan="10" class="feedback-spacer-left"></div>
+          <div nz-col nzSpan="2" class="feedback-option yes-option">
+            <i
+              nz-icon
+              nzType="like"
+              class="feedback-icon"
+              (click)="yes('Y')"
+              nzTheme="outline"
+            ></i>
+            <h4 class="option-label">Yes</h4>
+          </div>
+          <div nz-col nzSpan="2" class="feedback-option no-option">
+            <i
+              nz-icon
+              nzType="dislike"
+              class="feedback-icon"
+              (click)="no()"
+              nzTheme="outline"
+            ></i>
+            <h4 class="option-label">No</h4>
+          </div>
+          <div nz-col nzSpan="10" class="feedback-spacer-right"></div>
+        </div>
+      </div>
+      <div
+        nz-col
+        nzSpan="5"
+        *ngIf="showSuggest"
+        class="suggestion-spacer"
+      ></div>
+      <div nz-col nzSpan="14" *ngIf="showSuggest" class="suggestion-container">
+        <h4 class="suggestion-title">Any Suggestion :</h4>
+        <textarea
+          rows="2"
+          nz-input
+          [(ngModel)]="inputValue"
+          class="suggestion-textarea"
+        ></textarea>
+        <div class="suggestion-buttons">
+          <button
+            nz-button
+            nzType="default"
+            (click)="cancel()"
+            class="cancel-button"
+          >
+            Cancel
+          </button>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="yes('N')"
+            class="save-button"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,53 +1,167 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
+}
+.bo-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.bo-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.bo-radio-group {
+  margin-bottom: 8px;
+}
+.bo-radio-btn {
+  margin-top: 0px !important;
+}
+.bo-filter-btn-width {
+  width: 47px;
+}
+.bo-filter-row {
+  padding-top: 0px;
+}
+.bo-filter-loading {
+  text-align: center;
+}
+.bo-filter-card-col {
+  margin-bottom: 8px;
+}
+.bo-filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.bo-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.bo-filter-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.bo-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.bo-filter-actions-row {
+  margin-top: 7px;
+}
+.bo-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.bo-filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.bo-filter-tag-icon {
+  font-size: 10px !important;
+}
+.bo-filter-tag-last {
+  margin-right: 0px;
+}
+.bo-filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.bo-filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.bo-filter-footer-btn {
+  margin-right: 10px;
+}
+.bo-table-preline {
+  white-space: pre-line;
+}
+.bo-th-center {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.bo-th-center-bold {
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-weight: bold;
+}
+.bo-action-cell {
+  display: flex;
+  justify-content: center;
+}
+.bo-tag-clickable {
+  cursor: pointer;
+}
+.bo-icon-md {
+  font-size: 15px;
+}
+.bo-text-center {
+  text-align: center;
+}
+.bo-text-left {
+  text-align: left;
+}
+.bo-th-bold-center {
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+}
+.bo-image-preview-container {
+  height: 300px;
+  overflow: auto;
+}
+.bo-image-preview {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600px;
+  max-height: 400px;
+}
+.bo-query-title-center {
+  text-align: center;
 }

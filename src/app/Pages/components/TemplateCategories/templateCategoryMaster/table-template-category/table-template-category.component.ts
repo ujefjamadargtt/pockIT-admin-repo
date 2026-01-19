@@ -6,7 +6,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { TemplateCategoryMaster } from 'src/app/Pages/Models/templateCategory';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-table-template-category',
   templateUrl: './table-template-category.component.html',
@@ -31,7 +30,6 @@ export class TableTemplateCategoryComponent {
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
-
   namevisible = false;
   descriptionvisible = false;
   selectedBranches: number[] = [];
@@ -48,7 +46,6 @@ export class TableTemplateCategoryComponent {
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   filterQuery: string = '';
@@ -57,12 +54,8 @@ export class TableTemplateCategoryComponent {
     { label: 'Country Name', value: 'COUNTRY_ID' },
     { label: 'State Name', value: 'STATE_ID' },
     { label: 'Name', value: 'NAME' },
-    // { label: 'Sequence No.', value: 'SEQ_NO' },
-
     { label: 'Status', value: 'IS_ACTIVE' },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -79,7 +72,6 @@ export class TableTemplateCategoryComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -105,7 +97,6 @@ export class TableTemplateCategoryComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   isseqapply = false;
   isDistApplied = false;
@@ -118,7 +109,6 @@ export class TableTemplateCategoryComponent {
       this.search();
       this.isnameFilterApplied = false;
     }
-
     if (this.seqno.length > 0 && event.key === 'Enter') {
       this.search();
       this.isseqapply = true;
@@ -136,42 +126,35 @@ export class TableTemplateCategoryComponent {
   }
   public commonFunction = new CommonFunctionService();
   ngOnInit() {
-    // this.getCountyData();
-    // this.getStateData();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
-
   isStateFilterApplied = false;
   onBranchChange(): void {
-    //this.search();
     if (this.selectedBranches?.length) {
       this.search();
-      this.isStateFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isStateFilterApplied = true; 
     } else {
       this.search();
-      this.isStateFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isStateFilterApplied = false; 
     }
   }
   isnameFilterApplied = false;
   onCountryChange(): void {
-    //this.search();
     if (this.selectedCountries?.length) {
       this.search();
-      this.isnameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isnameFilterApplied = true; 
     } else {
       this.search();
-      this.isnameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isnameFilterApplied = false; 
     }
   }
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   reset(): void {
     this.searchText = '';
     this.Name = '';
@@ -188,17 +171,14 @@ export class TableTemplateCategoryComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -210,8 +190,6 @@ export class TableTemplateCategoryComponent {
         ')';
     }
     this.loadingRecords = true;
-
-    // name Filter
     if (this.Name !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.Name.trim()}%'`;
@@ -219,7 +197,6 @@ export class TableTemplateCategoryComponent {
     } else {
       this.isnameFilterApplied = false;
     }
-
     if (this.Description !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -228,8 +205,6 @@ export class TableTemplateCategoryComponent {
     } else {
       this.isDistapply = false;
     }
-
-    // SEQ_NO Filter
     if (this.seqno !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `SEQ_NO LIKE '%${this.seqno.trim()}%'`;
@@ -237,8 +212,6 @@ export class TableTemplateCategoryComponent {
     } else {
       this.isseqapply = false;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -261,8 +234,6 @@ export class TableTemplateCategoryComponent {
             this.totalRecords = data['count'];
             this.dataList = data['data'];
             this.TabId = data['TAB_ID'];
-
-            //this.loadFilters();
           } else if (data['code'] == 400) {
             this.loadingRecords = false;
             this.dataList = [];
@@ -289,7 +260,6 @@ export class TableTemplateCategoryComponent {
         }
       );
   }
-
   add(): void {
     this.drawerTitle = 'Add  Template Category';
     this.drawerData = new TemplateCategoryMaster();
@@ -319,7 +289,6 @@ export class TableTemplateCategoryComponent {
     );
     this.drawerVisible = true;
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -328,43 +297,34 @@ export class TableTemplateCategoryComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   edit(data: TemplateCategoryMaster): void {
     this.drawerTitle = 'Template Category';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -381,8 +341,6 @@ export class TableTemplateCategoryComponent {
       groups: [],
     },
   ];
-
-  // new filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -394,19 +352,10 @@ export class TableTemplateCategoryComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   openfilter() {
     this.drawerTitle = 'Template Category Filter';
-    // this.applyCondition = "";
-    // this.filterFields[0]["options"] = this.countryData;
-    // this.filterFields[1]["options"] = this.stateData;
-
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -415,13 +364,9 @@ export class TableTemplateCategoryComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -438,7 +383,6 @@ export class TableTemplateCategoryComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -456,11 +400,9 @@ export class TableTemplateCategoryComponent {
       },
     ];
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'NAME',
@@ -476,7 +418,6 @@ export class TableTemplateCategoryComponent {
       ],
       placeholder: 'Enter Template Category',
     },
-
     {
       key: 'DESCRIPTION',
       label: 'Enter Description',
@@ -491,7 +432,6 @@ export class TableTemplateCategoryComponent {
       ],
       placeholder: 'Enter Description',
     },
-
     {
       key: 'SEQ_NO',
       label: 'Sequence Number',
@@ -506,7 +446,6 @@ export class TableTemplateCategoryComponent {
       ],
       placeholder: 'Enter Sequence Number',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -531,8 +470,7 @@ export class TableTemplateCategoryComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -546,46 +484,33 @@ export class TableTemplateCategoryComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with ' AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
-  // filterQuery = '';
-
   selectedFilter: string | null = null;
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  //TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
   TabId: number;
-
   drawerfilterClose() {
     this.drawerFilterVisible = false;
     this.loadFilters();
@@ -593,16 +518,12 @@ export class TableTemplateCategoryComponent {
   get filtercloseCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterloading: boolean = false;
-
   whichbutton: any;
-
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -610,16 +531,12 @@ export class TableTemplateCategoryComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -634,22 +551,15 @@ export class TableTemplateCategoryComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -663,7 +573,6 @@ export class TableTemplateCategoryComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -672,12 +581,8 @@ export class TableTemplateCategoryComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
-    //  
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -693,14 +598,10 @@ export class TableTemplateCategoryComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //  
           } else {
             this.isfilterapply = true;
           }
@@ -723,9 +624,7 @@ export class TableTemplateCategoryComponent {
       }
     );
   }
-
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -733,37 +632,23 @@ export class TableTemplateCategoryComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
-    //  
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-      //  
-      //  
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-      //  
       this.loadFilters();
     }
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
-    // this.filterFields[0]["options"] = this.countryData;
-    // this.filterFields[1]["options"] = this.stateData;
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -771,9 +656,7 @@ export class TableTemplateCategoryComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

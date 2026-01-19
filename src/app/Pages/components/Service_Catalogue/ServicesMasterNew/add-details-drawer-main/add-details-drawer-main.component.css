@@ -1,0 +1,23 @@
+.editor-container {
+  margin-top: 10px;
+}
+.custom-editor {
+  resize: none;
+  color: black;
+}
+.editor-footer {
+  display: flex;
+  margin-top: 20px;
+}
+.cancel-button {
+  margin-right: 12px;
+}
+.save-button {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: white;
+}
+.save-button:hover {
+  background-color: #40a9ff;
+  border-color: #40a9ff;
+}

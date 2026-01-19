@@ -8,7 +8,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
 import { customer } from '../../Models/customer';
-
 @Component({
   selector: 'app-customer-address-logs-report',
   templateUrl: './customer-address-logs-report.component.html',
@@ -19,7 +18,6 @@ export class CustomerAddressLogsReportComponent {
   @Input() data: customer = new customer();
   @Input() drawerVisible: boolean;
   @Input() custmoerid: any;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -27,7 +25,6 @@ export class CustomerAddressLogsReportComponent {
     private datepipe: DatePipe,
     private _exportService: ExportService
   ) { }
-
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -73,9 +70,7 @@ export class CustomerAddressLogsReportComponent {
       this.search(true);
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -87,15 +82,11 @@ export class CustomerAddressLogsReportComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   distinctData: any = [];
-
   onFilterClick(columnKey: string): void {
     this.api.getDistinctData(204, columnKey).subscribe(
       (data) => {
@@ -111,7 +102,6 @@ export class CustomerAddressLogsReportComponent {
       }
     );
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.addressline1Text.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -120,7 +110,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.addressline1Applied = false;
     }
-
     if (this.addressline2Text.length >= 3 && event.key === 'Enter') {
       this.search();
       this.addressline2Applied = true;
@@ -128,7 +117,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.addressline2Applied = false;
     }
-
     if (this.contactPersonNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.iscontactpersonNameApplied = true;
@@ -139,7 +127,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.iscontactpersonNameApplied = false;
     }
-
     if (this.countryNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isCountryFilterApplied = true;
@@ -147,7 +134,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.isCountryFilterApplied = false;
     }
-
     if (this.customerNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isCustomerNameApplied = true;
@@ -155,7 +141,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.isCustomerNameApplied = false;
     }
-
     if (this.districtNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isDistFilterApplied = true;
@@ -163,7 +148,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.isDistFilterApplied = false;
     }
-
     if (this.GeoLocationText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isGeoLocationFilterApplied = true;
@@ -171,7 +155,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.isGeoLocationFilterApplied = false;
     }
-
     if (this.landmarkText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.islandmarkFilterApplied = true;
@@ -179,7 +162,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.islandmarkFilterApplied = false;
     }
-
     if (this.mobileText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.ismobileFilterApplied = true;
@@ -187,7 +169,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.ismobileFilterApplied = false;
     }
-
     if (this.pincodeText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isPincodeFilterApplied = true;
@@ -195,7 +176,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.isPincodeFilterApplied = false;
     }
-
     if (this.stateNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isStateFilterApplied = true;
@@ -203,7 +183,6 @@ export class CustomerAddressLogsReportComponent {
       this.search();
       this.isStateFilterApplied = false;
     }
-
     if (this.territoryNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isterritoryNameApplied = true;
@@ -216,7 +195,6 @@ export class CustomerAddressLogsReportComponent {
     }
   }
   filterQuery: string = '';
-
   nameFilter() {
     if (this.customerNameText.trim() === '') {
       this.searchText = '';
@@ -225,7 +203,6 @@ export class CustomerAddressLogsReportComponent {
     } else {
     }
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -235,18 +212,14 @@ export class CustomerAddressLogsReportComponent {
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -257,15 +230,12 @@ export class CustomerAddressLogsReportComponent {
           .join(' OR ') +
         ')';
     }
-
     var filterQuery = '';
-
     if (this?.addressline1Text !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `ADDRESS_LINE_1 LIKE '%${this.addressline1Text?.trim()}%'`;
     }
-
     if (this?.addressline2Text !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -276,105 +246,84 @@ export class CustomerAddressLogsReportComponent {
         (likeQuery ? ' AND ' : '') +
         `CONTACT_PERSON_NAME LIKE '%${this.contactPersonNameText?.trim()}%'`;
     }
-
     if (this.countryNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `COUNTRY_NAME LIKE '%${this.countryNameText?.trim()}%'`;
     }
-
     if (this.customerNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `CUSTOMER_NAME LIKE '%${this.customerNameText?.trim()}%'`;
     }
-
     if (this.districtNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DISTRICT_NAME LIKE '%${this.districtNameText?.trim()}%'`;
     }
-
     if (this.GeoLocationText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `GEO_LOCATION LIKE '%${this.GeoLocationText?.trim()}%'`;
     }
-
     if (this.landmarkText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `LANDMARK LIKE '%${this.landmarkText?.trim()}%'`;
     }
-
     if (this.mobileText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `MOBILE_NO LIKE '%${this.mobileText?.trim()}%'`;
     }
-
     if (this.pincodeText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `PINCODE LIKE '%${this.pincodeText?.trim()}%'`;
     }
-
     if (this.stateNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `STATE_NAME LIKE '%${this.stateNameText?.trim()}%'`;
     }
-
-    // Status Filter
     if (this.defaultFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_DEFAULT = '${this.defaultFilter}'`;
     }
-
     if (this.territoryNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TERRITORY_NAME LIKE '%${this.territoryNameText?.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS = ${this.statusFilter}`;
     }
-
-    // Type Filter
     if (this.typeFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `TYPE = '${this.typeFilter}'`;
     }
-
     if (this.cancelDateText?.length === 2) {
       const [start, end] = this.cancelDateText;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `CREATED_MODIFIED_DATE BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00'`;
       }
     }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.api
         .getCustomerAddressLogs(
@@ -451,7 +400,6 @@ export class CustomerAddressLogsReportComponent {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -460,97 +408,74 @@ export class CustomerAddressLogsReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   close() {
     this.drawervisible = false;
   }
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
   orderDateText: any;
   cancelDateVisible: boolean = false;
   cancelDateText: any;
   iscancelDateApplied: boolean = false;
-
-  ////
+  //
   addressLine1Visible: boolean = false;
   addressline1Text: string = '';
-
   addressline1Applied: boolean = false;
-
   addressLine2Visible: boolean = false;
   addressline2Text: string = '';
   addressline2Applied: boolean = false;
-
   contactpersonNameVisible: boolean = false;
   contactPersonNameText: string = '';
   iscontactpersonNameApplied: boolean = false;
-
   countryVisible: boolean = false;
   countryNameText: string = '';
   isCountryFilterApplied: boolean = false;
-
   customerNameVisible: boolean = false;
   customerNameText: string = '';
   isCustomerNameApplied: boolean = false;
-
   distVisible: boolean = false;
   districtNameText: string = '';
   isDistFilterApplied: boolean = false;
-
   geoLocationtVisible: boolean = false;
   GeoLocationText: string = '';
   isGeoLocationFilterApplied: boolean = false;
-
   landmarkVisible: boolean = false;
   landmarkText: string = '';
   islandmarkFilterApplied: boolean = false;
-
   mobileVisible: boolean = false;
   mobileText: string = '';
   ismobileFilterApplied: boolean = false;
-
   pincodeVisible: boolean = false;
   pincodeText: string = '';
   isPincodeFilterApplied: boolean = false;
-
   stateVisible: boolean = false;
   stateNameText: string = '';
   isStateFilterApplied: boolean = false;
-
   StatusVisible: boolean = false;
   isStatusApplied: boolean = false;
-
   territoryNameVisible: boolean = false;
   territoryNameText: string = '';
   isterritoryNameApplied: boolean = false;
-
   typeVisible: boolean = false;
   istypeApplied: boolean = false;
-
   defaultVisible: boolean = false;
   isdefaultApplied: boolean = false;
-
   reset(): void {
     this.addressline1Text = '';
     this.addressline2Text = '';
@@ -565,48 +490,36 @@ export class CustomerAddressLogsReportComponent {
     this.stateNameText = '';
     this.territoryNameText = '';
     this.cancelDateText = null;
-
     this.search();
   }
-
-  //status Filter
   statusFilter: string | undefined = undefined;
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   typeFilter: string | undefined = undefined;
-
   onTypeFilterChange(selectedStatus: string) {
     this.typeFilter = selectedStatus;
     this.search(true);
   }
-
   listOtypeFilter: any[] = [
     { text: 'House', value: 'H' },
     { text: 'Work', value: 'W' },
     { text: 'Office', value: 'F' },
   ];
-
   defaultFilter: string | undefined = undefined;
-
   ondefaultFilterChange(selectedStatus: string) {
     this.defaultFilter = selectedStatus;
     this.search(true);
   }
-
   listOfdefaultFilter: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   onDateChange(selectedDate: any): void {
     if (this.orderDateText && this.orderDateText.length === 2) {
       this.search();
@@ -615,12 +528,10 @@ export class CustomerAddressLogsReportComponent {
       this.search();
     }
   }
-
   resetDateFilter(): void {
     this.orderDateText = null;
     this.search();
   }
-
   onCancelDateChange(selectedDate: any): void {
     if (this.cancelDateText && this.cancelDateText.length === 2) {
       this.search();
@@ -629,34 +540,22 @@ export class CustomerAddressLogsReportComponent {
       this.search();
     }
   }
-
   resetCancelDateFilter(): void {
     this.cancelDateText = null;
     this.search();
   }
-
   dataList: any = [];
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Customer Name', value: 'CUSTOMER_NAME' },
-    // { label: 'Short Code', value: 'SHORT_CODE' },
   ];
-
-  // new filter
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   isLoading = false;
-
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  //TabId: number; // Ensure TabId is defined and initialized
-
+  savedFilters: any; 
+  currentClientId = 1; 
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
@@ -664,7 +563,6 @@ export class CustomerAddressLogsReportComponent {
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -679,7 +577,6 @@ export class CustomerAddressLogsReportComponent {
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -687,13 +584,12 @@ export class CustomerAddressLogsReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -708,21 +604,15 @@ export class CustomerAddressLogsReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -736,7 +626,6 @@ export class CustomerAddressLogsReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -745,8 +634,6 @@ export class CustomerAddressLogsReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-  //Edit Code 3
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -763,7 +650,6 @@ export class CustomerAddressLogsReportComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -780,18 +666,13 @@ export class CustomerAddressLogsReportComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   openfilter() {
     this.drawerTitle = 'Customer Service Logs Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -808,7 +689,6 @@ export class CustomerAddressLogsReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -825,7 +705,6 @@ export class CustomerAddressLogsReportComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -835,21 +714,17 @@ export class CustomerAddressLogsReportComponent {
       FILTER_JSON: {},
     };
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -910,7 +785,6 @@ export class CustomerAddressLogsReportComponent {
       ],
       placeholder: 'Enter Contact Person Name',
     },
-
     {
       key: 'ADDRESS_LINE_1',
       label: 'House No./Flat No./Floor No',
@@ -953,7 +827,6 @@ export class CustomerAddressLogsReportComponent {
       ],
       placeholder: 'Enter Landmark',
     },
-
     {
       key: 'COUNTRY_NAME',
       label: 'Country',
@@ -982,7 +855,6 @@ export class CustomerAddressLogsReportComponent {
       ],
       placeholder: 'Enter State Name',
     },
-
     {
       key: 'DISTRICT_NAME',
       label: 'District',
@@ -997,7 +869,6 @@ export class CustomerAddressLogsReportComponent {
       ],
       placeholder: 'Enter District',
     },
-
     {
       key: 'PINCODE',
       label: 'Pincode',
@@ -1026,7 +897,6 @@ export class CustomerAddressLogsReportComponent {
       ],
       placeholder: 'Select Default Address',
     },
-
     {
       key: 'TERRITORY_NAME',
       label: 'Territory Name',
@@ -1085,16 +955,12 @@ export class CustomerAddressLogsReportComponent {
       placeholder: 'Enter Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -1111,9 +977,7 @@ export class CustomerAddressLogsReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -1139,11 +1003,8 @@ export class CustomerAddressLogsReportComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1151,29 +1012,23 @@ export class CustomerAddressLogsReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
   drawerTitle;
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1181,14 +1036,11 @@ export class CustomerAddressLogsReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   excelData: any = [];
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -1203,14 +1055,12 @@ export class CustomerAddressLogsReportComponent {
         obj1['Customer Name'] = this.excelData[i]['CUSTOMER_NAME']
           ? this.excelData[i]['CUSTOMER_NAME']
           : '-';
-
         obj1['Mobile No'] = this.excelData[i]['MOBILE_NO']
           ? this.excelData[i]['MOBILE_NO']
           : '-';
         obj1['Contact Person Name'] = this.excelData[i]['CONTACT_PERSON_NAME']
           ? this.excelData[i]['CONTACT_PERSON_NAME']
           : '-';
-
         obj1['House No./Flat No./Floor No'] = this.excelData[i][
           'ADDRESS_LINE_1'
         ]
@@ -1222,37 +1072,29 @@ export class CustomerAddressLogsReportComponent {
         obj1['Landmark'] = this.excelData[i]['LANDMARK']
           ? this.excelData[i]['LANDMARK']
           : '-';
-
         obj1['Country'] = this.excelData[i]['COUNTRY_NAME']
           ? this.excelData[i]['COUNTRY_NAME']
           : '-';
-
         obj1['State'] = this.excelData[i]['STATE_NAME']
           ? this.excelData[i]['STATE_NAME']
           : '-';
-
         obj1['District'] = this.excelData[i]['DISTRICT_NAME']
           ? this.excelData[i]['DISTRICT_NAME']
           : '-';
-
         obj1['Pincode'] = this.excelData[i]['PINCODE']
           ? this.excelData[i]['PINCODE']
           : '-';
-
         if (this.excelData[i]['IS_DEFAULT'] == '1') {
           obj1['Default Address ?'] = 'Yes';
         } else if (this.excelData[i]['IS_DEFAULT'] == '0') {
           obj1['Default Address ?'] = 'No';
         }
-
         obj1['Territory'] = this.excelData[i]['TERRITORY_NAME']
           ? this.excelData[i]['TERRITORY_NAME']
           : '-';
-
         obj1['Geo Location'] = this.excelData[i]['GEO_LOCATION']
           ? this.excelData[i]['GEO_LOCATION']
           : '-';
-
         if (this.excelData[i]['TYPE'] == 'H') {
           obj1['Type'] = 'House';
         } else if (this.excelData[i]['TYPE'] == 'W') {
@@ -1260,13 +1102,11 @@ export class CustomerAddressLogsReportComponent {
         } else if (this.excelData[i]['TYPE'] == 'F') {
           obj1['Type'] = 'Office';
         }
-
         if (this.excelData[i]['STATUS'] == '1') {
           obj1['Status'] = 'Active';
         } else if (this.excelData[i]['STATUS'] == '0') {
           obj1['Status'] = 'Inctive';
         }
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -1280,12 +1120,10 @@ export class CustomerAddressLogsReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
   showcolumn = [
     { label: 'Address Line 1', key: 'ADDRESS_LINE_1', visible: true },
     { label: 'Addres Line 2', key: 'ADDRESS_LINE_2', visible: true },

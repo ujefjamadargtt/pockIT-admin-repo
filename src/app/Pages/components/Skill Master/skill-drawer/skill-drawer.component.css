@@ -1,6 +1,27 @@
-nz-form-item ,textarea {
+nz-form-item,
+textarea {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 5px;
+}
+.skill-form-margin {
+  margin-top: 10px;
+}
+.character-count {
+  color: red;
+  font-size: 10px;
+}
+.description-textarea {
+  width: 100%;
+}
+.footer-cancel-button {
+  margin-right: 12px;
+}
+.menu-item-dropdown {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-link-white {
+  color: white !important;
 }

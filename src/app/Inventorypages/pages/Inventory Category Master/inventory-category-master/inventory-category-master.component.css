@@ -1,36 +1,142 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.inv-back-icon-uid {
+  font-weight: bold;
+  cursor: pointer;
+}
+.inv-header-right-uid {
+  display: flex;
+  justify-content: flex-end;
+}
+.inv-filter-btn-wrap-uid {
+  width: 47px;
+}
+.flt-row-top-uid {
+  padding-top: 0px;
+}
+.flt-center-uid {
+  text-align: center;
+}
+.flt-card-wrapper-uid {
+  margin-bottom: 8px;
+}
+.flt-card-uid {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.flt-card-header-uid {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.flt-card-title-uid {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.flt-check-icon-uid {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.flt-card-actions-row-uid {
+  margin-top: 7px;
+}
+.flt-card-actions-uid {
+  display: flex;
+  justify-content: space-between;
+}
+.flt-action-tag-uid {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.flt-action-tag-view-uid {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.flt-action-icon-uid {
+  font-size: 10px !important;
+}
+.flt-nodata-uid {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.flt-footer-uid {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.flt-footer-btn-uid {
+  margin-right: 10px;
+}
+.tbl-preline-uid {
+  white-space: pre-line;
+}
+.cat-th-center-bold-uid {
+  font-weight: bold;
+  text-align: center;
+}
+.cat-edit-tag-uid {
+  cursor: pointer;
+}
+.cat-edit-icon-uid {
+  font-size: 15px;
+}
+.cat-view-tag-uid {
+  cursor: pointer;
+}
+.cat-view-icon-uid {
+  font-size: 15px;
+}
+.cat-filter-input-uid {
+  margin-top: 5px;
+  width: 100%;
+}
+.img-preview-container-uid {
+  height: 300px;
+  overflow: auto;
+}
+.img-preview-uid {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600px;
+  max-height: 400px;
+}
+.selected-query-text {
+  text-align: center;
 }

@@ -1,4 +1,4 @@
-nz-form-item  {
+nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
@@ -11,13 +11,105 @@ nz-form-item  {
   transform: translate(-50%, -50%);
   z-index: 10;
   display: flex;
-  flex-direction: column; /* Vertical alignment */
+  flex-direction: column;
   align-items: center;
-  gap: 10px; /* Adds space between spinner and text */
+  gap: 10px;
 }
-
 .custom-spin-text {
   font-size: 16px;
   font-weight: 500;
-  color: #092B9C; /* Optional: Matches Ant Design's theme */
+  color: #092B9C;
+}
+.select-full-width {
+  width: 100%;
+}
+.button-column-padding {
+  padding-right: 4px;
+}
+.apply-button-spacing {
+  margin-top: 26px;
+}
+.table-container-wrapper {
+  position: relative;
+}
+.table-header-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.record-counter-padding {
+  padding: 0px 10px;
+}
+.search-form-item {
+  padding: 0px;
+  margin-bottom: 0px !important;
+}
+.search-input-width {
+  width: 200px;
+}
+.table-preline-spacing {
+  white-space: pre-line;
+  padding-top: 10px;
+}
+.cell-center-align {
+  text-align: center;
+}
+.tag-pointer {
+  cursor: pointer;
+}
+.icon-size-medium {
+  font-size: 15px;
+}
+.center-icon-column {
+  align-self: center;
+  text-align: center;
+  align-items: center;
+}
+.arrow-icon-large {
+  font-size: 26px !important;
+}
+.arrow-icon-clickable {
+  cursor: pointer;
+  font-size: 26px !important;
+}
+.mapping-header-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.mapping-info-flex {
+  display: flex;
+}
+.total-records-padding {
+  text-align: left;
+  padding-left: 10px;
+}
+.switch-padding {
+  text-align: left;
+  padding-left: 10px;
+}
+.cell-preline {
+  white-space: pre-line;
+}
+.search-panel-right {
+  text-align: right;
+  padding-right: 5px;
+}
+.inline-search-form {
+  display: inline-flex;
+}
+.pincode-search-margin {
+  margin-left: 26px !important;
+}
+.search-input-height {
+  height: 32px;
+}
+.cancel-button-margin {
+  margin-right: 8px;
+}
+.modal-iframe-container {
+  height: 400px;
+  overflow: auto;
+}
+.modal-iframe-dimensions {
+  width: 832px;
+  height: 396px;
 }

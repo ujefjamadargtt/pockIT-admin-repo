@@ -6,12 +6,10 @@
   border: 1px solid #efefef;
   border-radius: 10px;
 }
-
 .mainnam {
   color: #000;
   font-size: 13px !important;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -21,31 +19,222 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
 .subnamm {
   color: #6A6A6A;
   font-size: 12px !important;
   font-weight: 500;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .ant-drawer-body {
   padding: 8px 20px !important;
 }
-
 .emptyDataTex {
   color: grey;
   font-weight: 500;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
-
- 
+.orders-header-row {
+  margin-bottom: 10px;
+}
+.orders-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.orders-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.orders-territory-item {
+  width: 250px;
+}
+.orders-territory-select {
+  width: 100%;
+}
+.orders-filter-btn-item {
+  width: 47px;
+}
+.orders-new-btn-item {
+  margin-right: 0px;
+}
+.filter-row-no-padding {
+  padding-top: 0px;
+}
+.filter-loading-center {
+  text-align: center;
+}
+.filter-card-column {
+  margin-bottom: 8px;
+}
+.filter-card-box {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-card-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-selected-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-card-actions-row {
+  margin-top: 7px;
+}
+.filter-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-icon {
+  font-size: 10px !important;
+}
+.filter-action-view {
+  margin-right: 0px;
+}
+.filter-no-data-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.filter-footer-button {
+  margin-right: 10px;
+}
+.order-name-left {
+  text-align: start;
+}
+.order-name-right {
+  text-align: end;
+  font-size: 12px !important;
+}
+.order-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+  font-size: 12px !important;
+}
+.order-edit-icon {
+  margin-left: 5px;
+  font-size: 12px !important;
+}
+.order-edit-text {
+  margin-left: 2px;
+  font-size: 12px !important;
+  font-weight: 500;
+}
+.customer-info-left {
+  font-size: 12px !important;
+  margin-top: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-start;
+}
+.customer-info-right {
+  font-size: 12px !important;
+  margin-top: 4px;
+  text-align: end;
+}
+.customer-phone-link {
+  font-size: 12px !important;
+  color: black !important;
+}
+.customer-phone-icon {
+  color: black !important;
+}
+.customer-block-info {
+  font-size: 12px !important;
+  margin-top: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-start;
+}
+.order-address-container {
+  border-color: black;
+}
+.order-address-text {
+  font-size: 12px !important;
+}
+.order-address-span {
+  font-size: 12px !important;
+}
+.order-territory-text {
+  font-size: 12px !important;
+}
+.order-services-count {
+  font-size: 12px !important;
+}
+.order-service-date {
+  font-size: 12px !important;
+  text-align: end;
+}
+.order-amount-container {
+  font-size: 12px !important;
+  text-align: start;
+  margin-top: 5px;
+}
+.order-amount-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 1px;
+}
+.order-status-container {
+  font-size: 12px !important;
+  text-align: end;
+  margin-top: 5px;
+}
+.order-express-container {
+  font-size: 10px !important;
+  text-align: center;
+  margin-top: 5px;
+}
+.order-express-tag {
+  border-top-left-radius: 40%;
+  border-top-right-radius: 40%;
+  font-size: 10px !important;
+}
+.load-more-container {
+  text-align: center;
+  padding-top: 10px;
+}
+.empty-state-container {
+  padding-top: 20vh;
+}
+.filter-query-text {
+  text-align: center;
+  font-family: monospace !important;
+  font-size: 13px;
+}
+.paddingg{
+  padding: 10px;
+}

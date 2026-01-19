@@ -1,0 +1,30 @@
+.inv-flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+.inv-table-top-space {
+    margin-top: 10px;
+}
+.inv-table-preline {
+    white-space: pre-line;
+}
+.inv-td-center {
+    text-align: center;
+}
+.inv-td-right {
+    text-align: right;
+}
+.inv-td-blue {
+    color: blue;
+}
+.inv-remark-ellipsis {
+    white-space: nowrap;
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.inv-remark-popover {
+    width: 50vw;
+    white-space: pre-line;
+    text-align: left;
+}

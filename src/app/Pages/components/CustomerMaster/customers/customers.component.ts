@@ -11,7 +11,6 @@ import { customerAddLogin } from 'src/app/Pages/Models/customerAddLogin';
 import { ServiceCatMasterDataNewB2b } from 'src/app/Pages/Models/ServiceCatMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
@@ -22,7 +21,6 @@ export class CustomersComponent {
   pageIndex = 1;
   pageSize = 10;
   totalRecords = 1;
-  // dataList = [];
   loadingRecords = true;
   sortValue: string = 'desc';
   sortKey: string = 'id';
@@ -41,8 +39,6 @@ export class CustomersComponent {
     ['ACCOUNT_STATUS', 'Status'],
     ['SHORT_CODE', 'SHORT_CODE'],
   ];
-
-  // columns1: string[][] = [["NAME", "Branch Name"], ["COUNTRY_NAME", "Country"], ["STATE_NAME", "State"], ["CITY_NAME", "City"]];
   drawerTitleMap: string;
   drawerDataMap: customer = new customer();
   drawerDataSer: customer = new customer();
@@ -70,7 +66,6 @@ export class CustomersComponent {
   accountstatus: any = 'Active';
   accountstatusFilter: any = '';
   customertext: string = '';
-
   shorttext: string = '';
   shortcodeVisible: boolean = false;
   isShortCodeFilterApplied: boolean = false;
@@ -85,15 +80,12 @@ export class CustomersComponent {
   companyNameText: string = '';
   mobiletext: string = '';
   companyName: string;
-
   isB2CcmpnyAddressFilterApplied: boolean = false;
   B2CcmpnyAddressvisible: boolean = false;
   B2CcmpnyAddressText: string = '';
-
   isB2CcmpnyNameFilterApplied: boolean = false;
   B2CcmpnyNamevisible: boolean = false;
   B2CcmpnyNameText: string = '';
-
   columns1: { label: string; value: string }[] = [
     { label: 'Customer Name ', value: 'NAME' },
     { label: 'E-mail ID', value: 'EMAIL' },
@@ -107,8 +99,6 @@ export class CustomersComponent {
     { label: 'Customer Type', key: 'CUSTOMER_TYPE', visible: true },
     { label: 'Status', key: 'ACCOUNT_STATUS', visible: true },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -125,7 +115,6 @@ export class CustomersComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -142,9 +131,9 @@ export class CustomersComponent {
       groups: [],
     },
   ];
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
   public commonFunction = new CommonFunctionService();
   TabId: number;
   constructor(
@@ -153,7 +142,6 @@ export class CustomersComponent {
     public router: Router,
     private sanitizer: DomSanitizer
   ) { }
-
   ngOnInit() {
     if (this.accountstatus === 'Active') {
       this.search();
@@ -162,14 +150,13 @@ export class CustomersComponent {
     }
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
   }
   back() {
     this.router.navigate(['/masters/menu']);
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -178,7 +165,6 @@ export class CustomersComponent {
       tooltip.hide();
     }
   }
-
   nameFilter() {
     if (this.customertext.trim() === '') {
       this.searchText = '';
@@ -189,10 +175,8 @@ export class CustomersComponent {
         this.search1();
       }
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   managerFilter() {
     if (this.manNameText.trim() === '') {
       this.searchText = '';
@@ -203,10 +187,8 @@ export class CustomersComponent {
         this.search1();
       }
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   companyFilter() {
     if (this.companyNameText.trim() === '') {
       this.searchText = '';
@@ -217,7 +199,6 @@ export class CustomersComponent {
         this.search1();
       }
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   emailFilter() {
@@ -230,10 +211,8 @@ export class CustomersComponent {
         this.search1();
       }
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   companyNameFilter() {
     if (this.B2CcmpnyNameText.trim() === '') {
       this.searchText = '';
@@ -244,10 +223,8 @@ export class CustomersComponent {
         this.search1();
       }
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   companyAddressFilter() {
     if (this.B2CcmpnyAddressText.trim() === '') {
       this.searchText = '';
@@ -258,10 +235,8 @@ export class CustomersComponent {
         this.search1();
       }
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   mobileFilter() {
     if (this.mobiletext.trim() === '') {
       this.searchText = '';
@@ -272,7 +247,6 @@ export class CustomersComponent {
         this.search1();
       }
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   sort(params: NzTableQueryParams): void {
@@ -280,20 +254,16 @@ export class CustomersComponent {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     if (this.accountstatus === 'Active') {
@@ -302,7 +272,6 @@ export class CustomersComponent {
       this.search1();
     }
   }
-
   activestateget(event: any) {
     this.accountstatus = event;
     if (this.accountstatus === 'Active') {
@@ -311,7 +280,6 @@ export class CustomersComponent {
       this.search1(true);
     }
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -321,17 +289,14 @@ export class CustomersComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -348,25 +313,21 @@ export class CustomersComponent {
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.customertext.trim()}%'`;
     }
-
     if (this.B2CcmpnyNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `INDIVIDUAL_COMPANY_NAME LIKE '%${this.B2CcmpnyNameText.trim()}%'`;
     }
-
     if (this.B2CcmpnyAddressText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `COMPANY_ADDRESS LIKE '%${this.B2CcmpnyAddressText.trim()}%'`;
     }
-
     if (this.shorttext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SHORT_CODE LIKE '%${this.shorttext.trim()}%'`;
     }
-
     if (this.manNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -386,30 +347,25 @@ export class CustomersComponent {
         (likeQuery ? ' AND ' : '') +
         `MOBILE_NO LIKE '%${this.mobiletext.trim()}%'`;
     }
-
     if (this.customertypeFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `CUSTOMER_TYPE = '${this.customertypeFilter}'`;
     }
-
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `ACCOUNT_STATUS = ${this.statusFilter}`;
     }
-
     if (this.GSTFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_HAVE_GST = ${this.GSTFilter}`;
     }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (this.accountstatus === 'Active') {
       this.accountstatusFilter = ' AND IS_DELETED_BY_CUSTOMER=0';
     } else {
@@ -456,7 +412,6 @@ export class CustomersComponent {
         }
       );
   }
-
   search1(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -466,17 +421,14 @@ export class CustomersComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -493,7 +445,6 @@ export class CustomersComponent {
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.customertext.trim()}%'`;
     }
-
     if (this.manNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -513,14 +464,12 @@ export class CustomersComponent {
         (likeQuery ? ' AND ' : '') +
         `MOBILE_NO LIKE '%${this.mobiletext.trim()}%'`;
     }
-
     if (this.customertypeFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `CUSTOMER_TYPE = '${this.customertypeFilter}'`;
     }
-
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -528,7 +477,6 @@ export class CustomersComponent {
       likeQuery += `ACCOUNT_STATUS = ${this.statusFilter}`;
     }
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (this.accountstatus === 'Active') {
       this.accountstatusFilter = ' AND IS_DELETED_BY_CUSTOMER=0';
     } else {
@@ -575,63 +523,49 @@ export class CustomersComponent {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   add(): void {
     this.drawerTitle = 'Create New Customer';
     this.drawerData = new customer();
     this.drawerVisible = true;
   }
-
   custid: any;
   CUSTOMER_MASTER_ID: any;
   edit(data: customer): void {
     this.custid = data.CUSTOMER_MASTER_ID;
     this.CUSTOMER_MASTER_ID = data.ID;
-
     this.drawerTitle = 'Update Customer';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   close(): void {
     this.visible = false;
   }
-
   close1(accountMasterPage: NgForm) {
     this.drawerVisible1 = false;
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
-
   drawerClose(): void {
     if (this.accountstatus === 'Active') {
       this.search();
     } else {
       this.search1();
     }
-
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
-
   allChecked;
-
   selectedOptions: any[] = [];
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
-
-  // Update column visibility on checkbox change
   onCheckboxChange(column: any) {
     column.visible = !column.visible;
   }
@@ -653,7 +587,6 @@ export class CustomersComponent {
       }
     }
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.customertext.length >= 3 && event.key === 'Enter') {
       if (this.accountstatus === 'Active') {
@@ -670,7 +603,6 @@ export class CustomersComponent {
       }
       this.isnameFilterApplied = false;
     }
-
     if (this.manNameText.length >= 3 && event.key === 'Enter') {
       if (this.accountstatus === 'Active') {
         this.search();
@@ -686,7 +618,6 @@ export class CustomersComponent {
       }
       this.ismanNameFilterApplied = false;
     }
-
     if (this.emailtext.length >= 3 && event.key === 'Enter') {
       if (this.accountstatus === 'Active') {
         this.search();
@@ -702,7 +633,6 @@ export class CustomersComponent {
       }
       this.isemailFilterApplied = false;
     }
-
     if (this.mobiletext.length > 0 && event.key === 'Enter') {
       if (this.accountstatus === 'Active') {
         this.search();
@@ -718,7 +648,6 @@ export class CustomersComponent {
       }
       this.ismobileFilterApplied = false;
     }
-
     if (this.companyNameText.length >= 3 && event.key === 'Enter') {
       if (this.accountstatus === 'Active') {
         this.search();
@@ -734,7 +663,6 @@ export class CustomersComponent {
       }
       this.iscmpnyNameFilterApplied = false;
     }
-
     if (this.shorttext.length >= 1 && event.key === 'Enter') {
       if (this.accountstatus === 'Active') {
         this.search();
@@ -750,7 +678,6 @@ export class CustomersComponent {
       }
       this.isShortCodeFilterApplied = false;
     }
-
     if (this.B2CcmpnyNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isB2CcmpnyNameFilterApplied = true;
@@ -758,7 +685,6 @@ export class CustomersComponent {
       this.search1();
       this.isB2CcmpnyNameFilterApplied = false;
     }
-
     if (this.B2CcmpnyAddressText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isB2CcmpnyAddressFilterApplied = true;
@@ -778,18 +704,14 @@ export class CustomersComponent {
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   listOfFilter2: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   countryData: any = [];
   getCountyData() {
     this.api
@@ -844,7 +766,6 @@ export class CustomersComponent {
         }
       );
   }
-
   stateData: any = [];
   getStateData() {
     this.api.getState(0, 0, '', '', ' AND ACCOUNT_STATUS = 1').subscribe(
@@ -866,7 +787,6 @@ export class CustomersComponent {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   GSTFilter: string | undefined = undefined;
   onGSTFilterChange(selectedStatus: string) {
     this.GSTFilter = selectedStatus;
@@ -892,8 +812,6 @@ export class CustomersComponent {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
-  // shreya
   drawerVisibleCustomers: boolean;
   drawerTitleCustomers: string;
   drawerDataCustomers: customer = new customer();
@@ -917,8 +835,6 @@ export class CustomersComponent {
   get closeCallbackCustomers() {
     return this.drawerCloseCustomers.bind(this);
   }
-
-  // new filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -930,17 +846,12 @@ export class CustomersComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Customer Filter';
-    // this.applyCondition = "";
-
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -949,13 +860,9 @@ export class CustomersComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -972,7 +879,6 @@ export class CustomersComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -990,36 +896,24 @@ export class CustomersComponent {
       },
     ];
   }
-
   drawerfilterClose(buttontype, updateButton): void {
-    //
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-      //
-      //
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-      //
       this.loadFilters();
     }
   }
   whichbutton: any;
-
   filterloading: boolean = false;
   isDeleting: boolean = false;
-
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1027,13 +921,12 @@ export class CustomersComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1048,18 +941,15 @@ export class CustomersComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1073,7 +963,6 @@ export class CustomersComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1086,10 +975,7 @@ export class CustomersComponent {
       this.search1();
     }
   }
-
   deleteItem(item: any): void {
-    //
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -1105,12 +991,10 @@ export class CustomersComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //
           } else {
             this.isfilterapply = true;
           }
@@ -1133,15 +1017,12 @@ export class CustomersComponent {
       }
     );
   }
-
   get filtercloseCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'NAME',
@@ -1157,7 +1038,6 @@ export class CustomersComponent {
       ],
       placeholder: 'Enter name',
     },
-
     {
       key: 'COMPANY_NAME',
       label: 'Company Name',
@@ -1200,7 +1080,6 @@ export class CustomersComponent {
       ],
       placeholder: 'Enter Mobile Number',
     },
-
     {
       key: 'CUSTOMER_MANAGER_NAME',
       label: 'Manager name',
@@ -1229,7 +1108,6 @@ export class CustomersComponent {
       ],
       placeholder: 'Select Customer Type',
     },
-
     {
       key: 'IS_HAVE_GST',
       label: 'GST Invoice ?',
@@ -1244,7 +1122,6 @@ export class CustomersComponent {
       ],
       placeholder: 'Select Have GST ?',
     },
-
     {
       key: 'INDIVIDUAL_COMPANY_NAME',
       label: 'B2C Company Name',
@@ -1273,7 +1150,6 @@ export class CustomersComponent {
       ],
       placeholder: 'Enter B2C Company Address',
     },
-
     {
       key: 'SHORT_CODE',
       label: 'Short Code',
@@ -1288,7 +1164,6 @@ export class CustomersComponent {
       ],
       placeholder: 'Enter Short Code',
     },
-
     {
       key: 'ACCOUNT_STATUS',
       label: 'Status',
@@ -1304,7 +1179,6 @@ export class CustomersComponent {
       placeholder: 'Select Status',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
@@ -1313,8 +1187,7 @@ export class CustomersComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -1328,32 +1201,24 @@ export class CustomersComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with ' AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   widthsss: any = '100%';
   drawerserviceVisibleMap: boolean = false;
   ServiceMapping(data: any): void {
     this.drawerTitleMa = `${data.COMPANY_NAME} Customer Wise Service Change Management`;
-    // this.drawerTitleMa = `${data.NAME} Customer Wise Service Change Management`;
     this.drawerDataMap = Object.assign({}, data);
     this.drawerserviceVisibleMap = true;
   }
-
   drawerServiceMappingCloseMap(): void {
     if (this.accountstatus === 'Active') {
       this.search();
@@ -1365,14 +1230,12 @@ export class CustomersComponent {
   get closeServiceMappingCallbackMap() {
     return this.drawerServiceMappingCloseMap.bind(this);
   }
-
   drawerserviceVisibleSer: boolean = false;
   ServiceMappingSer(data: any): void {
     this.drawerTitleSer = `Manage Services`;
     this.drawerDataSer = Object.assign({}, data);
     this.drawerserviceVisibleSer = true;
   }
-
   drawerServiceMappingCloseSer(): void {
     if (this.accountstatus === 'Active') {
       this.search();
@@ -1384,7 +1247,6 @@ export class CustomersComponent {
   get closeServiceMappingCallbackSer() {
     return this.drawerServiceMappingCloseSer.bind(this);
   }
-
   custid1: any;
   widthInv: any = '70%';
   viewInvoiceRequest(data: any): void {
@@ -1393,7 +1255,6 @@ export class CustomersComponent {
     this.drawerData1 = Object.assign({}, data);
     this.drawerVisible1invoice = true;
   }
-
   drawerClose1invoice(): void {
     if (this.accountstatus === 'Active') {
       this.search();
@@ -1408,11 +1269,8 @@ export class CustomersComponent {
   oldFilter: any[] = [];
   isLoading = false;
   isfilterapply: boolean = false;
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1420,28 +1278,22 @@ export class CustomersComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1449,16 +1301,12 @@ export class CustomersComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-  // profile photo
   ViewImage: any;
   ImageModalVisible: boolean = false;
   imageshow;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
@@ -1469,15 +1317,11 @@ export class CustomersComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   drawerSlotsVisible = false;
   drawerTitleSlots!: string;
   drawerDataSlots: customer = new customer();
-
   drawerSlotsMappingClose(): void {
     if (this.accountstatus === 'Active') {
       this.search();
@@ -1489,18 +1333,12 @@ export class CustomersComponent {
   get closeSlotsMappingCallback() {
     return this.drawerSlotsMappingClose.bind(this);
   }
-
   MapTimeSLots(data: any): void {
-    // this.drawerTitleSlots = ` Map Time Slots to the ${data.NAME} Customer`;
     this.drawerTitleSlots = ` Map Time Slots to the ${data.COMPANY_NAME} Customer`;
     this.drawerDataSlots = Object.assign({}, data);
     this.drawerSlotsVisible = true;
   }
-
-  //Sanjana
-
   widthTechnician: string = '100%';
-
   get closeTechniciansMappingCallback() {
     return this.drawerTechniciansMappingClose.bind(this);
   }
@@ -1513,20 +1351,14 @@ export class CustomersComponent {
     }
     this.drawerTechniciansVisible = false;
   }
-
   TechnicianMapping(data: any): void {
     this.drawerTitle = ` Map technicians to the ${data.COMPANY_NAME}`;
     this.drawerData = Object.assign({}, data);
     this.drawerTechniciansVisible = true;
   }
-
-  //Add Logins
-
   drawerDataAddLogin: customerAddLogin = new customerAddLogin();
-
   drawerCustomerAddLoginVisible = false;
   widthCustomerAddLogin: string = '50%';
-
   AddLogins(data: any): void {
     this.drawerTitle = `Add Logins`;
     this.drawerDataAddLogin = Object.assign({}, data);
@@ -1534,18 +1366,13 @@ export class CustomersComponent {
     this.custid = data.ID;
     this.companyName = data.COMPANY_NAME;
   }
-
   get closeCustomerAddLoginCallback() {
     return this.drawerCustomerAddLoginClose.bind(this);
   }
-
   drawerCustomerAddLoginClose(): void {
     this.drawerCustomerAddLoginVisible = false;
   }
-
-  //Add Login List
   drawerDataAddLoginList: customerAddLogin = new customerAddLogin();
-
   drawerCustomerAddLoginListVisible = false;
   widthCustomerAddListLogin: string = '70%';
   mainCustData: any;
@@ -1557,15 +1384,12 @@ export class CustomersComponent {
     this.custid = data.ID;
     this.companyName = data.COMPANY_NAME;
   }
-
   get closeCustomerAddLoginListCallback() {
     return this.drawerCustomerAddLoginListClose.bind(this);
   }
-
   drawerCustomerAddLoginListClose(): void {
     this.drawerCustomerAddLoginListVisible = false;
   }
-
   drawerDataEmail: customerAddLogin = new customerAddLogin();
   drawerCustomerEmailVisible: boolean = false;
   widthCustomerEmail: string = '60%';
@@ -1578,15 +1402,12 @@ export class CustomersComponent {
     this.custid = data.ID;
     this.companyName = data.COMPANY_NAME;
   }
-
   get closeCustomerEmailCallback() {
     return this.drawerCustomerEmailClose.bind(this);
   }
-
   drawerCustomerEmailClose(): void {
     this.drawerCustomerEmailVisible = false;
   }
-
   parentSerId: any;
   sername: any;
   drawerDataB2bCust: customer = new customer();
@@ -1600,7 +1421,6 @@ export class CustomersComponent {
     this.parentSerId = data.ID;
     this.drawerVisibleB2bCust = true;
   }
-
   drawerCloseSubserviceB2bCust(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -1612,27 +1432,21 @@ export class CustomersComponent {
     }
     this.drawerVisibleB2bCust = false;
   }
-
   get closeCallbacksubserviceB2bCust() {
     return this.drawerCloseSubserviceB2bCust.bind(this);
   }
-
-  //sanjana
   drawerVisibleCustomersLogs: boolean;
   drawerTitleCustomersLogs: string;
   drawerDataCustomersLogs: customer = new customer();
   width: any = '100%';
   custmoerid: any;
-
   viewLogs(data: customer): void {
     this.CUSTOMER_MASTER_ID = data.CUSTOMER_MASTER_ID;
-    // this.drawerTitleCustomersLogs = `View Address Logs of ${data.NAME}`;
     this.drawerTitleCustomersLogs = `View Address Logs of ${data.COMPANY_NAME}`;
     this.drawerDataCustomersLogs = Object.assign({}, data);
     this.drawerVisibleCustomersLogs = true;
     this.custmoerid = data.CUSTOMER_MASTER_ID;
   }
-
   drawerCloseCustomersLogs(): void {
     if (this.accountstatus === 'Active') {
       this.search();
@@ -1644,10 +1458,7 @@ export class CustomersComponent {
   get closeCallbackCustomersLogs() {
     return this.drawerCloseCustomersLogs.bind(this);
   }
-
-  // activateBoolean: boolean = false;
   activateBoolean: boolean[] = [];
-
   activatecustomer(data: any, index: any): void {
     this.activateBoolean[index] = true;
     this.api.activatthisecustomer(data.ID, data.NAME, data.MOBILE_NO).subscribe(

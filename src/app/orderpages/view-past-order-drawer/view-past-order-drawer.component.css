@@ -1,31 +1,93 @@
-.cardstyle{
-    background-color: #fff;
-      cursor: pointer;
-      padding: 15px;
-      box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
-      border: 1px solid #efefef;
-      border-radius: 10px;
+.cardstyle {
+  background-color: #fff;
+  cursor: pointer;
+  padding: 15px;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid #efefef;
+  border-radius: 10px;
 }
-
-
-
-
 .mainnam {
-    color: #000;
-    font-size: 13px !important;
-    font-weight: 600;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .subnamm {
-    color: #6A6A6A;
-    font-size: 12px !important;
-    font-weight: 500;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  color: #000;
+  font-size: 13px !important;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.subnamm {
+  color: #6A6A6A;
+  font-size: 12px !important;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.order-card-wrapper {
+  padding: 10px;
+}
+.territory-col {
+  border-color: black;
+}
+.location-icon-col {
+  align-self: center;
+}
+.territory-name {
+  text-decoration: underline;
+  color: blue;
+  padding-left: 5px;
+}
+.order-date {
+  text-align: center;
+}
+.order-number-col {
+  text-align: end;
+}
+.order-number-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+}
+.customer-name-col {
+  font-size: 12px !important;
+  margin-top: 4px;
+}
+.customer-phone-col {
+  font-size: 12px !important;
+  margin-top: 4px;
+  text-align: end;
+}
+.customer-phone-link {
+  font-size: 12px !important;
+  color: black;
+}
+.service-col {
+  font-size: 12px !important;
+}
+.expected-date-col {
+  font-size: 12px !important;
+  text-align: end;
+}
+.payment-col {
+  font-size: 12px !important;
+  text-align: start;
+  margin-top: 5px;
+}
+.amount-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 1px;
+}
+.status-col {
+  font-size: 12px !important;
+  text-align: end;
+  margin-top: 5px;
+}
+.empty-state-container {
+  font-weight: 600;
+  margin-top: 10%;
+}
+.center-text {
+  text-align: center;
+}

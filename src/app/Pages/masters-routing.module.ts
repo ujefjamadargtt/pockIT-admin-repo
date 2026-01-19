@@ -85,7 +85,8 @@ import { CustomerAddressLogsReportComponent } from './Reports/customer-address-l
 import { UserloginlogsComponent } from './Reports/userloginlogs/userloginlogs.component';
 import { APKVersionReportComponent } from './Reports/apkversion-report/apkversion-report.component';
 import { CustomerwiseOrderDetailedReportComponent } from './Reports/customerwise-order-detailed-report/customerwise-order-detailed-report.component';
-
+import { OrdercancelchargeReportComponent } from './Reports/ordercancelcharge-report/ordercancelcharge-report.component';
+import { InvoiceReportsComponent } from './Reports/invoice-reports/invoice-reports.component';
 const routes: Routes = [
   {
     path: '',
@@ -114,7 +115,6 @@ const routes: Routes = [
       { path: 'city', component: ListcityComponent },
       { path: 'countrymaster', component: CountryMasterComponent },
       { path: 'vendor_master', component: VendorMasterComponent },
-      // { path: "customercategorymaster", component: CustomerCategoryMasterComponent, },
       { path: 'appLanguagemaster', component: AppLanguageMasterComponent },
       {
         path: 'customer_category_master',
@@ -131,14 +131,12 @@ const routes: Routes = [
       { path: 'smsserviceconfigs', component: SmsServiceConfigsComponent },
       { path: 'customerconfigs', component: CustomerconfigsComponent },
       { path: 'paymentgateway', component: PaymentGatewayMasterComponent },
-
       { path: 'menu', component: MasterMenuListComponent },
       { path: 'warehouse-master', component: WarehouseMasterComponent },
       {
         path: 'warehouse_location',
         component: WarehouselocationmasterComponent,
       },
-      // shreya
       { path: 'service-master', component: MainServiceListComponent },
       { path: 'district-master', component: DistrictMasterListComponent },
       { path: 'tax', component: TaxTableComponent },
@@ -150,7 +148,6 @@ const routes: Routes = [
       { path: 'hsn-master', component: HSNSACMASTERlistComponent },
       { path: 'banner-master', component: BannermasterlistComponent },
       { path: 'skill-verification-requests', component: SkillStatusComponent },
-
       { path: 'order-summary-report', component: OrderSummaryReportComponent },
       {
         path: 'customer-service-feedback-report',
@@ -226,7 +223,6 @@ const routes: Routes = [
         component: HelpDocumentSubcategoryListComponent,
       },
       { path: 'coupon-master', component: CouponsComponent },
-
       { path: 'coupon-type-master', component: CoupontypesComponent },
       {
         path: 'certificate-verification-requests',
@@ -250,8 +246,6 @@ const routes: Routes = [
         path: 'coupon-summary-report',
         component: CouponSummaryReportsComponent,
       },
-
-      // new
       {
         path: 'template-category-master',
         component: TableTemplateCategoryComponent,
@@ -269,10 +263,7 @@ const routes: Routes = [
         path: 'payment-gateway-transaction-report',
         component: PaymentGatewayTransactionReportComponent,
       },
-
-      // new
       { path: 'channel-list', component: ChannellistComponent },
-
       {
         path: 'technician-cash-collecction-report',
         component: TechnicianCashCollectionReportComponent,
@@ -289,21 +280,25 @@ const routes: Routes = [
         path: 'user-login-logs-report',
         component: UserloginlogsComponent,
       },
-
       {
         path: 'apk-version-history-report',
         component: APKVersionReportComponent,
       },
-
-      // new report
       {
         path: 'customer-wise-order-details-report',
         component: CustomerwiseOrderDetailedReportComponent,
       },
+      {
+        path: 'order-cancellation-charges-report',
+        component: OrdercancelchargeReportComponent,
+      },
+      {
+        path: 'invoice-reports',
+        component: InvoiceReportsComponent,
+      }
     ],
   },
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

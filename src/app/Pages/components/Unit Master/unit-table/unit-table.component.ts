@@ -4,10 +4,8 @@ import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { UnitMasterData } from 'src/app/Pages/Models/UnitMasterData';
-
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-unit-table',
   templateUrl: './unit-table.component.html',
@@ -35,20 +33,15 @@ export class UnitTableComponent {
   dataList: any = [];
   drawerTitle!: string;
   operators: string[] = ['AND', 'OR'];
-
   statusFilter: string | undefined = undefined;
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   unittext: string = '';
   unitVisible: boolean = false;
-
   shortcodetext: string = '';
   shortcodeVisible: boolean = false;
-
   query = '';
   query2 = '';
   seqnotext: string = '';
@@ -60,13 +53,9 @@ export class UnitTableComponent {
   QUERY_NAME: string = '';
   showquery: any;
   INSERT_NAMES: any[] = [];
-
   isUnitNameFilterApplied = false;
   isShortCodeFilterApplied = false;
   isSequenceNoFilterApplied = false;
-
-  //Edit Code 3
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -83,20 +72,16 @@ export class UnitTableComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
@@ -110,7 +95,6 @@ export class UnitTableComponent {
       this.search();
       this.isUnitNameFilterApplied = false;
     }
-
     if (this.shortcodetext.length > 0 && keys.key === 'Enter') {
       this.search();
       this.isShortCodeFilterApplied = true;
@@ -118,7 +102,6 @@ export class UnitTableComponent {
       this.search();
       this.isShortCodeFilterApplied = false;
     }
-
     if (this.seqnotext.length > 0 && keys.key === 'Enter') {
       this.search();
       this.isSequenceNoFilterApplied = true;
@@ -127,15 +110,11 @@ export class UnitTableComponent {
       this.isSequenceNoFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   filteredUnitData: any[] = [];
-
   search(reset: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -148,20 +127,15 @@ export class UnitTableComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -172,38 +146,28 @@ export class UnitTableComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.unittext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.unittext.trim()}%'`;
     }
-
-    // Short Code Filter
     if (this.shortcodetext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SHORT_CODE LIKE '%${this.shortcodetext.trim()}%'`;
     }
-
-    // Seq No Filters
     if (this.seqnotext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `SEQ_NO LIKE '%${this.seqnotext.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     const finalDataList =
       this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
-
     this.api
       .getUnitData(
         this.pageIndex,
@@ -245,7 +209,6 @@ export class UnitTableComponent {
         }
       );
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -254,22 +217,18 @@ export class UnitTableComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   add(): void {
     this.drawerTitle = 'Add New Unit ';
     this.drawerData = new UnitMasterData();
@@ -289,22 +248,18 @@ export class UnitTableComponent {
       () => { }
     );
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   edit(data: UnitMasterData): void {
     this.drawerTitle = 'Update Unit';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   reset(): void {
     this.searchText = '';
     this.unittext = '';
@@ -312,45 +267,34 @@ export class UnitTableComponent {
     this.seqnotext = '';
     this.search();
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
-  //Advance Filters
-
   nameFilter() {
     if (this.unittext.trim() === '') {
       this.searchText = '';
     } else if (this.unittext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   shortcodeFilter() {
     if (this.shortcodetext.trim() === '') {
       this.searchText = '';
     } else if (this.shortcodetext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   seqFilter() {
     if (this.seqnotext.trim() === '') {
       this.searchText = '';
     } else if (this.seqnotext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -363,7 +307,6 @@ export class UnitTableComponent {
   filterQuery: string = '';
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -376,10 +319,8 @@ export class UnitTableComponent {
   filterloading: boolean = false;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -387,16 +328,12 @@ export class UnitTableComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -411,22 +348,15 @@ export class UnitTableComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -440,7 +370,6 @@ export class UnitTableComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -449,10 +378,7 @@ export class UnitTableComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -468,14 +394,10 @@ export class UnitTableComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           } else {
             this.isfilterapply = true;
           }
@@ -498,9 +420,7 @@ export class UnitTableComponent {
       }
     );
   }
-
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -508,30 +428,17 @@ export class UnitTableComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
-  // Clearfilter() {
-  //   this.filterClass = 'filter-invisible';
-  //   this.selectedFilter = '';
-  //   this.isfilterapply = false;
-  //   this.filterQuery = '';
-  //   this.search();
-  //   sessionStorage.removeItem('ID');
-  // }
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -548,20 +455,14 @@ export class UnitTableComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
-
   openfilter() {
     this.drawerTitle = 'Unit Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -578,7 +479,6 @@ export class UnitTableComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -595,7 +495,6 @@ export class UnitTableComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -605,7 +504,6 @@ export class UnitTableComponent {
       FILTER_JSON: {},
     };
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -624,15 +522,6 @@ export class UnitTableComponent {
       ],
       placeholder: 'Enter Unit Name',
     },
-    // {
-    //   key: 'COUNTRY_ID',
-    //   label: 'Country',
-    //   type: 'select',
-    //   comparators: ['=', '!='],
-    //   options: [],
-    //   placeholder: 'Select Country',
-    // },
-
     {
       key: 'SHORT_CODE',
       label: 'Short Code',
@@ -661,7 +550,6 @@ export class UnitTableComponent {
       ],
       placeholder: 'Enter Sequence Number',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -677,83 +565,29 @@ export class UnitTableComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
-  // deleteItem(item: any): void {
-  //   this.isDeleting = true;
-  //   this.api.deleteFilterById(item.ID).subscribe(
-  //     (data) => {
-  //       if (data['code'] == 200) {
-  //         this.savedFilters = this.savedFilters.filter(
-  //           (filter) => filter.ID !== item.ID
-  //         );
-  //         this.message.success('Filter deleted successfully.', '');
-  //         this.isDeleting = false;
-  //         this.isfilterapply = false;
-  //         this.filterClass = 'filter-invisible';
-
-  //         this.loadFilters();
-  //         this.filterQuery = '';
-  //         this.search(true);
-  //       } else {
-  //         this.message.error('Failed to delete filter.', '');
-  //         this.isDeleting = false;
-  //       }
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       this.loadingRecords = false;
-  //       if (err.status === 0) {
-  //         this.message.error(
-  //           'Unable to connect. Please check your internet or server connection and try again shortly.',
-  //           ''
-  //         );
-  //       } else {
-  //         this.message.error('Something Went Wrong.', '');
-  //       }
-  //     }
-  //   );
-  // }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-  // applyfilter(item) {
-  //   this.filterClass = 'filter-invisible';
-  //   this.selectedFilter = item.ID;
-  //   this.isfilterapply = true;
-  //   this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
-  //   this.search(true);
-  // }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -761,9 +595,7 @@ export class UnitTableComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

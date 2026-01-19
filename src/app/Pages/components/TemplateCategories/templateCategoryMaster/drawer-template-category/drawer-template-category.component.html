@@ -1,6 +1,5 @@
 <div>
   <form nz-form #teritorymaster="ngForm">
-    <!-- Name Field -->
     <div nz-row>
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
         <nz-form-item>
@@ -25,7 +24,7 @@
               (blur)="isFocused = ''"
             />
             <h6
-              style="color: red; font-size: 10px"
+              class="character-count"
               *ngIf="
                 isFocused === 'districtName' ||
                 (data.NAME && isFocused === 'districtName')
@@ -37,8 +36,6 @@
         </nz-form-item>
       </div>
     </div>
-
-    <!-- Description Field -->
     <div nz-row>
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
         <nz-form-item>
@@ -58,7 +55,7 @@
               (blur)="isFocused = ''"
             ></textarea>
             <h6
-              style="color: red; font-size: 10px"
+              class="character-count"
               *ngIf="
                 isFocused === 'DESCRIPTION' ||
                 (data.DESCRIPTION && isFocused === 'DESCRIPTION')
@@ -70,8 +67,6 @@
         </nz-form-item>
       </div>
     </div>
-
-    <!-- Sequence No Field -->
     <div nz-row>
       <div nz-col nzSpan="12">
         <nz-form-item>
@@ -81,7 +76,7 @@
               nz-input
               placeholder="Sequence No."
               name="SEQ_NO"
-              style="width: 150px"
+              class="seq-no-input"
               required
               [(ngModel)]="data.SEQ_NO"
               #seqNo="ngModel"
@@ -93,7 +88,6 @@
         </nz-form-item>
       </div>
       <div nz-col nzSpan="2"></div>
-      <!-- Status Field -->
       <div nz-col nzSpan="8">
         <nz-form-item>
           <nz-form-label nzNoColon>Status</nz-form-label>
@@ -110,18 +104,15 @@
     </div>
   </form>
 </div>
-
 <div class="footer">
   <button
     nz-button
     nzType="default"
     (click)="close()"
-    class="ant-btn"
-    style="margin-right: 12px"
+    class="ant-btn footer-cancel-btn"
   >
     Cancel
   </button>
-
   <button
     nz-button
     *ngIf="!data.ID"
@@ -134,24 +125,20 @@
   >
     Save & Close
   </button>
-
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu>
       <li
         nz-menu-item
-        class="menuc"
-        style="border-radius: 4px; color: white !important"
+        class="menuc menu-item-custom"
       >
         <a
-          class="footer-button"
-          style="color: white !important"
+          class="footer-button menu-link"
           (click)="save(true, teritorymaster)"
           >Save & New</a
         >
       </li>
     </ul>
   </nz-dropdown-menu>
-
   <button
     type="button"
     class="ant-btn ant-btn-primary"

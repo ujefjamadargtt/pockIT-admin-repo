@@ -6,7 +6,6 @@ import { NzTableQueryParams } from "ng-zorro-antd/table";
 import { CustmoerCategoryData } from "src/app/Pages/Models/CustomerCategoryMaster";
 import { ApiServiceService } from "src/app/Service/api-service.service";
 import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
-
 @Component({
   selector: "app-customer-category-master",
   templateUrl: "./customer-category-master.component.html",
@@ -34,8 +33,6 @@ export class CustomerCategoryMasterComponent {
   drawervisible = false;
   isCategoryNameFilterApplied = false;
   isCategoryDescFilterApplied = false;
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: "AND",
@@ -52,7 +49,6 @@ export class CustomerCategoryMasterComponent {
       groups: [],
     },
   ];
-
   ngOnInit(): void {
     if (this.searchText.length > 3) {
       this.search();
@@ -60,14 +56,10 @@ export class CustomerCategoryMasterComponent {
       this.search();
     }
   }
-
   back() {
     this.router.navigate(["/masters/menu"]);
   }
-
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -76,7 +68,6 @@ export class CustomerCategoryMasterComponent {
       tooltip.hide();
     }
   }
-
   onInputChange(value: string): void {
     if (value.length >= 3 || value.length === 0) {
       this.search();
@@ -94,23 +85,13 @@ export class CustomerCategoryMasterComponent {
       this.sortKey = "id";
       this.sortValue = "desc";
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith("a") ? "asc" : "desc";
     } catch (error) {
       sort = "";
     }
-
     var likeQuery = "";
-    // if (this.searchText != "") {
-    //   likeQuery = " AND";
-    //   this.columns.forEach((column) => {
-    //     likeQuery += " " + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    // }
-    // Country Filter
     let globalSearchQuery = "";
     if (this.searchText !== "") {
       globalSearchQuery =
@@ -130,7 +111,6 @@ export class CustomerCategoryMasterComponent {
     } else {
       this.isCategoryNameFilterApplied = false;
     }
-    // Description
     if (this.DescriptionText !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") +
@@ -139,7 +119,6 @@ export class CustomerCategoryMasterComponent {
     } else {
       this.isCategoryDescFilterApplied = false;
     }
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
@@ -147,8 +126,6 @@ export class CustomerCategoryMasterComponent {
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
-
     likeQuery = globalSearchQuery + (likeQuery ? " AND " + likeQuery : "");
     this.api
       .getCustomerCategeroyData(
@@ -199,35 +176,28 @@ export class CustomerCategoryMasterComponent {
     const sortOrder = (currentSort && currentSort.value) || "desc";
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   drawerClose(): void {
     this.search();
     this.drawervisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   drawerChapterMappingClose(): void {
     this.drawerCategoryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
@@ -236,7 +206,6 @@ export class CustomerCategoryMasterComponent {
     this.drawerData = Object.assign({}, data);
     this.drawervisible = true;
   }
-
   add(): void {
     this.drawerTitle = "Add New Customer Category";
     this.drawerData = new CustmoerCategoryData();
@@ -244,11 +213,6 @@ export class CustomerCategoryMasterComponent {
     this.api.getCustomerCategeroyData(1, 1, "", "desc", "").subscribe(
       (data) => {
         if (data["code"] == 200) {
-          // if (data["count"] == 0) {
-          //   this.drawerData.SEQ_NO = 1;
-          // } else {
-          //   this.drawerData.SEQ_NO = data["data"][0]["SEQ_NO"] + 1;
-          // }
         } else {
           this.message.error("Server Not Found.", "");
         }
@@ -256,32 +220,21 @@ export class CustomerCategoryMasterComponent {
       (err: HttpErrorResponse) => {
         this.loadingRecords = false;
         if (err.status === 0) {
-          // Network error
           this.message.error(
             "Unable to connect. Please check your internet or server connection and try again shortly.",
             ""
           );
-          // this.dataList = [];
         } else {
-          // Other errors
           this.message.error("Something Went Wrong.", "");
         }
       }
     );
   }
-  //For Input
   DescriptionText: string = "";
   CategoryVisible = false;
   CategoryText: string = "";
   DescriptionVisible = false;
   keyup(keys) {
-    // if (this.searchText.length >= 3) {
-    //   this.search();
-    // }
-    // else if (this.searchText.length === 0) {
-    //   this.dataList = []
-    //   this.search()
-    // }
     const element = window.document.getElementById("button");
     if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === "Enter") {
@@ -291,10 +244,8 @@ export class CustomerCategoryMasterComponent {
       this.search(true);
     }
   }
-
   onKeyup(event: KeyboardEvent): void {
     const element = window.document.getElementById("button");
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && event.key === "Enter") {
       this.search(true);
     } else if (this.searchText.length === 0 && event.key == "Backspace") {
@@ -312,20 +263,16 @@ export class CustomerCategoryMasterComponent {
       this.search();
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   reset(): void {
     this.searchText = "";
     this.DescriptionText = "";
     this.CategoryText = "";
     this.search();
   }
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -336,8 +283,6 @@ export class CustomerCategoryMasterComponent {
     { text: "Inactive", value: "0" },
   ];
   dataList: any = [];
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem("userId");
@@ -350,7 +295,6 @@ export class CustomerCategoryMasterComponent {
   filterQuery: string = "";
   filterClass: string = "filter-invisible";
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === "filter-visible") {
       this.filterClass = "filter-invisible";
@@ -359,18 +303,10 @@ export class CustomerCategoryMasterComponent {
       this.loadFilters();
     }
   }
-
   filterloading: boolean = false;
-
-
-
-
   openfilter() {
     this.drawerTitle = "Customer Categories Filter";
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -379,13 +315,9 @@ export class CustomerCategoryMasterComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -402,7 +334,6 @@ export class CustomerCategoryMasterComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -420,13 +351,11 @@ export class CustomerCategoryMasterComponent {
       },
     ];
   }
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -434,16 +363,12 @@ export class CustomerCategoryMasterComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -458,22 +383,15 @@ export class CustomerCategoryMasterComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -487,8 +405,6 @@ export class CustomerCategoryMasterComponent {
       );
     this.filterQuery = '';
   }
-
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -497,12 +413,8 @@ export class CustomerCategoryMasterComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
-
   isDeleting: boolean = false;
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -518,14 +430,10 @@ export class CustomerCategoryMasterComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           }
           else {
             this.isfilterapply = true;
@@ -549,9 +457,7 @@ export class CustomerCategoryMasterComponent {
       }
     );
   }
-
   applyfilter(item) {
-
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -560,29 +466,19 @@ export class CustomerCategoryMasterComponent {
     this.search(true);
   }
   drawerflterClose(buttontype, updateButton): void {
-
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
-
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: "NAME",
@@ -598,7 +494,6 @@ export class CustomerCategoryMasterComponent {
       ],
       placeholder: "Enter Customer Category Name",
     },
-
     {
       key: "DESCRIPTION",
       label: "Description",
@@ -613,7 +508,6 @@ export class CustomerCategoryMasterComponent {
       ],
       placeholder: "Enter Description",
     },
-
     {
       key: "IS_ACTIVE",
       label: "Status",
@@ -629,36 +523,24 @@ export class CustomerCategoryMasterComponent {
       placeholder: "Select Status",
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
-
-
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
-
   isModalVisible = false;
   selectedQuery: string = "";
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = "";
   }
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -675,14 +557,12 @@ export class CustomerCategoryMasterComponent {
       groups: [],
     },
   ];
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;

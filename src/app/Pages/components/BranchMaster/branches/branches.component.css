@@ -1,56 +1,224 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
-
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
-
-
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.header-row {
+  margin-bottom: 12px;
+}
+.back-icon {
+  cursor: pointer;
+  font-weight: bold;
+}
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.filter-container {
+  padding: 8px;
+  background: #fafafa;
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+}
+.filter-card {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #a8a8a8;
+}
+.filter-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+.filter-card-actions .filter-card-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+.my-scroll ::ng-deep .ant-table-thead>tr>th {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.country-multiselect {
+  width: 100%;
+}
+.filter-select-container {
+  width: 100%;
+}
+.filter-multiselect-state,
+.filter-multiselect-city,
+.filter-multiselect-district,
+.filter-multiselect-pincode {
+  width: 100%;
+}
+.query-text-center {
+  text-align: center;
+}
+.filter-btn-item {
+  width: 47px;
+}
+.add-branch-item {
+  margin-right: 0;
+}
+.filter-wrapper {
+  padding-top: 0;
+}
+.center-text {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.filter-name {
+  color: #000;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-action-row {
+  margin-top: 7px;
+}
+.filter-action-container {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.no-data-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.footer-btn {
+  margin-right: 10px;
+}
+.table-wrapper {
+  margin-top: 10px;
+}
+.table-preline {
+  white-space: pre-line;
+}
+.th-center {
+  text-align: center;
+}
+.th-bold {
+  font-weight: bold;
+}
+.filter-active {
+  color: #092b9c;
+}
+.td-center {
+  text-align: center;
+}
+.td-left {
+  text-align: left;
+}
+.edit-tag {
+  cursor: pointer;
+}
+.edit-icon {
+  font-size: 15px;
+  margin-right: 6px;
+}
+.truncate-text {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.page-header-row {
+  align-items: center;
+}
+.formname {
+  font-size: 16px;
+}
+.back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-item {
+  width: 47px;
+}
+.add-branch-item {
+  margin-right: 0;
 }

@@ -5,33 +5,23 @@
   margin-top: 12px;
   margin-bottom: 12px;
   background-color: #fafafa;
-
 }
 #Gstno {
-
   text-transform: lowercase;
   text-transform:  '_';
-  white-space: nowrap; /* Prevent line breaks */
-  overflow: hidden;    /* Hide overflowing text */
-  text-overflow: ellipsis; /* Add ellipsis (...) for long text */
-  
-
+  white-space: nowrap; 
+  overflow: hidden;    
+  text-overflow: ellipsis; 
 }
-
 #Gstno::placeholder {
-
-  text-transform: initial; /* Set it to "initial" to reset the transformation for the placeholder */
-
+  text-transform: initial; 
 }
-
-
 #Gstno::before {
-  content: attr(data-text); /* Display the original text as a data attribute */
+  content: attr(data-text); 
 }
-
 #Gstno::after {
-  content: '_'; /* Display underscores after spaces */
-  white-space: pre; /* Preserve whitespace, including spaces and underscores */
+  content: '_'; 
+  white-space: pre; 
 }
 nz-form-item {
   display: inline-block;
@@ -45,20 +35,11 @@ nz-form-item {
   margin: 0;
   padding: 0;
   background-image: url('/assets/sms.jpg'); 
-
-  /* Replace with your background image URL */
   background-repeat: repeat;
-  /* You can use 'repeat', 'repeat-x', or 'repeat-y' to create a pattern */
   background-size: cover;
-  /* Adjust to fit your design */
-  /* font-family: Arial, sans-serif; */
-  /* background-color:  rgb(250, 250, 250); */
   font-family: 'Roboto', sans-serif !important;
-
 }
 .vertical{
-
-  /* font-family: Helvetica; */
   font-family: 'Roboto', sans-serif !important;
   background-color: rgb(255, 255, 255);
   border-radius:0px 44px 44px 44px;
@@ -67,25 +48,18 @@ nz-form-item {
   position: relative;
   overflow-wrap: break-word;
   padding: 10px;
-
 }
   .image {
     margin: 0;
     padding: 0;
     background-image: url('/assets/sms.jpg');
-    /* Replace with your background image URL */
     background-repeat: repeat;
-    /* You can use 'repeat', 'repeat-x', or 'repeat-y' to create a pattern */
     background-size: cover;
-    /* Adjust to fit your design */
-    /* font-family: Arial, sans-serif; */
     font-family: 'Roboto', sans-serif !important;
-
   }
   .phone-select {
     width: 70px;
   }
-      
   .header {
       position: absolute;
       top: 0px;
@@ -95,3 +69,35 @@ nz-form-item {
       text-align: right;
       right: 0px;
     }
+    .my-box-top-margin {
+  margin-top: 0px;
+}
+.character-count {
+  color: red;
+  font-size: 10px;
+}
+.format-button-bold {
+  color: #efefef;
+  width: 40px;
+}
+.bold-text {
+  color: black;
+}
+.format-button-italic {
+  color: #efefef;
+  width: 40px;
+}
+.italic-text {
+  color: black;
+}
+.template-textarea {
+  margin-top: 5px;
+  width: 100%;
+  height: 155px;
+}
+.full-width-select {
+  width: 100%;
+}
+.footer-cancel-btn {
+  margin-right: 8px;
+}

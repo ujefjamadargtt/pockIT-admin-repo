@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { KnowledgeBaseSubCategory } from 'src/app/Support/Models/KnowledgeBaseSubCategory';
-
 @Component({
   selector: 'app-knowledge-base-sub-category-add',
   templateUrl: './knowledge-base-sub-category-add.component.html',
@@ -17,10 +16,8 @@ export class KnowledgeBaseSubCategoryAddComponent {
   @Input() drawerClose: any = Function;
   isFocused: string = '';
   public commonFunction = new CommonFunctionService();
-
   isSpinning = false;
   isOk = true;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
@@ -30,7 +27,6 @@ export class KnowledgeBaseSubCategoryAddComponent {
     websitebannerPage.form.markAsPristine();
     websitebannerPage.form.markAsUntouched();
   }
-
   ngOnInit() {
     this.getcategoryData();
   }
@@ -40,8 +36,6 @@ export class KnowledgeBaseSubCategoryAddComponent {
       .getKnowledgeBaseCategoryData(0, 0, '', '', ' AND IS_ACTIVE = 1')
       .subscribe(
         (data: HttpResponse<any>) => {
-          // 
-
           const statusCode = data.status;
           const responseBody = data.body;
           if (statusCode == 200) {
@@ -62,7 +56,6 @@ export class KnowledgeBaseSubCategoryAddComponent {
   save(addNew: boolean, websitebannerPage: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       (this.data.NAME == ' ' ||
         this.data.NAME == null ||
@@ -88,7 +81,6 @@ export class KnowledgeBaseSubCategoryAddComponent {
       this.isOk = false;
       this.message.error(' Please Enter Subcategory Name.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -98,9 +90,6 @@ export class KnowledgeBaseSubCategoryAddComponent {
           }
           this.api.updateKnowledgeBasesubCategoryData(this.data).subscribe(
             (successCode: HttpResponse<any>) => {
-              // (data: HttpResponse<any>) => {
-              // 
-
               const statusCode = successCode.status;
               if (statusCode == 200) {
                 this.message.success(
@@ -128,9 +117,6 @@ export class KnowledgeBaseSubCategoryAddComponent {
         } else {
           this.api.createKnowledgeBasesubCategoryData(this.data).subscribe(
             (successCode: HttpResponse<any>) => {
-              // (data: HttpResponse<any>) => {
-              // 
-
               const statusCode = successCode.status;
               if (statusCode == 200) {
                 this.message.success(
@@ -163,7 +149,6 @@ export class KnowledgeBaseSubCategoryAddComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }

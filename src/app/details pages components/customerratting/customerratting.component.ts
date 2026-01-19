@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-customerratting',
   templateUrl: './customerratting.component.html',
@@ -27,7 +26,6 @@ export class CustomerrattingComponent {
   progressTechList: any;
   averageTechnicianRating;
   globalTechnicianRating;
-
   @Input() FILTER_ID: any;
   @Input() TYPE: any = '';
   @Input() customer_id: any = '';
@@ -35,13 +33,11 @@ export class CustomerrattingComponent {
   TechData: any = [];
   filterQuery: string = '';
   filterQuery1: string = '';
-
   isFilterApplied: any = 'default';
   filterClass: any = 'filter-invisible';
   Customers: any = [];
   Technician: any = [];
   Vendorfilterquery1: any = '';
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
@@ -60,7 +56,6 @@ export class CustomerrattingComponent {
   backofficeId = sessionStorage.getItem('backofficeId');
   decreptedbackofficeId = 0;
   customerMangeer: any = '';
-
   ngOnInit(): void {
     this.useridd = this.commonFunction.decryptdata(
       sessionStorage.getItem('userId') || ''
@@ -101,7 +96,6 @@ export class CustomerrattingComponent {
             (data) => {
               if (data['code'] == 200) {
                 this.loaddata = false;
-
                 data['data'].forEach((element) => {
                   if (element.ID) TECH_IDS.push(element.ID);
                 });
@@ -135,7 +129,6 @@ export class CustomerrattingComponent {
   }
   getCustomers() {
     if (this.TYPE != 'ORDER') {
-
       if (this.decreptedroleID == 7) {
         this.api
           .getAllCustomer(0, 0, 'NAME', 'desc', ' AND ACCOUNT_STATUS=1 AND CUSTOMER_MANAGER_ID=' + this.decreptedbackofficeId)
@@ -170,7 +163,6 @@ export class CustomerrattingComponent {
     } else {
     }
   }
-
   getTechinitialdata() {
     if (this.roleID == '9') {
       this.vendorid = this.commonFunction.decryptdata(
@@ -260,7 +252,6 @@ export class CustomerrattingComponent {
       var tec = Array.from(new Set(this.TECHNICIAN_ID));
       filter = ' AND ID in(' + tec.toString() + ')';
     }
-
     this.api
       .getTechnicianData(0, 0, 'NAME', 'desc', ' AND IS_ACTIVE=1' + filter)
       .subscribe(
@@ -284,7 +275,6 @@ export class CustomerrattingComponent {
         }
       );
   }
-
   getTECH1(filter: any) {
     this.api
       .getTechnicianData(0, 0, 'NAME', 'desc', ' AND IS_ACTIVE=1' + filter)
@@ -301,12 +291,10 @@ export class CustomerrattingComponent {
         }
       );
   }
-
   clearFilter() {
     this.pageIndex = 1;
     this.filterQuery = '';
     this.filterQuery1 = '';
-
     if (this.TYPE != 'JOB' && this.TYPE != 'ORDER') this.Customers = null;
     if (
       this.roleID != 1 &&
@@ -316,7 +304,6 @@ export class CustomerrattingComponent {
       var tec = Array.from(new Set(this.TECHNICIAN_ID));
       this.Technician = tec;
     } else this.Technician = null;
-
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
     if (this.TYPE == 'VENDOR') {
@@ -336,9 +323,7 @@ export class CustomerrattingComponent {
     }
   }
   filterdata: any = '';
-
   ViewCustomerReviewDetails() {
-    // this.customerfilter = this.customerfilter == undefined ? '' : this.customerfilter
     this.isSpinning = true;
     if (this.TYPE == 'ORDER' || this.TYPE == 'JOB') {
       this.Customers = this.customer_id;
@@ -351,7 +336,6 @@ export class CustomerrattingComponent {
     } else {
       this.filterQuery = '';
     }
-
     if (
       this.Technician != undefined &&
       this.Technician != null &&
@@ -361,7 +345,6 @@ export class CustomerrattingComponent {
     } else {
       this.filterQuery1 = '';
     }
-
     if (
       this.TYPE == 'CUSTOMER' &&
       this.FILTER_ID != null &&
@@ -410,7 +393,6 @@ export class CustomerrattingComponent {
             this.globalRating = data['count'];
             this.progressList = data['progress'].reverse();
             this.isSpinning = false;
-            //
           } else {
             this.dataList = [];
             this.message.error('Failed To Get Customer Review Details.', '');
@@ -423,11 +405,8 @@ export class CustomerrattingComponent {
         }
       );
   }
-
   ViewCustomerReviewDetails1(dataFilt: any) {
-    // this.customerfilter = this.customerfilter == undefined ? '' : this.customerfilter
     this.isSpinning = true;
-
     if (this.TYPE == 'ORDER' || this.TYPE == 'JOB') {
       this.Customers = this.customer_id;
     } else if (
@@ -448,7 +427,6 @@ export class CustomerrattingComponent {
     } else {
       this.filterQuery1 = '';
     }
-
     if (
       this.TYPE == 'CUSTOMER' &&
       this.FILTER_ID != null &&
@@ -497,7 +475,6 @@ export class CustomerrattingComponent {
             this.globalRating = data['count'];
             this.progressList = data['progress'].reverse();
             this.isSpinning = false;
-            //
           } else {
             this.dataList = [];
             this.message.error('Failed To Get Customer Review Details.', '');
@@ -515,9 +492,7 @@ export class CustomerrattingComponent {
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   applyFilter() {
-    // this.loadingRecords = true;
     if (this.TYPE == 'VENDOR') {
       if (
         this.Customers != null &&
@@ -585,10 +560,7 @@ export class CustomerrattingComponent {
         this.isFilterApplied = 'default';
       }
     }
-
-    // this.loadingRecords = false;
   }
-
   roundRating(rating: number): number {
     if (rating !== null && rating !== undefined && rating > 0) {
       return Math.round(rating * 2) / 2;
@@ -596,13 +568,9 @@ export class CustomerrattingComponent {
       return 0;
     }
   }
-
   viewshoprating() {
-    // this.customerfilter = this.customerfilter == undefined ? '' : this.customerfilter
     this.isSpinning = true;
-
     this.filterdata = ' AND ORDER_ID=' + this.FILTER_ID;
-    // this.filterQuery + this.filterQuery1 +
     this.api
       .getshoporderrattingdata(
         this.pageIndex,
@@ -620,7 +588,6 @@ export class CustomerrattingComponent {
             this.globalRating = data['body']['count'];
             this.progressList = data['body']['progress'].reverse();
             this.isSpinning = false;
-            //
           } else {
             this.dataList = [];
             this.message.error('Failed To Get Customer Review Details.', '');

@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { whatsapptemplate } from 'src/app/Pages/Models/whatsapptemplate';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 @Component({
   selector: 'app-templatepreview',
   templateUrl: './templatepreview.component.html',
@@ -19,16 +18,12 @@ export class TemplatepreviewComponent {
   image = '';
   Date;
   parsedButtonValues: Array<{ type: string; buttonText: string }> = [];
-
   constructor(private api: ApiServiceService) { }
-
   ngOnInit() {
     this.replacePlaceholders();
-
     if (this.data && this.data.BODY_TEXT) {
       this.data.BODY_TEXT = this.data.BODY_TEXT.replaceAll('\n', '<br>');
     }
-
     if (this.data && this.data.BUTTON_VALUES) {
       try {
         if (
@@ -36,17 +31,12 @@ export class TemplatepreviewComponent {
           this.data.BUTTON_VALUES.trim()
         ) {
           this.data.BUTTON_VALUES = JSON.parse(this.data.BUTTON_VALUES);
-
         } else {
-
         }
       } catch (error) {
-
       }
     } else {
-
     }
-
     if (
       this.data.HEADER_VALUES !== null &&
       this.data.HEADER_VALUES !== undefined &&
@@ -57,7 +47,6 @@ export class TemplatepreviewComponent {
         'WhatsAppTemplateImages/' +
         this.data.HEADER_VALUES;
     }
-
     if (
       this.data.HEADER_VALUES !== null &&
       this.data.HEADER_VALUES !== undefined &&
@@ -68,7 +57,6 @@ export class TemplatepreviewComponent {
         'WhatsAppTemplateImages/' +
         this.data.HEADER_VALUES;
     }
-
     if (
       this.data.HEADER_VALUES !== null &&
       this.data.HEADER_VALUES !== undefined &&
@@ -79,20 +67,9 @@ export class TemplatepreviewComponent {
         'WhatsAppTemplateImages/' +
         this.data.HEADER_VALUES;
     }
-
-
-
-
-
-
-
-
-
     const fileExtension = this.getFileExtension(this.data.HEADER_VALUES);
     this.TYPE = fileExtension;
-
   }
-
   getFileExtension(fileName: string): string {
     if (fileName && fileName.includes('.')) {
       const extension = fileName.split('.').pop();
@@ -100,9 +77,7 @@ export class TemplatepreviewComponent {
     }
     return '';
   }
-
   showfile() { }
-
   check(inputValue: any) {
     if (inputValue) {
       const pattern = /{{\d+}/g;
@@ -126,11 +101,9 @@ export class TemplatepreviewComponent {
     }
     return inputValue;
   }
-
   check1() {
     const pattern = /{{\d+}/g;
     const matches = this.data.BODY_TEXT.match(pattern);
-
     if (matches && this.data.BODY_VALUES != undefined) {
       for (let i = 0; i < matches.length; i++) {
         this.inputBody = this.inputBody.replace(
@@ -148,7 +121,6 @@ export class TemplatepreviewComponent {
       this.inputBody = this.data.BODY_TEXT;
     }
   }
-
   convertMarkdownToHTML(text: any, BODY_VALUES: any): string {
     if (text) {
       text = text.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
@@ -171,39 +143,26 @@ export class TemplatepreviewComponent {
     }
     return text;
   }
-
   replacePlaceholders() {
-    // Ensure BODY_TEXT is defined and a string
-    let text = this.data?.BODY_TEXT || ''; // Use default empty string if undefined
-
-    // Initialize an empty array for BODY_VALUES
+    let text = this.data?.BODY_TEXT || ''; 
     let bodyValues: string[] = [];
-
-    // Validate and parse BODY_VALUES
     if (this.data?.BODY_VALUES && typeof this.data.BODY_VALUES === 'string') {
       try {
         bodyValues = JSON.parse(this.data.BODY_VALUES);
       } catch (error) {
-
-        bodyValues = []; // Fallback to empty array if parsing fails
+        bodyValues = []; 
       }
     } else {
-
     }
-
-    // Replace placeholders in BODY_TEXT with parsed BODY_VALUES
-    const pattern = /{{\d+}}/g; // Match placeholders like {{1}}, {{2}}, etc.
+    const pattern = /{{\d+}}/g; 
     const matches = text.match(pattern);
-
     if (matches) {
       matches.forEach((placeholder, index) => {
-        const value = bodyValues[index] || placeholder; // Use value or fallback to placeholder
+        const value = bodyValues[index] || placeholder; 
         text = text.replace(placeholder, value);
       });
     } else {
-
     }
-
     this.formattedBodyText = text;
   }
 }

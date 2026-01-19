@@ -15,7 +15,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { smsmaster } from 'src/app/Pages/Models/smsmaster';
 import { NgForm } from '@angular/forms';
-
 @Component({
   selector: 'app-sms',
   templateUrl: './sms.component.html',
@@ -75,7 +74,6 @@ export class SmsComponent {
   baseurl = appkeys.baseUrl;
   dynamicInputValue1;
   Value;
-
   Name: any = [];
   Type: any = [];
   array2;
@@ -167,9 +165,7 @@ export class SmsComponent {
     editable: true,
     spellcheck: true,
     height: '80px',
-    //  minHeight: '0',
     maxHeight: 'auto',
-
     width: 'auto',
     minWidth: '0',
     translate: 'yes',
@@ -258,7 +254,6 @@ export class SmsComponent {
   close(): void {
     this.drawerClose();
   }
-
   isValidMobile(mobile) {
     const expression = /^[6-9]\d{9}$/;
     return expression.test(String('' + mobile).toLowerCase());
@@ -267,22 +262,18 @@ export class SmsComponent {
     const expression = /}}[.,]?[a-zA-Z]+/;
     return expression.test(String('' + body).toLowerCase());
   }
-
   resetDrawer(websitebannerPage: NgForm) {
     this.data = new smsmaster();
     websitebannerPage.form.markAsPristine();
     websitebannerPage.form.markAsUntouched();
   }
-
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s_]*$/; // Updated pattern
+    const allowedPattern = /^[a-zA-Z\s_]*$/; 
     const char = String.fromCharCode(event.keyCode || event.which);
-
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
-
   save(addNew: boolean, websitebannerPage: NgForm): void {
     const pattern = /{{\d+}}/g;
     if (
@@ -319,21 +310,6 @@ export class SmsComponent {
       this.message.error('Please Select Category', '');
       isOk = false;
     }
-    // else if (
-    //   this.data.HEADER_FORMAT == 'T' &&
-    //   (this.text == undefined || this.text == null)
-    // ) {
-    //   this.message.error('Please Enter Text For Header', '');
-    //   isOk = false;
-    // } else if (
-    //   this.data.HEADER_FORMAT == 'M' &&
-    //   this.IMAGE == undefined &&
-    //   this.VIDEO_URL == undefined &&
-    //   this.DOCUMENT == undefined
-    // ) {
-    //   this.message.error('Please Select Media For Header', '');
-    //   isOk = false;
-    // }
     else if (
       this.data.LANGUAGE_CODE == undefined ||
       this.data.LANGUAGE_CODE == null
@@ -357,27 +333,6 @@ export class SmsComponent {
         isOk = false;
       }
     }
-    // else if (
-    //   this.matches1 != undefined &&
-    //   this.data.HEADER_VALUES != undefined
-    // ) {
-    //   if (this.matches1.length != this.data.HEADER_VALUES.length) {
-    //     this.message.error(
-    //       ' Count of variables in Header and sample values are mismatching  ',
-    //       ''
-    //     );
-    //     isOk = false;
-    //   }
-    // } else if (
-    //   this.matches1 != undefined &&
-    //   this.data.HEADER_VALUES == undefined
-    // ) {
-    //   this.message.error(
-    //     ' Count of variables in Header and sample values are mismatching  ',
-    //     ''
-    //   );
-    //   isOk = false;
-    // }
     else if (this.matches != undefined && this.data.BODY_VALUES != undefined) {
       if (this.matches.length != this.data.BODY_VALUES.length) {
         this.message.error(
@@ -427,7 +382,6 @@ export class SmsComponent {
             text: familyDetail.custom,
           });
         }
-
         if (familyDetail.Type === 'URL') {
           this.array1.push({
             type: 'URL',
@@ -436,7 +390,6 @@ export class SmsComponent {
             example: [familyDetail.tempinput],
           });
         }
-
         if (familyDetail.Type === 'PHONE_NUMBER') {
           this.array1.push({
             type: 'PHONE_NUMBER',
@@ -444,7 +397,6 @@ export class SmsComponent {
             phone_number: '+910' + familyDetail.mobile,
           });
         }
-
         if (familyDetail.Type === 'COPY_CODE') {
           this.array1.push({
             type: 'COPY_CODE',
@@ -456,18 +408,7 @@ export class SmsComponent {
       this.array1 = this.array1.filter(
         (item) => item.text !== undefined && item.text !== null
       );
-
       this.isSpinning = true;
-
-      // const filteredArray = this.array1.filter((item) => {
-      //   for (var i = 0; i < this.FamilyDetails.length; i++) {
-      //     if (item.type === this.FamilyDetails[i].Type) {
-      //       return true;
-      //     }
-      //   }
-      //   return false;
-      // });
-
       var datas = {
         WP_CLIENT_ID: this.userId,
         TEMPLATE_NAME: this.NAME,
@@ -486,46 +427,14 @@ export class SmsComponent {
         ),
         STATUS: 'S',
         IS_ACTIVE: this.data.IS_ACTIVE,
-        // HEADER_TYPE:
-        //   this.fileURL !== null
-        //     ? 'I'
-        //     : this.fileDataIMAGE_URL !== null
-        //     ? 'V'
-        //     : this.fileURLPDF !== null
-        //     ? 'D'
-        //     : 'T',
-        // HEADER_TEXT:
-        //   this.data.HEADER_TEXT !== null && this.data.HEADER_TEXT !== undefined
-        //     ? this.data.HEADER_TEXT.toString()
-        //     : '',
-        // HEADER_VALUES: this.data.HEADER_VALUES
-        //   ? this.data.HEADER_VALUES
-        //   : this.IMAGE
-        //   ? [this.mediaIdImg]
-        //   : this.VIDEO_URL
-        //   ? [this.mediaIdVid]
-        //   : this.DOCUMENT
-        //   ? [this.mediaIdDoc]
-        //   : '',
-
-        // FOOTER_TEXT:
-        //   this.data.FOOTER_TEXT !== null && this.data.FOOTER_TEXT !== undefined
-        //     ? this.data.FOOTER_TEXT.toString()
-        //     : '',
-        // BUTTON_VALUES: filteredArray,
       };
-
       if (this.data.ID) {
         if (this.data.DESCRIPTION == '') {
           this.data.DESCRIPTION = null;
         }
-        //     this.data.BODY_VALUES = Array.isArray(this.data.BODY_VALUES)
-        // ? this.data.BODY_VALUES
-        // : [this.data.BODY_VALUES];
         this.data.BODY_VALUES = Array.isArray(this.data.BODY_VALUES)
           ? JSON.stringify(this.data.BODY_VALUES)
           : JSON.stringify([this.data.BODY_VALUES]);
-
         this.api.updateSmsTemplate(this.data).subscribe(
           (successCode: any) => {
             if (successCode.code == '200') {
@@ -549,7 +458,6 @@ export class SmsComponent {
         datas.BODY_VALUES = Array.isArray(this.data.BODY_VALUES)
           ? JSON.stringify(this.data.BODY_VALUES)
           : JSON.stringify([this.data.BODY_VALUES]);
-
         this.api.createSmsTemplate(datas).subscribe(
           (successCode) => {
             if (successCode['code'] == '200') {
@@ -576,18 +484,15 @@ export class SmsComponent {
       }
     }
   }
-
   onFileSelected(event: any) {
     this.fileSizeimg = Number(
       parseFloat(String(event.target.files[0].size / 1024 / 1024)).toFixed(2)
     );
-
     if (this.fileSizeimg < 5) {
       this.visiblemedia = true;
       const reader = new FileReader();
       const [file] = event.target.files;
       reader.readAsDataURL(file);
-
       reader.onload = () => {
         this.image = reader.result as string;
       };
@@ -604,107 +509,13 @@ export class SmsComponent {
         }
       }
       this.IMAGE = this.baseurl + 'static/templateMedia/' + url;
-
       this.isSpinning = true;
-      // this.api
-      //   .onUpload(this.userId, 'templateMedia', this.fileURL, url)
-      //   .subscribe((successCode) => {
-      //     if (successCode.code == '200') {
-      //       this.mediaIdImg = successCode.mediaId;
-      //       this.message.success('Image Uploaded Successfully', '');
-      //       this.isSpinning = false;
-      //     }
-      //     (err) => {
-      //       if (err['ok'] == false)
-      //         this.message.error('Failed to Upload the Image', '');
-      //     };
-      //   });
     } else {
       this.message.error('Please Select Image having size less than 5 MB', '');
       this.fileURL = null;
       this.IMAGE = '';
     }
   }
-
-  // checkInput() {
-  //   if (this.data.HEADER_TEXT == '' || this.data.HEADER_TEXT == undefined) {
-  //     this.showDynamicInput = false;
-  //   }
-
-  //   const regex = /}}(?!)/;
-  //   if (this.data.HEADER_TEXT.includes('}}')) {
-  //     this.showDynamicInput = true;
-  //   }
-
-  //   if (this.data.HEADER_TEXT.match(regex)) {
-  //     this.i++;
-  //   } else {
-  //     this.inputValue = this.data.HEADER_TEXT;
-  //   }
-  //   this.check();
-  //   this.Date = new Date();
-  // }
-  // check() {
-  //   const pattern = /{{\d+}/g;
-  //   const matches = this.data.HEADER_TEXT.match(pattern);
-  //   if (matches && this.data.HEADER_VALUES != undefined) {
-  //     for (let i = 0; i < matches.length; i++) {
-  //       this.inputValue = this.inputValue.replace(
-  //         matches[i].toString() ? matches[i].toString() : this.inputValue,
-  //         this.data.HEADER_VALUES[i]
-  //           ? this.data.HEADER_VALUES[i]
-  //           : matches[i].toString()
-  //       );
-  //       this.inputValue = this.inputValue.replace(
-  //         this.data.HEADER_VALUES[i] + '}',
-  //         this.data.HEADER_VALUES[i]
-  //       );
-  //     }
-  //   } else {
-  //     this.inputValue = this.data.HEADER_TEXT;
-  //   }
-  // }
-
-  // check1() {
-  //   const pattern = /{{\d+}/g;
-  //   const matches = this.data.BODY_TEXT.match(pattern);
-
-  //   if (matches && this.data.BODY_VALUES != undefined) {
-  //     for (let i = 0; i < matches.length; i++) {
-  //       this.inputBody = this.inputBody.replace(
-  //         matches[i].toString() ? matches[i].toString() : this.inputBody,
-  //         this.data.BODY_VALUES[i]
-  //           ? this.data.BODY_VALUES[i]
-  //           : matches[i].toString()
-  //       );
-  //       this.inputBody = this.inputBody.replace(
-  //         this.data.BODY_VALUES[i] + '}',
-  //         this.data.BODY_VALUES[i] + ' '
-  //       );
-  //     }
-  //   } else {
-  //     this.inputBody = this.data.BODY_TEXT;
-  //   }
-  // }
-
-  // checkInput1() {
-  //   if (this.data.BODY_TEXT == '' || this.data.BODY_TEXT == undefined) {
-  //     this.showDynamicInput1 = false;
-  //   }
-  //   if (this.data.BODY_TEXT.includes('}}')) {
-  //     this.showDynamicInput1 = true;
-  //   }
-  //   const regex = /}}(?!)/;
-
-  //   if (this.data.BODY_TEXT.match(regex)) {
-  //     this.i++;
-  //   } else {
-  //     this.inputBody = this.data.BODY_TEXT;
-  //   }
-  //   this.check1();
-  //   this.Date = new Date();
-  // }
-
   checkInputURL1() {
     if (this.WEBSITE_URL == '' || this.WEBSITE_URL == undefined) {
       this.showDynamicInputURL = false;
@@ -713,7 +524,6 @@ export class SmsComponent {
       this.showDynamicInputURL = true;
     }
     const regex = /}}(?!)/;
-
     if (this.WEBSITE_URL.match(regex)) {
       this.i++;
     } else {
@@ -721,7 +531,6 @@ export class SmsComponent {
     }
     this.checkInputURL();
   }
-
   checkInputURL() {
     const pattern = /{{\d+}/g;
     const matches = this.WEBSITE_URL.match(pattern);
@@ -738,7 +547,6 @@ export class SmsComponent {
       }
     }
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -746,13 +554,10 @@ export class SmsComponent {
     }
     return true;
   }
-
   onFileSelected1(event: any) {
     this.fileSizevid = Number(
       parseFloat(String(event.target.files[0].size / 1024 / 1024)).toFixed(2)
     );
-
-    // //
     if (this.fileSizevid < 16) {
       this.visiblemedia = true;
       this.fileDataIMAGE_URL = <File>event.target.files[0];
@@ -763,30 +568,12 @@ export class SmsComponent {
         reader.onload = () => {
           this.video = reader.result as string;
         };
-
         var number = Math.floor(100000 + Math.random() * 900000);
-
         var fileExt = this.fileDataIMAGE_URL.name.split('.').pop();
-
         var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-
         var url = '';
         url = this.fileDataIMAGE_URL.name;
         this.isSpinning = true;
-        // this.api
-        //   .onUpload1(this.userId, 'templateMedia', this.fileDataIMAGE_URL, url)
-        //   .subscribe((successCode) => {
-        //     if (successCode.code == '200') {
-        //       this.mediaIdVid = successCode.mediaId;
-        //       this.message.success('Video Uploaded Successfully', '');
-        //       this.isSpinning = false;
-        //     }
-        //     (err) => {
-        //       if (err['ok'] == false)
-        //         this.message.error('Failed to Upload the Video', '');
-        //     };
-        //   });
-
         this.event = url;
         this.VIDEO_URL = this.baseurl + 'static/templateMedia/' + url;
       }
@@ -796,14 +583,12 @@ export class SmsComponent {
       this.VIDEO_URL = '';
     }
   }
-
   onFileSelected3(event) {
     this.fileURLPDF = <File>event.target.files[0];
     this.upload = event.target.files[0].name;
     this.DOCUMENT = this.imgurl + 'templateMedia/' + this.upload;
     let typeArry = event.target.files[0].name.split('.');
     this.TYPE = event.target.files[0].name.split('.')[typeArry.length - 1];
-
     this.fileSizedoc = Number(
       parseFloat(String(event.target.files[0].size / 1024 / 1024)).toFixed(2)
     );
@@ -813,19 +598,6 @@ export class SmsComponent {
     if (this.fileSizedoc < 100) {
       this.visiblemedia = true;
       this.isSpinning = true;
-      // this.api
-      //   .onUploadFiles(this.userId, this.fileURLPDF)
-      //   .subscribe((successCode) => {
-      //     if (successCode['code'] == '200') {
-      //       this.mediaIdDoc = successCode.mediaId;
-      //       this.message.success('File Uploaded Successfully', '');
-      //       this.isSpinning = false;
-      //     }
-      //     (err) => {
-      //       if (err['ok'] == false)
-      //         this.message.error('Failed to Upload the File', '');
-      //     };
-      //   });
     } else {
       this.message.error(
         'Please select Document having size less than 100MB',
@@ -848,11 +620,9 @@ export class SmsComponent {
     this.visiblemedia = false;
     this.DOCUMENT = '';
   }
-
   check1() {
     const pattern = /{{\d+}/g;
     const matches = this.data.TEMPLATE_BODY.match(pattern);
-
     if (matches && this.data.BODY_VALUES != undefined) {
       for (let i = 0; i < matches.length; i++) {
         this.inputBody = this.inputBody.replace(
@@ -878,7 +648,6 @@ export class SmsComponent {
       this.showDynamicInput1 = true;
     }
     const regex = /}}(?!)/;
-
     if (this.data.TEMPLATE_BODY.match(regex)) {
       this.i++;
     } else {
@@ -887,43 +656,6 @@ export class SmsComponent {
     this.check1();
     this.Date = new Date();
   }
-  // convertB() {
-  //   // Wrap the text in <strong> tags if not already present
-  //   if (this.data.TEMPLATE_BODY === undefined) {
-  //     this.data.TEMPLATE_BODY = '<strong></strong>';
-  //   }
-
-  //   // Ensure that new input is always inside the <strong> tags
-  //   const bodyTextWithoutTags = this.data.TEMPLATE_BODY.replace(
-  //     /<\/?strong>/g,
-  //     ''
-  //   ); // Remove existing tags
-  //   this.data.TEMPLATE_BODY = `<strong>${bodyTextWithoutTags}</strong>`;
-
-  //   this.checkInput1();
-  // }
-
-  // convertI() {
-  //   // this.data.TEMPLATE_BODY += '_';
-  //   // this.italici++;
-  //   // if (this.italici % 2 === 0) {
-  //   //   this.data.TEMPLATE_BODY = this.data.TEMPLATE_BODY.replace(/\_/g, '<em>');
-  //   // } else {
-  //   //   this.data.TEMPLATE_BODY = this.data.TEMPLATE_BODY.replace(/\_/g, '</em>');
-  //   // }
-  //   // this.checkInput1();
-
-  //   // Wrap the text in <em> tags if not already present
-  //   if (this.data.TEMPLATE_BODY === undefined) {
-  //     this.data.TEMPLATE_BODY = '<em></em>';
-  //   }
-
-  //   // Ensure that new input is always inside the <em> tags
-  //   const bodyTextWithoutTags = this.data.TEMPLATE_BODY.replace(/<\/?em>/g, ''); // Remove existing tags
-  //   this.data.TEMPLATE_BODY = `<em>${bodyTextWithoutTags}</em>`;
-
-  //   this.checkInput1();
-  // }
   convertB() {
     const textArea = document.getElementById(
       'messages2'
@@ -932,31 +664,24 @@ export class SmsComponent {
       textArea.selectionStart,
       textArea.selectionEnd
     );
-
     if (selectedText) {
-      // Wrap the selected text in <strong> tags
       const newText =
         textArea.value.slice(0, textArea.selectionStart) +
         `<strong>${selectedText}</strong>` +
         textArea.value.slice(textArea.selectionEnd);
-
       this.data.TEMPLATE_BODY = newText;
     } else {
-      // If no text is selected, apply <strong> around the whole body content
       if (this.data.TEMPLATE_BODY === undefined) {
         this.data.TEMPLATE_BODY = '<strong></strong>';
       }
-
       const bodyTextWithoutTags = this.data.TEMPLATE_BODY.replace(
         /<\/?strong>/g,
         ''
-      ); // Remove existing tags
+      ); 
       this.data.TEMPLATE_BODY = `<strong>${bodyTextWithoutTags}</strong>`;
     }
-
     this.checkInput1();
   }
-
   convertI() {
     const textArea = document.getElementById(
       'messages2'
@@ -965,28 +690,22 @@ export class SmsComponent {
       textArea.selectionStart,
       textArea.selectionEnd
     );
-
     if (selectedText) {
-      // Wrap the selected text in <em> tags
       const newText =
         textArea.value.slice(0, textArea.selectionStart) +
         `<em>${selectedText}</em>` +
         textArea.value.slice(textArea.selectionEnd);
-
       this.data.TEMPLATE_BODY = newText;
     } else {
-      // If no text is selected, apply <em> around the whole body content
       if (this.data.TEMPLATE_BODY === undefined) {
         this.data.TEMPLATE_BODY = '<em></em>';
       }
-
       const bodyTextWithoutTags = this.data.TEMPLATE_BODY.replace(
         /<\/?em>/g,
         ''
-      ); // Remove existing tags
+      ); 
       this.data.TEMPLATE_BODY = `<em>${bodyTextWithoutTags}</em>`;
     }
-
     this.checkInput1();
   }
   onEmojiSelect(event: any) {
@@ -1009,7 +728,6 @@ export class SmsComponent {
       });
     }
     var ev = Object.assign({}, event);
-
     var sub1 = '';
     var sub2 = '';
     sub1 = this.data.TEMPLATE_BODY.substring(0, this.cursorPosition);
@@ -1017,11 +735,9 @@ export class SmsComponent {
       this.cursorPosition,
       this.data.TEMPLATE_BODY.length
     );
-
     this.data.TEMPLATE_BODY = sub1 + `${ev.emoji.native}` + sub2;
     var t = sub1 + `${ev.emoji.native}`;
     this.cursorPosition = t.length;
-
     this.checkInput1();
   }
 }

@@ -1,4 +1,4 @@
-nz-form-item  {
+nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
@@ -11,13 +11,92 @@ nz-form-item  {
   transform: translate(-50%, -50%);
   z-index: 10;
   display: flex;
-  flex-direction: column; /* Vertical alignment */
+  flex-direction: column;
   align-items: center;
-  gap: 10px; /* Adds space between spinner and text */
+  gap: 10px;
 }
-
 .custom-spin-text {
   font-size: 16px;
   font-weight: 500;
-  color: #092B9C; /* Optional: Matches Ant Design's theme */
+  color: #092B9C;
+}
+.cls-left-info {
+  text-align: left;
+  padding-left: 10px;
+}
+.cls-right-search {
+  text-align: right;
+  padding-right: 5px;
+}
+.cls-inline-form {
+  display: inline-flex;
+}
+.cls-zero-margin-bottom {
+  margin-bottom: 0px !important;
+}
+.cls-search-input-group {
+  margin-left: 26px !important;
+}
+.cls-search-input {
+  height: 32px;
+}
+.cls-table-wrapper {
+  position: relative;
+}
+.cls-table-spacing {
+  white-space: pre-line;
+  padding-top: 10px;
+}
+.cls-checkbox-center {
+  text-align: center;
+}
+.cls-mapheader-row-uniq {
+  display: flex;
+  justify-content: space-between;
+}
+.cls-mapheader-left-uniq {
+  display: flex;
+}
+.cls-mapheader-lefttext-uniq {
+  text-align: left;
+  padding-left: 10px;
+}
+.cls-mapheader-nowrap-uniq {
+  white-space: pre-line;
+  text-align: center;
+}
+.cls-mapheader-right-uniq {
+  text-align: right;
+  padding-right: 5px;
+}
+.cls-mapheader-inlineform-uniq {
+  display: inline-flex;
+}
+.cls-mapheader-searchgroup-uniq {
+  margin-left: 26px !important;
+}
+.cls-mapheader-searchinput-uniq {
+  height: 32px;
+}
+.cls-mapping-table-wrapper {
+  position: relative;
+}
+.cls-mapping-table-spacing {
+  white-space: pre-line;
+  padding-top: 10px;
+}
+.cls-mapping-nowrap-cell {
+  white-space: pre-line;
+  text-align: center;
+}
+.cls-footer-cancel-gap {
+  margin-right: 8px;
+}
+.cls-center-col {
+  align-self: center;
+  text-align: center;
+  align-items: center;
+}
+.cls-arrow-icon {
+  font-size: 26px !important;
 }

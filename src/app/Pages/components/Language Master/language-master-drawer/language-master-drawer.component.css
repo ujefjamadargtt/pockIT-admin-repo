@@ -1,7 +1,20 @@
-nz-form-item  {
+nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 5px;
 }
-
+.langmaster-char-counter-red-10px {
+  color: red;
+  font-size: 10px;
+}
+.langmaster-footer-cancel-btn-mr12 {
+  margin-right: 12px;
+}
+.langmaster-dropdown-menu-item-rounded-white {
+  border-radius: 4px;
+  color: white !important;
+}
+.langmaster-dropdown-link-white {
+  color: white !important;
+}

@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-departments',
   templateUrl: './departments.component.html',
@@ -45,10 +44,8 @@ export class DepartmentsComponent implements OnInit {
   OPEN_TIME2 = null;
   CLOSE_TIME2 = null;
   DAYS = false;
-  //USER_ID = this.cookie.get("userId");
   org: any = [];
   orgId = this.cookie.get('orgId');
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -66,30 +63,19 @@ export class DepartmentsComponent implements OnInit {
     this.orgId = this.cookie.get('orgId');
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
-
-  // sort(sort: { key: string; value: string }): void {
-  //   this.sortKey = sort.key;
-  //   this.sortValue = sort.value;
-  //   this.search(true);
-  // }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -108,14 +94,12 @@ export class DepartmentsComponent implements OnInit {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -128,19 +112,15 @@ export class DepartmentsComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
-    // Country Filter
     if (this.depttext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.depttext.trim()}%'`;
     }
-    //Short Code
     if (this.Shortcodetext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SHORT_CODE LIKE '%${this.Shortcodetext.trim()}%'`;
     }
-    //Seq no
     if (this.Seqtext && this.Seqtext.toString().trim() !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -151,8 +131,6 @@ export class DepartmentsComponent implements OnInit {
         (likeQuery ? ' AND ' : '') +
         `TICKET_TIME_PERIOD LIKE '%${this.Timetext.toString().trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -160,11 +138,7 @@ export class DepartmentsComponent implements OnInit {
       likeQuery += `STATUS = ${this.statusFilter}`;
     }
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // this.sortKey = 'NAME';
-    // sort = 'asc';
-
     this.api
       .getAllDepartments(
         this.pageIndex,
@@ -185,7 +159,6 @@ export class DepartmentsComponent implements OnInit {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
@@ -202,37 +175,28 @@ export class DepartmentsComponent implements OnInit {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   filterloading: boolean = false;
-
   isDeleting: boolean = false;
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -240,13 +204,12 @@ export class DepartmentsComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -261,21 +224,15 @@ export class DepartmentsComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -289,7 +246,6 @@ export class DepartmentsComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -298,7 +254,6 @@ export class DepartmentsComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -315,9 +270,7 @@ export class DepartmentsComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -343,7 +296,6 @@ export class DepartmentsComponent implements OnInit {
       }
     );
   }
-
   onKeyupS(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -364,7 +316,6 @@ export class DepartmentsComponent implements OnInit {
     this.drawerData = new Department();
     this.drawerData.ORG_ID = Number(1);
     this.listOfData = [];
-
     this.api
       .getAllDepartments(
         1,
@@ -384,7 +335,6 @@ export class DepartmentsComponent implements OnInit {
         },
         (err) => { }
       );
-
     for (let i = 0; i < 7; i++) {
       this.listOfData.push({
         ID: 0,
@@ -397,22 +347,13 @@ export class DepartmentsComponent implements OnInit {
         CLOSE_TIME: null,
       });
     }
-
     this.OPEN_TIME2 = null;
     this.CLOSE_TIME2 = null;
     this.DAYS = false;
     this.drawerVisible = true;
   }
-
   @ViewChild(DepartmentComponent, { static: false })
   DepartmentComponentVar: DepartmentComponent;
-
-  // edit(data: Department): void {
-  //   this.drawerTitle = "Update Department";
-  //   this.drawerData = Object.assign({}, data);
-  //   this.drawerVisible = true;
-  //   this.DepartmentComponentVar.getallorg2(this.drawerData.ID);
-  // }
   edit(data: Department): void {
     this.drawerTitle = 'Update Department';
     this.drawerData = Object.assign({}, data);
@@ -435,24 +376,20 @@ export class DepartmentsComponent implements OnInit {
             this.drawerData.SEQUENCE_NO =
               Number(data['data'][0]['SEQUENCE_NO']) + 1;
           }
-
           this.totalRecords = data['count'];
           this.dataList = data['data'];
         },
         (err) => { }
       );
   }
-
   drawerClose(): void {
     this.drawerVisible = false;
     this.search();
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -464,7 +401,6 @@ export class DepartmentsComponent implements OnInit {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
   filterGroups: any[] = [
     {
@@ -482,7 +418,6 @@ export class DepartmentsComponent implements OnInit {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -499,15 +434,12 @@ export class DepartmentsComponent implements OnInit {
       groups: [],
     },
   ];
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -515,27 +447,21 @@ export class DepartmentsComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Department Filter';
-
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -544,13 +470,9 @@ export class DepartmentsComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -567,7 +489,6 @@ export class DepartmentsComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -603,7 +524,6 @@ export class DepartmentsComponent implements OnInit {
       ],
       placeholder: 'Enter Department Name',
     },
-
     {
       key: 'SHORT_CODE',
       label: 'Short Code',
@@ -646,7 +566,6 @@ export class DepartmentsComponent implements OnInit {
       ],
       placeholder: 'Enter Sequence Number',
     },
-
     {
       key: 'STATUS',
       label: 'Status',
@@ -664,7 +583,6 @@ export class DepartmentsComponent implements OnInit {
   ];
   oldFilter: any[] = [];
   isLoading = false;
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
@@ -709,10 +627,8 @@ export class DepartmentsComponent implements OnInit {
       this.isTimeApplied = false;
     }
   }
-
   Countryvisible = false;
   Shortcodetext: string = '';
-
   reset(): void {
     this.searchText = '';
     this.depttext = '';
@@ -725,7 +641,6 @@ export class DepartmentsComponent implements OnInit {
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;

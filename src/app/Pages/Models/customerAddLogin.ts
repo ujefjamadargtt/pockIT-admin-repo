@@ -20,7 +20,6 @@ export class customerAddLogin {
   ALTCOUNTRY_CODE: any
   IS_SPECIAL_CATALOGUE: boolean = false;
   CUSTOMER_DETAILS_ID: any
-
   IS_HAVE_GST: boolean = false;
   INDIVIDUAL_COMPANY_NAME: any;
   COMPANY_ADDRESS: any;

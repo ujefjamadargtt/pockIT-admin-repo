@@ -1,33 +1,16 @@
 <div>
   <form nz-form #accountMasterPage="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
-      <!-- <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon>Branch Name</nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Enter Branch Name">
-              <input nz-input autocomplete="off" placeholder="Enter Branch Name" (keypress)="alphaOnly($event)"
-                maxlength="128" name="name" [pattern]="namepatt" [(ngModel)]="data.NAME" required />
-            </nz-form-control>
-            <h6 style="color: red; font-size: 10px" *ngIf="
-                data.NAME != undefined && data.NAME != null && data.NAME != ''
-              ">
-              {{ data.NAME.length }}/128
-            </h6>
-          </nz-form-item>
-        </div>
-      </div> -->
       <div nz-row>
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Branch Name</nz-form-label>
             <nz-form-control nzHasFeedback nzErrorTip="Enter Branch Name">
-              <input nz-input placeholder="Enter Branch Name" (keypress)="alphaOnly($event)" maxlength="128"
-                autocomplete="off" name="name" [pattern]="namepatt" [(ngModel)]="data.NAME"
+              <input nz-input placeholder="Enter Branch Name" maxlength="128" autocomplete="off" name="name"
+                [pattern]="namepatt" [(ngModel)]="data.NAME" (keypress)="alphaOnly($event)"
                 (focus)="isFocused = 'branchName'" (blur)="isFocused = ''" required />
             </nz-form-control>
-            <!-- Dynamic Character Count -->
-            <h6 style="color: red; font-size: 10px" *ngIf="
+            <h6 class="char-count" *ngIf="
                 isFocused === 'branchName' ||
                 (data.NAME != undefined &&
                   data.NAME != null &&
@@ -39,28 +22,16 @@
           </nz-form-item>
         </div>
       </div>
-
       <div nz-row>
-        <!-- <div nz-col nzSpan="12">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Enter Short Code">
-              <input nz-input placeholder="Enter Short Code" name="CODE" [(ngModel)]="data.CODE" maxlength="8"
-                autocomplete="off" required (keypress)="commonFunction.allowOnlyaplhaandnum($event)" />
-            </nz-form-control>
-            <span style="color: red; font-size: 10px !important" *ngIf="data.CODE">{{ data.CODE.length }}/8</span>
-          </nz-form-item>
-        </div> -->
         <div nz-col nzSpan="12">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
             <nz-form-control nzHasFeedback nzErrorTip="Enter Short Code">
-              <input nz-input placeholder="Enter Short Code" name="CODE" [(ngModel)]="data.CODE" maxlength="8"
-                autocomplete="off" required (keypress)="commonFunction.allowOnlyaplhaandnum($event)"
+              <input nz-input placeholder="Enter Short Code" name="CODE" maxlength="8" autocomplete="off"
+                [(ngModel)]="data.CODE" required (keypress)="commonFunction.allowOnlyaplhaandnum($event)"
                 (focus)="isFocused = 'shortCode'" (blur)="isFocused = ''" />
             </nz-form-control>
-            <!-- Dynamic Character Count -->
-            <span style="color: red; font-size: 10px !important" *ngIf="
+            <span class="char-count" *ngIf="
                 isFocused === 'shortCode' ||
                 (data.CODE && isFocused === 'shortCode')
               ">
@@ -68,42 +39,19 @@
             </span>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="12">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
-
             <nz-form-control nzHasFeedback nzErrorTip="Enter Valid Sequence Number">
-              <nz-input-number style="width: 100%" name="seqno" placeholder="Enter Sequence Number" maxlength="10"
-                (keypress)="commonFunction.onlynum($event)" [(ngModel)]="data.SEQ_NO" [nzMin]="1" [nzStep]="1" required>
-              </nz-input-number>
+              <nz-input-number class="full-width" name="seqno" placeholder="Enter Sequence Number" maxlength="10"
+                [(ngModel)]="data.SEQ_NO" [nzMin]="1" [nzStep]="1" required
+                (keypress)="commonFunction.onlynum($event)"></nz-input-number>
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
-
       <div class="my-box">
         <span><b>Branch Address Details:</b></span>
-        <!-- <div nz-row>
-          <div nz-col nzSpan="24">
-            <nz-form-item>
-              <nz-form-label nzRequired nzNoColon>Address </nz-form-label>
-
-              <nz-form-control nzHasFeedback nzErrorTip="Please Enter Address">
-                <textarea nz-input rows="2" name="address1" autocomplete="off" placeholder="Enter Address"
-                  maxlength="512" required="required" [(ngModel)]="data.ADDRESS"></textarea>
-              </nz-form-control>
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  data.ADDRESS != undefined &&
-                  data.ADDRESS != null &&
-                  data.ADDRESS != ''
-                ">
-                {{ data.ADDRESS.length }}/512
-              </h6>
-            </nz-form-item>
-          </div>
-        </div> -->
-
         <div nz-row>
           <div nz-col nzSpan="24">
             <nz-form-item>
@@ -113,8 +61,7 @@
                   autocomplete="off" required [(ngModel)]="data.ADDRESS" (focus)="isFocused = 'address'"
                   (blur)="isFocused = ''"></textarea>
               </nz-form-control>
-              <!-- Dynamic Character Count -->
-              <h6 style="color: red; font-size: 10px" *ngIf="
+              <h6 class="char-count" *ngIf="
                   isFocused === 'address' ||
                   (data.ADDRESS && isFocused === 'address')
                 ">
@@ -123,14 +70,13 @@
             </nz-form-item>
           </div>
         </div>
-
         <div nz-row>
           <div nz-col nzSpan="12">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Country</nz-form-label>
               <nz-form-control nzHasFeedback nzErrorTip="Select Country">
                 <nz-select nzAllowClear nzShowSearch required nzPlaceHolder="Select Country" name="COUNTRY_ID"
-                  (ngModelChange)="getstate($event, true)" [(ngModel)]="data.COUNTRY_ID"
+                  [(ngModel)]="data.COUNTRY_ID" (ngModelChange)="getstate($event, true)"
                   [nzLoading]="isCountrySpinning">
                   <nz-option *ngFor="let role of country" [nzValue]="role.ID" [nzLabel]="role.NAME">
                   </nz-option>
@@ -138,20 +84,18 @@
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="12">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>State</nz-form-label>
               <nz-form-control nzHasFeedback nzErrorTip="Select State">
                 <nz-select nzAllowClear nzShowSearch required nzPlaceHolder="Select State" name="TEMP_STATE_ID"
-                  (ngModelChange)="getDistrict($event, true)" [(ngModel)]="data.STATE_ID" [nzLoading]="isStateSpinning">
+                  [(ngModel)]="data.STATE_ID" (ngModelChange)="getDistrict($event, true)" [nzLoading]="isStateSpinning">
                   <nz-option *ngFor="let role of state" [nzValue]="role.ID" [nzLabel]="role.NAME">
                   </nz-option>
                 </nz-select>
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="12">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>District</nz-form-label>
@@ -165,32 +109,6 @@
               </nz-form-control>
             </nz-form-item>
           </div>
-
-          <!-- <div nz-col nzSpan="12">
-            <nz-form-item>
-              <nz-form-label nzRequired nzNoColon>City</nz-form-label>
-              <nz-form-control nzHasFeedback nzErrorTip="Select City">
-                <nz-select
-                required
-                  nzAllowClear
-                  nzShowSearch
-                  nzPlaceHolder="Select City"
-                  name="TEMP_CITY_ID"
-                  [(ngModel)]="data.CITY_ID"
-                  [nzLoading]="isCitySpinning" 
-                 
-                >
-                  <nz-option
-                    *ngFor="let role of City1"
-                    [nzValue]="role.ID"
-                    [nzLabel]="role.NAME"
-                  >
-                  </nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
-          </div> -->
-
           <div nz-col nzSpan="12">
             <nz-form-item>
               <nz-form-label nzRequired nzNoColon>Pin Code</nz-form-label>
@@ -204,7 +122,6 @@
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="12">
             <nz-form-item>
               <nz-form-label nzNoColon>Status</nz-form-label>
@@ -219,25 +136,23 @@
       </div>
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button type="button" nz-button class="ant-btn" style="margin-right: 8px" (click)="close(accountMasterPage)">
+    <button type="button" nz-button class="ant-btn footer-btn" (click)="close(accountMasterPage)">
       <span>Cancel</span>
     </button>
-
     <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button [nzLoading]="isSpinning"
       nz-dropdown [nzDropdownMenu]="menu" (click)="save(false, accountMasterPage)">
       <span>Save & Close</span>
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
-          <a (click)="save(true, accountMasterPage)" style="color: white!important;">Save & New</a>
+        <li nz-menu-item class="menuc cm-save-new-menu">
+          <a class="cm-save-new-link" (click)="save(true, accountMasterPage)">
+            Save & New
+          </a>
         </li>
       </ul>
     </nz-dropdown-menu>
-
     <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
       (click)="save(false, accountMasterPage)">
       <span>Update & close</span>

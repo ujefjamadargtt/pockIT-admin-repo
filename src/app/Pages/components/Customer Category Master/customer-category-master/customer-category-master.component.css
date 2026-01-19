@@ -1,50 +1,166 @@
+.bo-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.bo-form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.bo-filter-btn-item {
+  width: 47px;
+}
+.bo-add-btn-item {
+  margin-right: 0px;
+}
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 .ant-drawer {
   z-index: 999 !important;
 }
-
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.bo-filter-row {
+  padding-top: 0px;
+}
+.bo-filter-loading {
+  text-align: center;
+}
+.bo-filter-card-col {
+  margin-bottom: 8px;
+}
+.bo-filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.bo-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.bo-filter-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.bo-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.bo-filter-actions-row {
+  margin-top: 7px;
+}
+.bo-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.bo-filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.bo-filter-tag-icon {
+  font-size: 10px !important;
+}
+.bo-filter-tag-last {
+  margin-right: 0px;
+}
+.bo-filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.bo-filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.bo-filter-footer-btn {
+  margin-right: 10px;
+}
+th {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
+}
+.search-box {
+  padding: 8px;
+}
+.search-box input {
+  width: 188px;
+  display: block;
+}
+.search-box button {
+  width: 90px;
+}
+.search-button {
+  margin-right: 8px;
+}
+nz-select {
+  width: 100%;
+}
+.ant-drawer {
+  z-index: 999 !important;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}
+.bo-table-preline {
+  white-space: pre-line;
+}
+.bo-edit-tag {
+  cursor: pointer;
+}
+.bo-edit-icon {
+  font-size: 15px;
+}
+.bo-filter-modal-title {
+  text-align: center;
 }

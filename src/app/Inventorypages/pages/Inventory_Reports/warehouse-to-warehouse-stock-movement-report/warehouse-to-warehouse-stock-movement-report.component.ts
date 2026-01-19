@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-warehouse-to-warehouse-stock-movement-report',
   templateUrl: './warehouse-to-warehouse-stock-movement-report.component.html',
@@ -21,7 +20,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     private datepipe: DatePipe,
     private _exportService: ExportService
   ) { }
-
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -44,7 +42,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
   columns: string[][] = [
     ['SOURCE_WAREHOUSE_NAME'],
     ['DATE'],
-    // ['TRANSFER_MODE'],
     ['DESTINATION_WAREHOUSE_NAME'],
     ['USER_NAME'],
   ];
@@ -74,11 +71,9 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search(true);
     }
   }
-
   onEnterKey2(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   onKeyupS2(keys) {
     const element = window.document.getElementById('button2');
@@ -90,20 +85,10 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search2();
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-  // keyup(event) {
-  //   if (this.searchText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.searchText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  // }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -112,23 +97,18 @@ export class WarehouseToWarehouseStockMovementReportComponent {
   isOrderDateApplied = false;
   isFinalAmountApplied = false;
   isOrderStatusApplied = false;
-
   grossAmountText: any = [];
   isGrossAmountApplied = false;
   GrossAmountVisible = false;
-
   taxrateText = '';
   istaxrateApplied = false;
   taxrateVisible = false;
-
   couponchargesText = '';
   iscouponchargesApplied = false;
   couponchargesVisible = false;
-
   discountchargesText = '';
   isdiscountchargesApplied = false;
   discountchargesVisible = false;
-
   onKeyup(event: KeyboardEvent): void {
     if (this.countrytext.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -137,20 +117,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search();
       this.isFilterApplied = false;
     }
-    // if (this.orderNumberText.length >= 3 && event.key === "Enter") {
-    //   this.search();
-    //   this.isOrderNumberApplied = true;
-    // } else if (this.orderNumberText.length == 0 && event.key === "Backspace") {
-    //   this.search();
-    //   this.isOrderNumberApplied = false;
-    // }
-    // if (this.orderDateText != null && event.key === 'Enter') {
-    //   this.search();
-    //   this.isOrderDateApplied = true;
-    // } else if (this.orderDateText == null && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isOrderDateApplied = false;
-    // }
     if (this.finalAmountText.length > 0 && event.key === 'Enter') {
       this.search();
       this.isFinalAmountApplied = true;
@@ -158,7 +124,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search();
       this.isFinalAmountApplied = false;
     }
-
     if (this.grossAmountText.length > 0 && event.key === 'Enter') {
       this.search();
       this.isGrossAmountApplied = true;
@@ -166,7 +131,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search();
       this.isGrossAmountApplied = false;
     }
-
     if (this.taxrateText.length > 0 && event.key === 'Enter') {
       this.search();
       this.istaxrateApplied = true;
@@ -174,39 +138,8 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search();
       this.istaxrateApplied = false;
     }
-
-    // if (this.couponchargesText.length > 0 && event.key === "Enter") {
-    //   this.search();
-    //   this.iscouponchargesApplied = true;
-    // } else if (
-    //   this.couponchargesText.length == 0 &&
-    //   event.key === "Backspace"
-    // ) {
-    //   this.search();
-    //   this.iscouponchargesApplied = false;
-    // }
-
-    // if (this.discountchargesText.length > 0 && event.key === "Enter") {
-    //   this.search();
-    //   this.isdiscountchargesApplied = true;
-    // } else if (
-    //   this.discountchargesText.length == 0 &&
-    //   event.key === "Backspace"
-    // ) {
-    //   this.search();
-    //   this.isdiscountchargesApplied = false;
-    // }
-
-    // if (this.orderStatusText.length >= 3 && event.key === "Enter") {
-    //   this.search();
-    //   this.isOrderStatusApplied = true;
-    // } else if (this.orderStatusText.length == 0 && event.key === "Backspace") {
-    //   this.search();
-    //   this.isOrderStatusApplied = false;
-    // }
   }
   filterQuery: string = '';
-
   submittedDateVisible = false;
   isSubmittedDateFilterApplied: boolean = false;
   StartDate: any = [];
@@ -219,12 +152,11 @@ export class WarehouseToWarehouseStockMovementReportComponent {
         this.isSubmittedDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isSubmittedDateFilterApplied = false;
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -233,22 +165,18 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   close() {
     this.jobdetailsshow = false;
     this.search()
@@ -256,15 +184,11 @@ export class WarehouseToWarehouseStockMovementReportComponent {
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
-  //For Input
   countrytext: string = '';
   orderNumberText: string = '';
-  // orderDateText: string = '';
   finalAmountText: string = '';
   orderStatusText: any;
   Countryvisible = false;
@@ -298,15 +222,7 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     this.search2();
   }
   orderDateText: any;
-
   onDateChange(selectedDate: any): void {
-    // this.orderDateText = selectedDate;
-    // if (selectedDate) {
-    //   this.search();  // Call the search function when the date is selected
-    //   this.isOrderDateApplied = true;
-    // } else {
-    //   this.isOrderDateApplied = false;
-    // }
     if (this.orderDateText && this.orderDateText.length === 2) {
       const [start, end] = this.orderDateText;
       if (start && end) {
@@ -314,18 +230,16 @@ export class WarehouseToWarehouseStockMovementReportComponent {
         this.isOrderDateApplied = true;
       }
     } else {
-      this.orderDateText = null; // or [] if you prefer
+      this.orderDateText = null; 
       this.search();
       this.isOrderDateApplied = false;
     }
   }
-
   resetDateFilter(): void {
     this.orderDateText = '';
     this.isOrderDateApplied = false;
-    this.search(); // Reset the search results
+    this.search(); 
   }
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -340,33 +254,18 @@ export class WarehouseToWarehouseStockMovementReportComponent {
   ];
   dataList: any = [];
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Customer Name', value: 'CUSTOMER_NAME' },
-    // { label: 'Short Code', value: 'SHORT_CODE' },
   ];
-
-  // new filter
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   isLoading = false;
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  //TabId: number; // Ensure TabId is defined and initialized
-
-  // new  Main filter
-
-  //Edit Code 3
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
+  savedFilters: any; 
+  currentClientId = 1; 
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -383,16 +282,13 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       groups: [],
     },
   ];
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
-
   filterClass: string = 'filter-invisible';
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -402,7 +298,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     }
   }
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -422,7 +317,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -430,27 +324,20 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   filterloading: boolean = false;
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(0, 0, 'id', 'desc', ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
       )
-      // Use USER_ID as a number
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -465,21 +352,15 @@ export class WarehouseToWarehouseStockMovementReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -493,8 +374,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       );
     this.filterQuery = '';
   }
-
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -503,12 +382,7 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
-
-
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -524,12 +398,10 @@ export class WarehouseToWarehouseStockMovementReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           }
         } else {
           this.message.error('Failed to delete filter.', '');
@@ -550,9 +422,7 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       }
     );
   }
-
   applyfilter(item) {
-
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -560,36 +430,20 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
-
-
   drawerflterClose(buttontype, updateButton): void {
-
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
-
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-
       this.loadFilters();
     }
   }
-
-
   openfilter() {
     this.drawerTitle = 'Warehouse To Warehouse Stock Movement Filter';
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -598,13 +452,9 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -621,7 +471,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -639,9 +488,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       },
     ];
   }
-
-
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
@@ -660,7 +506,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       ],
       placeholder: "Select Date",
     },
-
     {
       key: "SOURCE_WAREHOUSE_NAME",
       label: "Source Warehouse Name",
@@ -717,44 +562,28 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       ],
       placeholder: 'Enter Transfer Mode',
     },
-
-
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isDeleting: boolean = false;
-
-
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
   drawerTitle;
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
-
   excelData: any = [];
   exportLoading: boolean = false;
-
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -762,17 +591,14 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = '';
-      //this.sortKey = 'CUSTOMER_ID';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -785,8 +611,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
           .join(' OR ') +
         ')';
     }
-
-    // Country Filter
     if (this.countrytext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -795,8 +619,8 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `(DATE BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00')`;
@@ -804,16 +628,13 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     }
     if (this.orderDateText?.length === 2) {
       const [start, end] = this.orderDateText;
-
       if (start && end) {
         const formatDate = (date: Date) =>
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
-
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `ORDER_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -824,15 +645,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
         (likeQuery ? ' AND ' : '') +
         `SOURCE_WAREHOUSE_NAME LIKE '%${this.finalAmountText.trim()}%'`;
     }
-
-    // if (this.grossAmountText.length > 0) {
-    //   const filterMode = this.grossAmountText
-    //     .map((mode) => `'${mode}'`)
-    //     .join(',');
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') + `TRANSFER_MODE IN (${filterMode})`;
-    // }
-
     if (this.taxrateText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -843,18 +655,11 @@ export class WarehouseToWarehouseStockMovementReportComponent {
         (likeQuery ? ' AND ' : '') +
         `COUPON_CHARGES LIKE '%${this.couponchargesText.trim()}%'`;
     }
-
     if (this.discountchargesText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SERVICE_CHARGES LIKE '%${this.discountchargesText.trim()}%'`;
     }
-
-    // if (this.orderStatusText !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') + `ORDER_STATUS_NAME LIKE '%${this.orderStatusText.trim()}%'`;
-    // }
-
     if (this.orderStatusText?.length) {
       const categories = this.orderStatusText.join(',');
       likeQuery +=
@@ -863,14 +668,11 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     } else {
       this.isOrderStatusApplied = false;
     }
-
     if (this.Seqtext && this.Seqtext.toString().trim() !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SEQ_NO LIKE '%${this.Seqtext.toString().trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -878,10 +680,7 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       likeQuery += `ORDER_STATUS_NAME = '${this.statusFilter}'`;
     }
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // this.sortKey = 'NAME';
-    // sort = 'asc';
     if (exportInExcel == false) {
       this.api
         .stockMovementRequestnew(
@@ -978,8 +777,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
         obj1['Source warehouse name'] = this.excelData[i]['SOURCE_WAREHOUSE_NAME'];
         obj1['Destination warehouse name'] = this.excelData[i]['DESTINATION_WAREHOUSE_NAME'];
         obj1['User Name'] = this.excelData[i]['USER_NAME'];
-
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -998,17 +795,12 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     var obj1: any = new Object();
     if (this.excelData2.length > 0) {
       for (var i = 0; i < this.excelData2.length; i++) {
-        // obj1['Date'] = this.datepipe.transform(
-        //   this.excelData[i]['DATE'],
-        //   'dd/MMM/yyyy'
-        // );
         obj1['Item Name'] = this.excelData2[i]['INVENTORY_NAME'];
         obj1['Variant Name'] = this.excelData2[i]['VARIANT_NAME'];
         obj1['Serial No'] = this.excelData2[i]['SERIAL_NO'];
         obj1['Batch No'] = this.excelData2[i]['BATCH_NO'];
         obj1['Quantity'] = this.excelData2[i]['QUANTITY'];
         obj1['Unit'] = this.excelData2[i]['UNIT_NAME'];
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData2.length - 1) {
           this._exportService.exportExcel(
@@ -1062,20 +854,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search2();
       this.itemNameApplied = false;
     }
-    // if (this.orderNumberText.length >= 3 && event.key === "Enter") {
-    //   this.search();
-    //   this.isOrderNumberApplied = true;
-    // } else if (this.orderNumberText.length == 0 && event.key === "Backspace") {
-    //   this.search();
-    //   this.isOrderNumberApplied = false;
-    // }
-    // if (this.orderDateText != null && event.key === 'Enter') {
-    //   this.search();
-    //   this.isOrderDateApplied = true;
-    // } else if (this.orderDateText == null && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isOrderDateApplied = false;
-    // }
     if (this.varientNameText.length > 0 && event.key === 'Enter') {
       this.search2();
       this.varientNameApplied = true;
@@ -1083,7 +861,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search2();
       this.varientNameApplied = false;
     }
-
     if (this.serialNoText.length > 0 && event.key === 'Enter') {
       this.search2();
       this.serialNoApplied = true;
@@ -1091,7 +868,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search2();
       this.serialNoApplied = false;
     }
-
     if (this.batchNoText.length > 0 && event.key === 'Enter') {
       this.search2();
       this.batchNoApplied = true;
@@ -1113,35 +889,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
       this.search2();
       this.unitApplied = false;
     }
-    // if (this.couponchargesText.length > 0 && event.key === "Enter") {
-    //   this.search();
-    //   this.iscouponchargesApplied = true;
-    // } else if (
-    //   this.couponchargesText.length == 0 &&
-    //   event.key === "Backspace"
-    // ) {
-    //   this.search();
-    //   this.iscouponchargesApplied = false;
-    // }
-
-    // if (this.discountchargesText.length > 0 && event.key === "Enter") {
-    //   this.search();
-    //   this.isdiscountchargesApplied = true;
-    // } else if (
-    //   this.discountchargesText.length == 0 &&
-    //   event.key === "Backspace"
-    // ) {
-    //   this.search();
-    //   this.isdiscountchargesApplied = false;
-    // }
-
-    // if (this.orderStatusText.length >= 3 && event.key === "Enter") {
-    //   this.search();
-    //   this.isOrderStatusApplied = true;
-    // } else if (this.orderStatusText.length == 0 && event.key === "Backspace") {
-    //   this.search();
-    //   this.isOrderStatusApplied = false;
-    // }
   }
   search2(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText2.length < 3 && this.searchText2.length !== 0) {
@@ -1150,17 +897,14 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     if (reset) {
       this.pageIndex1 = 1;
       this.sortKey1 = '';
-      //this.sortKey = 'CUSTOMER_ID';
       this.sortValue1 = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue1.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText2 !== "") {
@@ -1203,13 +947,8 @@ export class WarehouseToWarehouseStockMovementReportComponent {
         (likeQuery ? ' AND ' : '') +
         `UNIT_NAME LIKE '%${this.unitText.trim()}%'`;
     }
-    // Country Filter
-
     this.loadingRecords2 = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // this.sortKey = 'NAME';
-    // sort = 'asc';
     if (exportInExcel == false) {
       this.api
         .getAllInnerStockMovementItemDetailsTableeee2(
@@ -1226,7 +965,6 @@ export class WarehouseToWarehouseStockMovementReportComponent {
               this.loadingRecords2 = false;
               this.totalRecords2 = data.body['count'];
               this.items = data.body['data'];
-              // this.TabId2 = data["TAB_ID"];
             } else if (data['status'] == 400) {
               this.loadingRecords2 = false;
               this.items = [];
@@ -1298,42 +1036,32 @@ export class WarehouseToWarehouseStockMovementReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex1 = pageIndex;
     this.pageSize1 = pageSize;
-
     if (this.pageSize1 != pageSize) {
       this.pageIndex1 = 1;
       this.pageSize1 = pageSize;
     }
-
     if (this.sortKey1 != sortField) {
       this.pageIndex1 = 1;
       this.pageSize1 = pageSize;
     }
-
     this.sortKey1 = sortField;
     this.sortValue1 = sortOrder;
-
     this.search2();
   }
   orderwisejobcardreport(data: any) {
     this.jobdetailsdata = data;
-    // this.getTechniciansJobs(data);
     this.search2();
-
-    //  this.jobdetaildrawerTitle = `View details of ${data.NAME}`;
     this.jobdetaildrawerTitle = `View Details`;
     this.jobdetailsshow = true;
   }
-
   drawersize = '1000';
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
     this.search()
   }
-  //Drawer Methods
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }
-
   orderId: any;
   getTechniciansJobs(data) {
     this.orderId = data.ID;

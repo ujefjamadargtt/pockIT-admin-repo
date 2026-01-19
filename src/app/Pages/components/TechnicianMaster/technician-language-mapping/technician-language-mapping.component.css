@@ -1,7 +1,40 @@
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
-  
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.lang-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0 10px;
+}
+.lang-full-width-select {
+  width: 100%;
+}
+.lang-add-btn {
+  margin-top: 29px;
+}
+.lang-table-wrapper {
+  position: relative;
+}
+.lang-preline-table {
+  white-space: pre-line;
+}
+.lang-preline-cell {
+  white-space: pre-line;
+}
+.lang-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lang-footer-cancel {
+  margin-right: 8px;
+}

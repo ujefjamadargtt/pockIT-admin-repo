@@ -8,7 +8,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-faqs',
   templateUrl: './faqs.component.html',
@@ -24,7 +23,6 @@ export class FaqsComponent implements OnInit {
   sortValue: string = 'desc';
   sortKey: string = 'ID';
   searchText: string = '';
-  // filterQuery: any;
   filterQuery: any = '';
   isFilterApplied: any = 'default';
   columns: string[][] = [
@@ -51,11 +49,7 @@ export class FaqsComponent implements OnInit {
       groups: [],
     },
   ];
-
-  //New Advance Filter
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -72,18 +66,12 @@ export class FaqsComponent implements OnInit {
       groups: [],
     },
   ];
-
   applicationId = Number(this.cookie.get('applicationId'));
   @ViewChild(FaqresponsesComponent, { static: false })
   faqResponse1: FaqresponsesComponent;
-  // @ViewChild(FaqComponent,{static:false}) myInputVariable: ElementRef;
-  // @ViewChild('inputFile') myInputVariable: ElementRef;
-
-  //drawer Variables
   drawerVisible: boolean;
   drawerTitle: string;
   drawerData: Faq = new Faq();
-
   drawerVisible1: boolean;
   drawerTitle1: string;
   drawerData1: Faq = new Faq();
@@ -96,15 +84,7 @@ export class FaqsComponent implements OnInit {
   ngOnInit() {
     this.search();
   }
-  // Basic Methods
-  // sort(sort: { key: string; value: string }): void {
-  //   this.sortKey = sort.key;
-  //   this.sortValue = sort.value;
-  //   this.search(true);
-  // }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -113,62 +93,47 @@ export class FaqsComponent implements OnInit {
       tooltip.hide();
     }
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.searchText.length >= 3 && event.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length == 0 && event.key === 'Backspace') {
       this.search(true);
     }
-
     if (this.FAQHeadNametext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.FAQHeadNametext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
-
     if (this.Questiontext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.Questiontext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
-
     if (this.Answertext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.Answertext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
-
-    // if (this.Tagstext.length >= 3 && event.key === 'Enter') {
-    //   this.search();
-    // } else if (this.Tagstext.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    // }
     if (this.faqTypetext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.faqTypetext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
-
     if (this.PositiveCounttext.length >= 0 && event.key === 'Enter') {
       this.search();
     } else if (
@@ -177,7 +142,6 @@ export class FaqsComponent implements OnInit {
     ) {
       this.search();
     }
-
     if (this.NegativeCounttext.length >= 0 && event.key === 'Enter') {
       this.search();
     } else if (
@@ -186,17 +150,14 @@ export class FaqsComponent implements OnInit {
     ) {
       this.search();
     }
-
     if (this.SequenceNotext.length >= 0 && event.key === 'Enter') {
       this.search();
     } else if (this.SequenceNotext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
@@ -204,13 +165,10 @@ export class FaqsComponent implements OnInit {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
@@ -219,10 +177,8 @@ export class FaqsComponent implements OnInit {
     { text: 'Customer', value: "'C'" },
     { text: 'Technician', value: "'T'" },
   ];
-
   statusFilter: string | undefined = undefined;
   FAQForFilter: string | undefined = undefined;
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
@@ -231,11 +187,9 @@ export class FaqsComponent implements OnInit {
     this.FAQForFilter = selectedFAQFor;
     this.search(true);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -243,7 +197,6 @@ export class FaqsComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -252,7 +205,6 @@ export class FaqsComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
@@ -264,25 +216,9 @@ export class FaqsComponent implements OnInit {
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = ' ';
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND (';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
-    // }
-
-    // if (likeQuery)
-    //   this.filterQuery = ' AND APPLICATION_ID=' + this.applicationId + likeQuery;
-    // else this.filterQuery = ' AND APPLICATION_ID=' + this.applicationId;
-
-    //
-
     var likeQuery = '';
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -293,7 +229,6 @@ export class FaqsComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (this.FAQHeadNametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -302,7 +237,6 @@ export class FaqsComponent implements OnInit {
     } else {
       this.isFAQHeadNameFilterApplied = false;
     }
-
     if (this.Questiontext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -311,7 +245,6 @@ export class FaqsComponent implements OnInit {
     } else {
       this.isQuestionFilterApplied = false;
     }
-
     if (this.Answertext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -320,14 +253,6 @@ export class FaqsComponent implements OnInit {
     } else {
       this.isAnswerFilterApplied = false;
     }
-
-    // if (this.Tagstext !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') + ` TAGS LIKE '%${this.Tagstext.trim()}%'`;
-    //   this.isTagsFilterApplied = true;
-    // } else {
-    //   this.isTagsFilterApplied = false;
-    // }
     if (this.faqTypetext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -336,7 +261,6 @@ export class FaqsComponent implements OnInit {
     } else {
       this.isfaqTypeFilterApplied = false;
     }
-
     if (this.PositiveCounttext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -345,7 +269,6 @@ export class FaqsComponent implements OnInit {
     } else {
       this.PositiveCountVisible = false;
     }
-
     if (this.NegativeCounttext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -354,7 +277,6 @@ export class FaqsComponent implements OnInit {
     } else {
       this.isNegativeCountFilterApplied = false;
     }
-
     if (this.SequenceNotext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -363,25 +285,19 @@ export class FaqsComponent implements OnInit {
     } else {
       this.isSequenceNoFilterApplied = false;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS = ${this.statusFilter}`;
     }
-    // Status Filter
     if (this.FAQForFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `FAQ_TYPE = ${this.FAQForFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getAllFaqs(
         this.pageIndex,
@@ -406,7 +322,6 @@ export class FaqsComponent implements OnInit {
         (err) => { }
       );
   }
-  //Drawer Methods
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
@@ -420,12 +335,7 @@ export class FaqsComponent implements OnInit {
     this.drawerData.FAQ_HEAD_ID = null;
     this.drawerData.QUESTION = '';
     this.drawerData.ANSWER = '';
-    // this.drawerData.TAGS = '';
     this.drawerData.URL = '';
-    // this.drawerData.TAGS_STRING = [];
-    // this.form.nativeElement.reset()
-    // this.myInputVariable.nativeElement.value = '';
-
     this.drawerVisible = true;
     this.api.getAllFaqs(1, 1, 'SEQ_NO', 'desc', '').subscribe(
       (data) => {
@@ -442,32 +352,23 @@ export class FaqsComponent implements OnInit {
   URL;
   edit(data: Faq): void {
     this.drawerTitle = 'Update FAQ';
-    // try {
-    //   data.TAGS_STRING = data.TAGS.split(',');
-    // } catch (error) {
-    //   data.TAGS_STRING = [];
-    // }
     this.drawerData = Object.assign({}, data);
     this.URL = data.URL;
     this.drawerVisible = true;
-
     if (this.drawerData.URL != ' ' && this.drawerData.URL != null)
       this.drawerData.URL = this.drawerData.URL;
     else this.drawerData.URL = null;
   }
-
   ViewResponses(data: Faq) {
     this.drawerTitle1 = 'FAQ Responses';
     this.drawerData1 = Object.assign({}, data);
     this.drawerVisible1 = true;
     this.faqResponse1.applyfilter(data.ID);
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.search();
     this.drawerVisible1 = false;
@@ -477,49 +378,36 @@ export class FaqsComponent implements OnInit {
     this.FAQHeadNametext = '';
     this.Questiontext = '';
     this.Answertext = '';
-    // this.Tagstext = '';
     this.faqTypetext = '';
     this.PositiveCounttext = '';
     this.NegativeCounttext = '';
     this.SequenceNotext = '';
-
     this.search();
   }
-
-  //Column Filter
-
   FAQHeadNameVisible: boolean = false;
   isFAQHeadNameFilterApplied = false;
   FAQHeadNametext: string = '';
-
   QuestionVisible: boolean = false;
   isQuestionFilterApplied = false;
   Questiontext: string = '';
-
   AnswerVisible: boolean = false;
   isAnswerFilterApplied = false;
   Answertext: string = '';
-
   tagsVisible: boolean = false;
   isTagsFilterApplied = false;
   Tagstext: string = '';
-
   PositiveCountVisible: boolean = false;
   isPositiveCountFilterApplied = false;
   PositiveCounttext: string = '';
-
   NegativeCountVisible: boolean = false;
   isNegativeCountFilterApplied = false;
   NegativeCounttext: string = '';
-
   SequenceNoVisible: boolean = false;
   isSequenceNoFilterApplied = false;
   SequenceNotext: string = '';
-
   faqTypeVisible: boolean = false;
   isfaqTypeFilterApplied = false;
   faqTypetext: string = '';
-  // Advance Filter
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
@@ -535,14 +423,11 @@ export class FaqsComponent implements OnInit {
   isModalVisible: any;
   filterClass: string = 'filter-invisible';
   filterloading: boolean = false;
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -550,13 +435,12 @@ export class FaqsComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -571,18 +455,15 @@ export class FaqsComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -597,7 +478,6 @@ export class FaqsComponent implements OnInit {
     this.filterQuery = '';
   }
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -614,7 +494,6 @@ export class FaqsComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
@@ -639,19 +518,15 @@ export class FaqsComponent implements OnInit {
       }
     );
   }
-
   selectedFilter: string | null = null;
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
-
     this.isfilterapply = false;
     this.filterQuery = '';
     this.search();
     sessionStorage.removeItem('ID');
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -660,19 +535,14 @@ export class FaqsComponent implements OnInit {
     this.search(true);
     sessionStorage.setItem('ID', item.ID);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   applyCondition: any;
   openfilter() {
     this.drawerTitle = 'FAQ Filter';
     this.applyCondition = '';
-    // this.filterFields[3]['options'] = this.categoryData;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -681,14 +551,10 @@ export class FaqsComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
     this.drawerFilterVisible = true;
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -705,7 +571,6 @@ export class FaqsComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -723,38 +588,29 @@ export class FaqsComponent implements OnInit {
       },
     ];
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
-
     this.filterData = data;
     this.EditQueryData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
-    // this.filterFields[3]['options'] = this.categoryData;
   }
   oldFilter: any[] = [];
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   drawerflterClose(buttontype, updateButton) {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
@@ -764,7 +620,6 @@ export class FaqsComponent implements OnInit {
   get filtercloseCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'FAQ_HEAD_NAME',
@@ -780,7 +635,6 @@ export class FaqsComponent implements OnInit {
       ],
       placeholder: 'Enter FAQ Head Name',
     },
-
     {
       key: 'QUESTION',
       label: 'Question',
@@ -809,20 +663,6 @@ export class FaqsComponent implements OnInit {
       ],
       placeholder: 'Enter Answer',
     },
-    // {
-    //   key: 'TAGS',
-    //   label: 'Tags',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Tags',
-    // },
     {
       key: 'POSITIVE_COUNT',
       label: 'Positive Count',
@@ -866,17 +706,10 @@ export class FaqsComponent implements OnInit {
       placeholder: 'Status',
     },
   ];
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // drawerflterClose(): void {
-  //   this.drawerFilterVisible = false;
-  //   this.loadFilters();
-  // }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }

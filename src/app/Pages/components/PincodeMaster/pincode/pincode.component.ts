@@ -6,9 +6,7 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CookieService } from 'ngx-cookie-service';
 import { pincode } from 'src/app/Pages/Models/pincode';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-// declare let L: any;
 declare const google: any;
-
 @Component({
   selector: 'app-pincode',
   templateUrl: './pincode.component.html',
@@ -18,9 +16,7 @@ export class PincodeComponent {
   @Input() drawerClose: Function;
   @Input() data: pincode;
   @Input() drawerVisible: boolean;
-
   public commonFunction = new CommonFunctionService();
-
   loadingRecords = true;
   isSpinning = false;
   isOk = true;
@@ -35,14 +31,12 @@ export class PincodeComponent {
     private message: NzNotificationService
   ) { }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
-
   ngOnInit() {
     this.getCountry();
     if (this.data?.COUNTRY_ID) {
@@ -52,22 +46,18 @@ export class PincodeComponent {
       this.getDistrictByState(this.data.STATE_ID, false);
     }
     if (this.data.ID) {
-      // this.data.PINCODE = this.data.PINCODE_NUMBER;
     }
   }
-
   getCountryNameById(countryId: any): string {
     const country = this.CountryData.find((data: any) => data.ID === countryId);
     return country ? country.NAME : '';
   }
-
   getsistrictNameById(countryId: any): string {
     const country = this.DistrictData.find(
       (data: any) => data.ID === countryId
     );
     return country ? country.NAME : '';
   }
-
   getstateNameById(countryId: any): string {
     const country = this.StateData.find((data: any) => data.ID === countryId);
     return country ? country.NAME : '';
@@ -77,26 +67,21 @@ export class PincodeComponent {
       const { COUNTRY_ID, STATE } = this.data;
       if (COUNTRY_ID) {
         this.getStatesByCountry(COUNTRY_ID, false);
-        // this.getpincode();
       }
       if (STATE) {
         this.getDistrictByState(STATE, false);
-        // this.getpincode();
       }
     }
   }
-
   close(accountMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     this.data = new pincode();
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
   }
-
   save(addNew: boolean, accountMasterPage: NgForm): void {
     this.isOk = true;
     if (
@@ -141,10 +126,6 @@ export class PincodeComponent {
       this.isOk = false;
       this.message.error('Please Select District Name', '');
     }
-    // else if (!this.data.OFFICE_NAME || this.data.OFFICE_NAME.trim() == '') {
-    //   this.isOk = false;
-    //   this.message.error('Please Enter Office Name', '');
-    // } 
     else if (!this.data.PINCODE || this.data.PINCODE.trim() == '') {
       this.isOk = false;
       this.message.error('Please Enter Pincode', '');
@@ -156,7 +137,6 @@ export class PincodeComponent {
       this.isOk = false;
       this.message.error('Please Select Pincode For', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       this.data.COUNTRY_NAME = this.countryName;
@@ -178,7 +158,6 @@ export class PincodeComponent {
         if (this.data.HEAD_OFFICE === '') {
           this.data.HEAD_OFFICE = null;
         }
-
         this.api.updatePincode(this.data).subscribe(
           (successCode) => {
             if (successCode['code'] == 200) {
@@ -186,9 +165,7 @@ export class PincodeComponent {
                 'Pincode Information Updated Successfully',
                 ''
               );
-
               if (!addNew) this.drawerClose();
-
               this.isSpinning = false;
               this.resetDrawer(accountMasterPage);
             } else if (successCode['code'] == 300) {
@@ -222,7 +199,6 @@ export class PincodeComponent {
                 'Pincode Information Saved Successfully',
                 ''
               );
-
               if (!addNew) {
                 this.drawerClose();
                 this.resetDrawer(accountMasterPage);
@@ -249,13 +225,11 @@ export class PincodeComponent {
               );
               this.isSpinning = false;
             }
-
           }
         );
       }
     }
   }
-
   City1: any = [];
   CountryData: any = [];
   isContrySpinning = false;
@@ -281,10 +255,8 @@ export class PincodeComponent {
         }
       );
   }
-
   StateData: any = [];
   isStateSpinning = false;
-
   getStatesByCountry(countryId: any, value: boolean) {
     if (value == true) {
       this.data.STATE = null;
@@ -293,7 +265,6 @@ export class PincodeComponent {
       this.DistrictData = [];
     }
     this.countryName = this.getCountryNameById(countryId);
-
     this.isStateSpinning = true;
     this.api
       .getState(
@@ -320,7 +291,6 @@ export class PincodeComponent {
         }
       );
   }
-
   getDistrictByState(stateId: any, value: boolean) {
     if (value == true) {
       this.data.DISTRICT = null;
@@ -357,7 +327,6 @@ export class PincodeComponent {
   }
   DistrictData: any = [];
   isDistSpinning = false;
-
   mapDraweVisible = false;
   mapDrawerTitle = 'Select Location';
   map2: any;
@@ -391,9 +360,6 @@ export class PincodeComponent {
   floor: any = '';
   placeName: any = ''
   openmapModal() {
-
-
-
     if (
       !this.data.PINCODE ||
       this.data.PINCODE == '' ||
@@ -404,9 +370,7 @@ export class PincodeComponent {
     } else if (this.address4) {
       this.noaddress3 = false;
     }
-
     let addressParts: any = [];
-
     if (this.data.COUNTRY_ID) {
       let country = this.CountryData.find(
         (c) => c.ID === this.data.COUNTRY_ID
@@ -426,13 +390,6 @@ export class PincodeComponent {
     if (this.data.PINCODE) {
       addressParts.push(this.data.PINCODE);
     }
-
-    // if (Number(this.data.LATTITUDE) && Number(this.data.LATTITUDE)) {
-    //   this.selectedLocation = addressParts.join(', ');
-    // } else {
-    //   this.selectedLocation = '';
-    // }
-
     if ((Number(this.data.LATTITUDE) && Number(this.data.LONGITUDE)) ||
       (this.data.PINCODE !== null && this.data.PINCODE !== undefined && this.data.PINCODE !== '') ||
       (this.data.COUNTRY_ID !== null && this.data.COUNTRY_ID !== undefined && this.data.COUNTRY_ID !== '')) {
@@ -440,11 +397,7 @@ export class PincodeComponent {
     } else {
       this.selectedLocation = '';
     }
-
-
     this.mapDraweVisible = true;
-
-    // Set search box value and trigger search after modal opens
     setTimeout(() => {
       const searchBox = document.getElementById(
         'searchBox'
@@ -452,74 +405,52 @@ export class PincodeComponent {
       if (searchBox) {
         if (this.selectedLocation !== '' && this.selectedLocation !== null && this.selectedLocation !== undefined) {
           searchBox.value = this.selectedLocation || '';
-
         } else {
           searchBox.value = '';
-
         }
-        // this.handleSearch(this.selectedLocation);
-
         this.handleSearch({ target: { value: this.selectedLocation } });
       }
     }, 100);
-
     if (!this.data.COUNTRY_ID || !this.data.PINCODE) {
-      // Convert latitude and longitude to numbers
       this.data.LATTITUDE = Number(this.data.LATTITUDE);
       this.data.LONGITUDE = Number(this.data.LONGITUDE);
-
-      // this.mapDraweVisible = true;
       setTimeout(() => {
         this.loadMap();
       }, 5);
     }
     if (this.data.ID) {
-      // Convert latitude and longitude to numbers
       this.data.LATTITUDE = this.data.LATTITUDE;
       this.data.LONGITUDE = this.data.LONGITUDE;
-      // this.selectedLocation = '';
       if (this.data.LATTITUDE && this.data.LONGITUDE) {
         this.selectedLocation = '';
       }
-      // this.mapDraweVisible = true;
       setTimeout(() => {
         this.loadMap();
       }, 5);
     }
   }
-
   loadMap() {
     const map2Element = document.getElementById('map');
     if (!map2Element) return;
-
     const lat = Number(this.data.LATTITUDE) || 20.5937;
     const lng = Number(this.data.LONGITUDE) || 78.9629;
-
     this.map2 = new google.maps.Map(map2Element, {
       center: { lat, lng },
       zoom: this.data.LATTITUDE && this.data.LONGITUDE ? 14 : 5,
     });
-
     if (!isNaN(lat) && !isNaN(lng)) {
       this.marker = new google.maps.Marker({
         position: { lat, lng },
         map: this.map2,
       });
-
       this.getAddress(lat, lng);
     }
-
     const input = document.getElementById('searchBox') as HTMLInputElement;
     if (!input) return;
-
     const searchBox = new google.maps.places.SearchBox(input);
-    // this.map2.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-
-
     searchBox.addListener('places_changed', () => {
       const places = searchBox.getPlaces();
       if (!places || places.length === 0) return;
-
       const place = places[0];
       const lat = place.geometry?.location?.lat() || 0;
       const lng = place.geometry?.location?.lng() || 0;
@@ -527,34 +458,25 @@ export class PincodeComponent {
       var formattedaddress: any = ''
       formattedaddress = place?.formatted_address || '';
       this.selectedLocation = formattedaddress;
-
       this.map2.setCenter({ lat, lng });
       setTimeout(() => {
-        this.map2.setZoom(19); // Try 19–21
+        this.map2.setZoom(19); 
       }, 100);
-
-
       if (this.marker) {
         this.marker.setMap(null);
-        //  this.marker.setMap(null);
         this.marker = null;
       }
       this.marker = new google.maps.Marker({
         position: { lat, lng },
         map: this.map2,
       });
-
       this.getAddress(lat, lng, place);
     });
-
     this.map2.addListener('click', (event: any) => {
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
-
-
       if (this.marker) {
         this.marker.setMap(null);
-        //  this.marker.setMap(null);
         this.marker = null;
       }
       this.marker = new google.maps.Marker({
@@ -567,72 +489,53 @@ export class PincodeComponent {
       this.getAddress(lat, lng);
     });
   }
-
   handleSearch(event: any) {
     const query = event.target.value;
-
     let lat = this.data.LATTITUDE ? parseFloat(this.data.LATTITUDE) : 18.5204;
     let lng = this.data.LONGITUDE ? parseFloat(this.data.LONGITUDE) : 73.8567;
-
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
-
     this.map2 = new google.maps.Map(mapElement, {
       center: { lat, lng },
       zoom: this.data.LATTITUDE && this.data.LONGITUDE ? 14 : 5,
     });
-
     this.marker = new google.maps.Marker({
       position: { lat, lng },
       map: this.map2,
     });
-
     const input = document.getElementById('searchBox') as HTMLInputElement;
     if (input) {
-
-
       const autocomplete = new google.maps.places.Autocomplete(input);
-
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
         if (!place.geometry || !place.geometry.location) return;
         lat = place.geometry.location.lat();
         lng = place.geometry.location.lng();
-
         this.placeName = place?.name || '';
-
-
-        this.getAddress(lat, lng, place); // Still use OSM for better address sometimes
-
+        this.getAddress(lat, lng, place); 
         this.map2.setCenter(place.geometry.location);
         setTimeout(() => {
-          this.map2.setZoom(19); // Try 19–21
+          this.map2.setZoom(19); 
         }, 100);
         this.marker.setPosition(place.geometry.location);
       });
     }
-
     if (query !== null && query !== undefined && query !== '') {
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ address: query }, (results, status) => {
         if (status === 'OK' && results[0]) {
           const location = results[0].geometry.location;
           lat = location.lat();
           lng = location.lng();
-
           this.getAddress(lat, lng, null);
-
           this.map2.setCenter(location);
           setTimeout(() => {
-            this.map2.setZoom(19); // Try 19–21
+            this.map2.setZoom(19); 
           }, 100);
           this.marker.setPosition(location);
         }
       });
     }
-
-
     this.map2.addListener('click', (event: any) => {
       lat = event.latLng.lat();
       lng = event.latLng.lng();
@@ -640,24 +543,20 @@ export class PincodeComponent {
       var formattedaddress1: any = ''
       formattedaddress1 = '';
       this.selectedLocation = formattedaddress1;
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ location: { lat, lng } }, (results, status) => {
         if (status === 'OK' && results[0]) {
           const placeId = results[0].place_id;
-
-          // Get full place details using placeId
           const service = new google.maps.places.PlacesService(this.map2);
           service.getDetails({ placeId: placeId }, (placeResult, placeStatus) => {
             if (placeStatus === 'OK' && placeResult) {
-              this.placeName = placeResult.name || ''; // <- Now you get name too
-              this.getAddress(lat, lng, placeResult);  // Call your function with place
+              this.placeName = placeResult.name || ''; 
+              this.getAddress(lat, lng, placeResult);  
             } else {
               this.getAddress(lat, lng, null);
             }
           });
         } else {
-          // fallback if geocoding fails
           console.warn('Geocoder failed:', status);
           this.getAddress(lat, lng, null);
         }
@@ -666,69 +565,51 @@ export class PincodeComponent {
   }
   handleSearch1(event: any) {
     const query = event.target.value;
-
     let lat = this.data.LATTITUDE ? parseFloat(this.data.LATTITUDE) : 18.5204;
     let lng = this.data.LONGITUDE ? parseFloat(this.data.LONGITUDE) : 73.8567;
-
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
-
     this.map2 = new google.maps.Map(mapElement, {
       center: { lat, lng },
       zoom: this.data.LATTITUDE && this.data.LONGITUDE ? 14 : 5,
     });
-
     this.marker = new google.maps.Marker({
       position: { lat, lng },
       map: this.map2,
     });
-
     const input = document.getElementById('searchBox') as HTMLInputElement;
     if (input) {
-
-
       const autocomplete = new google.maps.places.Autocomplete(input);
-
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
         if (!place.geometry || !place.geometry.location) return;
         lat = place.geometry.location.lat();
         lng = place.geometry.location.lng();
-
         this.placeName = place?.name || '';
-
-
-        this.getAddress(lat, lng, place); // Still use OSM for better address sometimes
-
+        this.getAddress(lat, lng, place); 
         this.map2.setCenter(place.geometry.location);
         setTimeout(() => {
-          this.map2.setZoom(19); // Try 19–21
+          this.map2.setZoom(19); 
         }, 100);
         this.marker.setPosition(place.geometry.location);
       });
     }
-
     if (query !== null && query !== undefined && query !== '') {
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ address: query }, (results, status) => {
         if (status === 'OK' && results[0]) {
           const location = results[0].geometry.location;
           lat = location.lat();
           lng = location.lng();
-
           this.getAddress(lat, lng, null);
-
           this.map2.setCenter(location);
           setTimeout(() => {
-            this.map2.setZoom(19); // Try 19–21
+            this.map2.setZoom(19); 
           }, 100);
           this.marker.setPosition(location);
         }
       });
     }
-
-
     this.map2.addListener('click', (event: any) => {
       lat = event.latLng.lat();
       lng = event.latLng.lng();
@@ -736,24 +617,20 @@ export class PincodeComponent {
       var formattedaddress11: any = ''
       formattedaddress11 = '';
       this.selectedLocation = formattedaddress11;
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ location: { lat, lng } }, (results, status) => {
         if (status === 'OK' && results[0]) {
           const placeId = results[0].place_id;
-
-          // Get full place details using placeId
           const service = new google.maps.places.PlacesService(this.map2);
           service.getDetails({ placeId: placeId }, (placeResult, placeStatus) => {
             if (placeStatus === 'OK' && placeResult) {
-              this.placeName = placeResult.name || ''; // <- Now you get name too
-              this.getAddress(lat, lng, placeResult);  // Call your function with place
+              this.placeName = placeResult.name || ''; 
+              this.getAddress(lat, lng, placeResult);  
             } else {
               this.getAddress(lat, lng, null);
             }
           });
         } else {
-          // fallback if geocoding fails
           console.warn('Geocoder failed:', status);
           this.getAddress(lat, lng, null);
         }
@@ -777,7 +654,6 @@ export class PincodeComponent {
       this.DistrictData = [];
     }
     this.countryName = this.getCountryNameById(countryId);
-
     this.isStateSpinning = true;
     this.api
       .getState(
@@ -811,7 +687,6 @@ export class PincodeComponent {
         }
       );
   }
-
   getDistrictByLocationFetch(stateId: any, value: boolean, postcode: any, distt: any) {
     if (value == true) {
       this.data.DISTRICT = null;
@@ -837,7 +712,6 @@ export class PincodeComponent {
               if (DistrictDatas !== null && DistrictDatas !== undefined && DistrictDatas !== '') {
                 this.data.DISTRICT = Number(DistrictDatas);
                 this.getData(DistrictDatas);
-
               }
             }
           } else {
@@ -851,7 +725,6 @@ export class PincodeComponent {
         }
       );
   }
-
   getAddress(lat: number, lng: number, placeId?: any) {
     const geocoder = new google.maps.Geocoder();
     const latlng = { lat, lng };
@@ -867,10 +740,8 @@ export class PincodeComponent {
     this.districtSearch = '';
     this.street_number = '';
     this.subpremise = '';
-    // this.placeName = '';
     this.floor = '';
     const geocodeRequest = placeId?.place_id ? { placeId: placeId.place_id } : { location: latlng };
-
     geocoder.geocode(geocodeRequest, (results, status) => {
       if (status === 'OK' && results[0]) {
         const addressComponents: any = results[0].address_components;
@@ -886,7 +757,6 @@ export class PincodeComponent {
             if (types.includes('country')) {
               this.countrySearch = component?.long_name || '';
             }
-
             if (types.includes('administrative_area_level_3')) {
               this.districtSearch = component?.long_name || '';
             }
@@ -895,11 +765,8 @@ export class PincodeComponent {
             }
           });
         }
-
-        // Preserve coordinates
         this.data.LATTITUDE = lat;
         this.data.LONGITUDE = lng;
-
         if (this.data.ID || !this.noaddress3) {
           this.data.PINCODE = this.data.PINCODE;
         } else {
@@ -911,23 +778,19 @@ export class PincodeComponent {
         }
         this.selectedLocation = this.address2
       } else {
-        // this.selectedLocation = this.selectedLocation || {};
         this.selectedLocation = '';
         console.error('Geocoder failed due to: ' + status);
       }
     });
   }
-
   closemapModal() {
     this.mapDraweVisible = false;
     if (this.countrySearch !== '' && this.countrySearch !== undefined && this.countrySearch !== null) {
       this.StateDataValues(this.countrySearch, this.stateSearch, this.postcodeSearch, this.districtSearch)
     }
   }
-
   clearSearchBox() {
     this.selectedLocation = '';
     this.closemapModal();
   }
-
 }

@@ -10,7 +10,6 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { appkeys } from 'src/app/app.constant';
 import { HttpEventType } from '@angular/common/http';
-
 @Component({
   selector: 'app-custadd',
   templateUrl: './custadd.component.html',
@@ -32,7 +31,7 @@ export class CustaddComponent {
   mobpattern = /^[6-9]\d{9}$/;
   onlynum = /^[0-9]*$/;
   onlychar = /^[a-zA-Z ]*$/;
-  activeTabIndex: number = 0; // Default to the first tab
+  activeTabIndex: number = 0; 
   isFocused: any = '';
   public commonFunction = new CommonFunctionService();
   imgUrl;
@@ -47,7 +46,6 @@ export class CustaddComponent {
     },
   ];
   CustomerManager: any = [];
-
   constructor(
     private api: ApiServiceService,
     private cookie: CookieService,
@@ -55,7 +53,6 @@ export class CustaddComponent {
     private message: NzNotificationService,
     private sanitizer: DomSanitizer
   ) { }
-
   ngOnInit() {
     this.getCustomerCategoryData();
     this.data.SALUTATION = 'Mr';
@@ -72,7 +69,6 @@ export class CustaddComponent {
       }
     );
   }
-
   getCustomerCategoryData() {
     this.api
       .getCustomerCategeroyData(0, 0, '', '', ' AND IS_ACTIVE = 1')
@@ -90,30 +86,24 @@ export class CustaddComponent {
         }
       );
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
-
     return true;
   }
-
   close(accountMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     this.fileURL = null;
     this.data = new customer();
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
   }
-
   dataList: any = [];
-
   ID: any;
   changetype(event: any) {
     if (event == 'B') {
@@ -125,18 +115,15 @@ export class CustaddComponent {
     } else {
       this.data.IS_SPECIAL_CATALOGUE = false;
     }
-
     if (event == 'I') {
       this.data.SHORT_CODE = null;
     }
   }
   save(addNew: boolean, accountMasterPage: NgForm): void {
     this.isOk = true;
-
     if (this.data.CUSTOMER_TYPE == 'I') {
       this.data.COMPANY_NAME = null;
       this.data.PAN = null;
-      // this.data.GST_NO = null;
       this.data.IS_SPECIAL_CATALOGUE = false;
       this.data.SHORT_CODE = null;
     }
@@ -154,7 +141,6 @@ export class CustaddComponent {
       this.data.CUSTOMER_TYPE == ''
     ) {
       this.isOk = false;
-
       this.message.error('Please Select Customer Type', '');
     } else if (
       this.data.CUSTOMER_CATEGORY_ID == undefined ||
@@ -162,7 +148,6 @@ export class CustaddComponent {
       this.data.CUSTOMER_CATEGORY_ID == 0
     ) {
       this.isOk = false;
-
       this.message.error('Please Select Customer Category', '');
     } else if (
       this.data.CUSTOMER_TYPE == 'B' &&
@@ -171,7 +156,6 @@ export class CustaddComponent {
         this.data.COMPANY_NAME.trim() == '')
     ) {
       this.isOk = false;
-
       this.message.error('Please Enter Company Name', '');
     } else if (
       this.data.CUSTOMER_TYPE == 'B' &&
@@ -180,7 +164,6 @@ export class CustaddComponent {
         this.data.NAME == '')
     ) {
       this.isOk = false;
-
       this.message.error('Please Enter Contact Customer Name', '');
     } else if (
       this.data.CUSTOMER_TYPE == 'I' &&
@@ -189,7 +172,6 @@ export class CustaddComponent {
         this.data.NAME == null)
     ) {
       this.isOk = false;
-
       this.message.error('Please Enter Customer Name', '');
     } else if (
       this.data.EMAIL == undefined ||
@@ -204,7 +186,6 @@ export class CustaddComponent {
       this.message.error('Please Enter a Valid Email Address.', '');
     } else if (this.data.MOBILE_NO == undefined || this.data.MOBILE_NO == '') {
       this.isOk = false;
-
       this.message.error('Please Enter Mobile No.', '');
     } else if (
       this.data.COUNTRY_CODE === undefined ||
@@ -278,14 +259,11 @@ export class CustaddComponent {
         const fileExt = this.fileURL.name.split('.').pop();
         const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
         this.UrlImageOne = `${d ?? ''}${number}.${fileExt}`;
-
         this.api
           .onUpload('CustomerProfile', this.fileURL, this.UrlImageOne)
           .subscribe((res) => {
             if (res.type === HttpEventType.Response && res.status === 200) {
               this.data.PROFILE_PHOTO = this.UrlImageOne;
-
-              // this.message.success('Icon Uploaded Successfully...', '');
               this.handleSaveOperation(addNew, accountMasterPage);
             } else if (res.type === HttpEventType.Response) {
               this.message.error('Failed to Upload Profile Photo.', '');
@@ -296,7 +274,6 @@ export class CustaddComponent {
         this.handleSaveOperation(addNew, accountMasterPage);
       }
     }
-    // this.ngOnInit()
   }
   chagegst(data: any) {
     if (!this.data.IS_HAVE_GST) {
@@ -305,7 +282,6 @@ export class CustaddComponent {
       this.data.COMPANY_ADDRESS = null;
     }
   }
-
   handleSaveOperation(addNew: boolean, accountMasterPage: NgForm): void {
     if (this.data.CUSTOMER_TYPE == 'B') {
       this.data.COMPANY_NAME = this.data.COMPANY_NAME;
@@ -318,11 +294,9 @@ export class CustaddComponent {
     } else {
       this.data.COMPANY_NAME = null;
       this.data.PAN = null;
-      // this.data.GST_NO = null;
       this.data.IS_SPECIAL_CATALOGUE = false;
     }
     this.isSpinning = true;
-
     this.api.createCustomer(this.data).subscribe((successCode: any) => {
       if (successCode.code == '200') {
         this.message.success('Customer Information Saved Successfully', '');
@@ -337,7 +311,6 @@ export class CustaddComponent {
       }
     });
   }
-
   alphaOnly(event) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -381,34 +354,29 @@ export class CustaddComponent {
       .subscribe((data) => {
         this.addressdata = data['data'];
         if (this.addressdata && this.addressdata.length > 0) {
-          // Loop through each address and add FULL_ADDRESS key
           this.addressdata = this.addressdata.map((address) => {
             this.fullAddress = [
-              address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+              address.ADDRESS_LINE_1 || '', 
               address.ADDRESS_LINE_2 || '',
               address.CITY_NAME || '',
               address.STATE_NAME || '',
               address.COUNTRY_NAME || '',
               address.PINCODE || '',
             ]
-              .filter((part) => part.trim() !== '') // Remove empty parts
-              .join(', '); // Combine with commas
-
+              .filter((part) => part.trim() !== '') 
+              .join(', '); 
             return {
               ...address,
-              FULL_ADDRESS: this.fullAddress, // Add the concatenated address
+              FULL_ADDRESS: this.fullAddress, 
             };
           });
         }
       });
     this.drawerVisibleAddress = false;
-    // this.searchFamily(true);
   }
-
   get closeCallbackAddress() {
     return this.drawerAddressClose.bind(this);
   }
-
   next() {
     this.activeTabIndex = 1;
     this.ID = this.custid;
@@ -421,26 +389,22 @@ export class CustaddComponent {
         ' AND STATUS = 1 AND CUSTOMER_ID= ' + this.ID
       )
       .subscribe((data) => {
-        this.addressdata = data['data']; // Get the address data
+        this.addressdata = data['data']; 
         if (this.addressdata && this.addressdata.length > 0) {
-          // Loop through each address and add FULL_ADDRESS key
           this.addressdata = this.addressdata.map((address) => {
-            // Concatenate the full address for each address object
             const fullAddress = [
-              address.ADDRESS_LINE_1 || '', // Ensure no undefined or null
+              address.ADDRESS_LINE_1 || '', 
               address.ADDRESS_LINE_2 || '',
               address.CITY_NAME || '',
               address.STATE_NAME || '',
               address.COUNTRY_NAME || '',
               address.PINCODE || '',
             ]
-              .filter((part) => part.trim() !== '') // Remove empty parts
-              .join(', '); // Combine with commas
-
-            // Return the address object with the FULL_ADDRESS
+              .filter((part) => part.trim() !== '') 
+              .join(', '); 
             return {
               ...address,
-              FULL_ADDRESS: fullAddress, // Add the concatenated address as FULL_ADDRESS
+              FULL_ADDRESS: fullAddress, 
             };
           });
         }
@@ -455,18 +419,14 @@ export class CustaddComponent {
         this.data = data['data'][0];
       });
   }
-
   setasdefault(selectedData: any) {
-    // Step 1: Update the IS_DEFAULT values locally
     this.addressdata.forEach((item) => {
       if (item === selectedData) {
-        item.IS_DEFAULT = 1; // Set the selected address as default
+        item.IS_DEFAULT = 1; 
       } else {
-        item.IS_DEFAULT = 0; // Reset others
+        item.IS_DEFAULT = 0; 
       }
     });
-
-    // Step 2: Call the API to save the changes
     this.api.updateCustomerAddressNew(selectedData).subscribe(
       (successCode: any) => {
         if (successCode.code == '200') {
@@ -486,11 +446,7 @@ export class CustaddComponent {
       }
     );
   }
-
   countryCodes = this.commonFunction.countryCodes;
-
-  // Profile Photo
-
   imageshow: any = null;
   selectedFile: any;
   imagePreview: any;
@@ -505,47 +461,36 @@ export class CustaddComponent {
   sanitizedLink: any = '';
   sanitizedFileURL: SafeUrl | null = null;
   imagePreviewURL;
-
   fullImageUrl: string;
   retriveimgUrl = appkeys.retriveimgUrl;
-
   imageDeleteConfirm(data: any) {
     this.fileURL = null;
     this.UrlImageOne = null;
     this.data.PROFILE_PHOTO = ' ';
     this.fileURL = null;
   }
-
   deleteCancel() { }
-
   onFileSelected(event: any): void {
-    const maxFileSize = 1 * 1024 * 1024; // 1 MB
+    const maxFileSize = 1 * 1024 * 1024; 
     const allowedWidth = 128;
     const allowedHeight = 128;
-
     if (event.target.files[0]?.type.match(/image\/(jpeg|jpg|png)/)) {
       this.fileURL = event.target.files[0];
-
       if (this.fileURL.size > maxFileSize) {
         this.message.error('File size should not exceed 1MB.', '');
         this.fileURL = null;
         return;
       }
-
-      // Validate image dimensions
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const img = new Image();
         img.src = e.target.result;
         const input = event.target as HTMLInputElement;
-
         if (input?.files?.length) {
           this.selectedFile = input.files[0];
-
-          // Generate a preview of the selected image
           const reader = new FileReader();
           reader.onload = () => {
-            this.imagePreview = reader.result; // Base64 image data
+            this.imagePreview = reader.result; 
           };
           reader.readAsDataURL(this.selectedFile);
         }
@@ -558,7 +503,6 @@ export class CustaddComponent {
             this.fileURL = null;
             this.sanitizedFileURL = null;
           } else {
-            // Sanitize the file URL for preview
             this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
               URL.createObjectURL(this.fileURL)
             );
@@ -566,7 +510,6 @@ export class CustaddComponent {
           }
         };
       };
-
       reader.readAsDataURL(this.fileURL);
     } else {
       this.message.error(
@@ -577,38 +520,31 @@ export class CustaddComponent {
       this.sanitizedFileURL = null;
     }
   }
-
   removeImage1(): void {
     this.data.PROFILE_PHOTO = null;
     this.fileURL = null;
     this.imagePreviewURL = null;
     this.message.success('Profie Photo removed successfully.', '');
   }
-
   openImageInNewWindow(): void {
     if (this.fileURL) {
-      const imageURL = URL.createObjectURL(this.fileURL); // Get blob URL
+      const imageURL = URL.createObjectURL(this.fileURL); 
       window.open(imageURL, '_blank');
     } else {
       alert('No Profile Photo selected to view.');
     }
   }
-
   deleteImage(): void {
-    // Remove selected file and its preview
     this.fileURL = null;
     this.sanitizedFileURL = null;
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   allowAlphanumericAndSymbols(event: KeyboardEvent): void {
     const allowedRegex = /^[a-zA-Z0-9_-]$/;
-
     if (!allowedRegex.test(event.key)) {
-      event.preventDefault(); // Block the character if it doesn't match the pattern
+      event.preventDefault(); 
     }
   }
 }

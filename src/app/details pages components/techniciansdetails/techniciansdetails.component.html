@@ -4,37 +4,29 @@
   </div>
 </div>
 <div nz-row>
-  <div nz-col nzSpan="24" style="box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px">
-    <div nz-row [nzGutter]="16" style="padding: 20px">
+  <div nz-col nzSpan="24" class="tech-header-container">
+    <div nz-row [nzGutter]="16" class="tech-header-row">
       <div nz-col nzSpan="4" class="mainnam" nz-popover [nzPopoverContent]="techdetailsdata['NAME']"
         nzPopoverPlacement="topLeft">
         Name : {{ techdetailsdata.NAME }}
       </div>
-
       <div nz-col nzSpan="4">
-        <span *ngIf="techdetailsdata.IS_ACTIVE == 0" style="
-            padding: 1px 8px;
-            background-color: rgb(24, 24, 24);
-            color: white;
-            border-radius: 15px;
-          ">Inactive</span>
-
-        <span *ngIf="techdetailsdata.IS_ACTIVE == 1" style="
-            padding: 1px 8px;
-            background-color: green;
-            color: white;
-            border-radius: 15px;
-          ">Active</span>
+        <span *ngIf="techdetailsdata.IS_ACTIVE == 0" class="tech-status tech-status-inactive">
+          Inactive</span>
+        <span *ngIf="techdetailsdata.IS_ACTIVE == 1" class="tech-status tech-status-active">
+          Active</span>
       </div>
-
       <div nz-col nzSpan="8" class="mainnam">
         Email :
-        <a style="font-size: 12px !important" href="mailto:{{ techdetailsdata?.EMAIL_ID }}">{{ techdetailsdata?.EMAIL_ID
-          }}</a>
+        <a class="tech-link" href="mailto:{{ techdetailsdata?.EMAIL_ID }}">
+          {{ techdetailsdata?.EMAIL_ID }}
+        </a>
       </div>
       <div nz-col nzSpan="4" class="mainnam">
-        Mobile: <a style="font-size: 12px !important" href="tel:{{ techdetailsdata?.MOBILE_NUMBER }}">{{
-          techdetailsdata?.MOBILE_NUMBER }}</a>
+        Mobile:
+        <a class="tech-link" href="tel:{{ techdetailsdata?.MOBILE_NUMBER }}">
+          {{ techdetailsdata?.MOBILE_NUMBER }}
+        </a>
       </div>
       <div nz-col nzSpan="4" class="subname">
         <b>Experience Level: </b>
@@ -48,36 +40,37 @@
       <div nz-col nzSpan="8" class="subname" nz-popover [nzPopoverContent]="popoverTemplate"
         nzPopoverPlacement="topLeft">
         <b>Address : </b>
-        <span *ngIf="techdetailsdata.ADDRESS_LINE1">{{
-          techdetailsdata.ADDRESS_LINE1
-          }}</span>
-        <span *ngIf="techdetailsdata.COUNTRY_NAME">, {{ techdetailsdata.COUNTRY_NAME }}</span>
-        <span *ngIf="techdetailsdata.STATE_NAME">, {{ techdetailsdata.STATE_NAME }}</span>
-        <span *ngIf="techdetailsdata.DISTRICT_NAME">, {{ techdetailsdata.DISTRICT_NAME }}</span>
-        <!-- <span *ngIf="techdetailsdata.CITY_NAME">, {{ techdetailsdata.CITY_NAME }}</span> -->
-        <span *ngIf="techdetailsdata.PINCODE">, {{ techdetailsdata.PINCODE }}</span>
+        <span *ngIf="techdetailsdata.ADDRESS_LINE1">
+          {{ techdetailsdata.ADDRESS_LINE1 }}
+        </span>
+        <span *ngIf="techdetailsdata.COUNTRY_NAME">
+          , {{ techdetailsdata.COUNTRY_NAME }}
+        </span>
+        <span *ngIf="techdetailsdata.STATE_NAME">
+          , {{ techdetailsdata.STATE_NAME }}
+        </span>
+        <span *ngIf="techdetailsdata.DISTRICT_NAME">
+          , {{ techdetailsdata.DISTRICT_NAME }}
+        </span>
+        <span *ngIf="techdetailsdata.PINCODE">
+          , {{ techdetailsdata.PINCODE }}
+        </span>
       </div>
       <ng-template #popoverTemplate>
         <div>
-          <p *ngIf="techdetailsdata != undefined">
-            <strong>
-              <Address>Address Line:</Address>
-            </strong>
-            {{ techdetailsdata.ADDRESS_LINE1 }}
+          <p *ngIf="techdetailsdata">
+            <strong>Address Line:</strong> {{ techdetailsdata.ADDRESS_LINE1 }}
           </p>
-          <p *ngIf="techdetailsdata != undefined">
+          <p *ngIf="techdetailsdata">
             <strong>Country:</strong> {{ techdetailsdata.COUNTRY_NAME }}
           </p>
-          <p *ngIf="techdetailsdata != undefined">
+          <p *ngIf="techdetailsdata">
             <strong>State:</strong> {{ techdetailsdata.STATE_NAME }}
           </p>
-          <p *ngIf="techdetailsdata != undefined">
+          <p *ngIf="techdetailsdata">
             <strong>District:</strong> {{ techdetailsdata.DISTRICT_NAME }}
           </p>
-          <!-- <p *ngIf="techdetailsdata != undefined">
-            <strong>City:</strong> {{ techdetailsdata.CITY_NAME }}
-          </p> -->
-          <p *ngIf="techdetailsdata != undefined">
+          <p *ngIf="techdetailsdata">
             <strong>Pincode:</strong> {{ techdetailsdata.PINCODE }}
           </p>
         </div>
@@ -96,8 +89,7 @@
     </div>
   </div>
 </div>
-
-<div nz-row style="padding: 10px">
+<div nz-row class="tech-tabs-container">
   <div nz-col nzSpan="24">
     <nz-tabset nzCentered (nzSelectedIndexChange)="onSelectedIndexChange($event)">
       <nz-tab [nzTitle]="'Jobs'">
@@ -110,7 +102,6 @@
           <app-location [FILTER_ID]="techdetailsdata.ID" [TYPE]="'TECHNICIAN'"></app-location>
         </div>
       </nz-tab>
-
       <nz-tab [nzTitle]="'Technician Travel Locations'">
         <div *ngIf="show == 2">
           <app-technicianlocationsmap [FILTER_ID]="techdetailsdata.ID"
@@ -147,116 +138,6 @@
           <app-techcalender [FILTER_ID]="techdetailsdata.ID"></app-techcalender>
         </div>
       </nz-tab>
-
-      <!-- <ng-template nz-tab>
-          <div style="
-              height: 80vh;
-              overflow-y: auto;
-              background-color: white;
-              padding: 20px 15px;
-            ">
-            <div class="select-container">
-              <div nz-col nzSpan="10">
-                <nz-form-item>
-                  <nz-form-label nzRequired nzNoColon>Jobs</nz-form-label>
-                  <nz-form-control nzHasFeedback nzErrorTip="Please Select Job">
-                    <nz-select nzAllowClear="true" nzPlaceHolder="Select Job" name="JOB_CARD_NO"
-                      [(ngModel)]="JOB_CARD_NO" (ngModelChange)="onJobChange()" nzShowSearch>
-                      <nz-option *ngFor="let data of jobdatss" [nzValue]="data.ID"
-                        [nzLabel]="data.JOB_CARD_NO"></nz-option>
-                    </nz-select>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-            </div>
-            <div class="chat-container" *ngIf="JOB_CARD_NO">
-              <div class="message-box">
-                <div *ngFor="let data of chatDetailsdata">
-                  <div class="message customer-message" *ngIf="data.IS_CUSTOMER == 1">
-                    <span class="customer-name">{{
-                      this.data.CUSTOMER_NAME
-                      }}</span>
-                    <div>
-                      <div class="message-text">
-                        {{ data.MESSAGE }}
-                      </div>
-                      <div class="timestamp">15/Nov | 16:39 PM</div>
-                    </div>
-                  </div>
-
-                  <div class="message technician-message" *ngIf="data.IS_CUSTOMER == 0">
-                    <span class="technician-name">{{
-                      selectedTechnicianName
-                      }}</span>
-                    <div class="message-text">
-                      {{ data.MESSAGE }}
-                    </div>
-                    <span class="timestamp">15/Nov | 16:40 PM</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ng-template> -->
-
-      <!-- <nz-tab [nzTitle]="'Payments'" (nzSelect)="getPaymentLog()">
-        <div *ngIf="show == 7">
-          <ng-template nz-tab>
-            <div style="
-                height: 80vh;
-                overflow-y: auto;
-                background-color: white;
-                padding: 5px 15px;
-              ">
-
-              <nz-table #basicTable2 [nzBordered]="true" [nzSize]="'middle'" [nzShowPagination]="true"
-                [nzData]="paymentsData" [nzScroll]="{ x: '1100px' }">
-                <thead>
-                  <tr>
-                    <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="PAYMENT_DATE">
-                      Payment Date
-                    </th>
-                    <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="AMOUNT">
-                      Paid Amount
-                    </th>
-                    <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="JOB_CARD_NO">
-                      Job Card Number
-                    </th>
-                    <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="INVOICE_NO">
-                      Invoice No
-                    </th>
-                    <th nzWidth="200px" [nzSortFn]="true" nzColumnKey="PAYMENT_MODE">
-                      Payment Mode
-                    </th>
-                    <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="TRASNSACTION_ID">
-                      Trasnsaction Id
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let data of basicTable2.data">
-                    <td>
-                      {{ data.PAYMENT_DATE }}
-                    </td>
-                    <td>{{ data.AMOUNT }}</td>
-                    <td>
-                      {{ data.JOB_CARD_NO }}
-                    </td>
-
-                    <td style="text-align: center">
-                      {{ data.INVOICE_NO }}
-                    </td>
-                    <td>{{ data.PAYMENT_MODE }}</td>
-                    <td style="text-align: center">
-                      {{ data.TRASNSACTION_ID }}
-                    </td>
-                  </tr>
-                </tbody>
-              </nz-table>
-            </div>
-          </ng-template>
-        </div>
-      </nz-tab> -->
     </nz-tabset>
   </div>
 </div>

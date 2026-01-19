@@ -1,68 +1,27 @@
 <nz-spin [nzSpinning]="loadCust">
     <div nz-row>
-        <div nz-col nzSpan="24" style="box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px">
-            <div nz-row [nzGutter]="16" style="padding: 0px 0px 20px 0px">
-                <!-- <div
-            nz-col
-            nzSpan="4"
-            class="mainnam"
-            nz-popover
-            [nzPopoverContent]="CustData['NAME']"
-            nzPopoverPlacement="topLeft"
-          >
-            Name : {{ CustData.NAME }}
-          </div>
-          <div nz-col nzSpan="4" class="subname">
-            <span
-              *ngIf="CustData.ACCOUNT_STATUS"
-              style="
-                padding: 1px 8px;
-                background-color: green;
-                color: white;
-                border-radius: 15px;
-              "
-              >Active</span
-            >
-            <span
-              *ngIf="!CustData.ACCOUNT_STATUS"
-              style="
-                padding: 1px 8px;
-                background-color: rgb(24, 24, 24);
-                color: white;
-                border-radius: 15px;
-              "
-              >Inactive</span
-            >
-          </div> -->
-
+        <div nz-col nzSpan="24" class="cust-header-shadow">
+            <div nz-row [nzGutter]="16" class="cust-header-padding">
                 <div nz-col nzSpan="8" class="mainnam" nz-popover [nzPopoverContent]="CustData['NAME']"
                     nzPopoverPlacement="topLeft">
-                    <span class="name-container" style="display: flex; align-items: center; gap: 8px">
-                        <span class="name-text" style="
-                  white-space: nowrap;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  max-width: 400px;
-                  display: inline-block;
-                ">
-                            Name:
-                            {{ CustData.NAME }}
+                    <span class="name-container-flex">
+                        <span class="name-text-ellipsis">
+                            Name: {{ CustData.NAME }}
                         </span>
-                        <span *ngIf="CustData.ACCOUNT_STATUS" style="
-                  padding: 1px 8px;
-                  background-color: green;
-                  color: white;
-                  border-radius: 15px;
-                ">Active</span>
-                        <span *ngIf="!CustData.ACCOUNT_STATUS" style="
-                  padding: 1px 8px;
-                  background-color: rgb(24, 24, 24);
-                  color: white;
-                  border-radius: 15px;
-                ">Inactive</span>
+                        <span *ngIf="CustData.ACCOUNT_STATUS" class="account-status-active">
+                            Active
+                        </span>
+                        <span *ngIf="!CustData.ACCOUNT_STATUS" class="account-status-inactive">
+                            Inactive
+                        </span>
+                        <span *ngIf="CustData.ACCOUNT_STATUS" class="account-status-active">
+                            Active
+                        </span>
+                        <span *ngIf="!CustData.ACCOUNT_STATUS" class="account-status-inactive">
+                            Inactive
+                        </span>
                     </span>
                 </div>
-
                 <div nz-col nzSpan="8" class="subname" *ngIf="
               CustData.COMPANY_NAME != undefined &&
               CustData.COMPANY_NAME != null &&
@@ -75,12 +34,10 @@
                     <span *ngIf="CustData.CUSTOMER_TYPE == 'I'">Individual(B2C)</span>
                     <span *ngIf="CustData.CUSTOMER_TYPE == 'B'">Business(B2B)</span>
                 </div>
-
                 <div nz-col nzSpan="8" class="subname">
                     Registration Datetime:
                     {{ CustData.REGISTRATION_DATE | date : "dd/MM/yyyy HH:mm a" }}
                 </div>
-
                 <div nz-col nzSpan="8" class="subname">
                     Mobile No: {{ CustData.COUNTRY_CODE }}{{ CustData.MOBILE_NO }}
                 </div>
@@ -98,70 +55,36 @@
             </div>
         </div>
     </div>
-    <div nz-row style="padding: 10px">
+    <div nz-row class="cust-tab-wrapper">
         <div nz-col nzSpan="24">
             <nz-tabset nzCentered (nzSelectedIndexChange)="onSelectedIndexChange($event)">
                 <nz-tab [nzTitle]="'Address Details'">
                     <div *ngIf="show == 0">
                         <div nz-row>
-                            <!-- <div nz-col nzSpan="8" >
-                                  <div nz-row class="pt-4">
-                                      <div nz-col nzSpan="24">
-                                          <div class="row align-items-end  pb-2" style="margin-bottom: 0px !important;">
-                                              <div class="col-md-12" style="text-align: center;">
-                                                  <div class="section-title text-center text-md-start" style="padding-bottom: 0px;">
-                                                      <h4 class="title" style="margin-bottom: 0px;font-size: 18px !important;">Customer Basic Details</h4>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="my-box" style="width: 100%;margin-right: 14px;">
-                                          <div nz-col nzSpan="24" class="mainnam"  nz-popover
-                                          [nzPopoverContent]="data['NAME']"
-                                          nzPopoverPlacement="topLeft">Name : {{data.SALUTATION}}{{data.NAME}}</div>
-                                          <div nz-col nzSpan="24" class="subname">Customer Type : <span *ngIf="data.CUSTOMER_TYPE=='I'">Individual</span> <span *ngIf="data.CUSTOMER_TYPE=='B'">Business</span></div>
-                          
-                                          <div nz-col nzSpan="24" class="subname">  Registration Datetime:
-                                              {{ data.REGISTRATION_DATE | date : "dd/MM/yyyy HH:mm a" }}</div>
-                                          <div nz-col nzSpan="24" class="subname">Account Status : <span *ngIf="data.ACCOUNT_STATUS">Active</span> <span *ngIf="!data.ACCOUNT_STATUS">Disabled</span></div>
-                                          <div nz-col nzSpan="24" class="subname">Mobile No: {{data.COUNTRY_CODE}}{{data.MOBILE_NO}}</div>
-                                          <div nz-col nzSpan="24" class="subname" *ngIf="data.GST_NO!=undefined && data.GST_NO!=null && data.GST_NO!=''"  nz-popover
-                                          [nzPopoverContent]="data['GST_NO']"
-                                          nzPopoverPlacement="topLeft">GST No.: {{data.GST_NO}}</div>
-                                          <div nz-col nzSpan="24" class="subname" *ngIf="data.GST_NO!=undefined && data.GST_NO!=null && data.GST_NO!=''"  nz-popover
-                                          [nzPopoverContent]="data['GST_NO']"
-                                          nzPopoverPlacement="topLeft">PAN No. : {{data.GST_NO}}</div>
-                                       </div>
-                                     
-                                  </div>
-                              </div> -->
                             <div nz-col nzSpan="24" *ngIf="totalRecords > 0">
-                                <div class="container" style="padding-top: 10px">
+                                <div class="address-container">
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-12" *ngFor="let data of addressData" style="
-                          margin-bottom: 14px;
-                          padding-left: 7px;
-                          padding-right: 7px;
-                        ">
+                                        <div class="col-lg-6 col-md-6 col-12 address-item"
+                                            *ngFor="let data of addressData">
                                             <div class="card border-0 bg-light rounded shadow">
-                                                <div class="card-body" style="padding: 10px !important; height: 104px">
+                                                <div class="card-body address-card-body">
                                                     <div nz-row>
-                                                        <div nz-col nzSpan="20" class="truncate-one-line" nz-popover
-                                                            [nzPopoverContent]="data['ADDRESS_LINE_1']"
-                                                            nzPopoverPlacement="topLeft" style="font-weight: 500">
-                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{
-                                                            data.ADDRESS_LINE_1 }}
+                                                        <div nz-col nzSpan="20" class="truncate-one-line address-title"
+                                                            nz-popover [nzPopoverContent]="data['ADDRESS_LINE_1']"
+                                                            nzPopoverPlacement="topLeft">
+                                                            <i class="fa fa-map-marker"></i>&nbsp;{{
+                                                            data.ADDRESS_LINE_1
+                                                            }}
                                                         </div>
-
-                                                        <div nz-col nzSpan="4" class="mb-3 mb-sm-0"
-                                                            style="width: 100%; text-align: end" *ngIf="
-                                  addressData != undefined && data.IS_DEFAULT
-                                ">
-                                                            <span class="badge rounded-pill bg-primary"
-                                                                style="font-size: 9px !important">Default Address</span>
+                                                        <div nz-col nzSpan="4" class="address-default-col"
+                                                            *ngIf="addressData != undefined && data.IS_DEFAULT">
+                                                            <span
+                                                                class="badge rounded-pill bg-primary address-default-badge">
+                                                                Default Address
+                                                            </span>
                                                         </div>
                                                     </div>
-                                                    <div class="mt-3" style="margin-top: 2px !important">
+                                                    <div class="address-subinfo">
                                                         <span class="text-muted d-block">
                                                             <a target="_blank" class="text-muted" nz-popover
                                                                 [nzPopoverContent]="popoverTemplate"
@@ -191,7 +114,8 @@
                                                                     {{ data.DISTRICT_NAME }}
                                                                 </p>
                                                                 <p *ngIf="addressData != undefined">
-                                                                    <strong>Pincode:</strong> {{ data.PINCODE }}
+                                                                    <strong>Pincode:</strong>
+                                                                    {{ data.PINCODE }}
                                                                 </p>
                                                             </div>
                                                         </ng-template>
@@ -199,26 +123,19 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--end col-->
                                     </div>
-                                    <!--end row-->
                                 </div>
                             </div>
-                            <div nz-row *ngIf="totalRecords == 0 && show == 0"
-                                style="height: 50vh; width: 100% !important">
-                                <div nz-col nzSpan="24" style="
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                    ">
+                            <div nz-row *ngIf="totalRecords == 0 && show == 0" class="no-address-wrapper">
+                                <div nz-col nzSpan="24" class="no-address-center">
                                     <nz-empty
                                         nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                                         [nzNotFoundContent]="contentTpl43" [nzNotFoundFooter]="footerTpl43"
-                                        style="margin-top: 38px">
+                                        class="no-address-empty">
                                         <ng-template #contentTpl43>
                                             <span> Data Not Found</span>
                                         </ng-template>
-                                        <ng-template #footerTpl43> </ng-template>
+                                        <ng-template #footerTpl43></ng-template>
                                     </nz-empty>
                                 </div>
                             </div>

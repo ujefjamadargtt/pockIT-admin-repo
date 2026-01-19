@@ -3,9 +3,104 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
 }
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
+.back-icon {
+    font-weight: bold;
+    cursor: pointer;
+}
+.header-actions-container {
+    display: flex;
+    justify-content: flex-end;
+}
+.excel-button {
+    color: white;
+}
+.filter-button-wrapper {
+    width: 47px;
+}
+.filter-container-row {
+    padding-top: 0px;
+}
+.filter-loading-container {
+    text-align: center;
+}
+.filter-item-column {
+    margin-bottom: 8px;
+}
+.filter-item-card {
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    border-radius: 7px;
+    align-items: center;
+}
+.filter-card-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+}
+.filter-name-display {
+    color: black;
+    text-align: center;
+    font-size: 25px;
+    white-space: nowrap;
+}
+.filter-applied-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.filter-actions-wrapper {
+    margin-top: 7px;
+}
+.filter-actions-grid {
+    display: flex;
+    justify-content: space-between;
+}
+.filter-action-tag {
+    cursor: pointer;
+    font-size: 10px !important;
+}
+.view-tag {
+    margin-right: 0px;
+}
+.tag-icon {
+    font-size: 10px !important;
+}
+.no-filters-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.filter-controls-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: left;
+    margin-top: 10px;
+}
+.filter-reset-button {
+    margin-right: 10px;
+}
+.filter-new-button {
+    margin-right: 10px;
+}
+.table-header-bold-center {
+    font-weight: bold;
+    text-align: center;
+}
+.table-header-center {
+    text-align: center;
+}
+.date-range-picker {
+    width: 100%;
+}
+.modal-text-center {
+    text-align: center;
+}

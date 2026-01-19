@@ -1,11 +1,94 @@
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%;
   display: inline-block;
+}
+.clickable-bold-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.flex-end-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.white-text-btn {
+  color: white;
+}
+.fixed-width-item {
+  width: 47px;
+}
+.no-padding-top {
+  padding-top: 0px;
+}
+.text-center {
+  text-align: center;
+}
+.text-red-bold {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.mb-8 {
+  margin-bottom: 8px;
+}
+.mt-7 {
+  margin-top: 7px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+}
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.applied-filter-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.tag-small {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.icon-small {
+  font-size: 10px !important;
+}
+.mr-0 {
+  margin-right: 0px;
+}
+.mr-10 {
+  margin-right: 10px;
 }

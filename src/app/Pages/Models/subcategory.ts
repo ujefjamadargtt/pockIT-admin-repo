@@ -1,13 +1,3 @@
-// export class subcategory {
-//     ID: number;
-//     CLIENT_ID: number
-//     NAME: any
-//     CATEGORY_ID: any
-//     DESCRIPTION: any
-//     SUBCATEGORY_IMAGE: any
-//     STATUS: Boolean = true;
-// }
-
 export class subcategory {
     ID: number;
     CLIENT_ID: number

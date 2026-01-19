@@ -1,83 +1,66 @@
 .comment-container {
-  margin: 10px 0; /* Space between comments */
-  /* display: flex; Use flexbox for alignment */
+  margin: 10px 0;
 }
-
-/* Chat bubble styling */
 .chat-bubble {
-  padding: 8px 12px; /* Reduced padding for chat bubble */
-  border-radius: 15px; /* Rounded corners for chat bubble */
-  max-width: 400px; /* Set a fixed width for the chat bubble */
-  width: 100%; /* Allow it to take the full width of the container */
-  word-wrap: break-word; /* Allow long words to wrap */
-  overflow-wrap: break-word; /* Ensures long words will break as needed */
+  padding: 8px 12px;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
-
-/* Own comment styling */
 .own-comment {
   margin-top: 10px;
   padding: 5px 10px 27px;
-  border: 1px solid #092B9C!important;
+  border: 1px solid #092B9C !important;
   border-radius: 20px 0px 20px 20px;
-  background-color: #092B9C!important;
+  background-color: #092B9C !important;
   color: white;
   margin-left: auto;
 }
-
-/* Other comment styling */
 .other-comment {
   margin-top: 10px;
   padding: 5px 10px 27px;
-  border: 1px solid #092B9C!important;
+  border: 1px solid #092B9C !important;
   border-radius: 0px 20px 20px 20px;
   background-color: white;
 }
-
 .scrollable-textarea {
   width: 100%;
-  height: 100px; /* Fixed height */
+  height: 100px;
   margin-right: 8px;
-  overflow-y: auto; /* Enable vertical scroll */
+  overflow-y: auto;
 }
-
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 0px rgba(97, 94, 94, 0.1);
   background-color: #fdfdfd;
   box-shadow: inset 0 0 5px rgb(202, 199, 199);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;
 }
-
 ::-webkit-scrollbar-thumb {
   background: rgb(223, 217, 217);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(216, 211, 211);
 }
-
 .cardstyle {
   margin-top: 5px;
   background-color: #fff;
   position: relative;
-  /* height: 98%; */
   width: 98%;
   cursor: pointer;
   padding: 10px;
-  /* box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25); */
-  /* box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px; */
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   border: 1px solid #efefef;
   border-radius: 10px;
   padding: 15px 15px 10px 15px;
   min-height: 100px;
 }
-
 .mainnam {
   color: #000;
   font-size: 13px;
@@ -87,7 +70,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .subnamm {
   color: #6a6a6a;
   font-size: 12px;
@@ -97,7 +79,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .no-comments {
   display: flex;
   align-items: center;
@@ -111,51 +92,114 @@
   border-radius: 8px;
   background-color: #f9f9f9;
 }
-
 :host ::ng-deep .ant-drawer-body {
   padding: 13px !important;
 }
-
 .ant-drawer-body {
   padding: 13px !important;
 }
-
-
-
-
-
-/* Filters */
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-.select{
-width: 200px;
-padding: 8px;
-display: block;
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
+.icon-bold-pointer-ux {
+  font-weight: bold;
+  cursor: pointer;
+}
+.flex-end-ux {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-width-ux {
+  width: 47px;
+}
+.text-center-mb-5px-ux {
+  text-align: center;
+  margin-bottom: 5px;
+}
+.row-my-10px-ux {
+  margin: 10px 0px;
+}
+.filter-box-ux {
+  border: 1px dashed black;
+  border-radius: 5px;
+  padding: 10px;
+}
+.row-mb-5px-ux {
+  margin-bottom: 5px;
+}
+.filter-warning-text-ux {
+  color: red;
+  font-size: 11px;
+}
+.pt-10px-ux {
+  padding-top: 10px;
+}
+.flex-end-ux {
+  display: flex;
+  justify-content: flex-end;
+}
+.btn-mr-10px-ux {
+  margin-right: 10px;
+}
+.tag-item-ux {
+  margin: 5px;
+  display: inline-flex;
+  align-items: center;
+}
+.tag-text-ux {
+  color: black;
+  margin-right: 10px;
+}
+.icon-green-mr-8px-ux {
+  color: #01ac5c;
+  margin-right: 8px;
+}
+.icon-red-mr-8px-ux {
+  color: red;
+  margin-right: 8px;
+}
+.icon-blue-ux {
+  color: blue;
+}
+.no-data-text-ux {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.table-preline-ux {
+  white-space: pre-line;
+}
+.select-full-width-ux {
+  width: 100%;
+}
+.form-item-inline-fill-ux {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.qry-txt-ctr{
+  text-align: center;
+}

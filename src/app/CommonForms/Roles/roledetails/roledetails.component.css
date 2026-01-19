@@ -1,3 +1,19 @@
+.bo-search-row {
+    display: flex;
+    justify-content: flex-end;
+}
+.bo-search-form-item {
+    margin-right: 0px;
+}
+.bo-table-nowrap {
+    white-space: pre-line;
+}
+.bo-table-cell {
+    white-space: pre-line;
+}
+.bo-footer-cancel {
+    margin-right: 8px;
+}
 nz-form-item {
     padding: 0px 8px;
     display: block;

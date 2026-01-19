@@ -23,8 +23,6 @@ export class SelpdoclistComponent implements OnInit {
   sortValue: string = 'desc';
   sortKey: string = 'id';
   searchText: string = '';
-  // filterQuery: string = "";
-
   columns: string[][] = [
     ['NAME', 'Name'],
     ['HELP_DOCUMENT_CATEGORY_NAME', 'Name'],
@@ -56,8 +54,6 @@ export class SelpdoclistComponent implements OnInit {
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -76,7 +72,6 @@ export class SelpdoclistComponent implements OnInit {
   ];
   helpcategoryvisible: boolean;
   subcategoryvisible: boolean;
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
@@ -89,14 +84,9 @@ export class SelpdoclistComponent implements OnInit {
     this.isnewFilter = selectedStatus;
     this.search(true);
   }
-
-  // isfilterapply: boolean = false;
-  // filterClass: string = 'filter-invisible';
-  // filterQuery: string = '';
   visible = false;
   columns1: { label: string; value: string }[] = [
     { label: 'Category Name', value: 'NAME' },
-    // { label: 'Sequence No.', value: 'SEQ_NO' },
     { label: 'Is New ?', value: 'IS_NEW' },
     { label: 'Status', value: 'STATUS' },
   ];
@@ -110,30 +100,20 @@ export class SelpdoclistComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) { }
   ngOnInit() {
-    // this.search();
-    // this.columns1 = [
-    //   { label: 'Category Name', value: 'NAME' },
-    //   // add more columns if needed
-    // ];
     this.getCategory();
     this.getSubCategory();
   }
-
   ViewImage: any;
   ImageModalVisible: boolean = false;
   imageshow;
-
   onKeypressEvent(keys: KeyboardEvent) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length == 0 && keys.key == 'Backspace') {
-      // this.dataList = []
       this.search(true);
     }
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -144,30 +124,17 @@ export class SelpdoclistComponent implements OnInit {
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
   sanitizedLink: any = '';
-  // GetImage(link: string) {
-  //   let imagePath = this.api.retriveimgUrl + 'HelpDocument/' + link;
-  //   this.sanitizedLink =
-  //     this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
-  //   this.imageshow = this.sanitizedLink;
-
-  //   // Display the modal only after setting the image URL
-  //   this.ImageModalVisible = true;
-  // }
   GetImage(link: string) {
     const filePath: any = this.api.retriveimgUrl + 'HelpDocument/' + link;
-
     const isDocOrDocx: any = link.endsWith('.doc') || link.endsWith('.docx');
-
     let finalPath: any = isDocOrDocx
       ? `https://docs.google.com/gview?url=${encodeURIComponent(filePath)}&embedded=true`
       : filePath;
-
     this.sanitizedLink = this.sanitizer.bypassSecurityTrustResourceUrl(finalPath);
     this.imageshow = this.sanitizedLink;
     this.ImageModalVisible = true;
@@ -194,7 +161,6 @@ export class SelpdoclistComponent implements OnInit {
         (categoryData) => {
           if (categoryData.status == 200) {
             this.categoryList = categoryData.body.data;
-
             categoryData.body.data.forEach((element) => {
               this.categoryList1.push({
                 value: element.ID,
@@ -235,25 +201,20 @@ export class SelpdoclistComponent implements OnInit {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -261,7 +222,6 @@ export class SelpdoclistComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-
     this.loadingRecords = true;
     var sort: string;
     try {
@@ -270,14 +230,6 @@ export class SelpdoclistComponent implements OnInit {
       sort = '';
     }
     var likeQuery = '';
-    // if (this.searchText != "") {
-    //     likeQuery = " AND";
-    //   this.columns.forEach(column => {
-    //     likeQuery += " " + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2)
-    // }
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -290,27 +242,21 @@ export class SelpdoclistComponent implements OnInit {
         ')';
     }
     this.loadingRecords = true;
-
-    // category Filter
     if (this.categoryName !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.categoryName.trim()}%'`;
     }
-    // SEQ_NO Filter
     if (this.Seqtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `SEQ_NO LIKE '%${this.Seqtext.trim()}%'`;
     }
-
-    // IS_NEW Filter
     if (this.isnewFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_NEW = ${this.isnewFilter}`;
     }
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -321,27 +267,23 @@ export class SelpdoclistComponent implements OnInit {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; 
       this.iscatFilterApplied = true;
     } else {
       this.iscatFilterApplied = false;
     }
-
-    // subcategory Filter
     if (this.selectedSubCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `SUBCATEGORY_ID IN (${this.selectedSubCategories.join(
         ','
-      )})`; // Update with actual field name in the DB
+      )})`; 
       this.issubcatFilterApplied = true;
     } else {
       this.issubcatFilterApplied = false;
     }
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getHelpDoc(
         this.pageIndex,
@@ -383,11 +325,9 @@ export class SelpdoclistComponent implements OnInit {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   add(): void {
     this.drawerTitle = 'Add Help Document';
     this.drawerData = new helpDocumentMaster();
@@ -436,35 +376,28 @@ export class SelpdoclistComponent implements OnInit {
       this.isSeqApplied = false;
     }
   }
-
   edit(data: helpDocumentMaster): void {
     this.drawerTitle = 'Update Help Document';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   navigateToMastersMenu(): void {
     this.router.navigate(['/masters/menu']);
   }
-
   close(): void {
     this.visible1 = false;
   }
-
   close1(accountMasterPage: NgForm) {
     this.drawerVisible1 = false;
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
@@ -481,22 +414,17 @@ export class SelpdoclistComponent implements OnInit {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
   viewLink(link: string): void {
     if (link) {
-      window.open(link, '_blank'); // Opens the link in a new tab/window
+      window.open(link, '_blank'); 
     } else {
     }
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -509,7 +437,6 @@ export class SelpdoclistComponent implements OnInit {
   filterQuery: string = '';
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -518,15 +445,10 @@ export class SelpdoclistComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   filterloading: boolean = false;
-
   openfilter() {
     this.drawerTitle = 'Help Document Filter';
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.filterFields[1]['options'] = this.categoryList1;
     this.filterFields[2]['options'] = this.subCategoryList1;
     this.filterData = {
@@ -537,13 +459,9 @@ export class SelpdoclistComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -560,7 +478,6 @@ export class SelpdoclistComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -578,14 +495,11 @@ export class SelpdoclistComponent implements OnInit {
       },
     ];
   }
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -593,13 +507,12 @@ export class SelpdoclistComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -614,21 +527,15 @@ export class SelpdoclistComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -642,7 +549,6 @@ export class SelpdoclistComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -651,9 +557,7 @@ export class SelpdoclistComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -670,9 +574,7 @@ export class SelpdoclistComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -698,7 +600,6 @@ export class SelpdoclistComponent implements OnInit {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -707,25 +608,20 @@ export class SelpdoclistComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'NAME',
@@ -800,36 +696,26 @@ export class SelpdoclistComponent implements OnInit {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   currentClientId = 1;
-
   filterData: any;
   filterGroups2: any = [
     {
@@ -850,10 +736,8 @@ export class SelpdoclistComponent implements OnInit {
   editQuery(data: any) {
     this.filterFields[1]['options'] = this.categoryList1;
     this.filterFields[2]['options'] = this.subCategoryList1;
-
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -861,9 +745,7 @@ export class SelpdoclistComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

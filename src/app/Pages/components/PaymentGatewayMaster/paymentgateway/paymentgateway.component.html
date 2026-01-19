@@ -3,7 +3,6 @@
         <nz-spin [nzSpinning]="isSpinning">
             <div class="my-box">
                 <div nz-row>
-                    <!-- Gateway Name -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Gateway Name</nz-form-label>
@@ -13,8 +12,6 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-
-                    <!-- Gateway Provider -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Gateway Provider</nz-form-label>
@@ -25,9 +22,7 @@
                         </nz-form-item>
                     </div>
                 </div>
-
                 <div nz-row>
-                    <!-- API URL -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>API URL</nz-form-label>
@@ -37,8 +32,6 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-
-                    <!-- API Key -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>API Key</nz-form-label>
@@ -49,9 +42,7 @@
                         </nz-form-item>
                     </div>
                 </div>
-
                 <div nz-row>
-                    <!-- Currency -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Currency</nz-form-label>
@@ -60,12 +51,9 @@
                                     <input type="text" nz-input [(ngModel)]="data.CURRENCY" name="CURRENCY"
                                         placeholder="Enter Currency" required />
                                 </nz-input-group>
-                                <!-- <input nz-input [(ngModel)]="data.CURRENCY" name="CURRENCY" placeholder="Enter Currency" required /> -->
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-
-                    <!-- Supported Methods -->
                     <div nz-col nzSpan="12">
                         <nz-form-item>
                             <nz-form-label nzRequired nzNoColon>Supported Methods</nz-form-label>
@@ -76,9 +64,7 @@
                         </nz-form-item>
                     </div>
                 </div>
-
                 <div nz-row>
-                    <!-- Is Active -->
                     <div nz-col nzSpan="6">
                         <nz-form-item>
                             <nz-form-label nzNoColon>Test Mode</nz-form-label>
@@ -97,25 +83,22 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
-
-                    <!-- Test Mode -->
-
                 </div>
             </div>
         </nz-spin>
     </form>
     <div class="footer">
-        <button type="button" nz-button (click)="Close()" class="ant-btn" style="margin-right: 8px">
+        <button type="button" nz-button (click)="Close()" class="ant-btn footer-btn-margin-8">
             <span>Cancel</span>
         </button>
-        <button type="button" class="ant-btn ant-btn-primary" nz-button nz-dropdown
-            style="border-radius: 4px; color: white !important;" [nzDropdownMenu]="menu" [nzLoading]="isSpinning">
+        <button type="button" class="ant-btn ant-btn-primary footer-primary-btn" nz-button nz-dropdown
+            [nzDropdownMenu]="menu" [nzLoading]="isSpinning">
             <span>Save & Close</span>
         </button>
         <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu>
-                <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important;">
-                    <a style="color: white !important;">Save & New</a>
+                <li nz-menu-item class="menuc footer-dropdown-item-white">
+                    <a class="footer-dropdown-link-white">Save & New</a>
                 </li>
             </ul>
         </nz-dropdown-menu>

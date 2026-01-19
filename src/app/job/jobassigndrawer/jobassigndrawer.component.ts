@@ -5,7 +5,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 declare const google: any;
-
 @Component({
   selector: 'app-jobassigndrawer',
   templateUrl: './jobassigndrawer.component.html',
@@ -76,9 +75,7 @@ export class JobassigndrawerComponent {
     }
     this.getTechnicianData();
     this.sheduledate = this.Jobassignsdata.EXPECTED_DATE_TIME;
-
     this.STARTTIME = new Date(this.Jobassignsdata.EXPECTED_DATE_TIME);
-
     let startMinutes = this.STARTTIME.getMinutes();
     if (
       startMinutes != 0 &&
@@ -102,7 +99,6 @@ export class JobassigndrawerComponent {
           this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
       );
     }
-
     let startMinutes1 = this.ENDTIME.getMinutes();
     if (
       startMinutes1 != 0 &&
@@ -115,7 +111,6 @@ export class JobassigndrawerComponent {
       let roundedStartMinutes1 = Math.floor(startMinutes1 / 10) * 10;
       this.ENDTIME.setMinutes(roundedStartMinutes1);
     }
-
     if (
       this.datepipe.transform(
         this.Jobassignsdata.EXPECTED_DATE_TIME,
@@ -128,12 +123,9 @@ export class JobassigndrawerComponent {
       );
       const currentTime = this.datepipe.transform(new Date(), 'HH:mm');
       const currentTimedate = new Date();
-      // this.terriotrystarttime = currentTime;
       if (jobTime && currentTime) {
         if (jobTime < currentTime) {
-          // this.terriotrystarttime = currentTime;
           this.STARTTIME = currentTimedate;
-
           let startMinutes = this.STARTTIME.getMinutes();
           if (
             startMinutes != 0 &&
@@ -146,7 +138,6 @@ export class JobassigndrawerComponent {
             let roundedStartMinutes = Math.floor(startMinutes / 10) * 10;
             this.STARTTIME.setMinutes(roundedStartMinutes);
           }
-
           if (this.IS_ORDER_JOB == 'P') {
             this.ENDTIME = new Date(
               this.STARTTIME.getTime() +
@@ -158,7 +149,6 @@ export class JobassigndrawerComponent {
                 this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
             );
           }
-
           let startMinutes1 = this.ENDTIME.getMinutes();
           if (
             startMinutes1 != 0 &&
@@ -176,7 +166,6 @@ export class JobassigndrawerComponent {
       }
     } else {
     }
-
     this.userId = this.commonFunction.decryptdata(
       sessionStorage.getItem('userId') || ''
     );
@@ -184,20 +173,17 @@ export class JobassigndrawerComponent {
       sessionStorage.getItem('orgId') || ''
     );
   }
-
   changeTechnicianType(event) {
     this.TECHNICIAN_TYPE = event;
     this.getTechnicianData();
   }
   disabledEndHours: () => number[] = () => [];
   disabledEndMinutes: (hour: number) => number[] = () => [];
-
   distancechecked: boolean = false;
   ServiceAvailabilitychecked: boolean = false;
   BrakeAvailabilitychecked: boolean = false;
   skillschecked: boolean = false;
   searchValue: any = '';
-
   onSearchChange(event: any) {
     this.isselectedtech = false;
     this.searchValue = event;
@@ -215,7 +201,6 @@ export class JobassigndrawerComponent {
       this.dublicatetechData = this.techData;
     }
   }
-
   technician = [
     {
       CREATED_MODIFIED_DATE: '2024-12-18T10:00:00Z',
@@ -234,9 +219,7 @@ export class JobassigndrawerComponent {
       ID: 12346,
     },
   ];
-
   initMap(): void {
-    // For technician travel map
     const technician = this.technician;
     if (technician) {
       const locations = technician
@@ -250,11 +233,9 @@ export class JobassigndrawerComponent {
             : '',
         }))
         .filter((loc: any) => !isNaN(loc.latitude) && !isNaN(loc.longitude));
-
       if (locations.length === 0) {
         return;
       }
-
       const mapCenter = {
         lat:
           locations.reduce((sum: number, loc: any) => sum + loc.latitude, 0) /
@@ -263,24 +244,20 @@ export class JobassigndrawerComponent {
           locations.reduce((sum: number, loc: any) => sum + loc.longitude, 0) /
           locations.length,
       };
-
       if (isNaN(mapCenter.lat) || isNaN(mapCenter.lng)) {
-        return; // Exit if map center is invalid
+        return; 
       }
-
       const mapElement = document.getElementById('map');
       if (mapElement) {
         const map = new google.maps.Map(mapElement as HTMLElement, {
           center: mapCenter,
           zoom: 14,
         });
-
         const directionsService = new google.maps.DirectionsService();
         const directionsRenderer = new google.maps.DirectionsRenderer({
-          suppressMarkers: true, // We will add custom markers below
+          suppressMarkers: true, 
           map: map,
         });
-
         const waypoints = locations
           .slice(1, locations.length - 1)
           .map((location: any) => ({
@@ -290,7 +267,6 @@ export class JobassigndrawerComponent {
             ),
             stopover: true,
           }));
-
         const request = {
           origin: new google.maps.LatLng(
             locations[0].latitude,
@@ -301,34 +277,28 @@ export class JobassigndrawerComponent {
             locations[locations.length - 1].longitude
           ),
           waypoints: waypoints,
-          travelMode: google.maps.TravelMode.DRIVING, // Use DRIVING to show the road map
+          travelMode: google.maps.TravelMode.DRIVING, 
         };
-
         directionsService.route(request, (result, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
             directionsRenderer.setDirections(result);
-
-            // Add custom markers for each location
             locations.forEach((location: any, index: number) => {
               const markerIcon =
                 index === 0
-                  ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' // red marker for the start location
-                  : 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'; // blue markers for others
-
+                  ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' 
+                  : 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'; 
               const marker = new google.maps.Marker({
                 position: { lat: location.latitude, lng: location.longitude },
                 map: map,
                 icon: markerIcon,
               });
               var convertedDate: any = '';
-
               if (location.time != '') {
                 convertedDate = this.datepipe.transform(
                   location.time,
                   'h:mm a'
                 );
               }
-
               const infoWindow = new google.maps.InfoWindow({
                 content: `
               <div style="width: 150px; padding: 10px; font-size: 14px; color: #333; 
@@ -337,13 +307,9 @@ export class JobassigndrawerComponent {
               <p style="font-size: 12px; margin: 5px 0;">${convertedDate}</p>
               </div>`,
               });
-
-              // Show the InfoWindow on hover
               marker.addListener('mouseover', () => {
                 infoWindow.open(map, marker);
               });
-
-              // Close the InfoWindow when the mouse leaves the marker
               marker.addListener('mouseout', () => {
                 infoWindow.close();
               });
@@ -358,7 +324,6 @@ export class JobassigndrawerComponent {
     const columns: string[] = [];
     for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute < 60; minute += 10) {
-        // Format hours and minutes as "HH:MM"
         const formattedTime = `${hour.toString().padStart(2, '0')}:${minute
           .toString()
           .padStart(2, '0')}`;
@@ -368,7 +333,6 @@ export class JobassigndrawerComponent {
     return columns;
   }
   sheduledata = [];
-
   spinnn: boolean = false;
   techData: any;
   dublicatetechData: any;
@@ -431,49 +395,40 @@ export class JobassigndrawerComponent {
       time,
       job: this.sheduledata[0][time] || 'No Job',
     }));
-
     this.mergedData = [];
     let currentJob = null;
     let rowSpanCount = 0;
     let randomColor = '';
-    let tempIndex = -1; // Track the starting index of merged rows
-
+    let tempIndex = -1; 
     rawData.forEach((row, index) => {
       if (row.job === currentJob && row.job !== 'No Job') {
-        // Increment rowSpan for the first occurrence
         rowSpanCount++;
         this.mergedData[tempIndex].rowSpan = rowSpanCount;
-        this.mergedData.push({ ...row, rowSpan: 0, randomColor: '' }); // Add the row but with no rowspan
+        this.mergedData.push({ ...row, rowSpan: 0, randomColor: '' }); 
       } else {
-        // Add a new row for a new job or "No Job"
         currentJob = row.job;
         rowSpanCount = 1;
-        randomColor = row.job !== 'No Job' ? this.getRandomColor() : ''; // Assign color only to jobs
-        tempIndex = this.mergedData.length; // Update the start index for the current job
+        randomColor = row.job !== 'No Job' ? this.getRandomColor() : ''; 
+        tempIndex = this.mergedData.length; 
         this.mergedData.push({ ...row, rowSpan: 1, randomColor });
       }
     });
-
-    // Ensure rows with no merging show correct rowSpan
     this.mergedData.forEach((row) => {
       if (row.rowSpan === 1) row.rowSpan = 0;
     });
   }
-
-  // Assign color based on job type or any other condition
   getRowColor(job: string): any {
     if (job.includes('JOB/20241210/150')) {
-      return { backgroundColor: '#e6f7ff' }; // Light blue
+      return { backgroundColor: '#e6f7ff' }; 
     } else if (job.includes('JOB/20241210/00014')) {
-      return { backgroundColor: '#fff1b8' }; // Light yellow
+      return { backgroundColor: '#fff1b8' }; 
     } else if (job === 'No Job') {
-      return { backgroundColor: '#f6ffed' }; // Light green
+      return { backgroundColor: '#f6ffed' }; 
     }
-    return {}; // Default
+    return {}; 
   }
-
   getRandomColor(): string {
-    const letters = '89ABCDEF'; // Use only lighter hex digits
+    const letters = '89ABCDEF'; 
     let color = '#';
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * letters.length)];
@@ -488,7 +443,6 @@ export class JobassigndrawerComponent {
       this.filterClass = 'filter-visible';
     }
   }
-
   checkboxList = [
     {
       label: 'Distance',
@@ -520,22 +474,16 @@ export class JobassigndrawerComponent {
       SEQUENCE: 5,
     },
   ];
-
   trackByFn(index: number, item: any): any {
-    return item.label; // Use label or any unique identifier
+    return item.label; 
   }
-
-  // Handle the drop event to reorder items
   onDrop(event: CdkDragDrop<any[]>): void {
-    // Using `moveItemInArray` to reorder items
     moveItemInArray(this.checkboxList, event.previousIndex, event.currentIndex);
     this.checkboxList.forEach((item, index) => {
       item.SEQUENCE = index + 1;
     });
   }
-
   isselectedtech = false;
-
   viewtechdetails(datas: any) {
     this.mergedData = [];
     this.sheduledata = [];
@@ -572,8 +520,6 @@ export class JobassigndrawerComponent {
         (data) => {
           if (data['code'] == 200 || data['code'] == 300) {
             this.technician = data['data'];
-            //
-
             const technician = this.technician.map((data) => ({
               CREATED_MODIFIED_DATE: data.CREATED_MODIFIED_DATE,
               LOCATION_LONG: data.LOCATION_LONG,
@@ -581,7 +527,6 @@ export class JobassigndrawerComponent {
               TECHNICIAN_NAME: data.TECHNICIAN_NAME,
               JOB_CARD_NO: data.JOB_CARD_NO,
             }));
-
             if (this.technician.length > 0) {
               var dataaaaa222: any = {
                 CREATED_MODIFIED_DATE: '',
@@ -600,7 +545,6 @@ export class JobassigndrawerComponent {
               JOB_CARD_NO: this.Jobassignsdata.JOB_CARD_NO,
               TYPE: 'C',
             };
-
             this.technician = [
               {
                 ...dataaaaa222,
@@ -609,9 +553,7 @@ export class JobassigndrawerComponent {
                 ...dataaaaa,
               },
             ];
-
             setTimeout(() => {
-              // this.initMap();
               this.setLocation();
             }, 500);
           } else {
@@ -619,7 +561,6 @@ export class JobassigndrawerComponent {
           }
         },
         () => {
-          // this.message.error('Something Went Wrong', '');
         }
       );
     var vendorIDfilter: any = null;
@@ -642,7 +583,6 @@ export class JobassigndrawerComponent {
         (data) => {
           if (data['code'] == 200) {
             this.sheduledata = data['data'];
-
             if (this.sheduledata.length > 0) {
               this.prepareMergedData();
             } else {
@@ -654,7 +594,6 @@ export class JobassigndrawerComponent {
           }
         },
         () => {
-          // this.message.error('Something Went Wrong', '');
         }
       );
   }
@@ -675,7 +614,6 @@ export class JobassigndrawerComponent {
         (data11) => {
           if (data11['code'] == 200) {
             var normaldata = data11['data'];
-
             if (
               (normaldata[0].STATUS == 'AS' ||
                 normaldata[0].STATUS == 'P' ||
@@ -683,25 +621,18 @@ export class JobassigndrawerComponent {
               normaldata[0].TRACK_STATUS != 'SJ' &&
               normaldata[0].STATUS != 'CO'
             ) {
-              // this.sheduledate = this.Jobassignsdata.EXPECTED_DATE_TIME;
               this.sheduledate = this.Jobassignsdata.SCHEDULED_DATE_TIME
                 ? this.Jobassignsdata.SCHEDULED_DATE_TIME
                 : this.Jobassignsdata.EXPECTED_DATE_TIME;
-
               if (this.jobedit) {
                 const currentDate = new Date(
                   this.Jobassignsdata.SCHEDULED_DATE_TIME
                     ? this.Jobassignsdata.SCHEDULED_DATE_TIME
                     : this.Jobassignsdata.EXPECTED_DATE_TIME
                 );
-                // const currentDate = new Date(  this.Jobassignsdata.EXPECTED_DATE_TIME  );
-
-                // Extract the year, month, and day from the current date
                 const year = currentDate.getFullYear();
-                const month = currentDate.getMonth(); // Month is 0-indexed
+                const month = currentDate.getMonth(); 
                 const day = currentDate.getDate();
-
-                // Combine the date and time
                 const dateWithTime = new Date(
                   year,
                   month,
@@ -714,7 +645,6 @@ export class JobassigndrawerComponent {
                   day,
                   ...this.Jobassignsdata.END_TIME.split(':').map(Number)
                 );
-
                 this.STARTTIME = dateWithTime;
                 this.ENDTIME = dateWithTime1;
               } else {
@@ -723,7 +653,6 @@ export class JobassigndrawerComponent {
                     ? this.Jobassignsdata.SCHEDULED_DATE_TIME
                     : this.Jobassignsdata.EXPECTED_DATE_TIME
                 );
-                // this.STARTTIME = new Date(  this.Jobassignsdata.EXPECTED_DATE_TIME );
                 let startMinutes = this.STARTTIME.getMinutes();
                 if (
                   startMinutes != 0 &&
@@ -740,7 +669,6 @@ export class JobassigndrawerComponent {
                   this.STARTTIME.getTime() +
                     this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
                 );
-
                 let startMinutes1 = this.ENDTIME.getMinutes();
                 if (
                   startMinutes1 != 0 &&
@@ -754,7 +682,6 @@ export class JobassigndrawerComponent {
                     Math.floor(startMinutes1 / 10) * 10;
                   this.ENDTIME.setMinutes(roundedStartMinutes1);
                 }
-
                 if (
                   this.datepipe.transform(
                     this.Jobassignsdata.EXPECTED_DATE_TIME,
@@ -770,12 +697,9 @@ export class JobassigndrawerComponent {
                     'HH:mm'
                   );
                   const currentTimedate = new Date();
-
                   if (jobTime && currentTime) {
                     if (jobTime < currentTime) {
-                      // this.terriotrystarttime = currentTime;
                       this.STARTTIME = currentTimedate;
-
                       let startMinutes = this.STARTTIME.getMinutes();
                       if (
                         startMinutes != 0 &&
@@ -793,12 +717,10 @@ export class JobassigndrawerComponent {
                           this.STARTTIME.setMinutes(startMinutes);
                         }
                       }
-
                       this.ENDTIME = new Date(
                         this.STARTTIME.getTime() +
                           this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
                       );
-
                       let startMinutes1 = this.ENDTIME.getMinutes();
                       if (
                         startMinutes1 != 0 &&
@@ -818,10 +740,8 @@ export class JobassigndrawerComponent {
                 } else {
                 }
               }
-
               this.assigndataa = [];
               this.assigndataa = dataaaa;
-
               this.Titleforassign =
                 'Assign the ' +
                 this.Jobassignsdata.JOB_CARD_NO +
@@ -848,7 +768,6 @@ export class JobassigndrawerComponent {
                   (data) => {
                     if (data['code'] == 200) {
                       this.jobdata = data['data'];
-
                       this.previousdata = this.jobdata.filter((data) => {
                         return data.PREVIOUS_JOB == 1;
                       });
@@ -860,12 +779,10 @@ export class JobassigndrawerComponent {
                       setTimeout(() => {
                         this.disstrue = false;
                       }, 500);
-
                       if (this.previousdata.length > 0) {
                         this.distancecalculateforprevois =
                           data['preveousJob'].distance;
                       }
-
                       if (this.nextdata.length > 0) {
                         this.distancecalculatefornext =
                           data['nextJob'].distance;
@@ -876,7 +793,6 @@ export class JobassigndrawerComponent {
                     }
                   },
                   () => {
-                    // this.message.error('Something Went Wrong', '');
                     this.spinnn = false;
                   }
                 );
@@ -898,7 +814,6 @@ export class JobassigndrawerComponent {
         }
       );
   }
-
   assignjobtotech() {}
   DATEEE: any;
   isspinnnnnnn = false;
@@ -932,14 +847,12 @@ export class JobassigndrawerComponent {
           (data11) => {
             if (data11['code'] == 200) {
               var normaldata = data11['data'];
-
               var ok = false;
               if (this.alljobdata.length == normaldata.length) {
                 ok = true;
               } else {
                 ok = false;
               }
-
               if (
                 (this.IS_ORDER_JOB == 'O' && ok) ||
                 ((normaldata[0].STATUS == 'AS' ||
@@ -996,7 +909,6 @@ export class JobassigndrawerComponent {
                         );
                         this.isSpinning = true;
                         this.openModal = false;
-
                         this.drawerClose();
                         this.isSpinning = false;
                         this.isspinnnnnnn = false;
@@ -1079,20 +991,17 @@ export class JobassigndrawerComponent {
                         ...item.START_TIME.split(':').map(Number)
                       );
                       const startTimeDate = new Date(dateWithTime);
-
                       const dateWithTime11 = new Date(
                         year,
                         month,
                         day,
                         ...item.START_TIME.split(':').map(Number)
                       );
-
                       const endTimeDate = new Date(
                         dateWithTime11.getTime() +
                           item.ESTIMATED_TIME_IN_MIN * 60000
                       );
                       previousEndTime = endTimeDate;
-
                       return {
                         ID: item.ID,
                         ORDER_ID: item.ORDER_ID,
@@ -1115,7 +1024,6 @@ export class JobassigndrawerComponent {
                         ORGNISATION_ID: this.orgId,
                       };
                     });
-
                     dataaaa = {
                       IS_ORDER_JOB: 'O',
                       CUSTOMER_ID: this.Jobassignsdata.CUSTOMER_ID,
@@ -1149,7 +1057,6 @@ export class JobassigndrawerComponent {
                         : 0,
                     };
                   }
-
                   this.api
                     .createassignshedule(dataaaa)
                     .subscribe((successCode) => {
@@ -1215,17 +1122,13 @@ export class JobassigndrawerComponent {
         );
     }
   }
-
   closemodelll() {
     this.openModal = false;
     this.assigndataa = [];
-
     this.disstrue = true;
   }
-
   STARTTIME: any;
   ENDTIME: any;
-
   timeslottt = [
     { KEY: '00:00', VALUE: '00:00' },
     { KEY: '00:10', VALUE: '00:10' },
@@ -1372,12 +1275,8 @@ export class JobassigndrawerComponent {
     { KEY: '23:40', VALUE: '23:40' },
     { KEY: '23:50', VALUE: '23:50' },
   ];
-
   applyFilter() {
-    //
-
     this.spinnn = true;
-
     var SortOrder = this.checkboxList
       .filter((item) => item.checked)
       .map((item, index) => ({
@@ -1385,7 +1284,6 @@ export class JobassigndrawerComponent {
         VALUE: item.VALUE,
         SEQUENCE: index + 1,
       }));
-
     var dataaa = [
       {
         ...this.Jobassignsdata,
@@ -1421,22 +1319,20 @@ export class JobassigndrawerComponent {
           }
         },
         () => {
-          // this.message.error('Something Went Wrong', '');
         }
       );
   }
   sheduledate: any;
   isDisabled(timeSlot: string): boolean {
     if (!this.STARTTIME) {
-      return false; // Enable all options if no Start Time is selected
+      return false; 
     }
     return timeSlot <= this.STARTTIME;
   }
   onStartTimeChange(startTime: string): void {
     this.STARTTIME = startTime;
-    this.ENDTIME = null; // Reset End Time if Start Time changes
+    this.ENDTIME = null; 
   }
-
   initDistanceCalculation(
     orderLocation: any,
     technicianLocation: any
@@ -1446,12 +1342,10 @@ export class JobassigndrawerComponent {
         reject('Both orderLocation and technicianLocation are required.');
         return;
       }
-
       const orderLat = parseFloat(orderLocation.LOCATION_LATITUDE);
       const orderLng = parseFloat(orderLocation.LOCATION_LONG);
       const techLat = parseFloat(technicianLocation.LOCATION_LATITUDE);
       const techLng = parseFloat(technicianLocation.LOCATION_LONG);
-
       if (
         isNaN(orderLat) ||
         isNaN(orderLng) ||
@@ -1461,15 +1355,12 @@ export class JobassigndrawerComponent {
         reject('Invalid latitude or longitude values provided.');
         return;
       }
-
       const directionsService = new google.maps.DirectionsService();
-
       const request = {
         origin: new google.maps.LatLng(orderLat, orderLng),
         destination: new google.maps.LatLng(techLat, techLng),
-        travelMode: google.maps.TravelMode.DRIVING, // Use DRIVING to calculate road distance
+        travelMode: google.maps.TravelMode.DRIVING, 
       };
-
       directionsService.route(request, (result, status) => {
         if (
           status === google.maps.DirectionsStatus.OK &&
@@ -1479,7 +1370,7 @@ export class JobassigndrawerComponent {
             (sum: number, leg: any) => sum + leg.distance.value,
             0
           );
-          const distanceInKm = (totalDistance / 1000).toFixed(2); // Distance in kilometers with 2 decimals
+          const distanceInKm = (totalDistance / 1000).toFixed(2); 
           resolve(`${distanceInKm} km`);
         } else {
           reject(`Directions request failed due to ${status}`);
@@ -1487,30 +1378,20 @@ export class JobassigndrawerComponent {
       });
     });
   }
-
-  // this.timeDifference = this.calculateTimeDifference(this.jobStartTime, this.technicianStartTime);
   calculateTimeDifference(start: string, end: any): string {
     const startTime = new Date(start);
     const endTime = new Date(end);
-
     const diffInMilliseconds = endTime.getTime() - startTime.getTime();
     const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
     const hours = Math.floor(diffInMinutes / 60);
     const minutes = diffInMinutes % 60;
-
     return `${hours} hours ${minutes} minutes`;
   }
-
   calculateTimeDifference11(start: any, end: any): string {
-    // Get the current date
     const currentDate = new Date(this.sheduledate);
-
-    // Extract the year, month, and day from the current date
     const year = currentDate.getFullYear();
-    const month = currentDate.getMonth(); // Month is 0-indexed
+    const month = currentDate.getMonth(); 
     const day = currentDate.getDate();
-
-    // Combine the date and time
     const dateWithTime = new Date(
       year,
       month,
@@ -1520,24 +1401,17 @@ export class JobassigndrawerComponent {
     end = dateWithTime;
     const startTime = new Date(start);
     const endTime = new Date(end);
-
     const diffInMilliseconds = endTime.getTime() - startTime.getTime();
     const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
     const hours = Math.floor(diffInMinutes / 60);
     const minutes = diffInMinutes % 60;
-
     return `${hours} hours ${minutes} minutes`;
   }
   calculateTimeDifference1111(start: any, end: any): string {
-    // Get the current date
     const currentDate = new Date(this.sheduledate);
-
-    // Extract the year, month, and day from the current date
     const year = currentDate.getFullYear();
-    const month = currentDate.getMonth(); // Month is 0-indexed
+    const month = currentDate.getMonth(); 
     const day = currentDate.getDate();
-
-    // Combine the date and time
     const dateWithTime = new Date(
       year,
       month,
@@ -1547,20 +1421,16 @@ export class JobassigndrawerComponent {
     start = dateWithTime;
     const startTime = new Date(start);
     const endTime = new Date(end);
-
     const diffInMilliseconds = endTime.getTime() - startTime.getTime();
     const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
     const hours = Math.floor(diffInMinutes / 60);
     const minutes = diffInMinutes % 60;
-
     return `${hours} hours ${minutes} minutes`;
   }
-
   disabledHours = (): number[] => {
     const hours: number[] = [];
     const beforeHour = parseInt(this.terriotrystarttime.split(':')[0], 10);
     const afterHour = parseInt(this.terriotryendtime.split(':')[0], 10);
-
     for (let i = 0; i < 24; i++) {
       if (i < beforeHour || i > afterHour) {
         hours.push(i);
@@ -1568,57 +1438,42 @@ export class JobassigndrawerComponent {
     }
     return hours;
   };
-
   disabledMinutes = (hour: number): number[] => {
     const beforeHour = parseInt(this.terriotrystarttime.split(':')[0], 10);
     const beforeMinute = parseInt(this.terriotrystarttime.split(':')[1], 10);
-
     const afterHour = parseInt(this.terriotryendtime.split(':')[0], 10);
     const afterMinute = parseInt(this.terriotryendtime.split(':')[1], 10);
-
-    const allowedMinutes = [0, 10, 20, 30, 40, 50]; // Allowed minute intervals
-
-    // Disable minutes before terriotrystarttime
+    const allowedMinutes = [0, 10, 20, 30, 40, 50]; 
     if (hour === beforeHour) {
       return Array.from({ length: 60 }, (_, i) => i).filter(
         (minute) => minute < beforeMinute || !allowedMinutes.includes(minute)
       );
     }
-
-    // Disable minutes after terriotryendtime
     if (hour === afterHour) {
       return Array.from({ length: 60 }, (_, i) => i).filter(
         (minute) => minute > afterMinute || !allowedMinutes.includes(minute)
       );
     }
-
-    // For other hours, disable all minutes not divisible by 10
     return Array.from({ length: 60 }, (_, i) => i).filter(
       (minute) => !allowedMinutes.includes(minute)
     );
   };
-
   datachange(event: any) {
     this.ENDTIME = new Date(
       event.getTime() + this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
     );
   }
-
   roundNumber(value: any): number | string {
     const [integerPart, decimalPart] = value.toString().split('.');
-
     if (decimalPart === '00') {
-      return parseInt(integerPart, 10); // Return integer part
+      return parseInt(integerPart, 10); 
     }
-
-    return value; // Return original value as is
+    return value; 
   }
-
   openmodell: boolean = false;
   cancel() {
     this.openmodell = false;
   }
-
   showconfirmation() {
     if (
       this.sheduledate == undefined ||
@@ -1645,13 +1500,10 @@ export class JobassigndrawerComponent {
       this.openmodell = true;
     }
   }
-
   disabledHours1 = (): number[] => {
     if (!this.STARTTIME || !this.terriotryendtime) {
       return [];
     }
-
-    // Ensure STARTTIME and terriotryendtime are strings
     const startTime =
       typeof this.STARTTIME === 'string'
         ? this.STARTTIME
@@ -1660,14 +1512,11 @@ export class JobassigndrawerComponent {
       typeof this.terriotryendtime === 'string'
         ? this.terriotryendtime
         : this.datepipe.transform(this.terriotryendtime, 'HH:mm');
-
     if (!startTime || !territoryEndTime) {
       return [];
     }
-
     const startHour = parseInt(startTime.split(':')[0], 10);
     const endHour = parseInt(territoryEndTime.split(':')[0], 10);
-
     const hours: number[] = [];
     for (let i = 0; i < 24; i++) {
       if (i < startHour || i > endHour) {
@@ -1680,8 +1529,6 @@ export class JobassigndrawerComponent {
     if (!this.STARTTIME || !this.terriotryendtime) {
       return [];
     }
-
-    // Ensure STARTTIME and terriotryendtime are strings
     const startTime =
       typeof this.STARTTIME === 'string'
         ? this.STARTTIME
@@ -1690,41 +1537,31 @@ export class JobassigndrawerComponent {
       typeof this.terriotryendtime === 'string'
         ? this.terriotryendtime
         : this.datepipe.transform(this.terriotryendtime, 'HH:mm');
-
     if (!startTime || !territoryEndTime) {
       return [];
     }
-
     const startHour = parseInt(startTime.split(':')[0], 10);
     const startMinute = parseInt(startTime.split(':')[1], 10);
-
     const endHour = parseInt(territoryEndTime.split(':')[0], 10);
     const endMinute = parseInt(territoryEndTime.split(':')[1], 10);
-
     const allowedMinutes = [0, 10, 20, 30, 40, 50];
-
     if (hour === startHour) {
       return Array.from({ length: 60 }, (_, i) => i).filter(
         (minute) => minute < startMinute || !allowedMinutes.includes(minute)
       );
     }
-
     if (hour === endHour) {
       return Array.from({ length: 60 }, (_, i) => i).filter(
         (minute) => minute > endMinute || !allowedMinutes.includes(minute)
       );
     }
-
     return Array.from({ length: 60 }, (_, i) => i).filter(
       (minute) => !allowedMinutes.includes(minute)
     );
   };
-
   disstrue: boolean = true;
-
   getbetweendata(event) {
     this.isspinnnnnnn = false;
-
     this.api
       .getjobsbetween(
         0,
@@ -1746,22 +1583,18 @@ export class JobassigndrawerComponent {
             this.jobdata = this.jobdata.filter((data) => {
               return data.ID != this.Jobassignsdata.ID;
             });
-
             this.previousdata = this.jobdata.filter((data) => {
               return data.PREVIOUS_JOB == 1;
             });
             this.nextdata = this.jobdata.filter((data) => {
               return data.PREVIOUS_JOB == 0;
             });
-
             if (this.previousdata.length > 0) {
               this.distancecalculateforprevois = data['preveousJob'].distance;
             }
-
             if (this.nextdata.length > 0) {
               this.distancecalculatefornext = data['nextJob'].distance;
             }
-
             this.openModal = true;
             setTimeout(() => {
               this.disstrue = false;
@@ -1775,7 +1608,6 @@ export class JobassigndrawerComponent {
         () => {}
       );
   }
-
   getbetweendatastart(event) {
     this.isspinnnnnnn = false;
     this.ENDTIME = new Date(
@@ -1802,14 +1634,12 @@ export class JobassigndrawerComponent {
             this.jobdata = this.jobdata.filter((data) => {
               return data.ID != this.Jobassignsdata.ID;
             });
-
             this.previousdata = this.jobdata.filter((data) => {
               return data.PREVIOUS_JOB == 1;
             });
             this.nextdata = this.jobdata.filter((data) => {
               return data.PREVIOUS_JOB == 0;
             });
-
             this.openModal = true;
             setTimeout(() => {
               this.disstrue = false;
@@ -1817,7 +1647,6 @@ export class JobassigndrawerComponent {
             if (this.previousdata.length > 0) {
               this.distancecalculateforprevois = data['preveousJob'].distance;
             }
-
             if (this.nextdata.length > 0) {
               this.distancecalculatefornext = data['nextJob'].distance;
             }
@@ -1832,7 +1661,6 @@ export class JobassigndrawerComponent {
   }
   getbetweendataend(event) {
     this.isspinnnnnnn = false;
-
     this.api
       .getjobsbetween(
         0,
@@ -1854,7 +1682,6 @@ export class JobassigndrawerComponent {
             this.jobdata = this.jobdata.filter((data) => {
               return data.ID != this.Jobassignsdata.ID;
             });
-
             this.previousdata = this.jobdata.filter((data) => {
               return data.PREVIOUS_JOB == 1;
             });
@@ -1864,7 +1691,6 @@ export class JobassigndrawerComponent {
             if (this.previousdata.length > 0) {
               this.distancecalculateforprevois = data['preveousJob'].distance;
             }
-
             if (this.nextdata.length > 0) {
               this.distancecalculatefornext = data['nextJob'].distance;
             }
@@ -1903,10 +1729,8 @@ export class JobassigndrawerComponent {
             } else {
               ok = false;
             }
-
             if (ok) {
               this.sheduledate = this.Jobassignsdata.EXPECTED_DATE_TIME;
-
               this.STARTTIME = new Date(this.Jobassignsdata.EXPECTED_DATE_TIME);
               let startMinutes = this.STARTTIME.getMinutes();
               if (
@@ -1924,7 +1748,6 @@ export class JobassigndrawerComponent {
                 this.STARTTIME.getTime() +
                   this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
               );
-
               let startMinutes1 = this.ENDTIME.getMinutes();
               if (
                 startMinutes1 != 0 &&
@@ -1937,7 +1760,6 @@ export class JobassigndrawerComponent {
                 let roundedStartMinutes1 = Math.floor(startMinutes1 / 10) * 10;
                 this.ENDTIME.setMinutes(roundedStartMinutes1);
               }
-
               if (
                 this.datepipe.transform(
                   this.Jobassignsdata.EXPECTED_DATE_TIME,
@@ -1953,12 +1775,9 @@ export class JobassigndrawerComponent {
                   'HH:mm'
                 );
                 const currentTimedate = new Date();
-
                 if (jobTime && currentTime) {
                   if (jobTime < currentTime) {
-                    // this.terriotrystarttime = currentTime;
                     this.STARTTIME = currentTimedate;
-
                     let startMinutes = this.STARTTIME.getMinutes();
                     if (
                       startMinutes != 0 &&
@@ -1976,12 +1795,10 @@ export class JobassigndrawerComponent {
                         this.STARTTIME.setMinutes(startMinutes);
                       }
                     }
-
                     this.ENDTIME = new Date(
                       this.STARTTIME.getTime() +
                         this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
                     );
-
                     let startMinutes1 = this.ENDTIME.getMinutes();
                     if (
                       startMinutes1 != 0 &&
@@ -1999,10 +1816,8 @@ export class JobassigndrawerComponent {
                   }
                 }
               }
-
               this.assigndataa = [];
               this.assigndataa = dataaaa;
-
               this.Titleforassign =
                 'Assign the ' +
                 this.Jobassignsdata.ORDER_NO +
@@ -2029,7 +1844,6 @@ export class JobassigndrawerComponent {
                   (data) => {
                     if (data['code'] == 200) {
                       this.jobdata = data['data'];
-
                       this.previousdata = this.jobdata.filter((data) => {
                         return data.PREVIOUS_JOB == 1;
                       });
@@ -2045,7 +1859,6 @@ export class JobassigndrawerComponent {
                         this.distancecalculateforprevois =
                           data['preveousJob'].distance;
                       }
-
                       if (this.nextdata.length > 0) {
                         this.distancecalculatefornext =
                           data['nextJob'].distance;
@@ -2056,7 +1869,6 @@ export class JobassigndrawerComponent {
                     }
                   },
                   () => {
-                    // this.message.error('Something Went Wrong', '');
                     this.spinnn = false;
                   }
                 );
@@ -2097,7 +1909,6 @@ export class JobassigndrawerComponent {
         day,
         ...this.terriotryendtime.split(':').map(Number)
       );
-
       const todayEndTime = new Date(dateWithTime);
       return this.ENDTIME > todayEndTime
         ? 'The order is crossing the territorys end time.'
@@ -2106,51 +1917,29 @@ export class JobassigndrawerComponent {
       return '';
     }
   }
-
   disablePastDates = (current: Date): boolean => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
-
     return current <= yesterday;
   };
-
   gettimedataa111() {
     if (this.IS_ORDER_JOB == 'O' || this.IS_ORDER_JOB == 'P') {
       const currentDate = new Date(this.sheduledate);
-
-      // sheduledate chya 'time' components (hours, minutes, seconds, milliseconds) 0 set karun
-      // phakta 'date' compare karnya sathi ek new date object banva
       const selectedDate = new Date(currentDate);
       selectedDate.setHours(0, 0, 0, 0);
-
       const today = new Date();
-      // today chya 'time' components 0 set kara
       today.setHours(0, 0, 0, 0);
-
-      // 1. **YEAR, MONTH, & DATE (Divas) CHECK**:
-      // selectedDate he today peksha aadhi ahe ka he check kara (mhanjech, past date ahe ka)
       if (selectedDate < today) {
         this.showbutton = false;
-        // Ha error message tumhala tevhach milel, jevha (Year, Month, Date) he current date peksha kami asel.
         return 'You cannot select a date earlier than today.';
       }
-
-      // 2. Schedule Date today chya aadhi naslyas (selectedDate >= today), 'next day crossing' check kara
-
-      // END TIME parse kara
       const endTimeDate = new Date(this.ENDTIME);
-
-      // 'currentDate' pasun ek divas pudhchi tarikh (next day) banva.
       const nextDay = new Date(currentDate);
       nextDay.setDate(currentDate.getDate() + 1);
-      nextDay.setHours(0, 0, 0, 0); // Next day chya shuruwat (midnight)
-
-      // Check kara ki endTimeDate he nextDay chya 00:00:00.000 chya pudhe jat ahe ka.
+      nextDay.setHours(0, 0, 0, 0); 
       const isCrossingNextDay = endTimeDate >= nextDay;
-
       if (isCrossingNextDay) {
         this.showbutton = false;
         return 'The order crosses into the next day. Please adjust the time or schedule a specific job.';
@@ -2159,74 +1948,38 @@ export class JobassigndrawerComponent {
         return '';
       }
     } else {
-      // Other IS_ORDER_JOB values
       this.showbutton = true;
       return '';
     }
   }
-
-  // gettimedataa111() {
-  //   if (this.IS_ORDER_JOB == 'O' || this.IS_ORDER_JOB == 'P') {
-  //     const currentDate = new Date(this.sheduledate);
-  //     const year = currentDate.getFullYear();
-  //     const month = currentDate.getMonth();
-  //     const day = currentDate.getDate();
-
-  //     // Parse the END TIME as a Date object
-  //     const endTimeDate = new Date(this.ENDTIME);
-
-  //     // Check if END TIME is crossing into the next day
-  //     const isCrossingNextDay =
-  //       endTimeDate.getDate() > day ||
-  //       (endTimeDate.getDate() === day + 1 && endTimeDate.getHours() > 0);
-
-  //     if (isCrossingNextDay) {
-  //       this.showbutton = false;
-  //       return 'The order crosses into the next day. Please adjust the time or schedule a specific job.';
-  //     } else {
-  //       this.showbutton = true;
-  //       return '';
-  //     }
-  //   } else {
-  //     this.showbutton = true;
-  //     return '';
-  //   }
-  // }
-
   isspinnnnnnnmising: boolean = false;
   openmissingmodel: boolean = false;
-
   showbutton: boolean = true;
   continemissingorder() {
     this.isspinnnnnnnmising = true;
     this.alljobdata = this.newalljobarray;
-
     this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN = this.alljobdata.reduce(
       (total, item) => total + item.ESTIMATED_TIME_IN_MIN,
       0
     );
-
     if (this.alljobdata.length > 1) {
       var lenggth = this.alljobdata.length - 1;
       var addmin = lenggth * 10;
       this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN =
         this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN + addmin;
     }
-
     this.openmissingmodel = false;
     this.openModal = false;
     this.openmodell = false;
     this.isspinnnnnnnmising = false;
     this.getTechnicianData();
   }
-
   cancelmising() {
     this.openmissingmodel = false;
     this.openModal = false;
     this.openmodell = false;
     this.drawerClose();
   }
-
   roundRating(rating: number): number {
     if (rating !== null && rating !== undefined && rating > 0) {
       return Math.round(rating * 2) / 2;
@@ -2237,18 +1990,13 @@ export class JobassigndrawerComponent {
   getconditio() {
     return this.showbutton ? 'true' : 'false';
   }
-
-  // apiKey = 'AIzaSyA1EJJ0RMDQwzsDd00Oziy1pytYn_Ozi-g';
   apiKey = 'AIzaSyBOL8XUOxJicHzlQRGi27Wdn5M3zazFKTU';
-
   setLocation() {
     const technician = this.technician;
-
     if (!technician || technician.length === 0) {
       this.message.error('No technician location data available.', '');
       return;
     }
-
     const locations = technician
       .map((loc: any) => ({
         name: loc.TECHNICIAN_NAME,
@@ -2257,13 +2005,10 @@ export class JobassigndrawerComponent {
         TYPE: loc.TYPE,
       }))
       .filter((loc: any) => !isNaN(loc.lat) && !isNaN(loc.lng));
-
     if (locations.length === 0) {
       this.message.error('No valid locations found for the technician.', '');
       return;
     }
-
-    // Initialize Google Map
     const map = new google.maps.Map(
       document.getElementById('map') as HTMLElement,
       {
@@ -2272,10 +2017,7 @@ export class JobassigndrawerComponent {
         mapTypeId: 'roadmap',
       }
     );
-
     const bounds = new google.maps.LatLngBounds();
-
-    // Add markers
     locations.forEach((point, index) => {
       const marker = new google.maps.Marker({
         position: { lat: point.lat, lng: point.lng },
@@ -2284,16 +2026,14 @@ export class JobassigndrawerComponent {
         icon: {
           url:
             index === 0
-              ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' // Start
+              ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' 
               : index === locations.length - 1
-              ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' // End
-              : 'https://maps.google.com/mapfiles/ms/icons/red-dot.png', // Waypoints
+              ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' 
+              : 'https://maps.google.com/mapfiles/ms/icons/red-dot.png', 
           scaledSize: new google.maps.Size(40, 40),
         },
       });
-
       bounds.extend(marker.getPosition());
-
       const infoWindow = new google.maps.InfoWindow({
         content: `
           <div style="font-size: 14px;">
@@ -2302,30 +2042,21 @@ export class JobassigndrawerComponent {
           </div>
         `,
       });
-
       marker.addListener('click', () => {
         infoWindow.open(map, marker);
       });
       this.getNearestRoad(map, point);
     });
-
-    // Fit Map to Show All Markers
     map.fitBounds(bounds);
     this.isSpinning = false;
-    // Google API Key
     const googleApiKey = this.apiKey;
     const routeApiUrl = `https://routes.googleapis.com/directions/v2:computeRoutes?key=${googleApiKey}`;
-
-    // Process waypoints in batches of 25
     const MAX_WAYPOINTS = 25;
     const routeSegments: any = [];
-
     for (let i = 0; i < locations.length; i += MAX_WAYPOINTS) {
       const segment = locations.slice(i, i + MAX_WAYPOINTS);
       routeSegments.push(segment);
     }
-
-    // Function to fetch route and draw polylines
     const fetchAndDrawRoute = (segment: any, index: number) => {
       const origin = {
         latLng: { latitude: segment[0].lat, longitude: segment[0].lng },
@@ -2339,7 +2070,6 @@ export class JobassigndrawerComponent {
       const intermediates = segment.slice(1, -1).map((point: any) => ({
         location: { latLng: { latitude: point.lat, longitude: point.lng } },
       }));
-
       const requestBody = {
         origin: { location: origin },
         destination: { location: destination },
@@ -2349,7 +2079,6 @@ export class JobassigndrawerComponent {
         computeAlternativeRoutes: false,
         polylineEncoding: 'ENCODED_POLYLINE',
       };
-
       fetch(routeApiUrl, {
         method: 'POST',
         headers: {
@@ -2367,8 +2096,6 @@ export class JobassigndrawerComponent {
             );
             return;
           }
-
-          // Decode and draw each segment
           const polylinePoints = this.decodePolyline(
             data.routes[0].polyline.encodedPolyline
           );
@@ -2379,7 +2106,6 @@ export class JobassigndrawerComponent {
             strokeOpacity: 1.0,
             strokeWeight: 4,
           });
-
           travelPath.setMap(map);
         })
         .catch((error) => {
@@ -2393,21 +2119,16 @@ export class JobassigndrawerComponent {
           );
         });
     };
-
-    // Process each segment
     routeSegments.forEach((segment, index) =>
       fetchAndDrawRoute(segment, index)
     );
   }
-
-  // Function to decode polyline
   decodePolyline(encoded: string) {
     let index = 0,
       len = encoded.length;
     let lat = 0,
       lng = 0;
     const coordinates: any = [];
-
     while (index < len) {
       let shift = 0,
         result = 0,
@@ -2419,7 +2140,6 @@ export class JobassigndrawerComponent {
       } while (byte >= 0x20);
       let deltaLat = result & 1 ? ~(result >> 1) : result >> 1;
       lat += deltaLat;
-
       shift = 0;
       result = 0;
       do {
@@ -2429,13 +2149,10 @@ export class JobassigndrawerComponent {
       } while (byte >= 0x20);
       let deltaLng = result & 1 ? ~(result >> 1) : result >> 1;
       lng += deltaLng;
-
       coordinates.push({ lat: lat / 1e5, lng: lng / 1e5 });
     }
-
     return coordinates;
   }
-  // Function to draw a dashed polyline from the road to the technician
   drawWalkingPath(
     map: any,
     roadLocation: { lat: number; lng: number },
@@ -2455,10 +2172,9 @@ export class JobassigndrawerComponent {
         { lat: roadLocation.lat, lng: roadLocation.lng },
         { lat: technician.lat, lng: technician.lng },
       ],
-
       geodesic: true,
-      strokeColor: '#FF0000', // Red color for walking path
-      strokeOpacity: 0, // Ensure visibility
+      strokeColor: '#FF0000', 
+      strokeOpacity: 0, 
       strokeWeight: 1,
       icons: [
         {
@@ -2468,37 +2184,28 @@ export class JobassigndrawerComponent {
         },
       ],
     });
-
     walkingPath.setMap(map);
   }
-
   getNearestRoad(map: any, destination: any) {
-    const apiKey = this.apiKey; // Replace with your API Key
+    const apiKey = this.apiKey; 
     const roadApiUrl = `https://roads.googleapis.com/v1/nearestRoads?points=${destination.lat},${destination.lng}&key=${apiKey}`;
-
     fetch(roadApiUrl)
       .then((response) => response.json())
       .then((data) => {
         if (!data.snappedPoints || data.snappedPoints.length === 0) {
-          // console.warn('No nearest road found for:', destination.name);
           return;
         }
-
-        // Get snapped road point
         const roadPoint = data.snappedPoints[0].location;
         const roadLatLng = {
           lat: roadPoint.latitude,
           lng: roadPoint.longitude,
         };
-
-        // Draw walking path from road to technician
         this.drawWalkingPath(map, roadLatLng, destination);
       })
       .catch((error) => {
         console.error('Error fetching nearest road:', error);
       });
   }
-
   drawerTitlefordeatils: any = '';
   drawerdetailsVisible: any = false;
   drawerclosefordetails() {
@@ -2509,126 +2216,90 @@ export class JobassigndrawerComponent {
       'Details of ' + this.IS_ORDER_JOB == 'P'
         ? this.Jobassignsdata.JOB_CARD_NO
         : this.Jobassignsdata.ORDER_NO;
-
     this.drawerdetailsVisible = true;
   }
-
   openfileee(event: any) {
     window.open(this.api.retriveimgUrl + 'CartItemPhoto/' + event);
   }
   isTextOverflowing(element: HTMLElement): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
-
-  // End Time Disabled Hours
   disabledHours1New = (): number[] => {
     return this.disabledHoursNew();
   };
-
-  // End Time Disabled Minutes
   disabledMinutes1New = (hour: number): number[] => {
     return this.disabledMinutesNew(hour);
   };
-
   disabledMinutesNew = (hour: number): number[] => {
-    // Territory Time Logic
     const beforeHour = parseInt(this.terriotrystarttime.split(':')[0], 10);
     const beforeMinute = parseInt(this.terriotrystarttime.split(':')[1], 10);
     const afterHour = parseInt(this.terriotryendtime.split(':')[0], 10);
     const afterMinute = parseInt(this.terriotryendtime.split(':')[1], 10);
-
-    // Current Time Logic
     const disabler = this.getCurrentTimeDisabler();
     const currentHour = disabler.currentHour;
     const currentMinute = disabler.currentMinute;
     const minuteStep = 10;
     const allowedMinutes = [0, 10, 20, 30, 40, 50];
-
     const minutesToDisable: number[] = [];
-
     for (let i = 0; i < 60; i++) {
       let disable = false;
-
       if (!allowedMinutes.includes(i)) {
         disable = true;
       }
-
-      // 1. Territory Time Restriction
       if (hour === beforeHour && i < beforeMinute) {
         disable = true;
       }
       if (hour === afterHour && i > afterMinute) {
         disable = true;
       }
-
       if (disabler.isToday && hour === currentHour) {
         if (i % minuteStep === 0 && i < currentMinute) {
           disable = true;
         }
       }
-
       if (disable) {
         minutesToDisable.push(i);
       }
     }
-
     return minutesToDisable;
   };
-
   getCurrentTimeDisabler() {
     const currentDate = new Date(this.sheduledate);
-
     const selectedDate = new Date(currentDate);
     selectedDate.setHours(0, 0, 0, 0);
-
     const today = new Date();
     const todayOnly = new Date(today);
     todayOnly.setHours(0, 0, 0, 0);
-
     const isToday = selectedDate.getTime() === todayOnly.getTime();
-
     if (isToday) {
       const currentHour = today.getHours();
       const currentMinute = today.getMinutes();
-
       return {
         isToday: true,
         currentHour: currentHour,
         currentMinute: currentMinute,
       };
     }
-
     return { isToday: false, currentHour: -1, currentMinute: -1 };
   }
-
   disabledHoursNew = (): number[] => {
-    // Territory Time Logic
     const beforeHour = parseInt(this.terriotrystarttime.split(':')[0], 10);
     const afterHour = parseInt(this.terriotryendtime.split(':')[0], 10);
-
-    // Current Time Logic
     const disabler = this.getCurrentTimeDisabler();
-
     const currentHour = disabler.currentHour;
-
     const hoursToDisable: number[] = [];
-
     for (let i = 0; i < 24; i++) {
       let disable = false;
-
       if (i < beforeHour || i > afterHour) {
         disable = true;
       }
-
       if (disabler.isToday && i < currentHour) {
         disable = true;
       }
-
       if (disable) {
         hoursToDisable.push(i);
       }
     }
-
     return hoursToDisable;
   };
 }

@@ -13,7 +13,6 @@ import { InventoryMaster } from 'src/app/Inventorypages/inventorymodal/inventory
 import { brandMaster } from 'src/app/Pages/Models/BrandMaster';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-inventorymasterform',
   templateUrl: './inventorymasterform.component.html',
@@ -26,7 +25,6 @@ export class InventorymasterformComponent {
   @Input() disableItems: any;
   @Input() ShowTax: any;
   @Input() UnitName: any;
-
   HSNdata: any = [];
   BrandData: any = [];
   taxData: any = [];
@@ -55,11 +53,9 @@ export class InventorymasterformComponent {
   date;
   InventorySubCategoryList: any = [];
   InventoryCategoryList: any = [];
-
   UnitList: any = [];
   warehouseList: any = [];
   storageLocationlist: any = [];
-
   uploadedImage: any = '';
   fullImageUrl: string;
   retriveimgUrl = appkeys.retriveimgUrl;
@@ -81,7 +77,6 @@ export class InventorymasterformComponent {
     private message: NzNotificationService,
     private sanitizer: DomSanitizer
   ) { }
-
   ngOnInit() {
     if (this.data?.ID) {
       const html = this.data.DESCRIPTION || '';
@@ -98,27 +93,18 @@ export class InventorymasterformComponent {
       this.uploadedImage1 = this.data.INVENTORY_DETAILS_IMAGE;
     } else {
     }
-
-    // this.getSubCategory()
     this.getWarehouses();
-    // this.getWarehouselocations()
     this.getInventoryCategory();
     this.getUnits();
-    // if (this.data?.INVENTRY_SUB_CATEGORY_ID) {
-    //   this.onWarehousechange(this.data.WAREHOUSE_ID);
-    // }
-
     if (this.data.TAX_PREFERENCE == 'T') {
       this.ShowTax = true;
     }
-
     if (this.data.ID) {
       this.subcategoryid = this.data.INVENTRY_SUB_CATEGORY_ID;
       this.getNamesCatAndSub(this.data.INVENTRY_SUB_CATEGORY_ID);
       this.initializeWarehouse();
     }
   }
-
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -169,7 +155,6 @@ export class InventorymasterformComponent {
         this.InventoryCategoryList = [];
       }
     );
-
     this.api
       .getAllHSNSAC(0, 0, 'ID', 'desc', ' AND STATUS = 1')
       .subscribe((data) => {
@@ -179,7 +164,6 @@ export class InventorymasterformComponent {
           this.HSNdata = [];
         }
       });
-
     this.api
       .getAllInventoryBrand(0, 0, 'ID', 'desc', ' AND STATUS = 1')
       .subscribe((data) => {
@@ -189,7 +173,6 @@ export class InventorymasterformComponent {
           this.BrandData = [];
         }
       });
-
     this.api
       .getTaxData(0, 0, 'ID', 'desc', ' AND IS_ACTIVE = 1')
       .subscribe((data) => {
@@ -200,7 +183,6 @@ export class InventorymasterformComponent {
         }
       });
   }
-
   onChange(selectedId: any): void {
     if (selectedId != null && selectedId != undefined && selectedId != '') {
       var selectedProduct = this.UnitList.find(
@@ -221,7 +203,6 @@ export class InventorymasterformComponent {
       this.data.BASE_UNIT_ID = null;
     }
   }
-
   MainonChange(selectedId: any): void {
     if (selectedId != null && selectedId != undefined && selectedId != '') {
       var selectedProduct = this.UnitList.find(
@@ -232,12 +213,10 @@ export class InventorymasterformComponent {
         selectedProduct != undefined &&
         selectedProduct != ''
       ) {
-        // this.data.BASE_UNIT_NAME = selectedProduct[0]['NAME'];
         this.data.UNIT_NAME = selectedProduct['NAME'];
       } else {
         this.data.UNIT_NAME = null;
       }
-      // this.data.BASE_UNIT_ID = selectedId;
       this.data.UNIT_ID = selectedId;
     } else {
       this.data.UNIT_NAME = null;
@@ -247,7 +226,6 @@ export class InventorymasterformComponent {
   calculateTax(price: number, taxRate: number): number {
     return (Number(price) * Number(taxRate)) / 100;
   }
-
   calculateTotalPrice(price: number, taxRate: number): number {
     const taxAmount = this.calculateTax(Number(price), Number(taxRate));
     return Number(price) + Number(taxAmount);
@@ -262,7 +240,6 @@ export class InventorymasterformComponent {
         selectedProduct != undefined &&
         selectedProduct != ''
       ) {
-        // this.data.BASE_UNIT_NAME = selectedProduct[0]['NAME'];
         this.data.TAX_NAME = selectedProduct['NAME'];
         if (this.data.BASE_PRICE && this.data.BASE_PRICE > 0) {
           this.data.SELLING_PRICE = this.calculateTotalPrice(
@@ -276,7 +253,6 @@ export class InventorymasterformComponent {
       } else {
         this.data.TAX_NAME = null;
       }
-      // this.data.BASE_UNIT_ID = selectedId;
       this.data.TAX_ID = selectedId;
     } else {
       this.data.TAX_NAME = null;
@@ -294,7 +270,6 @@ export class InventorymasterformComponent {
       this.data.BASE_QUANTITY = 1;
     }
   }
-
   onVariantChange(event: any) {
     if (event == true) {
       this.data.BASE_UNIT_ID = null;
@@ -313,8 +288,6 @@ export class InventorymasterformComponent {
       this.data.BASE_PRICE = null;
       this.data.DISCOUNTED_PERCENTAGE = 0;
       this.data.DISCOUNTED_PRICE = 0;
-      // this.data.WAREHOUSE_ID = null;
-      // this.data.WAREHOUSE_NAME = null;
       this.data.IS_SET = false;
       this.data.IS_NEW = false;
       this.data.GUARANTEE_ALLOWED = false;
@@ -356,7 +329,6 @@ export class InventorymasterformComponent {
       }
     }
   }
-
   OnHSNChange(selectedId: any): void {
     if (selectedId != null && selectedId != undefined && selectedId != '') {
       var selectedProduct = this.HSNdata.find(
@@ -367,19 +339,16 @@ export class InventorymasterformComponent {
         selectedProduct != undefined &&
         selectedProduct != ''
       ) {
-        // this.data.BASE_UNIT_NAME = selectedProduct[0]['NAME'];
         this.data.HSN_NAME = selectedProduct['CODE'];
       } else {
         this.data.HSN_NAME = null;
       }
-      // this.data.BASE_UNIT_ID = selectedId;
       this.data.HSN_ID = selectedId;
     } else {
       this.data.HSN_NAME = null;
       this.data.HSN_ID = null;
     }
   }
-
   OnBrandChange(selectedId: any): void {
     if (selectedId != null && selectedId != undefined && selectedId != '') {
       var selectedProduct = this.BrandData.find(
@@ -417,7 +386,6 @@ export class InventorymasterformComponent {
   splitddata: any;
   getNamesCatAndSub(selectedKey: any): void {
     if (selectedKey != null && selectedKey != undefined && selectedKey !== '') {
-      // Find the selected subcategory and its parent category
       this.subcategoryid = selectedKey;
       let parentCategoryName = null;
       let subCategoryName = null;
@@ -428,9 +396,9 @@ export class InventorymasterformComponent {
             (child) => child.key === selectedKey
           );
           if (subCategory) {
-            parentCategoryName = category.title; // Parent category name
-            subCategoryName = subCategory.title; // Subcategory name
-            CategoryNameId = category.key; // Subcategory name
+            parentCategoryName = category.title;
+            subCategoryName = subCategory.title;
+            CategoryNameId = category.key;
             this.data.INVENTORY_CATEGORY_NAME = parentCategoryName;
             this.data.INVENTRY_SUB_CATEGORY_NAME = subCategoryName;
             this.data.INVENTORY_CATEGORY_ID = CategoryNameId;
@@ -440,69 +408,18 @@ export class InventorymasterformComponent {
         }
       });
     } else {
-      // Clear values if no subcategory is selected
       this.data.INVENTORY_CATEGORY_NAME = null;
       this.data.INVENTRY_SUB_CATEGORY_NAME = null;
       this.data.INVENTORY_CATEGORY_ID = null;
       this.data.INVENTRY_SUB_CATEGORY_ID = null;
     }
   }
-  // onWarehousechange(warehouseid: any) {
-  //   if (warehouseid != null && warehouseid != undefined && warehouseid != '') {
-  //
-  //     var selectedProduct = this.warehouseList.find(
-  //       (product) => product.ID === warehouseid
-  //     );
-  //     if (
-  //       selectedProduct != null &&
-  //       selectedProduct != undefined &&
-  //       selectedProduct != ''
-  //     ) {
-  //       // this.data.BASE_UNIT_NAME = selectedProduct[0]['NAME'];
-  //       this.data.WAREHOUSE_NAME = selectedProduct['NAME'];
-  //     } else {
-  //       this.data.WAREHOUSE_NAME = null;
-  //     }
-  //     // this.data.BASE_UNIT_ID = selectedId;
-  //     this.data.WAREHOUSE_ID = warehouseid;
-  //   } else {
-  //     this.data.WAREHOUSE_NAME = null;
-  //     // this.data.WAREHOUSE_ID = null;
-  //   }
-  // }
-  // onWarehousechange(warehouseid: any) {
-  //   if (warehouseid && warehouseid.length > 0) {
-  //
-
-  //     // Filter all selected warehouses based on IDs
-  //     var selectedWarehouses = this.warehouseList.filter((warehouse) =>
-  //       warehouseid.includes(warehouse.ID)
-  //     );
-
-  //
-
-  //     if (selectedWarehouses.length > 0) {
-  //       // Extract names of selected warehouses
-  //       let warehouseNames = selectedWarehouses.map((w) => w.NAME);
-
-  //
-  //     } else {
-  //
-  //     }
-  //   } else {
-  //
-  //   }
-  // }
-
   onWarehousechange(warehouseid: any) {
     if (warehouseid && warehouseid.length > 0) {
-      // Filter all selected warehouses based on IDs
       let selectedWarehouses = this.warehouseList.filter((warehouse) =>
         warehouseid.includes(warehouse.ID)
       );
-
       if (selectedWarehouses.length > 0) {
-        // Extract names of selected warehouses and join them into a string
         this.data.WAREHOUSE_NAME = selectedWarehouses
           .map((w) => w.NAME)
           .join(', ');
@@ -532,7 +449,6 @@ export class InventorymasterformComponent {
       let selectedWarehouses = this.warehouseList.filter((warehouse) =>
         warehouseid.includes(Number(warehouse.ID))
       );
-
       if (selectedWarehouses.length > 0) {
         this.data.WAREHOUSE_NAME = selectedWarehouses
           .map((w) => w.NAME)
@@ -561,18 +477,8 @@ export class InventorymasterformComponent {
       }
     );
   }
-
   getSubCategory() {
-    // this.api.getInventorySubCategory(0, 0, 'id', 'desc', ' AND IS_ACTIVE=1').subscribe(categorysuccess => {
-    //   if (categorysuccess.code == 200) {
-    //     this.InventorySubCategoryList = categorysuccess['data']
-    //   }
-    //   else {
-    //     this.InventorySubCategoryList = []
-    //   }
-    // })
   }
-
   getWarehouselocations() {
     this.api
       .getWarehousesLocation(0, 0, 'id', 'desc', ' AND IS_ACTIVE=1')
@@ -584,9 +490,7 @@ export class InventorymasterformComponent {
         }
       });
   }
-
   Unitload: boolean = false;
-
   getUnits() {
     this.Unitload = true;
     this.api.getUnitData(0, 0, 'SEQ_NO', 'asc', ' AND IS_ACTIVE=1').subscribe(
@@ -614,31 +518,17 @@ export class InventorymasterformComponent {
       }
     );
   }
-
   close(myForm: NgForm) {
     this.drawerClose();
     this.resetDrawer(myForm);
   }
-
   resetDrawer(myForm: NgForm) {
     myForm.form.markAsPristine();
     myForm.form.markAsUntouched();
     this.add();
   }
-
   add(): void {
-    // this.api.getAllBranch(1, 1, 'SEQ_NO', 'desc', '').subscribe(data => {
-    //   if (data['count'] == 0) {
-    //     this.data.SEQ_NO = 1;
-    //   } else {
-    //     this.data.SEQ_NO = Number(data['data'][0]['SEQ_NO']) + 1;
-    //     this.data.IS_ACTIVE = true;
-    //   }
-    // }, err => {
-    //
-    // })
   }
-
   alphanumchar(event) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -652,7 +542,6 @@ export class InventorymasterformComponent {
     }
     return true;
   }
-
   alphaOnly(event) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -665,32 +554,26 @@ export class InventorymasterformComponent {
     }
     return true;
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
-
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
-
     return true;
   }
   onlynum2(event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;
     const newValue = input.value + event.key;
-
     if (!/^\d*$/.test(event.key)) {
-      event.preventDefault(); // Prevent non-numeric characters
+      event.preventDefault();
     } else if (parseInt(newValue, 10) > 100) {
-      event.preventDefault(); // Prevent values greater than 100
+      event.preventDefault();
     }
   }
   onStatusChange(status: boolean): void {
     this.data.STATUS = status;
   }
-
   initializeWarehouse(): void {
-    // this.data.WAREHOUSE_ID = this.data.WAREHOUSE_ID.split(',').map(Number);
   }
   onBasePriceChange(event) {
     if (event && this.data.TAX_ID) {
@@ -702,8 +585,6 @@ export class InventorymasterformComponent {
         selectedProduct != undefined &&
         selectedProduct != ''
       ) {
-        // this.data.BASE_UNIT_NAME = selectedProduct[0]['NAME'];
-        // this.data.TAX_NAME = selectedProduct['NAME'];
         if (this.data.BASE_PRICE && this.data.BASE_PRICE > 0) {
           this.data.SELLING_PRICE = this.calculateTotalPrice(
             this.data.BASE_PRICE,
@@ -718,14 +599,12 @@ export class InventorymasterformComponent {
         if (this.data.DISCOUNT_ALLOWED) {
           this.data.DISCOUNTED_PRICE = 0;
         }
-        // this.data.DISCOUNTED_PRICE = 0;
       }
     } else {
       this.data.SELLING_PRICE = event;
       if (this.data.DISCOUNT_ALLOWED) {
         this.data.DISCOUNTED_PRICE = 0;
       }
-      // this.data.DISCOUNTED_PRICE = 0;
     }
   }
   onSellingPriceChange(event) {
@@ -748,59 +627,46 @@ export class InventorymasterformComponent {
         });
     });
   }
-
   prepareDescriptionWithUploads(
     html: string,
     callback: (updatedHtml: string) => void
   ): void {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
-
     const imgElements = Array.from(tempDiv.querySelectorAll('img'));
     const uploadObservables: Observable<any>[] = [];
     const replacements: { element: HTMLImageElement; filename: string }[] = [];
-
     imgElements.forEach((img) => {
       const src = img.getAttribute('src');
       if (src && (src.startsWith('data:image/') || src.startsWith('blob:'))) {
         const filename = `image_${Date.now()}_${Math.floor(
           Math.random() * 10000
         )}.png`;
-
         const obs = this.convertSrcToFile(src).pipe(
           switchMap((file) =>
             this.api.onUpload2('InventoryDetailsImage', file, filename)
           )
         );
-
         uploadObservables.push(obs);
         replacements.push({ element: img, filename });
       }
     });
-
     if (uploadObservables.length === 0) {
       callback(tempDiv.innerHTML);
       return;
     }
-
     forkJoin(uploadObservables).subscribe(() => {
       replacements.forEach((rep) => {
         const url = `${this.api.retriveimgUrl}InventoryDetailsImage/${rep.filename}`;
-        // console.log(url, '---url ---- ');
-
         rep.element.setAttribute('src', url);
       });
-
       callback(tempDiv.innerHTML);
     });
   }
-
   save(addNew: boolean, ServiceCatmaster: NgForm): void {
     this.isOk = true;
-
     const isBlobInDescription =
       this.data.DESCRIPTION && this.data.DESCRIPTION.includes('data:image');
-
     if (isBlobInDescription) {
       this.prepareDescriptionWithUploads(
         this.data.DESCRIPTION,
@@ -813,33 +679,25 @@ export class InventorymasterformComponent {
       this.continueSave(addNew, ServiceCatmaster);
     }
   }
-
   cleanTextLength = 0;
   showLengthError = false;
   maxLength = 50000;
-
   checkDescriptionLength(): void {
     const html = this.data.DESCRIPTION || '';
-
     const totalLength = html.length;
     this.cleanTextLength = totalLength;
     this.showLengthError = totalLength > this.maxLength;
-
     if (this.showLengthError) {
       const truncated = html.slice(0, this.maxLength);
-
       this.data.DESCRIPTION = '';
       setTimeout(() => {
         this.data.DESCRIPTION = truncated;
         this.cleanTextLength = truncated.length;
-        // this.showLengthError = false;
       });
     }
   }
-
   continueSave(addNew: boolean, myForm: NgForm): void {
     this.isOk = true;
-
     if (
       this.data.INVENTRY_SUB_CATEGORY_ID === null ||
       this.data.INVENTRY_SUB_CATEGORY_ID === undefined ||
@@ -869,14 +727,6 @@ export class InventorymasterformComponent {
       this.isOk = false;
       this.message.error('Please Enter Desription', '');
     }
-    // else if (
-    //   this.data.WAREHOUSE_ID === null ||
-    //   this.data.WAREHOUSE_ID === undefined ||
-    //   this.data.WAREHOUSE_ID === ''
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Select Warehouse', '');
-    // }
     else if (
       this.data.BRAND_ID === null ||
       this.data.BRAND_ID === undefined ||
@@ -885,36 +735,6 @@ export class InventorymasterformComponent {
       this.isOk = false;
       this.message.error('Please Select Brand Name', '');
     }
-    // else if (
-    //   this.data.HEIGHT === null ||
-    //   this.data.HEIGHT === undefined ||
-    //   this.data.HEIGHT === '' || this.data.HEIGHT === 0
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Enter Height', '');
-    // }
-    // else if (
-    //   this.data.WEIGHT === null ||
-    //   this.data.WEIGHT === undefined ||
-    //   this.data.WEIGHT === '' || this.data.WEIGHT === 0
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Enter Weight', '');
-    // } else if (
-    //   this.data.LENGTH === null ||
-    //   this.data.LENGTH === undefined ||
-    //   this.data.LENGTH === '' || this.data.LENGTH === 0
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Enter Length', '');
-    // } else if (
-    //   this.data.BREADTH === null ||
-    //   this.data.BREADTH === undefined ||
-    //   this.data.BREADTH === '' || this.data.BREADTH === 0
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Enter Breadth', '');
-    // }
     else if (
       !this.data.IS_HAVE_VARIANTS &&
       (this.data.BASE_UNIT_ID === null ||
@@ -970,11 +790,6 @@ export class InventorymasterformComponent {
       this.isOk = false;
       this.message.error('Please Enter Selling Price', '');
     }
-
-    // else if (!this.data.IS_HAVE_VARIANTS && (this.data.SERIAL_NO === null || this.data.SERIAL_NO === undefined || this.data.SERIAL_NO === '' || this.data.SERIAL_NO === 0)) {
-    //   this.isOk = false;
-    //   this.message.error('Please Enter Serial No.', '');
-    // }
     else if (
       !this.data.IS_HAVE_VARIANTS &&
       (this.data.AVG_LEVEL === null ||
@@ -1070,9 +885,7 @@ export class InventorymasterformComponent {
       this.isOk = false;
       this.message.error('Please Enter Expected Delivery Charges', '');
     }
-
     this.data.WAREHOUSE_ID = '';
-
     if (this.isOk) {
       if (!this.data.IS_HAVE_VARIANTS) {
         this.data.INVENTORY_DETAILS_IMAGE = this.data.INVENTORY_DETAILS_IMAGE;
@@ -1110,8 +923,6 @@ export class InventorymasterformComponent {
             this.data.INVENTRY_SUB_CATEGORY_ID.split('-')[1];
         }
       }
-      // this.data.WAREHOUSE_ID = this.data.WAREHOUSE_ID.join(',');
-
       {
         this.data.WAREHOUSE_ID = '';
         if (String(this.data.EXPECTED_DELIVERY_CHARGES) === '')
@@ -1126,16 +937,13 @@ export class InventorymasterformComponent {
       }
     }
   }
-
   createOrUpdate(addNew: boolean, myForm: NgForm): void {
     if (this.data.ID) {
       this.api.updateInventory(this.data).subscribe(
         (successCode: HttpResponse<any>) => {
           if (successCode.body.code === 200) {
             this.message.success('Inventory details updated successfully', '');
-
             if (!addNew) this.drawerClose();
-
             this.isSpinning = false;
           } else if (successCode.body.code == '300') {
             this.getNamesCatAndSub(this.subcategoryid);
@@ -1168,13 +976,11 @@ export class InventorymasterformComponent {
           if (successCode.body.code === 200) {
             this.message.success('Inventory details saved successfully', '');
             this.isSpinning = false;
-
             if (!addNew) this.drawerClose();
             else {
               this.resetDrawer(myForm);
               this.data = new InventoryMaster();
             }
-
             this.isSpinning = false;
           } else if (successCode.body.code == '300') {
             this.getNamesCatAndSub(this.subcategoryid);
@@ -1198,7 +1004,6 @@ export class InventorymasterformComponent {
             'Something went wrong, please try again later',
             ''
           );
-
           this.isSpinning = false;
         }
       );
@@ -1235,30 +1040,25 @@ export class InventorymasterformComponent {
   CropImageModalVisible = false;
   isSpinningCrop = false;
   cropimageshow: any;
-
   @ViewChild('image1') myElementRef!: ElementRef;
   CropImageModalCancel() {
     this.CropImageModalVisible = false;
     this.cropimageshow = false;
     this.myElementRef.nativeElement.value = null;
   }
-
   UrlImageOne;
   progressBarImageOne: boolean = false;
   percentImageOne = 0;
   timer: any;
   urlImageOneShow: boolean = false;
   fileURL: any = '';
-
   deleteCancel() { }
   removeImage() {
     this.data.WARRANTY_CARD = ' ';
     this.fileURL = null;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
@@ -1266,8 +1066,6 @@ export class InventorymasterformComponent {
     this.fileURL = null;
     this.UrlImageOne = null;
     this.data.WARRANTY_CARD = ' ';
-    // this.data.ICON = "";
-
     this.fileURL = null;
   }
   viewImage(imageURL: string): void {
@@ -1276,10 +1074,7 @@ export class InventorymasterformComponent {
   }
   sanitizedUrl2;
   viewImage2(imageURL: string): void {
-    // this.ViewImage = 1;
-    // this.GetImage(imageURL);
     let imagePath = this.api.retriveimgUrl + 'WarrantyCard/' + imageURL;
-    // this.sanitizedUrl2 =
     this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedUrl2;
     this.ImageModalVisible = true;
@@ -1291,22 +1086,15 @@ export class InventorymasterformComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
   sanitizedFileURL: SafeUrl | null = null;
   imageshow;
-
-  // imagePreview: any;
   selectedFile: any;
   onFileSelected(event: any): void {
-    const maxFileSize = 1 * 1024 * 1024; // 1 MB
-
+    const maxFileSize = 1 * 1024 * 1024;
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-
-      // Validate file type
       if (!file.type.match(/(image\/(jpeg|jpg|png)|application\/pdf|application\/msword|application\/vnd.openxmlformats-officedocument.wordprocessingml.document)/)) {
         this.message.error(
           'Please select a valid image or PDF file (PNG, JPG, JPEG, PDF).',
@@ -1315,28 +1103,21 @@ export class InventorymasterformComponent {
         event.target.value = null;
         return;
       }
-
-      // Validate file size
       if (file.size > maxFileSize) {
         this.message.error('File size should not exceed 1MB.', '');
         event.target.value = null;
         return;
       }
-
       this.fileURL = file;
-
-      // Handle PDF file
       if (file.type === 'application/pdf') {
         this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
           URL.createObjectURL(file)
         );
         this.data.WARRANTY_CARD = file.name;
-        //
         var number = Math.floor(100000 + Math.random() * 900000);
         var fileExt = this.fileURL.name.split('.').pop();
         var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
         var url = d == null ? '' : d + number + '.' + fileExt;
-
         if (
           this.data.WARRANTY_CARD != undefined &&
           this.data.WARRANTY_CARD.trim() !== ''
@@ -1361,16 +1142,12 @@ export class InventorymasterformComponent {
             this.isSpinning = false;
             this.progressBarImageOne = false;
             this.percentImageOne = 0;
-            // this.selectedFileName = null;
           } else if (res.type == 4 && res.status == 200) {
             if (res.body['code'] == 200) {
-              // this.message.success('Profile Photo Uploaded Successfully...', '');
               this.message.success('Successfully Uploaded Attachment', '');
               this.isSpinning = false;
-              // this.progressBarImageOne = false;
               this.data.WARRANTY_CARD = url;
               this.progressBarImageOne = false;
-              // this.isVisibleMiddle = false;
             } else {
               this.isSpinning = false;
               this.progressBarImageOne = false;
@@ -1381,15 +1158,11 @@ export class InventorymasterformComponent {
         });
         return;
       }
-
-      // Handle image file
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.imagePreview = e.target.result; // Base64 data for preview
-
+        this.imagePreview = e.target.result;
         const img = new Image();
         img.src = e.target.result;
-
         img.onload = () => {
           this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
             URL.createObjectURL(this.fileURL)
@@ -1398,7 +1171,6 @@ export class InventorymasterformComponent {
           var fileExt = this.fileURL.name.split('.').pop();
           var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
           var url = d == null ? '' : d + number + '.' + fileExt;
-
           if (
             this.data.WARRANTY_CARD != undefined &&
             this.data.WARRANTY_CARD.trim() !== ''
@@ -1423,16 +1195,12 @@ export class InventorymasterformComponent {
               this.isSpinning = false;
               this.progressBarImageOne = false;
               this.percentImageOne = 0;
-              // this.selectedFileName = null;
             } else if (res.type == 4 && res.status == 200) {
               if (res.body['code'] == 200) {
-                // this.message.success('Profile Photo Uploaded Successfully...', '');
                 this.message.success('Successfully Uploaded Attachment', '');
                 this.isSpinning = false;
-                // this.progressBarImageOne = false;
                 this.data.WARRANTY_CARD = url;
                 this.progressBarImageOne = false;
-                // this.isVisibleMiddle = false;
               } else {
                 this.isSpinning = false;
                 this.progressBarImageOne = false;
@@ -1441,14 +1209,11 @@ export class InventorymasterformComponent {
               }
             }
           });
-          //
         };
       };
-
       reader.readAsDataURL(file);
     }
   }
-
   base64ToFile(base64String: string, filename: string): File {
     const arr = base64String.split(',');
     const mime = arr[0].match(/:(.*?);/)![1];
@@ -1463,75 +1228,55 @@ export class InventorymasterformComponent {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   fileChangeEvent(event: any): void {
-    //
-
     this.CropImageModalVisible = true;
     this.cropimageshow = true;
-
     this.imageChangedEvent = event;
   }
-
   cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
   imageCropped(event: ImageCroppedEvent) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-
     if (!ctx) return;
-
     canvas.width = 128;
     canvas.height = 128;
-
     const img: any = new Image();
     img.src = event.base64;
     img.onload = () => {
-      ctx.fillStyle = '#ffffff'; // Change this color if needed
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, 128, 128);
-
-      // Convert to JPEG with reduced quality
-      this.compressImage(canvas, 0.7); // Start with 70% quality
+      this.compressImage(canvas, 0.7);
     };
   }
-
-  // Function to compress image and ensure size < 1MB
   compressImage(canvas: HTMLCanvasElement, quality: number) {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-
-        const sizeInMB = blob.size / (1024 * 1024); // Convert to MB
-
+        const sizeInMB = blob.size / (1024 * 1024);
         if (sizeInMB > 1 && quality > 0.1) {
-          // If size is still >1MB, reduce quality and try again
           this.compressImage(canvas, quality - 0.1);
         } else {
-          // Final compressed image (size is now below 1MB)
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             this.croppedImage = reader.result as string;
-            //
           };
         }
       },
       'image/jpeg',
       quality
-    ); // Convert to JPEG with given quality
+    );
   }
-
   imageWidth: number = 0;
   imageHeight: number = 0;
   imageLoaded(event) {
-    //
     setTimeout(() => {
       this.cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
     }, 50);
     this.imagePreview = this.croppedImage;
   }
   cropperReady(event) { }
-
   loadImageFailed() { }
-
   drawerbrandTitle = '';
   drawerbrandData: any;
   drawerbrandVisible = false;
@@ -1540,7 +1285,6 @@ export class InventorymasterformComponent {
     this.drawerbrandData = new brandMaster();
     this.drawerbrandVisible = true;
   }
-
   drawerbrandClose(): void {
     this.drawerbrandVisible = false;
     this.api
@@ -1556,7 +1300,6 @@ export class InventorymasterformComponent {
   get closebrandCallback() {
     return this.drawerbrandClose.bind(this);
   }
-
   imageshow1;
   imagePreview1: any;
   selectedFile1: any;
@@ -1570,30 +1313,22 @@ export class InventorymasterformComponent {
   ViewImage1: any;
   ImageModalVisible1 = false;
   onFileSelected1(event: any) {
-    const maxFileSize = 1 * 1024 * 1024; // 1MB
-
-    // File validation
+    const maxFileSize = 1 * 1024 * 1024;
     if (
       event.target.files[0]?.type === 'image/jpeg' ||
       event.target.files[0]?.type === 'image/jpg' ||
       event.target.files[0]?.type === 'image/png'
     ) {
       this.fileURL1 = <File>event.target.files[0];
-
-      // File size validation
       if (this.fileURL1.size > maxFileSize) {
         this.message.error('File size should not exceed 1MB.', '');
         this.fileURL1 = null;
         return;
       }
-
-      // Proceed with file upload
       var number = Math.floor(100000 + Math.random() * 900000);
       var fileExt = this.fileURL1.name.split('.').pop();
-
       var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
       var url = d == null ? '' : d + number + '.' + fileExt;
-
       if (
         this.data.INVENTORY_DETAILS_IMAGE != undefined &&
         this.data.INVENTORY_DETAILS_IMAGE.trim() != ''
@@ -1603,9 +1338,7 @@ export class InventorymasterformComponent {
           url = arr[5];
         }
       }
-
       const uploadedfileExt = this.uploadedImage1.split('.').pop();
-
       if (this.data.ID || this.UrlImageOne1) {
         if (uploadedfileExt == fileExt) {
           this.UrlImageOne1 = this.uploadedImage1;
@@ -1618,14 +1351,12 @@ export class InventorymasterformComponent {
       this.progressBarImageOne1 = true;
       this.urlImageOneShow1 = true;
       this.isSpinning = true;
-
       this.timer = this.api
         .onUpload('InventoryDetailsImage', this.fileURL1, this.UrlImageOne1)
         .subscribe((res) => {
           this.data.INVENTORY_DETAILS_IMAGE = this.UrlImageOne1;
           this.uploadedImage1 = this.data.INVENTORY_DETAILS_IMAGE;
           if (res.type === HttpEventType.Response) {
-            // Handle upload success
           }
           if (res.type === HttpEventType.UploadProgress) {
             const percentDone = Math.round((100 * res.loaded) / res.total);
@@ -1665,23 +1396,18 @@ export class InventorymasterformComponent {
       this.data.INVENTORY_DETAILS_IMAGE = null;
     }
   }
-
   viewImage1(imageURL: string): void {
     this.ViewImage1 = 1;
     this.GetImage1(imageURL);
   }
   sanitizedLink1: any = '';
-
   GetImage1(link: string) {
     let imagePath = this.api.retriveimgUrl + 'InventoryDetailsImage/' + link;
     this.sanitizedLink1 =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow1 = this.sanitizedLink1;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible1 = true;
   }
-
   deleteCancel1() { }
   removeImage1() {
     this.data.INVENTORY_DETAILS_IMAGE = '';

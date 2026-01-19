@@ -6,6 +6,9 @@ import { ListTechnicainMapComponent } from '../TechnicainMap/list-technicain-map
 import { ShpoorderlistComponent } from '../Inventorypages/pages/Shop/shpoorderlist/shpoorderlist.component';
 import { ReschedulejobrequestComponent } from '../job/reschedulejobrequest/reschedulejobrequest.component';
 // import { MastersComponent } from './masters.component';
+import { OrdercancelComponent } from './ordercancel/ordercancel.component';
+import { OrderCancellationChargesComponent } from './order-cancellation-charges/order-cancellation-charges.component';
+
 
 const routes: Routes = [
   {
@@ -20,6 +23,8 @@ const routes: Routes = [
         path: 'job-reschedule-requests',
         component: ReschedulejobrequestComponent,
       },
+      { path: 'ordercancel', component: OrdercancelComponent, },
+      { path: 'order-cancellation-charges', component: OrderCancellationChargesComponent }
     ],
   },
 ];

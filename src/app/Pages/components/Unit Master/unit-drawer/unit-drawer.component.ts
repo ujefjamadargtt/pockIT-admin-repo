@@ -4,7 +4,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { UnitMasterData } from 'src/app/Pages/Models/UnitMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-unit-drawer',
   templateUrl: './unit-drawer.component.html',
@@ -14,26 +13,21 @@ export class UnitDrawerComponent {
   isSpinning = false;
   isOk = true;
   isFocused: string = '';
-
   ngOnInit(): void { }
-
   public commonFunction = new CommonFunctionService();
   @Input() data: any = UnitMasterData;
   @Input()
   drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   resetDrawer(Unitmaster: NgForm) {
     this.data = new UnitMasterData();
     Unitmaster.form.markAsPristine();
     Unitmaster.form.markAsUntouched();
   }
-
   save(addNew: boolean, Unitmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -67,13 +61,10 @@ export class UnitDrawerComponent {
       this.data.SEQ_NO == null ||
       this.data.SEQ_NO == undefined ||
       this.data.SEQ_NO == ''
-      // ||
-      // this.data.SEQ_NO.trim() == ''
     ) {
       this.isOk = false;
       this.message.error(' Please Enter Sequence No', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -110,7 +101,6 @@ export class UnitDrawerComponent {
                 } else {
                   this.data = new UnitMasterData();
                   this.resetDrawer(Unitmaster);
-
                   this.api.getUnitData(1, 1, 'SEQ_NO', 'desc', '').subscribe(
                     (data) => {
                       if (data['code'] == 200) {
@@ -146,7 +136,6 @@ export class UnitDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }

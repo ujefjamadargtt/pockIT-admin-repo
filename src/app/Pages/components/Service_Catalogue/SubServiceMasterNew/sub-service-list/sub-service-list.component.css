@@ -1,39 +1,28 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select{
 width: 200px;
 padding: 8px;
 display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
-
-/* new css */
 .card {
   background: #fff;
   border: 1px solid #ddd;
@@ -43,9 +32,7 @@ nz-select {
   margin: 15px 0px 0px 0px;
   padding: 0px;
 }
-
 .card-header {
-  /* display: flex; */
   justify-content: space-between;
   align-items:center;
       margin-bottom: 0px;
@@ -54,17 +41,14 @@ nz-select {
   border-radius: 8px 8px 0px 0px!important;
   height: 28px;
 }
-
 .category-name {
   font-weight: bold;
   color: #333;
 }
-
 .subcategory-name {
   font-weight: bold;
   color: #555;
 }
-
 .tag {
 font-size: 12px;
 font-weight: bold;
@@ -73,23 +57,17 @@ border-radius: 0px 8px 0px 8px;
 position: relative;
 display: inline-block;
 }
-
 .card-body {
-/* display: flex;
-justify-content: space-between; */
-align-items: flex-start; /* Align items at the start */
+align-items: flex-start; 
 gap: 20px;
 }
-
 .details {
-flex: 1; /* Take up remaining space */
+flex: 1; 
 }
-
 .service-image {
-flex-shrink: 0; /* Prevent shrinking */
+flex-shrink: 0; 
 text-align: right;
 }
-
 .name {
   margin: 0 0 5px;
   font-size: 16px;
@@ -101,50 +79,40 @@ text-align: right;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* Limit to 3 lines */
+  -webkit-line-clamp: 1; 
   line-clamp: 1;
-  max-height: calc(1.5em * 1); /* Adjust line height (e.g., 1.5em) */
+  max-height: calc(1.5em * 1); 
   cursor: pointer;
   line-height: 1.5em;
 }
-
 .truncate-three-lines {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-line-clamp: 3; 
   line-clamp: 3;
-  max-height: calc(1.5em * 3); /* Adjust line height (e.g., 1.5em) */
+  max-height: calc(1.5em * 3); 
   cursor: pointer;
   line-height: 1.5em;
 }
-
 .description {
   margin: 0;
   color: #555;
   font-size: 14px;
 }
-
 .service-image {
   flex: 1;
   text-align: right;
 }
-
 .service-image img {
-  /* max-width: 120px;
-  max-height: 120px; */
   padding: 0px 15px 0pc 10px;
   border-radius: 0px;
   border: none;
 }
-
 .card-footer {
-  /* display: flex;
-  justify-content: space-between; */
   margin-top: 0px;
 }
-
 .btn {
   padding: 5px 2px !important;
   border: none;
@@ -153,12 +121,10 @@ text-align: right;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .btn.edit {
   background-color: #007bff;
   color: white;
 }
-    
 .btn.helpdoc {
   background-color: #39b793;
   color: white;
@@ -167,12 +133,10 @@ text-align: right;
   background-color: #ffc107;
   color: black;
 }
-
 .btn.add-subservice {
   background-color: #28a745;
   color: white;
 }
- 
 .btn.editmap {
   background-color: #af93ff;
   color: white;
@@ -180,28 +144,240 @@ text-align: right;
 .btn:hover {
   opacity: 0.9;
 }
-
 .nz-col {
-  padding-left: 10px; /* Optional: To add space between columns */
-  padding-right: 10px; /* Optional: To add space between columns */
+  padding-left: 10px; 
+  padding-right: 10px; 
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
 .custom-popover {
-  max-width: 600px; /* Adjust as needed */
-  max-height: 400px; /* Prevents popover from expanding too much */
-  overflow-y: auto; /* Enables scrolling for large content */
+  max-width: 600px; 
+  max-height: 400px; 
+  overflow-y: auto; 
   white-space: normal !important;
   word-wrap: break-word !important;
 }
-
 .custom-popover img {
-  max-width: 100% !important; /* Ensures image fits within the popover */
-  max-height: 200px !important; /* Limits image height to prevent fullscreen */
+  max-width: 100% !important; 
+  max-height: 200px !important; 
   height: auto !important;
   display: block;
   margin: auto;
   border-radius: 5px;
+}
+.search-controls-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+.filter-button-container {
+    width: 47px;
+}
+.search-input-field {
+    width: 300px;
+}
+.new-subservice-button-container {
+    margin-right: 0px;
+}
+.filter-content-row {
+    padding-top: 0px;
+}
+.filter-spin-container {
+    text-align: center;
+}
+.filter-cards-grid {
+    margin-bottom: 8px;
+}
+.filter-card-column {
+    margin-bottom: 8px;
+}
+.filter-card {
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    border-radius: 7px;
+    align-items: center;
+}
+.filter-card-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+}
+.filter-card-name {
+    color: black;
+    text-align: center;
+    font-size: 25px;
+    white-space: nowrap;
+}
+.filter-applied-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.filter-actions-row {
+    margin-top: 7px;
+}
+.filter-actions-container {
+    display: flex;
+    justify-content: space-between;
+}
+.filter-action-tag {
+    cursor: pointer;
+    font-size: 10px !important;
+}
+.edit-filter-tag {
+    margin-right: 0px;
+}
+.filter-tag-icon {
+    font-size: 10px !important;
+}
+.no-filters-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.filter-management-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: left;
+    margin-top: 10px;
+}
+.reset-filter-button {
+    margin-right: 10px;
+}
+.new-filter-button {
+    margin-right: 10px;
+}
+.service-card-wrapper {
+    padding: 5px;
+}
+.category-container {
+    padding: 4px 0px 0px 9px;
+}
+.status-icons-container {
+    text-align: end;
+}
+.status-icons-wrapper {
+    display: flex;
+    justify-content: end;
+    align-self: center;
+}
+.rating-icon {
+    align-self: center;
+}
+.status-icon {
+    font-size: 15px;
+    align-self: center;
+}
+.active-status-icon {
+    align-self: center;
+}
+.express-tag {
+    margin: 0px !important;
+}
+.details {
+    height: 102px;
+}
+.service-description {
+    text-align: justify;
+    font-size: 11px !important;
+}
+.price-row {
+    margin-top: 5px;
+}
+.price-col {
+    font-size: 11px !important;
+    font-weight: 500;
+}
+.price-value {
+    font-size: 11px !important;
+}
+.card-footer {
+    padding: 5px;
+}
+.footer-buttons-row {
+    display: flex;
+}
+.footer-button-col {
+    padding: 0px 3px;
+}
+.edit-button-col {
+    padding-right: 3px;
+}
+.map-button-col {
+    padding: 0px 3px;
+}
+.helpdoc-button-col {
+    padding: 0px 3px;
+}
+.changelog-button-col {
+    padding-left: 3px;
+}
+.edit-details-button,
+.map-skill-button,
+.helpdoc-button,
+.change-logs-button {
+    width: 100%;
+    font-size: 11px !important;
+}
+.load-more-container {
+    text-align: center;
+    margin-top: 20px;
+}
+.empty-state-container {
+    height: 75vh;
+}
+.empty-state-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.image-modal-content {
+    height: 400px;
+    overflow: auto;
+}
+.image-iframe {
+    width: 832px;
+    height: 396px;
+}
+.filter-text-content {
+    text-align: center;
+}
+.truncate-one-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.truncate-three-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.rating-star-svg-path-gray {
+    fill: #999999;
+}
+
+.rating-star-svg-polygon-darkgray {
+    fill: #858c8b;
+}
+
+.rating-star-svg-path-darkgray {
+    fill: #858c8b;
+}
+
+.rating-star-svg-path-orange {
+    fill: #ffb000;
+}
+
+.rating-star-svg-path-darkorange {
+    fill: #ff9d00;
+}
+
+.rating-star-svg-polygon-darkorange {
+    fill: #ff9d00;
 }

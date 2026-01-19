@@ -7,7 +7,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-certificate-verification',
   templateUrl: './certificate-verification.component.html',
@@ -23,8 +22,6 @@ export class CertificateVerificationComponent {
   sortValue: string = 'desc';
   sortKey: string = 'id';
   searchText: string = '';
-  // filterQuery: string = "";
-
   columns: string[][] = [
     ['ISSUED_BY_ORGANIZATION_NAME', 'ISSUED_BY_ORGANIZATION_NAME'],
     ['TECHNICIAN_NAME', 'TECHNICIAN_NAME'],
@@ -39,13 +36,11 @@ export class CertificateVerificationComponent {
   visible1 = false;
   drawerVisible: boolean;
   drawerTitle: string;
-
   drawerVisible1: boolean;
   drawerTitle1: string;
   ROLES = [];
   isSpinning = false;
   showcolumn = [
-    // { label: 'Approved By ', key: 'APPROVED_BY', visible: true },
     {
       label: 'Issued By Organization',
       key: 'ISSUED_BY_ORGANIZATION_NAME',
@@ -58,7 +53,6 @@ export class CertificateVerificationComponent {
     { label: 'Request Date ', key: 'ISSUED_DATE', visible: true },
     { label: 'Remark', key: 'REJECT_REMARK', visible: true },
   ];
-
   isapprovedDateFilterApplied = false;
   approvedDateVisible = false;
   isapprovedFilterApplied = false;
@@ -91,7 +85,6 @@ export class CertificateVerificationComponent {
     this.isnewFilter = selectedStatus;
     this.search(true);
   }
-
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   filterQuery: string = '';
@@ -103,8 +96,6 @@ export class CertificateVerificationComponent {
     { label: 'Remark', value: 'REJECT_REMARK' },
   ];
   isFilterApplied: boolean = false;
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -121,7 +112,6 @@ export class CertificateVerificationComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -130,29 +120,10 @@ export class CertificateVerificationComponent {
   ) { }
   public commonFunction = new CommonFunctionService();
   ngOnInit() {
-    // this.search();
-    // this.columns1 = [
-    //   { label: 'Category Name', value: 'NAME' },
-    //   // add more columns if needed
-    // ];
-    // if (this.VERIFIED_STATUS == 'P') {
-    //   this.ExtraQuery =
-    //     " AND IS_APPROVED_BY_ADMIN = '" +
-    //     "P'"
-    // } else {
-    //   this.ExtraQuery =
-    //     " AND VERIFICATION_STATUS = '" +
-    //     this.VERIFIED_STATUS +
-    //     "'"
-    // }
-    // this.getTeritory();
-    // this.getTeritory1();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
       : '0';
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
-
     this.getcounts();
   }
   imageshow: any = null;
@@ -167,19 +138,14 @@ export class CertificateVerificationComponent {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
-
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + 'CertificatePhotos/' + link;
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = imagePath;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   VERIFIED_STATUS: any = 'P';
   ExtraQuery: any = '';
   back() {
@@ -187,7 +153,6 @@ export class CertificateVerificationComponent {
   }
   reset(): void {
     this.searchText = '';
-
     this.customername = '';
     this.techname = '';
     this.approvedby = '';
@@ -206,12 +171,11 @@ export class CertificateVerificationComponent {
         this.isSubmittedDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isSubmittedDateFilterApplied = false;
     }
   }
-
   onApprovedDateRangeChange(): void {
     if (this.approvedDate && this.approvedDate.length === 2) {
       const [start, end] = this.approvedDate;
@@ -220,7 +184,7 @@ export class CertificateVerificationComponent {
         this.isapprovedDateFilterApplied = true;
       }
     } else {
-      this.approvedDate = null; // or [] if you prefer
+      this.approvedDate = null; 
       this.search();
       this.isapprovedDateFilterApplied = false;
     }
@@ -230,20 +194,16 @@ export class CertificateVerificationComponent {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
@@ -258,7 +218,6 @@ export class CertificateVerificationComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
     var sort: string;
     try {
@@ -267,7 +226,6 @@ export class CertificateVerificationComponent {
       sort = '';
     }
     var likeQuery = '';
-
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -280,29 +238,26 @@ export class CertificateVerificationComponent {
         ')';
     }
     this.loadingRecords = true;
-    // Date Range Filter
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `(ISSUED_DATE BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00')`;
       }
     }
-
     if (this.approvedDate && this.approvedDate.length === 2) {
       const [start, end] = this.approvedDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `(ACTION_DATE_TIME BETWEEN '${formattedStart} 00:00:00' AND '${formattedEnd} 23:59:00')`;
       }
     }
-
     if (this.customername !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -313,24 +268,18 @@ export class CertificateVerificationComponent {
         (likeQuery ? ' AND ' : '') +
         `APPROVED_BY LIKE '%${this.approvedby.trim()}%'`;
     }
-
     if (this.techname !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TECHNICIAN_NAME LIKE '%${this.techname.trim()}%'`;
     }
-
     if (this.remark !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `REJECT_REMARK LIKE '%${this.remark.trim()}%'`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.ExtraQuery = " AND STATUS='" + this.VERIFIED_STATUS + "'";
-
     this.api
       .gettechniciancertificatereq(
         this.pageIndex,
@@ -346,7 +295,6 @@ export class CertificateVerificationComponent {
             this.totalRecords = data.body['count'];
             this.dataList = data.body['data'];
             this.TabId = data.body['TAB_ID'];
-
             this.api
               .gettechniciancertificatereqcount(
                 this.pageIndex,
@@ -364,7 +312,6 @@ export class CertificateVerificationComponent {
                     this.rejectedCount = dataaa.body['data'][0]['REJECTED'];
                   } else {
                     this.loadingRecords = false;
-
                     this.message.error(
                       'Failed to get Data. please try again later.',
                       ''
@@ -374,14 +321,11 @@ export class CertificateVerificationComponent {
                 (err: HttpErrorResponse) => {
                   this.loadingRecords = false;
                   if (err.status === 0) {
-                    // Network error
                     this.message.error(
                       'Unable to connect. Please check your internet or server connection and try again shortly.',
                       ''
                     );
-                    // this.dataList = [];
                   } else {
-                    // Other errors
                     this.message.error('Server error: ' + err.message, '');
                   }
                 }
@@ -412,7 +356,6 @@ export class CertificateVerificationComponent {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
@@ -434,7 +377,6 @@ export class CertificateVerificationComponent {
   isterritorynameFilterApplied = false;
   territoryVisible = false;
   selectedterritory: any[] = [];
-
   onKeyup(event: KeyboardEvent, field: string): void {
     if (
       this.customername.length >= 3 &&
@@ -451,7 +393,6 @@ export class CertificateVerificationComponent {
       this.search();
       this.iscustnmFilterApplied = false;
     }
-
     if (this.techname.length >= 3 && event.key === 'Enter' && field == 'TECH') {
       this.search();
       this.istechnmFilterApplied = true;
@@ -463,7 +404,6 @@ export class CertificateVerificationComponent {
       this.search();
       this.istechnmFilterApplied = false;
     }
-
     if (
       this.approvedby.length >= 3 &&
       event.key === 'Enter' &&
@@ -479,7 +419,6 @@ export class CertificateVerificationComponent {
       this.search();
       this.isapprovedFilterApplied = false;
     }
-
     if (this.remark.length >= 3 && event.key === 'Enter' && field == 'REM') {
       this.search();
       this.isremarkFilterApplied = true;
@@ -495,71 +434,29 @@ export class CertificateVerificationComponent {
   onCountryChange(): void {
     if (this.selectedterritory?.length) {
       this.search();
-      this.isterritorynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isterritorynameFilterApplied = true; 
     } else {
       this.search();
-      this.isterritorynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isterritorynameFilterApplied = false; 
     }
-    // this.search();
   }
-
-  // territoryData: any = [];
-
-  // getTeritory() {
-  //   this.api.getTeritory(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
-  //     (data) => {
-  //       if (data['code'] == 200) {
-  //         this.territoryData = data['data'];
-  //       } else {
-  //         this.territoryData = [];
-  //         this.message.error('Failed To Get Territory Data', '');
-  //       }
-  //     },
-  //     () => {
-  //       this.message.error('Something Went Wrong', '');
-  //     }
-  //   );
-  // }
-
-  // territoryData1: any = [];
-  // getTeritory1() {
-  //   this.api
-  //     .getTeritory(0, 0, '', 'asc', ' AND IS_ACTIVE =1')
-  //     .subscribe((data) => {
-  //       if (data['code'] == '200') {
-  //         if (data['count'] > 0) {
-  //           data['data'].forEach((element) => {
-  //             this.territoryData1.push({
-  //               value: element.ID,
-  //               display: element.NAME,
-  //             });
-  //           });
-  //         }
-  //       }
-  //     });
-  // }
   navigateToMastersMenu(): void {
     this.router.navigate(['/masters/menu']);
   }
-
   close(): void {
     this.visible1 = false;
   }
-
   close1(accountMasterPage: NgForm) {
     this.drawerVisible1 = false;
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
@@ -576,10 +473,7 @@ export class CertificateVerificationComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // Main Filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -588,50 +482,34 @@ export class CertificateVerificationComponent {
       this.loadFilters();
     }
   }
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
+  userId = sessionStorage.getItem('userId'); 
   decryptedUserId = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '0';
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
+  USER_ID: number; 
+  savedFilters: any; 
   currentClientId = 1;
   selectedFilter: string | null = null;
-  // filterQuery = '';
-  // applyfilter(item) {
-  //   this.filterClass = 'filter-invisible';
-  //   this.selectedFilter = item.ID;
-  //   this.isfilterapply = true;
-  //   this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
-
-  //   this.search(true);
-  // }
-
   oldFilter: any[] = [];
   isLoading = false;
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -648,21 +526,13 @@ export class CertificateVerificationComponent {
       groups: [],
     },
   ];
-
   filterData: any;
-  // currentClientId = 1;
-
   openfilter() {
     this.drawerTitle = 'Cerficate Verification Filter';
-    // this.applyCondition = "";
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -679,7 +549,6 @@ export class CertificateVerificationComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -696,7 +565,6 @@ export class CertificateVerificationComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -706,11 +574,6 @@ export class CertificateVerificationComponent {
       FILTER_JSON: {},
     };
   }
-
-  // drawerfilterClose() {
-  //   this.drawerFilterVisible = false;
-  //   this.loadFilters();
-  // }
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -726,7 +589,6 @@ export class CertificateVerificationComponent {
       key: 'ISSUED_DATE',
       label: 'Request Date',
       type: 'date',
-      // comparators: ['=', '!=', '>', '<', '>=', '<='],
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -741,7 +603,6 @@ export class CertificateVerificationComponent {
       key: 'ACTION_DATE_TIME',
       label: 'Verification Date',
       type: 'date',
-      // comparators: ['=', '!=', '>', '<', '>=', '<='],
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -794,7 +655,6 @@ export class CertificateVerificationComponent {
         { value: 'Starts With', display: 'Starts With' },
         { value: 'Ends With', display: 'Ends With' },
       ],
-      // options: [],
       placeholder: 'Enter Certificate Name',
     },
     {
@@ -809,24 +669,8 @@ export class CertificateVerificationComponent {
         { value: 'Starts With', display: 'Starts With' },
         { value: 'Ends With', display: 'Ends With' },
       ],
-      // options: [],
       placeholder: 'Enter Credential ID',
     },
-    // {
-    //   key: 'CERTIFICATE_PHOTO',
-    //   label: 'Certificate Image',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   // options: [],
-    //   placeholder: 'Enter Certificate Image',
-    // },
     {
       key: 'ISSUED_BY_ORGANIZATION_NAME',
       label: 'Organization Name',
@@ -843,17 +687,12 @@ export class CertificateVerificationComponent {
       placeholder: 'Enter Organization Name',
     },
   ];
-
   filterloading: boolean = false;
-
   updateButton: any;
   updateBtn: any;
-
   whichbutton: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -861,13 +700,12 @@ export class CertificateVerificationComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -882,21 +720,15 @@ export class CertificateVerificationComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -910,7 +742,6 @@ export class CertificateVerificationComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -919,9 +750,7 @@ export class CertificateVerificationComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -932,16 +761,13 @@ export class CertificateVerificationComponent {
           this.savedFilters = this.savedFilters.filter(
             (filter) => filter.ID !== item.ID
           );
-
           this.message.success('Filter deleted successfully.', '');
           sessionStorage.removeItem('ID');
           this.filterloading = true;
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -967,9 +793,7 @@ export class CertificateVerificationComponent {
       }
     );
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -978,9 +802,7 @@ export class CertificateVerificationComponent {
       tooltip.hide();
     }
   }
-
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -988,30 +810,23 @@ export class CertificateVerificationComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1019,11 +834,9 @@ export class CertificateVerificationComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   rejectreason: any = '';
   appreorder(data: any, action: any) {
     this.isspinnnnnnn = true;
-
     if (
       (this.rejectreason == '' ||
         this.rejectreason == null ||
@@ -1033,22 +846,13 @@ export class CertificateVerificationComponent {
       this.message.error('Please enter rejection remark ', '');
       this.isspinnnnnnn = false;
     } else {
-      // const skillIdsArray = data.CERTIFICATE_IDS
-      //   ? data.CERTIFICATE_IDS.split(',').map((id: string) => id.trim()) // Split and trim values
-      //   : [];
       var dataaa = {
         ID: data.ID,
         STATUS: this.action,
         REJECT_REMARK: this.rejectreason == '' ? '' : this.rejectreason,
         TECHNICIAN_ID: data.TECHNICIAN_ID,
         TECHNICIAN_NAME: data.TECHNICIAN_NAME,
-        // CUSTOMER_ID: data.CUSTOMER_ID,
-        // CERTIFICATE_IDS: skillIdsArray,
-        // APPROVER_ID: this.decryptedUserId,
       };
-      // data.STATUS=this.action
-      // data.REJECT_REMARK=this.rejectreason == '' ? '' : this.rejectreason,
-      // this.api.approverejectorder(dataaa).subscribe(
       this.api.updatetechniciancertificatestatus(dataaa).subscribe(
         (successCode: any) => {
           if (successCode.status == 200) {
@@ -1083,11 +887,9 @@ export class CertificateVerificationComponent {
       );
     }
   }
-
   isspinnnnnnn: boolean = false;
   openmodell: boolean = false;
   openmodellRefund: boolean = false;
-
   cancelorderdata: any;
   action: any;
   opencancelmodal(event: any, action: any) {
@@ -1096,10 +898,8 @@ export class CertificateVerificationComponent {
     this.cancelorderdata = '';
     this.cancelorderdata = event;
   }
-
   opencancelmodalRefunc(event: any) {
     this.openmodellRefund = true;
-    // this.action = action;
     this.cancelorderdata = '';
     this.cancelorderdata = event;
   }
@@ -1113,12 +913,10 @@ export class CertificateVerificationComponent {
     this.isspinnnnnnn = false;
     this.cancelorderdata = '';
   }
-
   rejectedCount: any = 0;
   pendingCount: any = 0;
   approvedCount: any = 0;
   getcounts() { }
-
   selectStatus(event) {
     this.VERIFIED_STATUS = event;
     this.search(true);

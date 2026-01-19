@@ -4,7 +4,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { CountryData } from 'src/app/Pages/Models/CountryMasterData';
-
 @Component({
   selector: 'app-countrymaster-drawer',
   templateUrl: './countrymaster-drawer.component.html',
@@ -28,14 +27,12 @@ export class CountrymasterDrawerComponent {
     CountryDrawer.form.markAsUntouched();
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
-
   save(addNew: boolean, CountryDrawer: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -74,7 +71,6 @@ export class CountrymasterDrawerComponent {
       this.isOk = false;
       this.message.error('Please Enter Sequence No.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -119,7 +115,6 @@ export class CountrymasterDrawerComponent {
                         this.data.SEQ_NO = data['data'][0]['SEQ_NO'] + 1;
                       }
                     },
-
                     (err) => {
                       this.message.error(
                         'Something went wrong, please try again later',

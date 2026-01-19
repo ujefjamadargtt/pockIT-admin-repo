@@ -1,194 +1,86 @@
 <div>
   <form nz-form #Languagemaster="ngForm">
     <div nz-row>
-      <!-- <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
-        <nz-form-item>
-          <nz-form-label nzRequired nzNoColon>Language </nz-form-label>
-          <nz-form-control nzHasFeedback nzErrorTip="Enter Language">
-            <input nz-input name="name" placeholder="Enter Language" required [(ngModel)]="data.NAME"
-              #nameField="ngModel" (keypress)="commonFunction.alphaOnly($event)" maxlength="128" />
-            <h6 style="color: red; font-size: 10px" *ngIf="
-              data.NAME != undefined &&
-              data.NAME != null &&
-              data.NAME != ''
-            ">
-              {{ data.NAME.length }}/128
-            </h6>
-          </nz-form-control>
-        </nz-form-item>
-      </div> -->
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Language</nz-form-label>
           <nz-form-control nzHasFeedback nzErrorTip="Enter Language">
-            <input
-              nz-input
-              name="name"
-              placeholder="Enter Language"
-              required
-              [(ngModel)]="data.NAME"
-              #nameField="ngModel"
-              (focus)="isFocused = 'language'"
-              (blur)="isFocused = ''"
-              autocomplete="off"
-              (keypress)="commonFunction.alphaOnly($event)"
-              maxlength="128"
-            />
-            <!-- Character Count -->
-            <h6
-              style="color: red; font-size: 10px"
-              *ngIf="
+            <input nz-input name="name" placeholder="Enter Language" required [(ngModel)]="data.NAME"
+              #nameField="ngModel" (focus)="isFocused = 'language'" (blur)="isFocused = ''" autocomplete="off"
+              (keypress)="commonFunction.alphaOnly($event)" maxlength="128" />
+            <h6 class="langmaster-char-counter-red-10px" *ngIf="
                 isFocused === 'language' ||
                 (data.NAME != undefined &&
                   data.NAME != null &&
                   data.NAME != '' &&
                   isFocused === 'language')
-              "
-            >
+              ">
               {{ data.NAME.length || 0 }}/128
             </h6>
           </nz-form-control>
         </nz-form-item>
       </div>
     </div>
-
     <div nz-row>
-      <!-- <div nz-col nzXs="12">
-        <nz-form-item>
-          <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
-          <nz-form-control nzHasFeedback nzErrorTip="Enter Short Code">
-            <input nz-input name="shortcode" placeholder="Enter Short Code" required [(ngModel)]="data.SHORT_CODE"
-              #nameField="ngModel" (keypress)="commonFunction.alphaOnly($event)" maxlength="8" />
-            <h6 style="color: red; font-size: 10px" *ngIf="
-              data.SHORT_CODE != undefined &&
-              data.SHORT_CODE != null &&
-              data.SHORT_CODE != ''
-            ">
-              {{ data.SHORT_CODE.length }}/8
-            </h6>
-          </nz-form-control>
-        </nz-form-item>
-      </div> -->
       <div nz-col nzXs="12">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
           <nz-form-control nzHasFeedback nzErrorTip="Enter Short Code">
-            <input
-              nz-input
-              name="shortcode"
-              placeholder="Enter Short Code"
-              required
-              [(ngModel)]="data.SHORT_CODE"
-              #shortCodeField="ngModel"
-              (focus)="isFocused = 'shortCode'"
-              (blur)="isFocused = ''"
-              autocomplete="off"
-              (keypress)="commonFunction.alphaOnly($event)"
-              maxlength="8"
-            />
-            <!-- Dynamic Character Count -->
-            <h6
-              style="color: red; font-size: 10px"
-              *ngIf="
+            <input nz-input name="shortcode" placeholder="Enter Short Code" required [(ngModel)]="data.SHORT_CODE"
+              #shortCodeField="ngModel" (focus)="isFocused = 'shortCode'" (blur)="isFocused = ''" autocomplete="off"
+              (keypress)="commonFunction.alphaOnly($event)" maxlength="8" />
+            <h6 class="langmaster-char-counter-red-10px" *ngIf="
                 isFocused === 'shortCode' ||
                 (data.SHORT_CODE != undefined &&
                   data.SHORT_CODE != null &&
                   data.SHORT_CODE != '' &&
                   isFocused === 'shortCode')
-              "
-            >
+              ">
               {{ data.SHORT_CODE.length || 0 }}/8
             </h6>
           </nz-form-control>
         </nz-form-item>
       </div>
-
       <div nz-col nzXs="12">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
           <nz-form-control nzHasFeedback nzErrorTip="Plese Enter Sequence No.">
-            <input
-              nz-input
-              name="SeqNo"
-              placeholder="Enter Sequence No."
-              required
-              [(ngModel)]="data.SEQ_NO"
-              #nameField="ngModel"
-              (keypress)="commonFunction.onlynum($event)"
-              maxlength="8"
-            />
+            <input nz-input name="SeqNo" placeholder="Enter Sequence No." required [(ngModel)]="data.SEQ_NO"
+              #nameField="ngModel" (keypress)="commonFunction.onlynum($event)" maxlength="8" />
           </nz-form-control>
         </nz-form-item>
       </div>
     </div>
-
     <div nz-row>
       <div nz-col nzSpan="8">
         <nz-form-item>
           <nz-form-label nzNoColon>Status</nz-form-label>
           <nz-form-control>
-            <nz-switch
-              name="status"
-              nzCheckedChildren="Active"
-              nzUnCheckedChildren="Inactive"
-              [(ngModel)]="data.IS_ACTIVE"
-            ></nz-switch>
+            <nz-switch name="status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+              [(ngModel)]="data.IS_ACTIVE"></nz-switch>
           </nz-form-control>
         </nz-form-item>
       </div>
     </div>
   </form>
 </div>
-
 <div class="footer">
-  <button
-    nz-button
-    nzType="default"
-    (click)="close()"
-    class="ant-btn"
-    style="margin-right: 12px"
-  >
+  <button nz-button nzType="default" (click)="close()" class="ant-btn langmaster-footer-cancel-btn-mr12">
     Cancel
   </button>
-
-  <button
-    nz-button
-    *ngIf="!data.ID"
-    nzType="primary"
-    nz-dropdown
-    [nzDropdownMenu]="menu"
-    [nzLoading]="isSpinning"
-    (click)="save(false, Languagemaster)"
-    class="ant-btn ant-btn-primary"
-  >
+  <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
+    (click)="save(false, Languagemaster)" class="ant-btn ant-btn-primary">
     Save & Close
   </button>
-
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu>
-      <li
-        nz-menu-item
-        class="menuc"
-        style="border-radius: 4px; color: white !important"
-      >
-        <a
-          class="footer-button"
-          style="color: white !important"
-          (click)="save(true, Languagemaster)"
-          >Save & New</a
-        >
+      <li nz-menu-item class="menuc langmaster-dropdown-menu-item-rounded-white">
+        <a class="footer-button langmaster-dropdown-link-white" (click)="save(true, Languagemaster)">Save & New</a>
       </li>
     </ul>
   </nz-dropdown-menu>
-
-  <button
-    type="button"
-    class="ant-btn ant-btn-primary"
-    nz-button
-    [nzLoading]="isSpinning"
-    *ngIf="data.ID"
-    (click)="save(false, Languagemaster)"
-  >
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false, Languagemaster)">
     <span>Update & Close</span>
   </button>
 </div>

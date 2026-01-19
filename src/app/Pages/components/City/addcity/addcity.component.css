@@ -1,7 +1,31 @@
-nz-form-item{
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-    /* font-family: '"Poppins", sans-serif !important'; */
-  }
+.city-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0 10px;
+}
+.city-select {
+  width: 100%;
+}
+.city-input {
+  width: 100%;
+}
+.city-input-number {
+  width: 100%;
+}
+.city-char-count {
+  color: red;
+  font-size: 10px;
+}
+.city-footer {
+  margin-top: 10px;
+}
+.city-btn-cancel {
+  margin-right: 8px;
+}
+.city-menu {
+  border-radius: 4px;
+}
+.city-menu-link {
+  color: white !important;
+}

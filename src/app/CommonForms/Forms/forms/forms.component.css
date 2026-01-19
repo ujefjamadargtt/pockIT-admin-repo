@@ -1,0 +1,36 @@
+.back-arrow-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.search-action-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.new-form-button-container {
+  margin-right: 0px;
+}
+.table-container {
+  padding-top: 10px;
+}
+.data-table {
+  white-space: pre-line;
+}
+.action-cell {
+  white-space: pre-line;
+  text-align: center;
+}
+.data-cell {
+  white-space: pre-line;
+}
+.edit-link {
+  display: inline-block;
+  cursor: pointer;
+}
+.edit-icon {
+  font-size: 15px;
+}
+.formname {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}

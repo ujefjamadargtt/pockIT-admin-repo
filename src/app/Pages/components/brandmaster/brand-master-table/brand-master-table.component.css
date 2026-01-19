@@ -1,63 +1,191 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
+  
 }
-
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
+  
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 .filter-icon {
   color: inherit;
   transition: color 0.3s ease-in-out;
 }
-
 .active-filter {
   color: #092b9c;
 }
-
-
-
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
+  
   display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+
+.back-arrow-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-actions-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filter-btn-width {
+  width: 47px;
+}
+
+.search-input {
+  min-width: 180px;
+}
+
+.add-btn-no-margin {
+  margin-right: 0;
+}
+
+.filter-row-no-padding {
+  padding-top: 0;
+}
+
+.filter-loader-center {
+  text-align: center;
+}
+
+.saved-filter-col {
+  margin-bottom: 8px;
+}
+
+.saved-filter-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+
+.saved-filter-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+
+.saved-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+
+.applied-filter-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.saved-filter-actions-row {
+  margin-top: 7px;
+}
+
+.saved-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+
+.filter-action-icon {
+  font-size: 10px !important;
+}
+
+.filter-action-view {
+  margin-right: 0;
+}
+
+.no-filter-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+
+.filter-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.filter-footer-btn {
+  margin-right: 10px;
+}
+
+.brand-table-row {
+  margin-top: 10px;
+}
+
+.brand-table {
+  white-space: pre-line;
+}
+
+.brand-action-header {
+  font-weight: bold;
+  text-align: center;
+}
+
+.brand-status-header {
+  font-weight: bold;
+  text-align: center;
+}
+
+.brand-table-row-center {
+  text-align: center;
+}
+
+.brand-edit-tag {
+  cursor: pointer;
+}
+
+.brand-edit-icon {
+  font-size: 15px;
+}
+
+.filter-icon.active-filter {
+  color: #1890ff;
+}
+.text-center{
+  text-align: center
+}
+.ctr13{
+  text-align: center;
 }

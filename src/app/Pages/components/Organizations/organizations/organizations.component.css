@@ -1,45 +1,104 @@
 th {
-    text-align: center !important;
-    vertical-align: middle !important;
-    /* font-weight: bold; */
+  text-align: center !important;
+  vertical-align: middle !important;
 }
 th {
-    text-align: center !important;
-    vertical-align: middle !important;
-    /* font-weight: bold; */
+  text-align: center !important;
+  vertical-align: middle !important;
 }
-
-.select{
+.select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
-    padding: 8px;
-  }
-
-  .search-box input {
-    width: 188px;
-    display: block;
-  }
-
-  .search-box button {
-    width: 90px;
-  }
-
-  .search-button {
-    margin-right: 8px;
-  }
-
-  nz-select {
-    width: 100%;
-  }
-
-  .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
-    display: inline-block;
-  }
+  padding: 8px;
+}
+.search-box input {
+  width: 188px;
+  display: block;
+}
+.search-box button {
+  width: 90px;
+}
+.search-button {
+  margin-right: 8px;
+}
+nz-select {
+  width: 100%;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+.org-arrow-back-icon {
+    font-weight: bold;
+    cursor: pointer;
+}
+.org-header-actions-col {
+    display: flex;
+    justify-content: flex-end;
+}
+.org-new-button-item {
+    margin-right: 0px;
+}
+.org-filter-condition-row {
+    margin: 10px 0px;
+}
+.org-filter-dashed-box {
+    border: 1px dashed black;
+    border-radius: 5px;
+    padding: 10px;
+}
+.org-subfilter-row {
+    margin-bottom: 5px;
+}
+.org-btn-margin-right {
+    margin-right: 10px;
+}
+.org-filter-warning-text {
+    color: red;
+    font-size: 11px;
+}
+.org-filter-actions-row {
+    padding-top: 10px;
+}
+.org-filter-actions-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+.org-action-btn-margin {
+    margin-right: 10px;
+}
+.org-saved-filters-row {
+    padding-top: 10px;
+}
+.org-saved-filters-box {
+    border: 1px dashed black;
+    border-radius: 5px;
+    padding: 10px;
+}
+.org-no-data-text {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.org-table-whitespace {
+    white-space: pre-line;
+}
+.org-th-bold-center {
+    font-weight: bold;
+    text-align: center;
+}
+.org-tr-text-center {
+    text-align: center;
+}
+.org-edit-tag-cursor {
+    cursor: pointer;
+}
+.org-edit-icon-size {
+    font-size: 15px;
+}

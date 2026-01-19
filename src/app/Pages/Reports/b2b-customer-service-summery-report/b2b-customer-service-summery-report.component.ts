@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-b2b-customer-service-summery-report',
   templateUrl: './b2b-customer-service-summery-report.component.html',
@@ -30,7 +29,6 @@ export class B2bCustomerServiceSummeryReportComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -38,7 +36,6 @@ export class B2bCustomerServiceSummeryReportComponent {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   formTitle = 'B2B Customer Service Summery Report';
   excelData: any = [];
   exportLoading: boolean = false;
@@ -58,7 +55,6 @@ export class B2bCustomerServiceSummeryReportComponent {
   savedFilters: any[] = [];
   TabId: number;
   isDeleting: boolean = false;
-
   drawerTitle!: string;
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
@@ -71,27 +67,20 @@ export class B2bCustomerServiceSummeryReportComponent {
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   totalRecords = 1;
-
   columns: string[][] = [
     ['NAME', 'NAME'],
-    // ["TOTAL_OWN_SERVICES", "TOTAL_OWN_SERVICES"],
-    // ["TOTAL_MAPPED_SERVICES", "TOTAL_MAPPED_SERVICES"],
   ];
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   customerNameText: string = '';
   iscustomernameFilterApplied: boolean = false;
   customernameVisible = false;
-
   reset(): void {
     this.searchText = '';
     this.customerNameText = '';
-
     this.search();
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -104,20 +93,15 @@ export class B2bCustomerServiceSummeryReportComponent {
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -128,7 +112,6 @@ export class B2bCustomerServiceSummeryReportComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.customerNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -137,8 +120,6 @@ export class B2bCustomerServiceSummeryReportComponent {
     } else {
       this.iscustomernameFilterApplied = false;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     const finalDataList =
       this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
@@ -218,7 +199,6 @@ export class B2bCustomerServiceSummeryReportComponent {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -227,22 +207,18 @@ export class B2bCustomerServiceSummeryReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -257,7 +233,6 @@ export class B2bCustomerServiceSummeryReportComponent {
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -265,13 +240,12 @@ export class B2bCustomerServiceSummeryReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -286,21 +260,15 @@ export class B2bCustomerServiceSummeryReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -314,21 +282,17 @@ export class B2bCustomerServiceSummeryReportComponent {
       );
     this.filterQuery = '';
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
     if (this.customerNameText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.iscustomernameFilterApplied = true;
@@ -337,11 +301,8 @@ export class B2bCustomerServiceSummeryReportComponent {
       this.iscustomernameFilterApplied = false;
     }
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -349,22 +310,16 @@ export class B2bCustomerServiceSummeryReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -372,7 +327,6 @@ export class B2bCustomerServiceSummeryReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -389,9 +343,7 @@ export class B2bCustomerServiceSummeryReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -417,15 +369,12 @@ export class B2bCustomerServiceSummeryReportComponent {
       }
     );
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -450,19 +399,14 @@ export class B2bCustomerServiceSummeryReportComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'B2B Customer Service Summery Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -479,7 +423,6 @@ export class B2bCustomerServiceSummeryReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -496,7 +439,6 @@ export class B2bCustomerServiceSummeryReportComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -506,37 +448,29 @@ export class B2bCustomerServiceSummeryReportComponent {
       FILTER_JSON: {},
     };
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   filterFields: any[] = [
     {
       key: 'NAME',
@@ -553,13 +487,11 @@ export class B2bCustomerServiceSummeryReportComponent {
       placeholder: 'Enter Customer Name',
     },
   ];
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
     if (this.excelData.length > 0) {
       for (var i = 0; i < this.excelData.length; i++) {
-        // obj1["Assigned Date"] = this.excelData[i]["SCHEDULED_DATE_TIME"];
         obj1['Customer Name'] = this.excelData[i]['NAME'] || '-';
         obj1['Total Own Services'] =
           this.excelData[i]['TOTAL_OWN_SERVICES'] || '-';
@@ -578,9 +510,7 @@ export class B2bCustomerServiceSummeryReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

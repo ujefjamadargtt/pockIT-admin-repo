@@ -1,51 +1,135 @@
-th {
+.flex-row {
+  display: flex;
+}
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.mb-7 {
+  margin-bottom: 7px;
+}
+.mr-10 {
+  margin-right: 10px !important;
+}
+.bold-cursor {
+  font-weight: bold;
+  cursor: pointer;
+}
+.full-width {
+  width: 100%;
+}
+.th-center {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-th {
-  text-align: center !important;
-  vertical-align: middle !important;
-  /* font-weight: bold; */
-}
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%;
   display: inline-block;
+}
+.flex-row {
+  display: flex;
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.gap-5 {
+  gap: 5px;
+}
+.mb-8 {
+  margin-bottom: 8px;
+}
+.mt-7 {
+  margin-top: 7px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.mr-10 {
+  margin-right: 10px;
+}
+.card-filter {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.icon-top-right {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.tag-small {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.tag-spacing {
+  margin-right: 0px;
+}
+.no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.job-table-th-center-bold {
+  font-weight: bold;
+  text-align: center;
+}
+.filter-icon-active {
+  color: #092B9C;
+}
+.text-align-center {
+  text-align: center;
+}
+.width-300px {
+  width: 300px;
+}
+.width-280px {
+  width: 280px;
 }

@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { FormMaster } from 'src/app/CommonModels/form-master';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -19,15 +18,12 @@ export class FormComponent implements OnInit {
     private api: ApiServiceService,
     private message: NzNotificationService
   ) { }
-
   ngOnInit() {
     this.loadForms();
   }
-
   loadForms() {
     this.isSpinning = true;
     let filterQuery = ' and PARENT_ID=0';
-
     this.api.getAllForms(0, 0, '', '', filterQuery).subscribe(
       (forms) => {
         this.forms = forms['data'];
@@ -39,16 +35,13 @@ export class FormComponent implements OnInit {
       }
     );
   }
-
   close(): void {
     this.drawerClose();
   }
   isOk = true;
   save(addNew: boolean, websitebannerPage: NgForm): void {
     this.isSpinning = false;
-    this.isOk = true; // Assuming isOk is used for overall validation status
-
-    // Check if all required fields are filled
+    this.isOk = true; 
     if (
       (this.data.NAME == null ||
         this.data.NAME == undefined ||
@@ -63,11 +56,8 @@ export class FormComponent implements OnInit {
       this.isOk = false;
       this.message.error('Please Fill All The Required Fields', '');
       this.isSpinning = false;
-
       return;
     }
-
-    // Further validation specifically for NAME
     if (!this.data.NAME?.trim()) {
       this.isOk = false;
       this.message.error('Please Enter a Name', '');
@@ -82,8 +72,6 @@ export class FormComponent implements OnInit {
       this.message.error('Please Enter a Icon', '');
       this.isSpinning = false;
     }
-
-    // Proceed with save operation
     if (this.isOk) {
       if (this.data.ID) {
         this.api.updateForm(this.data).subscribe(
@@ -112,7 +100,6 @@ export class FormComponent implements OnInit {
                 this.data = new FormMaster();
                 this.resetDrawer(websitebannerPage);
               }
-
               this.loadForms();
             } else {
               this.message.error('Form Creation Failed...', '');

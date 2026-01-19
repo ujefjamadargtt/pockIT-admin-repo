@@ -1,19 +1,132 @@
 .select {
-    width: 200px;
-    padding: 8px;
-    display: block;
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
-
 .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    /* Adjust as needed */
-    display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
-    padding: 0px;
-  }
+  padding: 0px;
+}
+.wh-formname {
+  font-weight: bold;
+}
+.wh-header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.wh-form-inline {
+  width: 100%;
+  justify-content: end;
+}
+.wh-form-warehouse {
+  width: 450px;
+}
+.wh-filter-btn-item {
+  width: 47px;
+}
+.wh-search-group {
+  margin-right: 0px;
+}
+.wh-filter-row {
+  margin-top: 8px;
+}
+.wh-filter-header-row {
+  padding-top: 0px;
+}
+.wh-loading-center {
+  text-align: center;
+}
+.wh-filter-card-col {
+  margin-bottom: 8px;
+}
+.wh-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.wh-filter-card-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.wh-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.wh-check-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.wh-filter-actions-row {
+  margin-top: 7px;
+}
+.wh-actions-container {
+  display: flex;
+  justify-content: space-between;
+}
+.wh-tag-edit,
+.wh-tag-apply,
+.wh-tag-clear,
+.wh-tag-delete,
+.wh-tag-view {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.wh-tag-edit {
+  margin-right: 0px;
+}
+.wh-tag-icon {
+  font-size: 10px !important;
+}
+.wh-filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.wh-reset-btn,
+.wh-new-filter-btn {
+  margin-right: 10px;
+}
+.wh-table-container {
+  margin-top: 8px;
+}
+.wh-no-filters {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.wh-modal-title {
+  text-align: center;
+}
+.header-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.warehouse-select-full {
+  width: 100%;
+}
+.excel-btn-white-text {
+  color: white;
+}
+.table-preline-inventory {
+  white-space: pre-line;
+}
+.full-wdt {
+  width: 100%;
+}

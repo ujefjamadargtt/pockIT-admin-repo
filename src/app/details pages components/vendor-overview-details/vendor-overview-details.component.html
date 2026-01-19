@@ -1,13 +1,11 @@
 <div nz-row>
-    <div nz-col nzSpan="24" style="box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;">
-        <div nz-row [nzGutter]="16" style="padding: 0px 0px 20px 0px;">
+    <div nz-col nzSpan="24" class="vendor-header-shadow">
+        <div nz-row [nzGutter]="16" class="vendor-header-padding">
             <div nz-col *ngIf="data!=undefined" nzSpan="8" class="mainnam" nz-popover [nzPopoverContent]="data['NAME']"
                 nzPopoverPlacement="topLeft">Contact Person Name : {{data.NAME}}
-                &nbsp;<span *ngIf="data.STATUS == 0"
-                    style="padding: 1px 8px;background-color: rgb(24, 24, 24);color: white;border-radius: 15px;">Inactive</span>
-
-                <span *ngIf="data.STATUS == 1"
-                    style="padding: 1px 8px;background-color: green;color: white;border-radius: 15px;">Active</span>
+                &nbsp;
+                <span *ngIf="data.STATUS == 0" class="vendor-status-inactive">Inactive</span>
+                <span *ngIf="data.STATUS == 1" class="vendor-status-active">Active</span>
             </div>
             <div nz-col nzSpan="8" class="subname"
                 *ngIf="data!=undefined && data.BUSINESS_NAME!=undefined && data.BUSINESS_NAME!=null && data.BUSINESS_NAME!=''"
@@ -40,38 +38,34 @@
         </div>
     </div>
 </div>
-
-<div nz-row style="padding: 10px;">
+<div nz-row class="vendor-tab-container">
     <div nz-col nzSpan="24">
-
         <nz-tabset nzCentered (nzSelectedIndexChange)="onSelectedIndexChange($event)">
-
             <nz-tab [nzTitle]="'Technicians'">
                 <div *ngIf="show==0">
                     <app-technicainslist [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-technicainslist>
                 </div>
             </nz-tab>
             <nz-tab [nzTitle]="'Jobs'">
-                <div *ngIf=" show==1">
+                <div *ngIf="show==1">
                     <app-jobcardpage [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-jobcardpage>
                 </div>
             </nz-tab>
             <nz-tab [nzTitle]="'Order Location'">
-                <div *ngIf="show == 2">
+                <div *ngIf="show==2">
                     <app-location [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-location>
                 </div>
             </nz-tab>
             <nz-tab [nzTitle]="'Technician Locations'">
-                <div *ngIf="show == 3">
+                <div *ngIf="show==3">
                     <app-multiplelocationpage [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-multiplelocationpage>
                 </div>
             </nz-tab>
             <nz-tab [nzTitle]="'Technician Travel History'">
-                <div *ngIf="show == 4">
+                <div *ngIf="show==4">
                     <app-technicianlocationsmap [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-technicianlocationsmap>
                 </div>
             </nz-tab>
-
             <nz-tab [nzTitle]="'Chats'">
                 <div *ngIf="show==5">
                     <app-chatoverview-comp [FILTER_ID]="custid" [TYPE]="'VENDOR'"></app-chatoverview-comp>

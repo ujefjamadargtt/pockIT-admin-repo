@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-stocks-by-unit-report',
   templateUrl: './stocks-by-unit-report.component.html',
@@ -30,7 +29,6 @@ export class StocksByUnitReportComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -38,7 +36,6 @@ export class StocksByUnitReportComponent {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   formTitle = 'Unit wise item stock details';
   excelData: any = [];
   exportLoading: boolean = false;
@@ -58,7 +55,6 @@ export class StocksByUnitReportComponent {
   savedFilters: any[] = [];
   TabId: number;
   isDeleting: boolean = false;
-
   drawerTitle!: string;
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
@@ -86,7 +82,6 @@ export class StocksByUnitReportComponent {
     this.userid = this.commonFunction.decryptdata(
       sessionStorage.getItem('userId') || ''
     );
-
     this.userroleid = this.commonFunction.decryptdata(
       sessionStorage.getItem('roleId') || ''
     );
@@ -96,9 +91,7 @@ export class StocksByUnitReportComponent {
   }
   territoryData: any = [];
   territoryData1: any = [];
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -113,7 +106,6 @@ export class StocksByUnitReportComponent {
   getWarehouses() {
     if (this.userroleid == 23 || this.userroleid == '23') {
       this.warehouseLoading = true;
-
       this.api
         .getBackOfficeData(
           0,
@@ -169,7 +161,6 @@ export class StocksByUnitReportComponent {
         );
     } else {
       this.warehouseLoading = true;
-
       this.api.getWarehouses(0, 0, 'NAME', 'ASC', ' AND STATUS = 1').subscribe(
         (data) => {
           if (data['code'] == 200) {
@@ -214,9 +205,6 @@ export class StocksByUnitReportComponent {
       }
     );
   }
-
-  // categories1: any = [];
-
   getteritorydata() {
     this.api.getTeritory(0, 0, '', '', ' AND IS_ACTIVE=1').subscribe((data) => {
       if (data['code'] == '200') {
@@ -231,48 +219,38 @@ export class StocksByUnitReportComponent {
       }
     });
   }
-
   territoryVisible = false;
   selectedterritory: any[] = [];
   isterritorynameFilterApplied = false;
   onTerritoryChange(): void {
     if (this.selectedterritory?.length) {
       this.search();
-      this.isterritorynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isterritorynameFilterApplied = true; 
     } else {
       this.search();
-      this.isterritorynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isterritorynameFilterApplied = false; 
     }
-    // this.search();
   }
-
   managertext: string = '';
   ismangerfilt: boolean = false;
   managervisible = false;
-
   warehousename: string = '';
   iswarehousename: boolean = false;
   warehousenameisible = false;
-
   itemtext: string = '';
   itemtextvisible = false;
   isitemFilterApplied: boolean = false;
-
   serialtext: string = '';
   serialtextvisible = false;
   isserialFilterApplied: boolean = false;
-
   BATCHtext: string = '';
   BATCHtextvisible = false;
   isBATCHFilterApplied: boolean = false;
-
   unittext: string = '';
   unittextvisible = false;
   isunitFilterApplied: boolean = false;
-
   scheduleDateVisible = false;
   isscheduleDateFilterApplied: boolean = false;
-
   reset(): void {
     this.searchText = '';
     this.warehousename = '';
@@ -283,10 +261,8 @@ export class StocksByUnitReportComponent {
     this.unittext = '';
     this.stocktext = '';
     this.actualunittext = '';
-
     this.search();
   }
-
   listOfFilter: any[] = [
     { text: 'Both Sellable & Technician', value: 'B' },
     { text: 'Sellable Inventory', value: 'P' },
@@ -315,20 +291,12 @@ export class StocksByUnitReportComponent {
   actualUnitfilterApplied = false;
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
-    // if (this.nametext.trim() === "") {
-    //   this.searchText = "";
-    // } else if (this.nametext.length >= 3 ) {
-    //   this.search();
-    // }
-
     if (this.warehousename.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.iswarehousename = true;
@@ -336,13 +304,6 @@ export class StocksByUnitReportComponent {
       this.search();
       this.iswarehousename = false;
     }
-    // if (this.managertext.length >= 3 && keys.key === "Enter") {
-    //   this.search();
-    //   this.ismangerfilt = true;
-    // } else if (this.managertext.length == 0 && keys.key === "Backspace") {
-    //   this.search();
-    //   this.ismangerfilt = false;
-    // }
     if (this.itemtext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isitemFilterApplied = true;
@@ -350,23 +311,6 @@ export class StocksByUnitReportComponent {
       this.search();
       this.isitemFilterApplied = false;
     }
-
-    // if (this.serialtext.length >= 3 && keys.key === "Enter") {
-    //   this.search();
-    //   this.isserialFilterApplied = true;
-    // } else if (this.serialtext.length == 0 && keys.key === "Backspace") {
-    //   this.search();
-    //   this.isserialFilterApplied = false;
-    // }
-
-    // if (this.BATCHtext.length >= 3 && keys.key === "Enter") {
-    //   this.search();
-    //   this.isBATCHFilterApplied = true;
-    // } else if (this.BATCHtext.length == 0 && keys.key === "Backspace") {
-    //   this.search();
-    //   this.isBATCHFilterApplied = false;
-    // }
-
     if (this.unittext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isunitFilterApplied = true;
@@ -374,7 +318,6 @@ export class StocksByUnitReportComponent {
       this.search();
       this.isunitFilterApplied = false;
     }
-
     if (this.actualunittext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.actualUnitfilterApplied = true;
@@ -390,13 +333,10 @@ export class StocksByUnitReportComponent {
       this.stockFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -405,10 +345,8 @@ export class StocksByUnitReportComponent {
       this.loadFilters();
     }
   }
-
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -425,7 +363,6 @@ export class StocksByUnitReportComponent {
       groups: [],
     },
   ];
-
   CategoryData: any = [];
   getWarehousesdata1() {
     this.api;
@@ -446,22 +383,19 @@ export class StocksByUnitReportComponent {
   categoryvisible: boolean = false;
   selectedCategories: number[] = [];
   iscategoryFilterApplied = false;
-
   onCategoryChange(): void {
     if (this.selectedCategories?.length) {
       this.search();
-      this.iscategoryFilterApplied = true; // Filter applied if selectedCategories has values
+      this.iscategoryFilterApplied = true; 
     } else {
       this.search();
-      this.iscategoryFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.iscategoryFilterApplied = false; 
     }
-    // this.search();
   }
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.filterFields[3]['options'] = this.warehousedata;
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -469,14 +403,12 @@ export class StocksByUnitReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   filterloading: boolean = false;
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -485,16 +417,11 @@ export class StocksByUnitReportComponent {
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
       )
-      // Use USER_ID as a number
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-            //
-            //
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -515,14 +442,9 @@ export class StocksByUnitReportComponent {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -536,7 +458,6 @@ export class StocksByUnitReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -545,7 +466,6 @@ export class StocksByUnitReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -562,9 +482,7 @@ export class StocksByUnitReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -590,7 +508,6 @@ export class StocksByUnitReportComponent {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -599,21 +516,17 @@ export class StocksByUnitReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -626,18 +539,14 @@ export class StocksByUnitReportComponent {
       this.sortKey = 'ITEM_ID';
       this.sortValue = 'desc';
     }
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -648,19 +557,11 @@ export class StocksByUnitReportComponent {
           .join(' OR ') +
         ')';
     }
-    // if (this.warehousename !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') +
-    //     `WAREHOUSE_NAME LIKE '%${this.warehousename.trim()}%'`;
-    //   this.iswarehousename = true;
-    // } else {
-    //   this.iswarehousename = false;
-    // }
     if (this.selectedCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `WAREHOUSE_ID IN (${this.selectedCategories.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `WAREHOUSE_ID IN (${this.selectedCategories.join(',')})`; 
     }
     if (this.managertext !== '') {
       likeQuery +=
@@ -670,7 +571,6 @@ export class StocksByUnitReportComponent {
     } else {
       this.ismangerfilt = false;
     }
-
     if (this.itemtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -679,7 +579,6 @@ export class StocksByUnitReportComponent {
     } else {
       this.isitemFilterApplied = false;
     }
-
     if (this.unittext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -688,12 +587,6 @@ export class StocksByUnitReportComponent {
     } else {
       this.isunitFilterApplied = false;
     }
-    // if (this.statusFilter) {
-    //   if (likeQuery !== "") {
-    //     likeQuery += " AND ";
-    //   }
-    //   likeQuery += `INVENTORY_TYPE = '${this.statusFilter}'`;
-    // }
     if (this.statusFilter1) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -716,62 +609,10 @@ export class StocksByUnitReportComponent {
     } else {
       this.actualUnitfilterApplied = false;
     }
-    // if (this.mobiletext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.mobiletext.trim()}%'`;
-    //   this.ismobileFilterApplied = true;
-    // } else {
-    //   this.ismobileFilterApplied = false;
-    // }
-
-    // Date Range Filter
-    // if (this.StartDate && this.StartDate.length === 2) {
-    //   const [start, end] = this.StartDate;
-    //   if (start && end) {
-    //     const formattedStart = new Date(start).toISOString().split("T")[0]; // Format as YYYY-MM-DD
-    //     const formattedEnd = new Date(end).toISOString().split("T")[0]; // Format as YYYY-MM-DD
-    //     likeQuery +=
-    //       (likeQuery ? " AND " : "") +
-    //       `SCHEDULED_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
-    //   }
-    //   this.isscheduleDateFilterApplied = true;
-    // } else {
-    //   this.isscheduleDateFilterApplied = false;
-    // }
-    // if (this.selectedterritory.length > 0) {
-    //   if (likeQuery !== "") {
-    //     likeQuery += " AND ";
-    //   }
-    //   likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(",")})`; // Update with actual field name in the DB
-    // }
-
-    // if (this.ratingtext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.ratingtext.trim()}%'`;
-    //   this.isratingNameFilterApplied = true;
-    // } else {
-    //   this.isratingNameFilterApplied = false;
-    // }
-
-    // if (this.commenttext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `TECHNICIAN_NAME LIKE '%${this.commenttext.trim()}%'`;
-    //   this.iscommentFilterApplied = true;
-    // } else {
-    //   this.iscommentFilterApplied = false;
-    // }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // const finalDataList =
-    //   this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
     this.loadingRecords = true;
     var warefilter: any = '';
     if (this.warehousess) {
-      // warefilter = " AND WAREHOUSE_ID IN (" + this.warehousess + ")";
       if (exportInExcel == false) {
         this.api
           .getStocksbyUnitReport(
@@ -816,7 +657,6 @@ export class StocksByUnitReportComponent {
       } else {
         this.loadingRecords = true;
         this.exportLoading = true;
-
         this.api
           .getStocksbyUnitReport(
             0,
@@ -831,7 +671,6 @@ export class StocksByUnitReportComponent {
                 this.loadingRecords = false;
                 this.excelData = data['body']['data'];
                 this.exportLoading = false;
-
                 this.convertInExcel();
               } else {
                 this.excelData = [];
@@ -856,7 +695,6 @@ export class StocksByUnitReportComponent {
       this.dataList = [];
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -865,17 +703,14 @@ export class StocksByUnitReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     if (currentSort != null && currentSort.value != undefined) {
@@ -884,9 +719,7 @@ export class StocksByUnitReportComponent {
       this.loadingRecords = false;
     }
   }
-
   warehousedata: any = [];
-
   getWarehousesdata() {
     this.api;
     this.api
@@ -904,12 +737,10 @@ export class StocksByUnitReportComponent {
         }
       });
   }
-
   openfilter() {
     this.drawerTitle = 'Unit Wise Item Stock Details Filter';
     this.drawerFilterVisible = true;
     this.filterFields[3]['options'] = this.warehousedata;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -918,13 +749,9 @@ export class StocksByUnitReportComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -941,7 +768,6 @@ export class StocksByUnitReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -959,7 +785,6 @@ export class StocksByUnitReportComponent {
       },
     ];
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -989,7 +814,6 @@ export class StocksByUnitReportComponent {
         } else {
           obj1['Tracking Type'] = '-';
         }
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -1003,45 +827,31 @@ export class StocksByUnitReportComponent {
       this.message.error('No data found', '');
     }
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
-  // excelData: any = [];
-  // exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'ACTUAL_UNIT_NAME',
       label: 'Unit Name',
       type: 'text',
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -1056,7 +866,6 @@ export class StocksByUnitReportComponent {
       key: 'ITEM_NAME',
       label: 'Item Name',
       type: 'text',
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -1067,12 +876,10 @@ export class StocksByUnitReportComponent {
       ],
       placeholder: 'Enter Item Name',
     },
-
     {
       key: 'VARIANT_NAME',
       label: 'Varient Name',
       type: 'text',
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -1087,7 +894,6 @@ export class StocksByUnitReportComponent {
       key: 'WAREHOUSE_NAME',
       label: 'Warehouse Name',
       type: 'search',
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -1106,7 +912,6 @@ export class StocksByUnitReportComponent {
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
       ],
-
       options: [
         { value: 'N', display: 'None' },
         { value: 'S', display: 'Serial No. Wise' },
@@ -1115,14 +920,11 @@ export class StocksByUnitReportComponent {
       placeholder: 'Select Inventory Tracking Type',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -1131,7 +933,7 @@ export class StocksByUnitReportComponent {
         this.isscheduleDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isscheduleDateFilterApplied = false;
     }

@@ -1,18 +1,129 @@
 .select {
-    width: 200px;
-    padding: 8px;
-    display: block;
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
-
 .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    /* Adjust as needed */
-    display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
 }
 :host::ng-deep .ant-card-body {
-    padding: 0px;
-  }
+  padding: 0px;
+}
+.back-icon-bold {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-right-align {
+  display: flex;
+  justify-content: flex-end;
+}
+.header-form-full {
+  width: 100%;
+  justify-content: end;
+}
+.excel-btn-white {
+  color: white;
+}
+.filter-item-fixed {
+  width: 47px;
+}
+.search-item-nomargin {
+  margin-right: 0px;
+}
+.filters-row-top {
+  padding-top: 0px;
+}
+.spin-center {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card-styled {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-header-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-styled {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.check-icon-positioned {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-top {
+  margin-top: 7px;
+}
+.filter-actions-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.tag-edit-styled,
+.tag-apply-styled,
+.tag-clear-styled,
+.tag-delete-styled {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.tag-view-styled {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.icon-tiny {
+  font-size: 10px !important;
+}
+.no-filters-styled {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-btn-margin,
+.new-filter-btn-margin {
+  margin-right: 10px;
+}
+.table-margin-top {
+  margin-top: 8px;
+}
+.table-whitespace {
+  white-space: pre-line;
+}
+.current-stock-header {
+  text-align: center;
+}
+.unit-header-center,
+.item-header-center,
+.variant-header-center,
+.warehouse-header-center,
+.tracking-header-center {
+  text-align: center;
+}
+.warehouse-select-full {
+  width: 100%;
+}
+.modal-title-center {
+  text-align: center;
+}

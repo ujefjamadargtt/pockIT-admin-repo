@@ -1,51 +1,155 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 .filter-active {
   color: #092B9C !important;
 }
-
-
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.arrow-back-style {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-button-width {
+  width: 47px;
+}
+.search-input-width {
+  width: 300px;
+}
+.form-item-no-margin {
+  margin-right: 0px;
+}
+.filter-content-padding {
+  padding-top: 0px;
+}
+.spinner-center {
+  text-align: center;
+}
+.filter-card-margin {
+  margin-bottom: 8px;
+}
+.filter-card-style {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.filter-card-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-text {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-check-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.filter-actions-margin {
+  margin-top: 7px;
+}
+.filter-actions-layout {
+  display: flex;
+  justify-content: space-between;
+}
+.action-tag-style {
+  cursor: pointer;
+}
+.tag-icon-size {
+  font-size: 15px;
+}
+.view-tag-style {
+  cursor: pointer;
+  margin-right: 0px;
+}
+.no-data-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-button {
+  margin-right: 10px;
+}
+.new-filter-button {
+  margin-right: 10px;
+}
+.table-container-padding {
+  padding-top: 10px;
+}
+.table-whitespace-style {
+  white-space: pre-line;
+}
+.th-action-style {
+  font-weight: bold;
+  text-align: center;
+}
+.th-header-style {
+  font-weight: bold;
+  text-align: center;
+}
+.td-action-center {
+  text-align: center;
+}
+.select-full-width {
+  width: 100%;
+}
+.modal-text-center {
+  text-align: center;
+}
+.iframe-container {
+  height: 400px;
+  overflow: auto;
+}
+.iframe-style {
+  width: 832px;
+  height: 396px;
 }

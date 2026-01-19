@@ -12,7 +12,6 @@ import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { appkeys } from 'src/app/app.constant';
 import { DomSanitizer } from '@angular/platform-browser';
-
 @Component({
   selector: 'app-ordercreatedrawer',
   templateUrl: './ordercreatedrawer.component.html',
@@ -120,10 +119,8 @@ export class OrdercreatedrawerComponent {
     } else {
       this.decreptedvendorId = 0;
     }
-
     this.getcustomer(this.searchkey);
     this.getcategories();
-
     this.getUnits();
     if (this.data.CUSTOMER_ID === '' || this.data.CUSTOMER_ID === undefined) {
       this.showcbutton = true;
@@ -132,7 +129,6 @@ export class OrdercreatedrawerComponent {
       this.showcbutton = false;
       this.showbutton = true;
     }
-
     if (this.decreptedroleId == '9') {
       this.api
         .getVendorData(0, 0, '', '', ' AND USER_ID=' + this.decrepteduserID)
@@ -162,12 +158,10 @@ export class OrdercreatedrawerComponent {
         });
     }
   }
-
   @Input() nodes: any = [];
   closeCallbackorder() {
     this.drawerCloseorder();
   }
-
   loadMore() {
     if (this.totalrecords > this.customer.length) {
       this.pageIndex++;
@@ -182,7 +176,6 @@ export class OrdercreatedrawerComponent {
       this.getcustomer(this.searchkey);
     }
   }
-
   keyup(event) {
     if (
       this.searchkey == '' &&
@@ -194,9 +187,7 @@ export class OrdercreatedrawerComponent {
       this.getcustomer('');
     }
   }
-
   isLoading = false;
-
   getcustomer(event: string = '', orgName: string = '') {
     const customerType = this.data.CUSTOMER_TYPE || 'I';
     if (this.decreptedroleId == 7) {
@@ -212,17 +203,13 @@ export class OrdercreatedrawerComponent {
           event +
           '%" ) '
           : '';
-
       let orgFilter = '';
-
       if (orgName !== '') {
         orgFilter = " AND COMPANY_NAME = '" + orgName + "'";
       }
-
       if (customerType) {
         orgFilter += ` AND CUSTOMER_TYPE = '${customerType}'`;
       }
-
       this.isLoading = true;
       this.api
         .getAllCustomer(
@@ -258,17 +245,13 @@ export class OrdercreatedrawerComponent {
           event +
           '%" ) '
           : '';
-
       let orgFilter = '';
-
       if (orgName !== '') {
         orgFilter = " AND COMPANY_NAME = '" + orgName + "'";
       }
-
       if (customerType) {
         orgFilter += ` AND CUSTOMER_TYPE = '${customerType}'`;
       }
-
       this.isLoading = true;
       this.api
         .getAllCustomer(
@@ -289,9 +272,7 @@ export class OrdercreatedrawerComponent {
         });
     }
   }
-
   showbillingaddress: boolean = false;
-
   @Input() storeserviceaddress: any;
   @Input() storeBillingaddress: any;
   getaddress(event) {
@@ -314,7 +295,6 @@ export class OrdercreatedrawerComponent {
         var cust: any = this.customer.filter(
           (element) => element.ID == this.data.CUSTOMER_ID
         );
-
         if (cust) {
           this.customerAddData = cust;
           this.data.CUSTOMER_TYPE = cust[0].CUSTOMER_TYPE;
@@ -329,7 +309,6 @@ export class OrdercreatedrawerComponent {
           this.data.CUSTOMER_NAME = cust[0]['NAME'];
         }
       }
-
       this.api
         .getAllCustomerAddress(
           0,
@@ -355,10 +334,8 @@ export class OrdercreatedrawerComponent {
     this.data.SERVICE_ADDRESS_DATA = null;
     this.data.BILLING_ADDRESS_DATA = null;
     this.data.TERRITORY_ID = 0;
-
     this.resetForm('C');
   }
-
   copyServiceAddress() {
     this.storeBillingaddress = this.storeserviceaddress;
     this.data.ADDRESS_ID1 = this.data.ADDRESS_ID;
@@ -384,7 +361,6 @@ export class OrdercreatedrawerComponent {
       var serviceAddress: any = this.addresses.filter(
         (element) => element.ID == event
       );
-
       var long: any;
       var longitude: any;
       var latitude: any;
@@ -470,7 +446,6 @@ export class OrdercreatedrawerComponent {
                   const year = currentDate.getFullYear();
                   const month = currentDate.getMonth();
                   const day = currentDate.getDate();
-
                   const dateWithTime = new Date(
                     year,
                     month,
@@ -483,7 +458,6 @@ export class OrdercreatedrawerComponent {
                     day,
                     ...this.data.MAX_T_END_TIME.split(':').map(Number)
                   );
-
                   this.terriotrystarttime1 = new Date(dateWithTime);
                   this.terriotryendtime1 = new Date(dateWithTime1);
                   this.isTerritoryExpress =
@@ -539,7 +513,6 @@ export class OrdercreatedrawerComponent {
                 const year = currentDate.getFullYear();
                 const month = currentDate.getMonth();
                 const day = currentDate.getDate();
-
                 const dateWithTime = new Date(
                   year,
                   month,
@@ -552,7 +525,6 @@ export class OrdercreatedrawerComponent {
                   day,
                   ...this.data.MAX_T_END_TIME.split(':').map(Number)
                 );
-
                 this.terriotrystarttime1 = new Date(dateWithTime);
                 this.terriotryendtime1 = new Date(dateWithTime1);
                 this.isTerritoryExpress =
@@ -591,7 +563,6 @@ export class OrdercreatedrawerComponent {
   getteritory1(event) {
     if (event == null || event == undefined || event == '') {
       this.storeBillingaddress = null;
-
       this.data.ADDRESS_ID1 = 0;
       this.data.STATE_ID = 0;
       this.data.IS_SAME_STATE = 0;
@@ -599,7 +570,6 @@ export class OrdercreatedrawerComponent {
       var serviceAddress: any = this.addresses.filter(
         (element) => element.ID == event
       );
-
       var long: any;
       var longitude: any;
       var latitude: any;
@@ -627,7 +597,6 @@ export class OrdercreatedrawerComponent {
             ? serviceAddress[0].LANDMARK
             : null,
         };
-
         this.data.STATE_ID = serviceAddress[0].STATE_ID;
         this.data.IS_SAME_STATE =
           this.STATE_ID == serviceAddress[0].STATE_ID ? true : false;
@@ -635,7 +604,6 @@ export class OrdercreatedrawerComponent {
     }
     this.resetForm('B');
   }
-
   getcategories() {
     this.api
       .getCategoryData(0, 0, 'SEQ_NO', 'asc', ' AND STATUS =1')
@@ -647,7 +615,6 @@ export class OrdercreatedrawerComponent {
         }
       });
   }
-
   getUnits() {
     this.api
       .getUnitData(0, 0, 'ID', 'desc', ' AND IS_ACTIVE =1')
@@ -667,15 +634,12 @@ export class OrdercreatedrawerComponent {
     );
     return this.totalamount;
   }
-
   calculateTotal() {
     this.total = this.quantity * this.rate;
   }
-
   deleteRow(index: number) {
     this.tableData.splice(index, 1);
   }
-
   nzSelectedKeys = [];
   servicechange(event: any) {
     if (event) {
@@ -694,7 +658,6 @@ export class OrdercreatedrawerComponent {
             this.services = [];
           }
         });
-
       var serviceee: any = this.servicescatalogue.filter(
         (element) => element.ID == event
       );
@@ -704,12 +667,10 @@ export class OrdercreatedrawerComponent {
       this.services = [];
     }
   }
-
   categoryname = '';
   subcategoryname = '';
   servicenamee = '';
   serviceitemnamee = '';
-
   categorychange(event: any) {
     if (
       this.data.CUSTOMER_ID == '' ||
@@ -760,7 +721,6 @@ export class OrdercreatedrawerComponent {
             this.servicescatalogue = [];
           }
         });
-
       var subcategoryyy: any = this.subcategories.filter(
         (element) => element.ID == event
       );
@@ -770,10 +730,8 @@ export class OrdercreatedrawerComponent {
       this.selectedServices = null;
     }
   }
-
   onServiceChange(serviceKey: string) {
     var cust: any = this.services.filter((element) => element.ID == serviceKey);
-
     if (cust) {
       if (this.data.CUSTOMER_TYPE == 'I') {
         this.rate = cust[0].PRICE_B2C;
@@ -786,23 +744,19 @@ export class OrdercreatedrawerComponent {
       this.rate = 0;
       this.calculateTotal();
     }
-
     if (serviceKey) {
       var servieitem: any = this.services.filter(
         (element) => element.ID == Number(serviceKey)
       );
       this.serviceitemnamee = servieitem[0].NAME;
     }
-    // this.getServiceNameAndItem(serviceKey)
   }
-
   cancel() { }
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
-
     return true;
   }
   addcustomer(): void {
@@ -810,7 +764,6 @@ export class OrdercreatedrawerComponent {
     this.drawerData = new customer();
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.drawerVisible = false;
     this.api
@@ -826,7 +779,6 @@ export class OrdercreatedrawerComponent {
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   addcustomerAddress(): void {
     if (
       this.data.CUSTOMER_ID != undefined &&
@@ -843,7 +795,6 @@ export class OrdercreatedrawerComponent {
   }
   drawerAddressClose(): void {
     this.drawerVisibleAddress = false;
-
     this.api
       .getAllCustomerAddress(
         1,
@@ -866,7 +817,6 @@ export class OrdercreatedrawerComponent {
   get closeCallbackAddress() {
     return this.drawerAddressClose.bind(this);
   }
-
   addToTable(servicescatalogue, i) {
     if (
       this.servicescatalogue[i].QUANTITY == undefined ||
@@ -889,15 +839,12 @@ export class OrdercreatedrawerComponent {
     }
     var taxRate = 0;
     if (this.data.IS_SAME_STATE) {
-      // console.log("1", this.servicescatalogue[i], this.servicescatalogue[i].SGST, this.servicescatalogue[i].CGST)
       taxRate =
         parseFloat(this.servicescatalogue[i].SGST) +
         parseFloat(this.servicescatalogue[i].CGST);
     } else {
-      // console.log("2")
       taxRate = parseFloat(this.servicescatalogue[i].IGST);
     }
-
     if (
       this.servicescatalogue[i].CESS != undefined &&
       this.servicescatalogue[i].CESS != null &&
@@ -905,29 +852,23 @@ export class OrdercreatedrawerComponent {
     ) {
       taxRate = taxRate + parseFloat(this.servicescatalogue[i].CESS);
     }
-
     const taxRateDecimal = taxRate / 100;
     this.servicescatalogue[i].TAX_EXCLUSIVE_AMOUNT =
       Number(this.servicescatalogue[i].KEY_PRICE) / (1 + taxRateDecimal);
     this.servicescatalogue[i].TAX_EXCLUSIVE_AMOUNT =
       Math.round(this.servicescatalogue[i].TAX_EXCLUSIVE_AMOUNT * 100) / 100;
-
     this.servicescatalogue[i].TAX_AMOUNT =
       (Number(this.servicescatalogue[i].KEY_PRICE) -
         Number(this.servicescatalogue[i].TAX_EXCLUSIVE_AMOUNT)) *
       Number(this.servicescatalogue[i].QUANTITY);
-
     this.servicescatalogue[i].TAX_AMOUNT =
       Math.round(this.servicescatalogue[i].TAX_AMOUNT * 100) / 100;
-
     this.servicescatalogue[i].TOTAL_TAX_EXCLUSIVE_AMOUNT =
       Number(this.servicescatalogue[i].TAX_EXCLUSIVE_AMOUNT) *
       Number(this.servicescatalogue[i].QUANTITY);
-
     this.servicescatalogue[i].TOTAL_TAX_EXCLUSIVE_AMOUNT =
       Math.round(this.servicescatalogue[i].TOTAL_TAX_EXCLUSIVE_AMOUNT * 100) /
       100;
-
     var ind = -1;
     ind = this.tableData.findIndex((element) => {
       return element.SERVICE_ITEM_ID == servicescatalogue.ID;
@@ -979,9 +920,7 @@ export class OrdercreatedrawerComponent {
           TAX_EXCLUSIVE_AMOUNT: this.servicescatalogue[i].TAX_EXCLUSIVE_AMOUNT,
           IS_JOB_CREATED_DIRECTLY:
             this.servicescatalogue[i].IS_JOB_CREATED_DIRECTLY,
-
           UNIT_NAME: this.servicescatalogue[i].UNIT_ID,
-          // TAX_AMOUNT: this.servicescatalogue[i].TAX_AMOUNT,
           END_TIME: this.servicescatalogue[i].END_TIME,
           START_TIME: this.servicescatalogue[i].START_TIME,
           DURARTION_HOUR: Number(this.servicescatalogue[i].DURARTION_HOUR),
@@ -1034,7 +973,6 @@ export class OrdercreatedrawerComponent {
         TAX_AMOUNT: this.servicescatalogue[i].TAX_AMOUNT,
         IS_JOB_CREATED_DIRECTLY:
           this.servicescatalogue[i].IS_JOB_CREATED_DIRECTLY,
-
         IS_EXPRESS: this.servicescatalogue[i].IS_EXPRESS,
         TOTAL_TAX_EXCLUSIVE_AMOUNT:
           Math.round(
@@ -1046,9 +984,7 @@ export class OrdercreatedrawerComponent {
             ? parseFloat(this.servicescatalogue[i].EXPRESS_COST)
             : 0,
         TAX_EXCLUSIVE_AMOUNT: this.servicescatalogue[i].TAX_EXCLUSIVE_AMOUNT,
-
         UNIT_NAME: this.servicescatalogue[i].UNIT_ID,
-        // TAX_AMOUNT: this.servicescatalogue[i].TAX_AMOUNT,
         END_TIME: this.servicescatalogue[i].END_TIME,
         START_TIME: this.servicescatalogue[i].START_TIME,
         DURARTION_HOUR: Number(this.servicescatalogue[i].DURARTION_HOUR),
@@ -1069,7 +1005,6 @@ export class OrdercreatedrawerComponent {
       });
     }
     if (this.servicescatalogue[i].IS_EXPRESS) this.showExpress = true;
-
     this.calculate();
   }
   @Input() showExpress = false;
@@ -1096,20 +1031,14 @@ export class OrdercreatedrawerComponent {
       this.message.error('Please select unit.', '');
       return;
     }
-
     var taxRate = 0;
     if (this.data.IS_SAME_STATE) {
-      // console.log("11")
-
       taxRate =
         parseFloat(this.servicescatalogue[i]['CHILDS'][k].SGST) +
         parseFloat(this.servicescatalogue[i]['CHILDS'][k].CGST);
     } else {
-      // console.log("22")
-
       taxRate = parseFloat(this.servicescatalogue[i]['CHILDS'][k].IGST);
     }
-
     if (
       this.servicescatalogue[i]['CHILDS'][k].CESS != undefined &&
       this.servicescatalogue[i]['CHILDS'][k].CESS != null &&
@@ -1118,12 +1047,10 @@ export class OrdercreatedrawerComponent {
       taxRate =
         taxRate + parseFloat(this.servicescatalogue[i]['CHILDS'][k].CESS);
     }
-
     const taxRateDecimal = taxRate / 100;
     this.servicescatalogue[i]['CHILDS'][k].TAX_EXCLUSIVE_AMOUNT =
       Number(this.servicescatalogue[i]['CHILDS'][k].KEY_PRICE) /
       (1 + taxRateDecimal);
-
     this.servicescatalogue[i]['CHILDS'][k].TAX_EXCLUSIVE_AMOUNT =
       Math.round(
         this.servicescatalogue[i]['CHILDS'][k].TAX_EXCLUSIVE_AMOUNT * 100
@@ -1132,24 +1059,19 @@ export class OrdercreatedrawerComponent {
       (Number(this.servicescatalogue[i]['CHILDS'][k].KEY_PRICE) -
         Number(this.servicescatalogue[i]['CHILDS'][k].TAX_EXCLUSIVE_AMOUNT)) *
       this.servicescatalogue[i]['CHILDS'][k].QUANTITY;
-
     this.servicescatalogue[i]['CHILDS'][k].TAX_AMOUNT =
       Math.round(this.servicescatalogue[i]['CHILDS'][k].TAX_AMOUNT * 100) / 100;
-
     this.servicescatalogue[i]['CHILDS'][k].TOTAL_TAX_EXCLUSIVE_AMOUNT =
       Number(this.servicescatalogue[i]['CHILDS'][k].TAX_EXCLUSIVE_AMOUNT) *
       this.servicescatalogue[i]['CHILDS'][k].QUANTITY;
-
     this.servicescatalogue[i]['CHILDS'][k].TOTAL_TAX_EXCLUSIVE_AMOUNT =
       Math.round(
         this.servicescatalogue[i]['CHILDS'][k].TOTAL_TAX_EXCLUSIVE_AMOUNT * 100
       ) / 100;
-
     var ind = -1;
     ind = this.tableData.findIndex((element) => {
       return element.SERVICE_ITEM_ID == servicescatalogue.ID;
     });
-
     if (ind != undefined && ind != null && ind > -1) {
       if (
         this.servicescatalogue[i]['CHILDS'][k].MAX_QTY >
@@ -1173,7 +1095,6 @@ export class OrdercreatedrawerComponent {
             this.servicescatalogue[i]['CHILDS'][k].SERVICE_NAME,
           IS_JOB_CREATED_DIRECTLY:
             this.servicescatalogue[i]['CHILDS'][k].IS_JOB_CREATED_DIRECTLY,
-
           SERVICE_NAME: this.servicescatalogue[i]['CHILDS'][k].NAME,
           MAX_QTY: this.servicescatalogue[i]['CHILDS'][k].MAX_QTY,
           QUANTITY:
@@ -1184,7 +1105,6 @@ export class OrdercreatedrawerComponent {
           TOTAL_AMOUNT:
             Number(this.tableData[ind].TOTAL_AMOUNT) +
             Number(this.servicescatalogue[i]['CHILDS'][k].TOTAL_AMOUNT),
-
           TAX_RATE: taxRate,
           TAX_AMOUNT:
             Math.round(
@@ -1209,9 +1129,7 @@ export class OrdercreatedrawerComponent {
               : 0,
           TAX_EXCLUSIVE_AMOUNT:
             this.servicescatalogue[i]['CHILDS'][k].TAX_EXCLUSIVE_AMOUNT,
-
           UNIT_NAME: this.servicescatalogue[i]['CHILDS'][k].UNIT_ID,
-          // TAX_AMOUNT: this.servicescatalogue[i]['CHILDS'][k].TAX_AMOUNT,
           END_TIME: this.servicescatalogue[i]['CHILDS'][k].END_TIME,
           START_TIME: this.servicescatalogue[i]['CHILDS'][k].START_TIME,
           DURARTION_HOUR: Number(
@@ -1265,12 +1183,10 @@ export class OrdercreatedrawerComponent {
         MAX_QTY: this.servicescatalogue[i]['CHILDS'][k].MAX_QTY,
         IS_JOB_CREATED_DIRECTLY:
           this.servicescatalogue[i]['CHILDS'][k].IS_JOB_CREATED_DIRECTLY,
-
         UNIT_ID: this.servicescatalogue[i]['CHILDS'][k].UNIT_ID,
         TOTAL_AMOUNT: Number(
           this.servicescatalogue[i]['CHILDS'][k].TOTAL_AMOUNT
         ),
-
         TAX_RATE: taxRate,
         TAX_AMOUNT: this.servicescatalogue[i]['CHILDS'][k].TAX_AMOUNT,
         IS_EXPRESS: this.servicescatalogue[i]['CHILDS'][k].IS_EXPRESS,
@@ -1283,9 +1199,7 @@ export class OrdercreatedrawerComponent {
             : 0,
         TAX_EXCLUSIVE_AMOUNT:
           this.servicescatalogue[i]['CHILDS'][k].TAX_EXCLUSIVE_AMOUNT,
-
         UNIT_NAME: this.servicescatalogue[i]['CHILDS'][k].UNIT_ID,
-        // TAX_AMOUNT: this.servicescatalogue[i]['CHILDS'][k].TAX_AMOUNT,
         END_TIME: this.servicescatalogue[i]['CHILDS'][k].END_TIME,
         START_TIME: this.servicescatalogue[i]['CHILDS'][k].START_TIME,
         DURARTION_HOUR: Number(
@@ -1313,7 +1227,6 @@ export class OrdercreatedrawerComponent {
     if (this.servicescatalogue[i].IS_EXPRESS) this.showExpress = true;
     this.calculate();
   }
-
   resetForm(from) {
     this.quantity = 0;
     this.rate = 0;
@@ -1321,7 +1234,6 @@ export class OrdercreatedrawerComponent {
     this.total = 0;
     this.tableData = [];
     this.expectedDate = null;
-
     if (from == 'C') {
       this.data.SERVICE_ADDRESS_DATA = null;
       this.data.BILLING_ADDRESS_DATA = null;
@@ -1343,7 +1255,6 @@ export class OrdercreatedrawerComponent {
       this.isTerritoryExpress = false;
       this.selectedKeys = [];
     }
-
     this.data.ORDER_DETAILS_DAT = [];
     this.data.TOTAL_TAXABLE_AMOUNT = 0;
     this.data.TAX_RATE = 0;
@@ -1352,7 +1263,6 @@ export class OrdercreatedrawerComponent {
     this.data.TOTAL_AMOUNT = 0;
     this.data.DISCOUNT_AMOUNT = 0;
   }
-
   findServiceKeyByTitle(nodes: any[], serviceTitle: string): string | null {
     for (const node of nodes) {
       if (
@@ -1360,7 +1270,6 @@ export class OrdercreatedrawerComponent {
       ) {
         return node.key;
       }
-
       if (node.children) {
         const foundKey = this.findServiceKeyByTitle(
           node.children,
@@ -1373,7 +1282,6 @@ export class OrdercreatedrawerComponent {
     }
     return null;
   }
-
   fullPath: any;
   @Input() serviceSubCatName: any = '';
   @Input() serviceCatName: any = '';
@@ -1386,7 +1294,6 @@ export class OrdercreatedrawerComponent {
     } else {
       this.serviceCatName = selectedNode?.title || 'Unknown Service';
     }
-
     this.serviceSubCatName = selectedNode?.title || 'Unknown Service Item';
   }
   findServiceByKey(nodes: any[], key: number): any | null {
@@ -1403,7 +1310,6 @@ export class OrdercreatedrawerComponent {
     }
     return null;
   }
-
   findParentServiceName(nodes: any[], childKey: number): string | null {
     for (const node of nodes) {
       if (node.children) {
@@ -1421,18 +1327,15 @@ export class OrdercreatedrawerComponent {
     }
     return null;
   }
-
   resetDrawer(orderDrawer: NgForm) {
     this.data = new orderMasterData();
     orderDrawer.form.markAsPristine();
     orderDrawer.form.markAsUntouched();
   }
   deleteCancel() { }
-
   save(addNew: boolean, orderDrawer: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       this.data.CUSTOMER_ID == null ||
       this.data.CUSTOMER_ID == undefined ||
@@ -1479,7 +1382,6 @@ export class OrdercreatedrawerComponent {
       this.isOk = false;
       this.message.error('Please select expected time', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       this.data.SERVICE_ADDRESS_DATA = this.storeserviceaddress;
@@ -1494,9 +1396,7 @@ export class OrdercreatedrawerComponent {
           item.IS_EXPRESS = false;
         });
       }
-
       this.data.ORDER_DETAILS_DAT = this.tableData;
-
       var ORDER_DATA = {
         CUSTOMER_ID: this.data.CUSTOMER_ID,
         ORDER_MEDIUM: this.data.ORDER_MEDIUM,
@@ -1517,19 +1417,15 @@ export class OrdercreatedrawerComponent {
         ORDER_CREATED_BY:
           this.vendor_id === '8' || this.vendor_id === 8 ? 'A' : this.Usertype,
       };
-      // VENDOR_ID: this.decreptedvendorId,
       var SERVICE_ADDRESS_DATA = this.data.SERVICE_ADDRESS_DATA;
       var BILLING_ADDRESS_DATA = this.data.BILLING_ADDRESS_DATA;
-
       var ORDER_DETAILS_DATA = this.data.ORDER_DETAILS_DAT;
-
       var expecteddateee = this.datePipe.transform(
         this.expectedDate,
         'yyyy-MM-dd'
       );
       var expecteddateeetime = this.datePipe.transform(this.time, 'HH:mm:ss');
       var totaldatee = `${expecteddateee} ${expecteddateeetime}`;
-
       var SUMMARY_DATA = {
         GROSS_AMOUNT: this.data.TOTAL_TAXABLE_AMOUNT,
         TAX_RATE: this.data.TAX_RATE,
@@ -1542,7 +1438,6 @@ export class OrdercreatedrawerComponent {
         SPECIAL_INSTRUCTIONS: this.specialInstruction,
         EXPECTED_DATE_TIME: totaldatee,
       };
-
       if (this.data.ID) {
         ORDER_DATA['ID'] = this.data.ID;
         SUMMARY_DATA['FINAL_AMOUNT'] = this.data.TOTAL_AMOUNT;
@@ -1624,9 +1519,7 @@ export class OrdercreatedrawerComponent {
     if (this.taxdata.length > 0) {
       if (this.totalamount && this.taxdata[0].RATE) {
         var tax = (this.totalamount * this.taxdata[0].RATE) / 100;
-
         this.totaltaxamount = tax;
-        // return "( Rate " + this.taxdata[0].RATE + " %)";
         return '';
       } else {
         return '';
@@ -1645,7 +1538,6 @@ export class OrdercreatedrawerComponent {
         this.expanded = true;
       }
     }
-
     if (event.node != undefined) {
       if (event.node.level == 1) this.getServices(event.node.key);
       this.onNodeClick(event);
@@ -1656,7 +1548,6 @@ export class OrdercreatedrawerComponent {
     this.selectedKeys =
       this.selectedKeys === clickedNodeKey ? clickedNodeKey : clickedNodeKey;
   }
-
   isNodeSelected(key: string): boolean {
     return this.selectedKeys === key;
   }
@@ -1670,7 +1561,6 @@ export class OrdercreatedrawerComponent {
         if (data['code'] == 200 && data['data'] != null) {
           this.nodes = data['data'];
           this.expandedKeys = this.getAllKeys(this.nodes);
-
           this.selectedKeys = this.nodes[0]['children'][0]['key'];
           this.getServices(this.selectedKeys);
           this.nodes[0]['children'][0]['selected'] = true;
@@ -1678,7 +1568,6 @@ export class OrdercreatedrawerComponent {
         } else this.nodes = [];
       });
   }
-
   getAllKeys(data: any): string[] {
     let keys: any = [];
     data.forEach((item) => {
@@ -1689,9 +1578,7 @@ export class OrdercreatedrawerComponent {
     });
     return keys;
   }
-
   isSpinning2 = false;
-
   getServices(SUB_CATEGORY_ID) {
     if (
       this.data.CUSTOMER_TYPE == 'B' &&
@@ -1716,20 +1603,14 @@ export class OrdercreatedrawerComponent {
           this.isSpinning2 = false;
           if (data['code'] == 200) {
             this.servicescatalogue = data['data'];
-
             this.serviceCatName = this.servicescatalogue[0]['CATEGORY_NAME'];
-            // this.CATEGORY_NAME= this.servicescatalogue[0].CATEGORY_NAME
             this.serviceSubCatName =
               this.servicescatalogue[0].SUB_CATEGORY_NAME;
-
-            // this.serviceCatName = this.servicescatalogue[0].SERVICE_NAME;
-            // this.serviceItem= this.servicescatalogue[0].NAME
             this.servicescatalogue.forEach((element, i) => {
               this.servicescatalogue[i].QUANTITY = 1;
               this.servicescatalogue[i].TOTAL_AMOUNT = Number(
                 this.servicescatalogue[i].KEY_PRICE
               );
-
               this.servicescatalogue[i]['options'] = this.servicescatalogue[i][
                 'options'
               ] = Array.from(
@@ -1769,7 +1650,6 @@ export class OrdercreatedrawerComponent {
             this.serviceCatName = this.servicescatalogue[0]['CATEGORY_NAME'];
             this.serviceSubCatName =
               this.servicescatalogue[0].SUB_CATEGORY_NAME;
-
             this.servicescatalogue.forEach((element, i) => {
               this.servicescatalogue[i].QUANTITY = 1;
               this.servicescatalogue[i].TOTAL_AMOUNT = Number(
@@ -1786,7 +1666,6 @@ export class OrdercreatedrawerComponent {
         });
     }
   }
-
   getsubServices(item, i) {
     if (
       this.servicescatalogue[i]['CHILDS'] != undefined &&
@@ -1869,7 +1748,6 @@ export class OrdercreatedrawerComponent {
                   (_, i) => i + 1
                 );
               });
-
               this.servicescatalogue[i]['CHILDS'] = this.services;
               this.servicescatalogue[i]['IS_OPEN'] = true;
             } else {
@@ -1882,9 +1760,7 @@ export class OrdercreatedrawerComponent {
       }
     }
   }
-
   public commonFunction = new CommonFunctionService();
-
   calculateTotal1(event, key, i): void {
     if (event != null && event != undefined) {
       if (key == 'KEY_PRICE') {
@@ -1912,7 +1788,6 @@ export class OrdercreatedrawerComponent {
   hideservices(servicescatalogue, i) {
     this.servicescatalogue[i]['IS_OPEN'] = false;
   }
-
   calculate() {
     this.data.TAX_AMOUNT = 0;
     this.data.DISCOUNT_AMOUNT = 0;
@@ -1920,10 +1795,8 @@ export class OrdercreatedrawerComponent {
     this.data.TOTAL_TAXABLE_AMOUNT = 0;
     this.data.EXPRESS_DELIVERY_CHARGES = 0;
     this.data.TOTAL_AMOUNT = 0;
-
     this.expectedDate = null;
     this.time = null;
-
     var d2: any = [];
     var d = this.tableData;
     var d3 = this.tableData;
@@ -1937,16 +1810,13 @@ export class OrdercreatedrawerComponent {
       (max, current) => (current.START_TIME > max.START_TIME ? current : max),
       d3[0]
     );
-
     var maxTime2 = d4.reduce(
       (max, current) => (current.END_TIME > max.END_TIME ? max : current),
       d4[0]
     );
-
     if (d2) this.data.MAX_DURARTION_MIN = d2.TOTAL_DURARTION_MIN;
     if (maxTime) this.data.START_TIME = maxTime.START_TIME;
     if (maxTime2) this.data.END_TIME = maxTime2.END_TIME;
-
     this.setDateDisableDateTime();
     this.showExpress = false;
     var TAX_RATE = 0;
@@ -1955,25 +1825,20 @@ export class OrdercreatedrawerComponent {
       this.data.DISCOUNT_AMOUNT = 0;
       this.data.TAX_AMOUNT =
         Number(this.data.TAX_AMOUNT) + Number(element.TAX_AMOUNT);
-
       TAX_RATE = TAX_RATE + Number(element.TAX_RATE);
-
       if (this.data.IS_EXPRESS && element.IS_EXPRESS)
         this.data.EXPRESS_DELIVERY_CHARGES =
           this.data.EXPRESS_DELIVERY_CHARGES +
           Number(element.EXPRESS_DELIVERY_CHARGES);
-
       this.data.TOTAL_TAXABLE_AMOUNT =
         this.data.TOTAL_TAXABLE_AMOUNT +
         Number(element.TOTAL_TAX_EXCLUSIVE_AMOUNT);
-
       if (index == this.tableData.length - 1) {
         this.data.TOTAL_TAXABLE_AMOUNT =
           Math.round(this.data.TOTAL_TAXABLE_AMOUNT * 100) / 100;
         this.data.EXPRESS_DELIVERY_CHARGES =
           Math.round(this.data.EXPRESS_DELIVERY_CHARGES * 100) / 100;
         this.data.TAX_AMOUNT = Math.round(this.data.TAX_AMOUNT * 100) / 100;
-
         this.data.TOTAL_AMOUNT =
           this.data.TOTAL_TAXABLE_AMOUNT +
           this.data.EXPRESS_DELIVERY_CHARGES +
@@ -1987,7 +1852,6 @@ export class OrdercreatedrawerComponent {
     });
   }
   DELETED_IDS: any = [];
-  // ID: 14,
   deleteService(cartItem, g) {
     this.tableData = this.tableData.filter((element, index) => {
       if (index == g && element.ID != null && element.ID != undefined) {
@@ -2026,32 +1890,26 @@ export class OrdercreatedrawerComponent {
   handleCancel() {
     this.isaddInstruction = false;
   }
-
   expressAvailable(event) {
     this.data.IS_EXPRESS = event;
     this.calculate();
   }
   @Input() MIN_T_END_TIME: any;
   @Input() MAX_T_START_TIME: any;
-
   setDateDisableDateTime() {
     this.MIN_T_END_TIME =
       this.data.MAX_T_END_TIME < this.data.END_TIME
         ? this.data.MAX_T_END_TIME
         : this.data.END_TIME;
-
     this.MAX_T_START_TIME =
       this.data.MAX_T_START_TIME > this.data.START_TIME
         ? this.data.MAX_T_START_TIME
         : this.data.START_TIME;
-
     var date: any = new Date();
     const [hours1, minutes1, second] =
       this.MIN_T_END_TIME.split(':').map(Number);
-
     const today = new Date();
-
-    this.currentDate = new Date(today); // Create a copy of the current date
+    this.currentDate = new Date(today); 
     this.currentDate.setMinutes(
       this.currentDate.getMinutes() + this.data.MAX_DURARTION_MIN
     );
@@ -2063,15 +1921,13 @@ export class OrdercreatedrawerComponent {
     );
     var date1: any = new Date(this.currentDate);
     date1.setHours(hours1, minutes1, 0, 0);
-    const differenceInMs: any = date1 - date; // Difference in milliseconds
-    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); //
-
+    const differenceInMs: any = date1 - date; 
+    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); 
     if (differenceInMinutes > 0) {
     } else if (differenceInMinutes < 0) {
       this.currentDate.setDate(this.currentDate.getDate() + 1);
     }
   }
-
   @Input() currentDate = new Date();
   currentDate2 = new Date();
   currentHour = new Date().getHours();
@@ -2081,28 +1937,23 @@ export class OrdercreatedrawerComponent {
   disabledminutes: any[] = [];
   disabledPastDates = (current: Date): boolean =>
     differenceInCalendarDays(current, this.currentDate) < 0;
-
   calculateMaxStartTime(
     endHour: number,
     endMinute: number
   ): { hour: number; minute: number } {
-    const totalMinutes = endHour * 60 + endMinute; // Convert end time to total minutes
-    const maxStartMinutes = totalMinutes - this.data.MAX_DURARTION_MIN; // Subtract service duration
+    const totalMinutes = endHour * 60 + endMinute; 
+    const maxStartMinutes = totalMinutes - this.data.MAX_DURARTION_MIN; 
     return {
       hour: Math.floor(maxStartMinutes / 60),
       minute: maxStartMinutes % 60,
     };
   }
-
   calculateMaxStartTime2(records: any) {
     if (!Array.isArray(records) || records.length === 0) {
       return [];
     }
-
-    // Sort records in descending order and slice top 3
     return records.sort((a, b) => b - a).slice(0, 3);
   }
-
   getDisabledHours = (): number[] => {
     const disabledHours: number[] = [];
     const currentDate = new Date();
@@ -2110,17 +1961,14 @@ export class OrdercreatedrawerComponent {
     const { hour: startHour, minute: startMinute } = this.parseTimeString(
       this.MAX_T_START_TIME
     );
-
     const { hour: endHour, minute: endMinute } = this.parseTimeString(
       this.MIN_T_END_TIME
     );
-
     var maxStartHour: any = this.calculateMaxStartTime2([
       currentHour,
       startHour,
       this.currentDate.getHours(),
     ]);
-
     if (this.expectedDate) {
       if (this.expectedDate.toDateString() == currentDate.toDateString()) {
         for (let i = 0; i < 24; i++) {
@@ -2136,11 +1984,9 @@ export class OrdercreatedrawerComponent {
         }
       }
     }
-
     this.disabledHours = disabledHours;
     return disabledHours;
   };
-
   getDisabledMinutes = (hour: number): number[] => {
     var disabledMinutes: number[] = [];
     const currentDate = new Date();
@@ -2152,7 +1998,6 @@ export class OrdercreatedrawerComponent {
     const { hour: endHour, minute: endMinute } = this.parseTimeString(
       this.MIN_T_END_TIME
     );
-
     if (this.expectedDate) {
       if (this.expectedDate.toDateString() == currentDate.toDateString()) {
         if (hour == startHour) {
@@ -2211,16 +2056,13 @@ export class OrdercreatedrawerComponent {
         }
       }
     }
-
     this.disabledminutes = disabledMinutes;
     return disabledMinutes;
   };
-
   parseTimeString(timeString: string): { hour: number; minute: number } {
     const [hour, minute, seconds] = timeString.split(':').map(Number);
     return { hour, minute };
   }
-
   setTime(value) {
     if (value != undefined && value != null) {
       let minutes = value.getMinutes();
@@ -2228,7 +2070,6 @@ export class OrdercreatedrawerComponent {
       value.setMinutes(minutes);
       value.setSeconds(0);
       value.setMilliseconds(0);
-
       if (this.disabledHours.includes(value.getHours())) {
         this.time = undefined;
         this.message.error(
@@ -2251,7 +2092,6 @@ export class OrdercreatedrawerComponent {
     this.time = null;
     this.setDateDisableDateTime();
   }
-
   isTextOverflowing(element: HTMLElement): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
@@ -2266,7 +2106,6 @@ export class OrdercreatedrawerComponent {
     if (servicescatalogue.MAX_QTY > this.servicescatalogue[i].QUANTITY) {
       this.servicescatalogue[i].QUANTITY =
         this.servicescatalogue[i].QUANTITY + 1;
-
       this.calculateTotal1(this.servicescatalogue[i].QUANTITY, 'QUANTITY', i);
     } else {
       this.message.error(
@@ -2310,14 +2149,11 @@ export class OrdercreatedrawerComponent {
   formatTime(hoursMatch: any, minutesMatch: any): string {
     const hours = hoursMatch ? this.padZero(hoursMatch) : '00';
     const minutes = minutesMatch ? this.padZero(minutesMatch) : '00';
-
     return `${hours}:${minutes}`;
   }
-
   padZero(value: string | number): string {
     return value.toString().padStart(2, '0');
   }
-
   showerror = false;
   checkLength() {
     this.showerror = !this.showerror;
@@ -2335,14 +2171,12 @@ export class OrdercreatedrawerComponent {
     );
     return new Date(dateWithTime1);
   }
-
   decrementQuantityIncart(servicescatalogue, i) {
     if (servicescatalogue.QUANTITY > 1) {
       this.tableData[i].QUANTITY = this.tableData[i].QUANTITY - 1;
       this.tableData[i].TOTAL_TAX_EXCLUSIVE_AMOUNT =
         Number(this.tableData[i].TAX_EXCLUSIVE_AMOUNT) *
         this.tableData[i].QUANTITY;
-
       this.addToTable22(servicescatalogue, i);
     }
   }
@@ -2352,7 +2186,6 @@ export class OrdercreatedrawerComponent {
       this.tableData[i].TOTAL_TAX_EXCLUSIVE_AMOUNT =
         Number(this.tableData[i].TAX_EXCLUSIVE_AMOUNT) *
         this.tableData[i].QUANTITY;
-
       this.addToTable22(servicescatalogue, i);
     } else {
       this.message.error(
@@ -2361,7 +2194,6 @@ export class OrdercreatedrawerComponent {
       );
     }
   }
-
   addToTable22(servicescatalogue, i) {
     this.tableData[i].TOTAL_AMOUNT =
       Number(this.tableData[i].RATE) * Number(this.tableData[i].QUANTITY);
@@ -2371,11 +2203,9 @@ export class OrdercreatedrawerComponent {
       Number(this.tableData[i].QUANTITY);
     this.tableData[i].TAX_AMOUNT =
       Math.round(this.tableData[i].TAX_AMOUNT * 100) / 100;
-
     this.tableData[i].TOTAL_TAX_EXCLUSIVE_AMOUNT =
       Number(this.tableData[i].TAX_EXCLUSIVE_AMOUNT) *
       this.tableData[i].QUANTITY;
-
     this.tableData[i].TOTAL_TAX_EXCLUSIVE_AMOUNT =
       Math.round(this.tableData[i].TOTAL_TAX_EXCLUSIVE_AMOUNT * 100) / 100;
     this.tableData[i].TAX_AMOUNT = Number(this.tableData[i].TAX_AMOUNT);
@@ -2386,12 +2216,10 @@ export class OrdercreatedrawerComponent {
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
   ImageModalVisible = false;
   GetImage(link: string) {
@@ -2399,44 +2227,30 @@ export class OrdercreatedrawerComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   zoomLevel = 1;
   rotation = 0;
-
   zoomIn() {
     this.zoomLevel += 0.1;
   }
-
   zoomOut() {
     if (this.zoomLevel > 0.2) {
       this.zoomLevel -= 0.1;
     }
   }
-
   rotateLeft() {
     this.rotation -= 90;
   }
-
   rotateRight() {
     this.rotation += 90;
   }
-
   reset() {
     this.zoomLevel = 1;
     this.rotation = 0;
   }
   getcompanynames(event) {
     if (this.decreptedroleId == 7) {
-      // event =
-      //   event != '' && event != undefined && event != null
-      //     ?
-      //     event +
-      //     '%" OR COMPANY_NAME like "%'
-      //     : '';
       this.isLoading = true;
       this.api
         .getCompanyNames(
@@ -2474,7 +2288,6 @@ export class OrdercreatedrawerComponent {
         });
     }
   }
-
   searchCompany(event) {
     this.searchkey = event;
     if (event.length >= 3) {
@@ -2483,7 +2296,6 @@ export class OrdercreatedrawerComponent {
       this.getcompanynames(this.searchkey);
     }
   }
-
   keyupCompany(event) {
     if (
       this.searchkey == '' &&
@@ -2495,55 +2307,7 @@ export class OrdercreatedrawerComponent {
       this.getcompanynames('');
     }
   }
-  // getcompanynames(event) {
-  //   if (this.decreptedroleId == 7) {
-  //     this.isLoading = true;
-  //     this.api
-  //       .getCompanyNames(
-  //         this.pageIndex,
-  //         this.pageSize,
-  //         '',
-  //         '',
-  //         '' + event + '' + this.decreptedbackofficeId
-  //       )
-  //       .subscribe((data) => {
-  //         if (data['code'] == 200 && data['data'].length > 0) {
-  //           if (this.pageIndex == 1) {
-  //             this.company = [...data['data']];
-  //           } else {
-  //             this.company = [...this.company, ...data['data']];
-  //           }
-  //           this.totalrecords = data['count'];
-  //         } else {
-  //           this.company = [];
-  //           this.totalrecords = 0;
-  //         }
-  //         this.isLoading = false;
-  //       });
-  //   } else {
-  //     const searchTerm = '" AND COMPANY_NAME like "%' + event;
-  //     this.isLoading = true;
-  //     this.api
-  //       .getCompanyNames(this.pageIndex, 8, '', '', '' + searchTerm)
-  //       .subscribe((data) => {
-  //         if (data['code'] == 200 && data['data'].length > 0) {
-  //           if (this.pageIndex == 1) {
-  //             this.company = [...data['data']];
-  //           } else {
-  //             this.company = [...this.company, ...data['data']];
-  //           }
-  //           this.totalrecords = data['count'];
-  //         } else {
-  //           this.company = [];
-  //           this.totalrecords = 0;
-  //         }
-  //         this.isLoading = false;
-  //       });
-  //   }
-  // }
-
   onCustomerTypeChange(value: string) {
-
     this.data.ORGANIZATION_NAME = undefined;
     this.data.CUSTOMER_ID = undefined;
     this.addresses = [];
@@ -2562,25 +2326,20 @@ export class OrdercreatedrawerComponent {
     this.searchkey = '';
     this.customer = [];
     this.totalrecords = 0;
-
     if (value === 'B') {
       this.getcompanynames('');
     } else {
       this.getcustomer('');
     }
-
     this.loadCustomers('');
   }
-
   loadCustomers(orgName: string = '') {
     this.isLoading = true;
     let customerType = this.data.CUSTOMER_TYPE || 'I';
     let orgFilter = '';
-
     if (orgName !== '') {
       orgFilter = " AND COMPANY_NAME = '" + orgName + "'";
     }
-
     if (customerType) {
       orgFilter += ` AND CUSTOMER_TYPE = '${customerType}'`;
     }
@@ -2592,7 +2351,6 @@ export class OrdercreatedrawerComponent {
           const filteredData = data['data'].filter(
             (cust) => cust.CUSTOMER_TYPE === customerType
           );
-
           this.customer =
             this.pageIndex == 1
               ? [...filteredData]
@@ -2608,46 +2366,34 @@ export class OrdercreatedrawerComponent {
         this.isLoading = false;
       });
   }
-
   loadMorecompany() {
     if (this.totalrecords > this.company.length) {
       this.pageIndex++;
       this.getcompanynames(this.searchkey);
     }
   }
-
   selectOrgName(orgName: string | null): void {
     if (!orgName) {
       this.clearTerritory();
     }
-
     this.pageIndex = 1;
-
     if (orgName && orgName !== '') {
       this.loadCustomers(orgName);
     } else {
       this.getcompanynames('');
-
       this.loadCustomers('');
     }
   }
-
-
   clearTerritory() {
     this.data.TERRITORY_ID = null;
     this.data.TERRITORY_NAME = '';
     this.terriotrystarttime1 = null;
     this.terriotryendtime1 = null;
-
-
-
     this.data.CUSTOMER_ID = undefined;
     this.customer = [];
     this.addresses = [];
     this.data.ADDRESS_ID = undefined;
     this.data.ADDRESS_ID1 = undefined;
     this.data.ORDER_MEDIUM = undefined
-    // this.orderMediums=[];
   }
-
 }

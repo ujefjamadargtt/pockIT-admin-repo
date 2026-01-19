@@ -7,7 +7,6 @@ import { emailserviceconfig } from 'src/app/Pages/Models/emailserviceconfig';
 import { whatsappconfig } from 'src/app/Pages/Models/whatsappconfig';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-whatsapp-service-configs',
   templateUrl: './whatsapp-service-configs.component.html',
@@ -60,11 +59,9 @@ export class WhatsappServiceConfigsComponent {
     this.search();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
-
   whatsappApiAuthentication = [
     { Id: 1, Name: 'Bearer Token' },
     { Id: 2, Name: 'OAuth2' },
@@ -76,20 +73,20 @@ export class WhatsappServiceConfigsComponent {
   onServiceChange(): void {
     if (this.authenticiation?.length) {
       this.search();
-      this.isTypeFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isTypeFilterApplied = true; 
     } else {
       this.search();
-      this.isTypeFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isTypeFilterApplied = false; 
     }
   }
   isCountryCodeFilterApplied = false;
   onCountryCodeChange(): void {
     if (this.selectedCountry?.length) {
       this.search();
-      this.isCountryCodeFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isCountryCodeFilterApplied = true; 
     } else {
       this.search();
-      this.isCountryCodeFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isCountryCodeFilterApplied = false; 
     }
   }
   statusFilter: string | undefined = undefined;
@@ -106,7 +103,6 @@ export class WhatsappServiceConfigsComponent {
     private api: ApiServiceService,
     private message: NzNotificationService
   ) { }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
@@ -131,11 +127,6 @@ export class WhatsappServiceConfigsComponent {
     this.api.getemailServiceConfigData(1, 1, '', 'desc', '').subscribe(
       (data) => {
         if (data['code'] == 200) {
-          // if (data["count"] == 0) {
-          //   this.drawerData.SEQ_NO = 1;
-          // } else {
-          //   this.drawerData.SEQ_NO = data["data"][0]["SEQ_NO"] + 1;
-          // }
         } else {
           this.message.error('Server Not Found.', '');
         }
@@ -143,40 +134,33 @@ export class WhatsappServiceConfigsComponent {
       (err: HttpErrorResponse) => {
         this.loadingRecords = false;
         if (err.status === 0) {
-          // Network error
           this.message.error(
             'Unable to connect. Please check your internet or server connection and try again shortly.',
             ''
           );
-          // this.dataList = [];
         } else {
-          // Other errors
           this.message.error('Something Went Wrong.', '');
         }
       }
     );
   }
-
   edit(data: whatsappconfig): void {
     this.drawerTitle = 'Update Whatsapp Service Configuration';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   isTypeApplied = false;
   onTypeChange(): void {
-    //this.search();
     if (this.authenticiation?.length) {
       this.search();
-      this.isTypeApplied = true; // Filter applied if selectedCategories has values
+      this.isTypeApplied = true; 
     } else {
       this.search();
-      this.isTypeApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isTypeApplied = false; 
     }
   }
   authenticiation: any = [];
   selectedCountry: any;
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -186,14 +170,12 @@ export class WhatsappServiceConfigsComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -246,13 +228,6 @@ export class WhatsappServiceConfigsComponent {
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-    // if (this.authenticiation.length > 0) {
-    //   if (likeQuery !== '') {
-    //     likeQuery += ' AND ';
-    //   }
-    //   likeQuery += `AUTHENTICATION_TYPE IN (${this.authenticiation.join(',')})`;
-    // }
-
     if (
       this.authenticiation !== '' &&
       this.authenticiation != null &&
@@ -262,7 +237,6 @@ export class WhatsappServiceConfigsComponent {
         (likeQuery ? ' AND ' : '') +
         `AUTHENTICATION_TYPE LIKE '%${this.authenticiation}%'`;
     }
-
     if (
       this.selectedCountry !== '' &&
       this.selectedCountry != null &&
@@ -273,9 +247,7 @@ export class WhatsappServiceConfigsComponent {
         `DEFAULT_COUNTRY_CODE LIKE '%${this.selectedCountry}%'`;
     }
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getWhatsappServiceConfigData(
         this.pageIndex,
@@ -390,7 +362,6 @@ export class WhatsappServiceConfigsComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   filterQuery = '';
   reset(): void {
@@ -403,7 +374,6 @@ export class WhatsappServiceConfigsComponent {
     this.RetryText = '';
     this.filterQuery = '';
     this.search();
-    // this.countryCodes = [];
   }
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
@@ -413,22 +383,18 @@ export class WhatsappServiceConfigsComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   countryCodes = [
     { label: '+91 (India)', value: '+91' },
     { label: '+92 (Pakistan)', value: '+92' },
@@ -703,10 +669,10 @@ export class WhatsappServiceConfigsComponent {
     }
   }
   TabId: number;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
   loadFilters() {
     this.filterQuery = `AND TAB_ID=${this.TabId} AND USER_ID=${this.USER_ID}`;
     this.api
@@ -715,7 +681,7 @@ export class WhatsappServiceConfigsComponent {
         this.USER_ID,
         this.currentClientId,
         this.filterQuery
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
@@ -733,7 +699,6 @@ export class WhatsappServiceConfigsComponent {
   }
   public commonFunction = new CommonFunctionService();
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -743,48 +708,36 @@ export class WhatsappServiceConfigsComponent {
   }
   oldFilter: any[] = [];
   isLoading = false;
-
   deleteItem(item: any) {
-    // Show a loading indicator if needed
     this.isLoading = true;
-
-    // Call the deleteFilterById API
     this.api.deleteFilterById(item.ID).subscribe({
       next: (response) => {
         this.isfilterapply = false;
         this.filterClass = 'filter-invisible';
-        // Remove the filter from the oldFilter array
         this.savedFilters = this.savedFilters.filter((i) => i !== item);
-
-        // Rebuild the filterQuery from the remaining filters
         if (this.savedFilters.length > 0) {
           this.filterQuery =
             ' AND (' +
             this.savedFilters.map((filter) => filter.query).join(' AND ') +
             ')';
         } else {
-          // Reset the filterQuery if no filters are left
           this.filterQuery = '';
         }
         this.filterQuery = '';
-        // Re-trigger the search or data refresh
         this.search(true);
       },
       error: (err) => {
-        // Optionally show an error message to the user
       },
       complete: () => {
-        // Hide the loading indicator
         this.isLoading = false;
       },
     });
   }
-  selectedQuery: string = ''; // Holds the query to display
+  selectedQuery: string = ''; 
   isModalVisible = false;
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   drawerFilterVisible: boolean = false;
   drawerfilterClose() {
@@ -798,8 +751,6 @@ export class WhatsappServiceConfigsComponent {
   openfilter() {
     this.drawerTitle = 'Whatsapp Service Configuration Filter';
     this.applyCondition = '';
-    // this.filterFields[1]['options'] = this.countryData;
-
     this.drawerFilterVisible = true;
   }
   Clearfilter() {
@@ -824,14 +775,6 @@ export class WhatsappServiceConfigsComponent {
       ],
       placeholder: 'Enter Service Provider Name',
     },
-    // {
-    //   key: 'COUNTRY_ID',
-    //   label: 'Country',
-    //   type: 'select',
-    //   comparators: ['=', '!='],
-    //   options: [],
-    //   placeholder: 'Select Country',
-    // },
     {
       key: 'AUTHENTICATION_TYPE',
       label: 'Authentication Type',
@@ -902,22 +845,6 @@ export class WhatsappServiceConfigsComponent {
       ],
       placeholder: 'Enter Sender Phone Number',
     },
-
-    // {
-    //   key: 'SEQ_NO',
-    //   label: 'Sequence Number',
-    //   type: 'text',
-    //   comparators: [
-    //     '=',
-    //     '!=',
-    //     'Contains',
-    //     'Does Not Contains',
-    //     'Starts With',
-    //     'Ends With',
-    //   ],
-    //   placeholder: 'Enter Sequence Number',
-    // },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -931,10 +858,9 @@ export class WhatsappServiceConfigsComponent {
     },
   ];
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   showadd() {
     if (this.WhatsappServiceConfigData.length == 0) {
       return true;

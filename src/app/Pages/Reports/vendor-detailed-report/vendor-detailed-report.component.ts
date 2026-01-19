@@ -10,7 +10,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { VendorDetailedReport } from '../../Models/VendorDetailedReport';
 import { ExportService } from 'src/app/Service/export.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-vendor-detailed-report',
   templateUrl: './vendor-detailed-report.component.html',
@@ -21,7 +20,6 @@ export class VendorDetailedReportComponent {
   @Input()
   drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -29,7 +27,6 @@ export class VendorDetailedReportComponent {
     private datePipe: DatePipe,
     private _exportService: ExportService
   ) { }
-
   public commonFunction = new CommonFunctionService();
   formTitle = 'Vendor Detailed Report';
   searchText: string = '';
@@ -56,11 +53,9 @@ export class VendorDetailedReportComponent {
   excelData: any = [];
   exportLoading: boolean = false;
   dataList: any = [];
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   isNameApplied: boolean = false;
   isServiceNameApplied: boolean = false;
   isJobCardNoApplied: boolean = false;
@@ -69,7 +64,6 @@ export class VendorDetailedReportComponent {
   isVendorCostApplied: boolean = false;
   isTechnicianCostApplied: boolean = false;
   isTechnicianNameApplied: boolean = false;
-
   onKeyup(event: KeyboardEvent): void {
     if (this.nameText.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -78,7 +72,6 @@ export class VendorDetailedReportComponent {
       this.search();
       this.isNameApplied = false;
     }
-
     if (this.servicenameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isServiceNameApplied = true;
@@ -86,7 +79,6 @@ export class VendorDetailedReportComponent {
       this.search();
       this.isServiceNameApplied = false;
     }
-
     if (this.jobcardnoText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isJobCardNoApplied = true;
@@ -94,7 +86,6 @@ export class VendorDetailedReportComponent {
       this.search();
       this.isJobCardNoApplied = false;
     }
-
     if (this.ordernoText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isOrderNoApplied = true;
@@ -102,7 +93,6 @@ export class VendorDetailedReportComponent {
       this.search();
       this.isOrderNoApplied = false;
     }
-
     if (this.vendorcostText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isVendorCostApplied = true;
@@ -110,7 +100,6 @@ export class VendorDetailedReportComponent {
       this.search();
       this.isVendorCostApplied = false;
     }
-
     if (this.techniciannameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isTechnicianNameApplied = true;
@@ -121,7 +110,6 @@ export class VendorDetailedReportComponent {
       this.search();
       this.isTechnicianNameApplied = false;
     }
-
     if (this.techniciancostText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isTechnicianCostApplied = true;
@@ -133,15 +121,12 @@ export class VendorDetailedReportComponent {
       this.isTechnicianCostApplied = false;
     }
   }
-
   ngOnInit(): void {
     this.value1 = this.datePipe.transform(new Date(), 'yyyy-MM-01');
     this.value2 = this.datePipe.transform(new Date(), 'yyyy-MM-31');
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using DatePipe
     const formattedStartDate: any = this.datePipe.transform(
       startOfMonth,
       'yyyy-MM-dd'
@@ -150,16 +135,12 @@ export class VendorDetailedReportComponent {
       endOfMonth,
       'yyyy-MM-dd'
     );
-
-    // Store the formatted dates in the selectedDate array
     this.selectedDate = [formattedStartDate, formattedEndDate];
-
     this.getTECH();
     this.getVendorData();
     this.getServiceData();
     this.getJobCardNoData();
   }
-
   onKeyupS(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -175,9 +156,7 @@ export class VendorDetailedReportComponent {
     keyboardEvent.preventDefault();
     this.search(true);
   }
-
   filterQuery: string = '';
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -186,24 +165,18 @@ export class VendorDetailedReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
-    this.search(); // Perform search again with sorting applied
+    this.search(); 
   }
-
-  //For Input
-
   nameText: string = '';
   servicenameText: string = '';
   jobcardnoText: string = '';
@@ -212,8 +185,6 @@ export class VendorDetailedReportComponent {
   vendorcostText: string = '';
   techniciannameText: string = '';
   techniciancostText: string = '';
-
-  // Filter Visibility
   nameVisible = false;
   servicenameVisible = false;
   jobcardnoVisible = false;
@@ -222,7 +193,6 @@ export class VendorDetailedReportComponent {
   vendorcostVisible = false;
   techniciannameVisible = false;
   techniciancostVisible = false;
-
   reset(): void {
     this.nameText = '';
     this.servicenameText = '';
@@ -232,22 +202,18 @@ export class VendorDetailedReportComponent {
     this.vendorcostText = '';
     this.techniciannameText = '';
     this.techniciancostText = '';
-
     this.search(true);
   }
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   decrepteduserID = parseInt(this.decrepteduserIDString, 10);
-
   roleId = sessionStorage.getItem('roleId');
   decreptedroleIdString = this.roleId
     ? this.commonFunction.decryptdata(this.roleId)
     : '';
   decreptedroleId = parseInt(this.decreptedroleIdString, 10);
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -257,14 +223,12 @@ export class VendorDetailedReportComponent {
       this.sortKey = '';
       this.sortValue = 'desc';
     }
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -277,55 +241,41 @@ export class VendorDetailedReportComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.nameText.trim()) {
       likeQuery += `VENDOR_NAME LIKE '%${this.nameText.trim()}%'`;
     }
-
     if (this.servicenameText.trim()) {
       likeQuery += `SERVICE_NAME LIKE '%${this.servicenameText.trim()}%'`;
     }
-
     if (this.jobcardnoText.trim()) {
       likeQuery += `JOB_CARD_NO LIKE '%${this.jobcardnoText.trim()}%'`;
     }
-
     if (this.ordernoText.trim()) {
       likeQuery += `ORDER_NO LIKE '%${this.ordernoText.trim()}%'`;
     }
-
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `DATE(JOB_COMPLETED_DATETIME) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-
     if (this.vendorcostText.trim()) {
       likeQuery += `VENDOR_COST LIKE '%${this.vendorcostText.trim()}%'`;
     }
-
     if (this.techniciancostText.trim()) {
       likeQuery += `TECHNICIAN_COST LIKE '%${this.techniciancostText.trim()}%'`;
     }
-
     if (this.techniciannameText.trim()) {
       likeQuery += `TECHNICIAN_NAME LIKE '%${this.techniciannameText.trim()}%'`;
     }
-
     this.loadingRecords = true;
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-    // Apply filter only if decreptedroleId == 6
     let userFilter =
       this.decreptedroleId == 9 ? ` AND USER_ID=${this.decrepteduserID}` : '';
-
     if (exportInExcel == false) {
       this.loadingRecords = true;
       this.api
@@ -364,7 +314,6 @@ export class VendorDetailedReportComponent {
     } else {
       this.exportLoading = true;
       this.loadingRecords = true;
-
       this.api
         .getVendorDetailedReport(
           0,
@@ -393,11 +342,9 @@ export class VendorDetailedReportComponent {
         );
     }
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -427,9 +374,7 @@ export class VendorDetailedReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -438,7 +383,6 @@ export class VendorDetailedReportComponent {
       tooltip.hide();
     }
   }
-
   searchopen() {
     if (this.searchText.length >= 0) {
       this.search(true);
@@ -446,11 +390,9 @@ export class VendorDetailedReportComponent {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   filterloading: boolean = false;
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -462,113 +404,48 @@ export class VendorDetailedReportComponent {
   value2: string | null = null;
   selectedDate: Date[] = [];
   isFilterApplied: any = 'default';
-
-  // applyFilter() {
-  //   if (this.selectedDate && this.selectedDate.length === 2) {
-  //     this.value1 = this.datePipe.transform(this.selectedDate[0], 'yyyy-MM-dd');
-  //     this.value2 = this.datePipe.transform(this.selectedDate[1], 'yyyy-MM-dd');
-  //     this.filterQuery += ` AND DATE(JOB_COMPLETED_DATETIME) BETWEEN '${this.value1}' AND '${this.value2}'`;
-  //   }
-
-  //   if (
-  //     this.Technician &&
-  //     this.Technician != null &&
-  //     this.Technician != undefined &&
-  //     this.Technician.length != 0
-  //   ) {
-  //     this.filterQuery = ' AND TECHNICIAN_ID IN (' + this.Technician + ')';
-  //   }
-
-  //   if (
-  //     this.Vendor &&
-  //     this.Vendor != null &&
-  //     this.Vendor != undefined &&
-  //     this.Vendor.length != 0
-  //   ) {
-  //     this.filterQuery = ' AND VENDOR_ID IN (' + this.Vendor + ')';
-  //   }
-
-  //   if (
-  //     this.Service &&
-  //     this.Service != null &&
-  //     this.Service != undefined &&
-  //     this.Service.length != 0
-  //   ) {
-  //     this.filterQuery = ' AND SERVICE_ID IN (' + this.Service + ')';
-  //   }
-
-  //   if (
-  //     this.JobCardNo &&
-  //     this.JobCardNo != null &&
-  //     this.JobCardNo != undefined &&
-  //     this.JobCardNo.length != 0
-  //   ) {
-  //     this.filterQuery = ` AND JOB_CARD_NO IN ('${this.JobCardNo}')`;
-  //   }
-
-  //   this.search();
-
-  //   this.isSpinning = false;
-  //   this.filterClass = 'filter-invisible';
-  // }
-
   applyFilter() {
-    this.filterQuery = ''; // Reset filter query
-
-    // Date filter
+    this.filterQuery = ''; 
     if (this.selectedDate && this.selectedDate.length === 2) {
       this.value1 = this.datePipe.transform(this.selectedDate[0], 'yyyy-MM-dd');
       this.value2 = this.datePipe.transform(this.selectedDate[1], 'yyyy-MM-dd');
       this.filterQuery += ` AND DATE(JOB_COMPLETED_DATETIME) BETWEEN '${this.value1}' AND '${this.value2}'`;
     }
-
-    // Technician filter
     if (this.Technician && this.Technician.length) {
       this.filterQuery += ` AND TECHNICIAN_ID IN (${this.Technician.join(
         ','
       )})`;
     }
-
-    // Vendor filter
     if (this.Vendor && this.Vendor.length) {
       this.filterQuery += ` AND VENDOR_ID IN (${this.Vendor.join(',')})`;
     }
-
-    // Service filter
     if (this.Service && this.Service.length) {
       this.filterQuery += ` AND SERVICE_ID IN (${this.Service.join(',')})`;
     }
-
-    // Job Card Number filter
     if (this.JobCardNo && this.JobCardNo.length) {
       const formattedJobCards = this.JobCardNo.map((job) => `'${job}'`).join(
         ','
       );
       this.filterQuery += ` AND JOB_CARD_NO IN (${formattedJobCards})`;
     }
-
     this.search();
     this.isSpinning = false;
     this.filterClass = 'filter-invisible';
   }
-
   changeDate(value: any) {
     this.value1 = this.datePipe.transform(value[0], 'yyyy-MM-dd');
     this.value2 = this.datePipe.transform(value[1], 'yyyy-MM-dd');
   }
-
   clearFilter() {
     this.Technician = [];
     this.Vendor = [];
     this.Service = [];
     this.JobCardNo = [];
-
     this.filterQuery = '';
     this.filterClass = 'filter-invisible';
     this.applyFilter();
   }
   isSpinning: boolean = false;
-
   TechData: any;
   Technician: any;
   getTECH() {
@@ -587,7 +464,6 @@ export class VendorDetailedReportComponent {
         }
       );
   }
-
   VendorData: any;
   Vendor: any;
   getVendorData() {
@@ -604,7 +480,6 @@ export class VendorDetailedReportComponent {
       }
     );
   }
-
   ServiceData: any;
   Service: any;
   getServiceData() {
@@ -621,7 +496,6 @@ export class VendorDetailedReportComponent {
       }
     );
   }
-
   JobCardNoData: any;
   JobCardNo: any;
   getJobCardNoData() {
@@ -638,17 +512,14 @@ export class VendorDetailedReportComponent {
       }
     );
   }
-
   date1 =
     new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + 1;
   ranges: any = {
     'This Month': [startOfMonth(new Date()), endOfMonth(new Date())],
     'This Year': [startOfYear(new Date()), endOfYear(new Date())],
   };
-
   StartDate: any = [];
   EndDate: any = [];
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;

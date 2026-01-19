@@ -6,7 +6,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { KnowledgeBaseCategory } from 'src/app/Support/Models/KnowledgeBaseCategory';
-
 @Component({
   selector: 'app-konwledge-base-category-list',
   templateUrl: './konwledge-base-category-list.component.html',
@@ -21,7 +20,6 @@ export class KonwledgeBaseCategoryListComponent {
   pageSize = 10;
   sortValue: string = 'desc';
   sortKey: string = 'NAME';
-
   isLoading = true;
   columns: string[][] = [
     ['NAME', 'NAME'],
@@ -31,7 +29,6 @@ export class KonwledgeBaseCategoryListComponent {
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
-
   knowledgeBaseCategoryName: string = '';
   categoryvisible = false;
   description: string = '';
@@ -41,7 +38,6 @@ export class KonwledgeBaseCategoryListComponent {
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   iscategoryFilterApplied: boolean = false;
   isdescriptionFilterApplied: boolean = false;
   isfilterapply: boolean = false;
@@ -53,13 +49,11 @@ export class KonwledgeBaseCategoryListComponent {
     { label: 'Description', value: 'DESCRIPTION' },
     { label: 'Status', value: 'IS_ACTIVE' },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -73,10 +67,8 @@ export class KonwledgeBaseCategoryListComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -111,14 +103,12 @@ export class KonwledgeBaseCategoryListComponent {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   reset(): void {
     this.searchText = '';
     this.knowledgeBaseCategoryName = '';
     this.description = '';
     this.search();
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -128,18 +118,14 @@ export class KonwledgeBaseCategoryListComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -151,32 +137,23 @@ export class KonwledgeBaseCategoryListComponent {
         ')';
     }
     this.loadingRecords = true;
-
-    // knowledgeBaseCategoryName Filter
     if (this.knowledgeBaseCategoryName !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.knowledgeBaseCategoryName.trim()}%'`;
     }
-
-    // description Filter
     if (this.description !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DESCRIPTION LIKE '%${this.description.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getKnowledgeBaseCategoryData(
         this.pageIndex,
@@ -187,13 +164,8 @@ export class KonwledgeBaseCategoryListComponent {
       )
       .subscribe(
         (data: HttpResponse<any>) => {
-          //
-
           const statusCode = data.status;
           const responseBody = data.body;
-
-          //
-
           if (statusCode == 200) {
             this.loadingRecords = false;
             this.totalRecords = responseBody['count'];
@@ -225,13 +197,11 @@ export class KonwledgeBaseCategoryListComponent {
         }
       );
   }
-
   add(): void {
     this.drawerTitle = 'Add New Category';
     this.drawerData = new KnowledgeBaseCategory();
     this.drawerVisible = true;
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -240,38 +210,30 @@ export class KonwledgeBaseCategoryListComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   edit(data: KnowledgeBaseCategory): void {
     this.drawerTitle = 'Update Category';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
-  // Main Filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -280,7 +242,6 @@ export class KonwledgeBaseCategoryListComponent {
       this.loadFilters();
     }
   }
-
   filterFields: any[] = [
     {
       key: 'NAME',
@@ -296,7 +257,6 @@ export class KonwledgeBaseCategoryListComponent {
       ],
       placeholder: 'Enter Category Name',
     },
-
     {
       key: 'DESCRIPTION',
       label: 'Description',
@@ -311,7 +271,6 @@ export class KonwledgeBaseCategoryListComponent {
       ],
       placeholder: 'Enter Description',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -327,19 +286,8 @@ export class KonwledgeBaseCategoryListComponent {
       placeholder: 'Select Status',
     },
   ];
-
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
-  // openfilter() {
-  //   this.drawerTitle = 'Knowledgebase Category Filter';
-  //   this.applyCondition = '';
-  //   // this.filterFields[5]['options'] = this.VendorData;
-
-  //   this.drawerFilterVisible = true;
-  // }
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -356,7 +304,6 @@ export class KonwledgeBaseCategoryListComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -373,20 +320,14 @@ export class KonwledgeBaseCategoryListComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
-
   openfilter() {
     this.drawerTitle = 'Knowledgebase Category Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -403,7 +344,6 @@ export class KonwledgeBaseCategoryListComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -420,7 +360,6 @@ export class KonwledgeBaseCategoryListComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -430,39 +369,28 @@ export class KonwledgeBaseCategoryListComponent {
       FILTER_JSON: {},
     };
   }
-
-  // drawerflterClose(): void {
-  //   this.drawerFilterVisible = false;
-  // }
   whichbutton: any;
   filterloading: boolean = false;
   updateButton: any;
   updateBtn: any;
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
   oldFilter: any[] = [];
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -470,32 +398,27 @@ export class KonwledgeBaseCategoryListComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  TabId: number; 
   public commonFunction = new CommonFunctionService();
   ngOnInit() {
-    // Ensure USER_ID is assigned a valid number
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -504,14 +427,11 @@ export class KonwledgeBaseCategoryListComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -519,16 +439,12 @@ export class KonwledgeBaseCategoryListComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -543,22 +459,15 @@ export class KonwledgeBaseCategoryListComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -573,7 +482,6 @@ export class KonwledgeBaseCategoryListComponent {
     this.filterQuery = '';
   }
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -584,16 +492,13 @@ export class KonwledgeBaseCategoryListComponent {
           this.savedFilters = this.savedFilters.filter(
             (filter) => filter.ID !== item.ID
           );
-
           this.message.success('Filter deleted successfully.', '');
           sessionStorage.removeItem('ID');
           this.filterloading = true;
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -617,16 +522,12 @@ export class KonwledgeBaseCategoryListComponent {
       }
     );
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;

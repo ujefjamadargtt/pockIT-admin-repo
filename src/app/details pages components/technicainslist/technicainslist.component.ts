@@ -6,9 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { differenceInCalendarDays } from 'date-fns';
 import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
-
 declare const google: any;
-
 @Component({
   selector: 'app-technicainslist',
   templateUrl: './technicainslist.component.html',
@@ -40,7 +38,6 @@ export class technicainslistComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private datepipe: DatePipe
   ) { }
-
   ngOnInit(): void {
     this.getTechniciandata();
   }
@@ -51,7 +48,6 @@ export class technicainslistComponent implements OnInit {
       this.getTechniciandata(true);
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById('buttonss');
     if (element != null) element.focus();
@@ -86,16 +82,13 @@ export class technicainslistComponent implements OnInit {
       sort = '';
     }
     var likeQuery = '';
-
     if (this.searchText != '' && this.searchText.length > 0) {
       likeQuery = ' AND(';
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
       likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ') ';
-
     }
-
     if (this.TYPE == 'VENDOR' && this.FILTER_ID != null && this.FILTER_ID != undefined && this.FILTER_ID != '') {
       this.filterdata = ' AND VENDOR_ID=' + this.FILTER_ID
     } else {
@@ -106,7 +99,7 @@ export class technicainslistComponent implements OnInit {
       (data) => {
         if (data['code'] == 200) {
           this.count = data['count']
-          this.originalTechniciansData = data.data; // Save the original data
+          this.originalTechniciansData = data.data; 
         } else {
           this.count = 0;
           this.message.error('Server Not Found.', '');
@@ -120,28 +113,24 @@ export class technicainslistComponent implements OnInit {
       }
     );
   }
-
-  searchValue: string = ''; // Two-way bound to the input field
-  originalTechniciansData: any[] = []; // To preserve the original list
-
+  searchValue: string = ''; 
+  originalTechniciansData: any[] = []; 
   onSearchChange(value: string): void {
     this.searchValue = value;
     if (value.length >= 3) {
       const lowerValue = value.toLowerCase();
-
       this.techniciansdata = this.originalTechniciansData.filter(
         (technician) =>
           technician.NAME.toLowerCase().includes(lowerValue) ||
           technician.EMAIL_ID.toLowerCase().includes(lowerValue) ||
           technician.MOBILE_NUMBER.includes(value) ||
-          (technician.IS_ACTIVE === 1 && 'active'.includes(lowerValue)) || // Match "Active" status
+          (technician.IS_ACTIVE === 1 && 'active'.includes(lowerValue)) || 
           (technician.IS_ACTIVE === 0 && 'inactive'.includes(lowerValue))
       );
     } else {
       this.techniciansdata = [...this.originalTechniciansData];
     }
   }
-
   range(start: number, end: number): number[] {
     const result: number[] = [];
     for (let i = start; i < end; i++) {
@@ -149,17 +138,12 @@ export class technicainslistComponent implements OnInit {
     }
     return result;
   }
-
-  // Disable dates only, not time
   disabledDate = (current: Date): boolean => {
-    // Disable all dates after the selected date
     return differenceInCalendarDays(current, this.selectedDate) > 0;
   };
-
   dateformat(data: any) {
     this.selectedDate = this.datepipe.transform(data, 'yyyy-MM-dd');
   }
-
   handleHttpError(err: HttpErrorResponse) {
     this.loadingRecords = false;
     if (err.status === 0) {
@@ -171,11 +155,8 @@ export class technicainslistComponent implements OnInit {
       this.message.error('Something Went Wrong.', '');
     }
   }
-
   initMap(): void {
-    // For technician travel map
     const technician = this.technician;
-
     if (technician) {
       const locations = technician
         .map((loc: any) => ({
@@ -185,14 +166,12 @@ export class technicainslistComponent implements OnInit {
           time: new Date(loc.CREATED_MODIFIED_DATE).toLocaleString(),
         }))
         .filter(
-          (loc: any) => !isNaN(loc.latitude) && !isNaN(loc.longitude) // Filter out invalid locations
+          (loc: any) => !isNaN(loc.latitude) && !isNaN(loc.longitude) 
         );
-
       if (locations.length === 0) {
         this.message.error('No valid locations found for the technician.', '');
-        return; // Exit if no valid locations
+        return; 
       }
-
       const mapCenter = {
         lat:
           locations.reduce((sum: number, loc: any) => sum + loc.latitude, 0) /
@@ -201,29 +180,24 @@ export class technicainslistComponent implements OnInit {
           locations.reduce((sum: number, loc: any) => sum + loc.longitude, 0) /
           locations.length,
       };
-
       if (isNaN(mapCenter.lat) || isNaN(mapCenter.lng)) {
-        return; // Exit if map center is invalid
+        return; 
       }
-
       const mapElement = document.getElementById('map');
       if (mapElement) {
         const map = new google.maps.Map(mapElement as HTMLElement, {
           center: mapCenter,
           zoom: 14,
         });
-
         locations.forEach((location: any) => {
           const marker = new google.maps.Marker({
             position: { lat: location.latitude, lng: location.longitude },
             map: map,
           });
-
           const convertedDate = this.datepipe.transform(
             location.time,
             'h:mm a'
           );
-
           const infoWindow = new google.maps.InfoWindow({
             content: `
             <div style="width: 150px; padding: 10px; font-size: 14px; color: #333; 
@@ -231,18 +205,13 @@ export class technicainslistComponent implements OnInit {
             <p style="font-size: 12px; margin: 5px 0;">${convertedDate}</p>
             </div>`,
           });
-
-          // Show the InfoWindow on hover
           marker.addListener('mouseover', () => {
             infoWindow.open(map, marker);
           });
-
-          // Close the InfoWindow when the mouse leaves the marker
           marker.addListener('mouseout', () => {
             infoWindow.close();
           });
         });
-
         new google.maps.Polyline({
           path: locations.map(
             (location: any) =>
@@ -256,17 +225,11 @@ export class technicainslistComponent implements OnInit {
         });
       }
     }
-
-    // For all technicians location map
-
-    // Check for valid technician data with proper latitude and longitude
     const validLocations = this.techniciansdata.filter(
       (location) =>
         !isNaN(parseFloat(location.LOCATION_LATITUDE)) &&
         !isNaN(parseFloat(location.LOCATION_LONG))
     );
-
-    // Calculate the center only if there are valid locations
     const map2Center = {
       lat:
         validLocations.length > 0
@@ -283,14 +246,12 @@ export class technicainslistComponent implements OnInit {
           ) / validLocations.length
           : 0,
     };
-
     const map2Element = document.getElementById('map1');
     if (map2Element) {
       const map2 = new google.maps.Map(map2Element as HTMLElement, {
         center: map2Center,
         zoom: 14,
       });
-
       validLocations.forEach((location: any) => {
         const marker = new google.maps.Marker({
           position: {
@@ -299,35 +260,27 @@ export class technicainslistComponent implements OnInit {
           },
           map: map2,
         });
-
         const infoWindow = new google.maps.InfoWindow({
           content: `
       <div style="width: 150px; padding: 10px; font-size: 14px; color: #333; 
           background-color: #fff; border-radius: 5px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);">
         <h6>${location.NAME}</h6>
         <p>${location.MOBILE_NUMBER}</p>
-        
       </div>`,
         });
-
         infoWindow.open(map2, marker);
-
         marker.addListener('mouseover', () => {
           infoWindow.open(map2, marker);
         });
-
         marker.addListener('mouseout', () => {
           infoWindow.close();
         });
       });
     }
   }
-  // <p>${location.CITY_NAME}</p>
   drawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   addtechnicianfilter(data: any) {
     if (data == 'Technician') {
       this.drawerTitle = 'Technician Filter';
@@ -337,64 +290,46 @@ export class technicainslistComponent implements OnInit {
       this.drawerTitle = 'Job Filter';
     }
     this.applyCondition = data;
-    // this.drawerData = new CurrencyMaster();
     this.drawerFilterVisible = true;
   }
-
   drawerflterClose(): void {
     this.drawerFilterVisible = false;
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   selectedmode = 'tech';
-  // order
-  // job
-
   selectmodeee(event) {
     this.selectedmode = event;
   }
-
   date = new Date();
-
   onlymap: boolean = false;
-
   fullmap() {
     this.onlymap = true;
-    this.cdr.detectChanges(); // Manually trigger change detection to re-render the view
-
+    this.cdr.detectChanges(); 
     this.initMap();
   }
-
   back() {
     this.onlymap = false;
-    this.cdr.detectChanges(); // Manually trigger change detection to re-render the view
+    this.cdr.detectChanges(); 
     this.initMap();
   }
-
   public visiblesave = false;
   resetPasswordLoading: boolean = false;
-
   isChangePassword() {
     this.getSkillData();
     this.visiblesave = true;
   }
-
   handleCancelTop(): void {
     this.resetForm();
     this.visiblesave = false;
   }
-
   PINCODE_ID;
-
   checkOptionsOne = [
     { label: 'Inhouse', value: 'I', checked: false },
     { label: 'Freelancer', value: 'F', checked: false },
     { label: 'Vendor Tech', value: 'V', checked: false },
   ];
-
   checkOptionsTwo = [
     { label: 'Fresher', value: 'F', checked: false },
     { label: 'Junior', value: 'J', checked: false },
@@ -403,8 +338,6 @@ export class technicainslistComponent implements OnInit {
     { label: 'Lead', value: 'L', checked: false },
     { label: 'Expert', value: 'E', checked: false },
   ];
-
-
   selectedSkills: { [key: number]: boolean } = {};
   skillData: any = [];
   getSkillData() {
@@ -422,52 +355,33 @@ export class technicainslistComponent implements OnInit {
       }
     );
   }
-
-
-
   @ViewChild('resetform') resetform: NgForm;
   resetForm(): void {
-    // Reset all checkboxes in checkOptionsOne
     this.checkOptionsOne.forEach((option) => (option.checked = false));
-
-    // Reset all checkboxes in checkOptionsTwo
     this.checkOptionsTwo.forEach((option) => (option.checked = false));
-
-    // Clear selected skills
     this.selectedSkills = {};
-
-    // Reset Pincode selection
     this.PINCODE_ID = null;
-
-    // Reset the form's state
     if (this.resetform) {
       this.resetform.resetForm();
     }
   }
-
   jobdetaildrawerTitle = '';
   jobdetailsshow = false;
   jobdetailsdata: any;
   invoicefilter = '';
   ratingfilter = ''
-
   openjobcarddetails(data: any) {
-
     this.jobdetailsdata = data;
     this.getTechniciansJobs(data);
     this.jobdetaildrawerTitle = 'Technician Details';
-
   }
-
   drawersize = '100%';
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
   }
-  //Drawer Methods
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }
-
   jobdatss: any = [];
   jobcardids: any = [];
   jobId: any;

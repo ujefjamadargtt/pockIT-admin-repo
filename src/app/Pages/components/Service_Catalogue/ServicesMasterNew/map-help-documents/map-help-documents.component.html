@@ -10,7 +10,7 @@
                   <nz-form-label nzRequired nzNoColon>Help Category</nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Please Select Help Category">
                     <nz-select nzAllowClear="true" nzPlaceHolder="Select Help Category" name="catid"
-                      [(ngModel)]="categoryId" style="width: 100%" (ngModelChange)="onCategoryChange($event)"
+                      [(ngModel)]="categoryId" class="select-full-width" (ngModelChange)="onCategoryChange($event)"
                       nzShowSearch required [nzLoading]="isCategorySpinning">
                       <nz-option *ngFor="let data of categoryList" [nzValue]="data.ID"
                         [nzLabel]="data.HELP_CATEGORY_NAME"></nz-option>
@@ -23,7 +23,7 @@
                   <nz-form-label nzRequired nzNoColon>Help Subcategory</nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Please Select Help Subcategory">
                     <nz-select nzAllowClear="true" nzPlaceHolder="Select Help Subcategory" name="subcatid"
-                      [(ngModel)]="subCategoryId" style="width: 100%" nzShowSearch required
+                      [(ngModel)]="subCategoryId" class="select-full-width" nzShowSearch required
                       [nzLoading]="isSubCategorySpinning">
                       <nz-option *ngFor="let data of subCategoryList" [nzValue]="data.ID"
                         [nzLabel]="data.NAME"></nz-option>
@@ -31,20 +31,12 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-              <div nz-col nzSpan="4" style="padding-right: 4px">
-                <button style="margin-top: 26px" nz-button nzType="primary" [nzLoading]="isSpinningapply"
+              <div nz-col nzSpan="4" class="button-column-padding">
+                <button class="apply-button-spacing" nz-button nzType="primary" [nzLoading]="isSpinningapply"
                   (click)="apply()">
                   Apply
                 </button>
-                <!-- <button
-                  nz-button
-                  nzType="default"
-                  (click)="clear(filter)"
-                  class="ant-btn"
-                  style="margin-left: 12px"
-                >
-                  Clear
-                </button> -->
+
               </div>
             </div>
           </form>
@@ -52,19 +44,20 @@
       </div>
       <div nz-row>
         <div nz-col nzSpan="24">
-          <div style="position: relative">
-            <div style="display: flex; justify-content: space-between">
-              <div style="padding: 0px 10px">
+          <div class="table-container-wrapper">
+            <div class="table-header-flex">
+              <div class="record-counter-padding">
                 <span *ngIf="selectedPincode.length > 0">
                   {{ selectedPincode.length }} records selected out of
                   {{ PincodeMappingdata.length }}</span>
                 <span *ngIf="selectedPincode.length == 0">Total Records {{ PincodeMappingdata.length }}</span>
               </div>
               <div>
-                <nz-form-item style="padding: 0px; margin-bottom: 0px !important">
+                <nz-form-item class="search-form-item">
                   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-                    <input type="text" name="search" style="width: 200px" nz-input placeholder="Enter min 3 characters"
-                      [(ngModel)]="searchText" (keyup)="onKeypressEvent($event)" autocomplete="off" />
+                    <input type="text" name="search" class="search-input-width" nz-input
+                      placeholder="Enter min 3 characters" [(ngModel)]="searchText" (keyup)="onKeypressEvent($event)"
+                      autocomplete="off" />
                   </nz-input-group>
                 </nz-form-item>
 
@@ -78,12 +71,7 @@
 
             <nz-table class="my-scroll no-wrap1" nzBordered #tableeeee [nzData]="PincodeMappingdata"
               (nzQueryParams)="sort($event)" [nzSize]="'small'" [nzFrontPagination]="false"
-              style="white-space: pre-line; padding-top: 10px" [nzLoading]="isSpinning11 || isLoading"
-              [nzScroll]="{ y: '55vh' }">
-              <!-- <div *ngIf="isLoading" class="custom-spin-container">
-                <nz-spin [nzSpinning]="isLoading"></nz-spin>
-                <span class="custom-spin-text">{{ loadingMessage }}</span>
-              </div> -->
+              class="table-preline-spacing" [nzLoading]="isSpinning11 || isLoading" [nzScroll]="{ y: '55vh' }">
               <thead>
                 <tr>
                   <th nzWidth="50px">
@@ -99,7 +87,7 @@
 
               <tbody>
                 <tr *ngFor="let data of tableeeee.data; let i = index">
-                  <td style="text-align: center">
+                  <td class="cell-center-align">
                     <label nz-checkbox [(ngModel)]="data.selected" name="allSelecteddd{{ i }}"
                       (ngModelChange)="onPincodeSelecttable(data, $event)"></label>
                   </td>
@@ -125,37 +113,18 @@
                     <span *ngIf="data['NAME'] == null">-</span>
                   </td>
                   <td align="center">
-                    <!-- <a
-                      *ngIf="data['TYPE'] == 'D'"
-                      style="color: blue; margin-right: 9px"
-                      (click)="viewImage(data.DOCUMENT)"
-                      nz-tooltip
-                      nzTooltipTitle="View Document"
-                    >
-                      <span nz-icon nzType="eye" nzTheme="outline"></span>
-                    </a>
-                    <a
-                      *ngIf="data['TYPE'] == 'L'"
-                      style="color: blue; margin-right: 9px"
-                      [href]="data.LINK"
-                      target="_blank"
-                      nz-tooltip
-                      nzTooltipTitle="View Link"
-                    >
-                      <span nz-icon nzType="eye" nzTheme="outline"></span>
-                    </a> -->
                     <div *ngIf="data.TYPE == 'D'">
-                      <nz-tag nzColor="#2db7f5" (click)="viewImage(data.DOCUMENT)" style="cursor: pointer" nz-tooltip
+                      <nz-tag nzColor="#2db7f5" (click)="viewImage(data.DOCUMENT)" class="tag-pointer" nz-tooltip
                         nzTooltipTitle="View Document">
-                        <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
+                        <span nz-icon nzType="eye" nzTheme="outline" class="icon-size-medium">
                         </span>&nbsp;&nbsp;View</nz-tag>
                       <span *ngIf="this.data.TYPE == null || this.data.TYPE == ''">-</span>
                     </div>
 
                     <div *ngIf="data.TYPE == 'L'">
-                      <nz-tag nzColor="#2db7f5" (click)="viewLink(data.LINK)" style="cursor: pointer" nz-tooltip
+                      <nz-tag nzColor="#2db7f5" (click)="viewLink(data.LINK)" class="tag-pointer" nz-tooltip
                         nzTooltipTitle="View Link">
-                        <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
+                        <span nz-icon nzType="eye" nzTheme="outline" class="icon-size-medium">
                         </span>&nbsp;&nbsp;View</nz-tag>
                     </div>
                   </td>
@@ -167,38 +136,38 @@
       </div>
     </form>
   </div>
-  <div nz-col nzSpan="2" style="align-self: center; text-align: center; align-items: center">
+  <div nz-col nzSpan="2" class="center-icon-column">
     <div>
       <nz-spin [nzSpinning]="isSpinning">
-        <span nz-icon nzType="right-circle" style="font-size: 26px !important" nzTheme="outline"
+        <span nz-icon nzType="right-circle" class="arrow-icon-large" nzTheme="outline"
           *ngIf="selectedPincode.length == 0"></span>
-        <span nz-icon nzType="right-circle" style="cursor: pointer; font-size: 26px !important" nzTheme="fill"
-          (click)="BulkDocMap()" *ngIf="selectedPincode.length > 0"></span>
+        <span nz-icon nzType="right-circle" class="arrow-icon-clickable" nzTheme="fill" (click)="BulkDocMap()"
+          *ngIf="selectedPincode.length > 0"></span>
       </nz-spin>
     </div>
   </div>
   <div nz-col nzSpan="11">
-    <div nz-row style="display: flex; justify-content: space-between">
-      <div style="display: flex">
-        <div style="text-align: left; padding-left: 10px">
+    <div nz-row class="mapping-header-flex">
+      <div class="mapping-info-flex">
+        <div class="total-records-padding">
           <span *ngIf="selectedPincode11.length == 0">Total Records {{ totoalrecordsss }}</span>
         </div>
 
-        <div style="text-align: left; padding-left: 10px">
-          <td align="center" style="white-space: pre-line" nzLeft>
+        <div class="switch-padding">
+          <td align="center" nzLeft>
             <nz-switch name="allChange" nzCheckedChildren="Select All" nzUnCheckedChildren="Deselect All"
               (ngModelChange)="allChange($event)" [(ngModel)]="allChecked"></nz-switch>
           </td>
         </div>
       </div>
 
-      <div style="text-align: right; padding-right: 5px">
-        <form nz-form [nzLayout]="'inline'" style="display: inline-flex">
+      <div class="search-panel-right">
+        <form nz-form [nzLayout]="'inline'" class="inline-search-form">
           <nz-form-item>
-            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton1" style="margin-left: 26px !important">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton1" class="pincode-search-margin">
               <input type="text" name="pincodesearch" [(ngModel)]="searchPincode" autocomplete="off"
                 (keydown.enter)="handlepincodeEnterKey($event)" (keydown.backspace)="handlepincodeEnterKey($event)"
-                style="height: 32px" nz-input placeholder="Min 3 chars required." />
+                class="search-input-height" nz-input placeholder="Min 3 chars required." />
             </nz-input-group>
             <ng-template #suffixIconButton1>
               <button nz-button id="buttonSearch" nzType="primary" nzSearch (click)="searchopennn()">
@@ -212,10 +181,10 @@
 
     <div nz-row>
       <div nz-col nzSpan="24">
-        <div style="position: relative">
+        <div class="table-container-wrapper">
           <nz-table class="my-scroll no-wrap1" nzBordered #table [nzData]="mappingdata" (nzQueryParams)="sort11($event)"
-            [nzSize]="'small'" [nzFrontPagination]="false" style="white-space: pre-line; padding-top: 10px"
-            [nzLoading]="isSpinning22" [nzScroll]="{ x: '900px', y: '55vh' }">
+            [nzSize]="'small'" [nzFrontPagination]="false" class="table-preline-spacing" [nzLoading]="isSpinning22"
+            [nzScroll]="{ x: '900px', y: '55vh' }">
             <thead>
               <tr>
                 <th nzWidth="60px" nzShowSort [nzSortFn]="true" nzColumnKey="{{ 'STATUS' }}">
@@ -235,33 +204,25 @@
             </thead>
             <tbody>
               <tr *ngFor="let data of table.data; let i = index">
-                <td align="center" style="white-space: pre-line">
+                <td align="center" class="cell-preline">
                   <nz-switch name="STATUS" nzCheckedChildren="Yes" nzUnCheckedChildren="No" [(ngModel)]="data['STATUS']"
                     (ngModelChange)="SpecificDOcmap(data, $event)"></nz-switch>
                 </td>
                 <td align="center">
                   <div *ngIf="data.TYPE == 'D'">
-                    <nz-tag nzColor="#2db7f5" (click)="viewImage(data.DOCUMENT)" style="cursor: pointer" nz-tooltip
+                    <nz-tag nzColor="#2db7f5" (click)="viewImage(data.DOCUMENT)" class="tag-pointer" nz-tooltip
                       nzTooltipTitle="View Document">
-                      <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
+                      <span nz-icon nzType="eye" nzTheme="outline" class="icon-size-medium">
                       </span>&nbsp;&nbsp;View</nz-tag>
                     <span *ngIf="this.data.TYPE == null || this.data.TYPE == ''">-</span>
                   </div>
 
                   <div *ngIf="data.TYPE == 'L'">
-                    <nz-tag nzColor="#2db7f5" (click)="viewLink(data.LINK)" style="cursor: pointer" nz-tooltip
+                    <nz-tag nzColor="#2db7f5" (click)="viewLink(data.LINK)" class="tag-pointer" nz-tooltip
                       nzTooltipTitle="View Link">
-                      <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
+                      <span nz-icon nzType="eye" nzTheme="outline" class="icon-size-medium">
                       </span>&nbsp;&nbsp;View</nz-tag>
                   </div>
-                  <!-- <a *ngIf="data['TYPE'] == 'D'" style="color: blue; margin-right: 9px"
-                    (click)="viewImage(data.DOCUMENT)" nz-tooltip nzTooltipTitle="View Document">
-                    <span nz-icon nzType="eye" nzTheme="outline"></span>
-                  </a>
-                  <a *ngIf="data['TYPE'] == 'L'" style="color: blue; margin-right: 9px" [href]="data.LINK"
-                    target="_blank" nz-tooltip nzTooltipTitle="View Link">
-                    <span nz-icon nzType="eye" nzTheme="outline"></span>
-                  </a> -->
                 </td>
                 <td align="left">
                   <span *ngIf="data['MASTER_NAME'] != null">
@@ -353,7 +314,7 @@
 </div>
 
 <div class="footer">
-  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+  <button type="button" nz-button (click)="close()" class="ant-btn cancel-button-margin">
     <span>Cancel</span>
   </button>
 </div>
@@ -362,9 +323,8 @@
   [nzContent]="content" [nzTitle]="'View Document'" (nzOnCancel)="ImageModalCancel()" [nzFooter]="ImageModalFooter">
   <ng-template #content>
     <nz-spin [nzSpinning]="isSpinning">
-      <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss"
-        style="height: 400px; overflow: auto">
-        <iframe [src]="imageshow" style="width: 832px; height: 396px" frameborder="0"></iframe>
+      <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss modal-iframe-container">
+        <iframe [src]="imageshow" class="modal-iframe-dimensions" frameborder="0"></iframe>
       </div>
     </nz-spin>
   </ng-template>

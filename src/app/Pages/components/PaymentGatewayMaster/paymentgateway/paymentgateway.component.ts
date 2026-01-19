@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { paymentgateway } from 'src/app/Pages/Models/paymentgateway';
-
 @Component({
   selector: 'app-paymentgateway',
   templateUrl: './paymentgateway.component.html',

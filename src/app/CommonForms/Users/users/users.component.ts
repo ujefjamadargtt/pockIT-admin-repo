@@ -5,7 +5,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -24,43 +23,33 @@ export class UsersComponent implements OnInit {
   searchText: string = '';
   filterQuery: string = '';
   isFilterApplied: string = 'default';
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   userRolevisible: boolean = false;
   isRoleFilterApplied = false;
   selectedRoles: number[] = [];
-
   userNamevisible: boolean = false;
   isUserNameFilterApplied = false;
   UserNametext: string = '';
-
   Emailvisible: boolean = false;
   isEmailFilterApplied = false;
   Emailtext: string = '';
-
   columns: string[][] = [
     ['ROLE_NAME', 'Role'],
     ['NAME', 'Name'],
     ['EMAIL_ID', 'Email'],
-    // ['MOBILE_NUMBER', 'Mobile'],
-    // ["DESIGNATION_NAME", "Designation"],
-    // ["ROOM_NO", "Room No"],
   ];
   drawerVisible: boolean = false;
   drawerTitle: string = '';
   drawerData: any = new UserMaster();
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router,
     private sanitizer: DomSanitizer
   ) { }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -71,7 +60,6 @@ export class UsersComponent implements OnInit {
       this.search(true);
     }
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.searchText.length >= 3 && event.key === 'Enter') {
       this.search(true);
@@ -79,35 +67,28 @@ export class UsersComponent implements OnInit {
       this.dataList = [];
       this.search(true);
     }
-
     if (this.UserNametext.length >= 3 && event.key === 'Enter') {
       this.search(true);
     } else if (this.UserNametext.length == 0 && event.key === 'Backspace') {
       this.search(true);
     }
-
     if (this.Emailtext.length >= 3 && event.key === 'Enter') {
       this.search(true);
     } else if (this.Emailtext.length == 0 && event.key === 'Backspace') {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   ngOnInit() {
     this.getRoleData();
     this.search();
   }
-
   onRoleChange(): void {
     this.search();
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -116,29 +97,24 @@ export class UsersComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search(false);
   }
-
   statusFilter: string | undefined = undefined;
   showcloumnVisible: boolean = false;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   search(reset: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -151,20 +127,15 @@ export class UsersComponent implements OnInit {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -175,19 +146,15 @@ export class UsersComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
-    //Role Filter
     if (this.selectedRoles.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `ROLE_ID IN (${this.selectedRoles.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `ROLE_ID IN (${this.selectedRoles.join(',')})`; 
       this.isRoleFilterApplied = true;
     } else {
       this.isRoleFilterApplied = false;
     }
-
-    // User Name Filter
     if (this.UserNametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -196,9 +163,6 @@ export class UsersComponent implements OnInit {
     } else {
       this.isUserNameFilterApplied = false;
     }
-
-    //Email Filter
-
     if (this.Emailtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -207,19 +171,13 @@ export class UsersComponent implements OnInit {
     } else {
       this.isEmailFilterApplied = false;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-    // Call API with updated search query
     this.api
       .getAllUsers(
         this.pageIndex,
@@ -250,14 +208,12 @@ export class UsersComponent implements OnInit {
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   add(): void {
     this.drawerTitle = 'Add New User';
     this.drawerData = new UserMaster();
     this.drawerData.IS_ACTIVE = true;
     this.drawerVisible = true;
   }
-
   edit(data: any): void {
     this.drawerTitle = 'Update User Details';
     this.drawerData = Object.assign({}, data);
@@ -272,43 +228,33 @@ export class UsersComponent implements OnInit {
       }
     } else {
     }
-
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   ViewImage: any;
   ImageModalVisible = false;
   imageshow;
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + 'userProfile/' + link;
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   roleData: any = [];
   getRoleData() {
     this.api.getAllRoles(0, 0, '', '', " AND ARCHIVE_FLAG='F'").subscribe(

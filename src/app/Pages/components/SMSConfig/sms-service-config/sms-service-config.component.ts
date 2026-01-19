@@ -4,7 +4,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { smsservice } from 'src/app/Pages/Models/smsservice';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-sms-service-config',
   templateUrl: './sms-service-config.component.html',
@@ -19,17 +18,14 @@ export class SmsServiceConfigComponent {
   senderIds: any = [];
   apiurlpattern: RegExp =
     /^https?:\/\/[a-zA-Z0-9\-\.]+\.[a-z]{2,}(:[0-9]{1,5})?(\/[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;%=]*)?$/;
-  // passwordPattern: RegExp = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z0-9!@#$%^&*(),.?\":{}|<>]{8,}$/;
   isFocused: string = '';
   Close() {
     this.drawerClose;
   }
-
   ngOnInit(): void {
     this.data.USERNAME = '';
     this.data.PASSWORD = '';
   }
-
   public commonFunction = new CommonFunctionService();
   timeLogs = [
     {
@@ -57,33 +53,25 @@ export class SmsServiceConfigComponent {
       description: '15 Apr. 2024, 03:40 PM',
     },
   ];
-
-  // Current step index
   currentStep = 2;
-
-  // Get status for each step
   getStatus(index: number): 'finish' | 'process' | 'wait' {
     if (index < this.currentStep) return 'finish';
     if (index === this.currentStep) return 'process';
     return 'wait';
   }
-
   close() {
     this.drawerClose();
   }
-
   resetDrawer(smsServiceForm: NgForm) {
     this.data = new smsservice();
     smsServiceForm.form.markAsPristine();
     smsServiceForm.form.markAsUntouched();
   }
-
   isOk = true;
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   save(addNew: boolean, smsServiceForm: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -149,17 +137,9 @@ export class SmsServiceConfigComponent {
       this.isOk = false;
       this.message.error('Password must be at least 8 characters long.', '');
     }
-    // else if (!this.passwordPattern.test(this.data.PASSWORD.trim())
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error("Please enter a valid password.", "");
-    // }
-
     if (this.isOk) {
       this.isSpinning = true;
-
       if (this.data.ID) {
-        // Update existing Email Service Config data
         this.api.updateSmsServiceConfigData(this.data).subscribe(
           (response: any) => {
             this.isSpinning = false;
@@ -195,16 +175,6 @@ export class SmsServiceConfigComponent {
                 'Sms service configuration data created successfully.',
                 ''
               );
-              // if (!addNew) this.drawerClose();
-              // else {
-              //   this.resetDrawer(smsDrawer);
-              //   this.api
-              //     .getSmsServiceConfigData(0, 0, '', 'desc', '')
-              //     .subscribe(
-              //       () => { },
-              //       () => { }
-              //     );
-              // }
               if (!addNew) {
                 this.drawerClose();
               } else {
@@ -237,16 +207,13 @@ export class SmsServiceConfigComponent {
       }
     }
   }
-
   validateServiceProviderInput(event: KeyboardEvent): void {
     const allowedCharacters = /^[a-zA-Z\s\-\(\)]$/;
     const inputChar = event.key;
-
     if (!allowedCharacters.test(inputChar)) {
-      event.preventDefault(); // Prevent the character from being entered
+      event.preventDefault(); 
     }
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -254,7 +221,6 @@ export class SmsServiceConfigComponent {
     }
     return true;
   }
-
   countryCodes = [
     { label: "+91 (India)", value: "+91" },
     { label: "+92 (Pakistan)", value: "+92" },

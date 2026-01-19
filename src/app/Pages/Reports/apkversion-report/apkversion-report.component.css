@@ -1,11 +1,36 @@
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
-  
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%; 
   display: inline-block;
+}
+.header-actions-container {
+    display: flex;
+    justify-content: flex-end;
+}
+.month-picker {
+    width: 100%;
+}
+.date-picker-col {
+    margin-top: 5px;
+}
+.date-form-item {
+    margin-top: 5px;
+}
+.filter-buttons-col {
+    margin-top: 5px;
+}
+.apply-filter-button {
+    margin-right: 10px;
+}
+.table-header-bold {
+    font-weight: bold;
+}
+.table-cell-preline-center {
+    white-space: pre-line;
+    text-align: center;
 }

@@ -5,30 +5,15 @@
     margin-top: 12px;
     margin-bottom: 12px;
     background-color: #fafafa;
-
   }
   .header {
-
     position: absolute;
- 
     top: 0px;
- 
-    /* bottom: 0px; */
- 
     width: 100%;
- 
     border-top: 1px solid rgb(232, 232, 232);
- 
     padding: 10px 16px;
- 
     text-align: right;
- 
-    /* left: 0px; */
- 
     right: 0px;
- 
-    /* background: #fff; */
- 
  }
 nz-form-item {
   display: inline-block;
@@ -36,32 +21,26 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
-
 .step-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1rem;
 }
-
 .step-left {
   font-weight: bold;
   color: #333;
 }
-
 .step-right {
   color: #888;
   font-size: 0.9rem;
   text-align: right;
 }
-
 .step-description {
   margin-top: 4px;
   font-size: 0.85rem;
   color: #666;
 }
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -78,7 +57,39 @@ th {
 tr:hover {
   background-color: #f1f1f1;
 }
-
 :host::ng-deep .ant-form-item-explain{
   font-size: 13px;
+}
+.character-count {
+  color: red;
+  font-size: 10px;
+}
+.api-url-note {
+  font-size: 10px;
+  text-align: left;
+  margin-top: 5px;
+  color: blue;
+}
+.password-form-control {
+  text-align: left;
+}
+.password-count {
+  color: red;
+  font-size: 10px;
+  margin-bottom: 0px !important;
+}
+.password-error {
+  color: #ff4d4f;
+  font-size: 10px;
+  text-align: left;
+}
+.footer-cancel-btn {
+  margin-right: 8px;
+}
+.menu-item-custom {
+  border-radius: 4px;
+  color: white !important;
+}
+.menu-link {
+  color: white !important;
 }

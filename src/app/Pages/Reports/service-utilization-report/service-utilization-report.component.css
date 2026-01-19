@@ -1,11 +1,116 @@
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%; 
   display: inline-block;
+}
+.back-arrow-bold {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-btn-white {
+  color: white;
+}
+.filter-btn-container {
+  width: 47px;
+}
+.filter-padding-top-zero {
+  padding-top: 0px;
+}
+.loading-spin-center {
+  text-align: center;
+}
+.saved-filter-margin {
+  margin-bottom: 8px;
+}
+.saved-filter-card-style {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-header-flexbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-black {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.active-check-position {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-margin {
+  margin-top: 7px;
+}
+.filter-actions-spacing {
+  display: flex;
+  justify-content: space-between;
+}
+.edit-tag-style,
+.apply-tag-style,
+.clear-tag-style,
+.delete-tag-style {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.view-tag-nomargin {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.edit-icon-tiny,
+.search-icon-tiny,
+.close-icon-tiny,
+.delete-icon-tiny,
+.eye-icon-tiny {
+  font-size: 10px !important;
+}
+.no-filters-red {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-layout {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-btn-right,
+.new-filter-right {
+  margin-right: 10px;
+}
+.table-top-spacing {
+  margin-top: 10px;
+}
+.name-header-left {
+  text-align: left;
+}
+.total-req-center,
+.completed-req-center,
+.total-amt-center {
+  text-align: center;
+}
+.name-cell-preline {
+  white-space: pre-line;
+}
+.modal-text-align {
+  text-align: center;
 }

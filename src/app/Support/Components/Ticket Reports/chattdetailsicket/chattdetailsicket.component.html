@@ -1,34 +1,21 @@
 <div>
   <div nz-row *ngIf="loading">
-    <div nz-col nzSpan="24" style="text-align: center">
+    <div nz-col nzSpan="24" class="loading-text-center">
       <nz-spin [nzSpinning]="loading"></nz-spin>
     </div>
   </div>
-
-  <form nz-form *ngIf="!loading" style="margin-bottom: 60px">
+  <form nz-form *ngIf="!loading" class="form-margin-bottom">
     <nz-spin [nzSpinning]="isSpinning">
-      <div nz-row style="
-          margin-top: -45px;
-          position: fixed;
-          z-index: 10;
-          width: 485px;
-          cursor: pointer;
-        ">
-        <div nz-col nzSpan="24" style="
-            padding: 5px;
-            border-radius: 0px 0px 20px 20px;
-            background-color: #1890ff;
-            border: 1px solid white;
-          ">
+      <div nz-row class="fixed-header-row">
+        <div nz-col nzSpan="24" class="fixed-header-col">
           <div class="name">
             {{ newstr }}
           </div>
         </div>
       </div>
-
       <div *ngFor="let data of data2; let i = index">
-        <div nz-row *ngIf="data.data.length > 0" style="text-align: center; margin-top: 20px">
-          <div nz-col nzSpan="24" style="padding-top: 16px">
+        <div nz-row *ngIf="data.data.length > 0" class="date-row-center">
+          <div nz-col nzSpan="24" class="date-col-padding">
             <nz-tag [nzColor]="'red'">
               {{
               (data.key | date : "ddMMyyyy") ===
@@ -39,72 +26,49 @@
             </nz-tag>
           </div>
         </div>
-
         <div *ngFor="let data of data.data">
-          <div nz-col nzSpan="24" style="text-align: center; margin-top: 10px" *ngIf="data.SENDER == 'X'">
+          <div nz-col nzSpan="24" class="sender-x-container" *ngIf="data.SENDER == 'X'">
             <nz-tag [nzColor]="'green'">
               <div nz-row>
-                <div nz-col nzSpan="24" style="text-align: center">
+                <div nz-col nzSpan="24" class="text-center">
                   <div class="noty">
                     {{ data.DESCRIPTION }}
                   </div>
                 </div>
-
-                <div nz-col nzSpan="24" style="text-align: right">
+                <div nz-col nzSpan="24" class="text-right">
                   {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
                 </div>
               </div>
             </nz-tag>
           </div>
-
           <div nz-col nzSpan="24">
-            <div nz-col nzSpan="14" *ngIf="data.SENDER == 'S'" style="
-                margin-top: 10px;
-                padding: 5px 10px 0px;
-                border: 1px solid #1890ff;
-                border-radius: 0px 20px 20px 20px;
-                background-color: white;
-                font-size: 12px;
-              ">
-              <div style="font-weight: bold">
+            <div nz-col nzSpan="14" *ngIf="data.SENDER == 'S'" class="sender-s-box">
+              <div class="sender-name-bold">
                 {{ getSenderEmpName(data.SENDER_ID) }}
               </div>
               <div>{{ data.DESCRIPTION }}</div>
-              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL"
-                style="width: 100%; margin-bottom: 5px" />
-              <div style="text-align: right">
+              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL" class="chat-image" />
+              <div class="text-right">
                 {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
               </div>
             </div>
           </div>
-
           <div nz-col nzSpan="24">
             <div nz-col nzSpan="10"></div>
-
-            <div nz-col nzSpan="14" *ngIf="data.SENDER == 'U'" style="
-                margin-top: 10px;
-                padding: 5px 10px 0px;
-                border: 1px solid #1890ff;
-                border-radius: 20px 0px 20px 20px;
-                background-color: #1890ff;
-                font-size: 12px;
-              ">
-              <div style="font-weight: bold; color: white">
+            <div nz-col nzSpan="14" *ngIf="data.SENDER == 'U'" class="sender-u-box">
+              <div class="sender-u-name">
                 {{ getSenderEmpName(data.USER_ID) }}
               </div>
-              <div style="color: white">{{ data.DESCRIPTION }}</div>
-              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL"
-                style="width: 100%; margin-bottom: 5px" />
-              <div style="text-align: right; color: white">
+              <div class="sender-u-text">{{ data.DESCRIPTION }}</div>
+              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL" class="chat-image" />
+              <div class="sender-u-time">
                 {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="data2.length <= 0"
-        style="font-weight: 600; margin-top: 10%; margin-top: 20px">
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="data2.length <= 0" class="empty-state-text">
         <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
           [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
           <ng-template #contentTpl>
@@ -114,16 +78,13 @@
         </nz-empty>
       </div>
     </nz-spin>
-
     <div id="bottom"></div>
   </form>
-
-  <div id=":h8" class="a1 aaA aMZ" style="user-select: none">
-    <div class="a3I" style="user-select: none">&nbsp;</div>
+  <div id=":h8" class="a1 aaA aMZ no-user-select">
+    <div class="a3I no-user-select">&nbsp;</div>
   </div>
-
-  <div class="footer" style="display: none">
-    <button id="scrollDown" style="margin-left: 10px" nz-button nzType="primary" (click)="bottom()">
+  <div class="footer footer-hidden">
+    <button id="scrollDown" class="scroll-btn-margin" nz-button nzType="primary" (click)="bottom()">
       Scroll Bottom
     </button>
   </div>

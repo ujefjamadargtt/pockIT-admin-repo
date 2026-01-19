@@ -3,7 +3,6 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 export class Data {
   TECHNICIAN_ID: any = [];
   TECHNICIAN_NAME: string;
@@ -18,7 +17,6 @@ export class CustomerTechnicianMappingComponent {
   @Input() data;
   @Input() drawerClose: any = Function;
   @Input() drawerVisible: boolean = false;
-
   saveData: any = new Data();
   sortValue: string = 'desc';
   sortKey: string = 'NAME';
@@ -45,33 +43,24 @@ export class CustomerTechnicianMappingComponent {
   mappingdata: any = [];
   isSpinning22: boolean = false;
   isSpinning11: boolean = false;
-
   originalTraineeData1: any[] = [];
   originalTraineeData: any[] = [];
-
   allSelected1: any;
   selectedPincode111: any;
-
   isLoading: boolean = false;
   loadingMessage: string = '';
-
   selectedPincode11: any = [];
-
   totoalrecordsss = 0;
-
   searchskill;
   allChecked;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private modal: NzModalService
   ) { }
-
   ngOnInit() {
     this.allChecked = this.mappingdata.every((item) => item.IS_ACTIVE);
   }
-
   sort(params: NzTableQueryParams) {
     this.isSpinning = true;
     this.isSpinning11 = true;
@@ -93,7 +82,6 @@ export class CustomerTechnicianMappingComponent {
     this.sortValue = sortOrder;
     this.PincodeMapping();
   }
-
   PincodeMapping() {
     this.isSpinning = true;
     this.isSpinning11 = true;
@@ -103,8 +91,6 @@ export class CustomerTechnicianMappingComponent {
     } catch (error) {
       sort = '';
     }
-
-    // Call the API with the constructed query
     this.api
       .getMapTechnicianData11(0, 0, 'NAME', 'asc', '', this.data.CUSTOMER_MASTER_ID)
       .subscribe(
@@ -128,30 +114,23 @@ export class CustomerTechnicianMappingComponent {
         }
       );
   }
-
-  // select all pincode toggle button
   isSelectAll: boolean = false;
   toggleSelectAll(isSelectAll: boolean): void {
     if (isSelectAll) {
-      // Select all available pincodes
       this.saveData.TECHNICIAN_ID = this.pincodeData.map(
         (pincode) => pincode.ID
       );
     } else {
-      // Deselect all pincodes
       this.saveData.TECHNICIAN_ID = [];
     }
   }
-
   async toggleAll(selectAll: boolean): Promise<void> {
     this.isLoading = true;
     this.loadingMessage = selectAll
       ? 'Selecting all records. Please wait...'
       : 'Deselecting all selected records. Please wait...';
-
     const batchSize = 50;
     const totalRecords = this.PincodeMappingdata.length;
-
     const processBatch = async (startIndex: number) => {
       for (
         let i = startIndex;
@@ -160,7 +139,6 @@ export class CustomerTechnicianMappingComponent {
       ) {
         const item = this.PincodeMappingdata[i];
         item.selected = selectAll;
-
         if (selectAll) {
           this.selectedPincodeSet.add(item.ID);
           if (
@@ -177,19 +155,15 @@ export class CustomerTechnicianMappingComponent {
           );
         }
       }
-
       if (startIndex + batchSize < totalRecords) {
         setTimeout(() => processBatch(startIndex + batchSize), 0);
       } else {
-        this.updateSelectionStates(); // Ensure indeterminate logic is updated
+        this.updateSelectionStates(); 
         this.isLoading = false;
       }
     };
-
     processBatch(0);
   }
-
-  // Method to handle indeterminate state
   updateSelectionStates(): void {
     const totalSelected = this.PincodeMappingdata.filter(
       (item) => item.selected
@@ -197,10 +171,8 @@ export class CustomerTechnicianMappingComponent {
     this.allSelected = totalSelected === this.PincodeMappingdata.length;
     this.tableIndeterminate = totalSelected > 0 && !this.allSelected;
   }
-
   onPincodeSelecttable(data: any, selected: boolean): void {
     data.selected = selected;
-
     if (selected) {
       if (
         !this.selectedPincode.some((item) => item.TECHNICIAN_ID === data.ID)
@@ -216,29 +188,21 @@ export class CustomerTechnicianMappingComponent {
     }
     this.updateSelectionStates();
   }
-
-  // Function to get final formatted data
   getFormattedData() {
     return { data: this.selectedPincode };
   }
-
   onPincodeSelecttable11(data: any, selected: boolean): void {
     data.selected = selected;
     const totalRows = this.mappingdata.length;
     const selectedRows = this.mappingdata.filter(
       (item) => item.selected
     ).length;
-
-    // Update Select All and Indeterminate states
     this.allSelected1 = selectedRows === totalRows && totalRows > 0;
     this.tableIndeterminate11 = selectedRows > 0 && selectedRows < totalRows;
-
-    // Update selected pincodes
     this.selectedPincode11 = this.mappingdata
       .filter((item) => item.selected)
       .map((item) => item.TECHNICIAN_ID);
   }
-
   sort11(params: NzTableQueryParams) {
     this.isSpinning = true;
     this.isSpinning22 = true;
@@ -260,7 +224,6 @@ export class CustomerTechnicianMappingComponent {
     this.sortValue = sortOrder;
     this.PincodeMapping111();
   }
-
   PincodeMapping111() {
     this.isSpinning = true;
     this.isSpinning22 = true;
@@ -270,8 +233,6 @@ export class CustomerTechnicianMappingComponent {
     } catch (error) {
       sort = '';
     }
-
-    // Call the API with the constructed query
     this.api
       .getCustomerTechnicianmapdata(
         0,
@@ -284,10 +245,8 @@ export class CustomerTechnicianMappingComponent {
         (data) => {
           if (data['code'] === 200) {
             this.mappingdata = data['data'];
-
             this.totoalrecordsss = this.mappingdata.length;
             this.originalTraineeData1 = [...this.mappingdata];
-
             this.selectedPincode11 = [];
             this.allChecked =
               this.mappingdata.length > 0 &&
@@ -306,10 +265,8 @@ export class CustomerTechnicianMappingComponent {
         }
       );
   }
-
   mapdatatopincode() {
     this.isSpinning = true;
-
     this.api
       .addCustomerTechnicianMapping(this.data.CUSTOMER_MASTER_ID, this.selectedPincode, 'M', 1)
       .subscribe(
@@ -339,10 +296,8 @@ export class CustomerTechnicianMappingComponent {
         }
       );
   }
-
   unmapdatatopincode() {
     this.isSpinning = true;
-
     this.api
       .addCustomerTechnicianMapping(
         this.data.CUSTOMER_MASTER_ID,
@@ -364,7 +319,6 @@ export class CustomerTechnicianMappingComponent {
             this.PincodeMapping();
             this.allSelected1 = false;
             this.allSelected = false;
-            // this.drawerClose();
           } else {
             this.message.error('Failed to Map Technician to the Customer', '');
           }
@@ -376,14 +330,11 @@ export class CustomerTechnicianMappingComponent {
         }
       );
   }
-
   marasisactive() {
     const inactiveData = this.mappingdata
       .filter((item) => !item.IS_ACTIVE)
       .map((item) => item.ID);
-
     this.isSpinning = true;
-
     this.api.markasinactivedataTechnician(this.data.CUSTOMER_MASTER_ID, inactiveData).subscribe(
       (successCode) => {
         if (successCode['code'] === 200) {
@@ -406,32 +357,23 @@ export class CustomerTechnicianMappingComponent {
       }
     );
   }
-
   getstatussss() {
     const inactiveData = this.mappingdata
       .filter((item) => !item.IS_ACTIVE)
       .map((item) => item.TECHNICIAN_ID);
-
     return inactiveData.length == 0 ? false : true;
   }
-
   onPincodeSelecttable11111(data: any, selected: boolean): void {
-    // Prepare data for the API call
     const dataToSend = [
       {
         TECHNICIAN_ID: data.TECHNICIAN_ID,
         IS_ACTIVE: selected,
       },
     ];
-
-    // Show spinner while processing
     this.isSpinning = true;
-
-    // Call the API
     this.api.markasinactivedataTechnician(this.data.CUSTOMER_MASTER_ID, dataToSend).subscribe(
       (response) => {
         if (response.code === 200) {
-          // Success message based on selection state
           if (!selected) {
             this.message.success(
               'Technicians Successfully Unmapped to the Customer.',
@@ -443,67 +385,48 @@ export class CustomerTechnicianMappingComponent {
               ''
             );
           }
-
-          // Update the local data state
           data.IS_ACTIVE = selected;
-
-          // Recalculate 'Select All' state
           this.allChecked = this.mappingdata.every((item) => item.IS_ACTIVE);
         } else {
           this.message.error('Failed to Map Technician to the Customer.', '');
         }
-        this.isSpinning = false; // Hide spinner
+        this.isSpinning = false; 
       },
       (error) => {
-        this.isSpinning = false; // Hide spinner on error
+        this.isSpinning = false; 
         this.message.error('Something Went Wrong.', '');
       }
     );
   }
-
   datalist1: any[] = [];
   selectedPincodeSet: Set<number> = new Set();
   SearchPincode(data: string): void {
     this.isSpinning = true;
-
     if (data && data.trim().length >= 3) {
-      // Filter the data based on the search input
       this.datalist1 = this.PincodeMappingdata.filter((record) => {
         return (
           record.NAME && record.NAME.toLowerCase().includes(data.toLowerCase())
         );
       });
-
-      // Map the filtered data to include the selected state
       this.PincodeMappingdata = this.datalist1.map((record) => ({
         ...record,
         selected: this.selectedPincodeSet.has(record.ID),
       }));
-
-      // Sort selected records to the top
       this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
     } else if (data.trim().length === 0) {
-      // Reset to the original data and sort selected records to the top
       this.PincodeMappingdata = this.originalTraineeData.map((record) => ({
         ...record,
         selected: this.selectedPincodeSet.has(record.ID),
       }));
-
       this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
     }
-
     this.isSpinning = false;
   }
-
   mapsearchskill;
   SearchTechnician(data: any) {
     this.isSpinning = true;
-
     if (data && data.trim().length >= 3) {
-      // Convert the search term to lowercase for case-insensitive comparison
       const searchTerm = data.toLowerCase();
-
-      // Filter the data based on the SKILL_NAME field
       this.mappingdata = this.originalTraineeData1.filter((record) => {
         return (
           record.TECHNICIAN_NAME &&
@@ -512,25 +435,19 @@ export class CustomerTechnicianMappingComponent {
       });
       this.isSpinning = false;
     } else if (data.trim().length === 0) {
-      // Reset the table data to the original dataset
       this.isSpinning = false;
       this.mappingdata = [...this.originalTraineeData1];
     } else {
-      // If less than 3 characters, do not filter and show the original data
       this.isSpinning = false;
     }
   }
-
   allChange(selected: boolean): void {
-    this.allChecked = selected; // Set allChecked state
+    this.allChecked = selected; 
     this.isSpinning = true;
-
-    // Prepare data for batch update
     const dataToSend = this.mappingdata.map((item) => ({
       TECHNICIAN_ID: item.TECHNICIAN_ID,
       IS_ACTIVE: selected,
     }));
-
     this.api.markasinactivedataTechnician(this.data.CUSTOMER_MASTER_ID, dataToSend).subscribe(
       (response) => {
         if (response.code === 200) {
@@ -544,68 +461,49 @@ export class CustomerTechnicianMappingComponent {
         } else {
           this.message.error('Failed to Update Technician.', '');
         }
-        this.isSpinning = false; // Hide spinner
+        this.isSpinning = false; 
       },
       (error) => {
-        this.isSpinning = false; // Hide spinner on error
+        this.isSpinning = false; 
         this.message.error('Something Went Wrong.', '');
       }
     );
   }
-
   handleEnterKey(event: any): void {
     const keyboardEvent = event as KeyboardEvent;
-
-    // Handle Enter key press
     if (keyboardEvent.key === 'Enter') {
-      keyboardEvent.preventDefault(); // Prevent default form submission
-
-      // Call SearchOffice if input length is >= 3
+      keyboardEvent.preventDefault(); 
       if (this.searchskill.trim().length >= 3) {
         this.SearchPincode(this.searchskill);
       } else {
       }
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
-        // Use a small delay to ensure the model updates
         if (this.searchskill.trim().length === 0) {
-          // Reset to original data and sort selected records to the top
           this.PincodeMappingdata = this.originalTraineeData.map((record) => ({
             ...record,
             selected: this.selectedPincodeSet.has(record.ID),
           }));
           this.updateSelectionStates();
-
-          // Sort selected records to the top
           this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
         }
       }, 0);
     }
   }
-
   handlepincodeEnterKey(keys: any): void {
-    const keyboardEvent = event as KeyboardEvent; // Explicitly cast to KeyboardEvent
-
-    // Handle Enter key press
+    const keyboardEvent = event as KeyboardEvent; 
     if (keyboardEvent.key === 'Enter') {
-      keyboardEvent.preventDefault(); // Prevent default form submission
-
-      // Call SearchPincode if input length is >= 3
+      keyboardEvent.preventDefault(); 
       if (this.mapsearchskill.trim().length >= 3) {
         this.SearchTechnician(this.mapsearchskill);
       } else {
       }
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
-        // Use a small delay to ensure the model updates
         if (this.mapsearchskill.trim().length === 0) {
-          this.PincodeMapping111(); // Call PincodeMapping111 when search text is cleared
+          this.PincodeMapping111(); 
         }
       }, 0);
     }

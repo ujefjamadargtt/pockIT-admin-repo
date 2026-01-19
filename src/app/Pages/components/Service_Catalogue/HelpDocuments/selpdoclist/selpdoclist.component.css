@@ -1,44 +1,154 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-.select{
-width: 200px;
-padding: 8px;
-display: block;
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%;
   display: inline-block;
+}
+.back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-item {
+  width: 47px;
+}
+.search-input {
+  width: 300px;
+}
+.add-btn-item {
+  margin-right: 0px;
+}
+.filter-row {
+  padding-top: 0px;
+}
+.center-text {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.filter-card-actions {
+  margin-top: 7px;
+}
+.filter-action-row {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-tag-icon {
+  font-size: 10px !important;
+}
+.view-tag {
+  margin-right: 0px;
+}
+.no-data-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.footer-btn {
+  margin-right: 10px;
+}
+.document-table-row {
+  padding-top: 10px;
+}
+.th-action {
+  font-weight: bold;
+  text-align: center;
+}
+.th-center {
+  text-align: center;
+}
+.td-center {
+  text-align: center;
+}
+.action-tag {
+  cursor: pointer;
+}
+.action-icon {
+  font-size: 15px;
+}
+.drawer-body {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.query-text {
+  text-align: center;
+}
+.image-container {
+  height: 400px;
+  overflow: auto;
+}
+.image-frame {
+  width: 832px;
+  height: 396px;
+}
+.qr-ft-width{
+  width: 100%;
 }

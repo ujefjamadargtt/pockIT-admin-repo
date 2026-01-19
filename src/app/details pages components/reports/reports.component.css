@@ -1,43 +1,87 @@
 .card-wrapper {
     margin-bottom: 20px;
 }
-
 .card-container {
     border: none;
     background-color: rgba(255, 255, 255, 0.952);
 }
-
-/* 
 .report-card {
     font-size: 13px;
-    display: flex;
     align-items: center;
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-} */
-
-
-.report-card {
-    font-size: 13px;
-    /* display: flex; */
-    /* Enables flexbox */
-    align-items: center;
-    /* Centers text vertically */
-    /* justify-content: center; */
-    /* Centers content horizontally */
     cursor: pointer;
     padding: 13px;
-    /* Slightly increased padding for better spacing */
     height: 55px;
-    /* Ensures consistent height */
     border-radius: 5px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-
 .report-card:hover {
     background-color: rgb(248, 248, 248);
     cursor: pointer;
+}
+.back-navigation {
+    margin-bottom: 20px;
+}
+.back-arrow-icon {
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+.cards-row {
+    margin-bottom: 20px;
+}
+.card-container {
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.card-title-container {
+    display: flex;
+    align-items: center;
+}
+.card-title-icon {
+    margin-right: 5px;
+    font-size: 13px;
+}
+.card-title-text {
+    font-size: 17px !important;
+    font-weight: 600;
+}
+.report-card {
+    margin-bottom: 15px;
+}
+.menu-item-link {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    cursor: pointer;
+    margin: 0;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+.menu-item-link:hover {
+    background-color: #f5f5f5;
+}
+.menu-item-avatar {
+    margin-right: 5px;
+    border-radius: 50%;
+    background-color: #092b9c;
+    font-size: 13px;
+    color: white;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+}
+.truncated-menu-title,
+.full-menu-title {
+    margin-left: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.truncated-menu-title {
+    cursor: pointer;
+}
+.full-menu-title {
+    flex: 1;
 }

@@ -1,12 +1,124 @@
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
+}
+.fb2-back-bold {
+  font-weight: bold;
+  cursor: pointer;
+}
+.fb2-header-flex {
+  display: flex;
+  justify-content: flex-end;
+}
+.fb2-excel-white {
+  color: white;
+}
+.fb2-filter-width {
+  width: 47px;
+}
+.fb2-filter-row {
+  padding-top: 0px;
+}
+.fb2-loading-center {
+  text-align: center;
+}
+.fb2-filter-margin {
+  margin-bottom: 8px;
+}
+.fb2-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.fb2-filter-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.fb2-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.fb2-check-pos {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.fb2-filter-actions {
+  margin-top: 7px;
+}
+.fb2-tag-container {
+  display: flex;
+  justify-content: space-between;
+}
+.fb2-edit-tag,
+.fb2-apply-tag,
+.fb2-clear-tag,
+.fb2-delete-tag,
+.fb2-view-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.fb2-tag-icon {
+  font-size: 10px !important;
+}
+.fb2-view-tag {
+  margin-right: 0px;
+}
+.fb2-buttons-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.fb2-reset-btn,
+.fb2-new-btn {
+  margin-right: 10px;
+}
+.fb2-table-container {
+  margin-top: 10px;
+}
+.fb2-table-whitespace {
+  white-space: Pre-line;
+}
+.fb2-date-header,
+.fb2-tech-header,
+.fb2-cust-header,
+.fb2-rating-header,
+.fb2-comment-header {
+  text-align: center;
+}
+.fb2-date-cell,
+.fb2-rating-cell {
+  text-align: center;
+}
+.fb2-tooltip-cell {
+  text-align: left;
+}
+.fb2-date-dropdown {
+  width: 300px;
+}
+.fb2-date-search {
+  width: 280px;
+}
+.fb2-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.fb2-modal-title {
+  text-align: center;
 }

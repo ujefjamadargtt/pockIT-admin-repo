@@ -10,7 +10,6 @@ import { ServiceCatMasterDataNew } from 'src/app/Pages/Models/ServiceCatMasterDa
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-view-service-logs',
   templateUrl: './view-service-logs.component.html',
@@ -36,13 +35,11 @@ export class ViewServiceLogsComponent implements OnInit {
   excelData: any = [];
   exportLoading: boolean = false;
   isSpinning = false;
-
   @Input() data: any = ServiceCatMasterDataNew;
   @Input() drawerCloset: any = Function;
   @Input() drawerVisiblet: boolean = false;
   @Input() type: any;
   @Input() serviceid: any;
-
   columns: string[][] = [
     ['EXPRESS_COST', 'EXPRESS_COST'],
     ['NAME', 'NAME'],
@@ -61,7 +58,6 @@ export class ViewServiceLogsComponent implements OnInit {
   selectedCategories: number[] = [];
   selectedSubCategories: number[] = [];
   servicename: any;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -70,9 +66,7 @@ export class ViewServiceLogsComponent implements OnInit {
     public datepipe: DatePipe,
     private _exportService: ExportService
   ) { }
-
   distinctData: any = [];
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -95,28 +89,22 @@ export class ViewServiceLogsComponent implements OnInit {
   ngOnInit() {
     this.getCategoryData();
     this.getSubCategoryData();
-
     this.datalistforTable.START_TIME = this.datepipe.transform(
       this.datalistforTable.START_TIME,
       'hh:mm a'
     );
-
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
       : '0';
     this.USER_ID = Number(decryptedUserId);
-
     this.searchTable();
   }
-
   ViewImage: any;
   ImageModalVisible: boolean = false;
   imageshow;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
@@ -127,16 +115,13 @@ export class ViewServiceLogsComponent implements OnInit {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
   onKeypressEvent(keys: KeyboardEvent) {
     const element = window.document.getElementById('button');
-
     if (this.searchText1.length >= 3 && keys.key === 'Enter') {
       this.searchTable(true);
     } else if (this.searchText1.length == 0 && keys.key == 'Backspace') {
-      // this.dataList = []
       this.searchTable(true);
     }
   }
@@ -154,24 +139,20 @@ export class ViewServiceLogsComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'DESC';
     this.pageIndextable = pageIndex;
     this.pageSizetable = pageSize;
-
     if (this.pageSizetable != pageSize) {
       this.pageIndextable = 1;
       this.pageSizetable = pageSize;
     }
-
     if (this.sortKeytable != sortField) {
       this.pageIndextable = 1;
       this.pageSizetable = pageSize;
     }
-
     this.sortKeytable = sortField;
     this.sortValuetable = sortOrder;
     if (currentSort != null && currentSort.value != undefined) {
       this.searchTable();
     }
   }
-
   datalistforTable: any = [];
   loadtable: boolean = false;
   totalREcordTable: any = 0;
@@ -190,27 +171,22 @@ export class ViewServiceLogsComponent implements OnInit {
   SubServiceFilter: string | undefined = undefined;
   NewFilter: string | undefined = undefined;
   ExpressFilter: string | undefined = undefined;
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.searchTable(true);
   }
-
   onServiceTypeFilterChange(selectedStatus: string) {
     this.serviceTypeFilter = selectedStatus;
     this.searchTable(true);
   }
-
   onJobCreatedFilterChange(selectedStatus: string) {
     this.JobCreatedFilter = selectedStatus;
     this.searchTable(true);
   }
-
   onSubServiceFilterChange(selectedStatus: string) {
     this.SubServiceFilter = selectedStatus;
     this.searchTable(true);
   }
-
   onNewFilterChange(selectedStatus: string) {
     this.NewFilter = selectedStatus;
     this.searchTable(true);
@@ -220,29 +196,25 @@ export class ViewServiceLogsComponent implements OnInit {
     this.guranteeFilter = selectedStatus;
     this.searchTable(true);
   }
-
   waranteeFilter: string | undefined = undefined;
   onwarrantyFilterChange(selectedStatus: string) {
     this.waranteeFilter = selectedStatus;
     this.searchTable(true);
   }
-
   onExpressFilterChange(selectedStatus: string) {
     this.ExpressFilter = selectedStatus;
     this.searchTable(true);
   }
   Durationhours = '';
   Durationminutes = '';
-
   onInputChange() {
     if (this.Durationhours === '' && this.Durationminutes === '') {
       this.isServiceDurationFilterApplied = false;
-      this.searchTable(true); // Reset the filter if both fields are empty
+      this.searchTable(true); 
     }
   }
   applydurationFilter() {
     if (this.Durationhours === '' || this.Durationminutes === '') {
-      // Show error if any field is empty
       this.isServiceDurationFilterApplied = false;
       if (this.Durationhours === '' && this.Durationminutes === '') {
         this.message.error('Please Select Both Hours and Minutes.', '');
@@ -251,13 +223,10 @@ export class ViewServiceLogsComponent implements OnInit {
       } else if (this.Durationminutes === '') {
         this.message.error('Please Select Minutes.', '');
       }
-
-      // Call searchTable to reset the filter
-      this.searchTable(true); // Pass true to reset the filter
+      this.searchTable(true); 
     } else {
-      // Apply filter if both fields are filled
       this.isServiceDurationFilterApplied = true;
-      this.searchTable(false); // Pass false to apply the filter
+      this.searchTable(false); 
     }
   }
   prephours = '';
@@ -265,12 +234,11 @@ export class ViewServiceLogsComponent implements OnInit {
   onprepInputChange() {
     if (this.prephours === '' && this.prepnminutes === '') {
       this.isServiceDurationFilterApplied = false;
-      this.searchTable(true); // Reset the filter if both fields are empty
+      this.searchTable(true); 
     }
   }
   applyprepFilter() {
     if (this.prephours === '' || this.prepnminutes === '') {
-      // Show error if any field is empty
       this.isPrepHoursFilterApplied = false;
       if (this.prephours === '' && this.prepnminutes === '') {
         this.message.error('Please Select Both Hours and Minutes.', '');
@@ -279,16 +247,12 @@ export class ViewServiceLogsComponent implements OnInit {
       } else if (this.prepnminutes === '') {
         this.message.error('Please Select Minutes.', '');
       }
-
-      // Call searchTable to reset the filter
-      this.searchTable(true); // Pass true to reset the filter
+      this.searchTable(true); 
     } else {
-      // Apply filter if both fields are filled
       this.isPrepHoursFilterApplied = true;
-      this.searchTable(false); // Pass false to apply the filter
+      this.searchTable(false); 
     }
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -297,14 +261,12 @@ export class ViewServiceLogsComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   searchTable(reset: boolean = false, exportInExcel: boolean = false) {
     if (reset) {
       this.pageIndextable = 1;
       this.sortKeytable = '_id';
       this.sortValuetable = 'DESC';
     }
-
     var sort: string;
     try {
       sort = this.sortValuetable.startsWith('a') ? 'asc' : 'DESC';
@@ -312,11 +274,8 @@ export class ViewServiceLogsComponent implements OnInit {
       sort = '';
     }
     let filter: any = {};
-
     var likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText1 !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -327,9 +286,7 @@ export class ViewServiceLogsComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     this.loadingRecords = true;
-
     if (this.type != null && this.type !== undefined && this.type !== '') {
       if (
         this.type === 'B2BM' ||
@@ -349,7 +306,6 @@ export class ViewServiceLogsComponent implements OnInit {
     } else {
       this.logtype = {};
     }
-
     if (this.selectedLogDate?.length === 2) {
       const [start, end] = this.selectedLogDate;
       if (start && end) {
@@ -368,70 +324,60 @@ export class ViewServiceLogsComponent implements OnInit {
                     .toString()
                     .padStart(2, '0')}:00`
           );
-
         filter.LOG_DATE_TIME = {
           $gte: formatDate(new Date(start)),
           $lte: formatDate(new Date(end)),
         };
       }
     }
-
     if (this.ServiceModBytext !== '') {
       filter.ADDED_BY = { $regex: this.ServiceModBytext.trim(), $options: 'i' };
       this.isServiceModVisibleFilterApplied = true;
     } else {
       this.isServiceModVisibleFilterApplied = false;
     }
-
     if (this.Logtext !== '') {
       filter.LOG_TEXT = { $regex: this.Logtext.trim(), $options: 'i' };
       this.isLogTextVisibleFilterApplied = true;
     } else {
       this.isLogTextVisibleFilterApplied = false;
     }
-
     if (this.nametext !== '') {
       filter.NAME = { $regex: this.nametext.trim(), $options: 'i' };
       this.isServiceNameFilterApplied = true;
     } else {
       this.isServiceNameFilterApplied = false;
     }
-
     if (this.hsncodetext !== '') {
       filter.HSN_CODE = { $regex: this.hsncodetext.trim(), $options: 'i' };
       this.ishsncodeFilterApplied = true;
     } else {
       this.ishsncodeFilterApplied = false;
     }
-
     if (this.taxnametext !== '') {
       filter.TAX_NAME = { $regex: this.taxnametext.trim(), $options: 'i' };
       this.isTaxNameFilterApplied = true;
     } else {
       this.isTaxNameFilterApplied = false;
     }
-
     if (this.unitnametext !== '') {
       filter.UNIT_NAME = { $regex: this.unitnametext.trim(), $options: 'i' };
       this.isUnitNameFilterApplied = true;
     } else {
       this.isUnitNameFilterApplied = false;
     }
-
     if (this.hsncodetext !== '') {
       filter.HSN_CODE = { $regex: this.hsncodetext.trim(), $options: 'i' };
       this.ishsncodeFilterApplied = true;
     } else {
       this.ishsncodeFilterApplied = false;
     }
-
     if (this.taxnametext !== '') {
       filter.TAX_NAME = { $regex: this.taxnametext.trim(), $options: 'i' };
       this.isTaxNameFilterApplied = true;
     } else {
       this.isTaxNameFilterApplied = false;
     }
-
     if (this.guranteetext !== '') {
       filter.GUARANTEE_PERIOD = {
         $regex: this.guranteetext.trim(),
@@ -440,7 +386,6 @@ export class ViewServiceLogsComponent implements OnInit {
     } else {
       this.isguranteeFilterApplied = false;
     }
-
     if (this.wranteetext !== '') {
       filter.WARRANTY_PERIOD = {
         $regex: this.wranteetext.trim(),
@@ -449,21 +394,18 @@ export class ViewServiceLogsComponent implements OnInit {
     } else {
       this.iswarperiodFilterApplied = false;
     }
-
     if (this.B2Btext !== '') {
       filter.B2B_PRICE = { $regex: this.B2Btext.trim(), $options: 'i' };
       this.isB2BFilterApplied = true;
     } else {
       this.isB2BFilterApplied = false;
     }
-
     if (this.B2Ctext !== '') {
       filter.B2C_PRICE = { $regex: this.B2Ctext.trim(), $options: 'i' };
       this.isB2CFilterApplied = true;
     } else {
       this.isB2CFilterApplied = false;
     }
-
     if (this.TechnicianCosttext !== '') {
       filter.TECHNICIAN_COST = {
         $regex: this.TechnicianCosttext.trim(),
@@ -473,7 +415,6 @@ export class ViewServiceLogsComponent implements OnInit {
     } else {
       this.isTechnicalCostFilterApplied = false;
     }
-
     if (this.VendorCosttext !== '') {
       filter.VENDOR_COST = {
         $regex: this.VendorCosttext.trim(),
@@ -483,28 +424,24 @@ export class ViewServiceLogsComponent implements OnInit {
     } else {
       this.isVendorCostFilterApplied = false;
     }
-
     if (this.ExpCosttext !== '') {
       filter.EXPRESS_COST = { $regex: this.ExpCosttext.trim(), $options: 'i' };
       this.isExpressCostFilterApplied = true;
     } else {
       this.isExpressCostFilterApplied = false;
     }
-
     if (this.Qtytext !== '') {
       filter.QTY = { $regex: this.Qtytext.trim(), $options: 'i' };
       this.isQtyFilterApplied = true;
     } else {
       this.isQtyFilterApplied = false;
     }
-
     if (this.MaxQtytext !== '') {
       filter.MAX_QTY = { $regex: this.MaxQtytext.trim(), $options: 'i' };
       this.isMaxQtyFilterApplied = true;
     } else {
       this.isMaxQtyFilterApplied = false;
     }
-
     if (this.Durationhours !== '' && this.Durationminutes !== '') {
       filter.DURATION_HOUR = {
         $regex: `^${this.Durationhours.trim()}$`,
@@ -512,16 +449,14 @@ export class ViewServiceLogsComponent implements OnInit {
       };
       filter.DURATION_MIN = {
         $regex: `^${this.Durationminutes.trim()}$`,
-        $options: 'i', // Fixed the issue with extra backtick
+        $options: 'i', 
       };
       this.isServiceDurationFilterApplied = true;
     } else if (reset) {
-      // If reset is true, remove duration filters
       delete filter.DURATION_HOUR;
       delete filter.DURATION_MIN;
       this.isServiceDurationFilterApplied = false;
     }
-
     if (this.prephours !== '' && this.prepnminutes !== '') {
       filter.PREPARATION_HOURS = {
         $regex: `^${this.prephours.trim()}$`,
@@ -529,64 +464,47 @@ export class ViewServiceLogsComponent implements OnInit {
       };
       filter.PREPARATION_MINUTES = {
         $regex: `^${this.prepnminutes.trim()}$`,
-        $options: 'i', // Fixed the issue with extra backtick
+        $options: 'i', 
       };
       this.isPrepHoursFilterApplied = true;
     } else if (reset) {
-      // If reset is true, remove duration filters
       delete filter.PREPARATION_HOURS;
       delete filter.PREPARATION_MINUTES;
       this.isPrepHoursFilterApplied = false;
     }
-
-    // Start Time Range Filter
     if (this.startfromTime && this.starttoTime) {
       filter.START_TIME = { $gte: this.startfromTime, $lte: this.starttoTime };
     }
-
-    // End Time Range Filter
     if (this.endfromTime1 && this.endtoTime1) {
       filter.END_TIME = { $gte: this.endfromTime1, $lte: this.endtoTime1 };
     }
-
     if (this.statusFilter) {
       filter.STATUS = this.statusFilter;
     }
-
     if (this.JobCreatedFilter) {
       filter.IS_JOB_CREATED_DIRECTLY = this.JobCreatedFilter;
     }
-
     if (this.SubServiceFilter) {
       filter.IS_PARENT = this.SubServiceFilter;
     }
-
     if (this.ExpressFilter) {
       filter.IS_EXPRESS = this.ExpressFilter;
     }
-
     if (this.NewFilter) {
       filter.IS_NEW = this.NewFilter;
     }
-
     if (this.guranteeFilter) {
       filter.GUARANTEE_ALLOWED = this.guranteeFilter;
     }
-
     if (this.waranteeFilter) {
       filter.WARRANTY_ALLOWED = this.waranteeFilter;
     }
-
     if (this.serviceTypeFilter) {
       filter.SERVICE_TYPE = this.serviceTypeFilter;
     }
-
-    // Category Filter
     if (this.selectedCategories.length > 0) {
       filter.CATEGORY_NAME = { $in: this.selectedCategories };
     }
-
-    // Subcategory Filter
     if (this.selectedSubCategories.length > 0) {
       filter.SUB_CATEGORY_NAME = { $in: this.selectedSubCategories };
     }
@@ -616,10 +534,8 @@ export class ViewServiceLogsComponent implements OnInit {
         $and: [{ SERVICE_ID: this.serviceid }, this.logtype],
       };
     }
-
     const combineFilters = (baseFilter: any, newFilter: any) => {
       const mergedFilter = { ...baseFilter };
-
       for (const key in newFilter) {
         if (key === '$and' && Array.isArray(newFilter[key])) {
           if (mergedFilter[key]) {
@@ -631,17 +547,12 @@ export class ViewServiceLogsComponent implements OnInit {
           mergedFilter[key] = newFilter[key];
         }
       }
-
       return mergedFilter;
     };
-
-    // Combine filters
     filter = combineFilters(filter, additionalFilters);
     filter = combineFilters(filter, this.filterQuery);
-
     if (exportInExcel == false) {
       this.loadtable = true;
-
       this.api
         .getservicelogs(
           this.pageIndextable,
@@ -701,14 +612,12 @@ export class ViewServiceLogsComponent implements OnInit {
     } else {
       this.exportLoading = true;
       this.loadingRecords = true;
-
       this.api
         .getservicelogs(
           this.pageIndex,
           this.pageSizetable,
           this.sortKey,
           sort,
-          // likeQuery + this.filterQuery
           filter,
           this.searchText,
           [
@@ -744,12 +653,11 @@ export class ViewServiceLogsComponent implements OnInit {
         );
     }
   }
-
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  TabId: any; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
+  TabId: any; 
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
   selectedQuery: any;
@@ -758,77 +666,11 @@ export class ViewServiceLogsComponent implements OnInit {
   isFilterApplied: boolean = false;
   filterloading: boolean = false;
   filterQuery: any;
-
-  // loadFilters() {
-  //   this.filterloading = true;
-  //   this.api
-  //     .getFilterData1(
-  //       0,
-  //       0,
-  //       "",
-  //       "",
-  //       ` AND TAB_ID = '${this.TabId}' AND USER_ID = ${this.USER_ID}`
-  //     ) // Use USER_ID as a number
-  //     .subscribe(
-  //       (response) => {
-  //         if (response.code === 200) {
-  //           this.filterloading = false;
-  //           this.savedFilters = response.data;
-  //           this.filterQuery = "";
-  //         } else {
-  //           this.filterloading = false;
-  //           this.message.error("Failed to load filters.", "");
-  //         }
-  //       },
-  //       (error) => {
-  //         this.filterloading = false;
-  //         this.message.error("An error occurred while loading filters.", "");
-  //       }
-  //     );
-  //   this.filterQuery = "";
-  // }
-
-  // deleteItem(item: any): void {
-  //   this.filterloading = true;
-  //   this.api.deleteFilterById(item.ID).subscribe(
-  //     (data) => {
-  //       if (data["code"] == 200) {
-  //         this.savedFilters = this.savedFilters.filter(
-  //           (filter) => filter.ID !== item.ID
-  //         );
-  //         this.message.success("Filter deleted successfully.", "");
-  //         this.filterloading = false;
-  //         this.isfilterapply = false;
-  //         this.filterClass = "filter-invisible";
-
-  //         this.loadFilters();
-  //         this.filterQuery = "";
-  //         this.searchTable(true);
-  //       } else {
-  //         this.message.error("Failed to delete filter.", "");
-  //         this.filterloading = false;
-  //       }
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       this.loadingRecords = false;
-  //       if (err.status === 0) {
-  //         this.message.error(
-  //           "Unable to connect. Please check your internet or server connection and try again shortly.",
-  //           ""
-  //         );
-  //       } else {
-  //         this.message.error("Something Went Wrong.", "");
-  //       }
-  //     }
-  //   );
-  // }
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -836,13 +678,12 @@ export class ViewServiceLogsComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = '${this.TabId}' AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -857,21 +698,15 @@ export class ViewServiceLogsComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -885,7 +720,6 @@ export class ViewServiceLogsComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   isDeleting: boolean = false;
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
@@ -897,16 +731,13 @@ export class ViewServiceLogsComponent implements OnInit {
           this.savedFilters = this.savedFilters.filter(
             (filter) => filter.ID !== item.ID
           );
-
           this.message.success('Filter deleted successfully.', '');
           sessionStorage.removeItem('ID');
           this.filterloading = true;
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.searchTable(true);
@@ -931,16 +762,6 @@ export class ViewServiceLogsComponent implements OnInit {
     );
   }
   selectedFilter: string | null = null;
-
-  // Clearfilter() {
-  //   this.filterClass = "filter-invisible";
-  //   this.selectedFilter = "";
-
-  //   this.isfilterapply = false;
-  //   this.filterQuery = "";
-  //   this.searchTable();
-  // }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -949,44 +770,27 @@ export class ViewServiceLogsComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.searchTable();
   }
-
   applyfilter(item) {
     try {
-      // Try to parse FILTER_QUERY if it's a valid JSON string
       if (item.FILTER_QUERY && item.FILTER_QUERY !== '[object Object]') {
-        this.filterQuery = JSON.parse(item.FILTER_QUERY); // Should be a valid filter object
+        this.filterQuery = JSON.parse(item.FILTER_QUERY); 
       } else {
-        this.filterQuery = {}; // Default to empty object if invalid format
+        this.filterQuery = {}; 
       }
     } catch (error) {
-      this.filterQuery = {}; // Set to empty object in case of error
+      this.filterQuery = {}; 
     }
     sessionStorage.setItem('ID', item.ID);
-
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     this.isfilterapply = true;
-    // this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.searchTable(true);
   }
-
-  // applyfilter(item) {
-  //   //
-  //   this.filterClass = 'filter-invisible';
-  //   this.selectedFilter = item.ID;
-  //   sessionStorage.setItem('ID', item.ID);
-  //   this.isfilterapply = true;
-  //   this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
-  //   this.search(true);
-  // }
   toggleLiveDemo(item): void {
     this.selectedQuery = item.SHOW_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   applyCondition: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -1003,21 +807,16 @@ export class ViewServiceLogsComponent implements OnInit {
       groups: [],
     },
   ];
-
   filterData: any;
   openfilter() {
     this.drawerTitle = 'View Service Logs Filter';
     this.applyCondition = '';
     this.filterFields[3]['options'] = this.categoryData;
     this.filterFields[4]['options'] = this.subcategoryData;
-
     this.drawerFilterVisible = true;
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1034,7 +833,6 @@ export class ViewServiceLogsComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1051,7 +849,6 @@ export class ViewServiceLogsComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1061,27 +858,9 @@ export class ViewServiceLogsComponent implements OnInit {
       FILTER_JSON: {},
     };
   }
-
-  // // Edit Code 1
-  // EditQueryData = [];
-  // editButton: any;
-  // FILTER_NAME: any;
-  // editQuery(data: any) {
-  //   this.filterGroups = JSON.parse(data.FILTER_JSON);
-  //   this.FILTER_NAME = data.FILTER_NAME;
-
-  //   this.EditQueryData = data;
-  //   this.editButton = "Y";
-  //   this.drawerTitle = "Edit Query";
-  //   this.drawerFilterVisible = true;
-
-  // }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
@@ -1099,14 +878,11 @@ export class ViewServiceLogsComponent implements OnInit {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
@@ -1116,7 +892,6 @@ export class ViewServiceLogsComponent implements OnInit {
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'LOG_DATE_TIME',
@@ -1146,7 +921,6 @@ export class ViewServiceLogsComponent implements OnInit {
       ],
       placeholder: 'Enter Service Modified By Name',
     },
-
     {
       key: 'LOG_TEXT',
       label: 'Log Text',
@@ -1176,7 +950,6 @@ export class ViewServiceLogsComponent implements OnInit {
       options: [],
       placeholder: 'Enter Category',
     },
-
     {
       key: 'SUB_CATEGORY_NAME',
       label: 'Sub Category',
@@ -1191,7 +964,6 @@ export class ViewServiceLogsComponent implements OnInit {
       ],
       placeholder: 'Enter Sub Category Name',
     },
-
     {
       key: 'NAME',
       label: 'Service Name',
@@ -1361,7 +1133,6 @@ export class ViewServiceLogsComponent implements OnInit {
       ],
       placeholder: 'Enter Tax Name',
     },
-
     {
       key: 'UNIT_NAME',
       label: 'Unit Name',
@@ -1488,22 +1259,6 @@ export class ViewServiceLogsComponent implements OnInit {
       ],
       placeholder: 'Is Warranty Allowed ?',
     },
-
-    // {
-    //   key: 'WARRANTY_PERIOD',
-    //   label: 'Warranty Period',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Warranty Period',
-    // },
-
     {
       key: 'GUARANTEE_ALLOWED',
       label: 'Is Gurantee Allowed?',
@@ -1518,20 +1273,6 @@ export class ViewServiceLogsComponent implements OnInit {
       ],
       placeholder: 'Is Gurantee Allowed ?',
     },
-    // {
-    //   key: 'GUARANTEE_PERIOD',
-    //   label: 'Guarantee Period',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Guarantee Period',
-    // },
     {
       key: 'STATUS',
       label: 'Status',
@@ -1544,137 +1285,101 @@ export class ViewServiceLogsComponent implements OnInit {
       placeholder: 'Status',
     },
   ];
-
-  // filters
   LogDateVisible;
   isLogDateFilterApplied: boolean = false;
   selectedLogDate: any;
-
   ServiceModByVisible;
   isServiceModVisibleFilterApplied: boolean = false;
   ServiceModBytext: string = '';
-
   LogTextVisible;
   isLogTextVisibleFilterApplied: boolean = false;
   Logtext: string = '';
-
   CategoryVisible;
   isCategoryVisibleFilterApplied: boolean = false;
-
   SubCategoryVisible;
   isSubCategoryVisibleFilterApplied: boolean = false;
-
   ServiceNameVisible;
   isServiceNameFilterApplied: boolean = false;
   nametext: string = '';
-
   hsncodeVisible;
   ishsncodeFilterApplied: boolean = false;
   hsncodetext: string = '';
-
   taxnameVisible;
   isTaxNameFilterApplied: boolean = false;
   taxnametext: string = '';
-
   unitnameVisible;
   isUnitNameFilterApplied: boolean = false;
   unitnametext: string = '';
-
   warperiodVisible;
   iswarperiodFilterApplied: boolean = false;
   wranteetext: string = '';
-
   guranteeVisible;
   isguranteeFilterApplied: boolean = false;
   guranteetext: string = '';
-
   ServiceTypeVisible;
   isServiceTypeFilterApplied: boolean = false;
-
   B2BVisible;
   isB2BFilterApplied: boolean = false;
   B2Btext: string = '';
-
   B2CVisible;
   isB2CFilterApplied: boolean = false;
   B2Ctext: string = '';
-
   TechnicalCostVisible;
   isTechnicalCostFilterApplied: boolean = false;
   TechnicianCosttext: string = '';
-
   VendorCostVisible;
   isVendorCostFilterApplied: boolean = false;
   VendorCosttext: string = '';
-
   IsExpressVisible;
   isExpressFilterApplied: boolean = false;
   ExpressCosttext: string = '';
-
   ExpressCostVisible;
   isExpressCostFilterApplied: boolean = false;
   ExpCosttext: string = '';
-
   QtyVisible;
   isQtyFilterApplied: boolean = false;
   Qtytext: string = '';
-
   MaxQtyVisible;
   isMaxQtyFilterApplied: boolean = false;
   MaxQtytext: string = '';
-
   PrepHoursVisible;
   isPrepHoursFilterApplied: boolean = false;
   PrepHourstext: string = '';
-
   ServiceDurationVisible;
   isServiceDurationFilterApplied: boolean = false;
   Durationtext: string = '';
-
   StartTimeVisible;
   isStartTimeFilterApplied: boolean = false;
   StartTimetext: string = '';
-
   EndTimeVisible;
   isEndTimeFilterApplied: boolean = false;
   EndTimetext: string = '';
-
   JobCreatedVisible;
   isJobCreatedFilterApplied: boolean = false;
   JobCreatedtext: string = '';
-
   IsParentVisible;
   isParentFilterApplied: boolean = false;
   IsParenttext: string = '';
-
   IsNewVisible;
   isNewFilterApplied: boolean = false;
   IsNewtext: string = '';
-
   StatusVisible;
   isStatusFilterApplied: boolean = false;
-
   CustTypeFilter: string | undefined = undefined;
-
   listofCustType: any[] = [
     { text: 'Individiual', value: 'I' },
     { text: 'Business', value: 'B' },
   ];
-
   onCustTypeFilterChange(selectedStatus: string) {
     this.CustTypeFilter = selectedStatus;
     this.searchTable(true);
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   onKeyup(keys: any, type: string): void {
     const element = window.document.getElementById('button');
-
     if (
       type == 'servicemodby' &&
       this.ServiceModBytext.length >= 3 &&
@@ -1688,13 +1393,10 @@ export class ViewServiceLogsComponent implements OnInit {
       keys.key === 'Backspace'
     ) {
       this.searchTable();
-
       this.isServiceModVisibleFilterApplied = false;
     }
-
     if (type == 'logtext' && this.Logtext.length >= 3 && keys.key === 'Enter') {
       this.searchTable();
-
       this.isLogTextVisibleFilterApplied = true;
     } else if (
       type == 'logtext' &&
@@ -1702,17 +1404,14 @@ export class ViewServiceLogsComponent implements OnInit {
       keys.key === 'Backspace'
     ) {
       this.searchTable();
-
       this.isLogTextVisibleFilterApplied = false;
     }
-
     if (
       type == 'taxname' &&
       this.taxnametext.length >= 3 &&
       keys.key === 'Enter'
     ) {
       this.searchTable();
-
       this.isTaxNameFilterApplied = true;
     } else if (
       type == 'taxname' &&
@@ -1720,17 +1419,14 @@ export class ViewServiceLogsComponent implements OnInit {
       keys.key === 'Backspace'
     ) {
       this.searchTable();
-
       this.isTaxNameFilterApplied = false;
     }
-
     if (
       type == 'unitame' &&
       this.unitnametext.length >= 3 &&
       keys.key === 'Enter'
     ) {
       this.searchTable();
-
       this.isUnitNameFilterApplied = true;
     } else if (
       type == 'unitame' &&
@@ -1738,17 +1434,14 @@ export class ViewServiceLogsComponent implements OnInit {
       keys.key === 'Backspace'
     ) {
       this.searchTable();
-
       this.isUnitNameFilterApplied = false;
     }
-
     if (
       type == 'gurantee' &&
       this.guranteetext.length > 0 &&
       keys.key === 'Enter'
     ) {
       this.searchTable();
-
       this.isguranteeFilterApplied = true;
     } else if (
       type == 'gurantee' &&
@@ -1756,7 +1449,6 @@ export class ViewServiceLogsComponent implements OnInit {
       keys.key === 'Backspace'
     ) {
       this.searchTable();
-
       this.isguranteeFilterApplied = false;
     }
     if (
@@ -1765,7 +1457,6 @@ export class ViewServiceLogsComponent implements OnInit {
       keys.key === 'Enter'
     ) {
       this.searchTable();
-
       this.iswarperiodFilterApplied = true;
     } else if (
       type == 'warranty' &&
@@ -1773,10 +1464,8 @@ export class ViewServiceLogsComponent implements OnInit {
       keys.key === 'Backspace'
     ) {
       this.searchTable();
-
       this.iswarperiodFilterApplied = false;
     }
-
     if (type == 'name' && this.nametext.length >= 3 && keys.key === 'Enter') {
       this.searchTable();
       this.isServiceNameFilterApplied = true;
@@ -1788,7 +1477,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.isServiceNameFilterApplied = false;
     }
-
     if (
       type == 'hsncode' &&
       this.hsncodetext.length >= 1 &&
@@ -1804,7 +1492,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.ishsncodeFilterApplied = false;
     }
-
     if (type == 'b2b' && this.B2Btext.length >= 1 && keys.key === 'Enter') {
       this.searchTable();
       this.isB2BFilterApplied = true;
@@ -1816,7 +1503,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.isB2BFilterApplied = false;
     }
-
     if (type == 'b2c' && this.B2Ctext.length >= 1 && keys.key === 'Enter') {
       this.searchTable();
       this.isB2CFilterApplied = true;
@@ -1828,7 +1514,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.isB2CFilterApplied = false;
     }
-
     if (
       type == 'technicianprice' &&
       this.TechnicianCosttext.length >= 1 &&
@@ -1844,7 +1529,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.isTechnicalCostFilterApplied = false;
     }
-
     if (
       type == 'vendorprice' &&
       this.VendorCosttext.length >= 1 &&
@@ -1860,7 +1544,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.isVendorCostFilterApplied = false;
     }
-
     if (
       type == 'expcost' &&
       this.ExpCosttext.length >= 1 &&
@@ -1876,7 +1559,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.isFilterApplied = false;
     }
-
     if (type == 'qty' && this.Qtytext.length >= 1 && keys.key === 'Enter') {
       this.searchTable();
       this.isQtyFilterApplied = true;
@@ -1888,7 +1570,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.isQtyFilterApplied = false;
     }
-
     if (
       type == 'maxqty' &&
       this.MaxQtytext.length >= 1 &&
@@ -1904,7 +1585,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.isMaxQtyFilterApplied = false;
     }
-
     if (
       type == 'prephours' &&
       this.PrepHourstext.length >= 1 &&
@@ -1920,7 +1600,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.searchTable();
       this.isPrepHoursFilterApplied = false;
     }
-
     if (
       type == 'serviceduration' &&
       this.Durationtext.length >= 1 &&
@@ -1938,12 +1617,6 @@ export class ViewServiceLogsComponent implements OnInit {
     }
   }
   keyup(keys) {
-    // if (this.searchText.length >= 3) {
-    //   this.search();
-    // } else if (this.searchText.length == 0) {
-    //   this.search();
-    // }
-
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
@@ -1973,10 +1646,8 @@ export class ViewServiceLogsComponent implements OnInit {
     this.unitnametext = '';
     this.wranteetext = '';
     this.guranteetext = '';
-
     this.searchTable();
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.searchTable(true);
@@ -1984,7 +1655,6 @@ export class ViewServiceLogsComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   categoryData: any = [];
   getCategoryData() {
     this.api
@@ -2002,11 +1672,9 @@ export class ViewServiceLogsComponent implements OnInit {
         }
       });
   }
-
   onCategoryChange(): void {
     this.searchTable();
   }
-
   subcategoryData: any = [];
   getSubCategoryData() {
     this.api
@@ -2024,7 +1692,6 @@ export class ViewServiceLogsComponent implements OnInit {
         }
       });
   }
-
   onFilterClick(columnKey: string): void {
     this.api
       .getDistinctData1('678c8276d5fa6d645850e972', columnKey, true, '')
@@ -2042,11 +1709,9 @@ export class ViewServiceLogsComponent implements OnInit {
         }
       );
   }
-
   onSubCategoryChange(): void {
     this.searchTable();
   }
-
   onLogDateangeChange() {
     if (this.selectedLogDate && this.selectedLogDate.length === 2) {
       const [start, end] = this.selectedLogDate;
@@ -2055,7 +1720,7 @@ export class ViewServiceLogsComponent implements OnInit {
         this.isLogDateFilterApplied = true;
       }
     } else {
-      this.selectedLogDate = null; // or [] if you prefer
+      this.selectedLogDate = null; 
       this.searchTable();
       this.isLogDateFilterApplied = false;
     }
@@ -2073,24 +1738,19 @@ export class ViewServiceLogsComponent implements OnInit {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
     date.setHours(hours, minutes, 0);
   }
-
   onTimeFilterChange(): void {
     if (this.fromTime && this.toTime) {
-      // Extract hours and minutes, ensure it's in 'HH:mm:ss' format
       const startHours = this.fromTime.getHours().toString().padStart(2, '0');
       const startMinutes = this.fromTime
         .getMinutes()
@@ -2098,39 +1758,28 @@ export class ViewServiceLogsComponent implements OnInit {
         .padStart(2, '0');
       const endHours = this.toTime.getHours().toString().padStart(2, '0');
       const endMinutes = this.toTime.getMinutes().toString().padStart(2, '0');
-
-      // Concatenate in 'HH:mm:ss' format
       this.startfromTime = `${startHours}:${startMinutes}:00`;
       this.starttoTime = `${endHours}:${endMinutes}:00`;
-
-      // Set the filter as applied
       this.isStartTimeFilterApplied = true;
     } else {
-      // Clear the filter
       this.fromTime = null;
       this.toTime = null;
       this.startfromTime = null;
       this.starttoTime = null;
       this.isStartTimeFilterApplied = false;
     }
-
-    // Now, call searchTable (filtering logic is handled inside searchTable)
     this.searchTable();
   }
-
   endfromTime: any;
   endtoTime: any;
   endfromTime1;
   endtoTime1;
-
   fromTime: any;
   toTime: any;
   startfromTime;
   starttoTime;
-
   onendTimeFilterChange(): void {
     if (this.endfromTime && this.endtoTime) {
-      // Extract hours and minutes, ensure it's in 'HH:mm:ss' format
       const startHours = this.endfromTime
         .getHours()
         .toString()
@@ -2144,91 +1793,66 @@ export class ViewServiceLogsComponent implements OnInit {
         .getMinutes()
         .toString()
         .padStart(2, '0');
-
-      // Concatenate in 'HH:mm:ss' format
       this.endfromTime1 = `${startHours}:${startMinutes}:00`;
       this.endtoTime1 = `${endHours}:${endMinutes}:00`;
-
-      // Set the filter as applied
       this.isEndTimeFilterApplied = true;
     } else {
-      // Clear the filter
       this.endfromTime = null;
       this.endtoTime = null;
       this.endfromTime1 = null;
       this.endtoTime1 = null;
       this.isEndTimeFilterApplied = false;
     }
-
-    // Now, call searchTable (filtering logic is handled inside searchTable)
     this.searchTable();
   }
-
   formatTime(time: string): string {
-    // Ensure the time is valid and in the format HH:mm:ss or HH:mm
     if (time && /^[0-9]{2}:[0-9]{2}(?::[0-9]{2})?$/.test(time)) {
-      // Split the time into hours and minutes (ignore seconds if present)
       const [hours, minutes] = time.split(':').map(Number);
-
-      // Convert 24-hour format to 12-hour format
       const period = hours >= 12 ? 'PM' : 'AM';
-      const hour12 = hours % 12 || 12; // Convert 0 to 12 (midnight)
-
-      // Return formatted time
+      const hour12 = hours % 12 || 12; 
       return `${this.padZero(hour12)}:${this.padZero(minutes)} ${period}`;
     }
     return '';
   }
-
   padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
   }
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   listOfServiceTypeFilter: any[] = [
     { text: 'B2B', value: 'B' },
     { text: 'B2C', value: 'C' },
     { text: 'Both B2B and B2C', value: 'O' },
   ];
-
   listOfJobCreatedFilter: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   listOfSubServiceFilter: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   listOfNewFilter: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   listOfwarantyFilter: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   listOfguranteeFilter: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   listOfExpressFilter: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   importInExcel() {
     this.searchTable(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -2279,13 +1903,11 @@ export class ViewServiceLogsComponent implements OnInit {
         } else if (this.excelData[i]['IS_NEW'] == '0') {
           obj1['Is New?'] = 'No';
         }
-
         if (this.excelData[i]['WARRANTY_ALLOWED'] == '1') {
           obj1['Is New?'] = 'Yes';
         } else if (this.excelData[i]['WARRANTY_ALLOWED'] == '0') {
           obj1['Is New?'] = 'No';
         }
-
         if (this.excelData[i]['GUARANTEE_ALLOWED'] == '1') {
           obj1['Is New?'] = 'Yes';
         } else if (this.excelData[i]['GUARANTEE_ALLOWED'] == '0') {
@@ -2296,7 +1918,6 @@ export class ViewServiceLogsComponent implements OnInit {
         } else if (this.excelData[i]['STATUS'] == '0') {
           obj1['Status'] = 'Inactive';
         }
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -2310,9 +1931,8 @@ export class ViewServiceLogsComponent implements OnInit {
       this.message.error('There is a No Data', '');
     }
   }
-
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
 }

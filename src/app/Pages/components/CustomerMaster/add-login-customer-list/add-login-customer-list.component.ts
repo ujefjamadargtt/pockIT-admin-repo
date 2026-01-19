@@ -8,7 +8,6 @@ import { customer } from 'src/app/Pages/Models/customer';
 import { customerAddLogin } from 'src/app/Pages/Models/customerAddLogin';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-add-login-customer-list',
   templateUrl: './add-login-customer-list.component.html',
@@ -19,10 +18,8 @@ export class AddLoginCustomerListComponent {
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
   @Input() mainCustData: customer = new customer();
-
   drawerDataAddLogin: any;
   isparentId: any;
-
   drawerCustomerAddLoginVisible = false;
   widthCustomerAddLogin: string = '50%';
   custid: any;
@@ -30,7 +27,6 @@ export class AddLoginCustomerListComponent {
   pageIndex = 1;
   pageSize = 10;
   totalRecords = 1;
-  // dataList = [];
   loadingRecords = true;
   sortValue: string = 'desc';
   sortKey: string = 'id';
@@ -48,7 +44,6 @@ export class AddLoginCustomerListComponent {
     ['ACCOUNT_STATUS', 'Status'],
     ['SHORT_CODE', 'SHORT_CODE'],
   ];
-
   drawerTitleMap: string;
   drawerDataMap: customer = new customer();
   drawerDataSer: customer = new customer();
@@ -60,7 +55,6 @@ export class AddLoginCustomerListComponent {
   time = new Date();
   features = [];
   visible = false;
-  // drawerVisible: boolean;
   drawerTitle: string;
   drawerData: customer = new customer();
   customerVisible: boolean = false;
@@ -95,8 +89,6 @@ export class AddLoginCustomerListComponent {
     { label: 'Customer Type', key: 'CUSTOMER_TYPE', visible: true },
     { label: 'Status', key: 'ACCOUNT_STATUS', visible: true },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -113,7 +105,6 @@ export class AddLoginCustomerListComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -130,33 +121,28 @@ export class AddLoginCustomerListComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     public router: Router,
     private sanitizer: DomSanitizer
   ) {}
-
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
   public commonFunction = new CommonFunctionService();
   TabId: number;
   ngOnInit() {
     this.search();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -169,43 +155,35 @@ export class AddLoginCustomerListComponent {
   iscmpnyNameFilterApplied: boolean = false;
   isemailFilterApplied: boolean = false;
   ismobileFilterApplied: boolean = false;
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     if (currentSort != null && currentSort.value != undefined) {
       this.search();
     }
   }
-
   edit(data: customer): void {
     this.custid = data.ID;
-
     this.drawerTitle = 'Update Customer';
     this.drawerDataAddLogin = Object.assign({}, data);
     this.isparentId = data.PARENT_ID;
     this.mainCustData = this.mainCustData;
     this.drawerCustomerAddLoginVisible = true;
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -215,17 +193,14 @@ export class AddLoginCustomerListComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -237,7 +212,6 @@ export class AddLoginCustomerListComponent {
         ')';
     }
     this.loadingRecords = true;
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     this.api
       .getAllCustomer(
@@ -283,7 +257,6 @@ export class AddLoginCustomerListComponent {
         }
       );
   }
-
   AddLogins(data: any): void {
     this.drawerTitle = `Add Logins`;
     this.drawerDataAddLogin = Object.assign({}, data);
@@ -291,16 +264,13 @@ export class AddLoginCustomerListComponent {
     this.custid = data.ID;
     this.companyName = data.COMPANY_NAME;
   }
-
   get closeCustomerAddLoginCallback() {
     return this.drawerCustomerAddLoginClose.bind(this);
   }
-
   drawerCustomerAddLoginClose(): void {
     this.drawerCustomerAddLoginVisible = false;
     this.search(true);
   }
-
   add(): void {
     this.drawerTitle = 'Create New Logins';
     this.drawerDataAddLogin = new customerAddLogin();
@@ -309,19 +279,15 @@ export class AddLoginCustomerListComponent {
     this.mainCustData = this.mainCustData;
     this.drawerCustomerAddLoginVisible = true;
   }
-
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -332,20 +298,17 @@ export class AddLoginCustomerListComponent {
       this.search(true);
     }
   }
-
   drawerVisibleCustomersLogs: boolean;
   drawerTitleCustomersLogs: string;
   drawerDataCustomersLogs: customer = new customer();
   width: any = '100%';
   custmoerid: any;
-
   viewLogs(data: customer): void {
     this.drawerTitleCustomersLogs = `View Address Logs of ${data.NAME}`;
     this.drawerDataCustomersLogs = Object.assign({}, data);
     this.drawerVisibleCustomersLogs = true;
     this.custmoerid = data.ID;
   }
-
   drawerCloseCustomersLogs(): void {
     this.search();
     this.drawerVisibleCustomersLogs = false;
@@ -353,11 +316,9 @@ export class AddLoginCustomerListComponent {
   get closeCallbackCustomersLogs() {
     return this.drawerCloseCustomersLogs.bind(this);
   }
-
   reset() {
     this.shorttext = '';
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.shorttext.length >= 1 && event.key === 'Enter') {
       this.isShortCodeFilterApplied = true;
@@ -365,7 +326,6 @@ export class AddLoginCustomerListComponent {
       this.isShortCodeFilterApplied = false;
     }
   }
-
   drawerDataEmail: customerAddLogin = new customerAddLogin();
   drawerCustomerEmailVisible: boolean = false;
   widthCustomerEmail: string = '60%';
@@ -378,11 +338,9 @@ export class AddLoginCustomerListComponent {
     this.custid = data.ID;
     this.companyName = data.COMPANY_NAME;
   }
-
   get closeCustomerEmailCallback() {
     return this.drawerCustomerEmailClose.bind(this);
   }
-
   drawerCustomerEmailClose(): void {
     this.drawerCustomerEmailVisible = false;
   }

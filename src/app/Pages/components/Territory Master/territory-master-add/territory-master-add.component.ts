@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { TerritoryMaster } from 'src/app/Pages/Models/TerritoryMaster';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-territory-master-add',
   templateUrl: './territory-master-add.component.html',
@@ -16,17 +15,14 @@ export class TerritoryMasterAddComponent {
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
   public commonFunction = new CommonFunctionService();
-
   isSpinning = false;
   isOk = true;
   isFocused: string = '';
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private datePipe: DatePipe
   ) { }
-
   resetDrawer(teritorymaster: NgForm) {
     this.data = new TerritoryMaster();
     teritorymaster.form.markAsPristine();
@@ -34,8 +30,6 @@ export class TerritoryMasterAddComponent {
   }
   ngOnInit() {
     this.getBranchData();
-    // this.getCityData();
-    // this.getStateData();
     this.getCountryData();
     if (!this.data.ID) {
       this.getOrganizationData();
@@ -46,15 +40,9 @@ export class TerritoryMasterAddComponent {
       this.selectedDays = this.data.WEEKLY_OFFS?.split(',');
     }
   }
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['data'] && changes['data'].currentValue) {
-  //     this.populateWeeklySchedule();
-  //   }
-  // }
   convertToDate(time: any): Date | null {
-    if (time instanceof Date) return time; // Already a Date object
+    if (time instanceof Date) return time; 
     if (typeof time !== 'string' || !time) return null;
-
     const timeParts = time.split(':');
     if (timeParts.length === 3) {
       const [hours, minutes, seconds] = timeParts.map((part) =>
@@ -95,7 +83,6 @@ export class TerritoryMasterAddComponent {
       }
     );
   }
-
   countryData: any = [];
   getCountryData() {
     this.api
@@ -136,7 +123,6 @@ export class TerritoryMasterAddComponent {
   save(addNew: boolean, teritorymaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       (this.data.NAME.trim() == '' ||
         this.data.NAME == null ||
@@ -210,7 +196,6 @@ export class TerritoryMasterAddComponent {
       this.isOk = false;
       this.message.error('Please Enter Sequence No.', '');
     }
-
     if (this.isOk) {
       this.data.WEEKLY_OFFS = this.selectedDays.toString();
       if (
@@ -254,7 +239,6 @@ export class TerritoryMasterAddComponent {
               else {
                 this.data = new TerritoryMaster();
                 this.resetDrawer(teritorymaster);
-
                 this.api.getTeritory(1, 1, 'SEQ_NO', 'desc', '').subscribe(
                   (data) => {
                     if (data['code'] == 200) {
@@ -292,86 +276,25 @@ export class TerritoryMasterAddComponent {
       }
     }
   }
-  // save(addNew: boolean, teritorymaster: NgForm): void {
-  //   this.isSpinning = false;
-  //   this.isOk = true;
-
-  //   // Validation
-  //   if (!this.isValid()) {
-  //     this.isOk = false;
-  //     return; // Exit early if validation fails
-  //   }
-
-  //   // Time Transformation
-  //   this.data.START_TIME = this.transformTime(this.data.START_TIME);
-  //   this.data.END_TIME = this.transformTime(this.data.END_TIME);
-
-  //
-
-  //   if (this.isOk) {
-  //     this.isSpinning = true;
-  //     const saveObservable = this.data.ID
-  //       ? this.api.updateTerritory(this.data)
-  //       : this.api.createTerritory(this.data);
-
-  //     saveObservable.subscribe(
-  //       (successCode: any) => {
-  //         if (successCode.code == '200') {
-  //           this.message.success(
-  //             this.data.ID
-  //               ? 'Territory Updated Successfully'
-  //               : 'Territory Created Successfully',
-  //             ''
-  //           );
-  //           if (!addNew) this.drawerClose();
-  //           else this.resetForm(teritorymaster);
-  //         } else {
-  //           this.message.error(
-  //             this.data.ID
-  //               ? 'Territory Update Failed'
-  //               : 'Territory Creation Failed',
-  //             ''
-  //           );
-  //         }
-  //         this.isSpinning = false;
-  //       },
-  //       (error) => {
-  //         this.message.error(
-  //           'An error occurred while saving the territory.',
-  //           ''
-  //         );
-  //         this.isSpinning = false;
-  //       }
-  //     );
-  //   }
-  // }
-
-  // Validation Function
   private isValid(): boolean {
     if (!this.data.NAME?.trim() || !this.data.COUNTRY_ID || !this.data.SEQ_NO) {
       this.message.error('Please fill all the required fields', '');
       return false;
     }
-
     if (!this.data.NAME?.trim()) {
       this.message.error('Please enter territory name.', '');
       return false;
     }
-
     if (!this.data.COUNTRY_ID) {
       this.message.error('Please select country.', '');
       return false;
     }
-
     if (!this.data.SEQ_NO) {
       this.message.error('Please enter sequence number.', '');
       return false;
     }
-
     return true;
   }
-
-  // Time Transformation Function
   private transformTime(time: any): string {
     if (time instanceof Date) {
       return this.datePipe.transform(time, 'HH:mm:ss')!;
@@ -383,13 +306,9 @@ export class TerritoryMasterAddComponent {
     }
     return '';
   }
-
-  // Reset Form Function
   private resetForm(teritorymaster: NgForm): void {
     this.data = new TerritoryMaster();
     this.resetDrawer(teritorymaster);
-
-    // Get new sequence number
     this.api.getTeritory(1, 1, 'SEQ_NO', 'desc', '').subscribe(
       (data) => {
         if (data['code'] == 200) {
@@ -407,7 +326,6 @@ export class TerritoryMasterAddComponent {
       }
     );
   }
-
   disabledEndHours = (): number[] => {
     if (!this.data.START_TIME) {
       return [];
@@ -415,7 +333,6 @@ export class TerritoryMasterAddComponent {
     const startHour = this.data.START_TIME.getHours();
     return Array.from({ length: startHour }, (_, i) => i);
   };
-
   disabledEndMinutes = (hour: number): number[] => {
     if (!this.data.START_TIME || hour !== this.data.START_TIME.getHours()) {
       return [];
@@ -423,14 +340,11 @@ export class TerritoryMasterAddComponent {
     const startMinute = this.data.START_TIME.getMinutes();
     return Array.from({ length: startMinute }, (_, i) => i);
   };
-
   onStartTimeChange(): void {
-    // Clear the End Time if it becomes invalid after Start Time change
     if (this.data.END_TIME && this.data.END_TIME <= this.data.START_TIME) {
       this.data.END_TIME = null;
     }
   }
-
   close() {
     this.drawerClose();
   }
@@ -672,7 +586,6 @@ export class TerritoryMasterAddComponent {
     { label: 'Kyrgyzstan (+996)', value: '+996' },
     { label: 'Uzbekistan (+998)', value: '+998' },
   ];
-
   weekdata: any[] = [
     { name: 'Monday', shortCode: 'Mon' },
     { name: 'Tuesday', shortCode: 'Tue' },
@@ -682,7 +595,5 @@ export class TerritoryMasterAddComponent {
     { name: 'Saturday', shortCode: 'Sat' },
     { name: 'Sunday', shortCode: 'Sun' },
   ];
-
   selectedDays: string[] = [];
-
 }

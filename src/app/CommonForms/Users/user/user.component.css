@@ -4,7 +4,85 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 nz-divider {
   border-color: #7cb305 !important;
+}
+.wt-100 {
+  width: 100%
+}
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0 10px;
+}
+nz-divider {
+  border-color: #7cb305 !important;
+}
+.text-red {
+  color: red;
+}
+.font-10 {
+  font-size: 10px;
+}
+.text-left {
+  text-align: left;
+}
+.password-error {
+  color: red;
+  font-size: 10px;
+  text-align: left;
+}
+.upload-btn {
+  height: 28px;
+  padding: 0 7px;
+  font-size: 12px;
+  width: 30%;
+}
+.hidden-file-input {
+  display: none !important;
+}
+.profile-photo-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.view-link {
+  color: blue;
+  margin-right: 9px;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.ml10 {
+  margin-left: 10px;
+}
+.footer-cancel-btn {
+  margin-right: 8px;
+}
+.menu-item-primary {
+  border-radius: 4px;
+  color: white !important;
+}
+.menu-link-white {
+  color: white !important;
+}
+.image-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image-preview {
+  width: auto;
+  height: auto;
+  max-width: 600px;
+  max-height: 400px;
+  overflow: auto;
+}
+.crop-container {
+  height: 500px;
+  overflow: scroll;
+}
+.text-center {
+  text-align: center;
 }

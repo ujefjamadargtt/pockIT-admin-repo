@@ -6,7 +6,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { Faq } from 'src/app/Support/Models/TicketingSystem';
-
 @Component({
   selector: 'app-faqresponses',
   templateUrl: './faqresponses.component.html',
@@ -32,18 +31,13 @@ export class FaqresponsesComponent implements OnInit {
     ['SUGGESTION', 'Suggestion'],
     ['STATUS', 'Status'],
   ];
-
   FAQ_MASTER_ID: Number;
   STATUS = 'P';
   USER_TYPE: any;
-
-  //drawer Variables
   drawerVisible: boolean;
   drawerTitle: string;
   drawerData: Faq = new Faq();
   isSpinning = false;
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -60,12 +54,8 @@ export class FaqresponsesComponent implements OnInit {
       groups: [],
     },
   ];
-
-  //New Advance Filter
-
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -82,7 +72,6 @@ export class FaqresponsesComponent implements OnInit {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -91,35 +80,23 @@ export class FaqresponsesComponent implements OnInit {
   ngOnInit() {
     this.search();
   }
-  // Basic Methods
-
   getFAQID(id?) {
     if (id == undefined) this.FAQ_MASTER_ID = 0;
     else this.FAQ_MASTER_ID = id;
   }
-
-  // sort(sort: { key: string; value: string }): void {
-  //   this.sortKey = sort.key;
-  //   this.sortValue = sort.value;
-  //   this.search(true);
-  // }
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
-
     this.search();
   }
   search(reset: boolean = false) {
@@ -133,22 +110,8 @@ export class FaqresponsesComponent implements OnInit {
     } catch (error) {
       sort = '';
     }
-
-    // if (this.searchText != '') {
-    //   this.filterQuery += ' AND (';
-    //   var likeQuery = ' ';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like ('%" + this.searchText + "%') OR";
-    //   });
-    //   this.filterQuery += likeQuery.substring(0, likeQuery.length - 3) + ')';
-    // } else {
-    //   this.filterQuery = '';
-    //   this.applyFilter(this.FAQ_MASTER_ID);
-    // }
-
     var likeQuery = '';
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -159,7 +122,6 @@ export class FaqresponsesComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (this.UserNametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -168,7 +130,6 @@ export class FaqresponsesComponent implements OnInit {
     } else {
       this.isUserMobileFilterApplied = false;
     }
-
     if (this.UserMobiletext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -177,7 +138,6 @@ export class FaqresponsesComponent implements OnInit {
     } else {
       this.isUserMobileFilterApplied = false;
     }
-
     if (this.UserEmailtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -186,7 +146,6 @@ export class FaqresponsesComponent implements OnInit {
     } else {
       this.isUserEmailFilterApplied = false;
     }
-
     if (this.Suggestiontext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -195,15 +154,12 @@ export class FaqresponsesComponent implements OnInit {
     } else {
       this.isSuggestionFilterApplied = false;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS = '${this.statusFilter}'`;
     }
-
     if (
       globalSearchQuery != null &&
       globalSearchQuery != undefined &&
@@ -214,10 +170,6 @@ export class FaqresponsesComponent implements OnInit {
     ) {
       likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     }
-
-    // Combine global search query and column-specific search query
-
-    // if (this.FAQ_MASTER_ID != undefined) {
     this.api
       .getAllFaqResponses(
         0,
@@ -235,10 +187,7 @@ export class FaqresponsesComponent implements OnInit {
         },
         (err) => { }
       );
-    // }
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -255,10 +204,8 @@ export class FaqresponsesComponent implements OnInit {
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   keyup(event: KeyboardEvent): void {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && event.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && event.key == 'Backspace') {
@@ -266,7 +213,6 @@ export class FaqresponsesComponent implements OnInit {
       this.search(true);
     }
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -275,10 +221,8 @@ export class FaqresponsesComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -286,16 +230,12 @@ export class FaqresponsesComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -310,22 +250,15 @@ export class FaqresponsesComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -339,53 +272,8 @@ export class FaqresponsesComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
-  // applyFilter(id?) {
-  //   this.FAQ_MASTER_ID = id;
-  //   this.isSpinning = true;
-  //   var sort: string;
-  //   try {
-  //     sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
-  //   } catch (error) {
-  //     sort = '';
-  //   }
-  //   this.filterQuery =
-  //     ' AND FAQ_MASTER_ID=' +
-  //     this.FAQ_MASTER_ID +
-  //     " AND STATUS='" +
-  //     this.STATUS +
-  //     "' ";
-
-  //     if (
-  //       this.USER_TYPE != null &&
-  //       this.USER_TYPE != undefined &&
-  //       this.USER_TYPE != ""
-  //     ) {
-  //       this.filterQuery += " AND USER_TYPE = '" + this.USER_TYPE + "'";
-  //     }
-
-  //   if (this.FAQ_MASTER_ID != undefined) {
-  //     this.api
-  //       .getAllFaqResponses(0, 0, this.sortKey, sort, this.filterQuery)
-  //       .subscribe(
-  //         (data) => {
-  //           this.totalRecords = data['count'];
-  //           this.dataList = data['data'];
-  //           this.loadingRecords = false;
-  //           this.filterClass = 'filter-invisible';
-  //           this.isFilterApplied = 'primary';
-  //           this.isSpinning = false;
-  //         },
-  //         (err) => {}
-  //       );
-  //   }
-
-  // }
-
   selectedFilter: string | null = null;
-
   applyfilter(item) {
-
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -393,7 +281,6 @@ export class FaqresponsesComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -402,84 +289,64 @@ export class FaqresponsesComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   getName(status) {
     if (status == 'P') return 'Change';
     else return '';
   }
-
   edit(data: Faq, status, id) {
     if (status == 'P') {
       this.drawerTitle = 'Update Faq';
-      // try {
-      //   data.TAGS_STRING = data.TAGS.split(',');
-      // } catch (error) {
-      //   data.TAGS_STRING = [];
-      // }
       this.drawerData = Object.assign({}, data);
       this.drawerVisible = true;
     }
   }
-
   get closeCallback() {
     return this.drawerCloseFaq.bind(this);
   }
-
   drawerCloseFaq() {
     this.drawerVisible = false;
   }
-
   UserMobileVisible: boolean = false;
   isUserMobileFilterApplied = false;
   UserMobiletext: string = '';
-
   UserEmailVisible: boolean = false;
   isUserEmailFilterApplied = false;
   UserEmailtext: string = '';
-
   SuggesstionVisible: boolean = false;
   isSuggestionFilterApplied = false;
   Suggestiontext: string = '';
-
   UserNameVisible: boolean = false;
   isUserNameFilterApplied = false;
   UserNametext: string = '';
-
   onKeyup(event: KeyboardEvent): void {
     if (this.searchText.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.searchText.length == 0 && event.key === 'Backspace') {
       this.search();
     }
-
     if (this.UserNametext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.UserNametext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
-
     if (this.UserMobiletext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.UserMobiletext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
-
     if (this.UserEmailtext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.UserEmailtext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
-
     if (this.Suggestiontext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.Suggestiontext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
@@ -487,13 +354,10 @@ export class FaqresponsesComponent implements OnInit {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   reset(): void {
     this.searchText = '';
     this.UserNametext = '';
@@ -502,7 +366,6 @@ export class FaqresponsesComponent implements OnInit {
     this.UserMobiletext = '';
     this.search();
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -510,31 +373,24 @@ export class FaqresponsesComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   statusFilter: string | undefined = undefined;
-
   listOfFilter: any[] = [
     { text: 'Like', value: 'P' },
     { text: 'Dislike', value: 'N' },
   ];
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -542,13 +398,11 @@ export class FaqresponsesComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   convertToQuery(filterGroups: any[]): string {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -562,21 +416,15 @@ export class FaqresponsesComponent implements OnInit {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   openfilter() {
     this.drawerTitle = 'Faq Responses Filter';
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -585,13 +433,9 @@ export class FaqresponsesComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -608,7 +452,6 @@ export class FaqresponsesComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -626,36 +469,25 @@ export class FaqresponsesComponent implements OnInit {
       },
     ];
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
-
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   filterFields: any[] = [
     {
       key: 'STATUS',
@@ -669,7 +501,6 @@ export class FaqresponsesComponent implements OnInit {
         { value: 'P', display: 'Like' },
         { value: 'N', display: 'DisLike' },
       ],
-
       placeholder: 'Select Status',
     },
     {
@@ -690,9 +521,7 @@ export class FaqresponsesComponent implements OnInit {
       placeholder: 'Select User Type',
     },
   ];
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -709,7 +538,6 @@ export class FaqresponsesComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
@@ -734,14 +562,12 @@ export class FaqresponsesComponent implements OnInit {
       }
     );
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';

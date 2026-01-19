@@ -1,51 +1,152 @@
 th {
-    text-align: center !important;
-    vertical-align: middle !important;
-    /* font-weight: bold; */
-  }
-  
-  .select{
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.select {
   width: 200px;
   padding: 8px;
   display: block;
-  }
-  
-  .search-box {
-    padding: 8px;
-  }
-  
-  .search-box input {
-    width: 188px;
-    display: block;
-  }
-  
-  .search-box button {
-    width: 90px;
-  }
-  
-  .search-button {
-    margin-right: 8px;
-  }
-  
-  nz-select {
-    width: 100%;
-  }
-  
-  .ant-drawer{
-    z-index: 999 !important;
-  }
-  .active-filter span[nz-icon] {
-    font-weight: bold;
-    color: #092B9C!important; /* Optional: Add a blue color to indicate active state */
-  }
-  :host::ng-deep .ant-card-body {
-    padding: 0px;
-  }
+}
+.search-box {
+  padding: 8px;
+}
+.search-box input {
+  width: 188px;
+  display: block;
+}
+.search-box button {
+  width: 90px;
+}
+.search-button {
+  margin-right: 8px;
+}
+nz-select {
+  width: 100%;
+}
+.ant-drawer {
+  z-index: 999 !important;
+}
+.active-filter span[nz-icon] {
+  font-weight: bold;
+  color: #092B9C !important;
+}
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+.et-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.et-header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.et-filter-btn-item {
+  width: 47px;
+}
+.et-filter-row-top {
+  padding-top: 0px;
+}
+.et-text-center {
+  text-align: center;
+}
+.et-filter-item {
+  margin-bottom: 8px;
+}
+.et-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.et-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.et-filter-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.et-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.et-filter-actions-row {
+  margin-top: 7px;
+}
+.et-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.et-filter-tag-small {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.et-filter-icon-small {
+  font-size: 10px !important;
+}
+.et-filter-tag-nomr {
+  margin-right: 0px;
+}
+.et-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.et-filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.et-footer-btn {
+  margin-right: 10px;
+}
+.et-row-mt-10 {
+  margin-top: 10px;
+}
+.et-th-center {
+  text-align: center;
+}
+.et-tag-click {
+  cursor: pointer;
+}
+.et-tag-icon {
+  font-size: 15px;
+}
+.cnt-txt {
+  text-align: center
+}
+.et-mt-10 {
+  margin-top: 10px;
+}
 
-  .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
-    display: inline-block;
-  }
+.et-th-center {
+  text-align: center;
+}
+
+.et-action-tag {
+  cursor: pointer;
+}
+
+.et-action-icon {
+  font-size: 15px;
+}
+.full-wdt{
+  width: 100%;
+}

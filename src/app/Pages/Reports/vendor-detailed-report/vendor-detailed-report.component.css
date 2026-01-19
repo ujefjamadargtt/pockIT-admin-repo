@@ -1,0 +1,97 @@
+.header-controls {
+    display: flex;
+    justify-content: flex-end;
+}
+.excel-button {
+    color: white;
+}
+.filter-form-item {
+    width: 47px;
+}
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.filter-col {
+    margin-bottom: 10px;
+}
+.filter-form-item-spaced {
+    margin-right: 10px !important;
+}
+.filter-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.filter-label-empty {
+    display: block;
+    height: 22px;
+}
+.date-range-picker {
+    width: 100%;
+}
+.filter-select {
+    width: 100%;
+    font-weight: 100 !important;
+}
+.filter-action-col {
+    margin-right: 10px;
+}
+.filter-action-buttons {
+    display: flex;
+    align-items: center;
+    margin-top: 22px;
+}
+.filter-action-button {
+    margin-right: 10px;
+}
+.apply-filter-button {
+    margin-right: 10px;
+}
+.table-row {
+    margin-top: 10px;
+}
+.table-header {
+    font-weight: bold;
+}
+.vendor-header {
+    text-align: left;
+}
+.service-header {
+    text-align: center;
+}
+.jobno-header {
+    text-align: center;
+}
+.orderno-header {
+    text-align: center;
+}
+.date-header {
+    text-align: center;
+}
+.cost-header {
+    text-align: center;
+}
+.technician-header {
+    text-align: center;
+}
+.vendor-cell,
+.service-cell,
+.technician-cell {
+    white-space: pre-line;
+}
+.jobno-cell {
+    text-align: center;
+}
+.orderno-cell {
+    text-align: center;
+}
+.date-cell {
+    text-align: center;
+}
+.cost-cell {
+    text-align: center;
+}
+.date-range-filter-picker {
+    width: 100%;
+}

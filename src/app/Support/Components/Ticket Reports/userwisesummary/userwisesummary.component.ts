@@ -12,7 +12,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-userwisesummary',
   templateUrl: './userwisesummary.component.html',
@@ -30,7 +29,6 @@ export class UserwisesummaryComponent implements OnInit {
   sortValue: string = 'desc';
   sortKey: string = 'CREATOR_EMPLOYEE_ID';
   searchText: string = '';
-  // filterQuery: string = '';
   fileName = 'UserWise.xlsx';
   isFilterApplied: string = 'default';
   columns: string[][] = [['CREATOR_EMPLOYEE_NAME', 'Employee Name']];
@@ -53,7 +51,6 @@ export class UserwisesummaryComponent implements OnInit {
   toDate: string = '';
   departments: any = [];
   supportusers = [];
-  // userId = (this.cookie.get('userId'));
   roleId = Number(this.cookie.get('roleId'));
   orgId = Number(this.cookie.get('orgId'));
   deptId = Number(this.cookie.get('deptId'));
@@ -62,7 +59,6 @@ export class UserwisesummaryComponent implements OnInit {
   date1: any;
   date2: any;
   today = new Date();
-  // orgName: string = this.api.ORGANIZATION_NAME;
   isButtonSpinning: boolean = false;
   dataCount: number = 0;
   allTotal: number = 0;
@@ -89,7 +85,6 @@ export class UserwisesummaryComponent implements OnInit {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
@@ -98,18 +93,15 @@ export class UserwisesummaryComponent implements OnInit {
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   disabledToDate = (current: Date): boolean =>
     differenceInCalendarDays(
       current,
       this.date1 == null ? this.today : this.date1
     ) < 0;
-
   onFromDateChange(fromDate) {
     if (fromDate == null) this.date1 = new Date();
     else this.date1 = new Date(fromDate);
   }
-
   setDateForDeptWiseFilter() {
     this.date = [];
     let currentDate = new Date();
@@ -117,94 +109,19 @@ export class UserwisesummaryComponent implements OnInit {
     this.date1 = new Date(previous15thDayDate);
     this.date2 = new Date();
   }
-
   ngOnInit() {
     this.setDateForDeptWiseFilter();
-
-    // this.api
-    //   .getAllDepartments(
-    //     0,
-    //     0,
-    //     'NAME',
-    //     'ASC',
-    //     ' AND ORG_ID= ' + this.cookie.get('orgId')
-    //   )
-    //   .subscribe(
-    //     (data) => {
-    //       if (data['code'] == 200) {
-    //         this.departments = data['data'];
-    //       }
-    //     },
-    //     (err) => {
-
-    //     }
-    //   );
-
     this.supportusers = [];
-    // this.api
-    //   .getbackOfficeDepartmentMapping(
-    //     0,
-    //     0,
-    //     'NAME',
-    //     'asc',
-    //     ' AND ORG_ID= ' + this.cookie.get('orgId') + ' AND ID!=1'
-    //   )
-    //   .subscribe(
-    //     (data) => {
-    //       if (data['code'] == 200) {
-    //         this.supportusers = data['data'];
-    //       }
-    //     },
-    //     (err) => {
-    //
-    //     }
-    //   );
-
-    // if (this.roleId == 6) this.getDepartmentToShowReport();
-
-    // if (this.roleId == 4) this.getDepartmentSupportAgentWise();
-
-    // if (this.roleId != 4 && this.roleId != 6) this.search(true);
-
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
   }
-
   supportAgentWiseDeptArray: any = [];
-
   getDepartmentSupportAgentWise() {
     this.supportAgentWiseDeptArray = [];
-
-    // this.api
-    //   .gettickdeskSupportUserMapping(
-    //     0,
-    //     0,
-    //     'ID',
-    //     'ASC',
-    //     ' AND EMPLOYEE_ID=' + this.userId
-    //   )
-    //   .subscribe((data) => {
-    //     if (data['code'] == 200) {
-    //       var supportAgentWiseDept = data['data'];
-
-    //       for (var i = 0; i < supportAgentWiseDept.length; i++) {
-    //         this.supportAgentWiseDeptArray.push(
-    //           supportAgentWiseDept[i]['DEPARTMENT_ID']
-    //         );
-    //       }
-
-    //       if (this.roleId == 4) {
-    //         this.search(true);
-    //       }
-    //     }
-    //   });
   }
-
   deptWiseReport: any = [];
-
   getDepartmentToShowReport() {
     this.deptWiseReport = [];
-
     this.api
       .gettickdeskDepartmentAdminMapping(
         0,
@@ -216,18 +133,15 @@ export class UserwisesummaryComponent implements OnInit {
       .subscribe((data) => {
         if (data['code'] == 200) {
           var departments = data['data'];
-
           for (var i = 0; i < departments.length; i++) {
             this.deptWiseReport.push(departments[i]['DEPARTMENT_ID']);
           }
-
           if (this.roleId == 6) {
             this.search(true);
           }
         }
       });
   }
-
   exportexcel(): void {
     let element = document.getElementById('summer');
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
@@ -235,7 +149,6 @@ export class UserwisesummaryComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, this.fileName);
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -244,27 +157,18 @@ export class UserwisesummaryComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
-  // changeDate(value) {
-  //   this.fromDate = this.datePipe.transform(value[0], 'yyyy-MM-dd');
-  //   this.toDate = this.datePipe.transform(value[1], 'yyyy-MM-dd');
-  // }
-
   search(
     reset: boolean = false,
     exportToExcel: boolean = false,
@@ -273,29 +177,14 @@ export class UserwisesummaryComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
-    // var likeQuery = '';
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND (';
-
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
-    // }
-
     var likeQuery = '';
-
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -306,16 +195,13 @@ export class UserwisesummaryComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     var supportUserFilter = '';
     if (this.SUPPORT_USER.length > 0)
       supportUserFilter =
         ' AND CREATOR_EMPLOYEE_ID IN (' + this.SUPPORT_USER + ')';
-
     var deptFilter = '';
     if (this.DEPARTMENT.length > 0)
       deptFilter = ' AND DEPARTMENT_ID IN (' + this.DEPARTMENT + ')';
-
     var supportAgentWiseDept = '';
     if (this.roleId == 4) {
       if (this.supportAgentWiseDeptArray.length > 0)
@@ -323,7 +209,6 @@ export class UserwisesummaryComponent implements OnInit {
           ' AND DEPARTMENT_ID IN (' + this.supportAgentWiseDeptArray + ')';
       else supportAgentWiseDept = '';
     }
-
     var deptAdminWiseDept = '';
     if (this.roleId == 6) {
       if (this.deptWiseReport.length > 0)
@@ -331,7 +216,6 @@ export class UserwisesummaryComponent implements OnInit {
           ' AND DEPARTMENT_ID IN (' + this.deptWiseReport + ')';
       else deptAdminWiseDept = '';
     }
-
     var dateFilter = '';
     if (this.date1 != undefined && this.date2 != undefined) {
       dateFilter =
@@ -341,7 +225,6 @@ export class UserwisesummaryComponent implements OnInit {
         this.datePipe.transform(this.date2, 'yyyy-MM-dd ') +
         "')";
     }
-
     if (this.EmployeeNametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -350,7 +233,6 @@ export class UserwisesummaryComponent implements OnInit {
     } else {
       this.isEmployeeNameFilterApplied = false;
     }
-
     if (this.DepartmentNametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -359,10 +241,7 @@ export class UserwisesummaryComponent implements OnInit {
     } else {
       this.isDepartmentNameFilterApplied = false;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getUserwiseReport(
         this.pageIndex,
@@ -395,7 +274,6 @@ export class UserwisesummaryComponent implements OnInit {
             let allClosed = 0;
             let allBanned = 0;
             let allOnHold = 0;
-
             for (var i = 0; i < tempData.length; i++) {
               allTotal = allTotal + tempData[i]['TOTAL'];
               allCreated = allCreated + tempData[i]['CREATED'];
@@ -406,7 +284,6 @@ export class UserwisesummaryComponent implements OnInit {
               allBanned = allBanned + tempData[i]['BANNED'];
               allOnHold = allOnHold + tempData[i]['ON_HOLD'];
             }
-
             this.allTotal = allTotal;
             this.allCreated = allCreated;
             this.allAssigned = allAssigned;
@@ -435,10 +312,8 @@ export class UserwisesummaryComponent implements OnInit {
           }
         }
       );
-
     if (exportToExcel) {
       this.exportLoading = true;
-
       this.api
         .getUserwiseReport(
           0,
@@ -467,50 +342,12 @@ export class UserwisesummaryComponent implements OnInit {
           }
         );
     }
-
-    // else if (this.filterQuery != "" && this.filterQuery != null && this.filterQuery != undefined) {
-    //
-
-    //   this.loadingRecords = true;
-
-    //   this.api
-    //     .getUserwiseReport(
-    //       this.pageIndex,
-    //       this.pageSize,
-    //       this.sortKey,
-    //       sort,
-    //       likeQuery +
-    //       this.filterQuery +
-    //       supportUserFilter +
-    //       deptFilter +
-    //       supportAgentWiseDept +
-    //       deptAdminWiseDept +
-    //       dateFilter +
-    //       ' AND ORG_ID =' +
-    //       this.cookie.get('orgId')
-    //     )
-    //     .subscribe(
-    //       (data) => {
-    //         if (data['status'] == 200) {
-    //           this.loadingRecords = false;
-
-    //           this.totalRecords = data.body['count'];
-    //           this.dataList = data.body['data'];
-    //         }
-    //       },
-    //       (err) => {
-    //         if (err['ok'] == false) this.message.error('Server Not Found', '');
-    //       }
-    //     );
-    // }
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   applyFilter() {
     this.date1 = this.datePipe.transform(new Date(this.date1), 'yyyy-MM-dd');
     this.date2 = this.datePipe.transform(new Date(this.date2), 'yyyy-MM-dd');
@@ -520,17 +357,14 @@ export class UserwisesummaryComponent implements OnInit {
     )
       this.isFilterApplied = 'primary';
     else this.isFilterApplied = 'default';
-
     this.search(true);
     this.filterClass = 'filter-invisible';
   }
-
   clearFilter() {
     this.SUPPORT_USER = [];
     this.DEPARTMENT = [];
     this.date = [];
     this.filterQuery = '';
-    // this.selectedDate = null;
     this.fromDate = '';
     this.toDate = '';
     this.isFilterApplied = 'default';
@@ -540,143 +374,31 @@ export class UserwisesummaryComponent implements OnInit {
     this.SELECT_ALL = false;
     this.SELECT_ALL1 = false;
   }
-
-  // exportLoading: boolean = false;
-  // departmentNameToPrint: string = "";
-  // employeeNameToPrint: string = "";
-
   employeeID2: any;
   departmentID2: any;
-  // importInExcel(departmentID, employeeID) {
-  //   this.departmentID2 = departmentID;
-  //   this.employeeID2 = employeeID;
-  //   this.search(true, true);
-  // }
-
-  // convertInExcel() {
-  //   var arry1:any = [];
-  //   var obj1: any = new Object();
-  //   this.departmentNameToPrint = '';
-  //   let tempDepartmentName = '';
-  //   this.employeeNameToPrint = '';
-  //   let tempEmployeeName = '';
-
-  //   for (var i = 0; i < this.departmentID2.length; i++) {
-  //     let departments = this.departments.filter((obj1) => {
-  //       return obj1.ID == this.departmentID2[i];
-  //     });
-
-  //     tempDepartmentName = tempDepartmentName + departments[0]['NAME'] + ', ';
-  //   }
-
-  //   for (var i = 0; i < this.employeeID2.length; i++) {
-  //     let supportUsers = this.supportusers.filter((obj1:any) => {
-  //       return obj1.ID == this.employeeID2[i];
-  //     });
-
-  //     tempEmployeeName = tempEmployeeName + supportUsers[0]['NAME'] + ', ';
-  //   }
-
-  //   this.departmentNameToPrint = tempDepartmentName.substring(
-  //     0,
-  //     tempDepartmentName.length - 2
-  //   );
-  //   this.employeeNameToPrint = tempEmployeeName.substring(
-  //     0,
-  //     tempEmployeeName.length - 2
-  //   );
-
-  //   for (var i = 0; i < this.dataListForExport.length; i++) {
-  //     obj1['Employee Name'] = this.dataListForExport[i]['CREATOR_EMPLOYEE_NAME']
-  //       ? this.dataListForExport[i]['CREATOR_EMPLOYEE_NAME']
-  //       : 'None';
-  //     obj1['Total Ticket(s)'] = this.dataListForExport[i]['TOTAL'];
-  //     obj1['Pending'] = this.dataListForExport[i]['CREATED'];
-  //     obj1['Assigned'] = this.dataListForExport[i]['ASSIGNED'];
-  //     obj1['Answered'] = this.dataListForExport[i]['ANSWERED'];
-  //     obj1['Re-Opened'] = this.dataListForExport[i]['RE_OPEN'];
-  //     obj1['Closed'] = this.dataListForExport[i]['CLOSED'];
-  //     obj1['Banned'] = this.dataListForExport[i]['BANNED'];
-  //     obj1['On Hold'] = this.dataListForExport[i]['ON_HOLD'];
-
-  //     arry1.push(Object.assign({}, obj1));
-
-  //     if (i == this.dataListForExport.length - 1) {
-  //       var params:any = [];
-  //       params.push('User : ' + this.getUserName());
-  //       params.push('' + this.formTitle);
-  //       params.push(
-  //         'Date : ' +
-  //           this.datePipe.transform(
-  //             this.getCurrentDateTime(),
-  //             'dd MMM yyyy hh:mm:ss a'
-  //           )
-  //       );
-
-  //       var filters:any = [];
-  //       filters.push(
-  //         'Date : ' +
-  //           this.datePipe.transform(this.date1, 'dd MMM yyyy ') +
-  //           ' - ' +
-  //           this.datePipe.transform(this.date2, 'dd MMM yyyy')
-  //       );
-  //       filters.push('Department(s) : ' + this.getDepartments());
-  //       filters.push('Employee Name(s)  : ' + this.getEmployeeNames());
-
-  //       obj1['Employee Name'] = 'Total';
-  //       obj1['Dept. Name'] = '-';
-  //       obj1['Total Ticket(s)'] = this.allTotal;
-  //       obj1['Pending'] = this.allCreated;
-  //       obj1['Assigned'] = this.allAssigned;
-  //       obj1['Answered'] = this.allAnswered;
-  //       obj1['Re-Opened'] = this.allReopened;
-  //       obj1['Closed'] = this.allClosed;
-  //       obj1['Banned'] = this.allBanned;
-  //       obj1['On Hold'] = this.allOnHold;
-
-  //       arry1.push(Object.assign({}, obj1));
-
-  //       this._exportService.exportExcel(
-  //         arry1,
-  //         'Customer Wise Report Summary ' +
-  //           this.datePipe.transform(new Date(), 'dd-MMM-yy'),
-  //         // params,
-  //         // filters
-  //       );
-  //     }
-  //   }
-  // }
-
   isPDFModalVisible: boolean = false;
   PDFModalTitle: string = 'Export in PDF';
   exportInPDFLoading: boolean = false;
   departmentNameToPrint: string = '';
   employeeNameToPrint: string = '';
-
   importInPDF(departmentID, employeeID) {
     this.departmentNameToPrint = '';
     this.employeeNameToPrint = '';
-
     this.search(false, false, true);
     let tempDepartmentName = '';
     let tempEmployeeName = '';
-
     for (var i = 0; i < departmentID.length; i++) {
       let departments = this.departments.filter((obj1) => {
         return obj1.ID == departmentID[i];
       });
-
       tempDepartmentName = tempDepartmentName + departments[0]['NAME'] + ', ';
     }
-
     for (var i = 0; i < employeeID.length; i++) {
       let supportUsers = this.supportusers.filter((obj1: any) => {
         return obj1.ID == employeeID[i];
       });
-
       tempEmployeeName = tempEmployeeName + supportUsers[0]['NAME'] + ', ';
     }
-
     this.departmentNameToPrint = tempDepartmentName.substring(
       0,
       tempDepartmentName.length - 2
@@ -686,19 +408,15 @@ export class UserwisesummaryComponent implements OnInit {
       tempEmployeeName.length - 2
     );
   }
-
   handlePDFModalCancel() {
     this.isPDFModalVisible = false;
   }
-
   getCurrentDateTime() {
     return new Date();
   }
-
   getUserName() {
     return this.api.userName;
   }
-
   getDepartments() {
     if (
       this.departmentNameToPrint == '' ||
@@ -707,7 +425,6 @@ export class UserwisesummaryComponent implements OnInit {
       return 'All';
     else return this.departmentNameToPrint;
   }
-
   getEmployeeNames() {
     if (
       this.employeeNameToPrint == '' ||
@@ -716,9 +433,7 @@ export class UserwisesummaryComponent implements OnInit {
       return 'All';
     else return this.employeeNameToPrint;
   }
-
   pdfDownload: boolean = false;
-
   public generatePDF() {
     this.isButtonSpinning = true;
     var i = 0;
@@ -746,39 +461,32 @@ export class UserwisesummaryComponent implements OnInit {
       })
       .save(this.formTitle + '_' + datef + '_' + dates + '.pdf');
   }
-
   SELECT_ALL: boolean = false;
   onSelectAllChecked(event) {
     this.SELECT_ALL = event;
-    //
     let ids: any = [];
     if (this.SELECT_ALL == true) {
       for (var i = 0; i < this.departments.length; i++) {
         ids.push(this.departments[i]['ID']);
-        //
       }
     } else {
       ids = [];
     }
     this.DEPARTMENT = ids;
   }
-
   SELECT_ALL1: boolean = false;
   onSelectAllChecked1(event) {
     this.SELECT_ALL1 = event;
-    //
     let ids = [];
     if (this.SELECT_ALL1 == true) {
       for (var i = 0; i < this.supportusers.length; i++) {
         ids.push(this.supportusers[i]['ID']);
-        //
       }
     } else {
       ids = [];
     }
     this.SUPPORT_USER = ids;
   }
-
   onSelectOff(event) {
     var a = this.departments.length;
     var b = this.departments.length - event.length;
@@ -792,7 +500,6 @@ export class UserwisesummaryComponent implements OnInit {
       this.SELECT_ALL = false;
     }
   }
-
   onSelectOff1(event) {
     var a = this.supportusers.length;
     var b = this.supportusers.length - event.length;
@@ -806,7 +513,6 @@ export class UserwisesummaryComponent implements OnInit {
       this.SELECT_ALL1 = false;
     }
   }
-
   getTotal(index: number, size: number) {
     if (Number(index * size) >= Number(this.dataCount)) {
       return true;
@@ -814,8 +520,6 @@ export class UserwisesummaryComponent implements OnInit {
       return false;
     }
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -827,9 +531,7 @@ export class UserwisesummaryComponent implements OnInit {
   drawerTitle;
   drawerFilterVisible: boolean = false;
   filterQuery: string = '';
-  // filterClass: string = "filter-invisible";
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -838,12 +540,9 @@ export class UserwisesummaryComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   filterloading: boolean = false;
-
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -863,10 +562,8 @@ export class UserwisesummaryComponent implements OnInit {
   updateBtn: any;
   whichbutton: any;
   updateButton: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -874,13 +571,12 @@ export class UserwisesummaryComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -895,21 +591,15 @@ export class UserwisesummaryComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -923,7 +613,6 @@ export class UserwisesummaryComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -932,7 +621,6 @@ export class UserwisesummaryComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -949,9 +637,7 @@ export class UserwisesummaryComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -977,7 +663,6 @@ export class UserwisesummaryComponent implements OnInit {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -986,27 +671,20 @@ export class UserwisesummaryComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   openfilter() {
     this.drawerTitle = 'Customer Wise Summary Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1015,13 +693,9 @@ export class UserwisesummaryComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1038,7 +712,6 @@ export class UserwisesummaryComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1056,11 +729,9 @@ export class UserwisesummaryComponent implements OnInit {
       },
     ];
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'CREATOR_EMPLOYEE_NAME',
@@ -1077,35 +748,25 @@ export class UserwisesummaryComponent implements OnInit {
       placeholder: 'Enter Customer Name',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1113,18 +774,14 @@ export class UserwisesummaryComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   onKeyup(event: KeyboardEvent, type: string): void {
     if (
       type == 'searchtext' &&
@@ -1137,10 +794,8 @@ export class UserwisesummaryComponent implements OnInit {
       this.searchText.length == 0 &&
       event.key === 'Backspace'
     ) {
-      // this.dataList = [];
       this.search();
     }
-
     if (
       type == 'CustName' &&
       this.EmployeeNametext.length >= 3 &&
@@ -1155,7 +810,6 @@ export class UserwisesummaryComponent implements OnInit {
       this.dataList = [];
       this.search();
     }
-
     if (this.DepartmentNametext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (
@@ -1166,24 +820,19 @@ export class UserwisesummaryComponent implements OnInit {
       this.search();
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
-      // this.dataList = [];
       this.search(true);
     }
-
     if (this.EmployeeNametext.length >= 3 && keys.key === 'Enter') {
       this.search();
     } else if (this.EmployeeNametext.length == 0 && keys.key === 'Backspace') {
       this.dataList = [];
       this.search();
     }
-
     if (this.DepartmentNametext.length >= 3 && keys.key === 'Enter') {
       this.search();
     } else if (
@@ -1194,7 +843,6 @@ export class UserwisesummaryComponent implements OnInit {
       this.search();
     }
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -1202,30 +850,24 @@ export class UserwisesummaryComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   EmployeeNametext: string = '';
   EmployeeNameVisible: boolean = false;
   isEmployeeNameFilterApplied = false;
-
   DepartmentNametext: string = '';
   DepartmentNameVisible: boolean = false;
   isDepartmentNameFilterApplied = false;
-
   reset(): void {
     this.searchText = '';
     this.EmployeeNametext = '';
     this.DepartmentNametext = '';
     this.search();
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -1240,7 +882,6 @@ export class UserwisesummaryComponent implements OnInit {
         obj1['Closed'] = this.excelData[i]['CLOSED'];
         obj1['Banned'] = this.excelData[i]['BANNED'];
         obj1['On-Hold'] = this.excelData[i]['ON_HOLD'];
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -1254,9 +895,7 @@ export class UserwisesummaryComponent implements OnInit {
       this.message.error('There is a No Data', '');
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

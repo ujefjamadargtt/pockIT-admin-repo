@@ -7,7 +7,6 @@ import { NzNotificationService } from "ng-zorro-antd/notification";
 import { Router } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
 import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
-
 @Component({
   selector: "app-branches",
   templateUrl: "./branches.component.html",
@@ -23,16 +22,13 @@ export class BranchesComponent implements OnInit {
     { text: "Active", value: "1" },
     { text: "Inactive", value: "0" },
   ];
-
   countryvisible: boolean = false;
-
   PINCODEVisible: boolean = false;
   branchvisible: boolean = false;
   loadingRecords = true;
   sortValue: string = "desc";
   sortKey: string = "id";
   searchText: string = "";
-
   isFilterApplied: string = "default";
   columns: string[][] = [
     ["NAME", "Branch Name"],
@@ -44,7 +40,6 @@ export class BranchesComponent implements OnInit {
   drawerTitle: string;
   drawerTitle1: string;
   drawerData: Branchmaster = new Branchmaster();
-
   countrytext: string = "";
   statetext: string = "";
   citytext: string = "";
@@ -55,14 +50,12 @@ export class BranchesComponent implements OnInit {
   selectedCities: number[] = [];
   selectedDistrict: number[] = [];
   selectedPincode: number[] = [];
-
   isBranchNameFilterApplied = false;
   isCountryNameFilterApplied = false;
   isStateNameFilterApplied = false;
   isCityNameFilterApplied = false;
   isDistrictNameFilterApplied = false;
   isPincodeFilterApplied = false;
-
   iscountrynameFilterApplied: boolean = false;
   countryVisible: boolean = false;
   isStatenameFilterApplied: boolean = false;
@@ -73,7 +66,6 @@ export class BranchesComponent implements OnInit {
   districtVisible: boolean = false;
   isPincodenameFilterApplied: boolean = false;
   pincodeVisible: boolean = false;
-
   columns1: { label: string; value: string }[] = [
     { label: "Branch ", value: "NAME" },
     { label: "Country", value: "COUNTRY_ID" },
@@ -84,8 +76,6 @@ export class BranchesComponent implements OnInit {
     { label: "Country", key: "COUNTRY_NAME", visible: true },
     { label: "State", key: "STATE_NAME", visible: true },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: "AND",
@@ -102,14 +92,12 @@ export class BranchesComponent implements OnInit {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private cookie: CookieService,
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   ngOnInit() {
     this.search();
     this.getCountyData();
@@ -118,102 +106,75 @@ export class BranchesComponent implements OnInit {
     this.getDistrictData();
     this.getPincodeData("PINCODE");
   }
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
-  // onStateChange(): void {
-  //   this.search();
-  // }
-
   onCountryChange(): void {
-    // this.search();
     if (this.selectedCountries?.length) {
       this.search();
-      this.iscountrynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.iscountrynameFilterApplied = true; 
     } else {
       this.search();
-      this.iscountrynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.iscountrynameFilterApplied = false; 
     }
-    // this.search();
   }
-
   onStateChange(): void {
-    // this.search();
     if (this.selectedStates?.length) {
       this.search();
-      this.isStateNameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isStateNameFilterApplied = true; 
     } else {
       this.search();
-      this.isStateNameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isStateNameFilterApplied = false; 
     }
-    // this.search();
   }
-
   onDistrictChange(): void {
-    // this.search();
     if (this.selectedDistrict?.length) {
       this.search();
-      this.isDistrictNameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isDistrictNameFilterApplied = true; 
     } else {
       this.search();
-      this.isDistrictNameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isDistrictNameFilterApplied = false; 
     }
-    // this.search();
   }
-
   onCityChange(): void {
-    // this.search();
     if (this.selectedCities?.length) {
       this.search();
-      this.isCityNameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isCityNameFilterApplied = true; 
     } else {
       this.search();
-      this.isCityNameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isCityNameFilterApplied = false; 
     }
-    // this.search();
   }
-
   onPincodeChange(): void {
-    // this.search();
     if (this.selectedPincode?.length) {
       this.search();
-      this.isPincodeFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isPincodeFilterApplied = true; 
     } else {
       this.search();
-      this.isPincodeFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isPincodeFilterApplied = false; 
     }
-    // this.search();
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || "id";
     const sortOrder = (currentSort && currentSort.value) || "desc";
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -223,20 +184,15 @@ export class BranchesComponent implements OnInit {
     }
   }
   nameFilter() {
-
-
     if (this.branchtext.trim() === "") {
       this.searchText = "";
     } else if (this.branchtext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   likeQuery1 = "";
   filteredBranchData: any[] = [];
-
   search(reset: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -249,20 +205,15 @@ export class BranchesComponent implements OnInit {
       this.sortKey = "id";
       this.sortValue = "desc";
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith("a") ? "asc" : "desc";
     } catch (error) {
       sort = "";
     }
-
     let likeQuery = "";
     let globalSearchQuery = "";
-
-    // Global Search (using searchText)
     if (this.searchText !== "") {
       globalSearchQuery =
         " AND (" +
@@ -273,85 +224,46 @@ export class BranchesComponent implements OnInit {
           .join(" OR ") +
         ")";
     }
-
     if (this.branchtext !== "") {
-
-
       likeQuery +=
         (likeQuery ? " AND " : "") + `NAME LIKE '%${this.branchtext.trim()}%'`;
-
     }
-
-    // Country Filter
     if (this.selectedCountries.length > 0) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
       }
-      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; 
     }
-
-    // State Filter
     if (this.selectedStates.length > 0) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
       }
-      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`; 
     }
-
-    // District Filter
     if (this.selectedDistrict.length > 0) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
       }
-      likeQuery += `DISTRICT_NAME IN ('${this.selectedDistrict.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `DISTRICT_NAME IN ('${this.selectedDistrict.join("','")}')`; 
     }
-
-    // City Filter
     if (this.selectedCities.length > 0) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
       }
-      likeQuery += `CITY_NAME IN ('${this.selectedCities.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `CITY_NAME IN ('${this.selectedCities.join("','")}')`; 
     }
-
-    // Pincode Filter
     if (this.selectedPincode.length > 0) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
       }
-      likeQuery += `PINCODE IN ('${this.selectedPincode.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `PINCODE IN ('${this.selectedPincode.join("','")}')`; 
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
-    // likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-    // Call API with updated search query
-    // this.api
-    //   .getAllBranch(
-    //     this.pageIndex,
-    //     this.pageSize,
-    //     this.sortKey,
-    //     sort,
-    //     likeQuery + ''
-    //   )
-    //   .subscribe(
-    //     (data) => {
-    //       this.loadingRecords = false;
-    //       this.totalRecords = data['count'];
-    //       this.dataList = data['data'];
-    //     },
-    //     (err) => {}
-    //   );
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? " AND " + likeQuery : "");
     const finalDataList =
       this.filteredBranchData.length > 0
@@ -398,17 +310,13 @@ export class BranchesComponent implements OnInit {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   add(): void {
     this.drawerTitle = "Add New Branch";
     this.drawerData = new Branchmaster();
-
     this.drawerData.IS_ACTIVE = true;
-
     this.api.getAllBranch(1, 1, "SEQ_NO", "desc", "" + "").subscribe(
       (data) => {
         if (data["count"] == 0) {
@@ -419,37 +327,21 @@ export class BranchesComponent implements OnInit {
       },
       (err) => { }
     );
-
     this.drawerVisible = true;
   }
-
   STATE_HAS_LWF = false;
   edit(data: Branchmaster): void {
     this.drawerTitle = "Update Branch Details";
     this.drawerData = Object.assign({}, data);
-    // 
-    // 
-
-    // this.drawerData.STATE_ID = this.drawerData['STATE_ID'];
-    // 
-
-    // this.drawerData.CITY_ID = data.CITY_ID;
-    //this.drawerData.PINCODE_ID = data.PINCODE_ID;
-    // 
-    // 
-
     this.STATE_HAS_LWF = false;
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   keyup(keys) {
     const element = window.document.getElementById("button");
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === "Enter") {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == "Backspace") {
@@ -457,10 +349,8 @@ export class BranchesComponent implements OnInit {
       this.search(true);
     }
   }
-
   onKeyup(event: KeyboardEvent): void {
     const element = window.document.getElementById("button");
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && event.key === "Enter") {
       this.search(true);
     } else if (this.searchText.length === 0 && event.key == "Backspace") {
@@ -475,22 +365,17 @@ export class BranchesComponent implements OnInit {
       this.isBranchNameFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   visible: boolean = false;
-
   handleLiveDemoChange(event: any) {
     this.visible = event;
   }
   toggleLiveDemo1() {
     this.visible = false;
   }
-
   countryData: any = [];
   getCountyData() {
     this.api
@@ -508,7 +393,6 @@ export class BranchesComponent implements OnInit {
         }
       });
   }
-
   stateData: any = [];
   getStateData() {
     this.api
@@ -526,7 +410,6 @@ export class BranchesComponent implements OnInit {
         }
       });
   }
-
   cityData: any = [];
   getCityData() {
     this.api
@@ -544,7 +427,6 @@ export class BranchesComponent implements OnInit {
         }
       });
   }
-
   districtData: any = [];
   getDistrictData() {
     this.api
@@ -562,7 +444,6 @@ export class BranchesComponent implements OnInit {
         }
       });
   }
-
   pincodeData: any = [];
   getPincodeData(columnKey) {
     this.api.getDistinctData(4, columnKey).subscribe((data) => {
@@ -578,7 +459,6 @@ export class BranchesComponent implements OnInit {
       }
     });
   }
-
   statusFilter: string | undefined = undefined;
   showcloumnVisible: boolean = false;
   onStatusFilterChange(selectedStatus: string) {
@@ -586,14 +466,11 @@ export class BranchesComponent implements OnInit {
     this.search(true);
   }
   reset() { }
-
   back() {
     this.router.navigate(["/masters/menu"]);
   }
-
   distinctData: any = [];
   onFilterClick(columnKey: string): void {
-
     this.api.getDistinctData(4, columnKey).subscribe(
       (data) => {
         if (data["code"] == 200) {
@@ -608,8 +485,6 @@ export class BranchesComponent implements OnInit {
       }
     );
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem("userId");
@@ -622,7 +497,6 @@ export class BranchesComponent implements OnInit {
   filterQuery: string = "";
   filterClass: string = "filter-invisible";
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === "filter-visible") {
       this.filterClass = "filter-invisible";
@@ -631,20 +505,13 @@ export class BranchesComponent implements OnInit {
       this.loadFilters();
     }
   }
-
-
-
   openfilter() {
     this.drawerTitle = "Branch Filter";
     this.filterFields[1]["options"] = this.countryData;
     this.filterFields[2]["options"] = this.stateData;
     this.filterFields[3]["options"] = this.districtData;
-    // this.filterFields[4]["options"] = this.cityData;
     this.filterFields[4]["options"] = this.pincodeData;
-
     this.drawerFilterVisible = true;
-
-    // Edit code 2
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -653,13 +520,9 @@ export class BranchesComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -676,7 +539,6 @@ export class BranchesComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -694,14 +556,11 @@ export class BranchesComponent implements OnInit {
       },
     ];
   }
-
   whichbutton: any;
-
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -709,13 +568,12 @@ export class BranchesComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -730,22 +588,15 @@ export class BranchesComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -759,8 +610,6 @@ export class BranchesComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -769,11 +618,7 @@ export class BranchesComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
-
-
   deleteItem(item: any): void {
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -789,10 +634,7 @@ export class BranchesComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -819,7 +661,6 @@ export class BranchesComponent implements OnInit {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -828,29 +669,20 @@ export class BranchesComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
-
-
   drawerflterClose(buttontype, updateButton): void {
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: "NAME",
@@ -870,7 +702,6 @@ export class BranchesComponent implements OnInit {
       key: "COUNTRY_NAME",
       label: "Country",
       type: "search",
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -886,7 +717,6 @@ export class BranchesComponent implements OnInit {
       key: "STATE_NAME",
       label: "State",
       type: "search",
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -902,7 +732,6 @@ export class BranchesComponent implements OnInit {
       key: "DISTRICT_NAME",
       label: "District",
       type: "search",
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -914,12 +743,10 @@ export class BranchesComponent implements OnInit {
       options: [],
       placeholder: "Select District",
     },
-
     {
       key: "PINCODE",
       label: "Pincode",
       type: "search",
-
       comparators: [
         { value: '=', display: 'Equal To' },
         { value: '!=', display: 'Not Equal To' },
@@ -946,40 +773,26 @@ export class BranchesComponent implements OnInit {
       placeholder: "Select Status",
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
-
   isModalVisible = false;
   selectedQuery: string = "";
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = "";
   }
   filterloading: boolean = false;
-
-
-
-
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -996,21 +809,16 @@ export class BranchesComponent implements OnInit {
       groups: [],
     },
   ];
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
-
     this.filterFields[1]["options"] = this.countryData;
     this.filterFields[2]["options"] = this.stateData;
     this.filterFields[3]["options"] = this.districtData;
-    // this.filterFields[4]["options"] = this.cityData;
     this.filterFields[4]["options"] = this.pincodeData;
-
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;

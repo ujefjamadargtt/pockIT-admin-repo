@@ -7,12 +7,8 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
-
-// import { ChattdetailsicketComponent } from '../chattdetailsicket/chattdetailsicket.component';
 import { Ticket } from 'src/app/Support/Models/TicketingSystem';
 import { Router } from '@angular/router';
-// import { ChattdetailsicketComponent } from '../../Reports/chattdetailsicket/chattdetailsicket.component';
-
 @Component({
   selector: 'app-ticketautoclose',
   templateUrl: './ticketautoclose.component.html',
@@ -20,7 +16,6 @@ import { Router } from '@angular/router';
 })
 export class TicketautocloseComponent implements OnInit {
   formTitle = 'Employee Wise Ticket Auto Close Detailed Report';
-
   pageIndex = 1;
   pageSize = 10;
   totalRecords = 1;
@@ -45,30 +40,21 @@ export class TicketautocloseComponent implements OnInit {
     ['TICKET_TAKEN_EMPLOYEE', 'Support Agent'],
     ['TICKET_TAKEN_DEPARTMENT', 'Agent Department'],
   ];
-
   drawerVisible: boolean;
   drawerTitle: string;
-  // drawerData: Ticket = new Ticket();
   uniqueDateArry: any = [];
   newData2: any = [];
   data1: any = [];
-  // userId = Number(this.cookie.get('userId'));
   roleId = Number(this.cookie.get('roleId'));
   USER_ID: any = [];
   isSpinning = false;
   filterClass: string = 'filter-invisible';
   today = new Date();
   CurrentValue: any = new Date();
-
-  // startValue: any = new Date(
-  //   this.current.getFullYear() + '-' + (this.current.getMonth() + 1) + '-01'
-  // );
-  // endValue: any = new Date();
   START_DATE: any = new Date();
   END_DATE: any = new Date();
   endOpen = false;
   startOpen = false;
-
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
@@ -77,24 +63,18 @@ export class TicketautocloseComponent implements OnInit {
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   ngOnInit(): void {
     this.getSupportUsers();
     this.getSupportAgents();
-    // this.getBranches();
     this.search();
   }
-
   keyup(event: any) {
     this.search(true);
   }
-
   reset(): void {
     this.searchText = '';
   }
-
   StartDate: any;
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -103,15 +83,13 @@ export class TicketautocloseComponent implements OnInit {
         this.isdateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isdateFilterApplied = false;
     }
   }
-
   StartDate1: any;
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -120,53 +98,41 @@ export class TicketautocloseComponent implements OnInit {
       tooltip.hide();
     }
   }
-
   onDateRangeChange1(): void {
     if (this.StartDate1 && this.StartDate1.length === 2) {
       const [start, end] = this.StartDate1;
       if (start && end) {
         this.search();
-        // this.isdateFilterApplied = true;
       }
     } else {
-      this.StartDate1 = null; // or [] if you prefer
+      this.StartDate1 = null; 
       this.search();
-      // this.isdateFilterApplied = false;
     }
   }
-
   creatornameText: string = '';
   iscreatornameFilterApplied: boolean = false;
   creatornameVisible = false;
-
   ticketnoText: string = '';
   isticketnoFilterApplied: boolean = false;
   ticketnoVisible = false;
-
   isdateFilterApplied: boolean = false;
   dateVisible = false;
-
   islastdateFilterApplied: boolean = false;
   lastdateVisible = false;
-
   empText: string = '';
   isempFilterApplied: boolean = false;
   empVisible = false;
-
   deptText: string = '';
   isdeptFilterApplied: boolean = false;
   deptVisible = false;
-
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
     if (this.creatornameText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.iscreatornameFilterApplied = true;
@@ -174,7 +140,6 @@ export class TicketautocloseComponent implements OnInit {
       this.search();
       this.iscreatornameFilterApplied = false;
     }
-
     if (this.ticketnoText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isticketnoFilterApplied = true;
@@ -182,7 +147,6 @@ export class TicketautocloseComponent implements OnInit {
       this.search();
       this.isticketnoFilterApplied = false;
     }
-
     if (this.empText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isempFilterApplied = true;
@@ -190,7 +154,6 @@ export class TicketautocloseComponent implements OnInit {
       this.search();
       this.isempFilterApplied = false;
     }
-
     if (this.deptText.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isdeptFilterApplied = true;
@@ -206,7 +169,6 @@ export class TicketautocloseComponent implements OnInit {
       ? this.commonFunction.decryptdata(this.userId)
       : '';
     this.USER_ID = parseInt(this.decrepteduserIDString, 10);
-
     this.api
       .getbackOfficeDepartmentMapping(
         0,
@@ -219,31 +181,24 @@ export class TicketautocloseComponent implements OnInit {
         (data) => {
           if (data['status'] == 200) {
             this.supportUsers = data.body['data'];
-            // this.onSelectAllChecked(true);
-            // this.getSupportAgents();
           }
         },
         (err) => { }
       );
   }
-
   SELECT_ALL: boolean = false;
   onSelectAllChecked(event) {
     this.SELECT_ALL = event;
-
-    //
     let ids = [];
     if (this.SELECT_ALL == true) {
       for (var i = 0; i < this.supportUsers.length; i++) {
         ids.push(this.supportUsers[i]['ID']);
-        //
       }
     } else {
       ids = [];
     }
     this.USER_ID = ids;
   }
-
   onSelectOff(event) {
     var a = this.supportUsers.length;
     var b = this.supportUsers.length - event.length;
@@ -260,13 +215,11 @@ export class TicketautocloseComponent implements OnInit {
   USER_ID2: any = [];
   getSupportAgents() {
     this.supportAgents = [];
-
     this.userId = sessionStorage.getItem('userId');
     this.decrepteduserIDString = this.userId
       ? this.commonFunction.decryptdata(this.userId)
       : '';
     this.USER_ID = parseInt(this.decrepteduserIDString, 10);
-    // this.api.getbackOfficeDepartmentMapping(0, 0, 'NAME', 'asc', ' AND ID!=1 AND ID IN (SELECT EMPLOYEE_ID from view_employee_role_mapping where ORG_ID=' + this.cookie.get('orgId') + ' AND ROLE_ID=4)').subscribe(data => {
     this.api
       .getbackOfficeDepartmentMapping(
         0,
@@ -279,30 +232,24 @@ export class TicketautocloseComponent implements OnInit {
         (data) => {
           if (data['status'] == 200) {
             this.supportAgents = data.body['data'];
-            // this.onSelectAllChecked1(true);
-            // this.getBranches();
           }
         },
         (err) => { }
       );
   }
-
   SELECT_ALL1: boolean = false;
   onSelectAllChecked1(event) {
     this.SELECT_ALL1 = event;
-    //
     let ids = [];
     if (this.SELECT_ALL1 == true) {
       for (var i = 0; i < this.supportAgents.length; i++) {
         ids.push(this.supportAgents[i]['ID']);
-        //
       }
     } else {
       ids = [];
     }
     this.TAKEN_BY_USER_ID = ids;
   }
-
   onSelectOff1(event) {
     var a = this.supportAgents.length;
     var b = this.supportAgents.length - event.length;
@@ -316,31 +263,13 @@ export class TicketautocloseComponent implements OnInit {
       this.SELECT_ALL1 = false;
     }
   }
-
-  // getBranches() {
-  //   this.branches = [];
-
-  //   this.api.getAllBranch(0, 0, 'NAME', 'ASC', ' AND ORG_ID=' + this.cookie.get('orgId')).subscribe(data => {
-  //     if (data['status'] == 200) {
-  //       this.branches = data.body['data'];
-  //       // this.onSelectAllCheckedBranch(true);
-  //       // this.search(true);
-  //     }
-
-  //   }, err => {
-  //
-  //   });
-  // }
-
   SELECT_ALL_Branch: boolean = false;
   onSelectAllCheckedBranch(event) {
     this.SELECT_ALL_Branch = event;
-    //
     let ids = [];
     if (this.SELECT_ALL_Branch == true) {
       for (var i = 0; i < this.branches.length; i++) {
         ids.push(this.branches[i]['ID']);
-        //
       }
     } else {
       ids = [];
@@ -360,82 +289,64 @@ export class TicketautocloseComponent implements OnInit {
       this.SELECT_ALL_Branch = false;
     }
   }
-  // startOpen: boolean = false
-
   onStartChange(date: Date): void {
     this.START_DATE = date;
   }
   onEndChange(date: Date): void {
     this.END_DATE = date;
   }
-
   handleStartOpenChange(open: boolean): void {
     if (!open) {
       this.endOpen = true;
     }
   }
-
   handleEndOpenChange(open: boolean): void {
     this.endOpen = open;
   }
-
   disabledStartDate = (START_DATE: Date): boolean => {
     if (!START_DATE || !this.END_DATE) {
       return false;
     }
     return START_DATE.getTime() > this.END_DATE;
   };
-
   current = new Date();
-
   disabledEndDate = (END_DATE: Date): boolean => {
     if (!END_DATE) {
       return false;
     }
-
     var previousDate = new Date(this.START_DATE);
     previousDate.setDate(previousDate.getDate() + -1);
-
     return END_DATE <= new Date(previousDate);
   };
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   FROM_DATE: any = this.datePipe.transform(this.START_DATE, 'yyyy-MM-dd');
   TO_DATE: any = this.datePipe.transform(this.END_DATE, 'yyyy-MM-dd');
-
   applyFilter() {
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     this.filterQuery = '';
     this.START_DATE = this.datePipe.transform(this.START_DATE, 'yyyy-MM-dd');
     this.END_DATE = this.datePipe.transform(this.END_DATE, 'yyyy-MM-dd');
-
     var filter = '';
     filter = this.filterQuery;
     var likeQuery = '';
-
     if (this.START_DATE != null) {
       this.FROM_DATE = this.START_DATE;
     }
     if (this.END_DATE != null) {
       this.TO_DATE = this.END_DATE;
     }
-
     this.search(true);
     this.isFilterApplied = 'primary';
   }
-
   clearFilter() {
     this.filterClass = 'filter-invisible';
     this.isFilterApplied = 'default';
@@ -461,30 +372,14 @@ export class TicketautocloseComponent implements OnInit {
     if (reset) {
       this.pageIndex = 1;
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
-    // var likeQuery = "";
-    // if (this.searchText != "") {
-    //   likeQuery = " AND (";
-
-    //   this.columns.forEach(column => {
-    //     likeQuery += " " + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    //   likeQuery = likeQuery + ")";
-    // }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -495,7 +390,6 @@ export class TicketautocloseComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (this.creatornameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -504,7 +398,6 @@ export class TicketautocloseComponent implements OnInit {
     } else {
       this.iscreatornameFilterApplied = false;
     }
-
     if (this.ticketnoText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -513,12 +406,11 @@ export class TicketautocloseComponent implements OnInit {
     } else {
       this.isticketnoFilterApplied = false;
     }
-
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `DATE(DATE) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -527,12 +419,11 @@ export class TicketautocloseComponent implements OnInit {
         this.isdateFilterApplied = false;
       }
     }
-
     if (this.StartDate1 && this.StartDate1.length === 2) {
       const [start, end] = this.StartDate1;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `DATE(LAST_RESPONDED) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -541,7 +432,6 @@ export class TicketautocloseComponent implements OnInit {
         this.islastdateFilterApplied = false;
       }
     }
-
     if (this.empText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -550,7 +440,6 @@ export class TicketautocloseComponent implements OnInit {
     } else {
       this.isempFilterApplied = false;
     }
-
     if (this.deptText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -560,11 +449,9 @@ export class TicketautocloseComponent implements OnInit {
       this.isdeptFilterApplied = false;
     }
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.loadingRecords = true;
       this.isSpinning = true;
-      // this.api.getTicketAutoClose(this.pageIndex, this.pageSize, this.sortKey, sort, this.filterQuery + likeQuery, this.FROM_DATE, this.TO_DATE, this.USER_ID, this.TAKEN_BY_USER_ID, this.TICKET_GENERATOR_BRANCH_ID)
       this.api
         .getTicketAutoClose(
           this.pageIndex,
@@ -579,9 +466,7 @@ export class TicketautocloseComponent implements OnInit {
               this.loadingRecords = false;
               this.totalRecords = data.body['count'];
               this.dataList = data.body['data'];
-
               this.TabId = data.body['TAB_ID'];
-
               this.isSpinning = false;
               this.filterClass = 'filter-invisible';
             } else if (data['status'] == 400) {
@@ -606,7 +491,6 @@ export class TicketautocloseComponent implements OnInit {
         );
     } else {
       this.exportLoading = true;
-
       this.api
         .getTicketAutoClose(
           0,
@@ -621,7 +505,6 @@ export class TicketautocloseComponent implements OnInit {
               this.exportLoading = false;
               this.branchData = data.body['data'];
               this.TabId = data.body['TAB_ID'];
-
               this.convertInExcel();
             }
           },
@@ -632,18 +515,6 @@ export class TicketautocloseComponent implements OnInit {
         );
     }
   }
-
-  // sort(sort: any): void {
-  //   this.sortKey = sort.key;
-  //   this.sortValue = sort.value;
-  //   if (this.sortValue == "descend") {
-  //     this.sortValue = 'desc';
-  //   } else {
-  //     this.sortValue = 'asc'
-  //   }
-  //   //
-  //   this.search(true);
-  // }
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -652,38 +523,26 @@ export class TicketautocloseComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
     if (this.branchData.length > 0) {
       for (var i = 0; i < this.branchData.length; i++) {
-        // obj1["Feedback Date"] = this.excelData[i]["FEEDBACK_DATE_TIME"]
-        //   ? this.datepipe.transform(
-        //     this.excelData[i]["FEEDBACK_DATE_TIME"],
-        //     "dd/MM/yyyy hh:mm a"
-        //   )
-        //   : "-";
-
         obj1['Creator'] = this.branchData[i]['CREATER_NAME'] ?? '-';
         obj1['Ticket No.'] = this.branchData[i]['TICKET_NO'] ?? '-';
         obj1['Date'] = this.branchData[i]['DATE']
@@ -699,7 +558,6 @@ export class TicketautocloseComponent implements OnInit {
           this.branchData[i]['TICKET_TAKEN_EMPLOYEE'] ?? '-';
         obj1['Agent Department'] =
           this.branchData[i]['TICKET_TAKEN_DEPARTMENT'] ?? '-';
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.branchData.length - 1) {
           this._exportService.exportExcel(
@@ -713,13 +571,10 @@ export class TicketautocloseComponent implements OnInit {
       this.message.error('There is a No Data', '');
     }
   }
-
-  // @ViewChild(ChattdetailsicketComponent, { static: false }) ChattdetailsicketComponentVar: ChattdetailsicketComponent;
   grpid = 0;
   bread = [];
   newstr: string;
   GRPNAME = '';
-
   drawerData: any = [];
   isloading = false;
   viewTicketData(data: Ticket) {
@@ -727,31 +582,23 @@ export class TicketautocloseComponent implements OnInit {
     this.newData2 = [];
     this.data1 = [];
     this.uniqueDateArry = [];
-    // this.ChattdetailsicketComponentVar.loading = true;
     this.drawerTitle = 'Ticket No. ' + data.TICKET_NO;
     this.drawerData = Object.assign({}, data);
     var filterQuery1 = ' AND TICKET_MASTER_ID = ' + data.TICKET_MASTER_ID + '';
-
     this.api
       .getAllTicketDetails(0, 0, 'CREATED_MODIFIED_DATE', 'asc', filterQuery1)
       .subscribe(
         (data: HttpResponse<any>) => {
           if (data.status == 200) {
             data = data.body;
-            // this.ViewchatticketComponentVar.isSpinning = false;
             this.totalRecords = data['count'];
             this.data1 = data['data'];
             this.isloading = false;
-
-            // this.grpid = this.data1[0]['TICKET_GROUP_ID'];
             if (data['count'] > 0) {
               this.grpid = this.data1[0]['TICKET_GROUP_ID'];
             } else {
               this.grpid = 0;
-              // console.warn('No ticket data found for this ticket.');
             }
-
-            // Getting Unique dates
             for (var i = 0; i < this.data1.length; i++) {
               this.uniqueDateArry.push(
                 this.datePipe.transform(
@@ -760,10 +607,8 @@ export class TicketautocloseComponent implements OnInit {
                 )
               );
             }
-
             this.uniqueDateArry = [...new Set(this.uniqueDateArry)];
             this.uniqueDateArry.sort();
-
             this.uniqueDateArry.forEach((d1) => {
               this.newData2.push({
                 key: d1,
@@ -776,22 +621,16 @@ export class TicketautocloseComponent implements OnInit {
                 ),
               });
             });
-
             this.data1 = this.newData2;
-            // this.ViewchatticketComponentVar.scrollIntoViewFunction();
-
             this.api
-              // .getBreadInChat(0, 0, 'ID', 'desc', '', '', this.grpid)
               .getBreadInChat(0, 0, 'ID', 'desc', '', '', '')
               .subscribe(
                 (data: HttpResponse<any>) => {
                   if (data.status == 200) {
                     data = data.body;
                     this.bread = data['data'];
-
                     this.newstr = '';
                     this.GRPNAME = '';
-
                     for (var i = 0; i < this.bread.length; i++) {
                       this.GRPNAME =
                         this.GRPNAME + '>' + this.bread[i]['VALUE'];
@@ -807,37 +646,27 @@ export class TicketautocloseComponent implements OnInit {
         },
         (err) => { }
       );
-
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search(false);
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   onEnterKeyPress() {
-    // document.getElementById("searchBtn").focus();
   }
-
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
-
   USER_ID1 = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
-  // filterQuery: string = "";
-  // filterClass: string = "filter-invisible";
   savedFilters: any[] = [];
-
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -854,7 +683,6 @@ export class TicketautocloseComponent implements OnInit {
       groups: [],
     },
   ];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -863,16 +691,12 @@ export class TicketautocloseComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -880,16 +704,12 @@ export class TicketautocloseComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -904,22 +724,15 @@ export class TicketautocloseComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -933,7 +746,6 @@ export class TicketautocloseComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -942,9 +754,6 @@ export class TicketautocloseComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
-  // drawerTitle!: string;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -961,19 +770,14 @@ export class TicketautocloseComponent implements OnInit {
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Employee Wise Ticket Auto Close Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -990,7 +794,6 @@ export class TicketautocloseComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1007,7 +810,6 @@ export class TicketautocloseComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1017,7 +819,6 @@ export class TicketautocloseComponent implements OnInit {
       FILTER_JSON: {},
     };
   }
-
   whichbutton: any;
   filterloading: boolean = false;
   updateButton: any;
@@ -1025,21 +826,17 @@ export class TicketautocloseComponent implements OnInit {
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'CREATER_NAME',
@@ -1125,74 +922,13 @@ export class TicketautocloseComponent implements OnInit {
       ],
       placeholder: 'Enter Agent Department',
     },
-
-    // {
-    //   key: "CLOSED_BEFORE_24",
-    //   label: "Closed Before 24",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Closed Before 24",
-    // },
-    // {
-    //   key: "CLOSED_BETWEEN_24_48",
-    //   label: "Closed Between 24_48",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Closed Between 24_48",
-    // },
-    // {
-    //   key: "CLOSED_BETWEEN_48_72",
-    //   label: "Closed Between 48_72",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter Closed Between 48_72",
-    // },
-    // {
-    //   key: "CLOSED_AFTER_72",
-    //   label: "After 72",
-    //   type: "text",
-    //   comparators: [
-    //     "=",
-    //     "!=",
-    //     "Contains",
-    //     "Does Not Contains",
-    //     "Starts With",
-    //     "Ends With",
-    //   ],
-    //   placeholder: "Enter After 72",
-    // },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -1203,16 +939,13 @@ export class TicketautocloseComponent implements OnInit {
           this.savedFilters = this.savedFilters.filter(
             (filter) => filter.ID !== item.ID
           );
-
           this.message.success('Filter deleted successfully.', '');
           sessionStorage.removeItem('ID');
           this.filterloading = true;
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -1236,11 +969,8 @@ export class TicketautocloseComponent implements OnInit {
       }
     );
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1248,24 +978,18 @@ export class TicketautocloseComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1273,7 +997,6 @@ export class TicketautocloseComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';

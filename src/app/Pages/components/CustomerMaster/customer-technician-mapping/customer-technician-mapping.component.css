@@ -1,0 +1,36 @@
+.left-text-container {
+    text-align: left;
+    padding-left: 10px;
+}
+.right-form-container {
+    text-align: right;
+    padding-right: 10px;
+}
+.inline-flex-form {
+    display: inline-flex;
+}
+.input-group-margin {
+    margin-left: 26px !important;
+}
+.input-height {
+    height: 32px;
+}
+.relative-container {
+    position: relative;
+}
+.center-text {
+    text-align: center;
+}
+.table-pre-line {
+    white-space: pre-line;
+}
+.icon-large {
+    font-size: 26px !important;
+}
+.space-between-row {
+    display: flex;
+    justify-content: space-between;
+}
+.left-flex-row {
+    display: flex;
+}

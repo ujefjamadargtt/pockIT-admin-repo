@@ -5,55 +5,96 @@
   margin-top: 12px;
   margin-bottom: 12px;
   background-color: #fafafa;
-
 }
-
 .header {
-
   position: absolute;
-
   top: 0px;
-
-  /* bottom: 0px; */
-
   width: 100%;
-
   border-top: 1px solid rgb(232, 232, 232);
-
   padding: 10px 16px;
-
   text-align: right;
-
-  /* left: 0px; */
-
   right: 0px;
-
-  /* background: #fff; */
-
 }
-
 nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 image-cropper {
-  /* display: block; */
   margin: 20px auto;
   max-width: 100%;
   height: 100%;
 }
-
 .image-cropper-container {
   width: 100%;
   max-width: 500px;
-  /* Adjust as needed */
   height: auto;
   overflow: hidden;
-  /* Prevents overflow */
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.char-count-text-ac01 {
+  color: red;
+  font-size: 10px;
+}
+.seq-input-width-ac02 {
+  width: 130px;
+}
+.icon-delete-action-ac03 {
+  cursor: pointer;
+  color: red;
+  margin-left: 10px;
+}
+.upload-btn-ac04 {
+  height: 28px;
+  padding: 0px 7px;
+  font-size: 10px;
+  width: 40%;
+}
+.hidden-file-input-ac05 {
+  display: none !important;
+}
+.icon-preview-wrapper-ac06 {
+  margin-top: 10px;
+}
+.icon-preview-img-ac07 {
+  width: 128px;
+  height: auto;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+.icon-preview-center-ac08 {
+  align-items: center;
+}
+.icon-preview-square-ac09 {
+  height: 128px;
+  width: 128px;
+  overflow: auto;
+}
+.footer-btn-mr-ac10 {
+  margin-right: 8px;
+}
+.footer-dropdown-item-ac11 {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-dropdown-link-ac12 {
+  color: white !important;
+}
+.image-modal-body-ac13 {
+  height: 400px;
+  overflow: auto;
+}
+.image-modal-iframe-ac14 {
+  width: 832px;
+  height: 396px;
+}
+.crop-modal-body-ac15 {
+  height: 400px;
+  overflow: scroll;
+}
+.crop-preview-center-ac16 {
+  text-align: center;
 }

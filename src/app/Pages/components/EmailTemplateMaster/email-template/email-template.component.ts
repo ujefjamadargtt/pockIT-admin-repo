@@ -17,7 +17,6 @@ import { emailtemplate } from 'src/app/Pages/Models/emailtemplate';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
-
 @Component({
   selector: 'app-email-template',
   templateUrl: './email-template.component.html',
@@ -79,7 +78,6 @@ export class EmailTemplateComponent {
   baseurl = appkeys.baseUrl;
   dynamicInputValue1;
   Value;
-
   Name: any = [];
   Type: any = [];
   array2;
@@ -162,12 +160,10 @@ export class EmailTemplateComponent {
     this.setEditorConfig();
     this.getallLanguages();
     this.getTemplateCategories();
-    // this.getBodyValues();
     if (this.data.ID && this.data.BODY_VALUES !== '[null]') {
       this.showDynamicInput1 = true;
     }
   }
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -184,13 +180,11 @@ export class EmailTemplateComponent {
       this.data.TEMPLATE_NAME = this.data.TEMPLATE_NAME.replace(/ /g, '_');
     }
   }
-
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s_]*$/; // Updated pattern
+    const allowedPattern = /^[a-zA-Z\s_]*$/; 
     const char = String.fromCharCode(event.keyCode || event.which);
-
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   LangugageData: any[] = [];
@@ -229,9 +223,7 @@ export class EmailTemplateComponent {
     editable: true,
     spellcheck: true,
     height: '80px',
-    //  minHeight: '0',
     maxHeight: 'auto',
-
     width: 'auto',
     minWidth: '0',
     translate: 'yes',
@@ -320,7 +312,6 @@ export class EmailTemplateComponent {
       this.showDynamicInput1 = true;
     }
     const regex = /}}(?!)/;
-
     if (this.data.BODY.match(regex)) {
       this.i++;
     } else {
@@ -329,102 +320,32 @@ export class EmailTemplateComponent {
     this.check1();
     this.Date = new Date();
   }
-  // check1() {
-  //   const pattern = /{{\d+}/g;
-  //   const matches = this.data.BODY.match(pattern);
-
-  //   if (matches && this.data.BODY_VALUES != undefined) {
-  //     for (let i = 0; i < matches.length; i++) {
-  //       this.inputBody = this.inputBody.replace(
-  //         matches[i].toString() ? matches[i].toString() : this.inputBody,
-  //         this.data.BODY_VALUES[i]
-  //           ? this.data.BODY_VALUES[i]
-  //           : matches[i].toString()
-  //       );
-  //       this.inputBody = this.inputBody.replace(
-  //         this.data.BODY_VALUES[i] + '}',
-  //         this.data.BODY_VALUES[i] + ' '
-  //       );
-  //     }
-  //   } else {
-  //     this.inputBody = this.data.BODY;
-  //   }
-  // }
   check1() {
     const pattern = /{{\d+}}/g;
     const matches = this.data.BODY.match(pattern);
-
-    // Check if there are matches and BODY_VALUES are not empty
     if (matches && this.data.BODY_VALUES && this.data.BODY_VALUES.length > 0) {
       let bodyContent = this.data.BODY;
-
       let matchIndex = 0;
       for (let i = 0; i < matches.length; i++) {
-        // Safeguard: Ensure we have a valid value before calling split
         const valueWithIndex = this.data.BODY_VALUES[matchIndex];
-
-        // Only proceed if the value exists
         if (valueWithIndex) {
-          // Extract the original value without the index
-          const value = valueWithIndex.split('_')[0]; // This will give the same base value (e.g., 'hii')
-
+          const value = valueWithIndex.split('_')[0]; 
           bodyContent = bodyContent.replace(matches[i], value);
         }
-
         matchIndex++;
-        // Ensure we don't go out of bounds (repeat the same value if we reach the end)
         if (matchIndex >= this.data.BODY_VALUES.length) {
-          matchIndex = this.data.BODY_VALUES.length - 1; // Loop through values, allowing duplicates
+          matchIndex = this.data.BODY_VALUES.length - 1; 
         }
       }
-
-      this.inputBody = bodyContent; // Update with final body content
+      this.inputBody = bodyContent; 
     } else {
-      this.inputBody = this.data.BODY; // Fallback if no matches or BODY_VALUES are empty
+      this.inputBody = this.data.BODY; 
     }
   }
-
   generateUniqueValue(option: string): string {
-    // You can use a timestamp or a random string for uniqueness
-    const uniqueId = Date.now().toString(); // Or use a more complex method if needed
-
-    return `${option}-${uniqueId}`; // Concatenate the entered value with the unique identifier
+    const uniqueId = Date.now().toString(); 
+    return `${option}-${uniqueId}`; 
   }
-
-  // convertB() {
-  //   // Wrap the text in <strong> tags if not already present
-  //   if (this.data.BODY === undefined) {
-  //     this.data.BODY = '<strong></strong>';
-  //   }
-
-  //   // Ensure that new input is always inside the <strong> tags
-  //   const bodyTextWithoutTags = this.data.BODY.replace(/<\/?strong>/g, ''); // Remove existing tags
-  //   this.data.BODY = `<strong>${bodyTextWithoutTags}</strong>`;
-
-  //   this.checkInput1();
-  // }
-
-  // convertI() {
-  //   // this.data.BODY += '_';
-  //   // this.italici++;
-  //   // if (this.italici % 2 === 0) {
-  //   //   this.data.BODY = this.data.BODY.replace(/\_/g, '<em>');
-  //   // } else {
-  //   //   this.data.BODY = this.data.BODY.replace(/\_/g, '</em>');
-  //   // }
-  //   // this.checkInput1();
-
-  //   // Wrap the text in <em> tags if not already present
-  //   if (this.data.BODY === undefined) {
-  //     this.data.BODY = '<em></em>';
-  //   }
-
-  //   // Ensure that new input is always inside the <em> tags
-  //   const bodyTextWithoutTags = this.data.BODY.replace(/<\/?em>/g, ''); // Remove existing tags
-  //   this.data.BODY = `<em>${bodyTextWithoutTags}</em>`;
-
-  //   this.checkInput1();
-  // }
   convertB() {
     const textArea = document.getElementById(
       'messages2'
@@ -433,28 +354,21 @@ export class EmailTemplateComponent {
       textArea.selectionStart,
       textArea.selectionEnd
     );
-
     if (selectedText) {
-      // Wrap the selected text in <strong> tags
       const newText =
         textArea.value.slice(0, textArea.selectionStart) +
         `<strong>${selectedText}</strong>` +
         textArea.value.slice(textArea.selectionEnd);
-
       this.data.BODY = newText;
     } else {
-      // If no text is selected, apply <strong> around the whole body content
       if (this.data.BODY === undefined) {
         this.data.BODY = '<strong></strong>';
       }
-
-      const bodyTextWithoutTags = this.data.BODY.replace(/<\/?strong>/g, ''); // Remove existing tags
+      const bodyTextWithoutTags = this.data.BODY.replace(/<\/?strong>/g, ''); 
       this.data.BODY = `<strong>${bodyTextWithoutTags}</strong>`;
     }
-
     this.checkInput1();
   }
-
   convertI() {
     const textArea = document.getElementById(
       'messages2'
@@ -463,32 +377,24 @@ export class EmailTemplateComponent {
       textArea.selectionStart,
       textArea.selectionEnd
     );
-
     if (selectedText) {
-      // Wrap the selected text in <em> tags
       const newText =
         textArea.value.slice(0, textArea.selectionStart) +
         `<em>${selectedText}</em>` +
         textArea.value.slice(textArea.selectionEnd);
-
       this.data.BODY = newText;
     } else {
-      // If no text is selected, apply <em> around the whole body content
       if (this.data.BODY === undefined) {
         this.data.BODY = '<em></em>';
       }
-
-      const bodyTextWithoutTags = this.data.BODY.replace(/<\/?em>/g, ''); // Remove existing tags
+      const bodyTextWithoutTags = this.data.BODY.replace(/<\/?em>/g, ''); 
       this.data.BODY = `<em>${bodyTextWithoutTags}</em>`;
     }
-
     this.checkInput1();
   }
-
   close() {
     this.drawerClose();
   }
-
   isValidMobile(mobile) {
     const expression = /^[6-9]\d{9}$/;
     return expression.test(String('' + mobile).toLowerCase());
@@ -497,206 +403,27 @@ export class EmailTemplateComponent {
     const expression = /}}[.,]?[a-zA-Z]+/;
     return expression.test(String('' + body).toLowerCase());
   }
-  // export class emailtemplate {
-  //   ID: number;
-  //   TEMPLATE_NAME: any;
-  //   SUBJECT: any;
-  //   BODY: any;
-  //   ATTACHMENTS: any;
-  //   IS_ACTIVE: boolean;
-  //   BODY_VALUES: any;
-  //   BODY: any;
-  //   DESCRIPTION: any;
-  //   LANGUAGE_CODE: any;
-  //   TEMPLATE_CATEGORY_ID: null;
-  // }
-
-  // save(addNew: boolean): void {
-  //   const pattern = /{{\d+}}/g;
-
-  //   // Match patterns in BODY_TEXT and text
-  //   this.matches = this.data.BODY_VALUES?.match(pattern) || [];
-  //   this.matches1 = this.text?.match(pattern) || [];
-
-  //   let isOk = true;
-
-  //   // Validate required fields
-  //   if (!this.data.TEMPLATE_NAME?.trim()) {
-  //     this.message.error('Please enter name', '');
-  //     isOk = false;
-  //   } else if (!this.data.TEMPLATE_CATEGORY_ID) {
-  //     this.message.error('Please select Type', '');
-  //     isOk = false;
-  //   } else if (!this.data.LANGUAGE_CODE) {
-  //     this.message.error('Please select Language', '');
-  //     isOk = false;
-  //   } else if (!this.data.TEMPLATE_BODY?.trim()) {
-  //     this.message.error('Please enter Body of Template', '');
-  //     isOk = false;
-  //   } else if (
-  //     this.data.TEMPLATE_BODY &&
-  //     this.data.TEMPLATE_BODY.split('&#160;').length - 1 > 1
-  //   ) {
-  //     this.message.error(
-  //       'In Body Only single space allowed between two characters',
-  //       ''
-  //     );
-  //     isOk = false;
-  //   } else if (
-  //     this.matches?.length &&
-  //     this.data.TEMPLATE_BODY?.length !== this.matches.length
-  //   ) {
-  //     this.message.error(
-  //       'Count of variables in Body and sample values are mismatching',
-  //       ''
-  //     );
-  //     isOk = false;
-  //   }
-
-  //   if (isOk) {
-  //     // Process TEMPLATE_NAME
-  //     this.NAME = this.data.TEMPLATE_NAME.replace(/ /g, '_').replace(
-  //       /[A-Z]/g,
-  //       (char) => char.toLowerCase()
-  //     );
-
-  //     // Process BODY_TEXT
-  //     this.NAME1 = this.data.BODY_VALUES.replace(/&#34/g, '"')
-  //       .replace(/<span>|<\/span>|<br>|<div>|<\/div>/g, '')
-  //       .replace(/<strong>|<\/strong>/g, '*')
-  //       .replace(/<em>|<\/em>|<i>|<\/i>/g, '_')
-  //       .replace(/&#160/g, '	');
-
-  //     // Process FamilyDetails
-  //     this.array1 = this.FamilyDetails.map((familyDetail) => {
-  //       if (familyDetail.Type === 'QUICK_REPLY') {
-  //         return { type: 'QUICK_REPLY', text: familyDetail.custom };
-  //       } else if (familyDetail.Type === 'URL') {
-  //         return {
-  //           type: 'URL',
-  //           url: familyDetail.WEBSITE_URL,
-  //           text: familyDetail.websitebuttontext,
-  //           example: [familyDetail.tempinput],
-  //         };
-  //       } else if (familyDetail.Type === 'PHONE_NUMBER') {
-  //         return {
-  //           type: 'PHONE_NUMBER',
-  //           text: familyDetail.BUTTON1,
-  //           phone_number: `+910${familyDetail.mobile}`,
-  //         };
-  //       } else if (familyDetail.Type === 'COPY_CODE') {
-  //         return {
-  //           type: 'COPY_CODE',
-  //           text: familyDetail.BUTTON12,
-  //           example: [familyDetail.code],
-  //         };
-  //       }
-  //       return null;
-  //     }).filter((item) => item?.text);
-
-  //     // Filter array1
-  //     const filteredArray = this.array1.filter((item) =>
-  //       this.FamilyDetails.some((detail) => item.type === detail.Type)
-  //     );
-
-  //     // Prepare data for API
-  //     const datas = {
-  //       WP_CLIENT_ID: this.userId,
-  //       NAME: this.NAME,
-  //       LANGUAGES: this.data.LANGUAGE_CODE,
-  //       CATEGORY: this.data.TEMPLATE_CATEGORY_ID,
-  //       BODY_TEXT: this.NAME1.toString(),
-  //       BODY_VALUES: this.data.BODY_VALUES,
-  //       BUTTON_VALUES: null,
-  //       CREATED_DATETIME: this.datePipe.transform(
-  //         new Date(),
-  //         'yyyy-MM-dd HH:mm:ss'
-  //       ),
-  //       SUMITTED_DATETIME: this.datePipe.transform(
-  //         new Date(),
-  //         'yyyy-MM-dd HH:mm:ss'
-  //       ),
-  //       STATUS: 'S',
-  //     };
-
-  //     // API Call
-  //     this.api.createEmailTemplate(datas).subscribe((response) => {
-  //       this.isSpinning = false;
-  //       if (response.code === '200') {
-  //         this.message.success('Template Created Successfully', '');
-  //         if (!addNew) this.drawerClose();
-  //         else this.data = new emailtemplate();
-  //       } else {
-  //         this.message.error('Failed to Create Template', '');
-  //       }
-  //     });
-  //     // this.api.createTemplate(datas).subscribe((response) => {
-  //     //   this.isSpinning = false;
-  //     //   if (response.code === "200") {
-  //     //     this.message.success("Template Created Successfully", "");
-  //     //     if (!addNew) this.drawerClose();
-  //     //     else this.data = new emailtemplate();
-  //     //   } else {
-  //     //     this.message.error("Failed to Create Template", "");
-  //     //   }
-  //     // });
-  //   }
-  // }
-  // handleEnter(event: KeyboardEvent): void {
-  //   if (event.key === 'Enter') {
-  //     event.preventDefault(); // Prevent default Enter behavior
-  //     this.data.BODY += '\n'; // Append newline character
-  //   }
-  // }
-  // handleEnter(event: KeyboardEvent): void {
-  //   if (event.key === 'Enter') {
-  //     event.preventDefault(); // Prevent default enter behavior
-
-  //     const textarea = event.target as HTMLTextAreaElement;
-  //     const cursorPos = textarea.selectionStart;
-  //     const textBefore = this.data.BODY.substring(0, cursorPos);
-  //     const textAfter = this.data.BODY.substring(cursorPos);
-
-  //     // Insert \n at cursor position
-  //     this.data.BODY = textBefore + '\n' + textAfter;
-
-  //     // Move cursor to the correct position
-  //     setTimeout(() => {
-  //       textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
-  //     });
-  //   }
-  // }
   handleEnter(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
-      event.preventDefault(); // Prevent default Enter behavior
-
+      event.preventDefault(); 
       const textarea = event.target as HTMLTextAreaElement;
       const cursorPos = textarea.selectionStart;
       const textBefore = this.data.BODY.substring(0, cursorPos);
       const textAfter = this.data.BODY.substring(cursorPos);
-
-      // Insert a newline
       this.data.BODY = textBefore + '\n' + textAfter;
-
-      // Move cursor to the correct position
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
       });
     }
   }
-
-  // Convert \n to <br> before saving
   saveFormattedData(): void {
     if (this.data.BODY) {
       this.data.BODY = this.data.BODY.replace(/\n/g, '<br>');
     }
   }
-
-  // Convert <br> back to \n for displaying inside the textarea
   getFormattedText(): string {
     return this.data.BODY ? this.data.BODY.replace(/<br>/g, '\n') : '';
   }
-
   save(addNew: boolean, websitebannerPage: NgForm): void {
     const pattern = /{{\d+}}/g;
     if (this.data.BODY != undefined || this.data.BODY != null) {
@@ -758,13 +485,6 @@ export class EmailTemplateComponent {
       isOk = false;
     } else if (this.data.BODY != undefined) {
       const count = this.data.BODY.split('&#160;').length - 1;
-      // if (count > 1) {
-      //   this.message.error(
-      //     'In Body Only single space allowed between two characters',
-      //     ''
-      //   );
-      //   isOk = false;
-      // }
     } else if (
       this.matches != undefined &&
       this.data.BODY_VALUES != undefined
@@ -799,10 +519,7 @@ export class EmailTemplateComponent {
       this.NAME1 = this.data.BODY.replace(/&#34/g, '"')
         .replace(/<span>/g, '')
         .replace(/<\/span>/g, '')
-        // .replace(/<br>/g, '\n')
         .replace(/<br>/g, '')
-        // .replace(/<strong>/g, '*')
-        // .replace(/<\/strong>/g, '*')
         .replace(/<em>/g, '_')
         .replace(/<\/em>/g, '_')
         .replace(/<div>/g, '\n')
@@ -810,8 +527,6 @@ export class EmailTemplateComponent {
         .replace(/&#160/g, '\t')
         .replace(/<i>/g, '_')
         .replace(/<\/i>/g, '_');
-      // .replace(/<p class="center">/g, '<p style="text-align: center;">');
-
       for (let i = 0; i < this.FamilyDetails.length; i++) {
         const familyDetail = this.FamilyDetails[i];
         if (familyDetail.Type === 'QUICK_REPLY') {
@@ -820,7 +535,6 @@ export class EmailTemplateComponent {
             text: familyDetail.custom,
           });
         }
-
         if (familyDetail.Type === 'URL') {
           this.array1.push({
             type: 'URL',
@@ -829,7 +543,6 @@ export class EmailTemplateComponent {
             example: [familyDetail.tempinput],
           });
         }
-
         if (familyDetail.Type === 'PHONE_NUMBER') {
           this.array1.push({
             type: 'PHONE_NUMBER',
@@ -837,7 +550,6 @@ export class EmailTemplateComponent {
             phone_number: '+910' + familyDetail.mobile,
           });
         }
-
         if (familyDetail.Type === 'COPY_CODE') {
           this.array1.push({
             type: 'COPY_CODE',
@@ -849,9 +561,7 @@ export class EmailTemplateComponent {
       this.array1 = this.array1.filter(
         (item) => item.text !== undefined && item.text !== null
       );
-
       this.isSpinning = true;
-
       var datas = {
         WP_CLIENT_ID: this.userId,
         TEMPLATE_NAME: this.NAME,
@@ -872,16 +582,13 @@ export class EmailTemplateComponent {
         STATUS: 'S',
         IS_ACTIVE: this.data.IS_ACTIVE,
       };
-
       if (this.data.ID) {
         if (this.data.DESCRIPTION == '') {
           this.data.DESCRIPTION = null;
         }
-
         this.data.BODY_VALUES = Array.isArray(this.data.BODY_VALUES)
           ? JSON.stringify(this.data.BODY_VALUES)
           : JSON.stringify([this.data.BODY_VALUES]);
-
         this.api.updateEmailTemplate(this.data).subscribe(
           (successCode: any) => {
             if (successCode.code == '200') {
@@ -912,7 +619,6 @@ export class EmailTemplateComponent {
         datas.BODY_VALUES = Array.isArray(this.data.BODY_VALUES)
           ? JSON.stringify(this.data.BODY_VALUES)
           : JSON.stringify([this.data.BODY_VALUES]);
-
         this.api.createEmailTemplate(datas).subscribe(
           (successCode) => {
             if (successCode['code'] == '200') {
@@ -952,130 +658,7 @@ export class EmailTemplateComponent {
     websitebannerPage.form.markAsUntouched();
   }
   onFileSelected1(event: any) {
-    //   this.fileSizeimg = Number(
-    //     parseFloat(String(event.target.files[0].size / 1024 / 1024)).toFixed(2)
-    //   );
-    //   if (this.fileSizeimg < 5) {
-    //     this.visiblemedia = true;
-    //     const reader = new FileReader();
-    //     const [file] = event.target.files;
-    //     reader.readAsDataURL(file);
-    //     reader.onload = () => {
-    //       this.image = reader.result as string;
-    //     };
-    //     this.fileURL = <File>event.target.files[0];
-    //     var number = Math.floor(100000 + Math.random() * 900000);
-    //     var fileExt = this.fileURL.name.split(".").pop();
-    //     var d = this.datePipe.transform(new Date(), "yyyyMMdd");
-    //     var url = "";
-    //     url = d == null ? "" : d + number + "." + fileExt;
-    //     if (this.IMG_URL != undefined && this.IMG_URL.trim() != "") {
-    //       var arr = this.IMG_URL.split("/");
-    //       if (arr.length > 1) {
-    //         url = arr[5];
-    //       }
-    //     }
-    //     this.IMAGE = this.baseurl + "static/templateMedia/" + url;
-    //     this.isSpinning = true;
-    //     // this.api
-    //     //   .onUpload(this.userId, 'templateMedia', this.fileURL, url)
-    //     //   .subscribe((successCode) => {
-    //     //     if (successCode.code == '200') {
-    //     //       this.mediaIdImg = successCode.mediaId;
-    //     //       this.message.success('Image Uploaded Successfully', '');
-    //     //       this.isSpinning = false;
-    //     //     }
-    //     //     (err) => {
-    //     //       if (err['ok'] == false)
-    //     //         this.message.error('Failed to Upload the Image', '');
-    //     //     };
-    //     //   });
-    //   } else {
-    //     this.message.error("Please Select Image having size less than 5 MB", "");
-    //     this.fileURL = null;
-    //     this.IMAGE = "";
-    //   }
   }
-
-  // checkInput() {
-  //   if (this.data.HEADER_TEXT == '' || this.data.HEADER_TEXT == undefined) {
-  //     this.showDynamicInput = false;
-  //   }
-
-  //   const regex = /}}(?!)/;
-  //   if (this.data.HEADER_TEXT.includes('}}')) {
-  //     this.showDynamicInput = true;
-  //   }
-
-  //   if (this.data.HEADER_TEXT.match(regex)) {
-  //     this.i++;
-  //   } else {
-  //     this.inputValue = this.data.HEADER_TEXT;
-  //   }
-  //   this.check();
-  //   this.Date = new Date();
-  // }
-  // check() {
-  //   const pattern = /{{\d+}/g;
-  //   const matches = this.data.HEADER_TEXT.match(pattern);
-  //   if (matches && this.data.HEADER_VALUES != undefined) {
-  //     for (let i = 0; i < matches.length; i++) {
-  //       this.inputValue = this.inputValue.replace(
-  //         matches[i].toString() ? matches[i].toString() : this.inputValue,
-  //         this.data.HEADER_VALUES[i]
-  //           ? this.data.HEADER_VALUES[i]
-  //           : matches[i].toString()
-  //       );
-  //       this.inputValue = this.inputValue.replace(
-  //         this.data.HEADER_VALUES[i] + '}',
-  //         this.data.HEADER_VALUES[i]
-  //       );
-  //     }
-  //   } else {
-  //     this.inputValue = this.data.HEADER_TEXT;
-  //   }
-  // }
-
-  // check1() {
-  //   const pattern = /{{\d+}/g;
-  //   const matches = this.data.BODY_TEXT.match(pattern);
-
-  //   if (matches && this.data.BODY_VALUES != undefined) {
-  //     for (let i = 0; i < matches.length; i++) {
-  //       this.inputBody = this.inputBody.replace(
-  //         matches[i].toString() ? matches[i].toString() : this.inputBody,
-  //         this.data.BODY_VALUES[i]
-  //           ? this.data.BODY_VALUES[i]
-  //           : matches[i].toString()
-  //       );
-  //       this.inputBody = this.inputBody.replace(
-  //         this.data.BODY_VALUES[i] + '}',
-  //         this.data.BODY_VALUES[i] + ' '
-  //       );
-  //     }
-  //   } else {
-  //     this.inputBody = this.data.BODY_TEXT;
-  //   }
-  // }
-
-  // checkInput1() {
-  //   if (this.data.BODY_TEXT == '' || this.data.BODY_TEXT == undefined) {
-  //     this.showDynamicInput1 = false;
-  //   }
-  //   if (this.data.BODY_TEXT.includes('}}')) {
-  //     this.showDynamicInput1 = true;
-  //   }
-  //   const regex = /}}(?!)/;
-
-  //   if (this.data.BODY_TEXT.match(regex)) {
-  //     this.i++;
-  //   } else {
-  //     this.inputBody = this.data.BODY_TEXT;
-  //   }
-  //   this.check1();
-  //   this.Date = new Date();
-  // }
-
   checkInputURL1() {
     if (this.WEBSITE_URL == '' || this.WEBSITE_URL == undefined) {
       this.showDynamicInputURL = false;
@@ -1084,7 +667,6 @@ export class EmailTemplateComponent {
       this.showDynamicInputURL = true;
     }
     const regex = /}}(?!)/;
-
     if (this.WEBSITE_URL.match(regex)) {
       this.i++;
     } else {
@@ -1092,7 +674,6 @@ export class EmailTemplateComponent {
     }
     this.checkInputURL();
   }
-
   checkInputURL() {
     const pattern = /{{\d+}/g;
     const matches = this.WEBSITE_URL.match(pattern);
@@ -1109,31 +690,18 @@ export class EmailTemplateComponent {
       }
     }
   }
-  // templateCategories = [
-  //   { Id: 'Welcome Email', Name: 'Welcome Email' },
-  //   { Id: 'Password Reset', Name: 'Password Reset' },
-  //   { Id: 'Appointment Confirmation', Name: 'Appointment Confirmation' },
-  //   { Id: 'Order Notification', Name: 'Order Notification' },
-  //   { Id: 'Promotional Email', Name: 'Promotional Email' },
-  //   { Id: 'Follow-up Email', Name: 'Follow-up Email' },
-  //   { Id: 'Feedback Request', Name: 'Feedback Request' },
-  //   { Id: 'Other', Name: 'Other' },
-  // ];
   templateCategories: any = [];
   getTemplateCategories() {
     this.api.getTemplateCategoryData(0, 0, '', 'desc', '').subscribe(
       (data) => {
         if (data['code'] == 200) {
           this.templateCategories = data['data'];
-
-          //this.loadFilters();
         } else {
           this.templateCategories = [];
           this.message.error('Something Went Wrong ...', '');
         }
       },
       (err: HttpErrorResponse) => {
-        // this.loadingRecords = false;
         if (err.status === 0) {
           this.message.error(
             'Network error: Please check your internet connection.',
@@ -1152,12 +720,10 @@ export class EmailTemplateComponent {
     }
     return true;
   }
-
   onFileSelected(event: any) {
     this.fileSizevid = Number(
       parseFloat(String(event.target.files[0].size / 1024 / 1024)).toFixed(2)
     );
-
     if (this.fileSizevid < 16) {
       this.visiblemedia = true;
       this.fileDataIMAGE_URL = <File>event.target.files[0];
@@ -1168,30 +734,12 @@ export class EmailTemplateComponent {
         reader.onload = () => {
           this.video = reader.result as string;
         };
-
         var number = Math.floor(100000 + Math.random() * 900000);
-
         var fileExt = this.fileDataIMAGE_URL.name.split('.').pop();
-
         var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-
         var url = '';
         url = this.fileDataIMAGE_URL.name;
         this.isSpinning = true;
-        // this.api
-        //   .onUpload1(this.userId, 'templateMedia', this.fileDataIMAGE_URL, url)
-        //   .subscribe((successCode) => {
-        //     if (successCode.code == '200') {
-        //       this.mediaIdVid = successCode.mediaId;
-        //       this.message.success('Video Uploaded Successfully', '');
-        //       this.isSpinning = false;
-        //     }
-        //     (err) => {
-        //       if (err['ok'] == false)
-        //         this.message.error('Failed to Upload the Video', '');
-        //     };
-        //   });
-
         this.event = url;
         this.VIDEO_URL = this.baseurl + 'static/templateMedia/' + url;
       }
@@ -1201,14 +749,12 @@ export class EmailTemplateComponent {
       this.VIDEO_URL = '';
     }
   }
-
   onFileSelected3(event) {
     this.fileURLPDF = <File>event.target.files[0];
     this.upload = event.target.files[0].name;
     this.DOCUMENT = this.imgurl + 'templateMedia/' + this.upload;
     let typeArry = event.target.files[0].name.split('.');
     this.TYPE = event.target.files[0].name.split('.')[typeArry.length - 1];
-
     this.fileSizedoc = Number(
       parseFloat(String(event.target.files[0].size / 1024 / 1024)).toFixed(2)
     );
@@ -1218,19 +764,6 @@ export class EmailTemplateComponent {
     if (this.fileSizedoc < 100) {
       this.visiblemedia = true;
       this.isSpinning = true;
-      // this.api
-      //   .onUploadFiles(this.userId, this.fileURLPDF)
-      //   .subscribe((successCode) => {
-      //     if (successCode['code'] == '200') {
-      //       this.mediaIdDoc = successCode.mediaId;
-      //       this.message.success('File Uploaded Successfully', '');
-      //       this.isSpinning = false;
-      //     }
-      //     (err) => {
-      //       if (err['ok'] == false)
-      //         this.message.error('Failed to Upload the File', '');
-      //     };
-      //   });
     } else {
       this.message.error(
         'Please select Document having size less than 100MB',
@@ -1253,15 +786,11 @@ export class EmailTemplateComponent {
     this.visiblemedia = false;
     this.DOCUMENT = '';
   }
-
-  // using prompt
   insertCustomButton() {
-    const buttonText = prompt('Enter Button Name', 'Click Here'); // Get button name
-    if (!buttonText) return; // Prevent empty buttons
-
-    const buttonLink = prompt('Enter Button Link', 'https://example.com'); // Get button link
-    if (!buttonLink) return; // Prevent empty links
-
+    const buttonText = prompt('Enter Button Name', 'Click Here'); 
+    if (!buttonText) return; 
+    const buttonLink = prompt('Enter Button Link', 'https://example.com'); 
+    if (!buttonLink) return; 
     const buttonHtml = `
       <div style=" margin-top: 10px;">
         <a href="${buttonLink}" target="_blank"
@@ -1271,50 +800,37 @@ export class EmailTemplateComponent {
           ${buttonText} <!-- Custom Button Text -->
         </a>
       </div>`;
-
-    // Insert into Angular Editor
     this.data.BODY = this.data.BODY ? this.data.BODY + buttonHtml : buttonHtml;
   }
-
   ngAfterViewInit() {
     setTimeout(() => {
       const toolbar = document.querySelector('.angular-editor-toolbar');
-
       if (toolbar) {
-        // Create a new toolbar button
         const button = document.createElement('button');
         button.innerHTML = '🔗 Insert Button';
         button.style.position = 'absolute';
-        button.style.top = '38px'; // Move slightly above the toolbar
+        button.style.top = '38px'; 
         button.style.left = '400px';
         button.style.border = 'solid 1px #cfcaca';
         button.style.background = '#ffffff';
         button.style.color = '#494343';
         button.style.padding = '5px 10px';
-        // button.style.borderRadius = '4px';
         button.style.cursor = 'pointer';
         button.style.height = '28px';
-
-        // Check if data.ID exists -> Disable the button
         if (this.data?.ID) {
           button.disabled = true;
-          button.style.opacity = '0.5'; // Make it look disabled
+          button.style.opacity = '0.5'; 
           button.style.cursor = 'not-allowed';
         }
-
-        // Add click event to insert the button inside the editor (only if not disabled)
         button.addEventListener('click', () => {
           if (!this.data?.ID) {
             this.insertCustomButton();
           }
         });
-
-        // Append the button above the toolbar
         toolbar.parentElement?.insertBefore(button, toolbar);
       }
     }, 200);
   }
-
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -1323,7 +839,7 @@ export class EmailTemplateComponent {
     placeholder: 'Enter Description',
     enablePlaceholders: true,
     translate: 'no',
-    sanitize: false, // ✅ Allows inserting custom HTML (important)
+    sanitize: false, 
     toolbarHiddenButtons: [
       ['insertImage', 'insertVideo', 'subscript', 'superscript'],
     ],
@@ -1338,7 +854,6 @@ export class EmailTemplateComponent {
       ['insertButton'],
     ],
   };
-
   setEditorConfig() {
     this.config = { ...this.config, editable: this.data.ID ? true : true };
   }

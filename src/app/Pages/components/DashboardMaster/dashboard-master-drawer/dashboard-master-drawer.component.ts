@@ -6,7 +6,6 @@ import { DashboardMaster } from 'src/app/Pages/Models/dashboardmaster';
 import { TemplateCategoryMaster } from 'src/app/Pages/Models/templateCategory';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-dashboard-master-drawer',
   templateUrl: './dashboard-master-drawer.component.html',
@@ -17,7 +16,6 @@ export class DashboardMasterDrawerComponent {
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
   public commonFunction = new CommonFunctionService();
-
   isSpinning = false;
   isOk = true;
   isStateSpinning = false;
@@ -28,7 +26,6 @@ export class DashboardMasterDrawerComponent {
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   resetDrawer(teritorymaster: NgForm) {
     this.data = new DashboardMaster();
     teritorymaster.form.markAsPristine();
@@ -38,10 +35,7 @@ export class DashboardMasterDrawerComponent {
     this.getRole();
   }
   isroleSpinning: boolean = false;
-
   roleData: any = [];
-
-
   getRole() {
     this.isroleSpinning = true;
     this.api
@@ -55,20 +49,16 @@ export class DashboardMasterDrawerComponent {
         }
       });
   }
-
   save(addNew: boolean, teritorymaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       (this.data.ROLE_ID == 0 ||
         this.data.ROLE_ID == null ||
         this.data.ROLE_ID == undefined) &&
-
       (this.data.TITLE.trim() == '' ||
         this.data.TITLE == null ||
         this.data.TITLE == undefined) &&
-
       (this.data.SNAPSHOT_LINK == undefined ||
         this.data.SNAPSHOT_LINK == null ||
         this.data.SNAPSHOT_LINK.trim() == '')
@@ -99,7 +89,6 @@ export class DashboardMasterDrawerComponent {
       this.isOk = false;
       this.message.error('Please Enter Snapshot Link.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -124,7 +113,6 @@ export class DashboardMasterDrawerComponent {
             }
           );
         } else {
-          // this.data.ROLE_ID = this.roleIDMain
           this.api.createDashboard(this.data).subscribe((successCode: HttpResponse<any>) => {
             if (successCode.status == 200) {
               this.message.success('Dashboard Created Successfully', '');
@@ -132,8 +120,6 @@ export class DashboardMasterDrawerComponent {
               else {
                 this.data = new DashboardMaster();
                 this.resetDrawer(teritorymaster);
-
-
               }
               this.isSpinning = false;
             } else {
@@ -145,16 +131,14 @@ export class DashboardMasterDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   ondistChange() { }

@@ -1,0 +1,78 @@
+.user-header {
+    margin-bottom: 10px;
+}
+.icon-back {
+    font-weight: bold;
+    cursor: pointer;
+}
+.header-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+.search-form-item {
+    margin-right: 8px;
+}
+.wt-100 {
+    width: 100%
+}
+.header-search {
+    height: 32px;
+}
+.btn-search {
+    height: 32px;
+}
+.btn-new-user {
+    display: flex;
+    align-items: center;
+}
+.table-container {
+    margin-top: 8px;
+}
+.user-table {
+    white-space: pre-line;
+}
+.table-header {
+    font-weight: bold;
+}
+.table-header-center {
+    text-align: center;
+}
+.table-cell-center {
+    text-align: center;
+}
+.table-cell-left {
+    text-align: left;
+}
+.icon-edit {
+    font-size: 15px;
+}
+.icon-eye {
+    font-size: 15px;
+}
+.active-filter {
+    color: #092B9C !important;
+}
+.dropdown-container {
+    padding: 8px;
+}
+.filter-input {
+    width: 100%;
+}
+.input-clear-icon {
+    cursor: pointer;
+}
+.image-container {
+    height: 400px;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.image-frame {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+}
+*:focus {
+    outline: none;
+}

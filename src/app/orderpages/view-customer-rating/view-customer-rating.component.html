@@ -1,6 +1,4 @@
 <nz-tabset nzCentered>
-  <!-- Technician Review -->
-
   <nz-tab nzTitle="Technician Reviews">
     <div nz-row>
       <div nz-col nzSpan="12">
@@ -9,11 +7,10 @@
         <span class="ant-rate-text">({{ globalTechnicianRating }} global ratings)</span>
       </div>
 
-      <div nz-col nzSpan="12" style="align-items: end">
+      <div nz-col nzSpan="12" class="align-end-col">
         <div *ngFor="let progTech of progressTechList">
           <div nz-row>
             <div nz-col nzSpan="4">{{ progTech.rating }} Star</div>
-
             <div nz-col nzSpan="20">
               <nz-progress [nzPercent]="progTech.progress_percentage" [nzStrokeColor]="'Yellow'">
               </nz-progress>
@@ -24,22 +21,13 @@
 
       <nz-divider nzText="Technician Reviews" nzOrientation="left"></nz-divider>
 
-      <div nz-col nzSpan="24" style="
-          margin-top: 5px;
-          padding: 5px;
-          max-height: 40vh;
-          overflow: auto;
-          padding-right: 10px;
-        ">
+      <div nz-col nzSpan="24" class="review-list-container">
         <div *ngFor="let data of technicianData">
           <nz-comment nzAuthor="{{ data['TECHNICIAN_NAME'] }}">
             <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="assets/img/blueEmpImage.png"></nz-avatar>
-
             <nz-comment-content>
-              <span>
-                {{ data["COMMENTS"] }}
-              </span>
-              <div style="margin-top: 0px">
+              <span>{{ data["COMMENTS"] }}</span>
+              <div class="rating-top-zero">
                 <nz-rate [(ngModel)]="data.RATING" nzDisabled></nz-rate>
               </div>
             </nz-comment-content>
@@ -48,18 +36,18 @@
       </div>
 
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="technicianData.length == 0"
-        style="font-weight: 600; margin-top: 10%">
+        class="empty-state-container">
         <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
           [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
           <ng-template #contentTpl>
             <span> Data Not Found</span>
           </ng-template>
-          <ng-template #footerTpl> </ng-template>
+          <ng-template #footerTpl></ng-template>
         </nz-empty>
       </div>
 
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="totalRecords > 10">
-        <div style="text-align: center" *ngIf="totalRecords > technicianData.length">
+        <div class="center-text" *ngIf="totalRecords > technicianData.length">
           <button nz-button nzType="primary" (click)="loadMoreTechnician()">
             Load More
           </button>
@@ -68,7 +56,6 @@
     </div>
   </nz-tab>
 
-  <!-- Customer Review -->
   <nz-tab nzTitle="Customer Reviews">
     <div nz-row>
       <div nz-col nzSpan="12">
@@ -77,11 +64,10 @@
         <span class="ant-rate-text">({{ globalRating }} global ratings)</span>
       </div>
 
-      <div nz-col nzSpan="12" style="align-items: end">
+      <div nz-col nzSpan="12" class="align-end-col">
         <div *ngFor="let prog of progressList">
           <div nz-row>
             <div nz-col nzSpan="4">{{ prog.rating }} Star</div>
-
             <div nz-col nzSpan="20">
               <nz-progress [nzPercent]="prog.progress_percentage" [nzStrokeColor]="'Yellow'">
               </nz-progress>
@@ -92,22 +78,13 @@
 
       <nz-divider nzText="Customer Reviews" nzOrientation="left"></nz-divider>
 
-      <div nz-col nzSpan="24" style="
-          margin-top: 5px;
-          padding: 5px;
-          max-height: 40vh;
-          overflow: auto;
-          padding-right: 10px;
-        ">
+      <div nz-col nzSpan="24" class="review-list-container">
         <div *ngFor="let item of dataList">
           <nz-comment nzAuthor="{{ item['CUSTOMER_NAME'] }}">
             <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="assets/img/blueEmpImage.png"></nz-avatar>
-
             <nz-comment-content>
-              <span>
-                {{ item["COMMENTS"] }}
-              </span>
-              <div style="margin-top: 0px">
+              <span>{{ item["COMMENTS"] }}</span>
+              <div class="rating-top-zero">
                 <nz-rate [(ngModel)]="item.RATING" nzDisabled></nz-rate>
               </div>
             </nz-comment-content>
@@ -116,18 +93,18 @@
       </div>
 
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="dataList.length == 0"
-        style="font-weight: 600; margin-top: 10%">
+        class="empty-state-container">
         <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
           [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
           <ng-template #contentTpl>
             <span> Data Not Found</span>
           </ng-template>
-          <ng-template #footerTpl> </ng-template>
+          <ng-template #footerTpl></ng-template>
         </nz-empty>
       </div>
 
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="totalRecords > 10">
-        <div style="text-align: center" *ngIf="totalRecords > dataList.length">
+        <div class="center-text" *ngIf="totalRecords > dataList.length">
           <button nz-button nzType="primary" (click)="loadMore()">
             Load More
           </button>

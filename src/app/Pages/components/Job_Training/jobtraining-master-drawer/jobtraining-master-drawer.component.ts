@@ -34,7 +34,6 @@ export class JobtrainingMasterDrawerComponent {
   categoryList: any = [];
   subcategoryList: any = [];
   imgUrl;
-
   public commonFunction = new CommonFunctionService();
   constructor(
     private api: ApiServiceService,
@@ -46,11 +45,10 @@ export class JobtrainingMasterDrawerComponent {
   fullImageUrl: string;
   retriveimgUrl = appkeys.retriveimgUrl;
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-]*$/; // Updated pattern
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-]*$/; 
     const char = String.fromCharCode(event.keyCode || event.which);
-
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   editorConfig: AngularEditorConfig = {
@@ -97,21 +95,6 @@ export class JobtrainingMasterDrawerComponent {
       this.cleanTextLength = html.length;
       this.showLengthError = html.length > this.maxLength;
     }
-    // if (
-    //   this.data.ID != null &&
-    //   this.data.ID != undefined &&
-    //   this.data.DOCUMENT != null &&
-    //   this.data.DOCUMENT != undefined &&
-    //   this.data.DOCUMENT != ' '
-    // ) {
-    //   this.fullImageUrl =
-    //     this.retriveimgUrl + 'HelpDocument/' + this.data.DOCUMENT;
-    //   this.uploadedImage = this.data.DOCUMENT;
-    //   // this.onCategoryChange(this.data.CATEGORY_ID)
-    //   // window.open(fullImageUrl, '_blank');
-    // } else {
-    //   // this.message.info('Document Not Uploaded.', '');
-    // }
     var filter = '';
     filter = this.data.CATEGORY_ID
       ? ' AND CATEGORY_ID=' + this.data.CATEGORY_ID
@@ -132,7 +115,6 @@ export class JobtrainingMasterDrawerComponent {
       this.getServices();
     }
     this.getCategory();
-    // if(this.dat)
   }
   serviceList: any = [];
   getServices() {
@@ -156,7 +138,6 @@ export class JobtrainingMasterDrawerComponent {
   }
   onCategoryChange(event) {
     if (event) {
-      // this.api.get
       this.api
         .getSubCategoryData(
           0,
@@ -221,22 +202,17 @@ export class JobtrainingMasterDrawerComponent {
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
-
     return true;
   }
-
   close(accountMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     this.data = new JobTraining();
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
-    // this.fileURL = '';
   }
-
   alphaOnly(event) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -249,27 +225,21 @@ export class JobtrainingMasterDrawerComponent {
     }
     return true;
   }
-  //  @ViewChild('editorRef') editor!: AngularEditorComponent;
-
   getPlainTextLength(): number {
     const div = document.createElement('div');
     div.innerHTML = this.data.DESCRIPTION || '';
     return div.innerText.length;
   }
-
   enforceMaxLength() {
     const maxLength = 1024;
     const div = document.createElement('div');
     div.innerHTML = this.data.DESCRIPTION || '';
     const plainText = div.innerText;
-
     if (plainText.length > maxLength) {
-      // Trim the plain text
       const trimmedText = plainText.substring(0, maxLength);
       this.data.DESCRIPTION = trimmedText;
     }
   }
-
   sanitizedFileURL: SafeUrl | null = null;
   imageshow;
   imagePreview: any;
@@ -282,12 +252,9 @@ export class JobtrainingMasterDrawerComponent {
   fileURL: any = '';
   ViewImage: any;
   sanitizedLink: any = '';
-
   ImageModalVisible = false;
   onFileSelected(event: any) {
-    const maxFileSize = 1 * 1024 * 1024; // 1MB
-
-    // File validation
+    const maxFileSize = 1 * 1024 * 1024; 
     if (
       event.target.files[0]?.type === 'image/jpeg' ||
       event.target.files[0]?.type === 'image/jpg' ||
@@ -298,30 +265,22 @@ export class JobtrainingMasterDrawerComponent {
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     ) {
       this.fileURL = <File>event.target.files[0];
-
-      // File size validation
       if (this.fileURL.size > maxFileSize) {
         this.message.error('File size should not exceed 1MB.', '');
         this.fileURL = null;
         return;
       }
-
-      // Proceed with file upload
       var number = Math.floor(100000 + Math.random() * 900000);
       var fileExt = this.fileURL.name.split('.').pop();
-
       var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
       var url = d == null ? '' : d + number + '.' + fileExt;
-
       if (this.data.DOC_URL != undefined && this.data.DOC_URL.trim() != '') {
         var arr = this.data.DOC_URL.split('/');
         if (arr.length > 1) {
           url = arr[5];
         }
       }
-
       const uploadedfileExt = this.uploadedImage.split('.').pop();
-
       if (this.data.ID || this.UrlImageOne) {
         if (uploadedfileExt == fileExt) {
           this.UrlImageOne = this.uploadedImage;
@@ -340,7 +299,6 @@ export class JobtrainingMasterDrawerComponent {
           this.data.DOC_URL = this.UrlImageOne;
           this.uploadedImage = this.data.DOC_URL;
           if (res.type === HttpEventType.Response) {
-            // Handle upload success
           }
           if (res.type === HttpEventType.UploadProgress) {
             const percentDone = Math.round((100 * res.loaded) / res.total);
@@ -383,7 +341,6 @@ export class JobtrainingMasterDrawerComponent {
       this.data.DOC_URL = null;
     }
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
@@ -395,7 +352,6 @@ export class JobtrainingMasterDrawerComponent {
     this.percentImageOne = 0;
     this.data.DOC_URL = null;
   }
-
   deleteCancel() { }
   removeImage() {
     this.data.DOC_URL = '';
@@ -405,45 +361,28 @@ export class JobtrainingMasterDrawerComponent {
     this.percentImageOne = 0;
     this.data.DOC_URL = null;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-  // GetImage(link: string) {
-  //   let imagePath = this.api.retriveimgUrl + 'JobTrainingDocs/' + link;
-  //   this.sanitizedLink =
-  //     this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
-  //   this.imageshow = this.sanitizedLink;
-
-  //   // Display the modal only after setting the image URL
-  //   this.ImageModalVisible = true;
-  // }
   GetImage(link: string) {
     const filePath: any = this.api.retriveimgUrl + 'JobTrainingDocs/' + link;
-
     const isDocOrDocx: any = link.endsWith('.doc') || link.endsWith('.docx');
-
     let finalPath: any = isDocOrDocx
       ? `https://docs.google.com/gview?url=${encodeURIComponent(filePath)}&embedded=true`
       : filePath;
-
     this.sanitizedLink = this.sanitizer.bypassSecurityTrustResourceUrl(finalPath);
     this.imageshow = this.sanitizedLink;
     this.ImageModalVisible = true;
   }
-
   save(addNew: boolean, websitebannerPage: NgForm): void {
     this.isOk = true;
-
     const isBlobInDescription =
       this.data.DESCRIPTION && this.data.DESCRIPTION.includes('data:image');
-
     if (isBlobInDescription) {
       this.api.prepareDescriptionWithUploads(
         this.data.DESCRIPTION,
         'JobTrainingDocs',
-
         (updatedHtml) => {
           this.data.DESCRIPTION = updatedHtml;
           this.continueSave(addNew, websitebannerPage);
@@ -453,33 +392,25 @@ export class JobtrainingMasterDrawerComponent {
       this.continueSave(addNew, websitebannerPage);
     }
   }
-
   cleanTextLength = 0;
   showLengthError = false;
   maxLength = 50000;
-
   checkDescriptionLength(): void {
     const html = this.data.DESCRIPTION || '';
-
     const totalLength = html.length;
     this.cleanTextLength = totalLength;
     this.showLengthError = totalLength > this.maxLength;
-
     if (this.showLengthError) {
       const truncated = html.slice(0, this.maxLength);
-
       this.data.DESCRIPTION = '';
       setTimeout(() => {
         this.data.DESCRIPTION = truncated;
         this.cleanTextLength = truncated.length;
-        // this.showLengthError = false;
       });
     }
   }
-
   continueSave(addNew: boolean, accountMasterPage: NgForm): void {
     this.isOk = true;
-
     if (
       this.data.CATEGORY_ID == undefined &&
       this.data.SUBCATEGORY_ID == undefined &&
@@ -491,9 +422,7 @@ export class JobtrainingMasterDrawerComponent {
       this.message.error('Please Fill All Required Fields', '');
       this.isOk = false;
     }
-    // Validate required fields
     else if (
-      // this.data.NAME.trim() === '' ||
       this.data.CATEGORY_ID == null ||
       this.data.CATEGORY_ID == undefined
     ) {
@@ -501,7 +430,6 @@ export class JobtrainingMasterDrawerComponent {
       this.message.error('Please Select Category', '');
       return;
     } else if (
-      // this.data.NAME.trim() === '' ||
       this.data.SUBCATEGORY_ID == null ||
       this.data.SUBCATEGORY_ID == undefined
     ) {
@@ -509,7 +437,6 @@ export class JobtrainingMasterDrawerComponent {
       this.message.error('Please Select Sub Category', '');
       return;
     } else if (
-      // this.data.NAME.trim() === '' ||
       this.data.SERVICE_ID == null ||
       this.data.SERVICE_ID == undefined
     ) {
@@ -551,35 +478,11 @@ export class JobtrainingMasterDrawerComponent {
       this.message.error('Please Enter Description', '');
       return;
     }
-    // Handle image upload first
-    // if (this.fileURL) {
-    //   const number = Math.floor(100000 + Math.random() * 900000);
-    //   const fileExt = this.fileURL.name.split('.').pop();
-    //   const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-    //   this.UrlImageOne = `${d ?? ''}${number}.${fileExt}`;
-
-    //   this.api
-    //     .onUpload('HelpDocument', this.fileURL, this.UrlImageOne)
-    //     .subscribe((res) => {
-    //       if (res.type === HttpEventType.Response && res.status === 200) {
-    //         this.data.DOCUMENT = this.UrlImageOne;
-
-    //         // this.message.success('Icon Uploaded Successfully...', '');
-    //         this.handleSaveOperation(addNew, accountMasterPage);
-    //       } else if (res.type === HttpEventType.Response) {
-    //         this.message.error('Failed to Upload Document.', '');
-    //         this.isSpinning = false;
-    //       }
-    //     });
-    // } else {
-    // If no image file, proceed directly to save
     if (this.isOk) {
       this.isSpinning = true;
       this.handleSaveOperation(addNew, accountMasterPage);
     }
-    // }
   }
-
   handleSaveOperation(addNew: boolean, accountMasterPage: NgForm): void {
     if (this.data.SOURCE_TYPE == 'L') {
       this.data.DOC_URL = null;
@@ -587,14 +490,6 @@ export class JobtrainingMasterDrawerComponent {
       this.data.LINK = null;
     }
     if (this.data.ID) {
-      // Update category
-      // const uploadedfileExt = this.uploadedImage.name.split('.').pop();
-      // const fileExt = this.fileURL.name.split('.').pop();
-      //
-      //
-      // if (uploadedfileExt === fileExt) {
-      //
-      // }
       this.api.updateJobTraining(this.data).subscribe(
         (successCode) => {
           if (successCode['status'] === 200) {
@@ -616,7 +511,6 @@ export class JobtrainingMasterDrawerComponent {
         }
       );
     } else {
-      // Create category
       this.api.creatJobTraining(this.data).subscribe(
         (successCode) => {
           if (successCode['status'] === 200) {

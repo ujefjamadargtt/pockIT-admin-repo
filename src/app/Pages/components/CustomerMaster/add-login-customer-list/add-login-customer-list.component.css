@@ -1,0 +1,30 @@
+.bo-flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+.bo-flex-center {
+    display: flex;
+    justify-content: center;
+}
+.bo-text-center {
+    text-align: center;
+}
+.bo-empty-item {
+    width: 47px;
+}
+.bo-no-margin-right {
+    margin-right: 0;
+}
+.bo-table-pre-line {
+    white-space: pre-line;
+}
+.bo-th-center-bold {
+    font-weight: bold;
+    text-align: center;
+}
+.bo-clickable {
+    cursor: pointer;
+}
+.bo-icon-md {
+    font-size: 15px;
+}

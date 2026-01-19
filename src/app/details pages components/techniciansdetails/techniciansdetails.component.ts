@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 @Component({
   selector: 'app-techniciansdetails',
   templateUrl: './techniciansdetails.component.html',
@@ -60,7 +59,6 @@ export class techniciansdetailsDetailsComponent {
             }
           } else {
             this.jobdatss = [];
-            // this.message.error('Failed to get Pending job card data', '');
           }
         },
         () => {
@@ -70,19 +68,4 @@ export class techniciansdetailsDetailsComponent {
       );
   }
   paymentsData: any = [];
-  // getPaymentLog() {
-  //   this.api
-  //     .getInvoiceLogs(1, 10, 'id', 'desc', '' + this.invoicefilter)
-  //     .subscribe(
-  //       (data) => {
-  //         if (data['code'] == 200) {
-  //           this.paymentsData = data['data'];
-  //         } else {
-  //         }
-  //       },
-  //       () => { }
-  //     );
-  // }
-
-
 }

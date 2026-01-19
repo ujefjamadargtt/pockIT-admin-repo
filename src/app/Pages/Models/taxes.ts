@@ -9,6 +9,4 @@ export class taxes {
     EXPIRY_DATE:any
     COUNTRY_ID:any
     IS_ACTIVE: Boolean = true;
-    
- 
 }

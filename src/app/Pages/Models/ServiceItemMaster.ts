@@ -12,6 +12,4 @@ export class ServiceItemMaster {
     STOCK_QUANTITY:string; 
     IS_ACTIVE:boolean=true;
     SEQ_NO:number;
-
     }
-

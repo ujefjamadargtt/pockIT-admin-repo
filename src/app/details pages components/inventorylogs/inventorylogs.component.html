@@ -1,11 +1,11 @@
 <div>
   <div nz-row>
-    <div nz-col nzSpan="18" style="font-weight: bold">
+    <div nz-col nzSpan="18" class="tl-item-bold">
       {{ ITEM_NAME }}
     </div>
     <div nz-col nzSpan="6">
-      <div style="display: flex; justify-content: flex-end; align-items: center">
-        <button nz-button style="margin-right: 10px" nzTooltipTitle="Filter" [nzType]="isFilterApplied"
+      <div class="tl-header-actions">
+        <button nz-button class="tl-filter-btn-space" nzTooltipTitle="Filter" [nzType]="isFilterApplied"
           nzTooltipPlacement="top" nz-tooltip (click)="showFilter()">
           <i nz-icon nzType="filter"></i>
         </button>
@@ -19,23 +19,15 @@
           <form nz-form>
             <div nz-row>
               <div nz-col nzSpan="8">
-                <nz-form-item style="margin-right: 10px !important">
+                <nz-form-item class="tl-form-item-space">
                   <nz-form-label nzNoColon>Date</nz-form-label>
-                  <nz-range-picker style="width: 100%" [nzFormat]="'dd/MM/yyyy'" nzAllowClear="false"
+                  <nz-range-picker class="tl-full-width" [nzFormat]="'dd/MM/yyyy'" nzAllowClear="false"
                     [nzRanges]="ranges" (nzOnCalendarChange)="changeDate($event)" name="selectedDate"
                     [(ngModel)]="selectedDate">
                   </nz-range-picker>
                 </nz-form-item>
               </div>
-
-
-              <div nz-col nzSpan="8" style="
-                  display: flex;
-                  gap: 10px;
-                  padding: 0px 0px 0px 10px;
-                  align-self: center;
-                  margin-top: 20px;
-                ">
+              <div nz-col nzSpan="8" class="tl-filter-actions">
                 <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons" (click)="applyFilter()">
                   <i nz-icon nzType="filter"></i>Apply Filter
                 </button>
@@ -49,43 +41,32 @@
       </div>
     </div>
   </div>
-  <nz-divider style="margin: 0px 0px 10px !important"></nz-divider>
+  <nz-divider class="tl-divider-space"></nz-divider>
   <nz-spin [nzSpinning]="loadactionlogs">
-    <div style="margin-left: -150px">
+    <div class="tl-timeline-offset">
       <nz-timeline [nzMode]="mode">
         <nz-timeline-item *ngFor="let group of timelineData" nzLabel="{{ group.date | date : 'hh/MMM/yyyy' }}">
           <div class="event-details">
-            <!-- Icon and Title -->
             <div class="event-title">
-              <span style="
-                  font-size: 14px !important;
-                  font-weight: 500;
-                  color: darkslateblue;
-                ">{{ group.events.ACTION_TYPE }}</span>
+              <span class="tl-event-action">{{ group.events.ACTION_TYPE }}</span>
               |
-              <span style="
-                  color: rgb(143 143 143);
-                  font-size: 11px !important;
-                  font-weight: 600;
-                ">
+              <span class="tl-event-time">
                 {{ group.events.time }}
               </span>
             </div>
-            <!-- Time and User -->
             <div class="event-meta">
               <span class="time">
                 <span>{{ group.events.title }}</span> </span><br />
-              <span style="font-size: 10px !important" class="event-description"
-                *ngIf="group.events.WAREHOUSE_NAME != ''">Warehouse Name :&nbsp;
-                <span style="font-size: 10px !important">
+              <span class="event-description tl-event-small" *ngIf="group.events.WAREHOUSE_NAME != ''">Warehouse Name
+                :&nbsp;
+                <span class="tl-event-small">
                   {{ group.events.WAREHOUSE_NAME }}</span>
-                &nbsp;&nbsp; Quantity :&nbsp;<span style="font-size: 10px !important">
+                &nbsp;&nbsp; Quantity :&nbsp;<span class="tl-event-small">
                   {{ group.events.QUANTITY }} {{ group.events.UNIT_NAME }}
                 </span>
               </span>
-              <span style="font-size: 10px !important" class="event-description"
-                *ngIf="group.events.description != ''">Reason :&nbsp;
-                <span style="font-size: 10px !important">
+              <span class="event-description tl-event-small" *ngIf="group.events.description != ''">Reason :&nbsp;
+                <span class="tl-event-small">
                   {{ group.events.description }}</span>
               </span>
             </div>
@@ -93,13 +74,11 @@
         </nz-timeline-item>
       </nz-timeline>
     </div>
-
     <ng-template #loadingTemplate>
       <nz-spin>Loading timeline data...</nz-spin>
     </ng-template>
-
     <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="timelineData.length == 0"
-      style="font-weight: 600; margin-top: 10%">
+      class="tl-empty-state">
       <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
         [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
         <ng-template #contentTpl>

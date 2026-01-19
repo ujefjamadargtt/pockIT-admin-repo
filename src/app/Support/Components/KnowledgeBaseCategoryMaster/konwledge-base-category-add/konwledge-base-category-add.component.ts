@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { KnowledgeBaseCategory } from 'src/app/Support/Models/KnowledgeBaseCategory';
-
 @Component({
   selector: 'app-konwledge-base-category-add',
   templateUrl: './konwledge-base-category-add.component.html',
@@ -15,13 +14,10 @@ export class KonwledgeBaseCategoryAddComponent {
   @Input() data: any = KnowledgeBaseCategory;
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   public commonFunction = new CommonFunctionService();
-
   isSpinning = false;
   isOk = true;
   isFocused: string = '';
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
@@ -31,7 +27,6 @@ export class KonwledgeBaseCategoryAddComponent {
     websitebannerPage.form.markAsPristine();
     websitebannerPage.form.markAsUntouched();
   }
-
   save(addNew: boolean, websitebannerPage: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -53,7 +48,6 @@ export class KonwledgeBaseCategoryAddComponent {
           this.api.updateKnowledgeBaseCategoryData(this.data).subscribe(
             (successCode: HttpResponse<any>) => {
               const statusCode = successCode.status;
-
               if (statusCode === 200) {
                 this.message.success(
                   'Knowledge Base Category Updated Successfully',
@@ -112,7 +106,6 @@ export class KonwledgeBaseCategoryAddComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }

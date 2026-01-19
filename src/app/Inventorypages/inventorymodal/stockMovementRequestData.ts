@@ -11,12 +11,10 @@ export class StockMovementRequest {
   deletedItemData: any[] = [];
   REASON: any;
   MOVEMENT_TYPE: any;
-
   SOURCE_WAREHOUSE_NAME: any;
   DESTINATION_WAREHOUSE_NAME: any;
   INVENTORY_DETAILS: any[] = [];
 }
-
 export class InnerStockMovementRequest {
   MOVEMENT_ID: number = 0;
   VARIANT_ID: any = 0;
@@ -36,4 +34,3 @@ export class InnerStockMovementRequest {
   STOCK;
   STOCK_UNIT_ID;
 }
-

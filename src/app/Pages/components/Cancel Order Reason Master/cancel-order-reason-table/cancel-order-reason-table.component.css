@@ -1,46 +1,173 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.header-back-icon-c1 {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-right-container-c1 {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-wrapper-c1 {
+  width: 47px;
+}
+.add-btn-wrapper-c1 {
+  margin-right: 0px;
+}
+.filter-wrapper-c1 {
+  margin-top: 10px;
+}
+.filter-box-c1 {
+  background: #ffffff;
+  padding: 10px;
+}
+.filter-content-row-c1 {
+  padding-top: 0;
+}
+.filter-loader-c1 {
+  text-align: center;
+}
+.filter-card-col-c1 {
+  margin-bottom: 8px;
+}
+.filter-card-c1 {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-title-c1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.filter-name-c1 {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.filter-applied-icon-c1 {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-action-row-c1 {
+  margin-top: 7px;
+}
+.filter-action-btns-c1 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.filter-tag-c1 {
+  cursor: pointer;
+  font-size: 10px;
+}
+.filter-no-data-c1 {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer-c1 {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.filter-footer-btn-c1 {
+  margin-right: 10px;
+}
+.reason-table-c1 {
+  white-space: pre-line;
+}
+.col-action-c1 {
+  width: 10px;
+  text-align: center;
+}
+.col-reason-c1 {
+  width: 60px;
+}
+.col-type-c1 {
+  width: 20px;
+  text-align: center;
+}
+.col-reasonfor-c1 {
+  width: 30px;
+  text-align: center;
+}
+.col-status-c1 {
+  width: 15px;
+  text-align: center;
+}
+.cell-center-c1 {
+  text-align: center;
+  left: 0px;
+  position: sticky;
+}
+.cell-left-c1 {
+  text-align: left;
+}
+.edit-tag-c1 {
+  cursor: pointer;
+}
+.filter-active-c1 {
+  color: #092b9c;
+}
+.clear-icon-c1 {
+  cursor: pointer;
+}
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.drawer-main-c1 .ant-drawer-body {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.drawer-filter-c1 .ant-drawer-body {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.query-text-c1 {
+  text-align: center;
 }

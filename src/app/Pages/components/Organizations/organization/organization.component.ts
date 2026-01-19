@@ -7,34 +7,26 @@ import { CookieService } from 'ngx-cookie-service';
 import { OrganizationMaster } from 'src/app/Pages/Models/organization-master';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { HttpErrorResponse } from '@angular/common/http';
-
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.css'],
   providers: [DatePipe]
 })
-
 export class OrganizationComponent implements OnInit {
   @Input() drawerClose: Function;
   @Input() data: OrganizationMaster;
   @Input() drawerVisible: boolean;
   passwordVisible: boolean = false;
   public commonFunction = new CommonFunctionService();
-
   orgId = this.cookie.get('orgId');
   isSpinning = false;
   isOk = true;
   namepattern = /^[a-zA-Z0-9\s\(\)\-_&\./]*$/;
-
   weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   emailPattern: RegExp = /^(?!.*\.\..*)(?!.*--.*)(?!.*-\.|-\@|\.-|\@-)[a-zA-Z0-9]([a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z]{2,})+$/;
-
   constructor(private api: ApiServiceService, private cookie: CookieService, private datePipe: DatePipe, private message: NzNotificationService) {
   }
-
-  // WEEK_DAY_DATA: any[] = [];
-
   ngOnInit() {
     this.getallCountry();
     if (this.data?.COUNTRY_ID) {
@@ -49,17 +41,12 @@ export class OrganizationComponent implements OnInit {
     if (this.data?.DISTRICT_ID) {
       this.getPincodesByDist(this.data.DISTRICT_ID);
     }
-
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data'] && changes['data'].currentValue) {
       this.populateWeeklySchedule();
-      // Add logic to handle changes in other properties if needed
     }
   }
-
-
   omit(event: any) {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -67,28 +54,22 @@ export class OrganizationComponent implements OnInit {
     }
     return true;
   }
-
   close(accountMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     this.data = new OrganizationMaster();
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
   }
-
   populateWeeklySchedule(): void {
     this.data.DAY_START_TIME = this.convertToDate(this.data.DAY_START_TIME),
       this.data.DAY_END_TIME = this.convertToDate(this.data.DAY_END_TIME)
   }
-
-
   convertToDate(time: any): Date | null {
-    if (time instanceof Date) return time; // Already a Date object
+    if (time instanceof Date) return time; 
     if (typeof time !== 'string' || !time) return null;
-
     const timeParts = time.split(':');
     if (timeParts.length === 3) {
       const [hours, minutes, seconds] = timeParts.map(part => parseInt(part, 10));
@@ -98,7 +79,6 @@ export class OrganizationComponent implements OnInit {
     }
     return null;
   }
-
   disabledHoursForToTimeMorning(): () => number[] {
     return () => {
       const startTime = this.data.DAY_START_TIME;
@@ -110,7 +90,6 @@ export class OrganizationComponent implements OnInit {
       }
     };
   }
-
   disabledMinutesForToTimeMorning(): (hour: number) => number[] {
     return (hour: number) => {
       const startTime = this.data.DAY_START_TIME;
@@ -122,7 +101,6 @@ export class OrganizationComponent implements OnInit {
       }
     };
   }
-
   save(addNew: boolean, accountMasterPage: NgForm): void {
     this.isOk = true;
     if (
@@ -191,10 +169,7 @@ export class OrganizationComponent implements OnInit {
       this.isOk = false;
       this.message.error("Please select end time", '');
     }
-
-
     if (this.isOk) {
-
       if (
         this.data.DAY_START_TIME != undefined &&
         this.data.DAY_START_TIME != null &&
@@ -213,7 +188,6 @@ export class OrganizationComponent implements OnInit {
       this.orgId = this.cookie.get('orgId');
       this.data.CAN_CHANGE_SERVICE_PRICE = true;
       if (this.data.ID) {
-
         this.api.updateOrganization(this.data).subscribe(successCode => {
           if (successCode['code'] == 200 && successCode['message'] == 'Email already exists...') {
             this.message.error("Email already exists.", '')
@@ -221,21 +195,16 @@ export class OrganizationComponent implements OnInit {
           }
           else if (successCode['code'] == 200) {
             this.message.success("Oraganization information updated successfully", "");
-
             if (!addNew)
               this.drawerClose();
-
             this.isSpinning = false;
             this.resetDrawer(accountMasterPage);
-
           } else {
             this.message.error("Oraganization information updation failed", "");
             this.isSpinning = false;
           }
         });
-
       } else {
-
         this.api.createOrganization(this.data).subscribe(successCode => {
           if (successCode['code'] == 200 && successCode['message'] == 'Email already exists...') {
             this.message.error("Email already exists.", '')
@@ -244,26 +213,21 @@ export class OrganizationComponent implements OnInit {
           else if (successCode['code'] == 200) {
             this.isSpinning = false;
             this.message.success("Oraganization information saved successfully", "");
-
             if (!addNew) {
               this.drawerClose();
               this.resetDrawer(accountMasterPage);
-
             } else {
               this.data = new OrganizationMaster();
               this.resetDrawer(accountMasterPage);
             }
-
           } else {
             this.message.error("Oraganization information creation failed", "");
             this.isSpinning = false;
           }
         });
-
       }
     }
   }
-
   isStateSpinning = false;
   isDistSpinning = false;
   isCitySpinning = false;
@@ -273,7 +237,6 @@ export class OrganizationComponent implements OnInit {
   StateData: any = [];
   CountryData: any = [];
   CityData: any = [];
-
   getallCountry() {
     this.api.getAllCountryMaster(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -299,8 +262,6 @@ export class OrganizationComponent implements OnInit {
       }
     );
   }
-
-  // Fetch states based on country ID
   getStatesByCountry(countryId: any, value: boolean = true) {
     if (value === false) {
       this.data.STATE_ID = null;
@@ -313,7 +274,7 @@ export class OrganizationComponent implements OnInit {
       this.CityData = [];
       this.PincodeData = [];
     }
-    this.isStateSpinning = true; // Set loading to true when fetching data
+    this.isStateSpinning = true; 
     this.api
       .getState(
         0,
@@ -321,7 +282,7 @@ export class OrganizationComponent implements OnInit {
         '',
         'asc',
         `AND COUNTRY_ID = ${countryId} AND IS_ACTIVE = 1`
-      ) // Added ' AND IS_ACTIVE = 1'
+      ) 
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
@@ -330,7 +291,7 @@ export class OrganizationComponent implements OnInit {
             this.StateData = [];
             this.message.error('Failed to get state data...', '');
           }
-          this.isStateSpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isStateSpinning = false; 
         },
         (err: HttpErrorResponse) => {
           this.isStateSpinning = false;
@@ -345,8 +306,6 @@ export class OrganizationComponent implements OnInit {
         }
       );
   }
-
-  // Fetch cities based on state ID
   getDistByState(stateId: number, value: boolean = true) {
     if (value === false) {
       this.data.DISTRICT_ID = null;
@@ -357,7 +316,7 @@ export class OrganizationComponent implements OnInit {
       this.CityData = [];
       this.PincodeData = [];
     }
-    this.isDistSpinning = true; // Set loading to true when fetching data
+    this.isDistSpinning = true; 
     this.api
       .getDistrictData(
         0,
@@ -365,7 +324,7 @@ export class OrganizationComponent implements OnInit {
         '',
         'asc',
         `AND STATE_ID = ${stateId} AND IS_ACTIVE = 1`
-      ) // Added ' AND IS_ACTIVE = 1'
+      ) 
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
@@ -374,7 +333,7 @@ export class OrganizationComponent implements OnInit {
             this.DistData = [];
             this.message.error('Failed to tet district data...', '');
           }
-          this.isDistSpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isDistSpinning = false; 
         },
         (err: HttpErrorResponse) => {
           this.isDistSpinning = false;
@@ -389,33 +348,25 @@ export class OrganizationComponent implements OnInit {
         }
       );
   }
-
   onDistrictChange(districtId: number | null) {
-    // Always clear city and pincode data when district changes
     this.data.CITY_ID = null;
     this.CityData = [];
     this.data.PINCODE_ID = null;
     this.data.PINCODE = null;
     this.PincodeData = [];
-
     if (districtId) {
-      // If a valid district is selected, fetch cities for the selected district
       this.getCityonDist(districtId);
       this.getPincodesByDist(districtId);
     }
   }
-
-
-
   getCityonDist(distId: number | null, value: boolean = true) {
     if (value === false) {
       this.data.CITY_ID = null;
       this.data.PINCODE_ID = null;
       this.data.PINCODE = null;
       this.CityData = [];
-      // this.PincodeData = [];
     }
-    this.isCitySpinning = true; // Set loading to true when fetching data
+    this.isCitySpinning = true; 
     this.api
       .getAllCityMaster(
         0,
@@ -423,7 +374,7 @@ export class OrganizationComponent implements OnInit {
         '',
         'asc',
         `AND DISTRICT_ID = ${distId} AND IS_ACTIVE = 1`
-      ) // Added ' AND IS_ACTIVE = 1'
+      ) 
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
@@ -432,7 +383,7 @@ export class OrganizationComponent implements OnInit {
             this.CityData = [];
             this.message.error('Failed to get city data...', '');
           }
-          this.isCitySpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isCitySpinning = false; 
         },
         (err: HttpErrorResponse) => {
           this.isCitySpinning = false;
@@ -461,9 +412,7 @@ export class OrganizationComponent implements OnInit {
     } else {
       this.data.PINCODE = null;
     }
-
   }
-  // Fetch pincodes based on dist ID
   getPincodesByDist(distId: number | null, value: boolean = true) {
     this.getCityonDist(distId);
     if (value === false) {
@@ -471,9 +420,9 @@ export class OrganizationComponent implements OnInit {
       this.data.PINCODE = null;
       this.PincodeData = [];
     }
-    this.isPincodeSpinning = true; // Set loading to true when fetching data
+    this.isPincodeSpinning = true; 
     this.api
-      .getAllPincode(0, 0, '', 'asc', `AND DISTRICT = ${distId}`) // Added ' AND IS_ACTIVE = 1'
+      .getAllPincode(0, 0, '', 'asc', `AND DISTRICT = ${distId}`) 
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
@@ -483,7 +432,7 @@ export class OrganizationComponent implements OnInit {
             this.PincodeData = [];
             this.message.error('Failed to get pincode data...', '');
           }
-          this.isPincodeSpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isPincodeSpinning = false; 
         },
         (err: HttpErrorResponse) => {
           this.isPincodeSpinning = false;

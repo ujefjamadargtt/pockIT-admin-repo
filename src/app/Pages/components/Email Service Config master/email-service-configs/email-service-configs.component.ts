@@ -30,13 +30,11 @@ export class EmailServiceConfigsComponent {
     ['SENDER_EMAIL', 'SENDER_EMAIL'],
     ['SENDER_NAME', 'SENDER_NAME'],
   ];
-
   constructor(
     private router: Router,
     private api: ApiServiceService,
     private message: NzNotificationService
   ) { }
-
   dataList = [];
   onKeyupS(keys) {
     const element = window.document.getElementById('button');
@@ -48,13 +46,10 @@ export class EmailServiceConfigsComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   ngonInit() {
     if (this.searchText.length > 3) {
       this.search(true);
@@ -62,20 +57,16 @@ export class EmailServiceConfigsComponent {
       this.search(true);
     }
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   drawerTitle = '';
   keyup() {
     if (this.searchText.length >= 3) {
@@ -84,12 +75,10 @@ export class EmailServiceConfigsComponent {
       this.search();
     }
   }
-
   shouldTruncateAt25(value: string): boolean {
-    const mCount = (value.match(/m/g) || []).length; // Count the number of 'm's
-    return value.length > 25 && mCount > 6; // Truncate at 25 if length > 25 and 'm' count > 4
+    const mCount = (value.match(/m/g) || []).length; 
+    return value.length > 25 && mCount > 6; 
   }
-
   add(): void {
     this.drawerTitle = 'Add New Email Service Configuration';
     this.drawerData = new emailserviceconfig();
@@ -97,11 +86,6 @@ export class EmailServiceConfigsComponent {
     this.api.getemailServiceConfigData(1, 1, '', 'desc', '').subscribe(
       (data) => {
         if (data['code'] == 200) {
-          // if (data["count"] == 0) {
-          //   this.drawerData.SEQ_NO = 1;
-          // } else {
-          //   this.drawerData.SEQ_NO = data["data"][0]["SEQ_NO"] + 1;
-          // }
         } else {
           this.message.error('Server Not Found.', '');
         }
@@ -109,27 +93,22 @@ export class EmailServiceConfigsComponent {
       (err: HttpErrorResponse) => {
         this.loadingRecords = false;
         if (err.status === 0) {
-          // Network error
           this.message.error(
             'Unable to connect. Please check your internet or server connection and try again shortly.',
             ''
           );
-          // this.dataList = [];
         } else {
-          // Other errors
           this.message.error('Something Went Wrong.', '');
         }
       }
     );
   }
-
   edit(data: emailserviceconfig): void {
     this.drawerTitle = 'Update Email Service Configuration';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -146,22 +125,18 @@ export class EmailServiceConfigsComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   ProviderText: string = '';
   ProviderVisible = false;
   hostText: string = '';
@@ -176,11 +151,9 @@ export class EmailServiceConfigsComponent {
   SenderVisible = false;
   TypeVisible = false;
   selectedTypes: number[] = [];
-
   onTypeChange(): void {
     this.search();
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -190,14 +163,12 @@ export class EmailServiceConfigsComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -211,7 +182,6 @@ export class EmailServiceConfigsComponent {
         ')';
     }
     this.loadingRecords = true;
-    // Country Filter
     if (this.ProviderText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -249,9 +219,7 @@ export class EmailServiceConfigsComponent {
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getemailServiceConfigData(
         this.pageIndex,
@@ -292,7 +260,6 @@ export class EmailServiceConfigsComponent {
         }
       );
   }
-
   isSnameApplied = false;
   isEmailApplied = false;
   isUserApplied = false;
@@ -300,8 +267,7 @@ export class EmailServiceConfigsComponent {
   isHostApplied = false;
   isServiceApplied = false;
   onKeyup(event: KeyboardEvent, field: string): void {
-    const fieldValue = this[field]; // Dynamically access the field value
-
+    const fieldValue = this[field]; 
     if (event.key === 'Enter') {
       if (fieldValue.length >= 3) {
         this.search();
@@ -336,50 +302,6 @@ export class EmailServiceConfigsComponent {
         break;
     }
   }
-  // onKeyup(event: KeyboardEvent): void {
-  //   if (this.ProviderText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //     this.isServiceApplied = true;
-  //   } else if (this.ProviderText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //     this.isServiceApplied = false;
-  //   }
-  //   if (this.hostText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //     this.isHostApplied = true;
-  //   } else if (this.hostText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //     this.isHostApplied = false;
-  //   }
-  //   if (this.PortText.length > 0 && event.key === 'Enter') {
-  //     this.search();
-  //     this.isPortApplied = true;
-  //   } else if (this.PortText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //     this.isPortApplied = false;
-  //   }
-  //   if (this.UserText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //     this.isUserApplied = true;
-  //   } else if (this.UserText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //     this.isUserApplied = false;
-  //   }
-  //   if (this.EmailText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //     this.isEmailApplied = true;
-  //   } else if (this.EmailText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //     this.isEmailApplied = false;
-  //   }
-  //   if (this.SenderText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //     this.isSnameApplied = true;
-  //   } else if (this.SenderText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  // }
-
   reset(): void {
     this.searchText = '';
     this.ProviderText = '';
@@ -396,18 +318,15 @@ export class EmailServiceConfigsComponent {
     this.isServiceApplied = false;
     this.search();
   }
-
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   showadd() {
     if (this.emailServiceConfigData.length == 0) {
       return true;

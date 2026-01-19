@@ -1,11 +1,122 @@
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
-.nz-form-itemm{
+.nz-form-itemm {
   display: inline-block !important;
   margin-bottom: 5px !important;
   width: -webkit-fill-available !important;
   padding: 0px 10px !important;
   font-family: '"Poppins", sans-serif !important';
+}
+.tbl-filter-wrapper-uid {
+  display: flex;
+  justify-content: flex-end;
+}
+.tbl-filter-btn-item-uid {
+  width: 47px;
+}
+.filter-row-top-uid {
+  padding-top: 0px;
+}
+.filter-loading-center-uid {
+  text-align: center;
+}
+.filter-card-wrapper-uid {
+  margin-bottom: 8px;
+}
+.filter-card-uid {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header-uid {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-text-uid {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon-uid {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.filter-card-actions-row-uid {
+  margin-top: 7px;
+}
+.filter-card-actions-uid {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag-uid {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-icon-uid {
+  font-size: 10px !important;
+}
+.filter-view-tag-uid {
+  margin-right: 0px;
+}
+.filter-no-data-uid {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer-actions-uid {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+.filter-footer-btn-uid {
+  margin-right: 10px;
+}
+.jobmng-table-whitespace {
+  white-space: pre-line;
+}
+.jobmng-th-bold {
+  font-weight: bold;
+}
+.jobmng-tag-cursor {
+  cursor: pointer;
+}
+.jobmng-icon-size {
+  font-size: 15px;
+}
+.jobmng-width-full {
+  width: 100%;
+}
+.jobstat-modal-title {
+  font-size: 15px;
+}
+.jobstat-form-item-left {
+  text-align: left;
+}
+.jobstat-textarea-width {
+  width: 100%;
+}
+.jobstat-char-count {
+  color: red;
+  font-size: 10px;
+  text-align: left;
+}
+.jobstat-otp-form-item {
+  display: inline-block;
+  width: -webkit-fill-available;
+  text-align: left;
+  margin-bottom: 7px;
+}
+.jobstat-form-control-left {
+  text-align: left;
+}
+.cntr {
+  text-align: center;
 }

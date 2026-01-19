@@ -49,14 +49,11 @@ export class SubcategoriesComponent {
   ];
   showcolumn = [
     { label: 'Prarent category Name ', key: 'CATEGORY_NAME', visible: true },
-
     { label: 'Subcategory ', key: 'NAME', visible: true },
     { label: 'Is New ? ', key: 'IS_NEW', visible: true },
     { label: 'Status ', key: 'STATUS', visible: true },
     { label: 'Status ', key: 'STATUS', visible: true },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -73,7 +70,6 @@ export class SubcategoriesComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -90,7 +86,6 @@ export class SubcategoriesComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -106,37 +101,30 @@ export class SubcategoriesComponent {
     this.getcategory1();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
   columns1 = [
     { label: 'Prarent category Name ', value: 'CATEGORY_NAME' },
-
     { label: 'Subcategory ', value: 'NAME' },
-    // { label: 'Sequence No.', value: 'SEQ_NO' },
     { label: 'Is New ?', value: 'IS_NEW' },
     { label: 'Status ', value: 'STATUS' },
   ];
-
   parentData: any = [];
   categoryName = '';
   selectedCountries: any = [];
   prentcategoryname = '';
-
   issubcategoryFilterApplied: boolean = false;
   isseqnoFilterApplied: boolean = false;
   iscategoryFilterApplied: boolean = false;
-
   onCategoryChange(): void {
     if (this.selectedCategories?.length) {
       this.search();
-      this.iscategoryFilterApplied = true; // Filter applied if selectedCategories has values
+      this.iscategoryFilterApplied = true; 
     } else {
       this.search();
-      this.iscategoryFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.iscategoryFilterApplied = false; 
     }
-    // this.search();
   }
   seqno: string = '';
   seqvisible = false;
@@ -156,26 +144,21 @@ export class SubcategoriesComponent {
       this.isseqnoFilterApplied = false;
     }
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
@@ -196,13 +179,6 @@ export class SubcategoriesComponent {
     this.search(true);
   }
   onSearchKeyUp(keys): void {
-    // if (this.searchText.length >= 3 || this.searchText.length === 0) {
-    //   // Trigger search only if 3+ characters or if input is cleared
-    //   this.search();
-    // } else {
-
-    // }
-
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
@@ -215,37 +191,30 @@ export class SubcategoriesComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   nameFilter() {
     if (this.categoryName.trim() === '') {
       this.searchText = '';
     } else if (this.categoryName.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   seqnoFilter() {
     if (this.seqno.trim() === '') {
       this.searchText = '';
     } else if (this.seqno.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
     }
-
     if (reset) {
       this.pageIndex = 1;
     }
-
     this.loadingRecords = true;
     var sort: string;
     try {
@@ -253,11 +222,8 @@ export class SubcategoriesComponent {
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -269,45 +235,34 @@ export class SubcategoriesComponent {
         ')';
     }
     this.loadingRecords = true;
-
-    // categoryName Filter
     if (this.categoryName !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.categoryName.trim()}%'`;
     }
-
-    // selectedCategories Filter
     if (this.selectedCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; 
     }
-    // SEQ_NO Filter
     if (this.seqno !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `SEQ_NO LIKE '%${this.seqno.trim()}%'`;
     }
-
-    // IS_NEW Filter
     if (this.isnewFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_NEW = ${this.isnewFilter}`;
     }
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `STATUS = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getSubCategoryData(
         this.pageIndex,
@@ -349,7 +304,6 @@ export class SubcategoriesComponent {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
@@ -383,31 +337,25 @@ export class SubcategoriesComponent {
     );
     this.drawerVisible = true;
   }
-
   edit(data: subcategory): void {
     this.drawerTitle = 'Update Subcategory';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   close(): void {
     this.visible = false;
   }
-
   close1(accountMasterPage: NgForm) {
     this.drawerVisible1 = false;
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
@@ -420,7 +368,6 @@ export class SubcategoriesComponent {
     }
   }
   filterClass: string = 'filter-invisible';
-
   reset() { }
   categories1: any = [];
   getcategory() {
@@ -457,8 +404,6 @@ export class SubcategoriesComponent {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
-  // new filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -470,18 +415,13 @@ export class SubcategoriesComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Subcategory Filter';
-    // this.applyCondition = "";
     this.filterFields[0]['options'] = this.categories1;
-
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -490,13 +430,9 @@ export class SubcategoriesComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -513,7 +449,6 @@ export class SubcategoriesComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -531,15 +466,12 @@ export class SubcategoriesComponent {
       },
     ];
   }
-
   drawerflterClose(): void {
     this.drawerFilterVisible = false;
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'CATEGORY_NAME',
@@ -570,7 +502,6 @@ export class SubcategoriesComponent {
       ],
       placeholder: 'Enter Subcategory Name',
     },
-
     {
       key: 'SEQ_NO',
       label: 'Sequence Number',
@@ -614,7 +545,6 @@ export class SubcategoriesComponent {
       placeholder: 'Select Status',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
@@ -623,8 +553,7 @@ export class SubcategoriesComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -638,38 +567,24 @@ export class SubcategoriesComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
-
-  // filterQuery = '';
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   isLoading = false;
   isfilterapply = false;
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -677,41 +592,29 @@ export class SubcategoriesComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  TabId: number; // Ensure TabId is defined and initialized
-
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  TabId: number; 
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   drawerfilterClose(buttontype, updateButton): void {
-    //  
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-      //  
-      //  
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-      //  
       this.loadFilters();
     }
   }
@@ -728,60 +631,10 @@ export class SubcategoriesComponent {
       this.search(true);
     }
   }
-
   filterloading: boolean = false;
   isDeleting: boolean = false;
-  // loadFilters() {
-  //   this.filterloading = true;
-
-  //   this.api
-  //     .getFilterData1(
-  //       0,
-  //       0,
-  //       'id',
-  //       'desc',
-  //       ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-  //     ) // Use USER_ID as a number
-  //     .subscribe(
-  //       (response) => {
-  //         if (response.code === 200) {
-  //           this.filterloading = false;
-  //           this.savedFilters = response.data;
-
-  //            
-  //            
-
-  //           if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
-  //             let IDIndex = this.savedFilters.find(
-  //               (element: any) =>
-  //                 Number(element.ID) === Number(sessionStorage.getItem('ID'))
-  //             );
-  //           
-  //             this.applyfilter(IDIndex);
-  //             this.whichbutton = '';
-  //             this.updateBtn = '';
-  //           }
-  //           // else if (this.whichbutton == 'SA') {
-  //           //   this.applyfilter(this.savedFilters[0]);
-  //           // }
-
-  //           this.filterQuery = '';
-  //         } else {
-  //           this.filterloading = false;
-  //           this.message.error('Failed to load filters.', '');
-  //         }
-  //       },
-  //       (error) => {
-  //         this.filterloading = false;
-  //         this.message.error('An error occurred while loading filters.', '');
-  //       }
-  //     );
-  //   this.filterQuery = '';
-  // }
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -789,16 +642,12 @@ export class SubcategoriesComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -813,22 +662,15 @@ export class SubcategoriesComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -842,7 +684,6 @@ export class SubcategoriesComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -851,10 +692,7 @@ export class SubcategoriesComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
-    //  
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -870,13 +708,10 @@ export class SubcategoriesComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //  
           } else {
             this.isfilterapply = true;
           }
@@ -899,18 +734,13 @@ export class SubcategoriesComponent {
       }
     );
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterFields[0]['options'] = this.categories1;
-
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -918,9 +748,7 @@ export class SubcategoriesComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

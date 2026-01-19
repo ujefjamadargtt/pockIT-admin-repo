@@ -22,7 +22,6 @@ export class MultiplelocationpageComponent {
     private api: ApiServiceService,
     private datepipe: DatePipe
   ) {}
-
   technician: any;
   ngOnInit(): void {
     this.initMap();
@@ -43,7 +42,6 @@ export class MultiplelocationpageComponent {
               data['data'].forEach((element) => {
                 if (element.TECHNICIAN_ID) TECH_IDS.push(element.TECHNICIAN_ID);
               });
-
               filterquery =
                 ' AND ORDER_ID =' +
                 this.FILTER_ID +
@@ -98,11 +96,9 @@ export class MultiplelocationpageComponent {
           (data2) => {
             if (data2['code'] == 200) {
               var TECH_IDS: any = [];
-
               data2['data'].forEach((element) => {
                 if (element.TECHNICIAN_ID) TECH_IDS.push(element.TECHNICIAN_ID);
               });
-
               filterquery =
                 ' AND JOB_CARD_ID in (' +
                 this.FILTER_ID.toString() +
@@ -147,7 +143,6 @@ export class MultiplelocationpageComponent {
         );
     } else if (this.TYPE == 'VENDOR') {
       var TECH_IDS: any = [];
-
       this.api
         .getTechnicianData(0, 0, '', '', ' AND VENDOR_ID =' + this.FILTER_ID)
         .subscribe(
@@ -182,7 +177,6 @@ export class MultiplelocationpageComponent {
         );
     }
   }
-
   getdataaa(filterquery) {
     this.api
       .getTechnicaionLoacionTrackmultiple(0, 0, '_id', 'desc', filterquery)
@@ -198,7 +192,6 @@ export class MultiplelocationpageComponent {
               this.isSpinning = false;
               this.isnodata = true;
             }
-            // Initialize the map with updated data
           } else {
             this.message.error('Server Not Found.', '');
           }
@@ -208,9 +201,7 @@ export class MultiplelocationpageComponent {
         }
       );
   }
-
   @Input() technicianlocationfilter: any;
-
   techniciansdata: any;
   handleHttpError(err: HttpErrorResponse) {
     if (err.status === 0) {
@@ -224,14 +215,11 @@ export class MultiplelocationpageComponent {
   }
   setLocation(): void {
     this.isSpinning = false;
-
     const validLocations = this.technician.filter(
       (location) =>
         !isNaN(parseFloat(location.LOCATION_LATITUDE)) &&
         !isNaN(parseFloat(location.LOCATION_LONG))
     );
-
-    // Calculate the center only if there are valid locations
     const map2Center = {
       lat:
         validLocations.length > 0
@@ -248,14 +236,12 @@ export class MultiplelocationpageComponent {
             ) / validLocations.length
           : 0,
     };
-
     const map2Element = document.getElementById('map1');
     if (map2Element) {
       const map2 = new google.maps.Map(map2Element as HTMLElement, {
         center: map2Center,
         zoom: 18,
       });
-
       validLocations.forEach((location: any) => {
         const marker = new google.maps.Marker({
           position: {
@@ -273,18 +259,13 @@ export class MultiplelocationpageComponent {
       <div style="width: 150px; padding: 10px; font-size: 14px; color: #333; 
           background-color: #fff; border-radius: 5px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);">
         <h6>${location.TECHNICIAN_NAME}</h6>
-        
-       
         <p>${convertedDate}</p>
       </div>`,
         });
-
         infoWindow.open(map2, marker);
-
         marker.addListener('mouseover', () => {
           infoWindow.open(map2, marker);
         });
-
         marker.addListener('mouseout', () => {
           infoWindow.close();
         });
@@ -292,5 +273,3 @@ export class MultiplelocationpageComponent {
     }
   }
 }
-
-// <p>${location.CITY_NAME}</p>

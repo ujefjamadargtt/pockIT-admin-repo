@@ -12,31 +12,24 @@ import { ChannelMaster } from '../../ChannelMaster';
 export class ChanneladdComponent {
   isSpinning = false;
   isOk = true;
-
   ngOnInit(): void { }
-
   public commonFunction = new CommonFunctionService();
   @Input() data: any = ChannelMaster;
   @Input()
   drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   resetDrawer(Channelmaster: NgForm) {
     this.data = new ChannelMaster();
     Channelmaster.form.markAsPristine();
     Channelmaster.form.markAsUntouched();
   }
-
   techData: any = [];
-
   channelData: any = [];
   isFocused: string = '';
-
   save(addNew: boolean, Channelmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -48,7 +41,6 @@ export class ChanneladdComponent {
       this.isOk = false;
       this.message.error(' Please Enter Channel Name', '');
     }
-
     if (this.isOk) {
       if (this.data.DESCRIPTION == '') {
         this.data.DESCRIPTION = null;
@@ -104,9 +96,7 @@ export class ChanneladdComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }
 }
-

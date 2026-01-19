@@ -1,11 +1,110 @@
 :host::ng-deep .ant-card-body {
     padding: 0px;
 }
-
 .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
+    max-width: 100%;
     display: inline-block;
-  }
+}
+.header-back-arrow {
+    font-weight: bold;
+    cursor: pointer;
+}
+.header-actions-flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+.header-excel-btn-white {
+    color: white;
+}
+.filter-row-no-padding {
+    padding-top: 0px;
+}
+.filter-spinner-center {
+    text-align: center;
+}
+.saved-filter-col {
+    margin-bottom: 8px;
+}
+.filter-card {
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    border-radius: 7px;
+}
+.filter-card-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+}
+.filter-name-text {
+    color: black;
+    text-align: center;
+    font-size: 25px;
+    white-space: nowrap;
+}
+.filter-applied-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.filter-card-footer {
+    margin-top: 7px;
+}
+.filter-card-actions {
+    display: flex;
+    justify-content: space-between;
+}
+.filter-action-tag {
+    cursor: pointer;
+    font-size: 10px !important;
+}
+.filter-action-icon {
+    font-size: 10px !important;
+}
+.filter-view-tag {
+    margin-right: 0px;
+}
+.filter-no-data {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.filter-bottom-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: left;
+    margin-top: 10px;
+}
+.filter-bottom-btn-space {
+    margin-right: 10px;
+}
+.col-width-100 {
+    width: 100px;
+}
+.col-width-70 {
+    width: 70px;
+}
+.col-width-50 {
+    width: 50px;
+}
+.table-text-left {
+    text-align: left;
+}
+.table-text-center {
+    text-align: center;
+}
+.filter-icon-active {
+    color: #092B9C;
+}
+.filter-icon-default {
+    color: inherit;
+}
+.table-scroll-height {
+    max-height: 50vh;
+}

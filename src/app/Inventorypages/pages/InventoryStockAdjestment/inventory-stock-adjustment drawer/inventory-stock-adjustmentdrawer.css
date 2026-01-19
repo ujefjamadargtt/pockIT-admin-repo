@@ -7,10 +7,46 @@
     text-align: right;
     right: 0px;
 }
-
 nz-form-item {
     display: inline-block;
     margin-bottom: 5px;
     width: -webkit-fill-available;
     padding: 0px 5px;
+}
+.wh-row-flex-start {
+  display: flex;
+  justify-content: flex-start;
+}
+.warehouse-select-width {
+  width: 250px;
+}
+.table-preline-adjustment {
+  white-space: pre-line;
+}
+.variant-combination-small {
+  font-weight: 500;
+}
+.current-stock-cell {
+  text-align: center;
+  color: red;
+  font-size: 14px !important;
+}
+.quantity-input-wrapper {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.quantity-input-field-adjust {
+  text-align: center;
+  color: blue;
+  font-size: 14px !important;
+}
+.action-cell-center {
+  text-align: center;
+}
+.update-row-btn {
+  border-radius: 50px 50px;
+  padding: 2px 10px;
+  height: 26px;
 }

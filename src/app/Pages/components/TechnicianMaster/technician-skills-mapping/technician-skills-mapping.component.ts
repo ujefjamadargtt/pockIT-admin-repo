@@ -51,9 +51,7 @@ export class TechnicianSkillsMappingComponent {
     this.allChecked = this.mappingdata.every((item) => item.IS_ACTIVE);
   }
   stateData: any = [];
-
   pincodeData: any = [];
-
   PincodeMapping() {
     this.isSpinning = true;
     this.isSpinning11 = true;
@@ -63,8 +61,6 @@ export class TechnicianSkillsMappingComponent {
     } catch (error) {
       sort = '';
     }
-
-    // Call the API with the constructed query
     this.api.getSkillData11(0, 0, 'NAME', 'asc', '', this.data.ID).subscribe(
       (data) => {
         if (data['code'] === 200) {
@@ -111,38 +107,26 @@ export class TechnicianSkillsMappingComponent {
     this.drawerClose();
   }
   Cancel() { }
-
-  // Add into table
-
-  // select all pincode toggle button
   isSelectAll: boolean = false;
   toggleSelectAll(isSelectAll: boolean): void {
     if (isSelectAll) {
-      // Select all available pincodes
       this.saveData.SKILL_ID = this.pincodeData.map((pincode) => pincode.ID);
     } else {
-      // Deselect all pincodes
       this.saveData.SKILL_ID = [];
     }
   }
-  // filter
-
   unmapSelected() { }
   allSelected1: any;
   selectedPincode111: any;
-
   isLoading: boolean = false;
   loadingMessage: string = '';
-
   async toggleAll(selectAll: boolean): Promise<void> {
     this.isLoading = true;
     this.loadingMessage = selectAll
       ? 'Selecting all records. Please wait...'
       : 'Deselecting all selected records. Please wait...';
-
     const batchSize = 50;
     const totalRecords = this.PincodeMappingdata.length;
-
     const processBatch = async (startIndex: number) => {
       for (
         let i = startIndex;
@@ -151,7 +135,6 @@ export class TechnicianSkillsMappingComponent {
       ) {
         const item = this.PincodeMappingdata[i];
         item.selected = selectAll;
-
         if (selectAll) {
           this.selectedPincodeSet.add(item.ID);
           if (
@@ -168,19 +151,15 @@ export class TechnicianSkillsMappingComponent {
           );
         }
       }
-
       if (startIndex + batchSize < totalRecords) {
         setTimeout(() => processBatch(startIndex + batchSize), 0);
       } else {
-        this.updateSelectionStates(); // Ensure indeterminate logic is updated
+        this.updateSelectionStates(); 
         this.isLoading = false;
       }
     };
-
     processBatch(0);
   }
-
-  // Method to handle indeterminate state
   updateSelectionStates(): void {
     const totalSelected = this.PincodeMappingdata.filter(
       (item) => item.selected
@@ -188,10 +167,8 @@ export class TechnicianSkillsMappingComponent {
     this.allSelected = totalSelected === this.PincodeMappingdata.length;
     this.tableIndeterminate = totalSelected > 0 && !this.allSelected;
   }
-
   onPincodeSelecttable(data: any, selected: boolean): void {
     data.selected = selected;
-
     if (selected) {
       if (!this.selectedPincode.some((item) => item.SKILL_ID === data.ID)) {
         this.selectedPincode.push({ SKILL_ID: data.ID, STATUS: 'M' });
@@ -205,12 +182,9 @@ export class TechnicianSkillsMappingComponent {
     }
     this.updateSelectionStates();
   }
-
-  // Function to get final formatted data
   getFormattedData() {
     return { data: this.selectedPincode };
   }
-
   selectedPincode11: any = [];
   onPincodeSelecttable11(data: any, selected: boolean): void {
     data.selected = selected;
@@ -218,17 +192,12 @@ export class TechnicianSkillsMappingComponent {
     const selectedRows = this.mappingdata.filter(
       (item) => item.selected
     ).length;
-
-    // Update Select All and Indeterminate states
     this.allSelected1 = selectedRows === totalRows && totalRows > 0;
     this.tableIndeterminate11 = selectedRows > 0 && selectedRows < totalRows;
-
-    // Update selected pincodes
     this.selectedPincode11 = this.mappingdata
       .filter((item) => item.selected)
       .map((item) => item.SKILL_ID);
   }
-
   sort11(params: NzTableQueryParams) {
     this.isSpinning = true;
     this.isSpinning22 = true;
@@ -250,7 +219,6 @@ export class TechnicianSkillsMappingComponent {
     this.sortValue = sortOrder;
     this.PincodeMapping111();
   }
-
   mappingdata: any = [];
   isSpinning22: boolean = false;
   isSpinning11: boolean = false;
@@ -263,8 +231,6 @@ export class TechnicianSkillsMappingComponent {
     } catch (error) {
       sort = '';
     }
-
-    // Call the API with the constructed query
     this.api
       .getTechnicianmapdata(
         0,
@@ -277,10 +243,8 @@ export class TechnicianSkillsMappingComponent {
         (data) => {
           if (data['code'] === 200) {
             this.mappingdata = data['data'];
-
             this.totoalrecordsss = this.mappingdata.length;
             this.originalTraineeData1 = [...this.mappingdata];
-
             this.selectedPincode11 = [];
             this.allChecked =
               this.mappingdata.length > 0 &&
@@ -300,10 +264,8 @@ export class TechnicianSkillsMappingComponent {
       );
   }
   totoalrecordsss = 0;
-
   mapdatatopincode() {
     this.isSpinning = true;
-
     this.api
       .addTechnicianPincodeMappingskills(
         this.data.ID,
@@ -339,10 +301,8 @@ export class TechnicianSkillsMappingComponent {
         }
       );
   }
-
   unmapdatatopincode() {
     this.isSpinning = true;
-
     this.api
       .addTechnicianPincodeMappingskills(
         this.data.ID,
@@ -365,7 +325,6 @@ export class TechnicianSkillsMappingComponent {
             this.PincodeMapping();
             this.allSelected1 = false;
             this.allSelected = false;
-            // this.drawerClose();
           } else {
             this.message.error('Failed to Map Skills to the Technician', '');
           }
@@ -377,14 +336,11 @@ export class TechnicianSkillsMappingComponent {
         }
       );
   }
-
   marasisactive() {
     const inactiveData = this.mappingdata
       .filter((item) => !item.IS_ACTIVE)
       .map((item) => item.ID);
-
     this.isSpinning = true;
-
     this.api.markasinactivedataskill(this.data.ID, inactiveData).subscribe(
       (successCode) => {
         if (successCode['code'] === 200) {
@@ -396,7 +352,6 @@ export class TechnicianSkillsMappingComponent {
           this.selectedPincode11 = [];
           this.PincodeMapping111();
           this.allSelected1 = false;
-          // this.drawerClose();
         } else {
           this.message.error('Failed to Map Skills to the Technician', '');
         }
@@ -408,32 +363,23 @@ export class TechnicianSkillsMappingComponent {
       }
     );
   }
-
   getstatussss() {
     const inactiveData = this.mappingdata
       .filter((item) => !item.IS_ACTIVE)
       .map((item) => item.SKILL_ID);
-
     return inactiveData.length == 0 ? false : true;
   }
-
   onPincodeSelecttable11111(data: any, selected: boolean): void {
-    // Prepare data for the API call
     const dataToSend = [
       {
         SKILL_ID: data.SKILL_ID,
         IS_ACTIVE: selected,
       },
     ];
-
-    // Show spinner while processing
     this.isSpinning = true;
-
-    // Call the API
     this.api.markasinactivedataskill(this.data.ID, dataToSend).subscribe(
       (response) => {
         if (response.code === 200) {
-          // Success message based on selection state
           if (!selected) {
             this.message.success(
               'Skills Successfully Unmapped to the Technician.',
@@ -445,73 +391,51 @@ export class TechnicianSkillsMappingComponent {
               ''
             );
           }
-
-          // Update the local data state
           data.IS_ACTIVE = selected;
-
-          // Recalculate 'Select All' state
           this.allChecked = this.mappingdata.every((item) => item.IS_ACTIVE);
         } else {
           this.message.error('Failed to Map Skill to the Technician.', '');
         }
-        this.isSpinning = false; // Hide spinner
+        this.isSpinning = false; 
       },
       (error) => {
-        this.isSpinning = false; // Hide spinner on error
+        this.isSpinning = false; 
         this.message.error('Something Went Wrong.', '');
       }
     );
   }
-
   originalTraineeData: any[] = [];
-
   searchskill;
-
   datalist1: any[] = [];
   selectedPincodeSet: Set<number> = new Set();
   SearchPincode(data: string): void {
     this.isSpinning = true;
-
     if (data && data.trim().length >= 3) {
-      // Filter the data based on the search input
       this.datalist1 = this.PincodeMappingdata.filter((record) => {
         return (
           record.NAME && record.NAME.toLowerCase().includes(data.toLowerCase())
         );
       });
-
-      // Map the filtered data to include the selected state
       this.PincodeMappingdata = this.datalist1.map((record) => ({
         ...record,
         selected: this.selectedPincodeSet.has(record.ID),
       }));
-
-      // Sort selected records to the top
       this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
     } else if (data.trim().length === 0) {
-      // Reset to the original data and sort selected records to the top
       this.PincodeMappingdata = this.originalTraineeData.map((record) => ({
         ...record,
         selected: this.selectedPincodeSet.has(record.ID),
       }));
-
       this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
     }
-
     this.isSpinning = false;
   }
-
   originalTraineeData1: any[] = [];
-
   mapsearchskill;
   SearchSkill(data: any) {
     this.isSpinning = true;
-
     if (data && data.trim().length >= 3) {
-      // Convert the search term to lowercase for case-insensitive comparison
       const searchTerm = data.toLowerCase();
-
-      // Filter the data based on the SKILL_NAME field
       this.mappingdata = this.originalTraineeData1.filter((record) => {
         return (
           record.SKILL_NAME &&
@@ -520,27 +444,20 @@ export class TechnicianSkillsMappingComponent {
       });
       this.isSpinning = false;
     } else if (data.trim().length === 0) {
-      // Reset the table data to the original dataset
       this.isSpinning = false;
       this.mappingdata = [...this.originalTraineeData1];
     } else {
-      // If less than 3 characters, do not filter and show the original data
       this.isSpinning = false;
     }
   }
-
   allChecked;
-
   allChange(selected: boolean): void {
-    this.allChecked = selected; // Set allChecked state
+    this.allChecked = selected; 
     this.isSpinning = true;
-
-    // Prepare data for batch update
     const dataToSend = this.mappingdata.map((item) => ({
       SKILL_ID: item.SKILL_ID,
       IS_ACTIVE: selected,
     }));
-
     this.api.markasinactivedataskill(this.data.ID, dataToSend).subscribe(
       (response) => {
         if (response.code === 200) {
@@ -554,68 +471,49 @@ export class TechnicianSkillsMappingComponent {
         } else {
           this.message.error('Failed to Update Skills.', '');
         }
-        this.isSpinning = false; // Hide spinner
+        this.isSpinning = false; 
       },
       (error) => {
-        this.isSpinning = false; // Hide spinner on error
+        this.isSpinning = false; 
         this.message.error('Something Went Wrong.', '');
       }
     );
   }
-
   handleEnterKey(event: any): void {
     const keyboardEvent = event as KeyboardEvent;
-
-    // Handle Enter key press
     if (keyboardEvent.key === 'Enter') {
-      keyboardEvent.preventDefault(); // Prevent default form submission
-
-      // Call SearchOffice if input length is >= 3
+      keyboardEvent.preventDefault(); 
       if (this.searchskill.trim().length >= 3) {
         this.SearchPincode(this.searchskill);
       } else {
       }
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
-        // Use a small delay to ensure the model updates
         if (this.searchskill.trim().length === 0) {
-          // Reset to original data and sort selected records to the top
           this.PincodeMappingdata = this.originalTraineeData.map((record) => ({
             ...record,
             selected: this.selectedPincodeSet.has(record.ID),
           }));
           this.updateSelectionStates();
-
-          // Sort selected records to the top
           this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
         }
       }, 0);
     }
   }
-
   handlepincodeEnterKey(keys: any): void {
-    const keyboardEvent = event as KeyboardEvent; // Explicitly cast to KeyboardEvent
-
-    // Handle Enter key press
+    const keyboardEvent = event as KeyboardEvent; 
     if (keyboardEvent.key === 'Enter') {
-      keyboardEvent.preventDefault(); // Prevent default form submission
-
-      // Call SearchPincode if input length is >= 3
+      keyboardEvent.preventDefault(); 
       if (this.mapsearchskill.trim().length >= 3) {
         this.SearchSkill(this.mapsearchskill);
       } else {
       }
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
-        // Use a small delay to ensure the model updates
         if (this.mapsearchskill.trim().length === 0) {
-          this.PincodeMapping111(); // Call PincodeMapping111 when search text is cleared
+          this.PincodeMapping111(); 
         }
       }, 0);
     }

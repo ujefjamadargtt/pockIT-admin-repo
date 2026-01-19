@@ -27,7 +27,6 @@ export class TechnicianMasterComponent {
     private sanitizer: DomSanitizer,
     private cookie: CookieService
   ) { }
-
   formTitle = 'Manage Technicians';
   searchText: string = '';
   pageIndex = 1;
@@ -45,7 +44,6 @@ export class TechnicianMasterComponent {
     ['VEHICLE_NO', 'VEHICLE_NO'],
     ['BUSINESS_NAME', 'BUSINESS_NAME'],
     ['ADDRESS_LINE1', 'ADDRESS_LINE1'],
-    // ['CITY_NAME', 'CITY_NAME'],
     ['COUNTRY_NAME', 'COUNTRY_NAME'],
     ['DISTRICT_NAME', 'DISTRICT_NAME'],
     ['NAME', 'NAME'],
@@ -72,11 +70,7 @@ export class TechnicianMasterComponent {
       groups: [],
     },
   ];
-
-  //New Advance Filter
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -93,19 +87,12 @@ export class TechnicianMasterComponent {
       groups: [],
     },
   ];
-
   drawerTechnicianMappingVisible = false;
   drawerTitle = 'New Technician';
   drawerData: TechnicianMasterData = new TechnicianMasterData();
   drawervisible = false;
   ReportingPersonVisible: boolean = false;
   keyup(keys) {
-    // if (this.searchText.length >= 3) {
-    //   this.search();
-    // } else if (this.searchText.length == 0) {
-    //   this.search();
-    // }
-
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
@@ -115,16 +102,13 @@ export class TechnicianMasterComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   widthsSkill: string = '100%';
   widthsSkill1: string = '70%';
   widthsSkill2: string = '70%';
-
   onStateChange(): void {
     this.search();
   }
@@ -138,17 +122,14 @@ export class TechnicianMasterComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -160,62 +141,48 @@ export class TechnicianMasterComponent {
         ')';
     }
     this.loadingRecords = true;
-
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
     if (this.isownFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_OWN_VEHICLE = ${this.isownFilter}`;
     }
-
     if (this.typeFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `TYPE = '${this.typeFilter}'`;
     }
-
     if (this.genderFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `GENDER = '${this.genderFilter}'`;
     }
-    //  if (this.selectevehical .length > 0) {
-    //       likeQuery += (likeQuery ? ' AND ' : '') +
-    //      `VEHICLE_TYPE LIKE '%${this.selectevehical}%'`;
-
-    //     }
-
     if (this.selectedServices.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      // Wrap each value in single quotes for SQL syntax
       const formattedValues = this.selectedServices
         .map((sep: string) => `'${sep}'`)
         .join(',');
       likeQuery += `EXPERIENCE_LEVEL IN (${formattedValues})`;
     }
-
     if (this.selectevehical.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      // Wrap each value in single quotes for SQL syntax
       const formattedValues = this.selectevehical
         .map((sep: string) => `'${sep}'`)
         .join(',');
       likeQuery += `VEHICLE_TYPE IN (${formattedValues})`;
     }
-
     if (this.Techniciantext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -255,26 +222,23 @@ VEHICLE_NO
         (likeQuery ? ' AND ' : '') +
         `VEHICLE_DETAILS LIKE '%${this.Detailstext.trim()}%'`;
     }
-
     if (this.selectedPincode.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `PINCODE IN ('${this.selectedPincode.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `PINCODE IN ('${this.selectedPincode.join("','")}')`; 
     }
-
     if (this.selectedVendorName.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `VENDOR_ID IN (${this.selectedVendorName.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `VENDOR_ID IN (${this.selectedVendorName.join(',')})`; 
     }
-
     if (this.selectedCountries.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; 
     }
     if (this.selectedDistricties.length > 0) {
       if (likeQuery !== '') {
@@ -282,22 +246,14 @@ VEHICLE_NO
       }
       likeQuery += `DISTRICT_NAME IN ('${this.selectedDistricties.join(
         "','"
-      )}')`; // Update with actual field name in the DB
+      )}')`; 
     }
-    // if (this.selectedCities.length > 0) {
-    //   if (likeQuery !== '') {
-    //     likeQuery += ' AND ';
-    //   }
-    //   likeQuery += `CITY_NAME IN ('${this.selectedCities.join("','")}')`; // Update with actual field name in the DB
-    // }
-
     if (this.selectedStates.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`; 
     }
-
     var vendoridfilter: any;
     if (
       this.vendorid != null &&
@@ -308,7 +264,6 @@ VEHICLE_NO
     } else {
       vendoridfilter = '';
     }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     if (this.vendorroleid == 5 || this.vendorroleid == 9) {
       var t: any = this.territoryidfilter.split(',');
@@ -400,34 +355,28 @@ VEHICLE_NO
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     var roleeee = this.commonFunction.decryptdata(
       sessionStorage.getItem('roleId') || ''
     );
-
     if ((this.vendorroleid == '5' || this.vendorroleid == '9') && this.first) {
     } else {
       this.search();
     }
   }
-
   drawerClose(): void {
     this.search();
     this.drawervisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
@@ -437,27 +386,22 @@ VEHICLE_NO
   drawerChapterMappingClose(): void {
     this.drawerTechnicianMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
   parseExpectedTime(expectedTime: string): Date | null {
-    // If you need it as a Date object, here's one way to convert it
     if (!expectedTime) return null;
-
     const [hours, minutes, seconds] = expectedTime.split(':').map(Number);
-    const now = new Date(); // Get current date
+    const now = new Date(); 
     now.setHours(hours);
     now.setMinutes(minutes);
     now.setSeconds(seconds);
-    return now; // Return the Date object with expected time
+    return now; 
   }
   edit(data: TechnicianMasterData): void {
     this.drawerTitle = 'Update Technician Details';
     this.drawerData = Object.assign({}, data);
     this.drawervisible = true;
-
     if (this.drawerData.WEEK_DAY_DATA) {
       this.drawerData.WEEK_DAY_DATA = this.drawerData.WEEK_DAY_DATA.map(
         (day) => ({
@@ -484,14 +428,11 @@ VEHICLE_NO
       (err: HttpErrorResponse) => {
         this.loadingRecords = false;
         if (err.status === 0) {
-          // Network error
           this.message.error(
             'Unable to connect. Please check your internet or server connection and try again shortly.',
             ''
           );
-          // this.dataList = [];
         } else {
-          // Other errors
           this.message.error('Something Went Wrong.', '');
         }
       }
@@ -505,7 +446,6 @@ VEHICLE_NO
     { Id: 'L', Name: 'Lead' },
     { Id: 'E', Name: 'Expert' },
   ];
-
   Techniciantext: string = '';
   TechnicianVisible = false;
   Emailtext: string = '';
@@ -543,12 +483,9 @@ VEHICLE_NO
   selectedVendorName: number[] = [];
   selectedDistricties: any[] = [];
   showcolumn = [
-    // { label: 'Mobile No.', key: 'MOBILE_NUMBER', visible: true },
     { label: 'Gender', key: 'GENDER', visible: true },
-    // { label: 'Vendor Name', key: 'BUSINESS_NAME', visible: true },
     { label: 'Aadhaar No.', key: 'AADHAR_NUMBER', visible: true },
     { label: 'Address', key: 'ADDRESS_LINE1', visible: true },
-    // { label: 'City', key: 'CITY_NAME', visible: true },
     { label: 'Country', key: 'COUNTRY_NAME', visible: true },
     { label: 'State', key: 'STATE_NAME', visible: true },
     { label: 'District', key: 'DISTRICT_NAME', visible: true },
@@ -572,7 +509,6 @@ VEHICLE_NO
       this.search();
       this.isnameFilterApplied = false;
     }
-
     if (this.Emailtext.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isemailFilterApplied = true;
@@ -580,7 +516,6 @@ VEHICLE_NO
       this.search();
       this.isemailFilterApplied = false;
     }
-
     if (this.Mobiletext.length > 0 && event.key === 'Enter') {
       this.search();
       this.ismobileFilterApplied = true;
@@ -595,7 +530,6 @@ VEHICLE_NO
       this.search();
       this.isaddressFilterApplied = false;
     }
-
     if (this.Aadhaartext.length > 0 && event.key === 'Enter') {
       this.search();
       this.isadharFilterApplied = true;
@@ -611,59 +545,13 @@ VEHICLE_NO
       this.isvehiclenoFilterApplied = false;
     }
   }
-
-  // onKeyup(event: KeyboardEvent): void {
-  //   if (this.servicecattext.length > 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.servicecattext.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  //   if (this.servicecatdesctext.length > 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (
-  //     this.servicecatdesctext.length == 0 &&
-  //     event.key === 'Backspace'
-  //   ) {
-  //     this.search();
-  //   }
-  //   if (this.B2Btext.length > 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.B2Btext.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  //   if (this.B2Ctext.length > 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.B2Ctext.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  //   if (this.expresspriceb2b.length > 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.expresspriceb2b.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  //   if (this.expresspriceb2c.length > 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.expresspriceb2c.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  //   if (this.estimationTimemins.length > 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (
-  //     this.estimationTimemins.length == 0 &&
-  //     event.key === 'Backspace'
-  //   ) {
-  //     this.search();
-  //   }
-  // }
   reset(): void {
     this.searchText = '';
     this.Techniciantext = '';
-
     this.Emailtext = '';
     this.Mobiletext = '';
     this.search();
   }
-
   isnameFilterApplied: boolean = false;
   isemailFilterApplied: boolean = false;
   ismobileFilterApplied: boolean = false;
@@ -678,44 +566,36 @@ VEHICLE_NO
   iscityFilterApplied: boolean = false;
   ispincodeFilterApplied: boolean = false;
   isvehicletypeFilterApplied: boolean = false;
-
   nameFilter() {
     if (this.Techniciantext.trim() === '') {
       this.searchText = '';
     } else if (this.Techniciantext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   emailFilter() {
     if (this.Emailtext.trim() === '') {
       this.searchText = '';
     } else if (this.Emailtext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   mobileFilter() {
     if (this.Mobiletext.trim() === '') {
       this.searchText = '';
     } else if (this.Mobiletext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   adharFilter() {
     if (this.Aadhaartext.trim() === '') {
       this.searchText = '';
     } else if (this.Aadhaartext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   addressFilter() {
@@ -724,7 +604,6 @@ VEHICLE_NO
     } else if (this.Addresstext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
   vehiclenoFilter() {
@@ -733,104 +612,91 @@ VEHICLE_NO
     } else if (this.Vehicletext.length >= 3) {
       this.search();
     } else {
-      // this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   isownFilter: string | undefined = undefined;
   onisownFilterChange(selectedStatus: string) {
     this.isownFilter = selectedStatus;
     this.search(true);
   }
-
   onVehicalChange() {
     if (this.selectevehical?.length) {
       this.search();
-      this.isvehicletypeFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isvehicletypeFilterApplied = true; 
     } else {
       this.search();
-      this.isvehicletypeFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isvehicletypeFilterApplied = false; 
     }
-    // this.search();
   }
   onPincodeChange() {
     if (this.selectedPincode?.length) {
       this.search();
-      this.ispincodeFilterApplied = true; // Filter applied if selectedCategories has values
+      this.ispincodeFilterApplied = true; 
     } else {
       this.search();
-      this.ispincodeFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.ispincodeFilterApplied = false; 
     }
-    // this.search();
   }
   onCountryChange() {
     if (this.selectedCountries?.length) {
       this.search();
-      this.iscountryFilterApplied = true; // Filter applied if selectedCategories has values
+      this.iscountryFilterApplied = true; 
     } else {
       this.search();
-      this.iscountryFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.iscountryFilterApplied = false; 
     }
-    // this.search();
   }
   oncityChange() {
     if (this.selectedCities?.length) {
       this.search();
-      this.iscityFilterApplied = true; // Filter applied if selectedCategories has values
+      this.iscityFilterApplied = true; 
     } else {
       this.search();
-      this.iscityFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.iscityFilterApplied = false; 
     }
-    // this.search();
   }
   onStateChanged() {
     if (this.selectedStates?.length) {
       this.search();
-      this.isstateFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isstateFilterApplied = true; 
     } else {
       this.search();
-      this.isstateFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isstateFilterApplied = false; 
     }
-    // this.search();
   }
   onVendorNameChange() {
     if (this.selectedVendorName?.length) {
       this.search();
-      this.isvendornameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isvendornameFilterApplied = true; 
     } else {
       this.search();
-      this.isvendornameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isvendornameFilterApplied = false; 
     }
-    // this.search();
   }
   onDistrictChange() {
     if (this.selectedDistricties?.length) {
       this.search();
-      this.isdistrictFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isdistrictFilterApplied = true; 
     } else {
       this.search();
-      this.isdistrictFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isdistrictFilterApplied = false; 
     }
-    // this.search();
   }
-
   ReportingVisible = false;
   selectedServices: string[] = [];
   onServiceChange(): void {
     if (this.selectedServices?.length) {
       this.search();
-      this.isexplevelFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isexplevelFilterApplied = true; 
     } else {
       this.search();
-      this.isexplevelFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isexplevelFilterApplied = false; 
     }
-    // this.search();
   }
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
@@ -843,12 +709,10 @@ VEHICLE_NO
     { text: 'Freelancer', value: 'F' },
     { text: 'RemoteTechnician', value: 'R' },
   ];
-
   listOfFilter3: any[] = [
     { text: 'Yes', value: '1' },
     { text: 'No', value: '0' },
   ];
-
   VehicleData = [
     { ID: 'T', NAME: 'Two-Wheeler' },
     { ID: 'TR', NAME: 'Three-Wheeler' },
@@ -859,7 +723,6 @@ VEHICLE_NO
     this.typeV = selectedStatus;
     this.search(true);
   }
-
   ontypeFilterChange(selectedStatus: string) {
     this.typeFilter = selectedStatus;
     this.search(true);
@@ -873,17 +736,13 @@ VEHICLE_NO
     this.genderFilter = selectedStatus;
     this.search(true);
   }
-
-  // Check if the column is visible
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
   dataList: any = [];
   visible = false;
   filterQuery: string = '';
-  // Main filter
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   columns1: { label: string; value: string }[] = [
@@ -897,7 +756,6 @@ VEHICLE_NO
     { label: 'Vendor Name', value: 'VENDOR_ID' },
     { label: 'Country Name', value: 'COUNTRY_ID' },
     { label: 'State Name', value: 'STATE_ID' },
-    // { label: 'City Name', value: 'CITY_ID' },
     { label: 'Pincode', value: 'PINCODE_ID' },
     { label: 'Gender', value: 'GENDER' },
     { label: 'Status', value: 'IS_ACTIVE' },
@@ -914,13 +772,11 @@ VEHICLE_NO
     this.vendorroleid = this.commonFunction.decryptdata(
       sessionStorage.getItem('roleId') || ''
     );
-
     if (this.vendorroleid == '9') {
       this.api.getAllUsers(0, 0, '', '', ' AND ID=' + this.useridd).subscribe(
         (data) => {
           if (data['code'] === 200) {
             var dataaaaaa = data['data'];
-
             this.vendorid = dataaaaaa[0].VENDOR_ID;
             this.totalRecords = 0;
             this.Technician = [];
@@ -940,7 +796,6 @@ VEHICLE_NO
                       t.push(element.TERITORY_ID);
                     });
                     this.territoryidfilter = t.toString();
-                    // this.territoryidfilter = this.territoryidfilter;
                     this.search(true);
                   }
                 }
@@ -969,12 +824,6 @@ VEHICLE_NO
         .subscribe((data2) => {
           if (data2['code'] == '200') {
             if (data2['count'] > 0) {
-              // data2['data'].forEach((element) => {
-
-              //   this.territoryidfilter.push(element.TERITORY_ID);
-              //   this.totalRecords = 0;
-              //   this.Technician = [];
-              // });
               var t: any = [];
               data2['data'].forEach((element) => {
                 t.push(element.TERITORY_ID);
@@ -982,29 +831,9 @@ VEHICLE_NO
               this.territoryidfilter = t.toString();
               this.search(true);
             }
-
           }
         });
-      // var filterrrr = ' AND USER_ID=' + this.useridd;
-      // this.api.getBackOfficeData(0, 0, '', '', filterrrr).subscribe(
-      //   (dataaa1) => {
-      //     if (dataaa1['code'] == 200) {
-      //       var dataaaaaa1 = dataaa1['data'];
-      //       this.territoryidfilter = dataaaaaa1[0].TERITORY_IDS;
-      //       this.totalRecords = 0;
-      //       this.Technician = [];
-      //       this.search(true);
-      //     } else {
-      //       this.totalRecords = 0;
-      //       this.Technician = [];
-      //     }
-      //   },
-      //   () => {
-      //     this.message.error('Something Went Wrong', '');
-      //   }
-      // );
     }
-
     this.loadingRecords = false;
     this.getCountyData();
     this.getStateData();
@@ -1013,12 +842,10 @@ VEHICLE_NO
     this.getVendorData();
     this.getVendorData1();
     this.getDistrictData();
-
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
   territoryidfilter: any;
   distinctData: any = [];
@@ -1118,9 +945,6 @@ VEHICLE_NO
       }
     });
   }
-
-  // Main Filter code
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -1128,10 +952,8 @@ VEHICLE_NO
     }
     return true;
   }
-
   drawerMappingTitle = '';
   drawerMappigVisible = false;
-
   get closePincodeMappingCallback() {
     return this.drawerPicodeMappingClose.bind(this);
   }
@@ -1145,7 +967,6 @@ VEHICLE_NO
     this.drawerData = Object.assign({}, data);
     this.drawerPicodeVisible = true;
   }
-
   get closeSkillsMappingCallback() {
     return this.drawerSkillsMappingClose.bind(this);
   }
@@ -1172,7 +993,6 @@ VEHICLE_NO
     this.drawerData = Object.assign({}, data);
     this.drawerLanguageVisible = true;
   }
-
   drawerServiceVisible = false;
   drawerServiceMappingClose(): void {
     this.search();
@@ -1186,7 +1006,6 @@ VEHICLE_NO
     this.drawerData = Object.assign({}, data);
     this.drawerServiceVisible = true;
   }
-
   drawercalenderVisible = false;
   drawerCalenderMappingClose(): void {
     this.search();
@@ -1200,7 +1019,6 @@ VEHICLE_NO
     this.drawerData = Object.assign({}, data);
     this.drawercalenderVisible = true;
   }
-
   isSpinning = false;
   isOk = true;
   Disabled = true;
@@ -1232,22 +1050,18 @@ VEHICLE_NO
   jobdetailsdata: any;
   invoicefilter = '';
   ratingfilter = '';
-
   openjobcarddetails(data: TechnicianMasterData) {
     this.jobdetailsdata = data;
     this.getTechniciansJobs(data);
     this.jobdetaildrawerTitle = `View details of ${data.NAME}`;
   }
-
   drawersize = '100%';
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
   }
-  //Drawer Methods
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }
-
   jobdatss: any = [];
   jobcardids: any = [];
   jobId: any;
@@ -1255,25 +1069,18 @@ VEHICLE_NO
     this.jobId = data.ID;
     this.jobdetailsshow = true;
   }
-
-  // new filter
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   openfilter() {
     this.drawerTitle = 'Technician Filter';
-    // this.applyCondition = '';
     this.filterFields[5]['options'] = this.VendorData1;
     this.filterFields[9]['options'] = this.countryData;
     this.filterFields[10]['options'] = this.StateData;
     this.filterFields[11]['options'] = this.districtData;
     this.filterFields[12]['options'] = this.PincodeData;
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1282,13 +1089,9 @@ VEHICLE_NO
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1305,7 +1108,6 @@ VEHICLE_NO
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1323,15 +1125,12 @@ VEHICLE_NO
       },
     ];
   }
-
   drawerflterClose(): void {
     this.drawerFilterVisible = false;
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'TYPE',
@@ -1363,7 +1162,6 @@ VEHICLE_NO
       ],
       placeholder: 'Enter Name',
     },
-
     {
       key: 'EMAIL_ID',
       label: 'Email ID',
@@ -1449,7 +1247,6 @@ VEHICLE_NO
       ],
       placeholder: 'Select Experience Level',
     },
-
     {
       key: 'ADDRESS_LINE1',
       label: 'Address',
@@ -1568,7 +1365,6 @@ VEHICLE_NO
       placeholder: 'Select Status',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose();
@@ -1577,8 +1373,7 @@ VEHICLE_NO
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -1592,35 +1387,24 @@ VEHICLE_NO
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
-
-  // filterQuery = '';
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   techconfigrationTitle: any = '';
   techconfigrationvisible: boolean = false;
   techconfigrationdata: any = [];
@@ -1628,11 +1412,9 @@ VEHICLE_NO
     this.techconfigrationvisible = false;
     this.search();
   }
-
   get techconfigrationCallback() {
     return this.techconfigrationClose.bind(this);
   }
-
   openconfigration(data: any) {
     var daataaaa = data;
     this.api
@@ -1660,14 +1442,9 @@ VEHICLE_NO
         }
       });
   }
-
   handleOk1(): void {
     this.isSpinning = true;
-
-    // Toggle the IS_ACTIVE value
     this.data.IS_ACTIVE = this.data.IS_ACTIVE === 1 ? 0 : 1;
-
-    // Call the API to update the technician's data
     this.api.updateTechnicianData(this.data).subscribe(
       (response: any) => {
         this.isSpinning = false;
@@ -1678,7 +1455,7 @@ VEHICLE_NO
             `Technician has been ${statusMessage} successfully.`,
             ''
           );
-          this.isVisible = false; // Close the modal
+          this.isVisible = false; 
           this.search();
         } else {
           this.message.error(`Failed to update technician status.`, '');
@@ -1693,24 +1470,22 @@ VEHICLE_NO
       }
     );
   }
-
   isVisible: boolean;
   techdata: any;
   showConfirmdeactive(data: any): void {
     this.isVisible = true;
     this.techdata = data;
   }
-
   isVisible1: boolean;
   showConfirmactive(data: any): void {
     this.isVisible1 = true;
     this.techdata = data;
   }
   handleCancel1(): void {
-    this.isVisible1 = false; // Close the modal
+    this.isVisible1 = false; 
   }
   handleCancel1de(): void {
-    this.isVisible = false; // Close the modal
+    this.isVisible = false; 
   }
   isSpinningACtive: boolean = false;
   Disabletech(data: any) {
@@ -1723,7 +1498,7 @@ VEHICLE_NO
             `Technician status has been updated successfully.`,
             ''
           );
-          this.isVisible = false; // Close the modal
+          this.isVisible = false; 
           this.search();
         } else {
           this.isSpinningACtive = false;
@@ -1739,7 +1514,6 @@ VEHICLE_NO
       }
     );
   }
-
   activetech(data: any) {
     this.isSpinningACtive = true;
     this.api.activetechnician(data.ID, data.NAME, 'EN').subscribe(
@@ -1750,7 +1524,7 @@ VEHICLE_NO
             `Technician status has been updated successfully.`,
             ''
           );
-          this.isVisible1 = false; // Close the modal
+          this.isVisible1 = false; 
           this.search();
         } else {
           this.isSpinningACtive = false;
@@ -1768,27 +1542,23 @@ VEHICLE_NO
   }
   modalTitle: string;
   showConfirm1(data: any): void {
-    this.data = { ...data }; // Clone the data to avoid mutating the original object
+    this.data = { ...data }; 
     this.modalTitle =
-      data.IS_ACTIVE === 1 ? `Disable ${data.NAME}` : `Enable ${data.NAME}`; // Set the dynamic title
-    this.isVisible = true; // Show the modal
+      data.IS_ACTIVE === 1 ? `Disable ${data.NAME}` : `Enable ${data.NAME}`; 
+    this.isVisible = true; 
   }
-
   filterloading: boolean = false;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
+  TabId: number; 
   public commonFunction = new CommonFunctionService();
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1796,13 +1566,12 @@ VEHICLE_NO
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1817,21 +1586,15 @@ VEHICLE_NO
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1845,12 +1608,8 @@ VEHICLE_NO
       );
     this.filterQuery = '';
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
-    //
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -1866,13 +1625,10 @@ VEHICLE_NO
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //
           } else {
             this.isfilterapply = true;
           }
@@ -1895,7 +1651,6 @@ VEHICLE_NO
       }
     );
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1904,11 +1659,8 @@ VEHICLE_NO
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1916,13 +1668,10 @@ VEHICLE_NO
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -1931,57 +1680,42 @@ VEHICLE_NO
       this.loadFilters();
     }
   }
-
   drawerfilterClose(buttontype, updateButton) {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-      //
-      //
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-      //
       this.loadFilters();
     }
   }
-
   get filtercloseCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   viewJobsWidth: string = '1-0%';
   viewJobsDrawerVisible = false;
   viewJobsdrawerTitle = '';
   viewjobsdata: any;
   technicianId: any;
-
   viewJobs(data: TechnicianMasterData) {
     this.viewJobsDrawerVisible = true;
     this.viewjobsdata = data;
     this.getViewJobs(data);
     this.viewJobsdrawerTitle = `Jobs of ${data.NAME}`;
   }
-
   viewJobsdrawerClose(): void {
     this.viewJobsDrawerVisible = false;
   }
-
   get viewJobscloseCallback() {
     return this.viewJobsdrawerClose.bind(this);
   }
-
   getViewJobs(data) {
     this.technicianId = data.ID;
     this.viewJobsDrawerVisible = true;
   }
   userroleid: any;
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
@@ -1994,24 +1728,18 @@ VEHICLE_NO
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.FILTER_NAME = data.FILTER_NAME;
-    //
     this.filterData = data;
     this.EditQueryData = data;
-
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-  // profile photo
   ViewImage: any;
   ImageModalVisible: boolean = false;
   imageshow;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
@@ -2019,28 +1747,17 @@ VEHICLE_NO
   sanitizedLink: any = '';
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + 'TechnicianProfile/' + link;
-
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   resetLogin(data: any): void {
-    // var cloudid = this.cookie.get('CLOUD_ID');
-    // var deviceId = this.cookie.get('DEVICE_ID');
-
-    // this.filterloading = true;
     this.api.resetLogin(data.ID, data.SESSION_KEY).subscribe(
       (response) => {
         if (response['code'] === 200) {
           data.SESSION_KEY = '';
-          // cloudid === '';
-          // deviceId === '';
           this.message.success('Login reset successfully.', '');
-
           this.search(true);
         } else {
           this.message.error('Failed to reset login.', '');
@@ -2059,9 +1776,7 @@ VEHICLE_NO
       }
     );
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

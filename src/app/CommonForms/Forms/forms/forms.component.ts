@@ -4,7 +4,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
@@ -31,20 +30,17 @@ export class FormsComponent implements OnInit {
   drawerVisible: boolean = false;
   drawerTitle: string = '';
   drawerData: FormMaster = new FormMaster();
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
   ngOnInit() {
     this.search();
   }
-
   keyup(event) {
     if (this.searchText.length >= 3 && event.key === 'Enter') {
       this.search(true);
@@ -52,7 +48,6 @@ export class FormsComponent implements OnInit {
       this.search(true);
     }
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -61,26 +56,20 @@ export class FormsComponent implements OnInit {
       this.pageIndex = 1;
     }
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-
     if (this.searchText != '') {
       likeQuery = ' AND (';
-
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
       likeQuery += ')';
     }
-
     this.loadingRecords = true;
     this.api
       .getAllForms(this.pageIndex, this.pageSize, this.sortKey, sort, likeQuery)
@@ -102,7 +91,6 @@ export class FormsComponent implements OnInit {
         }
       );
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
@@ -110,38 +98,31 @@ export class FormsComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   add(): void {
     this.drawerTitle = 'Create New Form';
     this.drawerData = new FormMaster();
     this.drawerVisible = true;
   }
-
   edit(data: FormMaster): void {
     this.drawerTitle = 'Update Form Details';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;

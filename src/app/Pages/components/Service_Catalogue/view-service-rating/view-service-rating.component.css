@@ -1,0 +1,24 @@
+.rating-progress-container {
+    align-items: end;
+}
+.rating-progress-row {
+    margin-bottom: 8px;
+}
+.rating-star-label {
+    text-align: right;
+    padding-right: 10px;
+}
+.comments-container {
+    margin-top: 5px;
+    padding: 5px;
+    max-height: 40vh;
+    overflow: auto;
+    padding-right: 10px;
+}
+.comment-rating-container {
+    margin-top: 0px;
+}
+.empty-rating-state {
+    font-weight: 600;
+    margin-top: 10%;
+}

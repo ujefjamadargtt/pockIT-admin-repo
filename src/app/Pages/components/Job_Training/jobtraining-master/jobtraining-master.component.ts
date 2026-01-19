@@ -8,7 +8,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { JobTraining } from 'src/app/Pages/Models/jobTraining';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-jobtraining-master',
   templateUrl: './jobtraining-master.component.html',
@@ -24,8 +23,6 @@ export class JobtrainingMasterComponent {
   sortValue: string = 'desc';
   sortKey: string = 'id';
   searchText: string = '';
-  // filterQuery: string = "";
-
   columns: string[][] = [
     ['TITLE', 'Name'],
     ['LINK', 'Link'],
@@ -33,8 +30,6 @@ export class JobtrainingMasterComponent {
     ['SERVICE_MASTER_NAME', 'Name'],
     ['CATEGORY_NAME', 'Name'],
     ['SUB_CATEGORY_NAME', 'Name'],
-
-    // ["SEQ_NO", "Sequence Number"],
   ];
   time = new Date();
   features = [];
@@ -64,8 +59,6 @@ export class JobtrainingMasterComponent {
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -82,12 +75,9 @@ export class JobtrainingMasterComponent {
       groups: [],
     },
   ];
-
-  //New Advance Filter
   whichbutton: any;
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -104,36 +94,21 @@ export class JobtrainingMasterComponent {
       groups: [],
     },
   ];
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
   sanitizedLink: any = '';
-  // GetImage(link: string) {
-  //   let imagePath = this.api.retriveimgUrl + 'JobTrainingDocs/' + link;
-  //   this.sanitizedLink =
-  //     this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
-  //   this.imageshow = this.sanitizedLink;
-
-  //   // Display the modal only after setting the image URL
-  //   this.ImageModalVisible = true;
-  // }
-
   GetImage(link: string) {
     const filePath: any = this.api.retriveimgUrl + 'JobTrainingDocs/' + link;
-
     const isDocOrDocx: any = link.endsWith('.doc') || link.endsWith('.docx');
-
     let finalPath: any = isDocOrDocx
       ? `https://docs.google.com/gview?url=${encodeURIComponent(filePath)}&embedded=true`
       : filePath;
-
     this.sanitizedLink = this.sanitizer.bypassSecurityTrustResourceUrl(finalPath);
     this.imageshow = this.sanitizedLink;
     this.ImageModalVisible = true;
   }
-
   helpcategoryvisible: boolean;
   subcategoryvisible: boolean;
   serviceVisible: boolean;
@@ -151,20 +126,8 @@ export class JobtrainingMasterComponent {
     this.isnewFilter = selectedStatus;
     this.search(true);
   }
-
-  // isfilterapply: boolean = false;
-  // filterClass: string = 'filter-invisible';
-  // filterQuery: string = '';
-  // visible = false;
-  // columns1: { label: string; value: string }[] = [
-  //   { label: "Category Name", value: "NAME" },
-  //   // { label: 'Sequence No.', value: 'SEQ_NO' },
-  //   { label: "Is New ?", value: "IS_NEW" },
-  //   { label: "Status", value: "STATUS" },
-  // ];
   isFilterApplied: boolean = false;
   isdescriptionFilterApplied: boolean = false;
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -172,31 +135,21 @@ export class JobtrainingMasterComponent {
     private sanitizer: DomSanitizer
   ) { }
   ngOnInit() {
-    // this.search();
-    // this.columns1 = [
-    //   { label: 'Category Name', value: 'NAME' },
-    //   // add more columns if needed
-    // ];
     this.getCategory();
     this.getSubCategory();
     this.getServices();
   }
-
   ViewImage: any;
   ImageModalVisible: boolean = false;
   imageshow;
-
   onKeypressEvent(keys: KeyboardEvent) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length == 0 && keys.key == 'Backspace') {
-      // this.dataList = []
       this.search(true);
     }
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -204,9 +157,7 @@ export class JobtrainingMasterComponent {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -215,25 +166,9 @@ export class JobtrainingMasterComponent {
       tooltip.hide();
     }
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
-  // viewImage(imageURL: string): void {
-  //   this.ViewImage = 1;
-  //   this.GetImage(imageURL);
-  // }
-  // sanitizedLink: any = '';
-  // GetImage(link: string) {
-  //   let imagePath = this.api.retriveimgUrl + 'HelpDocument/' + link;
-  //   this.sanitizedLink =
-  //     this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
-  //   this.imageshow = this.sanitizedLink;
-
-  //   // Display the modal only after setting the image URL
-  //   this.ImageModalVisible = true;
-  // }
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -253,14 +188,6 @@ export class JobtrainingMasterComponent {
   serviceList: any = [];
   serviceList1: any = [];
   getServices() {
-    // var filter = '';
-    // if (this.data.CATEGORY_ID && this.data.SUBCATEGORY_ID) {
-    //   filter =
-    //     ' AND CATEGORY_ID= ' +
-    //     this.data.CATEGORY_ID +
-    //     ' AND SUB_CATEGORY_ID=' +
-    //     this.data.SUBCATEGORY_ID;
-    // }
     this.api
       .getServiceItem(0, 0, '', 'desc', ' AND STATUS=1')
       .subscribe((data) => {
@@ -283,7 +210,6 @@ export class JobtrainingMasterComponent {
       (categoryData) => {
         if (categoryData['code'] == 200) {
           this.categoryList = categoryData['data'];
-
           categoryData['data'].forEach((element) => {
             this.categoryList1.push({
               value: element.ID,
@@ -322,25 +248,20 @@ export class JobtrainingMasterComponent {
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -348,7 +269,6 @@ export class JobtrainingMasterComponent {
     if (reset) {
       this.pageIndex = 1;
     }
-
     this.loadingRecords = true;
     var sort: string;
     try {
@@ -357,14 +277,6 @@ export class JobtrainingMasterComponent {
       sort = '';
     }
     var likeQuery = '';
-    // if (this.searchText != "") {
-    //     likeQuery = " AND";
-    //   this.columns.forEach(column => {
-    //     likeQuery += " " + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2)
-    // }
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -377,8 +289,6 @@ export class JobtrainingMasterComponent {
         ')';
     }
     this.loadingRecords = true;
-
-    // category Filter
     if (this.categoryName !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -389,20 +299,6 @@ export class JobtrainingMasterComponent {
         (likeQuery ? ' AND ' : '') +
         `DESCRIPTION LIKE '%${this.description.trim()}%'`;
     }
-    // SEQ_NO Filter
-    // if (this.Seqtext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") + `SEQ_NO LIKE '%${this.Seqtext.trim()}%'`;
-    // }
-
-    // // IS_NEW Filter
-    // if (this.isnewFilter) {
-    //   if (likeQuery !== "") {
-    //     likeQuery += " AND ";
-    //   }
-    //   likeQuery += `IS_NEW = ${this.isnewFilter}`;
-    // }
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -413,28 +309,23 @@ export class JobtrainingMasterComponent {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; 
     }
-
-    // subcategory Filter
     if (this.selectedSubCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `SUBCATEGORY_ID IN (${this.selectedSubCategories.join(
         ','
-      )})`; // Update with actual field name in the DB
+      )})`; 
     }
-
     if (this.selectedServices.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `SERVICE_ID IN (${this.selectedServices.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `SERVICE_ID IN (${this.selectedServices.join(',')})`; 
     }
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getJobTraining(
         this.pageIndex,
@@ -476,38 +367,12 @@ export class JobtrainingMasterComponent {
         }
       );
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   add(): void {
     this.drawerTitle = 'Create New Job Training';
     this.drawerData = new JobTraining();
-    // this.api.getHelpDoc(1, 1, "SEQ_NO", "desc", "").subscribe(
-    //   (data) => {
-    //     if (data["code"] == 200) {
-    //       if (data["count"] == 0) {
-    //         this.drawerData.SEQ_NO = 1;
-    //       } else {
-    //         this.drawerData.SEQ_NO = data["data"][0]["SEQ_NO"] + 1;
-    //       }
-    //     } else {
-    //       this.message.error("Server Not Found", "");
-    //     }
-    //   },
-    //   (err: HttpErrorResponse) => {
-    //     this.loadingRecords = false;
-    //     if (err.status === 0) {
-    //       this.message.error(
-    //         "Network error: Please check your internet connection.",
-    //         ""
-    //       );
-    //     } else {
-    //       this.message.error("Something Went Wrong.", "");
-    //     }
-    //   }
-    // );
     this.drawerVisible = true;
   }
   Seqtext: string = '';
@@ -528,43 +393,29 @@ export class JobtrainingMasterComponent {
       this.search();
       this.isdescriptionFilterApplied = false;
     }
-    // if (this.Seqtext.length > 0 && event.key === 'Enter') {
-    //   this.search();
-    //   this.isSeqApplied = true;
-    // } else if (this.Seqtext.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    //   this.isSeqApplied = false;
-    // }
   }
-
   edit(data: JobTraining): void {
     this.drawerTitle = 'Update Job Training';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   navigateToMastersMenu(): void {
     this.router.navigate(['/masters/menu']);
   }
-
   close(): void {
     this.visible1 = false;
   }
-
   close1(accountMasterPage: NgForm) {
     this.drawerVisible1 = false;
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
@@ -581,22 +432,17 @@ export class JobtrainingMasterComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
   viewLink(link: string): void {
     if (link) {
-      window.open(link, '_blank'); // Opens the link in a new tab/window
+      window.open(link, '_blank'); 
     } else {
     }
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -609,7 +455,6 @@ export class JobtrainingMasterComponent {
   filterQuery: string = '';
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -621,10 +466,8 @@ export class JobtrainingMasterComponent {
   updateButton: any;
   updateBtn: any;
   filterloading: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -632,13 +475,12 @@ export class JobtrainingMasterComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -653,21 +495,15 @@ export class JobtrainingMasterComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -681,7 +517,6 @@ export class JobtrainingMasterComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -690,7 +525,6 @@ export class JobtrainingMasterComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -701,16 +535,13 @@ export class JobtrainingMasterComponent {
           this.savedFilters = this.savedFilters.filter(
             (filter) => filter.ID !== item.ID
           );
-
           this.message.success('Filter deleted successfully.', '');
           sessionStorage.removeItem('ID');
           this.filterloading = true;
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -736,11 +567,9 @@ export class JobtrainingMasterComponent {
       }
     );
   }
-
   openfilter() {
     this.drawerTitle = 'Job Training Filter';
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -749,9 +578,6 @@ export class JobtrainingMasterComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
@@ -791,25 +617,20 @@ export class JobtrainingMasterComponent {
       },
     ];
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'TITLE',
@@ -899,18 +720,13 @@ export class JobtrainingMasterComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -919,21 +735,16 @@ export class JobtrainingMasterComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
@@ -943,10 +754,8 @@ export class JobtrainingMasterComponent {
     this.filterFields[1]['options'] = this.categoryList1;
     this.filterFields[2]['options'] = this.subCategoryList1;
     this.filterFields[3]['options'] = this.serviceList1;
-
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.EditQueryData = data;
     this.filterData = data;
     this.editButton = 'Y';

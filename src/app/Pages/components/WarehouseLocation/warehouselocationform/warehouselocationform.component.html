@@ -1,152 +1,145 @@
 <div>
   <form #accountMasterPage="ngForm" nz-form>
     <nz-spin [nzSpinning]="isSpinning">
-      <!-- Inventory Details Section -->
       <div nz-row>
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>
               Select Warehouse
             </nz-form-label>
-
-            <nz-form-control nzHasFeedback nzErrorTip="Please Select Valid Warehouse">
-              <nz-select [(ngModel)]="data.WAREHOUSE_ID" nz-input name="warehouse" nzPlaceHolder="Select Warehouse"
-                nzAllowClear (ngModelChange)="getWarehouse()" required style="width: 100%">
-                <nz-option *ngFor="let item of Warehouselist" [nzValue]="item.ID" [nzLabel]="item.NAME"></nz-option>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Select Valid Warehouse"
+            >
+              <nz-select
+                [(ngModel)]="data.WAREHOUSE_ID"
+                nz-input
+                name="warehouse"
+                nzPlaceHolder="Select Warehouse"
+                nzAllowClear
+                (ngModelChange)="getWarehouse()"
+                required
+                class="warehouse-select-full-width"
+              >
+                <nz-option
+                  *ngFor="let item of Warehouselist"
+                  [nzValue]="item.ID"
+                  [nzLabel]="item.NAME"
+                ></nz-option>
               </nz-select>
             </nz-form-control>
-            <!-- <h6 style="color: red; font-size: 10px" *ngIf="
-                                      data.NAME != undefined &&
-                                      data.NAME != null &&
-                                      data.NAME != ''
-                                    ">
-                            {{ data.NAME.length }}/128
-                        </h6> -->
           </nz-form-item>
         </div>
       </div>
-      <!-- <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon> Location Name </nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Location Name">
-              <input [(ngModel)]="data.LOCATION_NAME" (keypress)="validateInput($event)" name="locationname"
-                autocomplete="off" nz-input maxlength="128" required placeholder="Enter Location Name" />
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  data.LOCATION_NAME != undefined &&
-                  data.LOCATION_NAME != null &&
-                  data.LOCATION_NAME != ''
-                ">
-                {{ data.LOCATION_NAME.length }}/8
-              </h6>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div> -->
       <div nz-row>
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon> Location Name </nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Location Name">
-              <input [(ngModel)]="data.LOCATION_NAME" name="locationname" autocomplete="off" nz-input maxlength="128"
-                required placeholder="Enter Location Name" (keypress)="validateInput($event)"
-                (focus)="isFocused = 'LOCATION_NAME'" (blur)="isFocused = ''"
-                (ngModelChange)="data.LOCATION_NAME = data.LOCATION_NAME?.trim()" />
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Location Name"
+            >
+              <input
+                [(ngModel)]="data.LOCATION_NAME"
+                name="locationname"
+                autocomplete="off"
+                nz-input
+                maxlength="128"
+                required
+                placeholder="Enter Location Name"
+                (keypress)="validateInput($event)"
+                (focus)="isFocused = 'LOCATION_NAME'"
+                (blur)="isFocused = ''"
+                (ngModelChange)="
+                  data.LOCATION_NAME = data.LOCATION_NAME?.trim()
+                "
+              />
               <br />
-              <!-- Character Counter -->
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  isFocused === 'LOCATION_NAME' || 
+              <h6
+                class="field-counter-warning"
+                *ngIf="
+                  isFocused === 'LOCATION_NAME' ||
                   (data.LOCATION_NAME && isFocused === 'LOCATION_NAME')
-                ">
+                "
+              >
                 {{ data.LOCATION_NAME?.length || 0 }}/128
               </h6>
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
-
       <div nz-row>
-        <!-- <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label nzNoColon> Location Description </nz-form-label>
-            <nz-form-control>
-              <textarea [(ngModel)]="data.LOCATION_DESCRIPTION" nz-input rows="3" name="location"
-                placeholder="Enter Location Description" maxlength="512"></textarea>
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  data.LOCATION_DESCRIPTION != undefined &&
-                  data.LOCATION_DESCRIPTION != null &&
-                  data.LOCATION_DESCRIPTION != ''
-                ">
-                {{ data.LOCATION_DESCRIPTION.length }}/512
-              </h6>
-            </nz-form-control>
-          </nz-form-item>
-        </div> -->
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label nzNoColon> Location Description </nz-form-label>
             <nz-form-control>
-              <textarea [(ngModel)]="data.LOCATION_DESCRIPTION" nz-input rows="3" name="location"
-                placeholder="Enter Location Description" maxlength="512" (focus)="isFocused = 'LOCATION_DESCRIPTION'"
+              <textarea
+                [(ngModel)]="data.LOCATION_DESCRIPTION"
+                nz-input
+                rows="3"
+                name="location"
+                placeholder="Enter Location Description"
+                maxlength="512"
+                (focus)="isFocused = 'LOCATION_DESCRIPTION'"
                 (blur)="isFocused = ''"
-                (ngModelChange)="data.LOCATION_DESCRIPTION = data.LOCATION_DESCRIPTION?.trim()"></textarea>
+                (ngModelChange)="
+                  data.LOCATION_DESCRIPTION = data.LOCATION_DESCRIPTION?.trim()
+                "
+              ></textarea>
               <br />
-              <!-- Character Counter -->
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  isFocused === 'LOCATION_DESCRIPTION' || 
-                  (data.LOCATION_DESCRIPTION && isFocused === 'LOCATION_DESCRIPTION')
-                ">
+              <h6
+                class="field-counter-warning"
+                *ngIf="
+                  isFocused === 'LOCATION_DESCRIPTION' ||
+                  (data.LOCATION_DESCRIPTION &&
+                    isFocused === 'LOCATION_DESCRIPTION')
+                "
+              >
                 {{ data.LOCATION_DESCRIPTION?.length || 0 }}/512
               </h6>
             </nz-form-control>
           </nz-form-item>
         </div>
-
-        <!-- <div nz-col nzSpan="12">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon> Short Code </nz-form-label>
-
-            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Short Code">
-              <input [(ngModel)]="data.SHORT_CODE" (keypress)="alphanumchar($event)" name="shortcode" nz-input
-                maxlength="5" autocomplete="off" required placeholder="Enter Short Code" />
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  data.SHORT_CODE != undefined &&
-                  data.SHORT_CODE != null &&
-                  data.SHORT_CODE != ''
-                ">
-                {{ data.SHORT_CODE.length }}/8
-              </h6>
-            </nz-form-control>
-          </nz-form-item>
-        </div> -->
-
         <div nz-col nzSpan="12">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon> Short Code </nz-form-label>
-
             <nz-form-control nzHasFeedback nzErrorTip="Please Enter Short Code">
-              <input [(ngModel)]="data.SHORT_CODE" (keypress)="alphanumchar($event)" name="shortcode" nz-input
-                maxlength="5" autocomplete="off" required placeholder="Enter Short Code"
-                (focus)="isFocused = 'SHORT_CODE'" (blur)="isFocused = ''"
-                (ngModelChange)="data.SHORT_CODE = data.SHORT_CODE?.trim()" />
+              <input
+                [(ngModel)]="data.SHORT_CODE"
+                (keypress)="alphanumchar($event)"
+                name="shortcode"
+                nz-input
+                maxlength="5"
+                autocomplete="off"
+                required
+                placeholder="Enter Short Code"
+                (focus)="isFocused = 'SHORT_CODE'"
+                (blur)="isFocused = ''"
+                (ngModelChange)="data.SHORT_CODE = data.SHORT_CODE?.trim()"
+              />
               <br />
-              <!-- Character Counter -->
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  isFocused === 'SHORT_CODE' || 
+              <h6
+                class="field-counter-warning"
+                *ngIf="
+                  isFocused === 'SHORT_CODE' ||
                   (data.SHORT_CODE && isFocused === 'SHORT_CODE')
-                ">
+                "
+              >
                 {{ data.SHORT_CODE?.length || 0 }}/5
               </h6>
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="6">
           <nz-form-item>
             <nz-form-label nzNoColon>Status</nz-form-label>
-
-            <nz-switch [(ngModel)]="data.IS_ACTIVE" style="line-height: 2.2" name="isactive" nzCheckedChildren="Active"
-              nzUnCheckedChildren="Inactive">
+            <nz-switch
+              [(ngModel)]="data.IS_ACTIVE"
+              class="status-switch-line-height"
+              name="isactive"
+              nzCheckedChildren="Active"
+              nzUnCheckedChildren="Inactive"
+            >
             </nz-switch>
           </nz-form-item>
         </div>
@@ -154,25 +147,43 @@
     </nz-spin>
   </form>
   <div class="footer">
-    <button (click)="close(accountMasterPage)" type="button" nz-button class="ant-btn" style="margin-right: 8px">
+    <button
+      (click)="close(accountMasterPage)"
+      type="button"
+      nz-button
+      class="ant-btn footer-cancel-button"
+    >
       <span>Cancel</span>
     </button>
-
-    <button *ngIf="!data.ID" [nzLoading]="isSpinning" [nzDropdownMenu]="menu" (click)="save(false, accountMasterPage)"
-      type="button" class="ant-btn ant-btn-primary" nz-button nz-dropdown>
+    <button
+      *ngIf="!data.ID"
+      [nzLoading]="isSpinning"
+      [nzDropdownMenu]="menu"
+      (click)="save(false, accountMasterPage)"
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      nz-dropdown
+    >
       <span> Save & Close </span>
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
-          <a (click)="save(true, accountMasterPage)" style="color: white!important;">Save & New</a>
+        <li nz-menu-item class="menuc menuc-rounded-white">
+          <a (click)="save(true, accountMasterPage)" class="menuc-link-white">
+            Save & New
+          </a>
         </li>
       </ul>
     </nz-dropdown-menu>
-
-    <button *ngIf="data.ID" [nzLoading]="isSpinning" (click)="save(false, accountMasterPage)" type="button"
-      class="ant-btn ant-btn-primary" nz-button>
+    <button
+      *ngIf="data.ID"
+      [nzLoading]="isSpinning"
+      (click)="save(false, accountMasterPage)"
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+    >
       <span>Update & close</span>
     </button>
   </div>

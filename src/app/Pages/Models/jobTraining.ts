@@ -1,14 +1,3 @@
-// export class JobTraining {
-//   ID:any
-//   CATEGORY_ID;
-//   SUBCATEGORY_ID;
-//   TITLE='';
-//   DESCRIPTION='';
-//   LINK='';
-//   STATUS=true;
-//   SERVICE_ID;
-// }
-
 export class JobTraining {
   ID: any;
   CATEGORY_ID;

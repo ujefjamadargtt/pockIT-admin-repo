@@ -4,7 +4,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { techniacianRatings, TechnicianMasterData } from 'src/app/Pages/Models/TechnicianMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 @Component({
   selector: 'app-customer-view-invoices',
   templateUrl: './customer-view-invoices.component.html',
@@ -51,7 +50,6 @@ export class CustomerViewInvoicesComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this.isSpinning = false;
           this.datalistCount = 0;
-
           this.datalist = new techniacianRatings();
           if (err.status === 0) {
             this.message.error(
@@ -65,7 +63,6 @@ export class CustomerViewInvoicesComponent implements OnInit {
         }
       );
   }
-
   save(addNew: boolean): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -73,15 +70,9 @@ export class CustomerViewInvoicesComponent implements OnInit {
       this.isOk = false;
       this.message.error("Please give ratings", "")
     }
-    // else if (this.datalist.COMMENTS === null || this.datalist.COMMENTS === undefined || this.datalist.COMMENTS.trim() === '') {
-    //   this.isOk = false;
-    //   this.message.error("Please enter comment", "")
-    // }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
-
         var calData: any = {
           TECHNICIAN_ID: this.data.TECHNICIAN_ID,
           ORDER_ID: this.data.ORDER_ID,
@@ -93,8 +84,6 @@ export class CustomerViewInvoicesComponent implements OnInit {
           FEEDBACK_DATE_TIME: this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss'),
           CLIENT_ID: 1
         }
-
-
         if (this.datalistCount > 0) {
           this.api
             .updateCustTechRatings(calData)

@@ -1,20 +1,113 @@
 tr td:nth-child(3) {
    text-align: center;
 }
-
 tr td:nth-child(4) {
    text-align: center;
 }
-
 .truncate-text {
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
    max-width: 100%;
-   /* Adjust as needed */
    display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
    padding: 0px;
+}
+.back-arrow-bold-pointer {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-width-47 {
+  width: 47px;
+}
+.form-item-no-margin-right {
+  margin-right: 0px;
+}
+.filter-padding-top-0 {
+  padding-top: 0px;
+}
+.loading-text-center {
+  text-align: center;
+}
+.filter-card-margin-bottom-8 {
+  margin-bottom: 8px;
+}
+.filter-card-border-rounded {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.filter-card-content-flex {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-text-center-25px {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-check-icon-absolute-top-right {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-margin-top-7 {
+  margin-top: 7px;
+}
+.filter-actions-flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-tag-pointer-10px {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-tag-icon-10px {
+  font-size: 10px !important;
+}
+.filter-tag-pointer-10px-no-margin {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.no-filter-text-center-red-bold {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-flex-end-mt10 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.filter-reset-btn-mr10 {
+  margin-right: 10px;
+}
+.filter-new-btn-mr10 {
+  margin-right: 10px;
+}
+.table-action-cell-center {
+  text-align: center;
+}
+.table-edit-tag-pointer {
+  cursor: pointer;
+}
+.table-edit-icon-15px {
+  font-size: 15px;
+}
+.modal-query-text-center {
+  text-align: center;
 }

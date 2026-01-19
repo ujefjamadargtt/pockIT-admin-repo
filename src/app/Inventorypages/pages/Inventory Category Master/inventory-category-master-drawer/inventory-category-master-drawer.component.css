@@ -1,7 +1,61 @@
-nz-form-item{
+nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
-  /* font-family: '"Poppins", sans-serif !important'; */
+}
+.invcat-counter-uid {
+  color: red;
+  font-size: 10px;
+}
+.invcat-fullwidth-uid {
+  width: 100%;
+}
+.invcat-delete-uid {
+  cursor: pointer;
+  color: red;
+  margin-left: 10px;
+}
+.invcat-upload-btn-uid {
+  height: 28px;
+  padding: 0 7px;
+  font-size: 10px;
+  width: 40%;
+}
+.invcat-hidden-input-uid {
+  display: none ! important;
+}
+.invcat-img-wrapper-uid {
+  margin-top: 10px;
+}
+.invcat-img-preview-uid {
+  width: 128px;
+  height: auto;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+.invcat-preview-box-uid {
+  align-items: center;
+}
+.invcat-preview-img-uid {
+  width: 128px;
+  height: 128px;
+  overflow: auto;
+}
+.invcat-footer-cancel-btn-uid {
+  margin-right: 12px;
+}
+.invcat-footer-menu-item-uid {
+  border-radius: 4px;
+  color: white !important;
+}
+.invcat-footer-menu-link-uid {
+  color: white !important;
+}
+.invcat-crop-container-uid {
+  height: 500px;
+  overflow: scroll;
+}
+.invcat-cropped-preview-center-uid {
+  text-align: center;
 }

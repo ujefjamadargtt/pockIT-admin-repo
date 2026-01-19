@@ -1,13 +1,10 @@
 <div>
-
     <form nz-form #accountMasterPage="ngForm">
         <nz-spin [nzSpinning]="isSpinning">
-
             <div nz-row>
                 <div nz-col nzSpan="12">
                     <nz-form-item>
                         <nz-form-label nzRequired nzNoColon>Tax Name</nz-form-label>
-
                         <nz-form-control nzHasFeedback nzErrorTip="Please Select Tax Name">
                             <nz-select nzShowSearch nzPlaceHolder="Select Tax Name" name="Tax"
                                 [(ngModel)]="data.TAX_ID">
@@ -17,30 +14,23 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
-
                 <div nz-col nzSpan="12">
                     <nz-form-item>
                         <nz-form-label nzRequired nzNoColon>Tax Type</nz-form-label>
-
                         <nz-form-control>
                             <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Tax Type" name="Type"
                                 [(ngModel)]="data.TYPE" required>
-
                                 <nz-option [nzValue]="'Percentage'" [nzLabel]="'%'"></nz-option>
                                 <nz-option [nzValue]="'Fixed'" [nzLabel]="'Fixed'"></nz-option>
-
                             </nz-select>
                         </nz-form-control>
                     </nz-form-item>
                 </div>
             </div>
             <div nz-row>
-
                 <div nz-col nzSpan="12">
                     <nz-form-item>
                         <nz-form-label nzRequired nzNoColon>Rate</nz-form-label>
-
-
                         <nz-form-control>
                             <nz-input-group nzAddOnAfter="₹">
                                 <input type="text" name="RATE" (keypress)="omit($event)" nz-input
@@ -62,16 +52,14 @@
                     </nz-form-item>
                 </div>
             </div>
-
             <div nz-row>
                 <div nz-col nzSpan="12">
                     <nz-form-item>
                         <nz-form-label nzRequired nzNoColon>Effective Date</nz-form-label>
                         <nz-form-control>
                             <nz-date-picker name="effectivedate" [(ngModel)]="data.EFFECTIVE_DATE" nzFormat="dd/MM/yyyy"
-                                style="width: 100%;" nzPlaceHolder="Select Effective Date"></nz-date-picker>
+                                class="full-width-datepicker" nzPlaceHolder="Select Effective Date"></nz-date-picker>
                         </nz-form-control>
-
                     </nz-form-item>
                 </div>
                 <div nz-col nzSpan="12">
@@ -79,10 +67,9 @@
                         <nz-form-label nzRequired nzNoColon>Expiry Date</nz-form-label>
                         <nz-form-control>
                             <nz-date-picker name="expirydate" [(ngModel)]="data.EXPIRY_DATE"
-                                [nzDisabledDate]="disabledDatejoin" nzFormat="dd/MM/yyyy" style="width: 100%;"
+                                [nzDisabledDate]="disabledDatejoin" nzFormat="dd/MM/yyyy" class="full-width-datepicker"
                                 nzPlaceHolder="Select Expiry Date"></nz-date-picker>
                         </nz-form-control>
-
                     </nz-form-item>
                 </div>
             </div>
@@ -93,7 +80,7 @@
                         <nz-form-control>
                             <textarea nz-input rows="2" name="description" maxlength="1024"
                                 [(ngModel)]="data.DESCRIPTION"></textarea>
-                            <h6 style="color: red; font-size: 10px" *ngIf="
+                            <h6 class="character-count" *ngIf="
                               data.DESCRIPTION != undefined &&
                               data.DESCRIPTION != null &&
                               data.DESCRIPTION != ''
@@ -108,7 +95,6 @@
                 <div nz-col nzSpan="6">
                     <nz-form-item>
                         <nz-form-label nzNoColon>Status</nz-form-label>
-
                         <nz-form-control>
                             <nz-switch name="Status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
                                 [(ngModel)]="data.IS_ACTIVE">
@@ -117,28 +103,26 @@
                     </nz-form-item>
                 </div>
             </div>
-
-
-
         </nz-spin>
     </form>
-
     <div class="footer">
-        <button type="button" nz-button style="margin-right: 8px;" class="ant-btn" style="margin-right: 8px;"
-            (click)="close(accountMasterPage)"><span>Cancel</span></button>
-
+        <button type="button" nz-button class="ant-btn footer-cancel-btn" (click)="close(accountMasterPage)">
+            <span>Cancel</span>
+        </button>
         <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown
-            [nzDropdownMenu]="menu" (click)="save(false,accountMasterPage)"><span>Save & Close</span></button>
-
+            [nzDropdownMenu]="menu" (click)="save(false,accountMasterPage)">
+            <span>Save & Close</span>
+        </button>
         <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu>
-                <li nz-menu-item class="menuc" style="border-radius: 4px;color: white!important;">
-                    <a (click)="save(true,accountMasterPage)" style="color: white!important;">Save & New</a>
+                <li nz-menu-item class="menuc menu-item-custom">
+                    <a class="menu-link" (click)="save(true,accountMasterPage)">Save & New</a>
                 </li>
             </ul>
         </nz-dropdown-menu>
-
         <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
-            (click)="save(false,accountMasterPage)"><span>Update & close</span></button>
+            (click)="save(false,accountMasterPage)">
+            <span>Update & close</span>
+        </button>
     </div>
 </div>

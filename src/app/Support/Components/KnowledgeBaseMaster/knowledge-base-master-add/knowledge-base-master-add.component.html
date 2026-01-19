@@ -9,15 +9,13 @@
                 <nz-form-label nzRequired nzNoColon> Category</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Select  Category">
                   <nz-select nzAllowClear="true" nzPlaceHolder="Select  Category" name="KNOWLEDGEBASE_CATEGORY_ID"
-                    [(ngModel)]="data.KNOWLEDGEBASE_CATEGORY_ID" (ngModelChange)="
-                      getsubcategoryData(data.KNOWLEDGEBASE_CATEGORY_ID, false)
-                    " nzShowSearch required>
+                    [(ngModel)]="data.KNOWLEDGEBASE_CATEGORY_ID"
+                    (ngModelChange)="getsubcategoryData(data.KNOWLEDGEBASE_CATEGORY_ID, false)" nzShowSearch required>
                     <nz-option *ngFor="let data of CategoryData" [nzValue]="data.ID" [nzLabel]="data.NAME"></nz-option>
                   </nz-select>
                 </nz-form-control>
               </nz-form-item>
             </div>
-
             <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Subcategory</nz-form-label>
@@ -31,34 +29,15 @@
               </nz-form-item>
             </div>
           </div>
-
-          <!-- <div nz-row>
-            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Subcategory</nz-form-label>
-                <nz-form-control nzHasFeedback nzErrorTip="Please Select Subcategory">
-                  <nz-select nzAllowClear="true" nzPlaceHolder="Select Subcategory" name="KNOWLEDGE_SUB_CATEGORY_ID"
-                    [(ngModel)]="data.KNOWLEDGE_SUB_CATEGORY_ID" nzShowSearch required>
-                    <nz-option *ngFor="let data of SubcategoryData" [nzValue]="data.ID"
-                      [nzLabel]="data.NAME"></nz-option>
-                  </nz-select>
-                </nz-form-control>
-              </nz-form-item>
-            </div>
-          </div> -->
-
           <div nz-row>
             <div nz-col nzSpan="24">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Title</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Enter Title">
-                  <!-- Input Field -->
                   <input nz-input name="TITLE" placeholder="Enter Title" required [(ngModel)]="data.TITLE"
                     (focus)="isFocused = 'TITLE'" (blur)="isFocused = ''" (keypress)="commonFunction.numchar($event)"
                     autocomplete="off" maxlength="128" />
-
-                  <!-- Dynamic Character Count -->
-                  <h6 style="color: red; font-size: 10px" *ngIf="
+                  <h6 class="kb-title-length" *ngIf="
                       isFocused === 'TITLE' ||
                       (data.TITLE && isFocused === 'TITLE')
                     ">
@@ -71,7 +50,7 @@
         </div>
         <div nz-col nzSpan="24">
           <div nz-row>
-            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+            <div nz-col nzSpan="24">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Description</nz-form-label>
                 <nz-form-control>
@@ -79,22 +58,16 @@
                     (ngModelChange)="checkDescriptionLength()" [config]="config" (focus)="isFocused = 'DESCRIPTION'"
                     (blur)="isFocused = ''">
                   </angular-editor>
-
-                  <h6 style="color: red; font-size: 10px" *ngIf="cleanTextLength > 0 || isFocused === 'DESCRIPTION'">
+                  <h6 class="kb-desc-length" *ngIf="cleanTextLength > 0 || isFocused === 'DESCRIPTION'">
                     {{ cleanTextLength }}/50,000
                   </h6>
-
-                  <div *ngIf="showLengthError" style="color: red; font-size: 11px;">
+                  <div *ngIf="showLengthError" class="kb-desc-error">
                     Description must not exceed 50,000 characters (including tags, formatting, and images).
                   </div>
-
-
-
                 </nz-form-control>
               </nz-form-item>
             </div>
           </div>
-
           <div nz-row>
             <div nz-col nzSpan="12">
               <nz-form-item>
@@ -107,53 +80,38 @@
                 </nz-form-control>
               </nz-form-item>
             </div>
-
-            <!-- Document -->
-            <!-- <div nz-row *ngIf="data.TYPE == 'D'"> -->
             <div nz-col nzSpan="12" *ngIf="data.TYPE == 'D'">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Document &nbsp;
-                  <span><i nz-icon nzType="info-circle" nzTheme="twotone"
+                  <span>
+                    <i nz-icon nzType="info-circle" nzTheme="twotone"
                       nzTooltipTitle="Please select an ducument file (PNG, JPG, JPEG, PDF, Doc) with a size up to 1MB."
                       nzTooltipPlacement="top" nz-tooltip>
-                    </i> </span></nz-form-label>
-
-                <nz-form-control nzHasFeedback nzErrorTip="Select Document">
-                  <button *ngIf="data.DOCUMENT == ' ' || data.DOCUMENT == null" nz-button
-                    style="padding: 0px 7px; font-size: 10px" (click)="image1.click()">
-                    <span nz-icon required nzType="upload"></span>Upload
-                    Document
-                    <!-- <i nz-icon nzType="upload" nzTheme="outline"></i> -->
-                    <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg, .pdf, .doc, .docx"
-                      (change)="onFileSelected($event)" style="display: none" />
-                  </button>
-
-                  <span *ngIf="
-                      data.DOCUMENT != null &&
-                      data.DOCUMENT != undefined &&
-                      data.DOCUMENT != ' '
-                    ">
-                    <div *ngIf="progressBarImageOne">
-                      <nz-progress [style.width]="percentImageOne + '%'" [nzPercent]="percentImageOne">{{
-                        percentImageOne }}%</nz-progress>
-                    </div>
+                    </i>
                   </span>
-
-                  <div *ngIf="
-                      data.DOCUMENT != null &&
-                      data.DOCUMENT != undefined &&
-                      data.DOCUMENT != ' '
-                    ">
-                    <a style="color: blue; margin-right: 9px" (click)="viewImage(data.DOCUMENT)">
+                </nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Select Document">
+                  <button *ngIf="data.DOCUMENT == ' ' || data.DOCUMENT == null" nz-button class="kb-upload-btn"
+                    (click)="image1.click()">
+                    <span nz-icon required nzType="upload"></span>Upload Document
+                    <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg, .pdf, .doc, .docx"
+                      (change)="onFileSelected($event)" class="kb-hidden-input" />
+                  </button>
+                  <div *ngIf="progressBarImageOne">
+                    <nz-progress [style.width]="percentImageOne + '%'" [nzPercent]="percentImageOne">
+                      {{ percentImageOne }}%
+                    </nz-progress>
+                  </div>
+                  <div *ngIf="data.DOCUMENT">
+                    <a class="kb-doc-link" (click)="viewImage(data.DOCUMENT)">
                       {{ data.DOCUMENT }}
                     </a>
-
-                    <a style="color: blue; margin-right: 9px" (click)="viewImage(data.DOCUMENT)" nz-tooltip
+                    <a class="kb-doc-link" (click)="viewImage(data.DOCUMENT)" nz-tooltip
                       nzTooltipTitle="Click Here To View Uploaded Image">
                       <span nz-icon nzType="eye" nzTheme="outline"></span>
                     </a>
                     <span *ngIf="data.ID">
-                      <span style="cursor: pointer" nz-popconfirm nzPopconfirmTitle="Are you sure want to delete?"
+                      <span class="kb-delete-icon" nz-popconfirm nzPopconfirmTitle="Are you sure want to delete?"
                         nzPopconfirmPlacement="top" (nzOnConfirm)="image1DeleteConfirm(data)"
                         (nzOnCancel)="deleteCancel()">
                         <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
@@ -162,9 +120,8 @@
                       </span>
                     </span>
                     <span *ngIf="!data.ID">
-                      <span style="cursor: pointer; margin-left: 0px" nz-popconfirm
-                        nzPopconfirmTitle="Are you sure want to delete?" nzPopconfirmPlacement="top"
-                        (nzOnConfirm)="removeImage()" (nzOnCancel)="deleteCancel()">
+                      <span class="kb-delete-icon" nz-popconfirm nzPopconfirmTitle="Are you sure want to delete?"
+                        nzPopconfirmPlacement="top" (nzOnConfirm)="removeImage()" (nzOnCancel)="deleteCancel()">
                         <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
                           nzTooltipTitle="Delete">
                         </span>
@@ -174,111 +131,62 @@
                 </nz-form-control>
               </nz-form-item>
             </div>
-            <!-- </div> -->
-
             <div nz-col nzSpan="24" *ngIf="data.TYPE == 'L'">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Link</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Enter Link">
                   <input nz-input autocomplete="off" placeholder="Enter Link" required maxlength="256" name="link"
                     [(ngModel)]="data.LINK" (focus)="isFocused = 'link'" (blur)="isFocused = ''" />
-                  <!-- Character Count -->
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                      isFocused === 'link' ||
-                      (data.LINK != undefined &&
-                        data.LINK != null &&
-                        data.LINK != '' &&
-                        isFocused === 'link')
-                    ">
+                  <h6 class="kb-link-length" *ngIf="isFocused === 'link' || (data.LINK && isFocused === 'link')">
                     {{ data.LINK ? data.LINK.length : 0 }}/256
                   </h6>
                 </nz-form-control>
               </nz-form-item>
             </div>
-
-            <!-- Link -->
           </div>
-          <!-- <div nz-row *ngIf="data.TYPE == 'L'"> -->
-
-          <!-- </div> -->
-
-          <!-- <div nz-row> -->
           <div nz-col nzSpan="12">
             <nz-form-item>
               <nz-form-label nzNoColon>Status</nz-form-label>
               <nz-form-control>
                 <nz-switch name="IS_ACTIVE" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
-                  [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+                  [(ngModel)]="data.IS_ACTIVE">
+                </nz-switch>
               </nz-form-control>
             </nz-form-item>
           </div>
-          <!-- </div> -->
         </div>
       </div>
     </nz-spin>
   </form>
 </div>
-
 <div class="footer">
-  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn kb-footer-cancel">
     Cancel
   </button>
-
   <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
     (click)="save(false, websitebannerPage)" class="ant-btn ant-btn-primary">
     Save & Close
   </button>
-
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu>
-      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
-        <a class="footer-button" style="color: white !important" (click)="save(true, websitebannerPage)">Save & New</a>
+      <li nz-menu-item class="menuc kb-footer-menu">
+        <a class="footer-button kb-footer-link" (click)="save(true, websitebannerPage)">
+          Save & New
+        </a>
       </li>
     </ul>
   </nz-dropdown-menu>
-
   <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
     (click)="save(false, websitebannerPage)">
     <span>Update & Close</span>
   </button>
 </div>
-<!-- <nz-modal [nzWidth]="1000" [(nzVisible)]="ImageModalVisible" nzMaskClosable="false" nzClosable="false"
-  [nzContent]="content" [nzTitle]="'Image View'" (nzOnCancel)="ImageModalCancel()" [nzFooter]="ImageModalFooter">
-  <ng-template #content>
-    <nz-spin [nzSpinning]="isSpinning">
-   
-      <div *ngIf="imageshow" class="ss"
-        style="max-height: 80vh; overflow: auto; display: flex; justify-content: center; align-items: center;">
-        <iframe [src]="imageshow" style="width: 100%; height: 100%; min-height: 400px;" frameborder="0"></iframe>
-      </div>
-    </nz-spin>
-  </ng-template>
-  <ng-template #ImageModalFooter>
-    <button nz-button nzType="default" (click)="ImageModalCancel()">
-      Close
-    </button>
-  </ng-template>
-</nz-modal> -->
-
 <nz-modal [nzWidth]="1000" [(nzVisible)]="ImageModalVisible" nzMaskClosable="false" nzClosable="false"
   [nzContent]="content" [nzTitle]="'Image View'" (nzOnCancel)="ImageModalCancel()" [nzFooter]="ImageModalFooter">
   <ng-template #content>
     <nz-spin [nzSpinning]="isSpinning">
-      <div *ngIf="imageshow" class="ss" style="
-          max-height: 80vh;
-          overflow: auto;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        ">
-        <iframe [src]="imageshow" style="
-            width: 950px;
-            height: 550px;
-            max-width: 100%;
-            max-height: 80vh;
-            border: none;
-          " frameborder="0">
-        </iframe>
+      <div *ngIf="imageshow" class="kb-image-view">
+        <iframe [src]="imageshow" class="kb-image-iframe" frameborder="0"></iframe>
       </div>
     </nz-spin>
   </ng-template>

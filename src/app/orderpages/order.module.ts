@@ -62,6 +62,9 @@ import { ShpoorderlistComponent } from '../Inventorypages/pages/Shop/shpoorderli
 import { ShpoorderapproveComponent } from '../Inventorypages/pages/Shop/shpoorderapprove/shpoorderapprove.component';
 import { ReschedulejobrequestComponent } from '../job/reschedulejobrequest/reschedulejobrequest.component';
 import { ShoporderdetailsComponent } from '../Inventorypages/pages/Shop/shoporderdetails/shoporderdetails.component';
+import { OrdercancelComponent } from './ordercancel/ordercancel.component';
+import { OrdercancelwiseDetailedReportComponent } from './ordercancelwise-detailed-report/ordercancelwise-detailed-report.component';
+import { OrderCancellationChargesComponent } from './order-cancellation-charges/order-cancellation-charges.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +74,9 @@ import { ShoporderdetailsComponent } from '../Inventorypages/pages/Shop/shoporde
     ShpoorderapproveComponent,
     ReschedulejobrequestComponent,
     ShoporderdetailsComponent,
+    OrdercancelComponent,
+    OrdercancelwiseDetailedReportComponent,
+    OrderCancellationChargesComponent,
   ],
   imports: [
     // PickerComponent,

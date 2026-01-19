@@ -1,0 +1,55 @@
+.back-icon {
+    font-weight: bold;
+    cursor: pointer;
+}
+.header-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.filter-btn {
+    margin-right: 10px;
+}
+.full-width {
+    width: 100%;
+    font-weight: 100;
+}
+.form-item-gap {
+    margin-right: 10px;
+}
+.filter-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.rate-text {
+    margin-left: 6px;
+    font-size: 13px;
+}
+.progress-section {
+    align-items: flex-end;
+}
+.comment-section {
+    margin-top: 5px;
+    padding: 5px 10px 5px 5px;
+    max-height: 40vh;
+    overflow-y: auto;
+}
+.technician-label {
+    font-weight: 600;
+    font-size: 12px;
+}
+.rating-box {
+    margin-top: 4px;
+}
+.empty-state {
+    font-weight: 600;
+    margin-top: 10%;
+}
+.load-more-wrapper {
+    text-align: center;
+}
+.no-data-container {
+    font-weight: 600;
+    margin-top: 10%;
+}

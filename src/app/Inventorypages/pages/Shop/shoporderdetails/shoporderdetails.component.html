@@ -1,50 +1,32 @@
 <div nz-row nzGutter="16">
-  <div class="gutter-row" nz-col nzSpan="7" style="min-height: 88vh; max-height: 88vh; overflow: auto">
+  <div class="gutter-row gutter-row-fixed-height-scroll" nz-col nzSpan="7">
     <div nz-row class="backbbb">
-      <div class="mainnam" nz-col nzSpan="12" style="text-align: start">
-        <span style="
-            color: #1d39c4 !important;
-            background: #f0f5ff !important;
-            border-color: #adc6ff !important;
-            padding: 5px;
-            font-size: 11px !important;
-          " [attr.title]='vieworderdata.orderData[0]["ORDER_NUMBER"]'>
+      <div class="mainnam order-header-left" nz-col nzSpan="12">
+        <span class="order-badge order-badge-number" [attr.title]='vieworderdata.orderData[0]["ORDER_NUMBER"]'>
           {{ vieworderdata.orderData[0]["ORDER_NUMBER"] }}
         </span>
       </div>
-      <div class="mainnam" nz-col nzSpan="12" style="text-align: end">
-        <!-- {{ date }} -->
-        <span style="
-            color: #1d39c4 !important;
-            background: #f0f5ff !important;
-            border-color: #adc6ff !important;
-            padding: 5px;
-            font-size: 10px !important;
-          " [attr.title]=' vieworderdata.orderData[0]["ORDER_DATE_TIME"]| date : "dd/MM/yyyy HH:mm a"'>
+      <div class="mainnam order-header-right" nz-col nzSpan="12">
+        <span class="order-badge order-badge-date"
+          [attr.title]='vieworderdata.orderData[0]["ORDER_DATE_TIME"] | date : "dd/MM/yyyy HH:mm a"'>
           {{
           vieworderdata.orderData[0]["ORDER_DATE_TIME"]
           | date : "dd/MM/yyyy HH:mm a"
           }}
         </span>
       </div>
-
-      <div class="subnam" nz-col nzSpan="24" style="
-          font-size: 12px !important;
-          margin-top: 4px;
-          overflow: hidden;
-          white-space: nowrap;
-        ">
-        <span nz-icon nzType="user" nzTheme="outline" style="margin-right: 3px"></span>
-        <span (click)="view(vieworderdata.orderData[0])">{{
-          vieworderdata.orderData[0]["CUSTOMER_NAME"]
-          }}</span>
+      <div class="subnam order-customer-row" nz-col nzSpan="24">
+        <span nz-icon nzType="user" nzTheme="outline" class="order-user-icon"></span>
+        <span (click)="view(vieworderdata.orderData[0])">
+          {{ vieworderdata.orderData[0]["CUSTOMER_NAME"] }}
+        </span>
       </div>
       <div nz-col nzSpan="24">
         <div nz-row>
           <div nz-col nzSpan="1">
             <span nz-icon nzType="environment" nzTheme="fill"></span>
           </div>
-          <div class="subnam" nz-col nzSpan="23" style="font-size: 12px !important; text-align: start">
+          <div class="subnam order-address-text" nz-col nzSpan="23">
             {{ vieworderdata.addressData[0]?.["ADDRESS_LINE_1"] }},
             {{ vieworderdata.addressData[0]?.["ADDRESS_LINE_2"] }}
             {{ vieworderdata.addressData[0]?.["COUNTRY_NAME"] }},
@@ -53,98 +35,68 @@
           </div>
         </div>
       </div>
-      <div class="subnam" nz-col nzSpan="8" style="font-size: 11px !important; text-align: start">
-        <a nzTooltipTitle="Call To Customer" nz-tooltip
-          style="margin-right: 3px; color: #262626 !important; cursor: pointer"
+      <div class="subnam order-contact-left" nz-col nzSpan="8">
+        <a nzTooltipTitle="Call To Customer" nz-tooltip class="order-call-link"
           href="tel:+{{ vieworderdata.orderData[0]['MOBILE_NO'] }}" target="_blank">
-          <span nz-icon nzType="phone" style="color: #262626 !important" nzTheme="fill"></span>
+          <span nz-icon nzType="phone" nzTheme="fill" class="order-call-icon"></span>
         </a>
         {{ vieworderdata.orderData[0]["MOBILE_NO"] }}
       </div>
-      <div class="subnam" nz-col nzSpan="16" style="font-size: 11px !important; text-align: end"></div>
+      <div class="subnam order-contact-right" nz-col nzSpan="16"></div>
     </div>
-    <div nz-row class="backbbb" style="margin-top: 10px; display: block;overflow: auto;">
-      <div nz-col nzSpan="24" class="mainnam" style="display: flex;justify-content: space-between;">
+    <div nz-row class="backbbb order-cart-wrapper">
+      <div nz-col nzSpan="24" class="mainnam order-cart-header">
         <p>Order Cart</p><a
           *ngIf="(!vieworderdata.orderData[0]['IS_SHIP_ORDER'] && vieworderdata.orderData[0]['MANUAL_COURIER_URL'] !==null && vieworderdata.orderData[0]['MANUAL_COURIER_URL'] !==undefined && vieworderdata.orderData[0]['MANUAL_COURIER_URL'] !=='') && (vieworderdata.orderData[0]['ORDER_STATUS'] == 'OD' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'DO' ||
                 vieworderdata.orderData[0]['ORDER_STATUS'] == 'SC'  || vieworderdata.orderData[0]['ORDER_STATUS'] == 'AO' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'GL' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'SP' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS')">
-          <button nz-button nzType="primary" style="padding: 0px 5px;
-    font-size: 7px !important;height: 25px !important;"
+          <button nz-button nzType="primary" class="order-track-btn"
             (click)="openCourierURL(vieworderdata.orderData[0]['MANUAL_COURIER_URL'],vieworderdata.orderData[0])">
-            <span style="font-size: 11px !important;">
-              Track Order
-            </span>
-          </button></a>
+            <span class="order-track-text">Track Order</span>
+          </button>
+        </a>
       </div>
-      <div nz-col nzSpan="24" style="max-height: 30vh; overflow: auto">
-        <div *ngFor="let cartItem of vieworderdata['detailsData']" class="cardstyle" style="
-            font-size: 11px;
-            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
-              rgb(209, 213, 219) 0px 0px 0px 1px inset;
-            padding: 10px;
-            margin-bottom: 4px;
-          ">
+      <div nz-col nzSpan="24" class="order-cart-items-wrapper">
+        <div *ngFor="let cartItem of vieworderdata['detailsData']" class="cardstyle order-cart-item">
           <div nz-row>
-            <div nz-col nzSpan="22" class="subname" [attr.title]="
-                cartItem.CATEGORY_NAME + ' > ' + cartItem.SUB_CATEGORY_NAME
-              ">
+            <div nz-col nzSpan="22" class="subname"
+              [attr.title]="cartItem.CATEGORY_NAME + ' > ' + cartItem.SUB_CATEGORY_NAME">
               <b class="truncate-text">
                 {{ cartItem.CATEGORY_NAME }} > {{ cartItem.SUB_CATEGORY_NAME }}
               </b>
             </div>
-
-            <div nz-col nzSpan="2" style="text-align: right">
-              <span *ngIf="
-                  cartItem.INVENTORY_IMAGE != null &&
-                  cartItem.INVENTORY_IMAGE != ''
-                " nz-icon (click)="viewImage(cartItem.INVENTORY_IMAGE)" nzType="picture" nzTheme="outline"
-                [nzTooltipTitle]="'View Photo'" nz-tooltip style="
-                  cursor: pointer;
-                  border: 1px solid grey;
-                  padding: 3px 4px;
-                  border-radius: 50px;
-                  background: white;
-                  margin-top: -5px;
-                  font-size: 12px !important;
-                "></span>
+            <div nz-col nzSpan="2" class="order-item-image-col">
+              <span *ngIf="cartItem.INVENTORY_IMAGE != null && cartItem.INVENTORY_IMAGE != ''" nz-icon nzType="picture"
+                nzTheme="outline" nz-tooltip [nzTooltipTitle]="'View Photo'" class="order-item-image-icon"
+                (click)="viewImage(cartItem.INVENTORY_IMAGE)">
+              </span>
             </div>
           </div>
           <div nz-row>
-            <div nz-col nzSpan="24" class="subname" #SERVICE_NAME [attr.title]="
-                isTextOverflowing(SERVICE_NAME) ? cartItem.PRODUCT_NAME : null
-              ">
+            <div nz-col nzSpan="24" class="subname" #SERVICE_NAME
+              [attr.title]="isTextOverflowing(SERVICE_NAME) ? cartItem.PRODUCT_NAME : null">
               {{ cartItem.PRODUCT_NAME }}
             </div>
             <div nz-col nzSpan="24">
-              <span style="
-                  font-size: 10px !important;
-                  font-weight: 400;
-                  color: grey;
-                " *ngIf="cartItem.BRAND_NAME != null && cartItem.BRAND_NAME != ''">{{ cartItem.BRAND_NAME }}</span>
+              <span *ngIf="cartItem.BRAND_NAME != null && cartItem.BRAND_NAME != ''" class="order-item-brand">
+                {{ cartItem.BRAND_NAME }}
+              </span>
             </div>
             <div nz-col nzSpan="24" *ngIf="cartItem.DESCRIPTION != null && cartItem.DESCRIPTION != ''">
               <div>
-                <span class="truncate-text" nz-popover style="
-                  font-size: 10px !important;
-                  font-weight: 400;
-                  color: grey;" *ngIf=" cartItem.DESCRIPTION !=null && cartItem.DESCRIPTION !='' "
-                  [nzPopoverContent]="descript2" nzPopoverPlacement="topLeft" [innerHTML]="cartItem.DESCRIPTION">
+                <span class="truncate-text order-item-description" nz-popover nzPopoverPlacement="topLeft"
+                  [nzPopoverContent]="descript2" [innerHTML]="cartItem.DESCRIPTION">
                 </span>
                 <ng-template #descript2>
                   <span [innerHTML]="cartItem.DESCRIPTION"></span>
                 </ng-template>
               </div>
             </div>
-
             <div nz-col nzSpan="12">
-              <span style="font-weight: 500; font-size: 11px !important">₹ {{ cartItem.RATE }} x {{ cartItem.QUANTITY
-                }}</span>
+              <span class="order-item-rate">
+                ₹ {{ cartItem.RATE }} x {{ cartItem.QUANTITY }}
+              </span>
             </div>
-            <div nz-col nzSpan="12" style="
-                text-align: right;
-                font-weight: 500;
-                font-size: 12px !important;
-              ">
+            <div nz-col nzSpan="12" class="order-item-total">
               ₹ {{ cartItem.TOTAL_AMOUNT | number }}
             </div>
           </div>
@@ -152,251 +104,172 @@
       </div>
       <div nz-col nzSpan="24" class="mainnam">Summary</div>
       <div nz-col nzSpan="24">
-        <div nz-row style="font-size: 12px">
-          <div nz-col nzSpan="16" style="text-align: right">Gross Total</div>
-
-          <div nz-col nzSpan="8" style="text-align: right">
+        <div nz-row class="order-summary-row">
+          <div nz-col nzSpan="16" class="order-summary-label">Gross Total</div>
+          <div nz-col nzSpan="8" class="order-summary-value">
             ₹ {{ vieworderdata.summaryData[0]?.GROSS_AMOUNT | number }}
           </div>
-
-          <div nz-col nzSpan="16" style="text-align: right">
-            (-) Discount
-            <span style="font-size: 9px !important"> </span>
+          <div nz-col nzSpan="16" class="order-summary-label">
+            (-) Discount <span class="order-summary-small"></span>
           </div>
-
-          <div nz-col nzSpan="8" style="text-align: right">
-            ₹ {{ vieworderdata.summaryData[0]?.DISCOUNT_CHARGES| number }}
+          <div nz-col nzSpan="8" class="order-summary-value">
+            ₹ {{ vieworderdata.summaryData[0]?.DISCOUNT_CHARGES | number }}
           </div>
-
-          <div nz-col nzSpan="16" style="text-align: right">
-            (+) Delivery Charges
-            <span style="font-size: 9px !important"> </span>
+          <div nz-col nzSpan="16" class="order-summary-label">
+            (+) Delivery Charges <span class="order-summary-small"></span>
           </div>
-
-          <div nz-col nzSpan="8" style="text-align: right">
-            ₹ {{ vieworderdata.summaryData[0]?.DELIVERY_CHARGES| number }}
+          <div nz-col nzSpan="8" class="order-summary-value">
+            ₹ {{ vieworderdata.summaryData[0]?.DELIVERY_CHARGES | number }}
           </div>
         </div>
-        <div nz-row style="
-            border-top: 1px dashed #7e7272;
-            padding: 1px 0;
-            font-size: 12px;
-          ">
-          <div nz-col nzSpan="16" style="font-weight: 600; text-align: right">
+        <div nz-row class="order-summary-total-row">
+          <div nz-col nzSpan="16" class="order-summary-total-label">
             Order Total
           </div>
-
-          <div nz-col nzSpan="8" style="font-weight: bold; text-align: right">
-            ₹ {{ vieworderdata.summaryData[0].NET_AMOUNT | number}}
+          <div nz-col nzSpan="8" class="order-summary-total-value">
+            ₹ {{ vieworderdata.summaryData[0].NET_AMOUNT | number }}
           </div>
         </div>
       </div>
-
       <div nz-col nzSpan="24" class="mainnam">Other Details</div>
-      <div nz-col nzSpan="24" class="subnam" style="font-size: 12px">
+      <div nz-col nzSpan="24" class="subnam order-other-detail">
         Payment Mode:
-        <span style="font-weight: 500" *ngIf="
-            vieworderdata != undefined &&
-              vieworderdata.orderData[0]['PAYMENT_MODE'] == 'COD';
-            else elsepyblocks
-          ">
-          Cash On Delivery</span>
+        <span class="order-other-value"
+          *ngIf="vieworderdata != undefined && vieworderdata.orderData[0]['PAYMENT_MODE'] == 'COD'; else elsepyblocks">
+          Cash On Delivery
+        </span>
         <ng-template #elsepyblocks>Online</ng-template>
       </div>
-
-      <div nz-col nzSpan="24" class="subnam" style="font-size: 12px"
+      <div nz-col nzSpan="24" class="subnam order-other-detail"
         *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'ON'">
         Expected Prepration Date :
-        <span style="font-weight: 500">{{
+        <span class="order-other-value">
+          {{
           vieworderdata.orderData[0]["EXPECTED_PREAPARATION_DATETIME"]
           | date : "dd/MM/yyyy"
-          }}</span>
+          }}
+        </span>
       </div>
-      <div nz-col nzSpan="24" class="subnam" style="font-size: 12px"
+      <div nz-col nzSpan="24" class="subnam order-other-detail"
         *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OK'">
         Expected Packaging Date :
-        <span style="font-weight: 500">{{
+        <span class="order-other-value">
+          {{
           vieworderdata.orderData[0]["EXPECTED_PACKAGING_DATETIME"]
           | date : "dd/MM/yyyy"
-          }}</span>
+          }}
+        </span>
       </div>
-      <div nz-col nzSpan="24" class="subnam" style="font-size: 12px"
+      <div nz-col nzSpan="24" class="subnam order-other-detail"
         *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OD'">
         Expected Dispatching Date :
-        <span style="font-weight: 500">{{
+        <span class="order-other-value">
+          {{
           vieworderdata.orderData[0]["EXPECTED_DISPATCH_DATETIME"]
           | date : "dd/MM/yyyy"
-          }}</span>
+          }}
+        </span>
       </div>
     </div>
-
     <div class="footer">
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        "
+      <nz-tag class="order-footer-tag"
         *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' && !vieworderdata.orderData[0]['IS_CANCELATION_REQUESTED']"
         [nzColor]="'#ff9d19'">Order Placed</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        "
+      <nz-tag class="order-footer-tag"
         *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OA' && !vieworderdata.orderData[0]['IS_CANCELATION_REQUESTED']"
         [nzColor]="'#00b778'">Order Accepted</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'" [nzColor]="'#e50000'">Order Rejected</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OC'" [nzColor]="'#e80000'">Order Cancelled</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="
-          ((vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'OA') &&
-          vieworderdata.orderData[0]['IS_CANCELATION_REQUESTED'])
-        " [nzColor]="'#ff5252'">
-        Cancel Requested</nz-tag>
-
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OK'" [nzColor]="'#00308d'">Order Packaging</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'" [nzColor]="'#019234'">Order Delivered</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OD'" [nzColor]="'#0351ea'">Order Dispatched</nz-tag>
-
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'ON'" [nzColor]="'#0351ea'">Order Prepared</nz-tag>
-
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'SC'" [nzColor]="'#0351ea'">Order Created In
-        Shiprocket</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'AO'" [nzColor]="'#0351ea'">Order Assigned</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'GL'" [nzColor]="'#0351ea'">Label Generated</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'SP'" [nzColor]="'#0351ea'">Sent For Pickup</nz-tag>
-      <nz-tag style="
-          width: 100% !important;
-          text-align: center;
-          font-size: 14px !important;
-        " *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'DO'" [nzColor]="'#0351ea'">Out For Delivery</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'"
+        [nzColor]="'#e50000'">Order Rejected</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OC'"
+        [nzColor]="'#e80000'">Order Cancelled</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="((vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'OA') &&
+            vieworderdata.orderData[0]['IS_CANCELATION_REQUESTED'])" [nzColor]="'#ff5252'">
+        Cancel Requested
+      </nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OK'"
+        [nzColor]="'#00308d'">Order Packaging</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'"
+        [nzColor]="'#019234'">Order Delivered</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OD'"
+        [nzColor]="'#0351ea'">Order Dispatched</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'ON'"
+        [nzColor]="'#0351ea'">Order Prepared</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'SC'"
+        [nzColor]="'#0351ea'">Order Created In Shiprocket</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'AO'"
+        [nzColor]="'#0351ea'">Order Assigned</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'GL'"
+        [nzColor]="'#0351ea'">Label Generated</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'SP'"
+        [nzColor]="'#0351ea'">Sent For Pickup</nz-tag>
+      <nz-tag class="order-footer-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'DO'"
+        [nzColor]="'#0351ea'">Out For Delivery</nz-tag>
     </div>
   </div>
   <div class="gutter-row" nz-col nzSpan="17">
-    <!-- <nz-affix nzOffsetTop="10"> -->
     <div class="backbbb">
       <nz-spin [nzSpinning]="isSpinning">
         <nz-tabset nzCentered (nzSelectedIndexChange)="onSelectedIndexChange($event)">
           <nz-tab [nzTitle]="titleTemplate">
             <ng-template #titleTemplate>
               Verification
-              <span *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP'" nz-icon style="color: orange"
-                nzType="warning" nzTheme="fill"></span>
-
-              <span *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] != 'OP'" nz-icon style="color: green"
-                nzType="check-circle" nzTheme="fill"></span>
+              <span *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP'" nz-icon
+                class="order-verification-icon-pending" nzType="warning" nzTheme="fill"></span>
+              <span *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] != 'OP'" nz-icon
+                class="order-verification-icon-success" nzType="check-circle" nzTheme="fill"></span>
             </ng-template>
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="order-scroll-container">
                 <div nz-row
                   *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' && !vieworderdata.orderData[0]['IS_CANCELATION_REQUESTED']">
-                  <div nz-col nzSpan="24" style="text-align: center; padding: 10px; font-size: 20px">
+                  <div nz-col nzSpan="24" class="order-center-title">
                     <b>Verify Order</b>
                   </div>
                   <div nz-col nzSpan="24">
                     <div nz-row class="my-box">
-                      <div nz-col nzSpan="24" style="text-align: center; margin-bottom: 10px;font-weight: 700;
-    color: #0a2b9e;">
+                      <div nz-col nzSpan="24" class="order-process-question">
                         How would you like to process this order?&nbsp;&nbsp;
-                        <nz-radio-group name="checkstatusss" [(ngModel)]="IS_SHIP_ORDER" style="display: inline-block"
-                          required>
-                          <label nz-radio nzValue="M" style="
-                          margin-right: 10px;
-                          font-weight: 600;
-                        ">
-                            <span style="font-size: 13px !important;
-    margin-right: 4px;
-    font-weight: 500 !important;">Manually</span>
+                        <nz-radio-group name="checkstatusss" [(ngModel)]="IS_SHIP_ORDER"
+                          class="order-inline-radio-group" required>
+                          <label nz-radio nzValue="M" class="order-radio-option">
+                            <span class="order-radio-text">Manually</span>
                           </label>
-                          <label nz-radio nzValue="S" style=" margin-right: 20px; font-weight: 600">
-                            <span style="font-size: 13px !important;
-    margin-right: 4px;
-    font-weight: 500 !important;">Using Shiprocket</span>
+                          <label nz-radio nzValue="S" class="order-radio-option order-radio-option-wide">
+                            <span class="order-radio-text">Using Shiprocket</span>
                           </label>
                         </nz-radio-group>
                       </div>
-                      <div nz-col nzSpan="24" style="text-align: center; margin-bottom: 10px;margin-top: 35px;">
-                        <nz-radio-group name="checkstatus" [(ngModel)]="STATUS" style="display: inline-block" required>
-                          <label nz-radio nzValue="A" style="
-                          color: green;
-                          margin-right: 20px;
-                          font-weight: 600;
-                        ">
-                            <span style="font-size: 16px !important; margin-right: 4px">Accept Order</span>
-                            <span style="font-size: 18px !important" nz-icon nzType="check-circle"
-                              nzTheme="outline"></span></label>
-                          <label nz-radio nzValue="R" style="color: red; margin-right: 20px; font-weight: 600">
-                            <span style="font-size: 16px !important; margin-right: 4px">Reject Order</span>
-                            <span style="font-size: 18px !important" nz-icon nzType="close-circle"
-                              nzTheme="outline"></span></label>
+                      <div nz-col nzSpan="24" class="order-accept-reject-section">
+                        <nz-radio-group name="checkstatus" [(ngModel)]="STATUS" class="order-inline-radio-group"
+                          required>
+                          <label nz-radio nzValue="A" class="order-radio-accept">
+                            <span class="order-status-text">Accept Order</span>
+                            <span nz-icon nzType="check-circle" nzTheme="outline" class="order-status-icon">
+                            </span>
+                          </label>
+                          <label nz-radio nzValue="R" class="order-radio-reject">
+                            <span class="order-status-text">Reject Order</span>
+                            <span nz-icon nzType="close-circle" nzTheme="outline" class="order-status-icon">
+                            </span>
+                          </label>
                         </nz-radio-group>
                       </div>
                     </div>
                   </div>
-
-
                   <div nz-col nzSpan="24" *ngIf="STATUS === 'R' || STATUS === 'A'">
                     <div nz-row>
                       <div nz-col nzSpan="2"></div>
-                      <div nz-col nzSpan="20" class="my-box" style="padding: 10px">
+                      <div nz-col nzSpan="20" class="my-box order-box-padding">
                         <div nz-row>
                           <div nz-col nzSpan="24" *ngIf="STATUS === 'R'">
                             <nz-form-item class="nz-form-itemm">
                               <nz-form-label nzRequired nzNoColon>Reject Remark</nz-form-label>
                               <nz-form-control nzHasFeedback nzErrorTip="Please Enter Rejection Remark">
-                                <textarea name="remark" style="width: 100%" nz-input [(ngModel)]="orderData.REMARK"
-                                  [nzAutosize]="{ minRows: 2, maxRows: 4 }" maxlength="500"
-                                  placeholder="Please Enter Rejection Remark" draggable="false" required></textarea>
-                                <h6 style="color: red; font-size: 10px" *ngIf="
+                                <textarea name="remark" nz-input class="order-full-width-textarea"
+                                  [(ngModel)]="orderData.REMARK" [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+                                  maxlength="500" placeholder="Please Enter Rejection Remark" draggable="false"
+                                  required></textarea>
+                                <h6 class="order-remark-counter" *ngIf="
                                     orderData.REMARK != undefined &&
                                     orderData.REMARK != null &&
                                     orderData.REMARK != ''
@@ -412,11 +285,11 @@
                                 <nz-form-item class="nz-form-itemm">
                                   <nz-form-label nzNoColon>Acceptance Remark</nz-form-label>
                                   <nz-form-control>
-                                    <textarea name="accremark" style="width: 100%" nz-input
+                                    <textarea name="accremark" nz-input class="order-full-width-textarea"
                                       [(ngModel)]="orderData.ACCEPTANCE_REMARK"
                                       [nzAutosize]="{ minRows: 2, maxRows: 4 }" maxlength="256"
                                       placeholder="Please Enter Acceptance Remark" draggable="false"></textarea>
-                                    <h6 style="color: red; font-size: 10px" *ngIf="
+                                    <h6 class="order-remark-counter" *ngIf="
                                         orderData.ACCEPTANCE_REMARK != undefined &&
                                         orderData.ACCEPTANCE_REMARK != null &&
                                         orderData.ACCEPTANCE_REMARK != ''
@@ -428,42 +301,25 @@
                               </div>
                               <div nz-col nzSpan="10">
                                 <nz-form-item>
-                                  <div style="
-                                      display: flex;
-                                      justify-content: space-between;
-                                    ">
+                                  <div class="order-warehouse-header">
                                     <div>
-                                      <nz-form-label nzRequired nzNoColon>Warehouse
-                                      </nz-form-label>
+                                      <nz-form-label nzRequired nzNoColon>Warehouse</nz-form-label>
                                     </div>
                                     <div>
-                                      <nz-tag style="
-                                          width: 100% !important;
-                                          text-align: center;
-                                          cursor: pointer;
-                                          font-size: 13px !important;
-                                        " *ngIf="
-                                          WAREHOUSE_ID && !loadingRecordIStock
-                                        " [nzColor]="'geekblue'" (click)="ViewDetails()">
-                                        <!-- <span nz-icon nzType="eye" nzTheme="outline"></span> -->
+                                      <nz-tag class="order-view-stock-tag" *ngIf="WAREHOUSE_ID && !loadingRecordIStock"
+                                        [nzColor]="'geekblue'" (click)="ViewDetails()">
                                         <span nz-icon nzType="eye" *ngIf="!loadingRecordIStock"></span>
                                         <span nz-icon nzType="sync" nzSpin *ngIf="loadingRecordIStock"></span>
-                                        &nbsp;View Stock</nz-tag>
-                                      <nz-tag style="
-                                          width: 100% !important;
-                                          text-align: center;
-                                          cursor: pointer;
-                                          font-size: 13px !important;
-                                        " *ngIf="
-                                          WAREHOUSE_ID && loadingRecordIStock
-                                        " [nzColor]="'geekblue'">
-                                        <!-- <span nz-icon nzType="eye" nzTheme="outline"></span> -->
+                                        &nbsp;View Stock
+                                      </nz-tag>
+                                      <nz-tag class="order-view-stock-tag" *ngIf="WAREHOUSE_ID && loadingRecordIStock"
+                                        [nzColor]="'geekblue'">
                                         <span nz-icon nzType="eye" *ngIf="!loadingRecordIStock"></span>
                                         <span nz-icon nzType="sync" nzSpin *ngIf="loadingRecordIStock"></span>
-                                        &nbsp;View Stock</nz-tag>
+                                        &nbsp;View Stock
+                                      </nz-tag>
                                     </div>
                                   </div>
-
                                   <nz-form-control nzErrorTip="Select Warehouse">
                                     <nz-select nzPlaceHolder="Select Warehouse" name="fromgodown" nzAllowClear="false"
                                       [(ngModel)]="WAREHOUSE_ID" (ngModelChange)="changeFromGodown($event)" nzShowSearch
@@ -477,16 +333,13 @@
                               </div>
                               <div nz-col nzSpan="6">
                                 <nz-form-item>
-                                  <nz-form-label nzRequired nzNoColon>Select Stage
-                                  </nz-form-label>
+                                  <nz-form-label nzRequired nzNoColon>Select Stage</nz-form-label>
                                   <nz-form-control nzErrorTip="Select Select Stage">
                                     <nz-select nzPlaceHolder="Select Select Stage" name="fromgodown"
                                       (ngModelChange)="changestagetye($event)" nzAllowClear="false"
                                       [(ngModel)]="selecteddata" nzShowSearch nzDisabled required>
-                                      <nz-option [nzValue]="'OK'" [nzLabel]="'Start Packaging'">
-                                      </nz-option>
-                                      <nz-option [nzValue]="'OD'" [nzLabel]="'Start Dispatching'">
-                                      </nz-option>
+                                      <nz-option [nzValue]="'OK'" [nzLabel]="'Start Packaging'"></nz-option>
+                                      <nz-option [nzValue]="'OD'" [nzLabel]="'Start Dispatching'"></nz-option>
                                     </nz-select>
                                   </nz-form-control>
                                 </nz-form-item>
@@ -495,141 +348,42 @@
                                 <nz-form-item class="nz-form-itemm" *ngIf="selecteddata == 'ON'">
                                   <nz-form-label nzRequired nzNoColon>Expected Preparation Date</nz-form-label>
                                   <nz-form-control>
-                                    <nz-date-picker style="width: 100%" [(ngModel)]="expectedDate" nzFormat="dd/MM/yyyy"
-                                      [nzDisabledDate]="disabledPastDates" [nzShowToday]="false"
-                                      name="expectedDate"></nz-date-picker>
+                                    <nz-date-picker class="order-full-width-datepicker" [(ngModel)]="expectedDate"
+                                      nzFormat="dd/MM/yyyy" [nzDisabledDate]="disabledPastDates" [nzShowToday]="false"
+                                      name="expectedDate">
+                                    </nz-date-picker>
                                   </nz-form-control>
                                 </nz-form-item>
                                 <nz-form-item class="nz-form-itemm" *ngIf="selecteddata == 'OK'">
                                   <nz-form-label nzRequired nzNoColon>Expected Packaging Date</nz-form-label>
                                   <nz-form-control>
-                                    <nz-date-picker style="width: 100%" [(ngModel)]="expectedDate" nzFormat="dd/MM/yyyy"
-                                      [nzDisabledDate]="disabledPastDates" [nzShowToday]="false"
-                                      name="expectedDate1"></nz-date-picker>
+                                    <nz-date-picker class="order-full-width-datepicker" [(ngModel)]="expectedDate"
+                                      nzFormat="dd/MM/yyyy" [nzDisabledDate]="disabledPastDates" [nzShowToday]="false"
+                                      name="expectedDate1">
+                                    </nz-date-picker>
                                   </nz-form-control>
                                 </nz-form-item>
                                 <nz-form-item class="nz-form-itemm" *ngIf="selecteddata == 'OD'">
                                   <nz-form-label nzRequired nzNoColon>Expected Dispatching Date</nz-form-label>
                                   <nz-form-control>
-                                    <nz-date-picker style="width: 100%" [(ngModel)]="expectedDate" nzFormat="dd/MM/yyyy"
-                                      [nzDisabledDate]="disabledPastDates" [nzShowToday]="false"
-                                      name="EXPECTED_DISPATCH_DATETIME"></nz-date-picker>
+                                    <nz-date-picker class="order-full-width-datepicker" [(ngModel)]="expectedDate"
+                                      nzFormat="dd/MM/yyyy" [nzDisabledDate]="disabledPastDates" [nzShowToday]="false"
+                                      name="EXPECTED_DISPATCH_DATETIME">
+                                    </nz-date-picker>
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
-                              <!-- <div nz-col nzSpan="6" *ngIf="selecteddata === 'OD'">
-                                <nz-form-item>
-                                  <nz-form-label nzRequired nzNoColon>Height</nz-form-label>
-                                  <nz-form-control nzErrorTip="Enter Height">
-                                    <nz-input-group [nzAddOnAfter]="'CM'">
-                                      <input nz-input name="SelectHEIGHT" placeholder="Enter Height" required
-                                        [(ngModel)]="SelectHEIGHT" autocomplete="off" (keypress)="
-                                          commonFunction.forCostFunction($event)
-                                        " maxlength="5" (paste)="
-                                          commonFunction.handlePaste($event)
-                                        " />
-                                    </nz-input-group>
-                                  </nz-form-control>
-                                </nz-form-item>
-                              </div>
-                              <div nz-col nzSpan="6" *ngIf="selecteddata === 'OD'">
-                                <nz-form-item>
-                                  <nz-form-label nzRequired nzNoColon>Weight</nz-form-label>
-                                  <nz-form-control nzErrorTip="Enter Weight">
-                                    <nz-input-group [nzAddOnAfter]="'KG'">
-                                      <input nz-input name="SelectWEIGHT" placeholder="Enter Weight" required
-                                        [(ngModel)]="SelectWEIGHT" autocomplete="off" (keypress)="
-                                          commonFunction.forCostFunction($event)
-                                        " maxlength="8" (paste)="
-                                          commonFunction.handlePaste($event)
-                                        " />
-                                    </nz-input-group>
-                                  </nz-form-control>
-                                </nz-form-item>
-                              </div>
-                              <div nz-col nzSpan="6" *ngIf="selecteddata === 'OD'">
-                                <nz-form-item>
-                                  <nz-form-label nzRequired nzNoColon>Length</nz-form-label>
-                                  <nz-form-control nzErrorTip="Enter Length">
-                                    <nz-input-group [nzAddOnAfter]="'CM'">
-                                      <input nz-input name="SelectLENGTH" placeholder="Enter Length" required
-                                        [(ngModel)]="SelectLENGTH" autocomplete="off" (keypress)="
-                                          commonFunction.forCostFunction($event)
-                                        " maxlength="5" (paste)="
-                                          commonFunction.handlePaste($event)
-                                        " />
-                                    </nz-input-group>
-                                  </nz-form-control>
-                                </nz-form-item>
-                              </div>
-                              <div nz-col nzSpan="6" *ngIf="selecteddata === 'OD'">
-                                <nz-form-item>
-                                  <nz-form-label nzRequired nzNoColon>Breadth</nz-form-label>
-                                  <nz-form-control nzErrorTip="Enter Breadth">
-                                    <nz-input-group [nzAddOnAfter]="'CM'">
-                                      <input nz-input name="SelectBREADTH" placeholder="Enter Breadth" required
-                                        [(ngModel)]="SelectBREADTH" autocomplete="off" (keypress)="
-                                          commonFunction.forCostFunction($event)
-                                        " maxlength="8" (paste)="
-                                          commonFunction.handlePaste($event)
-                                        " />
-                                    </nz-input-group>
-                                  </nz-form-control>
-                                </nz-form-item>
-                              </div>
-                              <div nz-col nzSpan="12" *ngIf="
-                                  STATUS === 'A' &&
-                                  selecteddata === 'OD' &&
-                                  CourierdataCount > 0
-                                ">
-                                <nz-form-item>
-                                  <nz-form-label nzRequired nzNoColon>Courier
-                                  </nz-form-label>
-                                  <nz-form-control nzErrorTip="Select Courier">
-                                    <nz-select nzPlaceHolder="Select Courier" name="CourierDataa" nzAllowClear="false"
-                                      [(ngModel)]="Courier" nzShowSearch required>
-                                      <nz-option nzCustomContent *ngFor="let report of CourierData"
-                                        [nzValue]="report.courier_company_id" [nzLabel]="report.courier_name">
-                                        <div nz-row>
-                                          <div nz-col nzSpan="24" class="mainnam">
-                                            Name: {{ report.courier_name }}
-                                          </div>
-                                          <div nz-col nzSpan="12" class="subname">
-                                            Delivery Days:
-                                            {{ report.estimated_delivery_days }}
-                                          </div>
-                                          <div nz-col nzSpan="12" class="subname">
-                                            Delivery Date: {{ report.etd }}
-                                          </div>
-                                          <div nz-col nzSpan="12" class="subname">
-                                            Rate: {{ report.rate }}
-                                          </div>
-                                          <div nz-col nzSpan="12" class="subname">
-                                            COD Charges:
-                                            {{ report.cod_charges }}
-                                          </div>
-                                          <div nz-col nzSpan="12" class="subname">
-                                            RTO Charges:
-                                            {{ report.rto_charges }}
-                                          </div>
-                                        </div>
-                                      </nz-option>
-                                    </nz-select>
-                                  </nz-form-control>
-                                </nz-form-item>
-                              </div> -->
                             </div>
                           </div>
-                          <div nz-col nzSpan="24" style="text-align: center; padding-bottom: 20px">
-                            <button nz-button *ngIf="STATUS === 'R'" nzType="primary" style="margin-top: 10px"
+                          <div nz-col nzSpan="24" class="order-action-container">
+                            <button nz-button *ngIf="STATUS === 'R'" nzType="primary" class="order-action-btn-sm"
                               (nzOnConfirm)="acceptorder('first')" [nzOkText]="'Yes'" [nzLoading]="BoadAccept"
                               (nzOnCancel)="deleteCancel()" nz-popconfirm
                               nzPopconfirmTitle="Are you sure, you want to reject order?" nzPopconfirmPlacement="top">
                               Reject Order
                             </button>
-
                             <button nz-button nzType="primary" *ngIf="STATUS === 'A' && selecteddata !== 'OD'"
-                              style="margin-top: 20px" (nzOnConfirm)="acceptorder('first')" [nzOkText]="'Yes'"
+                              class="order-action-btn-lg" (nzOnConfirm)="acceptorder('first')" [nzOkText]="'Yes'"
                               (nzOnCancel)="deleteCancel()" nz-popconfirm [nzLoading]="BoadAccept"
                               nzPopconfirmTitle="Are you sure, you want to accept order?" nzPopconfirmPlacement="top">
                               <i nz-icon nzType="check"></i>Accept Order
@@ -638,9 +392,10 @@
                                 STATUS === 'A' &&
                                 selecteddata === 'OD' &&
                                 CourierdataCount > 0
-                              " [nzLoading]="BoadAccept" style="margin-top: 20px" (nzOnConfirm)="acceptorder('first')"
-                              [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
-                              nzPopconfirmTitle="Are you sure, you want to accept order?" nzPopconfirmPlacement="top">
+                              " [nzLoading]="BoadAccept" class="order-action-btn-lg"
+                              (nzOnConfirm)="acceptorder('first')" [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()"
+                              nz-popconfirm nzPopconfirmTitle="Are you sure, you want to accept order?"
+                              nzPopconfirmPlacement="top">
                               <i nz-icon nzType="check"></i> Accept Order
                             </button>
                           </div>
@@ -650,11 +405,10 @@
                     </div>
                   </div>
                 </div>
-
                 <div nz-row
                   *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OK' && vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                  <div nz-col nzSpan="24" style="text-align: center; padding: 10px; font-size: 16px">
-                    <b style="font-weight: 500">The order has started packaging, and the expected date is
+                  <div nz-col nzSpan="24" class="order-status-header-centered">
+                    <b class="order-status-text-weight">The order has started packaging, and the expected date is
                       {{
                       vieworderdata.orderData[0][
                       "ACTUAL_PACKAGING_DATETIME"
@@ -662,19 +416,13 @@
                       }}
                     </b>
                   </div>
-
                   <div nz-col nzSpan="24">
                     <div nz-row>
                       <div nz-col nzSpan="2"></div>
-                      <div nz-col nzSpan="20" class="my-box" style="padding: 10px">
+                      <div nz-col nzSpan="20" class="my-box order-box-padding">
                         <div nz-row>
                           <div nz-col nzSpan="24">
-                            <div style="
-                                font-size: 14px;
-                                font-weight: 500;
-                                text-align: center;
-                                margin-top: 10px;
-                              ">
+                            <div class="stage-title-centered">
                               Change Order Stage
                             </div>
                             <div nz-row>
@@ -691,8 +439,6 @@
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
-
-
                               <div nz-col nzSpan="6" *ngIf="selecteddata === 'SC'">
                                 <nz-form-item>
                                   <nz-form-label nzRequired nzNoColon>Height</nz-form-label>
@@ -798,35 +544,31 @@
                                 </nz-form-item>
                               </div>
                               <div nz-col nzSpan="12">
-                                <nz-form-item style="margin: 0px !important;text-align: center;">
+                                <nz-form-item class="courier-button-form-item">
                                   <button nz-button nzType="default" [nzLoading]="spinCourier"
-                                    *ngIf="selecteddata === 'SC'"
-                                    style="margin-top: 31px;color: #00308d;border-color: #00308d;"
-                                    (click)="getcourier1()">
+                                    *ngIf="selecteddata === 'SC'" class="courier-button-style" (click)="getcourier1()">
                                     <i nz-icon nzType="check"></i>Get Available Courier Options
                                   </button>
                                 </nz-form-item>
                               </div>
-                              <div nz-col nzSpan="12" style="text-align: center; padding-bottom: 20px">
+                              <div nz-col nzSpan="12" class="button-container-centered">
                                 <button *ngIf="CourierdataCount > 0" nz-button nzType="primary"
-                                  style="margin-top: 30px;" (click)="CreateShipOrder()">
+                                  class="button-margin-top-30" (click)="CreateShipOrder()">
                                   Create Order In Shiprocket
                                 </button>
                               </div>
                             </div>
                           </div>
-
                         </div>
                       </div>
                       <div nz-col nzSpan="2"></div>
                     </div>
                   </div>
                 </div>
-
                 <div nz-row
                   *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OK' && !vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                  <div nz-col nzSpan="24" style="text-align: center; padding: 10px; font-size: 16px">
-                    <b style="font-weight: 500">The order has started packaging, and the expected date is
+                  <div nz-col nzSpan="24" class="order-status-header-centered">
+                    <b class="order-status-text-weight">The order has started packaging, and the expected date is
                       {{
                       vieworderdata.orderData[0][
                       "ACTUAL_PACKAGING_DATETIME"
@@ -834,19 +576,13 @@
                       }}
                     </b>
                   </div>
-
                   <div nz-col nzSpan="24">
                     <div nz-row>
                       <div nz-col nzSpan="2"></div>
-                      <div nz-col nzSpan="20" class="my-box" style="padding: 10px">
+                      <div nz-col nzSpan="20" class="my-box order-box-padding">
                         <div nz-row>
                           <div nz-col nzSpan="24">
-                            <div style="
-                                font-size: 14px;
-                                font-weight: 500;
-                                text-align: center;
-                                margin-top: 10px;
-                              ">
+                            <div class="stage-title-centered">
                               Change Order Stage
                             </div>
                             <div nz-row>
@@ -863,8 +599,6 @@
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
-
-
                               <div nz-col nzSpan="16">
                                 <nz-form-item>
                                   <nz-form-label nzNoColon>Tracking URL</nz-form-label>
@@ -874,25 +608,24 @@
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
-                              <div nz-col nzSpan="24" style="text-align: center; padding-bottom: 20px">
-                                <button nz-button nzType="primary" style="margin-top: 30px;" (click)="MarkAsDelivery()">
+                              <div nz-col nzSpan="24" class="button-container-centered">
+                                <button nz-button nzType="primary" class="button-margin-top-30"
+                                  (click)="MarkAsDelivery()">
                                   Mark As Out For Delivery
                                 </button>
                               </div>
                             </div>
                           </div>
-
                         </div>
                       </div>
                       <div nz-col nzSpan="2"></div>
                     </div>
                   </div>
                 </div>
-
                 <div nz-row
                   *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'DO' && !vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                  <div nz-col nzSpan="24" style="text-align: center; padding: 10px; font-size: 16px">
-                    <b style="font-weight: 500">The order was out for delivery on
+                  <div nz-col nzSpan="24" class="order-status-header-centered">
+                    <b class="order-status-text-weight">The order was out for delivery on
                       {{
                       vieworderdata.orderData[0][
                       "ORDER_OUT_FOR_DELIVERY_DATE"
@@ -900,14 +633,12 @@
                       }}
                     </b>
                   </div>
-
                   <div nz-col nzSpan="24">
                     <div nz-row>
                       <div nz-col nzSpan="2"></div>
-                      <div nz-col nzSpan="20" class="my-box" style="padding: 10px">
+                      <div nz-col nzSpan="20" class="my-box order-box-padding">
                         <div nz-row>
                           <div nz-col nzSpan="24">
-
                             <div nz-row>
                               <div nz-col nzSpan="10">
                                 <nz-form-item>
@@ -922,17 +653,14 @@
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
-
-
-                              <div nz-col nzSpan="8" style="text-align: center; padding-bottom: 20px">
-                                <button nz-button nzType="primary" style="margin-top: 30px;"
+                              <div nz-col nzSpan="8" class="button-container-centered">
+                                <button nz-button nzType="primary" class="button-margin-top-30"
                                   (click)="MarkAsDelivered()">
                                   Mark As Delivered
                                 </button>
                               </div>
                             </div>
                           </div>
-
                         </div>
                       </div>
                       <div nz-col nzSpan="2"></div>
@@ -941,8 +669,8 @@
                 </div>
                 <div nz-row
                   *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'SC'  && vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                  <div nz-col nzSpan="24" style="text-align: center; padding: 10px; font-size: 16px">
-                    <b style="font-weight: 500">Order created in shiprocket on
+                  <div nz-col nzSpan="24" class="order-status-header-centered">
+                    <b class="order-status-text-weight">Order created in shiprocket on
                       {{
                       vieworderdata.orderData[0][
                       "ORDER_SHIPROCKET_DATETIME"
@@ -953,17 +681,9 @@
                   <div nz-col nzSpan="24">
                     <div nz-row>
                       <div nz-col nzSpan="2"></div>
-                      <div nz-col nzSpan="20" class="my-box" style="padding: 10px">
+                      <div nz-col nzSpan="20" class="my-box order-box-padding">
                         <div nz-row>
                           <div nz-col nzSpan="24">
-                            <!-- <div style="
-                                font-size: 14px;
-                                font-weight: 500;
-                                text-align: center;
-                                margin-top: 10px;
-                              ">
-                              Change Order Stage
-                            </div> -->
                             <div nz-row>
                               <div nz-col nzSpan="12">
                                 <nz-form-item>
@@ -978,25 +698,24 @@
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
-                              <div nz-col nzSpan="12" style="padding-bottom: 20px">
-                                <button nz-button nzType="primary" style="margin-top: 30px" (click)="AssignShipOrder()">
+                              <div nz-col nzSpan="12" class="button-padding-bottom-20">
+                                <button nz-button nzType="primary" class="button-margin-top-30"
+                                  (click)="AssignShipOrder()">
                                   Assign Order
                                 </button>
                               </div>
                             </div>
                           </div>
-
                         </div>
                       </div>
                       <div nz-col nzSpan="2"></div>
                     </div>
                   </div>
                 </div>
-
                 <div nz-row
                   *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'AO'  && vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                  <div nz-col nzSpan="24" style="text-align: center; padding: 10px; font-size: 16px">
-                    <b style="font-weight: 500">Order assigned in shiprocket on
+                  <div nz-col nzSpan="24" class="order-status-header-centered">
+                    <b class="order-status-text-weight">Order assigned in shiprocket on
                       {{
                       vieworderdata.orderData[0][
                       "ORDER_SHIP_ASSIGN_DATETIME"
@@ -1004,21 +723,12 @@
                       }}
                     </b>
                   </div>
-
                   <div nz-col nzSpan="24">
                     <div nz-row>
                       <div nz-col nzSpan="2"></div>
-                      <div nz-col nzSpan="20" class="my-box" style="padding: 10px">
+                      <div nz-col nzSpan="20" class="my-box order-box-padding">
                         <div nz-row>
                           <div nz-col nzSpan="24">
-                            <!-- <div style="
-                                font-size: 14px;
-                                font-weight: 500;
-                                text-align: center;
-                                margin-top: 10px;
-                              ">
-                              Change Order Stage
-                            </div> -->
                             <div nz-row>
                               <div nz-col nzSpan="12">
                                 <nz-form-item>
@@ -1033,26 +743,24 @@
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
-                              <div nz-col nzSpan="12" style="padding-bottom: 20px">
-                                <button nz-button nzType="primary" style="margin-top: 30px"
+                              <div nz-col nzSpan="12" class="button-padding-bottom-20">
+                                <button nz-button nzType="primary" class="button-margin-top-30"
                                   (click)="GenerateLabelShipOrder()">
                                   Generate Label
                                 </button>
                               </div>
                             </div>
                           </div>
-
                         </div>
                       </div>
                       <div nz-col nzSpan="2"></div>
                     </div>
                   </div>
                 </div>
-
                 <div nz-row
                   *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'GL'  && vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                  <div nz-col nzSpan="24" style="text-align: center; padding: 10px; font-size: 16px">
-                    <b style="font-weight: 500">Label generated in shiprocket on
+                  <div nz-col nzSpan="24" class="order-status-header-centered">
+                    <b class="order-status-text-weight">Label generated in shiprocket on
                       {{
                       vieworderdata.orderData[0][
                       "ORDER_LABEL_DATETIME"
@@ -1060,22 +768,12 @@
                       }}
                     </b>
                   </div>
-
                   <div nz-col nzSpan="24">
                     <div nz-row>
                       <div nz-col nzSpan="2"></div>
-                      <div nz-col nzSpan="20" class="my-box" style="padding: 10px">
+                      <div nz-col nzSpan="20" class="my-box order-box-padding">
                         <div nz-row>
-
                           <div nz-col nzSpan="24">
-                            <!-- <div style="
-                                font-size: 14px;
-                                font-weight: 500;
-                                text-align: center;
-                                margin-top: 10px;
-                              ">
-                              Change Order Stage
-                            </div> -->
                             <div nz-row>
                               <div nz-col nzSpan="12">
                                 <nz-form-item>
@@ -1090,26 +788,24 @@
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
-                              <div nz-col nzSpan="12" style="padding-bottom: 20px">
-                                <button nz-button nzType="primary" style="margin-top: 30px"
+                              <div nz-col nzSpan="12" class="button-padding-bottom-20">
+                                <button nz-button nzType="primary" class="button-margin-top-30"
                                   (click)="SendForPickupShipOrder()">
                                   Send For Pickup
                                 </button>
                               </div>
                             </div>
                           </div>
-
                         </div>
                       </div>
                       <div nz-col nzSpan="2"></div>
                     </div>
                   </div>
                 </div>
-
                 <div nz-row
                   *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'SP'  && vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                  <div nz-col nzSpan="24" style="text-align: center; padding: 10px; font-size: 16px">
-                    <b style="font-weight: 500">Order send for pickup on
+                  <div nz-col nzSpan="24" class="order-status-header-centered">
+                    <b class="order-status-text-weight">Order send for pickup on
                       {{
                       vieworderdata.orderData[0][
                       "ORDER_PICKUP_DATETIME"
@@ -1117,21 +813,12 @@
                       }}
                     </b>
                   </div>
-
                   <div nz-col nzSpan="24">
                     <div nz-row>
                       <div nz-col nzSpan="2"></div>
-                      <div nz-col nzSpan="20" class="my-box" style="padding: 10px">
+                      <div nz-col nzSpan="20" class="my-box order-box-padding">
                         <div nz-row>
                           <div nz-col nzSpan="24">
-                            <!-- <div style="
-                                font-size: 14px;
-                                font-weight: 500;
-                                text-align: center;
-                                margin-top: 10px;
-                              ">
-                              Change Order Stage
-                            </div> -->
                             <div nz-row>
                               <div nz-col nzSpan="12">
                                 <nz-form-item>
@@ -1146,64 +833,53 @@
                                   </nz-form-control>
                                 </nz-form-item>
                               </div>
-                              <div nz-col nzSpan="12" style="padding-bottom: 20px">
-                                <button nz-button nzType="primary" style="margin-top: 30px" (click)="dispatchorder()">
+                              <div nz-col nzSpan="12" class="button-padding-bottom-20">
+                                <button nz-button nzType="primary" class="button-margin-top-30"
+                                  (click)="dispatchorder()">
                                   Start Dispatching
                                 </button>
                               </div>
                             </div>
                           </div>
-
                         </div>
                       </div>
                       <div nz-col nzSpan="2"></div>
                     </div>
                   </div>
                 </div>
-
                 <div
                   *ngIf="(vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'OA')&& vieworderdata.orderData[0]['IS_CANCELATION_REQUESTED']"
-                  style="
-                text-align: center;
-                padding-top: 30vh;
-                font-size: 20px;
-                font-weight: 500;
-                color: rgb(255, 30, 0);
-              ">
+                  class="cancel-request-message">
                   The cancellation request is under verification.
                 </div>
-
                 <div
                   *ngIf="vieworderdata.orderData[0]['IS_SHIP_ORDER'] && (vieworderdata.orderData[0]['ORDER_STATUS'] == 'OD' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'DO' ||
                 vieworderdata.orderData[0]['ORDER_STATUS'] == 'SC'  || vieworderdata.orderData[0]['ORDER_STATUS'] == 'AO' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'GL' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'SP' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS')"
-                  style="max-height: 78vh;min-height: 76vh;overflow-y: auto;overflow-x: hidden;padding-right: 10px;">
+                  class="shipment-details-container">
                   <div nz-row nzGutter="24">
                     <div nz-col nzSpan="2"></div>
-                    <div nz-col nzSpan="20" style="padding: 10px">
+                    <div nz-col nzSpan="20" class="shipment-details-padding">
                       <div class="cardstyle1" nz-row>
-                        <div class="mainnam" nz-col nzSpan="24" style="text-align: center;color: #1d39c4 !important;
-                      background: #f0f5ff !important;border-color: #adc6ff !important;padding: 5px;">
-                          <span style=" font-size: 15px !important;">Shipment Details</span>
+                        <div class="mainnam shipment-details-header" nz-col nzSpan="24">
+                          <span class="shipment-details-header-text">Shipment Details</span>
                         </div>
-                        <div nz-col nzSpan="12" style="margin-top: 10px;color: #5a5a5a !important;"
-                          class="truncate-text1 subnamm">
-                          <b style="font-weight: 600 !important;">Shiprocket Order ID:</b>
+                        <div nz-col nzSpan="12" class="shipment-item-margin truncate-text1 subnamm">
+                          <b class="shipment-item-label">Shiprocket Order ID:</b>
                           {{vieworderdata.orderData[0]['ORDER_ID']}}
                         </div>
-                        <div nz-col nzSpan="12" style="margin-top: 10px;color: #5a5a5a !important;"
-                          class="truncate-text1 subnamm">
-                          <b style="font-weight: 600 !important;">Shipment ID:</b>
+                        <div nz-col nzSpan="12" class="shipment-item-margin truncate-text1 subnamm">
+                          <b class="shipment-item-label">Shipment ID:</b>
                           {{vieworderdata.orderData[0]['SHIPMENT_ID']}}
                         </div>
                         <div nz-col nzSpan="12"
                           *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'AO' ||vieworderdata.orderData[0]['ORDER_STATUS'] == 'GL' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'SP' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'OD' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'"
-                          style="margin-top: 10px;color: #5a5a5a !important;" class="truncate-text1 subnamm">
-                          <b style="font-weight: 600 !important;">AWB Code:</b>
+                          class="shipment-item-margin truncate-text1 subnamm">
+                          <b class="shipment-item-label">AWB Code:</b>
                           {{vieworderdata.orderData[0]['AWB_CODE']}}
                         </div>
                         <div
                           *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'GL' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'SP' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'OD' || vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'"
-                          nz-col nzSpan="12" style="margin-top: 10px;" class="truncate-text1 subnamm">
+                          nz-col nzSpan="12" class="shipment-label-margin truncate-text1 subnamm">
                           <a href="{{vieworderdata.orderData[0]['LABEL_URL']}}" target="_blank">
                             <button nz-button nzType="primary">
                               Download Label
@@ -1214,46 +890,21 @@
                     <div nz-col nzSpan="2"></div>
                   </div>
                 </div>
-                <div *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'" style="
-                    text-align: center;
-                    padding-top: 30vh;
-                    font-size: 20px;
-                    font-weight: 500;
-                    color: red;
-                  ">
+                <div *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'" class="order-rejected-message">
                   Order Rejected
                 </div>
-                <div *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OC'" style="
-                    text-align: center;
-                    padding-top: 30vh;
-                    font-size: 20px;
-                    font-weight: 500;
-                    color: red;
-                  ">
+                <div *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OC'" class="order-cancelled-message">
                   Order Cancelled
                 </div>
-                <div *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'" style="
-                    text-align: center;
-                    padding-top: 30vh;
-                    font-size: 20px;
-                    font-weight: 500;
-                    color: rgb(2, 95, 47);
-                  ">
+                <div *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'" class="order-delivered-message">
                   Order Delivered
                 </div>
               </div>
             </ng-template>
           </nz-tab>
-
           <nz-tab (nzSelect)="setFilter()" [nzTitle]="'Action/Activity Log'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="tab-content-container">
                 <app-actionlogs [TYPE]="'SHOP_ORDER'" [FILTER_ID]="orderDetails.ID"></app-actionlogs>
               </div>
             </ng-template>
@@ -1264,130 +915,116 @@
           vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'
         ">
             <ng-template nz-tab>
-              <div style="
-              max-height: 78vh;
-              min-height: 76vh;
-              overflow-y: auto;
-              overflow-x: hidden;
-              padding-right: 10px;
-            ">
+              <div class="tab-content-container">
                 <div nz-row nzGutter="24">
-                  <div nz-col nzSpan="24" style="padding: 10px">
+                  <div nz-col nzSpan="24" class="warehouse-details-padding">
                     <div class="cardstyle1" nz-row>
-                      <div class="mainnam" nz-col nzSpan="24" style="text-align: center;color: #1d39c4 !important;
-                      background: #f0f5ff !important;
-                      border-color: #adc6ff !important;
-                      padding: 5px;
-                     ">
-                        <span style=" font-size: 15px !important;">Warehouse Details</span>
+                      <div class="mainnam" nz-col nzSpan="24" class="warehouse-header-section">
+                        <span class="warehouse-header-text">Warehouse Details</span>
                       </div>
-                      <div nz-col nzSpan="24" style="margin-top: 10px;"
+                      <div nz-col nzSpan="24" class="warehouse-info-item-margin"
                         [nzTooltipTitle]="isTextOverflow ? warehousedetails[0]['NAME'] : null" #tooltipRef="nzTooltip"
                         nz-tooltip #textContainername class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContainername, tooltipRef)">
-                        <b style="font-weight: 600 !important;">Warehouse Name:</b> {{ warehousedetails[0]['NAME'] }}
+                        <b class="warehouse-info-label">Warehouse Name:</b> {{ warehousedetails[0]['NAME'] }}
                       </div>
-                      <div nz-col nzSpan="24" style="margin-top: 10px;"
+                      <div nz-col nzSpan="24" class="warehouse-info-item-margin"
                         [nzTooltipTitle]="isTextOverflow ? warehousedetails[0]['CITY_NAME'] : null"
                         #tooltipRef="nzTooltip" nz-tooltip #textContainername class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContainername, tooltipRef)">
-                        <b style="font-weight: 600 !important;">City:</b> {{ warehousedetails[0]['CITY_NAME']}}
+                        <b class="warehouse-info-label">City:</b> {{ warehousedetails[0]['CITY_NAME']}}
                       </div>
-                      <div nz-col nzSpan="24" style="margin-top: 5px;"
+                      <div nz-col nzSpan="24" class="warehouse-info-item-margin-small"
                         [nzTooltipTitle]="isTextOverflow ? warehousedetails[0]['ADDRESS_LINE1'] : null"
                         #tooltipRef="nzTooltip" nz-tooltip #textContainerAddrs class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContainerAddrs, tooltipRef)">
-                        <b style="font-weight: 600 !important;">Pickup Location:</b> {{
+                        <b class="warehouse-info-label">Pickup Location:</b> {{
                         warehousedetails[0]['ADDRESS_LINE1'] }}
                         {{ warehousedetails[0]['COUNTRY_NAME'] }}
                         {{ warehousedetails[0]['STATE_NAME'] }}
                         {{ warehousedetails[0]['DISTRICT_NAME'] }},
                         {{ warehousedetails[0]['PINCODE'] }}
                       </div>
-                      <div nz-col nzSpan="24" style="margin-top: 5px;"
+                      <div nz-col nzSpan="24" class="warehouse-info-item-margin-small"
                         [nzTooltipTitle]="isTextOverflow ? warehousedetails[0]['WAREHOUSE_MANAGER_NAME'] : null"
                         #tooltipRef="nzTooltip" nz-tooltip #textContainerWMnm class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContainerWMnm, tooltipRef)">
-                        <b style="font-weight: 600 !important;">Warehouse Manager:</b> {{
+                        <b class="warehouse-info-label">Warehouse Manager:</b> {{
                         warehousedetails[0]['WAREHOUSE_MANAGER_NAME'] }}
                       </div>
-                      <div nz-col nzSpan="24" style="margin-top: 5px;margin-bottom: 10px;"
-                        class="truncate-text1 subnam">
-                        <b style="font-weight: 600 !important;">Mobile No:</b> {{ warehousedetails[0]['MOBILE_NO'] }}
+                      <div nz-col nzSpan="24" class="warehouse-info-item-margin-bottom truncate-text1 subnam">
+                        <b class="warehouse-info-label">Mobile No:</b> {{ warehousedetails[0]['MOBILE_NO'] }}
                       </div>
-                      <div class="mainnam" *ngIf="vieworderdata.orderData[0]['IS_SHIP_ORDER']" nz-col nzSpan="24" style="text-align: center;color: #1d39c4 !important;
-                      background: #f0f5ff !important;
-                      border-color: #adc6ff !important;
-                      padding: 5px;">
-                        <span style=" font-size: 15px !important;">Courier Details</span>
+                      <div class="mainnam" *ngIf="vieworderdata.orderData[0]['IS_SHIP_ORDER']" nz-col nzSpan="24"
+                        class="warehouse-header-section">
+                        <span class="warehouse-header-text">Courier Details</span>
                       </div>
-                      <div nz-col nzSpan="24" style="margin-top: 10px;"
+                      <div nz-col nzSpan="24" class="warehouse-info-item-margin"
                         *ngIf="Courierdetails!=undefined && vieworderdata.orderData[0]['IS_SHIP_ORDER']"
                         [nzTooltipTitle]="isTextOverflow ? Courierdetails['courier_name'] : null"
                         #tooltipRef="nzTooltip" nz-tooltip #textContaineCnm class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContaineCnm, tooltipRef)">
-                        <b style="font-weight: 600 !important;">Courier Name:</b> {{ Courierdetails['courier_name'] }}
+                        <b class="warehouse-info-label">Courier Name:</b> {{ Courierdetails['courier_name'] }}
                       </div>
-                      <div nz-col nzSpan="24" style="margin-top: 5px;"
+                      <div nz-col nzSpan="24" class="warehouse-info-item-margin-small"
                         *ngIf="Courierdetails!=undefined && vieworderdata.orderData[0]['IS_SHIP_ORDER']"
                         [nzTooltipTitle]="isTextOverflow ? Courierdetails['city'] : null" #tooltipRef="nzTooltip"
                         nz-tooltip #textContainecity class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContainecity, tooltipRef)">
-                        <b style="font-weight: 600 !important;">City:</b> {{ Courierdetails['city'] }}
+                        <b class="warehouse-info-label">City:</b> {{ Courierdetails['city'] }}
                       </div>
-                      <div nz-col nzSpan="24" style="margin-top: 5px;"
+                      <div nz-col nzSpan="24" class="warehouse-info-item-margin-small"
                         *ngIf="Courierdetails!=undefined && vieworderdata.orderData[0]['IS_SHIP_ORDER']"
                         [nzTooltipTitle]="isTextOverflow ? Courierdetails['city'] : null" #tooltipRef="nzTooltip"
                         nz-tooltip #textContaineEST class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContaineEST, tooltipRef)">
-                        <b style="font-weight: 600 !important;">Estimated Delivery Date:</b> {{ Courierdetails['etd'] }}
+                        <b class="warehouse-info-label">Estimated Delivery Date:</b> {{ Courierdetails['etd'] }}
                       </div>
-                      <div nz-col nzSpan="8" style="margin-top: 5px;"
+                      <div nz-col nzSpan="8" class="warehouse-info-item-margin-small"
                         *ngIf="Courierdetails!=undefined && vieworderdata.orderData[0]['IS_SHIP_ORDER']"
                         [nzTooltipTitle]="isTextOverflow ? Courierdetails['city'] : null" #tooltipRef="nzTooltip"
                         nz-tooltip #textContainerate class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContainerate, tooltipRef)">
-                        <b style="font-weight: 600 !important;">Delivery Charges:</b>&nbsp;₹ {{ Courierdetails['rate'] |
+                        <b class="warehouse-info-label">Delivery Charges:</b>&nbsp;₹ {{ Courierdetails['rate'] |
                         number
                         }}
                       </div>
-                      <div nz-col nzSpan="8" style="margin-top: 5px;"
+                      <div nz-col nzSpan="8" class="warehouse-info-item-margin-small"
                         *ngIf="Courierdetails!=undefined && vieworderdata.orderData[0]['IS_SHIP_ORDER']"
                         [nzTooltipTitle]="isTextOverflow ? Courierdetails['city'] : null" #tooltipRef="nzTooltip"
                         nz-tooltip #textContaineRTO class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContaineRTO, tooltipRef)">
-                        <b style="font-weight: 600 !important;">RTO Charges:</b>&nbsp;₹ {{ Courierdetails['rto_charges']
+                        <b class="warehouse-info-label">RTO Charges:</b>&nbsp;₹ {{ Courierdetails['rto_charges']
                         | number
                         }}
                       </div>
-                      <div nz-col nzSpan="8" style="margin-top: 5px;"
+                      <div nz-col nzSpan="8" class="warehouse-info-item-margin-small"
                         *ngIf="Courierdetails!=undefined && vieworderdata.orderData[0]['IS_SHIP_ORDER']"
                         [nzTooltipTitle]="isTextOverflow ? Courierdetails['city'] : null" #tooltipRef="nzTooltip"
                         nz-tooltip #textContaineCOD class="truncate-text1 subnam"
                         (mouseenter)="checkOverflow(textContaineCOD, tooltipRef)">
-                        <b style="font-weight: 600 !important;">COD Charges:</b>&nbsp;₹ {{ Courierdetails['cod_charges']
+                        <b class="warehouse-info-label">COD Charges:</b>&nbsp;₹ {{ Courierdetails['cod_charges']
                         | number
                         }}
                       </div>
-
-                      <div class="subnam" nz-col nzSpan="8" style="margin-top: 5px;"
+                      <div class="subnam" nz-col nzSpan="8" class="warehouse-info-item-margin-small"
                         *ngIf="vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                        <b style="font-weight: 600 !important;">Package Height:</b>
+                        <b class="warehouse-info-label">Package Height:</b>
                         {{vieworderdata.orderData[0]['HEIGHT'] }} CM
                       </div>
-                      <div class="subnam" nz-col nzSpan="8" style="margin-top: 5px;"
+                      <div class="subnam" nz-col nzSpan="8" class="warehouse-info-item-margin-small"
                         *ngIf="vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                        <b style="font-weight: 600 !important;">Package Weight:</b>
+                        <b class="warehouse-info-label">Package Weight:</b>
                         {{vieworderdata.orderData[0]['WEIGHT'] }} KG
                       </div>
-                      <div class="subnam" nz-col nzSpan="8" style="margin-top: 5px;"
+                      <div class="subnam" nz-col nzSpan="8" class="warehouse-info-item-margin-small"
                         *ngIf="vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                        <b style="font-weight: 600 !important;">Package Length:</b>
+                        <b class="warehouse-info-label">Package Length:</b>
                         {{vieworderdata.orderData[0]['LENGTH'] }} CM
                       </div>
-                      <div class="subnam" nz-col nzSpan="8" style="margin-top: 5px;margin-bottom: 10px;"
+                      <div class="subnam" nz-col nzSpan="8" class="warehouse-info-item-margin-bottom"
                         *ngIf="vieworderdata.orderData[0]['IS_SHIP_ORDER']">
-                        <b style="font-weight: 600 !important;">Package Breadth:</b>
+                        <b class="warehouse-info-label">Package Breadth:</b>
                         {{vieworderdata.orderData[0]['BREADTH'] }} CM
                       </div>
                     </div>
@@ -1398,26 +1035,14 @@
           </nz-tab>
           <nz-tab (nzSelect)="setFilter()" [nzTitle]="'Order Location'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="tab-content-container">
                 <app-location [TYPE]="'SHOP_ORDER'" [FILTER_ID]="orderDetails.ID"></app-location>
               </div>
             </ng-template>
           </nz-tab>
           <nz-tab (nzSelect)="setFilter()" [nzTitle]="'Order Ratings'">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="tab-content-container">
                 <app-customerratting [TYPE]="'SHOP_ORDER'" [FILTER_ID]="orderDetails.ID"></app-customerratting>
               </div>
             </ng-template>
@@ -1427,15 +1052,9 @@
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR' ||
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'C' ||
               vieworderdata.orderData[0]['ORDER_STATUS'] == 'CA'
-            " [nzTitle]="'Invoice'" style="margin-left:10px !important" (nzClick)="InvoiceClick()">
+            " [nzTitle]="'Invoice'" class="invoice-tab-margin" (nzClick)="InvoiceClick()">
             <ng-template nz-tab>
-              <div style="
-                  max-height: 78vh;
-                  min-height: 76vh;
-                  overflow-y: auto;
-                  overflow-x: hidden;
-                  padding-right: 10px;
-                ">
+              <div class="tab-content-container">
                 <app-invoicepage [TYPE]="'ORDER'" [FILTER_ID]="orderDetails.ID" [showMinimal]="true"
                   [tableData]="newdataList"></app-invoicepage>
               </div>
@@ -1446,12 +1065,11 @@
     </div>
   </div>
 </div>
-
 <nz-modal [nzWidth]="900" [(nzVisible)]="ImageModalVisible" nzMaskClosable="false" nzClosable="false"
   [nzContent]="content" [nzTitle]="'Image View'" (nzOnCancel)="ImageModalCancel()" [nzFooter]="ImageModalFooter">
   <ng-template #content>
     <nz-spin [nzSpinning]="isSpinning">
-      <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss" style="height: 400px">
+      <div *ngIf="imageshow != undefined && imageshow != null && imageshow != ''" class="ss order-image-container">
         <div class="controls">
           <button nz-button nzType="primary" nzShape="circle" (click)="zoomIn()">
             <i nz-icon nzType="zoom-in"></i>
@@ -1483,17 +1101,16 @@
     </button>
   </ng-template>
 </nz-modal>
-
 <div *ngIf="isdetailsclosed">
   <nz-drawer nzMaskClosable="false" [nzClosable]="true" [nzVisible]="isdetailsclosed" nzPlacement="right"
     [nzTitle]="PartTitle" (nzOnClose)="closedetailsd()" nzWidth="90%">
     <ng-container *nzDrawerContent>
-      <div nz-row style="margin-top: 8px">
+      <div nz-row class="order-row-margin-top">
         <div nz-col nzSpan="24">
-          <nz-table class="my-scroll no-wrap1" #table [nzData]="dataList" [nzTotal]="totalRecords" nzBordered
+          <nz-table class="my-scroll no-wrap1 order-table-preline" #table [nzData]="dataList" [nzTotal]="totalRecords" nzBordered
             [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="getlistofstock()"
             (nzPageSizeChange)="getlistofstock()" (nzQueryParams)="sort($event)" [nzSize]="'small'" nzShowSizeChanger
-            [nzFrontPagination]="false" [nzScroll]="{ y: '60vh' }" style="white-space: pre-line">
+            [nzFrontPagination]="false" [nzScroll]="{ y: '60vh' }" >
             <thead>
               <tr>
                 <th nzLeft nzWidth="180px" nzShowSort align="center" nzColumnKey="{{ 'CURRENT_STOCK' }}"
@@ -1503,7 +1120,6 @@
                 <th nzWidth="250px" nzShowSort align="center" nzColumnKey="{{ 'ITEM_NAME' }}" [nzSortFn]="true">
                   Item Name
                 </th>
-
                 <th nzWidth="180px" align="center" nzShowSort align="center" nzColumnKey="{{ 'VARIANT_NAME' }}"
                   [nzSortFn]="true">
                   Variant Name

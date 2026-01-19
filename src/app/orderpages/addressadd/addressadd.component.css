@@ -5,30 +5,15 @@
   margin-top: 12px;
   margin-bottom: 12px;
   background-color: #fafafa;
-
 }
 .header {
-
   position: absolute;
-
   top: 0px;
-
-  /* bottom: 0px; */
-
   width: 100%;
-
   border-top: 1px solid rgb(232, 232, 232);
-
   padding: 10px 16px;
-
   text-align: right;
-
-  /* left: 0px; */
-
   right: 0px;
-
-  /* background: #fff; */
-
 }
 nz-form-item {
 display: inline-block;
@@ -36,40 +21,31 @@ margin-bottom: 5px;
 width: -webkit-fill-available;
 padding: 0px 10px;
 }
-
-
-
 .custom-header {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Pushes items to edges */
+  justify-content: space-between; 
   width: 100%;
-  
   }
-  
   .left-section {
   display: flex;
   align-items: center;
   }
-  
   .close-icon {
   cursor: pointer;
   font-size: 18px;
   color: #333;
   margin-right: 10px;
   }
-  
   .search-text {
   font-size: 16px !important;
   font-weight: 500;
   color: #333;
   }
-  
   .search-container {
   flex-grow: 1;
   max-width: 280px;
   }
-  
   .search-container input {
   width: 100%;
   padding: 8px 12px;
@@ -78,9 +54,43 @@ padding: 0px 10px;
   font-size: 14px;
   outline: none;
   }
-  
-  
   :host::ng-deep .ant-modal-header {
   padding: 9px 19px;
   }
-  
+  .form-container {
+    margin-bottom: 0px !important;
+}
+.form-label-margin {
+    margin-top: 5px;
+}
+.location-icon {
+    cursor: pointer;
+}
+.location-img {
+    height: 30px;
+    width: 30px;
+}
+.character-count {
+    color: red;
+}
+.full-width-select {
+    width: 100%;
+}
+.map-container {
+    height: 300px;
+    width: 100%;
+}
+.cancel-button {
+    margin-right: 8px;
+}
+.save-button {
+    margin-right: 8px;
+    background-color: #1890ff;
+    color: white;
+    border: 1px solid #1890ff;
+}
+.update-button {
+    background-color: #1890ff;
+    color: white;
+    border: 1px solid #1890ff;
+}

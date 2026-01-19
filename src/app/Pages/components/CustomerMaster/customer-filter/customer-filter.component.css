@@ -1,19 +1,71 @@
 .filter-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .condition-group {
-    border: 1px solid #d9d9d9;
-    padding: 15px;
-    border-radius: 8px;
-    background: #fafafa;
-  }
-  
-  .filter-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.condition-group {
+  border: 1px solid #d9d9d9;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.group-header {
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: #092B9C !important;
+  padding-top: 16px;
+}
+.remove-icon {
+  color: red;
+  cursor: pointer;
+}
+.logical-operator-container {
+  text-align: center;
+  padding-bottom: 5px;
+}
+.condition-group {
+  border-radius: 5px;
+  border: 1px dashed rgb(217, 217, 217);
+  padding: 8px;
+  background: #fbfbfb;
+}
+.condition-row {
+  padding: 8px;
+  border-bottom: 1px solid rgb(246, 246, 246);
+}
+.operator-col {
+  display: flex;
+  flex-direction: column;
+}
+.operator-select {
+  width: 100%;
+}
+.when-text {
+  text-align: center;
+  padding: 5px;
+}
+.field-col .field-select,
+.comparator-col .comparator-select,
+.value-col .value-input,
+.value-col .value-date-picker,
+.value-col .value-select {
+  width: 100%;
+}
+.action-col {
+  text-align: right;
+}
+.add-btn {
+  margin-left: 10px;
+}
+.modal-input {
+  width: 100%;
+}
+.modal-char-count {
+  color: red;
+  font-size: 10px;
+}

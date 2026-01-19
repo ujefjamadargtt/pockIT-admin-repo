@@ -16,5 +16,4 @@ IS_ACTIVE:boolean=true
 CREATED_AT:any
 UPDATED_AT:any
 NOTES:any
-   
 }

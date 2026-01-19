@@ -1,6 +1,6 @@
 <div nz-row>
-  <div nz-col nzSpan="24" style="box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px">
-    <div nz-row [nzGutter]="16" style="padding: 20px">
+  <div nz-col nzSpan="24" class="order-shadow-divider">
+    <div nz-row [nzGutter]="16" class="order-row-padding-md">
       <div nz-col nzSpan="8" class="mainnam">
         Job No : {{ jobdetailsdata.JOB_CARD_NO }}
       </div>
@@ -13,7 +13,6 @@
       <div nz-col nzSpan="8" class="subname">
         Service Name : {{ jobdetailsdata.SERVICE_FULL_NAME }}
       </div>
-
       <div nz-col nzSpan="8" class="subname">
         Amount: ₹ {{ jobdetailsdata.SERVICE_AMOUNT | number }}
       </div>
@@ -28,7 +27,6 @@
         Expected Date:
         {{ jobdetailsdata.EXPECTED_DATE_TIME | date : "dd/MM/yyyy HH:mm a" }}
       </div>
-
       <div nz-col nzSpan="8" class="subname">
         Estimated Time: {{ jobdetailsdata.ESTIMATED_TIME_IN_MIN }} min.
       </div>
@@ -37,8 +35,8 @@
         <nz-tag *ngIf="jobdetailsdata.STATUS == 'P'" [nzColor]="'orange'">{{jobdetailsdata.JOB_CARD_STATUS}}</nz-tag>
         <nz-tag *ngIf="(jobdetailsdata.STATUS == 'AS' || jobdetailsdata.STATUS == 'AC')"
           [nzColor]="'blue'">Assigned</nz-tag>
-        <!-- <nz-tag *ngIf="jobdetailsdata.STATUS == 'AC'" [nzColor]="'geekblue'">Accepted</nz-tag> -->
         <nz-tag *ngIf="jobdetailsdata.STATUS == 'CO'" [nzColor]="'green'">{{jobdetailsdata.JOB_CARD_STATUS}}</nz-tag>
+        <nz-tag *ngIf="jobdetailsdata.STATUS == 'CN'" [nzColor]="'red'">{{jobdetailsdata.JOB_CARD_STATUS}}</nz-tag>
       </div>
       <div nz-col nzSpan="8" class="subname" *ngIf="jobdetailsdata.STATUS != 'P'">
         Technician Name : {{ jobdetailsdata.TECHNICIAN_NAME }}
@@ -48,14 +46,12 @@
         {{ jobdetailsdata.SCHEDULED_DATE_TIME | date : "dd/MM/yyyy" }}
         &nbsp;&nbsp; Start Time :
         {{ formatTime(jobdetailsdata.START_TIME) }} &nbsp;&nbsp; End Time :
-        <!-- {{ jobdetailsdata.END_TIME }} -->
         {{ formatTime(jobdetailsdata.END_TIME) }}
       </div>
     </div>
   </div>
 </div>
-
-<div nz-row style="padding: 10px">
+<div nz-row class="order-row-padding">
   <div nz-col nzSpan="24">
     <nz-tabset nzCentered (nzSelectedIndexChange)="onSelectedIndexChange($event)">
       <nz-tab [nzTitle]="'Action/Activity Log'">
@@ -76,7 +72,6 @@
           </div>
         </ng-template>
       </nz-tab>
-
       <nz-tab [nzTitle]="'Technician Travel History'" (nzSelect)="setFilter()">
         <ng-template nz-tab>
           <div *ngIf="show == 3">
@@ -91,7 +86,6 @@
           </div>
         </ng-template>
       </nz-tab>
-
       <nz-tab [nzTitle]="'Customer Ratings for Technicians'">
         <div *ngIf="show == 5">
           <app-customerratting [TYPE]="'JOB'" [FILTER_ID]="jobdetailsdata.ID"

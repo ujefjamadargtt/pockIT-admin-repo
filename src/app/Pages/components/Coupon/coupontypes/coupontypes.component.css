@@ -1,51 +1,137 @@
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 .select {
     width: 200px;
     padding: 8px;
     display: block;
 }
-
 .search-box {
     padding: 8px;
 }
-
 .search-box input {
     width: 188px;
     display: block;
 }
-
 .search-box button {
     width: 90px;
 }
-
 .search-button {
     margin-right: 8px;
 }
-
 nz-select {
     width: 100%;
 }
-
 .margin-row {
     margin: 10px 0px;
 }
-
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
 }
-
-
 .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
+}
+.coupon-header-title-x1 {
+    font-weight: bold;
+}
+.coupon-back-icon-x1 {
+    font-weight: bold;
+    cursor: pointer;
+}
+.coupon-header-actions-x1 {
+    display: flex;
+    justify-content: flex-end;
+}
+.coupon-filter-btn-wrapper-x1 {
+    width: 47px;
+}
+.coupon-add-btn-wrapper-x1 {
+    margin-right: 0;
+}
+.filter-top-spacing-x1 {
+    padding-top: 0;
+}
+.filter-loader-center-x1 {
+    text-align: center;
+}
+.filter-card-wrapper-x1 {
+    margin-bottom: 8px;
+}
+.filter-card-x1 {
+    display: flex;
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    border-radius: 7px;
+}
+.filter-card-header-x1 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+}
+.filter-name-text-x1 {
+    color: black;
+    text-align: center;
+    font-size: 25px;
+    white-space: nowrap;
+}
+.filter-applied-icon-x1 {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.filter-card-actions-x1 {
+    margin-top: 7px;
+}
+.filter-action-row-x1 {
+    display: flex;
+    justify-content: space-between;
+}
+.filter-action-tag-x1 {
+    cursor: pointer;
+    font-size: 10px !important;
+}
+.filter-action-tag-x2 {
+    cursor: pointer;
+    font-size: 10px !important;
+    margin-right: 0;
+}
+.filter-action-icon-x1 {
+    font-size: 10px !important;
+}
+.filter-no-data-x1 {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.filter-footer-actions-x1 {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.filter-footer-btn-x1 {
+    margin-right: 10px;
+}
+.filter-query-text-x1 {
+    text-align: center;
+}
+.coupon-table-header-x2 {
+    font-weight: bold;
+}
+.coupon-action-tag-x2 {
+    cursor: pointer;
+}
+.coupon-action-icon-x2 {
+    font-size: 15px;
+}
+.coupon-query-text-x2 {
+    text-align: center;
 }

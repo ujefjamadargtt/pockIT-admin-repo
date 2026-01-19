@@ -1,46 +1,80 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.banner-formname-normal {
+  font-weight: bold;
+}
+.banner-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.banner-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.banner-filter-item {
+  width: 47px;
+}
+.banner-add-btn-item {
+  margin-right: 0px;
+}
+.tbl-th-bold {
+  font-weight: bold;
+}
+.tbl-text-center {
+  text-align: center;
+}
+.tbl-row-center {
+  text-align: center;
+}
+.tbl-action-tag {
+  cursor: pointer;
+}
+.tbl-action-icon {
+  font-size: 15px;
+}
+.image-preview-container {
+  height: 300px;
+  overflow: auto;
+}
+.image-preview-img {
+  margin-left: 20px;
+  width: 900px;
+  height: auto;
+  object-fit: contain;
+}
+.filter-text-center {
+  text-align: center;
 }

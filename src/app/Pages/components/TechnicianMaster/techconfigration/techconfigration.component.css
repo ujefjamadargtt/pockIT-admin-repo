@@ -1,7 +1,6 @@
-/* nz-form-item  {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 5px;
-  } */
-  
+.cfg-switch-align-end {
+  text-align: end !important;
+}
+.cfg-footer-cancel-btn {
+  margin-right: 12px;
+}

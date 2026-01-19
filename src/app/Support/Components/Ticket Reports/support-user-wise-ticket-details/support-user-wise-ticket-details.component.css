@@ -3,25 +3,10 @@ table {
     border-collapse: collapse;
     width: 100%;
 }
-
-/* td,
-th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 5px;
-    text-align: center !important;
-    vertical-align: middle !important;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-} */
-
 .container {
     height: 100px;
     position: relative;
 }
-
 .vertical-center {
     margin: 0;
     position: relative;
@@ -29,7 +14,103 @@ tr:nth-child(even) {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
+  .back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.action-col {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-btn {
+  color: white;
+}
+.filter-loading {
+  text-align: center;
+}
+.filter-cards-row {
+  margin-bottom: 8px;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.filter-name {
+  color: black;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+}
+.filter-action-tag {
+  font-size: 10px !important;
+  cursor: pointer;
+}
+.no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+.reset-btn, .new-btn {
+  margin-right: 10px;
+}
+.cursor-tag{
+    cursor: pointer
+}
+.font-15px{
+    font-size: 15px
+}
+.column-header {
+  font-weight: bold;
+  text-align: center;
+}
+.filter-applied {
+  color: #092B9C !important;
+}
+.table-body {
+  white-space: pre-line;
+}
+.truncate-cell {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.filter-dropdown {
+  width: 100%;
+}
+.view-tag {
+  cursor: pointer;
+}

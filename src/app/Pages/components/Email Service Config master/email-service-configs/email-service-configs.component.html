@@ -1,180 +1,62 @@
 <div nz-row nzType="flex">
   <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8">
     <div class="formname">
-      <span
-        (click)="back()"
-        nz-icon
-        nzType="arrow-left"
-        nzTheme="outline"
-        style="font-weight: bold; cursor: pointer"
-      ></span
-      >&nbsp;&nbsp;{{ formTitle }}
+      <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline" class="formname-back-icon"></span>
+      &nbsp;&nbsp;{{ formTitle }}
     </div>
   </div>
-  <div
-    nz-col
-    nzXs="24"
-    nzSm="24"
-    nzMd="4"
-    nzLg="6"
-    nzXl="16"
-    style="display: flex; justify-content: flex-end"
-  >
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="16" class="formname-right-container">
     <form nz-form [nzLayout]="'inline'">
-      <!-- <nz-form-item>
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-          <input type="text" name="search" (keyup)="onKeyupS($event)" (keydown.enter)="onEnterKey($event)" id="button"
-            autocomplete="off" [(ngModel)]="searchText" nz-input placeholder="Min 3 chars required." />
-        </nz-input-group>
-        <ng-template #suffixIconButton>
-          <button nz-button nzType="primary" (click)="search(true)" nzSearch>
-            <i nz-icon nzType="search"></i>
-          </button>
-        </ng-template>
-      </nz-form-item > -->
-      <nz-form-item style="margin-right: 0px" *ngIf="showadd()">
-        <button
-          nz-button
-          nzType="primary"
-          (click)="add()"
-          nzJustify="end"
-          [nzLoading]="loadingRecords"
-        >
-          <i nz-icon nzType="plus"></i>New Email service Config
+      <nz-form-item class="formname-action-item" *ngIf="showadd()">
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end" [nzLoading]="loadingRecords">
+          <i nz-icon nzType="plus"></i> New Email service Config
         </button>
       </nz-form-item>
     </form>
   </div>
 </div>
-<div nz-row style="margin-top: 10px">
+<div nz-row class="nz-row-margin-top-10">
   <div nz-col nzSpan="24">
-    <nz-table
-      class="my-scroll no-wrap1"
-      nzBordered
-      #table
-      nzShowSizeChanger
-      [nzFrontPagination]="false"
-      [nzData]="emailServiceConfigData"
-      [nzTotal]="totalRecords"
-      [(nzPageIndex)]="pageIndex"
-      [(nzPageSize)]="pageSize"
-      (nzPageIndexChange)="search()"
-      [nzLoading]="loadingRecords"
-      (nzQueryParams)="sort($event)"
-      [nzSize]="'small'"
-      style="white-space: pre-line"
-      [nzScroll]="{ x: '600px', y: '55vh' }"
-    >
+    <nz-table class="my-scroll no-wrap1 email-config-table" nzBordered #table nzShowSizeChanger
+      [nzFrontPagination]="false" [nzData]="emailServiceConfigData" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" [nzLoading]="loadingRecords"
+      (nzQueryParams)="sort($event)" [nzSize]="'small'" [nzScroll]="{ x: '600px', y: '55vh' }">
       <thead>
         <tr>
-          <th nzWidth="80px" style="text-align: center" nzAlign="center" nzLeft>
+          <th nzWidth="80px" nzAlign="center" nzLeft class="email-config-th-center">
             <b>Action</b>
           </th>
-          <th
-            nzLeft
-            nzWidth="300px"
-            nzShowSort
-            align="center"
-            nzColumnKey="{{ 'SERVICE_PROVIDER' }}"
-            [nzSortFn]="true"
-            nzCustomFilter
-          >
+          <th nzLeft nzWidth="300px" nzShowSort align="center" nzColumnKey="{{ 'SERVICE_PROVIDER' }}" [nzSortFn]="true"
+            nzCustomFilter>
             Service Provider
-            <!-- <nz-filter-trigger [(nzVisible)]="ProviderVisible" [nzDropdownMenu]="Provider">
-              <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isServiceApplied ? '#092B9C!important' : 'inherit' }"></span>
-            </nz-filter-trigger> -->
           </th>
-          <th
-            nzLeft
-            nzWidth="250px"
-            nzShowSort
-            align="center"
-            nzColumnKey="{{ 'SMTP_HOST' }}"
-            [nzSortFn]="true"
-            nzCustomFilter
-          >
+          <th nzLeft nzWidth="250px" nzShowSort align="center" nzColumnKey="{{ 'SMTP_HOST' }}" [nzSortFn]="true"
+            nzCustomFilter>
             SMTP Host
-            <!-- <nz-filter-trigger [(nzVisible)]="hostVisible" [nzDropdownMenu]="host">
-              <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isHostApplied ? '#092B9C!important' : 'inherit' }"></span>
-            </nz-filter-trigger> -->
           </th>
-          <th
-            nzWidth="150px"
-            nzShowSort
-            align="center"
-            nzColumnKey="{{ 'SMTP_PORT' }}"
-            [nzSortFn]="true"
-            nzCustomFilter
-          >
+          <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'SMTP_PORT' }}" [nzSortFn]="true"
+            nzCustomFilter>
             SMTP Port
-            <!-- <nz-filter-trigger [(nzVisible)]="portVisible" [nzDropdownMenu]="Port">
-              <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isPortApplied ? '#092B9C!important' : 'inherit' }"></span>
-            </nz-filter-trigger> -->
           </th>
-          <th
-            nzWidth="300px"
-            nzShowSort
-            align="center"
-            nzColumnKey="{{ 'USERNAME' }}"
-            [nzSortFn]="true"
-            nzCustomFilter
-          >
+          <th nzWidth="300px" nzShowSort align="center" nzColumnKey="{{ 'USERNAME' }}" [nzSortFn]="true" nzCustomFilter>
             User Name
-            <nz-filter-trigger
-              [(nzVisible)]="UserVisible"
-              [nzDropdownMenu]="User"
-            >
-              <span
-                nz-icon
-                nzType="filter"
-                nzTheme="fill"
-                [ngStyle]="{
-                  color: isUserApplied ? '#092B9C' : 'inherit'
-                }"
-              ></span>
+            <nz-filter-trigger [(nzVisible)]="UserVisible" [nzDropdownMenu]="User">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+              color: isUserApplied ? '#092B9C' : 'inherit'
+            }"></span>
             </nz-filter-trigger>
           </th>
-          <th
-            nzWidth="300px"
-            nzShowSort
-            align="center"
-            nzColumnKey="{{ 'SENDER_EMAIL' }}"
-            [nzSortFn]="true"
-            nzCustomFilter
-          >
+          <th nzWidth="300px" nzShowSort align="center" nzColumnKey="{{ 'SENDER_EMAIL' }}" [nzSortFn]="true"
+            nzCustomFilter>
             Sender Email
-            <!-- <nz-filter-trigger [(nzVisible)]="EmailVisible" [nzDropdownMenu]="Email">
-              <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isEmailApplied ? '#092B9C!important' : 'inherit' }"></span>
-            </nz-filter-trigger> -->
           </th>
-          <th
-            nzWidth="300px"
-            nzShowSort
-            align="center"
-            nzColumnKey="{{ 'SENDER_NAME' }}"
-            [nzSortFn]="true"
-            nzCustomFilter
-          >
+          <th nzWidth="300px" nzShowSort align="center" nzColumnKey="{{ 'SENDER_NAME' }}" [nzSortFn]="true"
+            nzCustomFilter>
             Sender Name
-            <!-- <nz-filter-trigger [(nzVisible)]="SenderVisible" [nzDropdownMenu]="Sender">
-              <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isSnameApplied ? '#092B9C!important' : 'inherit' }"></span>
-            </nz-filter-trigger> -->
           </th>
-          <th
-            nzWidth="100px"
-            nzShowSort
-            nzColumnKey="{{ 'IS_ACTIVE' }}"
-            [nzSortFn]="true"
-          >
+          <th nzWidth="100px" nzShowSort nzColumnKey="{{ 'IS_ACTIVE' }}" [nzSortFn]="true">
             Status
-
-            <!-- [nzFilters]="listOfFilter"
-            [nzFilterFn]="true" [nzFilterMultiple]="false" (nzFilterChange)="onStatusFilterChange($event)" -->
           </th>
         </tr>
       </thead>
@@ -182,346 +64,59 @@
       <tbody>
         <tr *ngFor="let data of table.data">
           <td align="center" nzLeft>
-            <!-- <a (click)="edit(data)">
-              <span nz-icon nzType="edit" nzTheme="twotone" style="font-size: 15px" nzTooltipTitle="Edit"
-                nz-tooltip></span>
-            </a> -->
-            <nz-tag
-              nzColor="#2db7f5"
-              (click)="edit(data)"
-              style="cursor: pointer"
-            >
-              <span
-                nz-icon
-                nzType="edit"
-                nzTheme="outline"
-                style="font-size: 15px"
-              >
-              </span
-              >&nbsp;&nbsp;Edit</nz-tag
-            >
+            <nz-tag nzColor="#2db7f5" (click)="edit(data)" class="email-config-edit-tag">
+              <span nz-icon nzType="edit" nzTheme="outline" class="email-config-edit-icon"></span>
+              &nbsp;&nbsp;Edit
+            </nz-tag>
           </td>
-          <!-- <td align="left" nzLeft>
-            <span *ngIf="data['SERVICE_PROVIDER'] != null">
-              <span *ngIf="data['SERVICE_PROVIDER'].length >= 35" nz-popover
-                [nzPopoverContent]="data['SERVICE_PROVIDER']" nzPopoverPlacement="topLeft">
-                {{
-                data["SERVICE_PROVIDER"] == null
-                ? "-"
-                : (data["SERVICE_PROVIDER"] | slice : 0 : 35)
-                }}{{ data["SERVICE_PROVIDER"].length > 35 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['SERVICE_PROVIDER'].length < 35">
-                {{
-                data["SERVICE_PROVIDER"] == null
-                ? "-"
-                : (data["SERVICE_PROVIDER"] | slice : 0 : 35)
-                }}
-                {{ data["SERVICE_PROVIDER"].length > 35 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['SERVICE_PROVIDER'] == null">-</span>
-          </td> 
-           <td align="left" nzLeft>
-            <span *ngIf="data['SMTP_HOST'] != null">
-              <span *ngIf="data['SMTP_HOST'].length >= 30" nz-popover [nzPopoverContent]="data['SMTP_HOST']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["SMTP_HOST"] == null
-                ? "-"
-                : (data["SMTP_HOST"] | slice : 0 : 30)
-                }}{{ data["SMTP_HOST"].length > 30 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['SMTP_HOST'].length < 30">
-                {{
-                data["SMTP_HOST"] == null
-                ? "-"
-                : (data["SMTP_HOST"] | slice : 0 : 30)
-                }}
-                {{ data["SMTP_HOST"].length > 30 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['SMTP_HOST'] == null">-</span>
-          </td> 
-            <td align="center">{{ data.SMTP_PORT ?? "-" }}</td>
-             <td align="left">
-            <span *ngIf="data['USERNAME'] != null">
-              <span *ngIf="data['USERNAME'].length >= 30" nz-popover [nzPopoverContent]="data['USERNAME']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["USERNAME"] == null
-                ? "-"
-                : (data["USERNAME"] | slice : 0 : 30)
-                }}{{ data["USERNAME"].length > 30 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['USERNAME'].length < 30">
-                {{
-                data["USERNAME"] == null
-                ? "-"
-                : (data["USERNAME"] | slice : 0 : 30)
-                }}
-                {{ data["USERNAME"].length > 30 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['USERNAME'] == null">-</span>
-          </td>
-          <td align="left">
-            <span *ngIf="data['SENDER_EMAIL'] != null">
-              <span *ngIf="data['SENDER_EMAIL'].length >= 30" nz-popover [nzPopoverContent]="data['SENDER_EMAIL']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["SENDER_EMAIL"] == null
-                ? "-"
-                : (data["SENDER_EMAIL"] | slice : 0 : 30)
-                }}{{ data["SENDER_EMAIL"].length > 30 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['SENDER_EMAIL'].length < 30">
-                {{
-                data["SENDER_EMAIL"] == null
-                ? "-"
-                : (data["SENDER_EMAIL"] | slice : 0 : 30)
-                }}
-                {{ data["SENDER_EMAIL"].length > 30 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['SENDER_EMAIL'] == null">-</span>
-          </td>
-          <td align="left">
-            <span *ngIf="data['SENDER_NAME'] != null">
-              <span *ngIf="data['SENDER_NAME'].length >= 30" nz-popover [nzPopoverContent]="data['SENDER_NAME']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["SENDER_NAME"] == null
-                ? "-"
-                : (data["SENDER_NAME"] | slice : 0 : 30)
-                }}{{ data["SENDER_NAME"].length > 30 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['SENDER_NAME'].length < 30">
-                {{
-                data["SENDER_NAME"] == null
-                ? "-"
-                : (data["SENDER_NAME"] | slice : 0 : 30)
-                }}
-                {{ data["SENDER_NAME"].length > 30 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['SENDER_NAME'] == null">-</span>
-          </td>
-          -->
-          <!-- <td align="left" nzLeft>
-            <span *ngIf="data['SERVICE_PROVIDER']; else noData">
-              <span *ngIf="shouldTruncateAt25(data['SERVICE_PROVIDER'])" nz-popover
-                [nzPopoverContent]="data['SERVICE_PROVIDER']" nzPopoverPlacement="topLeft">
-                {{ data["SERVICE_PROVIDER"] | slice : 0 : 25 }}...
-              </span>
-              <span *ngIf="
-                  !shouldTruncateAt25(data['SERVICE_PROVIDER']) &&
-                  data['SERVICE_PROVIDER'].length > 30
-                " nz-popover [nzPopoverContent]="data['SERVICE_PROVIDER']" nzPopoverPlacement="topLeft">
-                {{ data["SERVICE_PROVIDER"] | slice : 0 : 30 }}...
-              </span>
-              <span *ngIf="data['SERVICE_PROVIDER'].length <= 30">
-                {{ data["SERVICE_PROVIDER"] }}
-              </span>
-            </span>
-            <ng-template #noData>-</ng-template>
-          </td> -->
-          <td
-            nzLeft
-            align="left"
-            [nzTooltipTitle]="isTextOverflow ? data['SERVICE_PROVIDER'] : null"
-            #tooltipRef1="nzTooltip"
-            nz-tooltip
-          >
-            <div
-              #textContainer1
-              class="truncate-text"
-              (mouseenter)="checkOverflow(textContainer1, tooltipRef1)"
-            >
+
+          <td nzLeft align="left" [nzTooltipTitle]="isTextOverflow ? data['SERVICE_PROVIDER'] : null"
+            #tooltipRef1="nzTooltip" nz-tooltip>
+            <div #textContainer1 class="truncate-text" (mouseenter)="checkOverflow(textContainer1, tooltipRef1)">
               {{ data["SERVICE_PROVIDER"] ? data["SERVICE_PROVIDER"] : "-" }}
             </div>
           </td>
 
-          <!-- <td align="left" nzLeft>
-            <span *ngIf="data['SMTP_HOST']; else noData">
-              <span *ngIf="shouldTruncateAt25(data['SMTP_HOST'])" nz-popover [nzPopoverContent]="data['SMTP_HOST']"
-                nzPopoverPlacement="topLeft">
-                {{ data["SMTP_HOST"] | slice : 0 : 20 }}...
-              </span>
-              <span *ngIf="
-                  !shouldTruncateAt25(data['SMTP_HOST']) &&
-                  data['SMTP_HOST'].length > 26
-                " nz-popover [nzPopoverContent]="data['SMTP_HOST']" nzPopoverPlacement="topLeft">
-                {{ data["SMTP_HOST"] | slice : 0 : 26 }}...
-              </span>
-              <span *ngIf="data['SMTP_HOST'].length <= 26">
-                {{ data["SMTP_HOST"] }}
-              </span>
-            </span>
-            <ng-template #noData>-</ng-template>
-          </td> -->
-
-          <td
-            align="left"
-            nzLeft
-            [nzTooltipTitle]="isTextOverflow ? data['SMTP_HOST'] : null"
-            #tooltipRef="nzTooltip"
-            nz-tooltip
-          >
-            <div
-              #textContainer
-              class="truncate-text"
-              (mouseenter)="checkOverflow(textContainer, tooltipRef)"
-            >
+          <td nzLeft align="left" [nzTooltipTitle]="isTextOverflow ? data['SMTP_HOST'] : null" #tooltipRef="nzTooltip"
+            nz-tooltip>
+            <div #textContainer class="truncate-text" (mouseenter)="checkOverflow(textContainer, tooltipRef)">
               {{ data["SMTP_HOST"] ? data["SMTP_HOST"] : "-" }}
             </div>
           </td>
-          <!-- <td align="center">
-            <span *ngIf="data['SMTP_PORT']; else noData">
-              <span *ngIf="shouldTruncateAt25(data['SMTP_PORT'])" nz-popover [nzPopoverContent]="data['SMTP_PORT']"
-                nzPopoverPlacement="topLeft">
-                {{ data["SMTP_PORT"] | slice : 0 : 10 }}...
-              </span>
-              <span *ngIf="
-                  !shouldTruncateAt25(data['SMTP_PORT']) &&
-                  data['SMTP_PORT'].length > 15
-                " nz-popover [nzPopoverContent]="data['SMTP_PORT']" nzPopoverPlacement="topLeft">
-                {{ data["SMTP_PORT"] | slice : 0 : 15 }}...
-              </span>
-              <span *ngIf="data['SMTP_PORT'].length <= 15">
-                {{ data["SMTP_PORT"] }}
-              </span>
-            </span>
-            <ng-template #noData>-</ng-template>
-          </td> -->
 
-          <td
-            align="center"
-            [nzTooltipTitle]="isTextOverflow ? data['SMTP_PORT'] : null"
-            #tooltipRef2="nzTooltip"
-            nz-tooltip
-          >
-            <div
-              #textContainer2
-              class="truncate-text"
-              (mouseenter)="checkOverflow(textContainer2, tooltipRef2)"
-            >
+          <td align="center" [nzTooltipTitle]="isTextOverflow ? data['SMTP_PORT'] : null" #tooltipRef2="nzTooltip"
+            nz-tooltip>
+            <div #textContainer2 class="truncate-text" (mouseenter)="checkOverflow(textContainer2, tooltipRef2)">
               {{ data["SMTP_PORT"] ? data["SMTP_PORT"] : "-" }}
             </div>
           </td>
-          <!-- <td align="left">
-            <span *ngIf="data['USERNAME']; else noData">
-              <span *ngIf="shouldTruncateAt25(data['USERNAME'])" nz-popover [nzPopoverContent]="data['USERNAME']"
-                nzPopoverPlacement="topLeft">
-                {{ data["USERNAME"] | slice : 0 : 25 }}...
-              </span>
-              <span *ngIf="
-                  !shouldTruncateAt25(data['USERNAME']) &&
-                  data['USERNAME'].length > 30
-                " nz-popover [nzPopoverContent]="data['USERNAME']" nzPopoverPlacement="topLeft">
-                {{ data["USERNAME"] | slice : 0 : 30 }}...
-              </span>
-              <span *ngIf="data['USERNAME'].length <= 30">
-                {{ data["USERNAME"] }}
-              </span>
-            </span>
-            <ng-template #noData>-</ng-template>
-          </td> -->
 
-          <td
-            align="left"
-            [nzTooltipTitle]="isTextOverflow ? data['USERNAME'] : null"
-            #tooltipRef3="nzTooltip"
-            nz-tooltip
-          >
-            <div
-              #textContainer3
-              class="truncate-text"
-              (mouseenter)="checkOverflow(textContainer3, tooltipRef3)"
-            >
+          <td align="left" [nzTooltipTitle]="isTextOverflow ? data['USERNAME'] : null" #tooltipRef3="nzTooltip"
+            nz-tooltip>
+            <div #textContainer3 class="truncate-text" (mouseenter)="checkOverflow(textContainer3, tooltipRef3)">
               {{ data["USERNAME"] ? data["USERNAME"] : "-" }}
             </div>
           </td>
-          <!-- <td align="left">
-            <span *ngIf="data['SENDER_EMAIL']; else noData">
-              <span *ngIf="shouldTruncateAt25(data['SENDER_EMAIL'])" nz-popover
-                [nzPopoverContent]="data['SENDER_EMAIL']" nzPopoverPlacement="topLeft">
-                {{ data["SENDER_EMAIL"] | slice : 0 : 25 }}...
-              </span>
-              <span *ngIf="
-                  !shouldTruncateAt25(data['SENDER_EMAIL']) &&
-                  data['SENDER_EMAIL'].length > 30
-                " nz-popover [nzPopoverContent]="data['SENDER_EMAIL']" nzPopoverPlacement="topLeft">
-                {{ data["SENDER_EMAIL"] | slice : 0 : 30 }}...
-              </span>
-              <span *ngIf="data['SENDER_EMAIL'].length <= 30">
-                {{ data["SENDER_EMAIL"] }}
-              </span>
-            </span>
-            <ng-template #noData>-</ng-template>
-          </td> -->
 
-          <td
-            align="left"
-            [nzTooltipTitle]="isTextOverflow ? data['SENDER_EMAIL'] : null"
-            #tooltipRef3="nzTooltip"
-            nz-tooltip
-          >
-            <div
-              #textContainer3
-              class="truncate-text"
-              (mouseenter)="checkOverflow(textContainer3, tooltipRef3)"
-            >
+          <td align="left" [nzTooltipTitle]="isTextOverflow ? data['SENDER_EMAIL'] : null" #tooltipRef5="nzTooltip"
+            nz-tooltip>
+            <div #textContainer5 class="truncate-text" (mouseenter)="checkOverflow(textContainer5, tooltipRef5)">
               {{ data["SENDER_EMAIL"] ? data["SENDER_EMAIL"] : "-" }}
             </div>
           </td>
-          <!-- <td align="left">
-            <span *ngIf="data['SENDER_NAME']; else noData">
-              <span *ngIf="shouldTruncateAt25(data['SENDER_NAME'])" nz-popover [nzPopoverContent]="data['SENDER_NAME']"
-                nzPopoverPlacement="topLeft">
-                {{ data["SENDER_NAME"] | slice : 0 : 25 }}...
-              </span>
-              <span *ngIf="
-                  !shouldTruncateAt25(data['SENDER_NAME']) &&
-                  data['SENDER_NAME'].length > 30
-                " nz-popover [nzPopoverContent]="data['SENDER_NAME']" nzPopoverPlacement="topLeft">
-                {{ data["SENDER_NAME"] | slice : 0 : 30 }}...
-              </span>
-              <span *ngIf="data['SENDER_NAME'].length <= 30">
-                {{ data["SENDER_NAME"] }}
-              </span>
-            </span>
-            <ng-template #noData>-</ng-template>
-          </td> -->
-          <td
-            align="left"
-            [nzTooltipTitle]="isTextOverflow ? data['SENDER_NAME'] : null"
-            #tooltipRef4="nzTooltip"
-            nz-tooltip
-          >
-            <div
-              #textContainer4
-              class="truncate-text"
-              (mouseenter)="checkOverflow(textContainer4, tooltipRef4)"
-            >
+
+          <td align="left" [nzTooltipTitle]="isTextOverflow ? data['SENDER_NAME'] : null" #tooltipRef4="nzTooltip"
+            nz-tooltip>
+            <div #textContainer4 class="truncate-text" (mouseenter)="checkOverflow(textContainer4, tooltipRef4)">
               {{ data["SENDER_NAME"] ? data["SENDER_NAME"] : "-" }}
             </div>
           </td>
+
           <td align="center">
-            <i
-              nz-icon
-              *ngIf="data['IS_ACTIVE']"
-              [nzType]="'check-circle'"
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#52c41a'"
-            ></i>
-            <i
-              nz-icon
-              *ngIf="!data['IS_ACTIVE']"
-              [nzType]="'close-circle'"
-              [nzTheme]="'twotone'"
-              [nzTwotoneColor]="'#f50'"
-            ></i>
+            <i nz-icon *ngIf="data['IS_ACTIVE']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+            <i nz-icon *ngIf="!data['IS_ACTIVE']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
           </td>
         </tr>
       </tbody>
@@ -530,29 +125,13 @@
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
           <nz-input-group [nzSuffix]="inputClearTpl">
-            <input
-              type="text"
-              nz-input
-              [(ngModel)]="ProviderText"
-              (keyup)="onKeyup($event, 'ProviderText')"
-              placeholder="Search Service provider"
-            />
+            <input type="text" nz-input [(ngModel)]="ProviderText" (keyup)="onKeyup($event, 'ProviderText')"
+              placeholder="Search Service provider" />
           </nz-input-group>
           <ng-template #inputClearTpl>
-            <span
-              nz-icon
-              class="ant-input-clear-icon"
-              nzTheme="fill"
-              nzType="close-circle"
-              *ngIf="ProviderText"
-              (click)="reset()"
-            ></span>
-            <span
-              nz-icon
-              nzType="search"
-              nzTheme="outline"
-              *ngIf="ProviderText == ''"
-            ></span>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="ProviderText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="ProviderText == ''"></span>
           </ng-template>
         </div>
       </div>
@@ -561,29 +140,13 @@
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
           <nz-input-group [nzSuffix]="inputClearTpl">
-            <input
-              type="text"
-              nz-input
-              [(ngModel)]="hostText"
-              (keyup)="onKeyup($event, 'hostText')"
-              placeholder="Search SMTP Host"
-            />
+            <input type="text" nz-input [(ngModel)]="hostText" (keyup)="onKeyup($event, 'hostText')"
+              placeholder="Search SMTP Host" />
           </nz-input-group>
           <ng-template #inputClearTpl>
-            <span
-              nz-icon
-              class="ant-input-clear-icon"
-              nzTheme="fill"
-              nzType="close-circle"
-              *ngIf="hostText"
-              (click)="reset()"
-            ></span>
-            <span
-              nz-icon
-              nzType="search"
-              nzTheme="outline"
-              *ngIf="hostText == ''"
-            ></span>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="hostText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="hostText == ''"></span>
           </ng-template>
         </div>
       </div>
@@ -592,29 +155,13 @@
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
           <nz-input-group [nzSuffix]="inputClearTpl">
-            <input
-              type="text"
-              nz-input
-              [(ngModel)]="PortText"
-              (keyup)="onKeyup($event, 'PortText')"
-              placeholder="Search SMTP Port"
-            />
+            <input type="text" nz-input [(ngModel)]="PortText" (keyup)="onKeyup($event, 'PortText')"
+              placeholder="Search SMTP Port" />
           </nz-input-group>
           <ng-template #inputClearTpl>
-            <span
-              nz-icon
-              class="ant-input-clear-icon"
-              nzTheme="fill"
-              nzType="close-circle"
-              *ngIf="PortText"
-              (click)="reset()"
-            ></span>
-            <span
-              nz-icon
-              nzType="search"
-              nzTheme="outline"
-              *ngIf="PortText == ''"
-            ></span>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="PortText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="PortText == ''"></span>
           </ng-template>
         </div>
       </div>
@@ -623,29 +170,13 @@
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
           <nz-input-group [nzSuffix]="inputClearTpl">
-            <input
-              type="text"
-              nz-input
-              [(ngModel)]="UserText"
-              (keyup)="onKeyup($event, 'UserText')"
-              placeholder="Search User Name"
-            />
+            <input type="text" nz-input [(ngModel)]="UserText" (keyup)="onKeyup($event, 'UserText')"
+              placeholder="Search User Name" />
           </nz-input-group>
           <ng-template #inputClearTpl>
-            <span
-              nz-icon
-              class="ant-input-clear-icon"
-              nzTheme="fill"
-              nzType="close-circle"
-              *ngIf="UserText"
-              (click)="reset()"
-            ></span>
-            <span
-              nz-icon
-              nzType="search"
-              nzTheme="outline"
-              *ngIf="UserText == ''"
-            ></span>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="UserText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="UserText == ''"></span>
           </ng-template>
         </div>
       </div>
@@ -654,29 +185,13 @@
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
           <nz-input-group [nzSuffix]="inputClearTpl">
-            <input
-              type="text"
-              nz-input
-              [(ngModel)]="EmailText"
-              (keyup)="onKeyup($event, 'EmailText')"
-              placeholder="Search Sender Email"
-            />
+            <input type="text" nz-input [(ngModel)]="EmailText" (keyup)="onKeyup($event, 'EmailText')"
+              placeholder="Search Sender Email" />
           </nz-input-group>
           <ng-template #inputClearTpl>
-            <span
-              nz-icon
-              class="ant-input-clear-icon"
-              nzTheme="fill"
-              nzType="close-circle"
-              *ngIf="EmailText"
-              (click)="reset()"
-            ></span>
-            <span
-              nz-icon
-              nzType="search"
-              nzTheme="outline"
-              *ngIf="EmailText == ''"
-            ></span>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="EmailText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="EmailText == ''"></span>
           </ng-template>
         </div>
       </div>
@@ -685,57 +200,27 @@
       <div class="ant-table-filter-dropdown">
         <div class="search-box">
           <nz-input-group [nzSuffix]="inputClearTpl">
-            <input
-              type="text"
-              nz-input
-              [(ngModel)]="SenderText"
-              (keyup)="onKeyup($event, 'SenderText')"
-              placeholder="Search Sender Name"
-            />
+            <input type="text" nz-input [(ngModel)]="SenderText" (keyup)="onKeyup($event, 'SenderText')"
+              placeholder="Search Sender Name" />
           </nz-input-group>
           <ng-template #inputClearTpl>
-            <span
-              nz-icon
-              class="ant-input-clear-icon"
-              nzTheme="fill"
-              nzType="close-circle"
-              *ngIf="SenderText"
-              (click)="reset()"
-            ></span>
-            <span
-              nz-icon
-              nzType="search"
-              nzTheme="outline"
-              *ngIf="SenderText == ''"
-            ></span>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="SenderText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="SenderText == ''"></span>
           </ng-template>
         </div>
       </div>
     </nz-dropdown-menu>
   </div>
 </div>
-
-<nz-drawer
-  [nzBodyStyle]="{
+<nz-drawer [nzBodyStyle]="{
     height: 'calc(100% - 55px)',
     overflow: 'auto',
     'padding-bottom': '53px'
-  }"
-  [nzClosable]="true"
-  [nzMask]="true"
-  [nzMaskClosable]="true"
-  [nzWidth]="1000"
-  [nzVisible]="drawerVisible"
-  [nzTitle]="drawerTitle"
-  (nzOnClose)="drawerClose()"
-  (nzKeyboard)="(true)"
->
+  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="true" [nzWidth]="1000" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
   <ng-container *nzDrawerContent>
-    <app-email-service-config
-      [drawerClose]="closeCallback"
-      [drawerVisible]="drawerVisible"
-      [data]="drawerData"
-    >
+    <app-email-service-config [drawerClose]="closeCallback" [drawerVisible]="drawerVisible" [data]="drawerData">
     </app-email-service-config>
   </ng-container>
 </nz-drawer>

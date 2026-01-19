@@ -1,44 +1,129 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%;
   display: inline-block;
+}
+.header-row {
+  align-items: center;
+}
+.formname {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+.back-icon {
+  font-weight: bold !important;
+  cursor: pointer;
+}
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-item {
+  width: 47px;
+}
+.add-btn-item {
+  margin-right: 0;
+}
+.filter-wrapper {
+  padding-top: 0;
+}
+.center {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.filter-name {
+  font-size: 14px;
+  white-space: nowrap;
+  color: #000;
+}
+.filter-selected-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+.filter-tag {
+  cursor: pointer;
+  font-size: 10px;
+}
+.no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.footer-btn {
+  margin-right: 10px;
+}
+.country-table-wrapper {
+  margin-top: 10px;
+}
+.tbl-center {
+  text-align: center;
+}
+.edit-tag {
+  cursor: pointer;
+}
+.edit-icon {
+  font-size: 15px;
+}
+.query-title {
+  text-align: center;
 }

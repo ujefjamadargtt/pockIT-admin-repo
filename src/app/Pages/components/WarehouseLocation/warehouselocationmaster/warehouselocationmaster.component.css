@@ -1,37 +1,114 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-.select{
-width: 200px;
-padding: 8px;
-display: block;
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 .margin-row {
   margin: 10px 0px;
 }
-
+.back-icon-bold-pointer {
+  font-weight: bold;
+  cursor: pointer;
+}
+.top-actions-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-item-fixed-width {
+  width: 47px;
+}
+.mr-0-important {
+  margin-right: 0px;
+}
+.filter-row-padding-top-10 {
+  padding-top: 10px;
+}
+.saved-filters-wrapper {
+  border: 1px dashed black;
+  border-radius: 5px;
+  padding: 10px;
+}
+.text-center-spinner {
+  text-align: center;
+}
+.saved-filter-tag {
+  margin: 1px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+}
+.saved-filter-tag-title {
+  color: black;
+  margin-right: 10px;
+}
+.filter-icon-apply {
+  color: #01ac5c;
+  margin-right: 8px;
+}
+.filter-icon-delete {
+  color: red;
+  margin-right: 8px;
+}
+.filter-icon-view {
+  color: blue;
+}
+.no-filters-found-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-actions-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.mr-10-clear-filter {
+  margin-right: 10px;
+}
+.mr-10-add-filter {
+  margin-right: 10px;
+}
+.table-row-margin-top-10 {
+  margin-top: 10px;
+}
+.table-pre-line {
+  white-space: pre-line;
+}
+.th-bold-center {
+  font-weight: bold;
+  text-align: center;
+}
+.tbody-row-text-center {
+  text-align: center;
+}
+.edit-icon-font-15 {
+  font-size: 15px;
+}
+.full-width {
+  width: 100%;
+}
+.modal-query-title-center {
+  text-align: center;
+}

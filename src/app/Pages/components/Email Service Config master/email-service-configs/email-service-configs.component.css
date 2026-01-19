@@ -1,7 +1,39 @@
 .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
-    display: inline-block;
-  }
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+
+.formname-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.formname-right-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.formname-action-item {
+  margin-right: 0px;
+}
+.email-config-table {
+  white-space: pre-line;
+}
+
+.email-config-th-center {
+  text-align: center;
+}
+
+.email-config-edit-tag {
+  cursor: pointer;
+}
+
+.email-config-edit-icon {
+  font-size: 15px;
+}
+.nz-row-margin-top-10 {
+  margin-top: 10px;
+}

@@ -1,132 +1,194 @@
 <div nz-row>
-    <div nz-col nzSpan="24">
-        <nz-table class="my-scroll no-wrap1" nzBordered #organizationTable nzShowSizeChanger [nzFrontPagination]="false"
-            [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
-            [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)"
-            (nzQueryParams)="sort($event)" [nzSize]="'small'" style="white-space: pre-line" [nzScroll]="{ y: '50vh' }">
-            <thead>
-                <tr>
-                    <th nzWidth="170px" nzLeft style="font-weight: bold; text-align: center">
-                        Action
-                    </th>
-
-                    <!-- Country -->
-                    <th nzWidth="300px" style="font-weight: bold; text-align: center" nzColumnKey="NAME"
-                        [nzSortFn]="true">
-                        Customer Name
-                    </th>
-
-                    <th nzWidth="250px" style="font-weight: bold; text-align: center" nzColumnKey="EMAIL"
-                        [nzSortFn]="true">
-                        Email ID
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of organizationTable.data" style="text-align: center">
-                    <td nzLeft>
-                        <nz-tag [nzColor]="'green'" style="cursor: pointer;" (click)="edit(data)">Approve</nz-tag>
-                        <nz-tag [nzColor]="'red'" style="cursor: pointer;" (click)="edit1(data)">reject</nz-tag>
-
-                        <!-- <a (click)="edit(data)"><span nz-icon nzType="edit" nzTheme="twotone" style="font-size: 15px"
-                                nzTooltipTitle="Edit" nz-tooltip></span></a>&nbsp;&nbsp; -->
-                    </td>
-                    <td align="left">
-                        <span *ngIf="data['NAME'] != null">
-                            <span *ngIf="data['NAME'].length >= 50" nz-popover [nzPopoverContent]="data['NAME']"
-                                nzPopoverPlacement="topLeft">
-                                {{
-                                data["NAME"] == null
-                                ? "-"
-                                : (data["NAME"] | slice : 0 : 50)
-                                }}{{ data["NAME"].length > 50 ? "..." : "" }}
-                            </span>
-                            <span *ngIf="data['NAME'].length < 50">
-                                {{
-                                data["NAME"] == null ? "-" : (data["NAME"] | slice : 0 : 50)
-                                }}
-                                {{ data["NAME"].length > 50 ? "..." : "" }}
-                            </span>
-                        </span>
-                        <span *ngIf="data['NAME'] == null">-</span>
-                    </td>
-                    <td align="left">
-                        <span *ngIf="data['EMAIL'] != null" style="text-align: left">
-                            <span *ngIf="data['EMAIL'].length >= 50" nz-popover [nzPopoverContent]="data['EMAIL']"
-                                nzPopoverPlacement="topLeft">
-                                {{
-                                data["EMAIL"] == null
-                                ? "-"
-                                : (data["EMAIL"] | slice : 0 : 50)
-                                }}{{ data["EMAIL"].length > 50 ? "..." : "" }}
-                            </span>
-                            <span *ngIf="data['EMAIL'].length < 50">
-                                {{
-                                data["EMAIL"] == null
-                                ? "-"
-                                : (data["EMAIL"] | slice : 0 : 50)
-                                }}
-                                {{ data["EMAIL"].length > 50 ? "..." : "" }}
-                            </span>
-                        </span>
-                        <span *ngIf="data['EMAIL'] == null" style="text-align: center">-</span>
-                    </td>
-                </tr>
-            </tbody>
-        </nz-table>
-
-        <!-- Column Visibility Toggle Dropdown -->
-    </div>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1 approval-table"
+      nzBordered
+      #organizationTable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+      [nzSize]="'small'"
+      [nzScroll]="{ y: '50vh' }"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="170px" nzLeft class="action-header">Action</th>
+          <th
+            nzWidth="300px"
+            class="customer-name-header"
+            nzColumnKey="NAME"
+            [nzSortFn]="true"
+          >
+            Customer Name
+          </th>
+          <th
+            nzWidth="250px"
+            class="email-header"
+            nzColumnKey="EMAIL"
+            [nzSortFn]="true"
+          >
+            Email ID
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of organizationTable.data" class="table-row">
+          <td nzLeft class="action-cell">
+            <nz-tag [nzColor]="'green'" class="approve-tag" (click)="edit(data)"
+              >Approve</nz-tag
+            >
+            <nz-tag [nzColor]="'red'" class="reject-tag" (click)="edit1(data)"
+              >reject</nz-tag
+            >
+          </td>
+          <td align="left" class="customer-name-cell">
+            <span *ngIf="data['NAME'] != null">
+              <span
+                *ngIf="data['NAME'].length >= 50"
+                nz-popover
+                [nzPopoverContent]="data['NAME']"
+                nzPopoverPlacement="topLeft"
+                class="truncated-name"
+              >
+                {{ data["NAME"] == null ? "-" : (data["NAME"] | slice : 0 : 50)
+                }}{{ data["NAME"].length > 50 ? "..." : "" }}
+              </span>
+              <span *ngIf="data['NAME'].length < 50" class="full-name">
+                {{
+                  data["NAME"] == null ? "-" : (data["NAME"] | slice : 0 : 50)
+                }}
+                {{ data["NAME"].length > 50 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data['NAME'] == null" class="empty-value">-</span>
+          </td>
+          <td align="left" class="email-cell">
+            <span *ngIf="data['EMAIL'] != null" class="email-content">
+              <span
+                *ngIf="data['EMAIL'].length >= 50"
+                nz-popover
+                [nzPopoverContent]="data['EMAIL']"
+                nzPopoverPlacement="topLeft"
+                class="truncated-email"
+              >
+                {{
+                  data["EMAIL"] == null
+                    ? "-"
+                    : (data["EMAIL"] | slice : 0 : 50)
+                }}{{ data["EMAIL"].length > 50 ? "..." : "" }}
+              </span>
+              <span *ngIf="data['EMAIL'].length < 50" class="full-email">
+                {{
+                  data["EMAIL"] == null ? "-" : (data["EMAIL"] | slice : 0 : 50)
+                }}
+                {{ data["EMAIL"].length > 50 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data['EMAIL'] == null" class="empty-value-center"
+              >-</span
+            >
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
 </div>
-
-
-
-<nz-modal [(nzVisible)]="openModal" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="410px"
-    nzClosable="false" [nzFooter]="contextofrules" nzMaskClosable="true" (nzOnCancel)="closemodelll()">
-    <ng-container *nzModalContent>
-        <h5 style="font-size: 15px">Are you sure, you want approve invoice request ?</h5>
-
-    </ng-container>
-
-    <ng-template #contextofrules>
-        <button nz-button [nzLoading]="isSpinning" nzType="default" class="btn btn-primary" (click)="closemodelll()">
-            Cancel
-        </button>
-        <button nz-button [nzLoading]="isSpinning" nzType="primary" class="btn btn-primary"
-            (click)="Approve(assigndataa)">
-            Approve
-        </button>
-
-    </ng-template>
+<nz-modal
+  [(nzVisible)]="openModal"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="410px"
+  nzClosable="false"
+  [nzFooter]="contextofrules"
+  nzMaskClosable="true"
+  (nzOnCancel)="closemodelll()"
+>
+  <ng-container *nzModalContent>
+    <h5 class="modal-question">
+      Are you sure, you want approve invoice request ?
+    </h5>
+  </ng-container>
+  <ng-template #contextofrules>
+    <button
+      nz-button
+      [nzLoading]="isSpinning"
+      nzType="default"
+      class="modal-cancel-btn"
+      (click)="closemodelll()"
+    >
+      Cancel
+    </button>
+    <button
+      nz-button
+      [nzLoading]="isSpinning"
+      nzType="primary"
+      class="modal-approve-btn"
+      (click)="Approve(assigndataa)"
+    >
+      Approve
+    </button>
+  </ng-template>
 </nz-modal>
-
-<nz-modal [(nzVisible)]="openModal1" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="450px"
-    nzClosable="false" [nzFooter]="contextofrulesfoot" nzMaskClosable="true" (nzOnCancel)="closemodelll()">
-    <ng-container *nzModalContent>
-        <h5 style="font-size: 15px">Are you sure, you want reject invoice request ?</h5>
-        <hr style="margin: 8px 0" />
-        <p style="font-size: 13px; margin-bottom: 10px"></p>
-        <div nz-row>
-            <div nz-col nzSpan="24">
-                <nz-form-item style="margin-bottom: 4px !important">
-                    <nz-form-label nzRequired nzNoColon>Rejection Remark</nz-form-label>
-                    <nz-form-control>
-                        <textarea [(ngModel)]="REMARKS" style="width: 100%;" nz-input rows="3" name="remark"
-                            placeholder="Enter Rejection Remark" maxlength="512"></textarea>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-        </div>
-    </ng-container>
-
-    <ng-template #contextofrulesfoot>
-        <button nz-button [nzLoading]="isSpinning" nzType="default" class="btn btn-primary" (click)="closemodelll()">
-            Cancel
-        </button>
-        <button nz-button [nzLoading]="isSpinning" nzType="primary" class="btn btn-primary"
-            (click)="reject(assigndataa)">
-            Reject
-        </button>
-
-    </ng-template>
+<nz-modal
+  [(nzVisible)]="openModal1"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="450px"
+  nzClosable="false"
+  [nzFooter]="contextofrulesfoot"
+  nzMaskClosable="true"
+  (nzOnCancel)="closemodelll()"
+>
+  <ng-container *nzModalContent>
+    <h5 class="modal-question">
+      Are you sure, you want reject invoice request ?
+    </h5>
+    <hr class="modal-divider" />
+    <p class="modal-instruction"></p>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item class="rejection-remark-form">
+          <nz-form-label nzRequired nzNoColon>Rejection Remark</nz-form-label>
+          <nz-form-control>
+            <textarea
+              [(ngModel)]="REMARKS"
+              class="remark-textarea"
+              nz-input
+              rows="3"
+              name="remark"
+              placeholder="Enter Rejection Remark"
+              maxlength="512"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #contextofrulesfoot>
+    <button
+      nz-button
+      [nzLoading]="isSpinning"
+      nzType="default"
+      class="modal-cancel-btn"
+      (click)="closemodelll()"
+    >
+      Cancel
+    </button>
+    <button
+      nz-button
+      [nzLoading]="isSpinning"
+      nzType="primary"
+      class="modal-reject-btn"
+      (click)="reject(assigndataa)"
+    >
+      Reject
+    </button>
+  </ng-template>
 </nz-modal>

@@ -1,0 +1,103 @@
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+.ordcancel-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.ordcancel-form-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.ordcancel-filter-btn-width {
+  width: 47px;
+}
+.ordcancel-filter-padding {
+  padding-top: 0px;
+}
+.ordcancel-text-center {
+  text-align: center;
+}
+.ordcancel-card-mb {
+  margin-bottom: 8px;
+}
+.ordcancel-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.ordcancel-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.ordcancel-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.ordcancel-check-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.ordcancel-actions-mt {
+  margin-top: 7px;
+}
+.ordcancel-actions-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.ordcancel-tag-cursor {
+  cursor: pointer;
+}
+.ordcancel-icon-size {
+  font-size: 15px;
+}
+.ordcancel-tag-view {
+  cursor: pointer;
+  margin-right: 0px;
+}
+.ordcancel-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.ordcancel-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.ordcancel-btn-mr {
+  margin-right: 10px;
+}
+.ordcancel-table-mt {
+  margin-top: 10px;
+}
+.ordcancel-th-center {
+  text-align: center;
+}
+.ordcancel-th-bold-center {
+  font-weight: bold;
+  text-align: center;
+}
+.ordcancel-dropdown-width {
+  width: 300px;
+}
+.ordcancel-searchbox-width {
+  width: 280px;
+}

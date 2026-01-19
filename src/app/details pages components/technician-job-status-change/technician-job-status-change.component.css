@@ -1,33 +1,36 @@
 th {
-    text-align: center !important;
-    vertical-align: middle !important;
-    /* font-weight: bold; */
+  text-align: center !important;
+  vertical-align: middle !important;
 }
-
-.select{
+.select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
-    padding: 8px;
-  }
-
-  .search-box input {
-    width: 188px;
-    display: block;
-  }
-
-  .search-box button {
-    width: 90px;
-  }
-
-  .search-button {
-    margin-right: 8px;
-  }
-
-  nz-select {
-    width: 100%;
-  }
-
+  padding: 8px;
+}
+.search-box input {
+  width: 188px;
+  display: block;
+}
+.search-box button {
+  width: 90px;
+}
+.search-button {
+  margin-right: 8px;
+}
+nz-select {
+  width: 100%;
+}
+.img-remarks-container {
+  border-bottom: 1px solid #00000012;
+}
+.img-remarks-text {
+  text-align: justify;
+  white-space: pre-line;
+  margin-bottom: 5px;
+}
+.img-item-spacing {
+  margin-top: 10px;
+}

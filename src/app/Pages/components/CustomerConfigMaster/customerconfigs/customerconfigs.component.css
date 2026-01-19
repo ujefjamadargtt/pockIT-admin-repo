@@ -1,0 +1,20 @@
+.back-arrow-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.no-right-margin {
+  margin-right: 0px;
+}
+.row-top-space {
+  margin-top: 10px;
+}
+.table-preline {
+  white-space: pre-line;
+}
+.th-bold-center {
+  text-align: center;
+}

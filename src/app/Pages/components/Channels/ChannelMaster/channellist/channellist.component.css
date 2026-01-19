@@ -1,32 +1,93 @@
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 .select {
     width: 200px;
     padding: 8px;
     display: block;
 }
-
 .search-box {
     padding: 8px;
 }
-
 .search-box input {
     width: 188px;
     display: block;
 }
-
 .search-box button {
     width: 90px;
 }
-
 .search-button {
     margin-right: 8px;
 }
-
 nz-select {
     width: 100%;
+}
+.chn-arrow-back {
+  font-weight: bold;
+  cursor: pointer;
+}
+.chn-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.chn-filter-width {
+  width: 47px;
+}
+.chn-padding-top {
+  padding-top: 10px;
+}
+.chn-filter-container {
+  border: 1px dashed black;
+  border-radius: 5px;
+  padding: 10px;
+}
+.chn-text-center {
+  text-align: center;
+}
+.chn-filter-tag {
+  margin: 1px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+}
+.chn-filter-name {
+  color: black;
+  margin-right: 10px;
+}
+.chn-icon-apply {
+  color: #01ac5c;
+  margin-right: 8px;
+}
+.chn-icon-delete {
+  color: red;
+  margin-right: 8px;
+}
+.chn-icon-eye {
+  color: blue;
+  margin-right: 8px;
+}
+.chn-icon-edit {
+  font-size: 15px;
+}
+.chn-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.chn-bottom-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.chn-btn-margin {
+  margin-right: 10px;
+}
+.chn-table-whitespace {
+  white-space: pre-line;
+}
+.chn-modal-text {
+  text-align: center;
 }

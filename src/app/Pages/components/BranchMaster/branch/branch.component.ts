@@ -6,7 +6,6 @@ import { CookieService } from "ngx-cookie-service";
 import { Branchmaster } from "src/app/Pages/Models/branchmaster";
 import { ApiServiceService } from "src/app/Service/api-service.service";
 import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
-
 @Component({
   selector: "app-branch",
   templateUrl: "./branch.component.html",
@@ -19,14 +18,12 @@ export class BranchComponent implements OnInit {
   @Input() drawerVisible: boolean;
   public commonFunction = new CommonFunctionService();
   isSpinning = false;
-
   isCountrySpinning = false;
   isStateSpinning = false;
   isDistrictSpinning = false;
   isCitySpinning = false;
   isPincodeSpinning = false;
   isFocused: string = "";
-
   isOk = true;
   emailpattern =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -42,13 +39,11 @@ export class BranchComponent implements OnInit {
   time2;
   department: Branchmaster[] = [];
   org = [];
-
   orgId = sessionStorage.getItem("orgId");
   decreptedOrgIdString = this.orgId
     ? this.commonFunction.decryptdata(this.orgId)
     : "";
   decreptedOrgId = parseInt(this.decreptedOrgIdString, 10);
-
   pageIndex = 1;
   pageSize = 10;
   totalRecords = 1;
@@ -56,14 +51,12 @@ export class BranchComponent implements OnInit {
   sortValue: string = "desc";
   sortKey: string = "id";
   date;
-
   constructor(
     private api: ApiServiceService,
     private cookie: CookieService,
     private datePipe: DatePipe,
     private message: NzNotificationService
   ) { }
-
   ngOnInit() {
     if (this.data.ID) {
       this.getCountry1();
@@ -71,34 +64,27 @@ export class BranchComponent implements OnInit {
       this.getCountry();
     }
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["data"] && this.data) {
       const { COUNTRY_ID, STATE_ID } = this.data;
-
-      // Call the API to load state, city, and pincode
       this.getstate(COUNTRY_ID, false);
       if (STATE_ID) {
         this.getDistrict(STATE_ID, false);
       }
     }
   }
-
   allClusters = [];
   clusters = [];
-
   close(accountMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     this.data.ORG_ID = 1
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
     this.add();
   }
-
   add(): void {
     this.api.getAllBranch(1, 1, "SEQ_NO", "desc", "").subscribe(
       (data) => {
@@ -112,7 +98,6 @@ export class BranchComponent implements OnInit {
       (err) => { }
     );
   }
-
   alphanumchar(event) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -126,7 +111,6 @@ export class BranchComponent implements OnInit {
     }
     return true;
   }
-
   alphaOnly(event) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -139,7 +123,6 @@ export class BranchComponent implements OnInit {
     }
     return true;
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -147,11 +130,9 @@ export class BranchComponent implements OnInit {
     }
     return true;
   }
-
   save(addNew: boolean, accountMasterPage: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       (this.data.NAME == undefined ||
         this.data.NAME == null ||
@@ -227,7 +208,6 @@ export class BranchComponent implements OnInit {
       this.isOk = false;
       this.message.error("Please Select Pincode", "");
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       this.data.ORG_ID = 1
@@ -279,7 +259,6 @@ export class BranchComponent implements OnInit {
       }
     }
   }
-
   onStateChange(event: any) {
     if (event != null && event != undefined) {
       this.api
@@ -289,13 +268,11 @@ export class BranchComponent implements OnInit {
         });
     }
   }
-
   state: any = [];
   country: any = [];
   pincode: any = [];
   City1: any = [];
   district: any[];
-
   getCountry() {
     this.isCountrySpinning = true;
     this.api
@@ -304,7 +281,6 @@ export class BranchComponent implements OnInit {
         (data) => {
           if (data["code"] == 200) {
             this.country = data["data"];
-
             this.isCountrySpinning = false;
           } else {
             this.country = [];
@@ -318,7 +294,6 @@ export class BranchComponent implements OnInit {
         }
       );
   }
-
   getCountry1() {
     this.api
       .getAllCountryMaster(0, 0, "SEQ_NO", "asc", " AND IS_ACTIVE = 1")
@@ -340,12 +315,10 @@ export class BranchComponent implements OnInit {
         }
       );
   }
-
   getstate(event: any, isTrue) {
     var filter = " AND IS_ACTIVE = 1 AND COUNTRY_ID = " + event;
     if (isTrue) {
       this.data.STATE_ID = null;
-      // this.data.CITY_ID = null;
       this.data.DISTRICT_ID = null;
       this.data.PINCODE_ID = null;
       this.data.PINCODE = null;
@@ -363,9 +336,7 @@ export class BranchComponent implements OnInit {
             this.getDistrict(this.data.STATE_ID, false);
             this.data.STATE_ID = this.data.STATE_ID;
             this.isStateSpinning = false;
-
           } else {
-
             this.data.STATE_ID = null;
             this.state = [];
             this.isStateSpinning = false;
@@ -379,33 +350,23 @@ export class BranchComponent implements OnInit {
       );
     }
   }
-
   districtid: any;
-
   getDistrict(event: any, istrue) {
     if (istrue) {
       this.data.DISTRICT_ID = null;
-
-      // this.data.CITY_ID = undefined;
       this.data.PINCODE_ID = null;
       this.data.PINCODE = null;
-
       this.district = [];
       this.pincode = [];
     }
-
     this.districtid = event;
-
-
     var filter = " AND IS_ACTIVE = 1 AND STATE_ID = " + event;
-
     if (event) {
       this.isDistrictSpinning = true;
       this.api.getDistrictData(0, 0, "SEQ_NO", "asc", filter).subscribe(
         (data) => {
           if (data["code"] == 200) {
             this.district = data["data"];
-            // this.getCityyy1(this.data.DISTRICT_ID,false);
             this.getpincode(this.data.DISTRICT_ID, false);
             this.isDistrictSpinning = false;
           } else {
@@ -430,14 +391,12 @@ export class BranchComponent implements OnInit {
       var pin = this.pincode.filter((i) => i.ID == pincode);
       if (pin != null && pin != undefined && pin != '') {
         this.data.PINCODE = pin[0]['PINCODE_NUMBER']
-
       } else {
         this.data.PINCODE = null;
       }
     } else {
       this.data.PINCODE = null;
     }
-
   }
   getpincode(DISTRICT_ID: any, istrue) {
     if (istrue) {
@@ -445,10 +404,8 @@ export class BranchComponent implements OnInit {
       this.data.PINCODE = null;
       this.pincode = [];
     }
-
     this.data.DISTRICT_ID = DISTRICT_ID;
     var filter = " AND IS_ACTIVE = 1 AND DISTRICT = " + this.data.DISTRICT_ID;
-
     if (this.data.DISTRICT_ID) {
       this.isPincodeSpinning = true;
       this.api.getAllPincode(0, 0, "SEQ_NO", "asc", filter).subscribe(
@@ -456,7 +413,6 @@ export class BranchComponent implements OnInit {
           if (data["code"] == 200) {
             this.pincode = data["data"];
             this.data.PINCODE_ID = Number(this.data.PINCODE_ID);
-
             this.isPincodeSpinning = false;
           } else {
             this.state = [];

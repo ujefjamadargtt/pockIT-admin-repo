@@ -1,6 +1,25 @@
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px !important;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+  display: inline-block;
+  margin-bottom: 5px !important;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.w-100 {
+  width: 100%;
+}
+.color {
+  color: red;
+  font-size: 10px;
+}
+.mr-3 {
+  margin-right: 8px;
+}
+
+.menuc {
+  border-radius: 4px;
+  color: white !important;
+}
+
+.color-w {
+  color: white !important;
+}

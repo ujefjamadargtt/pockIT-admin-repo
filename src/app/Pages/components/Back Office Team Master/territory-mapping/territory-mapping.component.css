@@ -1,10 +1,43 @@
-nz-form-item  {
+.bo-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 5px;
 }
-
-*:focus {
-  outline: none;
+.bo-add-btn {
+  width: 100%;
+  margin-top: 5px;
+}
+.bo-hr {
+  margin: 10px 0;
+}
+.bo-search-col {
+  text-align: right;
+  padding-right: 20px;
+  width: 100% !important;
+}
+.bo-search-group {
+  margin-left: 26px !important;
+}
+.bo-search-input {
+  height: 32px;
+}
+.bo-search-btn {
+  height: 32px;
+}
+.bo-table-th-bold {
+  font-weight: bold;
+  text-align: center;
+}
+.bo-table-th-center {
+  text-align: center;
+}
+.bo-table-cell-preline {
+  white-space: pre-line;
+}
+.bo-table-cell-left {
+  text-align: left;
+}
+.bo-footer-cancel {
+  margin-right: 8px;
 }

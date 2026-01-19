@@ -1,4 +1,3 @@
-
 export class TechnicianMasterData {
   TYPE: string = 'O';
   OLD_TYPE: any = null;
@@ -33,7 +32,6 @@ export class TechnicianMasterData {
   ORG_ID: any;
   CREATED_DATE: any;
   TECHNICIAN_STATUS: number = 1;
-  // PINCODE: any;
   PROFILE_PHOTO: any;
   IS_UNIFORM_ASSIGNED = false;
   IS_TOOLKIT_ASSIGNED = false;
@@ -54,8 +52,6 @@ export class Technicianconfigrationdata {
   CAN_EDIT_SKILL: boolean = false;
   CAN_EDIT_PINCODE: boolean = false;
 }
-
-
 export class techniacianRatings {
   ORDER_ID: any
   CUSTOMER_ID: any

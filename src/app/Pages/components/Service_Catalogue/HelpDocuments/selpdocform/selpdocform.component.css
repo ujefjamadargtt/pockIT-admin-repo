@@ -5,34 +5,72 @@
   margin-top: 12px;
   margin-bottom: 12px;
   background-color: #fafafa;
-
 }
 .header {
-
   position: absolute;
-
   top: 0px;
-
-  /* bottom: 0px; */
-
   width: 100%;
-
   border-top: 1px solid rgb(232, 232, 232);
-
   padding: 10px 16px;
-
   text-align: right;
-
-  /* left: 0px; */
-
   right: 0px;
-
-  /* background: #fff; */
-
 }
 nz-form-item {
-display: inline-block;
-margin-bottom: 5px;
-width: -webkit-fill-available;
-padding: 0px 10px;
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.docname-charcount-text-ux91 {
+  color: red;
+  font-size: 10px;
+}
+.category-select-width-xa42 {
+  width: 100%;
+}
+.subcategory-select-width-bk73 {
+  width: 100%;
+}
+.seqno-input-width-kd19 {
+  width: 130px;
+}
+.upload-btn-style-ps72 {
+  padding: 0px 7px;
+  font-size: 10px;
+}
+.file-input-hidden-wq55 {
+  display: none !important;
+}
+.doc-link-blue-mr91 {
+  color: blue;
+  margin-right: 9px;
+  cursor: pointer;
+}
+.delete-cursor-pointer-vc33 {
+  cursor: pointer;
+}
+.delete-margin-left-rt44 {
+  margin-left: 0px;
+}
+.link-charcount-text-qx81 {
+  color: red;
+  font-size: 10px;
+}
+.footer-cancel-btn-mr82 {
+  margin-right: 8px;
+}
+.dropdown-item-style-kp19 {
+  border-radius: 4px;
+  color: white !important;
+}
+.dropdown-link-style-ww63 {
+  color: white !important;
+}
+.image-modal-container-hx91 {
+  height: 400px;
+  overflow: auto;
+}
+.image-modal-iframe-qm47 {
+  width: 832px;
+  height: 396px;
 }

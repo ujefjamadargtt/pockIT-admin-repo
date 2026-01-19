@@ -2,13 +2,12 @@
   <form nz-form #accountMasterPage="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
       <div nz-row>
-        <div nz-col nzSpan="24" style="display: none;">
+        <div nz-col nzSpan="24" class="kb-hidden">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Parent Name </nz-form-label>
-
             <nz-input-group>
               <nz-form-control nzErrorTip="Please Select Correct Option ">
-                <nz-select nzShowSearch nzAllowClear name="parent_id" style="width: 100%"
+                <nz-select nzShowSearch nzAllowClear name="parent_id" class="kb-full-width"
                   nzPlaceHolder="Select Parent Name" [(ngModel)]="data.PARENT_ID">
                   <nz-option [nzValue]="0" [nzLabel]="'None'"></nz-option>
                   <nz-option *ngFor="let val of faqHeads" [nzValue]="val.ID" [nzLabel]="val.NAME">
@@ -21,13 +20,11 @@
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>FAQ Head Name</nz-form-label>
-
             <nz-form-control nzErrorTip="Please Enter Valid Name">
-              <input placeholder="Enter FAQ Head Name" maxlength="128" nz-input name="FAQname" type="text"
+              <input nz-input placeholder="Enter FAQ Head Name" maxlength="128" name="FAQname" type="text"
                 [(ngModel)]="data.NAME" required (focus)="isFocused = 'name'" (blur)="isFocused = ''"
                 autocomplete="off" />
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  isFocused === 'name' ||
+              <h6 class="kb-char-count" *ngIf="isFocused === 'name' ||
                   (data.NAME != undefined &&
                     data.NAME != null &&
                     data.NAME != '' &&
@@ -38,30 +35,9 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-
-        <!-- <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label nzNoColon>Description</nz-form-label>
-
-            <nz-form-control>
-              <textarea placeholder="Enter Description" maxlength="512" rows="3" nz-input [(ngModel)]="data.DESCRIPTION"
-                name="descript" (focus)="isFocused = 'description'" (blur)="isFocused = ''"></textarea>
-              <h6 style="color: red; font-size: 10px" *ngIf="
-                  isFocused === 'description' ||
-                  (data.DESCRIPTION != undefined &&
-                    data.DESCRIPTION != null &&
-                    data.DESCRIPTION != '' &&
-                    isFocused === 'description')
-                ">
-                {{ data.DESCRIPTION?.length || 0 }}/512
-              </h6>
-            </nz-form-control>
-          </nz-form-item>
-        </div> -->
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>FAQ Head For</nz-form-label>
-
             <nz-input-group>
               <nz-radio-group name="FAQ_HEAD_TYPE" [(ngModel)]="data.FAQ_HEAD_TYPE">
                 <label nz-radio nzValue="C">Customer</label>
@@ -73,28 +49,16 @@
         <div nz-col nzSpan="12">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
-
             <nz-form-control nzErrorTip="Please Enter Valid Sequence Number">
-              <nz-input-number (keypress)="omit($event)" style="width: 100%" name="seqno" [(ngModel)]="data.SEQUENCE_NO"
-                [nzMin]="1" [nzStep]="1" required></nz-input-number>
+              <nz-input-number (keypress)="omit($event)" class="kb-full-width" name="seqno"
+                [(ngModel)]="data.SEQUENCE_NO" [nzMin]="1" [nzStep]="1" required>
+              </nz-input-number>
             </nz-form-control>
           </nz-form-item>
         </div>
-
-        <!-- <div nz-col nzSpan="5">
-          <nz-form-item>
-            <nz-form-label nzNoColon>Is Parent?</nz-form-label>
-
-            <nz-form-control>
-              <nz-switch name="isparent" [(ngModel)]="data.IS_PARENT" nzCheckedChildren="Yes"
-                nzUnCheckedChildren="No"></nz-switch>
-            </nz-form-control>
-          </nz-form-item>
-        </div> -->
         <div nz-col nzSpan="12">
           <nz-form-item>
             <nz-form-label nzNoColon>Status</nz-form-label>
-
             <nz-form-control>
               <nz-switch name="status" [(ngModel)]="data.STATUS" nzCheckedChildren="Active"
                 nzUnCheckedChildren="Inactive">
@@ -105,25 +69,23 @@
       </div>
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button type="button" nz-button (click)="close(accountMasterPage)" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close(accountMasterPage)" class="ant-btn kb-footer-cancel">
       <span>Cancel</span>
     </button>
-
     <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
       (click)="save(false, accountMasterPage)">
       <span>Save & Close</span>
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
-          <a (click)="save(true, accountMasterPage)" style="color: white !important">Save & New</a>
+        <li nz-menu-item class="menuc kb-footer-menu">
+          <a (click)="save(true, accountMasterPage)" class="kb-footer-link">
+            Save & New
+          </a>
         </li>
       </ul>
     </nz-dropdown-menu>
-
     <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
       (click)="save(false, accountMasterPage)">
       <span>Update & close</span>

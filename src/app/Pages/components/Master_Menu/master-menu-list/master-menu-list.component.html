@@ -1,10 +1,10 @@
-<div nz-row style="margin-bottom: 5px">
+<div nz-row class="search-row-margin">
   <div nz-col nzSpan="8"></div>
   <div nz-col nzSpan="8">
     <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
       <input type="text" nz-input name="searchmenu" placeholder="Enter at least 3 characters and enter to search"
         [(ngModel)]="searchQuery" (ngModelChange)="onSearchQueryChange($event)" (keydown.enter)="onEnterKeyPress()"
-        style="height: 35px" />
+        class="search-input-height" />
     </nz-input-group>
     <ng-template #suffixIconButton>
       <button nz-button nzType="primary" nzSearch>
@@ -12,30 +12,26 @@
       </button>
     </ng-template>
   </div>
-
   <div nz-col nzSpan="8"></div>
 </div>
 <br />
-<nz-spin [nzSpinning]="loadingRecords" style="margin: 0px 100px">
-  <div nz-row [nzGutter]="8" style="height: 75vh;
-    overflow: auto;">
-    <!-- <div nz-col nzSpan="6"></div> -->
+<nz-spin [nzSpinning]="loadingRecords" class="spin-horizontal-margin">
+  <div nz-row [nzGutter]="8" class="content-scroll-area">
     <div nz-col nzSpan="6" *ngFor="let title of objectKeys(titleWiseChildren); let i = index"
-      style="justify-content: center; display: flex">
+      class="card-column-center">
       <nz-card [nzTitle]="cardTitle" [nzBodyStyle]="{ 'border-bottom': 'none' }">
         <div *ngFor="let child of titleWiseChildren[title]">
           <p [routerLink]="child.link" [ngStyle]="{ cursor: 'pointer' }"
             [ngClass]="{ hovered: true,searched: showclass && (child.title.toLowerCase().includes(searchQuery.toLowerCase()))}"
-            (click)="onMenuClick()" style="font-size: 13px">
+            (click)="onMenuClick()" class="menu-item-text">
             {{ child.title }}
           </p>
         </div>
       </nz-card>
       <ng-template #cardTitle>
-        <i nz-icon [nzType]="forms[i].icon" style="margin-right: 5px; padding-top: 6px !important"></i>
+        <i nz-icon [nzType]="forms[i].icon" class="card-title-icon"></i>
         {{ title }}
       </ng-template>
     </div>
-    <!-- <div nz-col nzSpan="6"></div> -->
   </div>
 </nz-spin>

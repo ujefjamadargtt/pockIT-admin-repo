@@ -9,7 +9,6 @@ import {
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { HttpErrorResponse } from '@angular/common/http';
-
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
@@ -45,18 +44,14 @@ export class DepartmentComponent implements OnInit {
   spatt = /^[a-zA-Z0-9 ]+$/;
   org: any = [];
   orgId = this.cookie.get('orgId');
-
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
     private message: NzNotificationService,
     private cookie: CookieService
   ) { }
-
   ngOnInit() {
     this.CreateData();
-    // this.getallorg1();
-
     this.api
       .getAllOrganizations(this.pageIndex, this.pageSize, this.sortKey, '', '')
       .subscribe(
@@ -67,17 +62,14 @@ export class DepartmentComponent implements OnInit {
         (err) => { }
       );
   }
-
   close(accountMasterPage: NgForm) {
     this.drawerClose();
     this.resetDrawer(accountMasterPage);
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
     this.add();
   }
-
   add(): void {
     this.api
       .getAllDepartments(
@@ -99,7 +91,6 @@ export class DepartmentComponent implements OnInit {
         (err) => { }
       );
   }
-
   departments() {
     this.api
       .getAllDepartments(
@@ -117,27 +108,22 @@ export class DepartmentComponent implements OnInit {
         (err) => { }
       );
   }
-
   setAllDays(event) {
     this.DAYS = event;
   }
-
   setOpenTime(event) {
     this.OPEN_TIME2 = event;
-
     for (let i = 0; i < 7; i++) {
       if (this.listOfData[i]['IS_HOLIDAY'] == false) {
         this.listOfData[i]['OPEN_TIME'] = this.OPEN_TIME2;
         this.listOfData[i]['CLOSE_TIME'] = this.CLOSE_TIME2;
       }
-
       if (this.listOfData[i]['IS_HOLIDAY'] == true) {
         this.listOfData[i]['OPEN_TIME'] = this.OPEN_TIME;
         this.listOfData[i]['CLOSE_TIME'] = this.CLOSE_TIME;
       }
     }
   }
-
   setCloseTime(event) {
     this.CLOSE_TIME2 = event;
     for (let i = 0; i < 7; i++) {
@@ -145,14 +131,12 @@ export class DepartmentComponent implements OnInit {
         this.listOfData[i]['OPEN_TIME'] = this.OPEN_TIME2;
         this.listOfData[i]['CLOSE_TIME'] = this.CLOSE_TIME2;
       }
-
       if (this.listOfData[i]['IS_HOLIDAY'] == true) {
         this.listOfData[i]['OPEN_TIME'] = this.OPEN_TIME;
         this.listOfData[i]['CLOSE_TIME'] = this.CLOSE_TIME;
       }
     }
   }
-
   CreateData() {
     for (let i = 0; i < 7; i++) {
       this.listOfData.push({
@@ -167,49 +151,10 @@ export class DepartmentComponent implements OnInit {
       });
     }
   }
-
   onFileSelectedLOGO_URL(event) {
     this.fileDataLOGO_URL = <File>event.target.files[0];
-
     var fileExt = this.fileDataLOGO_URL.name.split('.').pop();
   }
-  // getallorg1() {
-  //   this.api.getAllDepartments(0, 0, '', 'asc', ' AND STATUS =1').subscribe(
-  //     (data) => {
-  //       if (data['status'] == '200') {
-  //         this.listdata1 = data['body']['data'];
-  //         this.isSpinning = false;
-  //       } else {
-  //         this.listdata1 = [];
-  //         this.message.error('Failed to get Department data...', '');
-  //         this.isSpinning = false;
-  //       }
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       this.isSpinning = false;
-  //       if (err.status === 0) {
-  //         this.message.error(
-  //           'Unable to connect. Please check your internet or server connection and try again shortly.',
-  //           ''
-  //         );
-  //       } else {
-  //         // this.message.error("Something went wrong.", "");
-  //       }
-  //     }
-  //   );
-  // }
-  // getallorg1() {
-  //   this.api.getAllDepartments(0, 0, "ID", "desc", "").subscribe(
-  //     (data) => {
-  //       if (data["code"] == 200) {
-  //         this.listdata1 = data["data"];
-  //       }
-  //     },
-  //     (err) => {
-  //
-  //     }
-  //   );
-  // }
   isFocused: string = '';
   getallorg2(deptID: number) {
     this.api
@@ -224,18 +169,16 @@ export class DepartmentComponent implements OnInit {
       );
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   save(addNew: boolean, accountMasterPage: NgForm): void {
     this.isOk = true;
     this.isSpinning = true;
     this.data.ORG_ID = 1;
-    //
     if (
       (this.data.NAME.trim() == '' ||
         this.data.NAME == null ||
@@ -258,14 +201,11 @@ export class DepartmentComponent implements OnInit {
       this.isOk = false;
       this.isSpinning = false;
     } else if (this.data.NAME || this.data.NAME.trim() != '') {
-      //
       if (this.api.checkTextBoxIsValid1(this.data.NAME) == false) {
         this.message.error('Please Enter valid Department Name', '');
         this.isOk = false;
         this.isSpinning = false;
       } else {
-        // this.isOk = true;
-        // this.isSpinning = true;
         if (!this.data.SHORT_CODE && this.data.SHORT_CODE.trim() == '') {
           this.message.error('Please Enter Shortcode', '');
           this.isOk = false;
@@ -276,8 +216,6 @@ export class DepartmentComponent implements OnInit {
             this.isOk = false;
             this.isSpinning = false;
           } else {
-            // this.isOk = true;
-            // this.isSpinning = true;
             if (this.data.TICKET_TIME_PERIOD == null) {
               this.message.error(
                 'Please Enter Valid Ticket Closure Time (In Day(s))',
@@ -288,18 +226,8 @@ export class DepartmentComponent implements OnInit {
             } else if (this.isOk) {
               this.isSpinning = true;
               this.orgId = this.cookie.get('orgId');
-
               if (this.data.ID) {
-                // var emailData2 = this.listdata1.filter((obj) => {
-                //   return (
-                //     obj.SHORT_CODE == this.data.SHORT_CODE &&
-                //     obj.ID != this.data.ID
-                //   );
-                // });
-
-                // if (emailData2.length == 0) {
                 this.isSpinning = true;
-
                 this.api.updateDepartment(this.data).subscribe(
                   (successCode: any) => {
                     if (
@@ -331,17 +259,7 @@ export class DepartmentComponent implements OnInit {
                     this.isSpinning = false;
                   }
                 );
-                // }
               } else {
-                // var emailData: any = this.listdata1.filter((obj) => {
-                //   return (
-                //     obj.SHORT_CODE == this.data.SHORT_CODE &&
-                //     obj.ID != this.data.ID
-                //   );
-                // });
-                //
-
-                // if (emailData.length == 0) {
                 this.isSpinning = true;
                 this.api.createDepartment(this.data).subscribe(
                   (successCode: any) => {
@@ -370,7 +288,6 @@ export class DepartmentComponent implements OnInit {
                                   data['body']['data'][0]['SEQUENCE_NO'] + 1;
                               }
                             },
-
                             (err) => {
                               this.message.error(
                                 'Something went wrong, please try again later',
@@ -400,14 +317,6 @@ export class DepartmentComponent implements OnInit {
                     this.isSpinning = false;
                   }
                 );
-                // } else {
-                //   console.log('12345678');
-                //   // this.message.error(
-                //   //   'Shortcode Exist Please Enter Other Shortcode',
-                //   //   ''
-                //   // );
-                //   // this.isSpinning = false;
-                // }
               }
             }
           }
@@ -415,14 +324,11 @@ export class DepartmentComponent implements OnInit {
       }
     }
   }
-
   numberOnly(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
-
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
-
     return true;
   }
 }

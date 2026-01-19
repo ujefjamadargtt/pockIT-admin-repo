@@ -17,33 +17,26 @@ declare const google: any;
 export class TechnicianMasterdrawerComponent {
   emailpattern: RegExp =
     /^(?!.*\.\..*)(?!.*--)(?!.*[-.]{2})(?!.*[-@][.@-])[a-zA-Z0-9]([a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z]{2,})+$/;
-
   employmentType: string = 'O';
   @Input() data: any = TechnicianMasterData;
   @Input() drawerClose!: () => void;
   @Input() drawerVisible: boolean = false;
-
   isLoading = false;
-
   uploadedImage: any = '';
   selectedTab: number = 0;
   isFocused: string = '';
   StartDate: any;
   submittedDateVisible: boolean = false;
   isSubmittedDateFilterApplied: boolean = false;
-
   StartDate1: any;
   submittedDateVisible1: boolean = false;
   isSubmittedDateFilterApplied1: boolean = false;
-
   StartDate2: any;
   submittedDateVisible2: boolean = false;
   isSubmittedDateFilterApplied2: boolean = false;
-
   StartDate3: any;
   submittedDateVisible3: boolean = false;
   isSubmittedDateFilterApplied3: boolean = false;
-
   public commonFunction = new CommonFunctionService();
   googleAutocomplete: any;
   constructor(
@@ -60,7 +53,6 @@ export class TechnicianMasterdrawerComponent {
     { Id: 'L', Name: 'Lead' },
     { Id: 'E', Name: 'Expert' },
   ];
-
   VehicleData = [
     { ID: 'T', NAME: 'Two-Wheeler' },
     { ID: 'TR', NAME: 'Three-Wheeler' },
@@ -75,7 +67,6 @@ export class TechnicianMasterdrawerComponent {
   }
   fullImageUrl: string;
   retriveimgUrl = appkeys.retriveimgUrl;
-
   organizationid: any = sessionStorage.getItem('orgId');
   ngOnInit() {
     if (
@@ -88,12 +79,8 @@ export class TechnicianMasterdrawerComponent {
       this.fullImageUrl =
         this.retriveimgUrl + 'TechnicianProfile/' + this.data.PROFILE_PHOTO;
       this.uploadedImage = this.data.PROFILE_PHOTO;
-
-      // window.open(fullImageUrl, '_blank');
     } else {
-      // this.message.info('Document Not Uploaded.', '');
     }
-
     if (this.data.ID) {
       this.data.OLD_TYPE = this.data.TYPE;
     }
@@ -102,16 +89,12 @@ export class TechnicianMasterdrawerComponent {
     this.getOrganizationData();
     this.getorgData();
     this.getallCountry();
-
     if (this.data?.COUNTRY_ID) {
       this.getStatesByCountry(this.data.COUNTRY_ID);
     }
     if (this.data?.STATE_ID) {
       this.getDistrictByState(this.data.STATE_ID);
     }
-    // if (this.data?.DISTRICT_ID) {
-    //   this.getCitiesByState(this.data.DISTRICT_ID);
-    // }
     if (this.data?.DISTRICT_ID) {
       this.getPincodesByCity(this.data.DISTRICT_ID);
     }
@@ -137,7 +120,7 @@ export class TechnicianMasterdrawerComponent {
     } else if (this.data.ID && this.data.WEEK_DAY_DATA) {
       this.WEEK_DAY_DATA = this.data.WEEK_DAY_DATA.map((day) => ({
         WEEK_DAY: Object.keys(dayMapping).includes(day.WEEK_DAY)
-          ? dayMapping[day.WEEK_DAY] // Map abbreviated form to full name
+          ? dayMapping[day.WEEK_DAY] 
           : day.WEEK_DAY,
         IS_SERIVCE_AVAILABLE: day.IS_SERIVCE_AVAILABLE,
         DAY_START_TIME: day.DAY_START_TIME,
@@ -146,22 +129,18 @@ export class TechnicianMasterdrawerComponent {
         BREAK_END_TIME: day.BREAK_END_TIME,
       }));
     }
-
     this.useridd = this.commonFunction.decryptdata(
       sessionStorage.getItem('userId') || ''
     );
     this.vendorroleid = this.commonFunction.decryptdata(
       sessionStorage.getItem('roleId') || ''
     );
-
     if (this.vendorroleid == '9') {
       this.data.TYPE = 'V';
-
       this.api.getAllUsers(0, 0, '', '', ' AND ID=' + this.useridd).subscribe(
         (data) => {
           if (data['code'] === 200) {
             var dataaaaaa = data['data'];
-
             this.data.VENDOR_ID = dataaaaaa[0].VENDOR_ID;
           } else {
             this.message.error('Failed To Get State Data...', '');
@@ -190,28 +169,22 @@ export class TechnicianMasterdrawerComponent {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     const formattedStartTime = date.toISOString();
-
-    // Apply the start time to all records in the table
     this.WEEK_DAY_DATA.forEach((day) => {
       if (day.IS_SERIVCE_AVAILABLE) {
         day.DAY_START_TIME = formattedStartTime;
       }
     });
-
     this.WEEK_DAY_DATA.forEach((item) => {
       item.DAY_START_TIME = formattedStartTime;
       const endTime = new Date(item.DAY_END_TIME);
@@ -219,30 +192,23 @@ export class TechnicianMasterdrawerComponent {
         item.DAY_END_TIME = null;
       }
     });
-
     this.WEEK_DAY_DATA.forEach((item) => {
       item.DAY_START_TIME = formattedStartTime;
       const endTime = new Date(item.BREAK_START_TIME);
-
       if (endTime < date) {
         item.BREAK_START_TIME = null;
       }
     });
-
     this.WEEK_DAY_DATA.forEach((item) => {
       item.DAY_START_TIME = formattedStartTime;
       const endTime = new Date(item.BREAK_END_TIME);
-
       if (endTime < date) {
         item.BREAK_END_TIME = null;
       }
     });
-
-    // Close the filter dropdown
     this.updateEndTimeRestrictions();
     this.submittedDateVisible = false;
   }
-
   updateEndTimeRestrictions() {
     this.disableEndHours = () => {
       let startHour = this.getStartHour();
@@ -250,20 +216,16 @@ export class TechnicianMasterdrawerComponent {
         (h) => h < startHour || h > this.orgEndHour
       );
     };
-
     this.disableEndMinutes = (hour: number) => {
       let startHour = this.getStartHour();
       let startMinute = this.getStartMinute();
-
       const endHour = this.orgEndHour;
       const endMinute = this.orgEndMinute;
-
       const minuteStep = 10;
       const allMinutes = Array.from(
         { length: 60 / minuteStep },
         (_, i) => i * minuteStep
       );
-
       if (hour === startHour) {
         return allMinutes.filter((m) => m <= startMinute);
       } else if (hour === endHour) {
@@ -271,28 +233,22 @@ export class TechnicianMasterdrawerComponent {
       }
       return [];
     };
-
     this.disableBreakStartHours = (): number[] => {
       let startHour = this.getStartHour();
-
       return Array.from({ length: 24 }, (_, h) => h).filter(
         (h) => h < startHour || h > this.orgEndHour
       );
     };
-
     this.disableBreakStartMinutes = (hour: number): number[] => {
       let startHour = this.getStartHour();
       let startMinute = this.getStartMinute();
-
       const endHour = this.orgEndHour;
       const endMinute = this.orgEndMinute;
-
       const minuteStep = 10;
       const allMinutes = Array.from(
         { length: 60 / minuteStep },
         (_, i) => i * minuteStep
       );
-
       if (hour === startHour) {
         return allMinutes.filter((m) => m <= startMinute);
       } else if (hour === endHour) {
@@ -301,11 +257,9 @@ export class TechnicianMasterdrawerComponent {
       return [];
     };
   }
-
   cancelFilterss1() {
     this.submittedDateVisible1 = false;
   }
-
   applyprepFilter1(value: any) {
     let timeString: string;
     if (value instanceof Date) {
@@ -319,75 +273,59 @@ export class TechnicianMasterdrawerComponent {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     const formattedStartTime = date.toISOString();
-
-    // Apply the start time to all records in the table
     this.WEEK_DAY_DATA.forEach((day) => {
       if (day.IS_SERIVCE_AVAILABLE) {
         day.DAY_END_TIME = formattedStartTime;
       }
     });
-
     this.WEEK_DAY_DATA.forEach((item) => {
       item.DAY_END_TIME = formattedStartTime;
       const endTime = new Date(item.BREAK_START_TIME);
-
       if (endTime > date) {
         item.BREAK_START_TIME = null;
       }
     });
-
     this.WEEK_DAY_DATA.forEach((item) => {
       item.DAY_END_TIME = formattedStartTime;
       const endTime = new Date(item.BREAK_END_TIME);
-
       if (endTime > date) {
         item.BREAK_END_TIME = null;
       }
     });
     this.updateEndTimeRestrictions1();
-    // Close the filter dropdown
     this.submittedDateVisible1 = false;
   }
-
   updateEndTimeRestrictions1() {
     this.disableBreakStartHours = (): number[] => {
       let endHour = this.getEndHour();
       let startHour = this.getStartHour();
-
       return Array.from({ length: 24 }, (_, h) => h).filter(
         (h) => h < startHour || h > endHour
       );
     };
-
     this.disableBreakStartMinutes = (hour: number): number[] => {
       let endHour1 = this.getEndHour();
       let endMinute1 = this.getEndMinute();
       let startHour = this.getStartHour();
       let startminute = this.getStartMinute();
-
       const endHour = this.orgEndHour;
       const endMinute = this.orgEndMinute;
-
       const minuteStep = 10;
       const allMinutes = Array.from(
         { length: 60 / minuteStep },
         (_, i) => i * minuteStep
       );
-
       if (hour === endHour1) {
         return allMinutes.filter((m) => m >= endMinute1);
       } else if (hour === startHour) {
@@ -397,26 +335,20 @@ export class TechnicianMasterdrawerComponent {
       }
       return [];
     };
-
     this.disableBreakEndHours = (): number[] => {
       let endHour = this.getEndHour();
-
       return Array.from({ length: 24 }, (_, h) => h).filter((h) => h > endHour);
     };
-
     this.disableBreakEndMinutes = (hour: number): number[] => {
       let endHour1 = this.getEndHour();
       let endMinute1 = this.getEndMinute();
-
       const endHour = this.orgEndHour;
       const endMinute = this.orgEndMinute;
-
       const minuteStep = 10;
       const allMinutes = Array.from(
         { length: 60 / minuteStep },
         (_, i) => i * minuteStep
       );
-
       if (hour === endHour1) {
         return allMinutes.filter((m) => m >= endMinute1);
       } else if (hour === endHour) {
@@ -441,66 +373,52 @@ export class TechnicianMasterdrawerComponent {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     const formattedStartTime = date.toISOString();
-
-    // Apply the start time to all records in the table
     this.WEEK_DAY_DATA.forEach((day) => {
       if (day.IS_SERIVCE_AVAILABLE) {
         day.BREAK_START_TIME = formattedStartTime;
       }
     });
-
     this.WEEK_DAY_DATA.forEach((item) => {
       item.BREAK_START_TIME = formattedStartTime;
       const endTime = new Date(item.BREAK_END_TIME);
-
       if (endTime < date) {
         item.BREAK_END_TIME = null;
       }
     });
     this.updateEndTimeRestrictions2();
-    // Close the filter dropdown
     this.submittedDateVisible2 = false;
   }
-
   updateEndTimeRestrictions2() {
     this.disableBreakEndHours = (): number[] => {
       let breakstartHour = this.getBreakStartHour();
       let endHour = this.getEndHour();
-
       return Array.from({ length: 24 }, (_, h) => h).filter(
         (h) => h < breakstartHour || h > endHour
       );
     };
-
     this.disableBreakEndMinutes = (hour: number): number[] => {
       let endHour1 = this.getEndHour();
       let endMinute1 = this.getEndMinute();
       let breakstartHour = this.getBreakStartHour();
       let breakstartMinute = this.getBreakStartMinute();
-
       const endHour = this.orgEndHour;
       const endMinute = this.orgEndMinute;
-
       const minuteStep = 10;
       const allMinutes = Array.from(
         { length: 60 / minuteStep },
         (_, i) => i * minuteStep
       );
-
       if (hour === endHour1) {
         return allMinutes.filter((m) => m >= endMinute1);
       } else if (hour === breakstartHour) {
@@ -514,7 +432,6 @@ export class TechnicianMasterdrawerComponent {
   cancelFilterss3() {
     this.submittedDateVisible3 = false;
   }
-
   applyprepFilter3(value: any) {
     let timeString: string;
     if (value instanceof Date) {
@@ -528,41 +445,24 @@ export class TechnicianMasterdrawerComponent {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     const formattedStartTime = date.toISOString();
-
-    // Apply the start time to all records in the table
     this.WEEK_DAY_DATA.forEach((day) => {
       if (day.IS_SERIVCE_AVAILABLE) {
         day.BREAK_END_TIME = formattedStartTime;
       }
     });
-
-    // this.WEEK_DAY_DATA.forEach((item) => {
-    //   item.BREAK_START_TIME = formattedStartTime;
-    //   const endTime = new Date(item.BREAK_END_TIME);
-
-    //   if (endTime < date) {
-    //     item.BREAK_END_TIME = null;
-    //   }
-    // });
-
-    // Close the filter dropdown
     this.submittedDateVisible3 = false;
   }
-
   vendorid: any = '';
   vendorroleid: any;
   useridd: any;
@@ -576,12 +476,10 @@ export class TechnicianMasterdrawerComponent {
   isSpinning = false;
   isOk = true;
   passwordVisible: boolean = false;
-
   isStateSpinning: boolean = false;
   isDistrictSpinning: boolean = false;
   isCitySpinning: boolean = false;
   isPincodeSpinning: boolean = false;
-
   resetDrawer(websitebannerPage: NgForm) {
     this.fileURL = null;
     this.data = new TechnicianMasterData();
@@ -589,12 +487,10 @@ export class TechnicianMasterdrawerComponent {
     this.data.ORG_ID = 1
     if (this.vendorroleid == '9') {
       this.data.TYPE = 'V';
-
       this.api.getAllUsers(0, 0, '', '', ' AND ID=' + this.useridd).subscribe(
         (data) => {
           if (data['code'] === 200) {
             var dataaaaaa = data['data'];
-
             this.data.VENDOR_ID = dataaaaaa[0].VENDOR_ID;
           } else {
             this.message.error('Failed To Get State Data...', '');
@@ -627,7 +523,7 @@ export class TechnicianMasterdrawerComponent {
     } else if (this.data.ID && this.data.WEEK_DAY_DATA) {
       this.WEEK_DAY_DATA = this.data.WEEK_DAY_DATA.map((day) => ({
         WEEK_DAY: Object.keys(dayMapping).includes(day.WEEK_DAY)
-          ? dayMapping[day.WEEK_DAY] // Map abbreviated form to full name
+          ? dayMapping[day.WEEK_DAY] 
           : day.WEEK_DAY,
         IS_SERIVCE_AVAILABLE: day.IS_SERIVCE_AVAILABLE,
         DAY_START_TIME: day.DAY_START_TIME,
@@ -642,7 +538,6 @@ export class TechnicianMasterdrawerComponent {
   disableWeekEndDate = (current: Date): boolean => {
     if (this.data.CONTRACT_START_DATE) {
       const weekStartDate = new Date(this.data.CONTRACT_START_DATE);
-
       const startDateNormalized = new Date(
         weekStartDate.getFullYear(),
         weekStartDate.getMonth(),
@@ -653,13 +548,11 @@ export class TechnicianMasterdrawerComponent {
         current.getMonth(),
         current.getDate()
       );
-
       return currentDateNormalized < startDateNormalized;
     }
     return false;
   };
   pattern: RegExp = /^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{1,4}$/;
-
   countryCodes = [
     { label: '+91 (India)', value: '+91' },
     { label: '+92 (Pakistan)', value: '+92' },
@@ -898,27 +791,14 @@ export class TechnicianMasterdrawerComponent {
     { label: 'Kyrgyzstan (+996)', value: '+996' },
     { label: 'Uzbekistan (+998)', value: '+998' },
   ];
-
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
-  // disabledAfterDate = (current: Date): boolean => {
-  //   const today = new Date();
-  //   const minDate = new Date(
-  //     today.getFullYear() - 18,
-  //     today.getMonth(),
-  //     today.getDate()
-  //   );
-  //   return current > minDate;
-  // };
-
   defaultPickerValue = this.calculateDefaultPickerValue();
-
   calculateDefaultPickerValue(): Date {
     const today = new Date();
     return new Date(
@@ -927,7 +807,6 @@ export class TechnicianMasterdrawerComponent {
       today.getDate()
     );
   }
-
   disabledAfterDate = (current: Date): boolean => {
     if (!current) {
       return false;
@@ -938,10 +817,9 @@ export class TechnicianMasterdrawerComponent {
       today.getMonth(),
       today.getDate()
     );
-    return current > maxDate; // Disable dates after 18 years back
+    return current > maxDate; 
   };
   CropImageModalVisible = false;
-  // CropImageModalFooter: string|TemplateRef<{}>|ModalButtonOptions<any>[]|null|undefined;
   isSpinningCrop = false;
   cropimageshow: any;
   @ViewChild('image1') myElementRef!: ElementRef;
@@ -964,21 +842,14 @@ export class TechnicianMasterdrawerComponent {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   fileChangeEvent(event: any): void {
-    //
-
     this.CropImageModalVisible = true;
     this.cropimageshow = true;
-
     this.imageChangedEvent = event;
   }
-
   cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
   imageCropped(event: any) {
     this.enhanceImageQuality(event.base64, 128, 128);
-    // this.imageWidth = event.original.size.width;
-    // this.imageHeight = event.original.size.height;
   }
-
   async enhanceImageQuality(
     base64: any,
     finalWidth: number,
@@ -988,27 +859,19 @@ export class TechnicianMasterdrawerComponent {
       this.croppedImage = await new Promise((resolve, reject) => {
         const img = new Image();
         img.src = base64;
-        img.crossOrigin = 'Anonymous'; // Prevents tainted canvas issues.
-
+        img.crossOrigin = 'Anonymous'; 
         img.onload = async () => {
-          await img.decode(); // Ensures the image is fully loaded
-
-          // **Create initial high-resolution canvas**
+          await img.decode(); 
           const tempCanvas = document.createElement('canvas');
           const tempCtx = tempCanvas.getContext('2d');
-
           if (!tempCtx) return reject('Canvas context not available');
-
-          tempCanvas.width = img.width * 2; // Upscale before downscaling
+          tempCanvas.width = img.width * 2; 
           tempCanvas.height = img.height * 2;
-
           tempCtx.imageSmoothingEnabled = true;
           tempCtx.imageSmoothingQuality = 'high';
-          tempCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+          tempCtx.fillStyle = 'white'; 
           tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
           tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
-
-          // **Stepwise Downscaling**
           const downscaleCanvas = (
             sourceCanvas: HTMLCanvasElement,
             width: number,
@@ -1016,89 +879,51 @@ export class TechnicianMasterdrawerComponent {
           ): HTMLCanvasElement => {
             const newCanvas = document.createElement('canvas');
             const newCtx = newCanvas.getContext('2d');
-
             if (!newCtx) return sourceCanvas;
-
             newCanvas.width = width;
             newCanvas.height = height;
-
             newCtx.imageSmoothingEnabled = true;
             newCtx.imageSmoothingQuality = 'high';
-            newCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+            newCtx.fillStyle = 'white'; 
             newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
             newCtx.drawImage(sourceCanvas, 0, 0, width, height);
-
             return newCanvas;
           };
-
           let currentCanvas = tempCanvas;
           const downscaleSteps = [
-            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], // Step 1
-            [finalWidth * 2, finalHeight * 2], // Step 2
-            [finalWidth, finalHeight], // Final resolution
+            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], 
+            [finalWidth * 2, finalHeight * 2], 
+            [finalWidth, finalHeight], 
           ];
-
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
           }
-
-          // **Convert to PNG at Max Quality**
           resolve(currentCanvas.toDataURL('image/png', 1.0));
         };
-
         img.onerror = (err) => reject(`Image load error: ${err}`);
       });
     } catch (error) {
-      // console.error("Image enhancement failed:", error);
     }
   }
-  // imageCropped(event: ImageCroppedEvent) {
-  //   const canvas = document.createElement('canvas');
-  //   const ctx = canvas.getContext('2d');
-
-  //   if (!ctx) return;
-
-  //   canvas.width = 128;
-  //   canvas.height = 128;
-
-  //   const img: any = new Image();
-  //   img.src = event.base64;
-  //   img.onload = () => {
-  //     ctx.fillStyle = '#ffffff'; // Change this color if needed
-  //     ctx.fillRect(0, 0, canvas.width, canvas.height);
-  //     ctx.drawImage(img, 0, 0, 128, 128);
-
-  //     // Convert to JPEG with reduced quality
-  //     this.compressImage(canvas, 0.7); // Start with 70% quality
-  //   };
-  // }
-
-  // Function to compress image and ensure size < 1MB
   compressImage(canvas: HTMLCanvasElement, quality: number) {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-
-        const sizeInMB = blob.size / (1024 * 1024); // Convert to MB
-
+        const sizeInMB = blob.size / (1024 * 1024); 
         if (sizeInMB > 1 && quality > 0.1) {
-          // If size is still >1MB, reduce quality and try again
           this.compressImage(canvas, quality - 0.1);
         } else {
-          // Final compressed image (size is now below 1MB)
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             this.croppedImage = reader.result as string;
-            //
           };
         }
       },
       'image/jpeg',
       quality
-    ); // Convert to JPEG with given quality
+    ); 
   }
-
   imageWidth: number = 0;
   imageHeight: number = 0;
   imageLoaded(event) {
@@ -1108,23 +933,13 @@ export class TechnicianMasterdrawerComponent {
     this.imagePreview = this.croppedImage;
     this.imageWidth = event.original.size.width;
     this.imageHeight = event.original.size.height;
-    // Image loaded successfully
   }
-
   cropperReady(event) {
-    //
-    // Cropper ready
-    // event.height = 128;
-    // event.width = 128;
   }
-
   loadImageFailed() {
-    // Image failed to load
   }
-
   save(addNew: boolean, websitebannerPage: NgForm): void {
     this.isOk = true;
-
     if (this.isOk && this.WEEK_DAY_DATA && this.WEEK_DAY_DATA.length > 0) {
       for (const day of this.WEEK_DAY_DATA) {
         if (!day.WEEK_DAY) {
@@ -1162,7 +977,6 @@ export class TechnicianMasterdrawerComponent {
         }
       }
     }
-
     this.data.DOB = this.datePipe.transform(this.data.DOB, 'yyyy-MM-dd');
     this.data.CONTRACT_START_DATE = this.datePipe.transform(
       this.data.CONTRACT_START_DATE,
@@ -1178,7 +992,6 @@ export class TechnicianMasterdrawerComponent {
         this.data.VEHICLE_DETAILS = null;
         this.data.VEHICLE_NO = null;
       }
-
       this.isSpinning = true;
       if (this.data.TYPE === 'F') {
         this.data.CONTRACT_START_DATE = this.data.CONTRACT_START_DATE;
@@ -1193,7 +1006,6 @@ export class TechnicianMasterdrawerComponent {
         this.data.VENDOR_ID = null;
         this.data.VENDOR_NAME = null;
       }
-
       const dayMapping = {
         Monday: 'Mo',
         Tuesday: 'Tu',
@@ -1203,7 +1015,6 @@ export class TechnicianMasterdrawerComponent {
         Saturday: 'Sa',
         Sunday: 'Su',
       };
-
       const transformedData = this.WEEK_DAY_DATA.map((item) => {
         if (item.IS_SERIVCE_AVAILABLE) {
           return {
@@ -1237,18 +1048,14 @@ export class TechnicianMasterdrawerComponent {
           };
         }
       });
-
       if (this.fileURL) {
         this.data.WEEK_DAY_DATA = transformedData;
         this.data.ORG_ID = 1
         const number = Math.floor(100000 + Math.random() * 900000);
         const fileExt = this.fileURL.name.split('.').pop();
         const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-        // this.UrlImageOne = `${d ?? ''}${number}.${fileExt}`;
-
         var url = `${d ?? ''}${number}.${fileExt}`;
         const uploadedfileExt = this.uploadedImage.split('.').pop();
-
         if (this.data.ID) {
           if (uploadedfileExt == fileExt) {
             this.UrlImageOne = this.uploadedImage;
@@ -1258,14 +1065,11 @@ export class TechnicianMasterdrawerComponent {
         } else {
           this.UrlImageOne = url;
         }
-
         this.api
           .onUpload('TechnicianProfile', this.fileURL, this.UrlImageOne)
           .subscribe((res) => {
             if (res.type === HttpEventType.Response && res.status === 200) {
               this.data.PROFILE_PHOTO = this.UrlImageOne;
-
-              // this.message.success('Icon Uploaded Successfully...', '');
               this.handleSaveOperation(addNew, websitebannerPage);
             } else if (res.type === HttpEventType.Response) {
               this.message.error('Failed to Upload Profile Photo.', '');
@@ -1275,12 +1079,10 @@ export class TechnicianMasterdrawerComponent {
       } else {
         this.data.WEEK_DAY_DATA = transformedData;
         this.data.ORG_ID = 1
-        // If no image file, proceed directly to save
         this.handleSaveOperation(addNew, websitebannerPage);
       }
     }
   }
-
   createChannelData() {
     var data: any = {
       CHANNEL_NAME: this.pincodeChannel,
@@ -1329,8 +1131,6 @@ export class TechnicianMasterdrawerComponent {
     );
   }
   handleSaveOperation(addNew: boolean, websitebannerPage: NgForm): void {
-    // this.data.WEEK_DAY_DATA = transformedData;
-    // this.data.ORG_ID =1
     if (this.data.ID) {
       if (this.data.TYPE === this.data.OLD_TYPE) {
         this.data.OLD_TYPE = null;
@@ -1345,7 +1145,6 @@ export class TechnicianMasterdrawerComponent {
             this.selectedTab = 1;
             this.isSpinning = false;
           } else if (successCode.code == 300) {
-            // this.message.error("Email is already exist", "");
             var msg = successCode.message;
             this.message.error(msg, '');
             this.isSpinning = false;
@@ -1380,15 +1179,10 @@ export class TechnicianMasterdrawerComponent {
             } else {
               this.data = new TechnicianMasterData();
               this.resetDrawer(websitebannerPage);
-              // this.api.getTechnicianData(0, 0, '', 'desc', '').subscribe(
-              //   (data) => { },
-              //   () => { }
-              // );
               this.activeTabIndex = 0;
             }
             this.isSpinning = false;
           } else if (successCode.code == 300) {
-            // this.message.error("Email is already exist", "");
             var msg = successCode.message;
             this.message.error(msg, '');
             this.isSpinning = false;
@@ -1410,7 +1204,6 @@ export class TechnicianMasterdrawerComponent {
   close() {
     this.drawerClose();
   }
-
   CityData: any = [];
   PincodeData: any = [];
   StateData: any = [];
@@ -1433,8 +1226,6 @@ export class TechnicianMasterdrawerComponent {
         }
       );
   }
-
-  // Fetch states based on country ID
   getStatesByCountry(countryId: any, value: boolean = true) {
     this.isStateSpinning = true;
     if (value == false) {
@@ -1448,7 +1239,6 @@ export class TechnicianMasterdrawerComponent {
       this.CityData = [];
       this.PincodeData = [];
     }
-
     this.api
       .getState(
         0,
@@ -1461,7 +1251,6 @@ export class TechnicianMasterdrawerComponent {
         (data) => {
           if (data['code'] === 200) {
             this.StateData = data['data'];
-            //this.data.STATE_ID = "";
             this.isStateSpinning = false;
           } else {
             this.StateData = [];
@@ -1474,7 +1263,6 @@ export class TechnicianMasterdrawerComponent {
         }
       );
   }
-
   getDistrictByState(stateId: any, value: boolean = true) {
     this.isDistrictSpinning = true;
     if (value == false) {
@@ -1486,7 +1274,6 @@ export class TechnicianMasterdrawerComponent {
       this.CityData = [];
       this.PincodeData = [];
     }
-
     this.api
       .getdistrict(
         0,
@@ -1511,7 +1298,6 @@ export class TechnicianMasterdrawerComponent {
         }
       );
   }
-
   getStateandPincode(districtId: number, value: boolean = true) {
     if (value == false) {
       this.data.CITY_ID = null;
@@ -1520,7 +1306,6 @@ export class TechnicianMasterdrawerComponent {
       this.CityData = [];
       this.PincodeData = [];
     }
-    // this.getCitiesByState(districtId, value);
     this.getPincodesByCity(districtId, value);
   }
   Filterss: any = {};
@@ -1528,7 +1313,6 @@ export class TechnicianMasterdrawerComponent {
   filterdata1: any;
   pincodeChannel: any = '';
   pincodeChannelOld: any = '';
-
   getpincodename(pincode: any) {
     if (pincode != null && pincode != undefined && pincode != '') {
       var pin = this.PincodeData.filter((i) => i.ID == pincode);
@@ -1552,7 +1336,7 @@ export class TechnicianMasterdrawerComponent {
       this.data.PINCODE_ID = null;
       this.data.PINCODE = null;
     }
-    this.isPincodeSpinning = true; // Set loading to true when fetching data
+    this.isPincodeSpinning = true; 
     this.api
       .getAllPincode(
         0,
@@ -1573,11 +1357,11 @@ export class TechnicianMasterdrawerComponent {
             this.PincodeData = [];
             this.message.error('Failed To Get Pincode Data...', '');
           }
-          this.isPincodeSpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isPincodeSpinning = false; 
         },
         () => {
           this.message.error('Something went wrong.', '');
-          this.isPincodeSpinning = false; // Ensure spinning state is turned off on error
+          this.isPincodeSpinning = false; 
         }
       );
   }
@@ -1601,14 +1385,11 @@ export class TechnicianMasterdrawerComponent {
     if (this.data.CONTRACT_END_DATE && startDate) {
       const start = new Date(startDate);
       const end = new Date(this.data.CONTRACT_END_DATE);
-
       if (end < start) {
         this.data.CONTRACT_END_DATE = null;
       }
     }
   }
-
-  // tab
   activeTabIndex: number = 0;
   tabs = [
     {
@@ -1620,7 +1401,6 @@ export class TechnicianMasterdrawerComponent {
       disabled: true,
     },
   ];
-
   next() {
     this.isOk = true;
     if (
@@ -1658,9 +1438,6 @@ export class TechnicianMasterdrawerComponent {
       (this.data.DISTRICT_ID == null ||
         this.data.DISTRICT_ID == undefined ||
         this.data.DISTRICT_ID == 0) &&
-      // (this.data.CITY_ID == undefined ||
-      //   this.data.CITY_ID == null ||
-      //   this.data.CITY_ID == 0) &&
       (this.data.PINCODE_ID == undefined ||
         this.data.PINCODE_ID == null ||
         this.data.PINCODE_ID == 0) &&
@@ -1817,14 +1594,6 @@ export class TechnicianMasterdrawerComponent {
       this.isOk = false;
       this.message.error('Please Select State', '');
     }
-    // else if (
-    //   this.data.CITY_ID == null ||
-    //   this.data.CITY_ID == undefined ||
-    //   this.data.CITY_ID == 0
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Select City Name', '');
-    // }
     else if (
       this.data.PINCODE_ID == null ||
       this.data.PINCODE_ID == undefined ||
@@ -1897,13 +1666,6 @@ export class TechnicianMasterdrawerComponent {
     'Sunday',
   ];
   WEEK_DAY_DATA: any[] = [];
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['data'] && changes['data'].currentValue) {
-  //     this.populateWeeklySchedule();
-  //   }
-  // }
-
   populateWeeklySchedule(): void {
     const dayMap: { [key: string]: string } = {
       M: 'Monday',
@@ -1916,9 +1678,8 @@ export class TechnicianMasterdrawerComponent {
     };
   }
   convertToDate(time: any): Date | null {
-    if (time instanceof Date) return time; // Already a Date object
+    if (time instanceof Date) return time; 
     if (typeof time !== 'string' || !time) return null;
-
     const timeParts = time.split(':');
     if (timeParts.length === 3) {
       const [hours, minutes, seconds] = timeParts.map((part) =>
@@ -1930,10 +1691,8 @@ export class TechnicianMasterdrawerComponent {
     }
     return null;
   }
-
   day_start_time: any;
   day_end_time: any;
-
   getOrganizationData() {
     this.api
       .getAllOrganizations(1, 1, '', 'desc', ' AND ID=1')
@@ -1943,8 +1702,6 @@ export class TechnicianMasterdrawerComponent {
             if (data['body']['data'][0].DAY_START_TIME) {
               this.day_start_time = data['body']['data'][0].DAY_START_TIME;
             }
-
-            // Parse organization end time
             if (data['body']['data'][0].DAY_END_TIME) {
               this.day_end_time = data['body']['data'][0].DAY_END_TIME;
             }
@@ -1959,17 +1716,14 @@ export class TechnicianMasterdrawerComponent {
       (h) => h < startHour || h > endHour
     );
   };
-
   disableStartMinutes = (hour: number): number[] => {
     if (this.day_start_time && this.day_end_time) {
       let [startHour, startMinute] = this.day_start_time
         ?.split(':')
         .map(Number);
-
       if (hour > startHour) {
         return [];
       }
-
       if (hour === startHour) {
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute <= startMinute
@@ -1985,10 +1739,8 @@ export class TechnicianMasterdrawerComponent {
   disableEndHours = (): number[] => {
     let startHour = Number(this.day_start_time?.split(':')[0]);
     let endHour = Number(this.day_end_time?.split(':')[0]);
-    // const startTime = this.WEEK_DAY_DATA[this.index]?.START_TIME;
     const startTime = new Date(this.data.DAY_START_TIME);
     const starttimeHour = startTime.getHours();
-
     if (starttimeHour) {
       return Array.from({ length: 24 }, (_, h) => h).filter(
         (h) => h < starttimeHour || h > endHour
@@ -1999,27 +1751,23 @@ export class TechnicianMasterdrawerComponent {
       );
     }
   };
-
   disableEndMinutes = (hour: number): number[] => {
     var disabledMinutes: number[] = [];
     const endHour = Number(this.day_end_time?.split(':')[0]);
     const endMinute = Number(this.day_end_time?.split(':')[1]);
-
-    const minuteStep = 10; // Matches [nzMinuteStep]
+    const minuteStep = 10; 
     const allMinutes = Array.from(
       { length: 60 / minuteStep },
       (_, i) => i * minuteStep
     );
     var selectedStartHour: any;
     var selectedStartMinute: any;
-
     selectedStartHour = this.extractHour(
       this.WEEK_DAY_DATA[this.index]?.DAY_START_TIME
     );
     selectedStartMinute = this.extractMinute(
       this.WEEK_DAY_DATA[this.index]?.DAY_START_TIME
     );
-
     if (hour === selectedStartHour) {
       return allMinutes.filter((m) => m <= selectedStartMinute);
     } else if (hour === endHour) {
@@ -2027,7 +1775,6 @@ export class TechnicianMasterdrawerComponent {
     }
     return disabledMinutes;
   };
-
   extractHour(time: any): number {
     if (typeof time === 'string') {
       return Number(time.split(':')[0]);
@@ -2039,7 +1786,6 @@ export class TechnicianMasterdrawerComponent {
     }
     return 0;
   }
-
   extractMinute(time: any): number {
     if (typeof time === 'string') {
       return Number(time.split(':')[1]);
@@ -2064,72 +1810,53 @@ export class TechnicianMasterdrawerComponent {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     this.data.DAY_START_TIME = date.toISOString();
-
     const selectedTime = new Date(value);
     const roundedDate = this.roundMinutesToNearestInterval(selectedTime);
     this.WEEK_DAY_DATA[index].DAY_START_TIME = new Date(roundedDate);
-
     if (this.WEEK_DAY_DATA[index].DAY_END_TIME) {
       const breakStartDate = new Date(this.WEEK_DAY_DATA[index].DAY_END_TIME);
-
-      // Extract hours and minutes
       const breakStartHours = breakStartDate.getHours();
       const breakStartMinutes = breakStartDate.getMinutes();
       const breakStartTotalMinutes = breakStartHours * 60 + breakStartMinutes;
-
-      const startTotalMinutes = hours * 60 + minutes; // Start time converted to total minutes
-
+      const startTotalMinutes = hours * 60 + minutes; 
       if (breakStartTotalMinutes < startTotalMinutes) {
         this.WEEK_DAY_DATA[index].DAY_END_TIME = null;
       }
     }
-
     if (this.WEEK_DAY_DATA[index].BREAK_START_TIME) {
       const breakStartDate = new Date(
         this.WEEK_DAY_DATA[index].BREAK_START_TIME
       );
-
-      // Extract hours and minutes
       const breakStartHours = breakStartDate.getHours();
       const breakStartMinutes = breakStartDate.getMinutes();
       const breakStartTotalMinutes = breakStartHours * 60 + breakStartMinutes;
-
-      const startTotalMinutes = hours * 60 + minutes; // Start time converted to total minutes
-
+      const startTotalMinutes = hours * 60 + minutes; 
       if (breakStartTotalMinutes < startTotalMinutes) {
         this.WEEK_DAY_DATA[index].BREAK_START_TIME = null;
       }
     }
     if (this.WEEK_DAY_DATA[index].BREAK_END_TIME) {
       const breakStartDate = new Date(this.WEEK_DAY_DATA[index].BREAK_END_TIME);
-
-      // Extract hours and minutes
       const breakStartHours = breakStartDate.getHours();
       const breakStartMinutes = breakStartDate.getMinutes();
       const breakStartTotalMinutes = breakStartHours * 60 + breakStartMinutes;
-
-      const startTotalMinutes = hours * 60 + minutes; // Start time converted to total minutes
-
+      const startTotalMinutes = hours * 60 + minutes; 
       if (breakStartTotalMinutes < startTotalMinutes) {
         this.WEEK_DAY_DATA[index].BREAK_END_TIME = null;
       }
     }
   }
-
   updateEndTime(value: any, index: number): void {
     let timeString: string;
     if (value instanceof Date) {
@@ -2143,122 +1870,92 @@ export class TechnicianMasterdrawerComponent {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     this.data.DAY_END_TIME = date.toISOString();
-
     const selectedTime = new Date(value);
     const roundedDate = this.roundMinutesToNearestInterval(selectedTime);
     this.WEEK_DAY_DATA[index].DAY_END_TIME = new Date(roundedDate);
-
     if (this.WEEK_DAY_DATA[index].BREAK_START_TIME) {
       const breakStartDate = new Date(
         this.WEEK_DAY_DATA[index].BREAK_START_TIME
       );
-
-      // Extract hours and minutes
       const breakStartHours = breakStartDate.getHours();
       const breakStartMinutes = breakStartDate.getMinutes();
       const breakStartTotalMinutes = breakStartHours * 60 + breakStartMinutes;
-
-      const startTotalMinutes = hours * 60 + minutes; // Start time converted to total minutes
-
+      const startTotalMinutes = hours * 60 + minutes; 
       if (breakStartTotalMinutes > startTotalMinutes) {
         this.WEEK_DAY_DATA[index].BREAK_START_TIME = null;
       }
     }
     if (this.WEEK_DAY_DATA[index].BREAK_END_TIME) {
       const breakStartDate = new Date(this.WEEK_DAY_DATA[index].BREAK_END_TIME);
-
-      // Extract hours and minutes
       const breakStartHours = breakStartDate.getHours();
       const breakStartMinutes = breakStartDate.getMinutes();
       const breakStartTotalMinutes = breakStartHours * 60 + breakStartMinutes;
-
-      const startTotalMinutes = hours * 60 + minutes; // Start time converted to total minutes
-
+      const startTotalMinutes = hours * 60 + minutes; 
       if (breakStartTotalMinutes > startTotalMinutes) {
         this.WEEK_DAY_DATA[index].BREAK_END_TIME = null;
       }
     }
   }
-
   disableBreakEndHours = (): number[] => {
     const disabledHours: number[] = [];
-
     const breakStartTime = this.data.BREAK_START_TIME
       ? new Date(this.data.BREAK_START_TIME)
       : null;
     const dayEndTime = this.data.DAY_END_TIME
       ? new Date(this.data.DAY_END_TIME)
       : null;
-
-    // Use orgStartHour and orgEndHour if BREAK_START_TIME or DAY_END_TIME is not set
     const breakStartHour = breakStartTime
       ? breakStartTime.getHours()
       : this.orgStartHour;
     const dayEndHour = dayEndTime ? dayEndTime.getHours() : this.orgEndHour;
-
-    // Disable hours before the BREAK_START_TIME and after the DAY_END_TIME
     for (let hour = 0; hour < 24; hour++) {
       if (hour < breakStartHour || hour > dayEndHour) {
         disabledHours.push(hour);
       }
     }
-
     return disabledHours;
   };
-
   disableBreakEndMinutes = (hour: number): number[] => {
     const disabledMinutes: number[] = [];
-
     const breakStartTime = this.data.BREAK_START_TIME
       ? new Date(this.data.BREAK_START_TIME)
       : null;
     const dayEndTime = this.data.DAY_END_TIME
       ? new Date(this.data.DAY_END_TIME)
       : null;
-
-    // Use orgStartMinute and orgEndMinute if BREAK_START_TIME or DAY_END_TIME is not set
     const breakStartMinute = breakStartTime
       ? breakStartTime.getMinutes()
       : this.orgStartMinute;
     const dayEndMinute = dayEndTime
       ? dayEndTime.getMinutes()
       : this.orgEndMinute;
-
     if (breakStartTime && hour === breakStartTime.getHours()) {
-      // Disable minutes before the BREAK_START_TIME
       for (let minute = 0; minute < 60; minute++) {
         if (minute <= breakStartMinute) {
           disabledMinutes.push(minute);
         }
       }
     }
-
     if (dayEndTime && hour === dayEndTime.getHours()) {
-      // Disable minutes after the DAY_END_TIME
       for (let minute = 0; minute < 60; minute++) {
         if (minute > dayEndMinute) {
           disabledMinutes.push(minute);
         }
       }
     }
-
     return disabledMinutes;
   };
-
   updateBreakStartTime(value: any, index: number): void {
     let timeString: string;
     if (value instanceof Date) {
@@ -2272,41 +1969,31 @@ export class TechnicianMasterdrawerComponent {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     this.data.BREAK_START_TIME = date.toISOString();
-
     const selectedTime = new Date(value);
     const roundedDate = this.roundMinutesToNearestInterval(selectedTime);
     this.WEEK_DAY_DATA[index].BREAK_START_TIME = new Date(roundedDate);
-
     if (this.WEEK_DAY_DATA[index].BREAK_END_TIME) {
       const breakStartDate = new Date(this.WEEK_DAY_DATA[index].BREAK_END_TIME);
-
-      // Extract hours and minutes
       const breakStartHours = breakStartDate.getHours();
       const breakStartMinutes = breakStartDate.getMinutes();
       const breakStartTotalMinutes = breakStartHours * 60 + breakStartMinutes;
-
-      const startTotalMinutes = hours * 60 + minutes; // Start time converted to total minutes
-
+      const startTotalMinutes = hours * 60 + minutes; 
       if (breakStartTotalMinutes < startTotalMinutes) {
         this.WEEK_DAY_DATA[index].BREAK_END_TIME = null;
       }
     }
   }
-
   updateBreakEndTime(value: any, index: number): void {
     let timeString: string;
     if (value instanceof Date) {
@@ -2320,26 +2007,21 @@ export class TechnicianMasterdrawerComponent {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
-    date.setHours(hours, minutes, 0); // Set seconds to 0
+    date.setHours(hours, minutes, 0); 
     this.data.BREAK_END_TIME = date.toISOString();
-
     const selectedTime = new Date(value);
     const roundedDate = this.roundMinutesToNearestInterval(selectedTime);
     this.WEEK_DAY_DATA[index].BREAK_END_TIME = new Date(roundedDate);
   }
-
   disableBreakStartHours = (): number[] => {
     const disabledHours: number[] = [];
     const dayStartTime = this.data.DAY_START_TIME
@@ -2348,22 +2030,17 @@ export class TechnicianMasterdrawerComponent {
     const dayEndTime = this.data.DAY_END_TIME
       ? new Date(this.data.DAY_END_TIME)
       : null;
-
-    // Use orgStartHour and orgEndHour if no start/end time is selected
     const startHour = dayStartTime
       ? dayStartTime.getHours()
       : this.orgStartHour;
     const endHour = dayEndTime ? dayEndTime.getHours() : this.orgEndHour;
-
     for (let hour = 0; hour < 24; hour++) {
       if (hour < startHour || hour > endHour) {
         disabledHours.push(hour);
       }
     }
-
     return disabledHours;
   };
-
   disableBreakStartMinutes = (hour: number): number[] => {
     const disabledMinutes: number[] = [];
     const dayStartTime = this.data.DAY_START_TIME
@@ -2372,34 +2049,26 @@ export class TechnicianMasterdrawerComponent {
     const dayEndTime = this.data.DAY_END_TIME
       ? new Date(this.data.DAY_END_TIME)
       : null;
-
-    // Use orgStartMinute and orgEndMinute if no start/end time is selected
     const startMinute = dayStartTime
       ? dayStartTime.getMinutes()
       : this.orgStartMinute;
     const endMinute = dayEndTime ? dayEndTime.getMinutes() : this.orgEndMinute;
-
     if (dayStartTime && hour === dayStartTime.getHours()) {
-      // Disable minutes before the DAY_START_TIME
       for (let minute = 0; minute < 60; minute++) {
         if (minute < startMinute) {
           disabledMinutes.push(minute);
         }
       }
     }
-
     if (dayEndTime && hour === dayEndTime.getHours()) {
-      // Disable minutes after the DAY_END_TIME
       for (let minute = 0; minute < 60; minute++) {
         if (minute > endMinute) {
           disabledMinutes.push(minute);
         }
       }
     }
-
     return disabledMinutes;
   };
-
   disableStartHoursbulk: () => number[] = () => [];
   disableStartMinutesbulk: (hour: number) => number[] = () => [];
   disableEndHoursbulk: () => number[] = () => [];
@@ -2412,7 +2081,6 @@ export class TechnicianMasterdrawerComponent {
   orgStartMinute: any = 0;
   orgEndHour: any = 23;
   orgEndMinute: any = 59;
-
   getorgData() {
     this.api
       .getAllOrganizations(1, 1, '', 'desc', ' AND ID=1')
@@ -2432,7 +2100,6 @@ export class TechnicianMasterdrawerComponent {
                 );
               }
             }
-
             if (data['body']['data'][0].DAY_END_TIME) {
               const endParts = data['body']['data'][0].DAY_END_TIME.split(':');
               this.orgEndHour = +endParts[0];
@@ -2445,9 +2112,7 @@ export class TechnicianMasterdrawerComponent {
                 );
               }
             }
-
             this.initializeTimeRestrictions();
-
             if (data['body'].count > 0 && !this.data.ID) {
               if (
                 data['body']['data'][0].DAY_START_TIME != undefined &&
@@ -2456,7 +2121,7 @@ export class TechnicianMasterdrawerComponent {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_START_TIME.split(':'); // Split "HH:mm:ss"
+                  data['body']['data'][0].DAY_START_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.StartDate = new Date(today);
@@ -2469,7 +2134,7 @@ export class TechnicianMasterdrawerComponent {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_END_TIME.split(':'); // Split "HH:mm:ss"
+                  data['body']['data'][0].DAY_END_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.StartDate1 = new Date(today);
@@ -2485,7 +2150,6 @@ export class TechnicianMasterdrawerComponent {
       Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < this.orgStartHour || hour > this.orgEndHour
       );
-
     this.disableStartMinutesbulk = (hour: number) =>
       hour === this.orgStartHour
         ? Array.from({ length: 60 }, (_, i) => i).filter(
@@ -2496,18 +2160,15 @@ export class TechnicianMasterdrawerComponent {
             (minute) => minute > this.orgEndMinute
           )
           : [];
-
     this.disableEndHoursbulk = () => {
       const startHour = this.getStartHour();
       return Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < startHour || hour > this.orgEndHour
       );
     };
-
     this.disableEndMinutesbulk = (hour: number) => {
       const startHour = this.getStartHour();
       const startMinute = this.getStartMinute();
-
       if (hour === startHour) {
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute <= startMinute
@@ -2520,32 +2181,13 @@ export class TechnicianMasterdrawerComponent {
         return [];
       }
     };
-
-    // For Break Start Time
-    // this.disablebreakStartHoursbulk = () =>
-    //   Array.from({ length: 24 }, (_, i) => i).filter(
-    //     (hour) => hour < this.orgStartHour || hour > this.orgEndHour
-    //   );
-
     this.disablebreakStartHoursbulk = () => {
       const startHour = this.getStartHour();
       const endHour = this.getEndHour();
-
       return Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < startHour || hour > endHour
       );
     };
-
-    // this.disablebreakStartMinutesbulk = (hour: number) =>
-    //   hour === this.orgStartHour
-    //     ? Array.from({ length: 60 }, (_, i) => i).filter(
-    //         (minute) => minute < this.orgStartMinute
-    //       )
-    //     : hour === this.orgEndHour
-    //     ? Array.from({ length: 60 }, (_, i) => i).filter(
-    //         (minute) => minute > this.orgEndMinute
-    //       )
-    //     : [];
     this.disablebreakStartMinutesbulk = (hour: number) => {
       const breakStartHour = this.getEndHour();
       const breakStartMinute = this.getEndMinute();
@@ -2553,7 +2195,6 @@ export class TechnicianMasterdrawerComponent {
       const dayStartminute = this.getStartMinute();
       const dayendhour = this.getEndHour();
       const dayendminute = this.getEndMinute();
-
       if (hour === breakStartHour) {
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute <= breakStartMinute
@@ -2574,22 +2215,18 @@ export class TechnicianMasterdrawerComponent {
         return [];
       }
     };
-    // For Break End Time
     this.disablebreakEndHoursbulk = () => {
       const endHour = this.getEndHour();
-
       const breakStartHour = this.getBreakStartHour();
       return Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < breakStartHour || hour > endHour
       );
     };
-
     this.disablebreakEndMinutesbulk = (hour: number) => {
       const breakStartHour = this.getBreakStartHour();
       const breakStartMinute = this.getBreakStartMinute();
       const dayendhour = this.getEndHour();
       const dayendminute = this.getEndMinute();
-
       if (hour === breakStartHour) {
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute <= breakStartMinute
@@ -2607,50 +2244,41 @@ export class TechnicianMasterdrawerComponent {
       }
     };
   }
-
   getStartHour() {
     return this.StartDate
       ? new Date(this.StartDate).getHours()
       : this.orgStartHour;
   }
-
   getStartMinute() {
     return this.StartDate
       ? new Date(this.StartDate).getMinutes()
       : this.orgStartMinute;
   }
-
   getEndHour() {
     return this.StartDate1
       ? new Date(this.StartDate1).getHours()
       : this.orgEndHour;
   }
-
   getEndMinute() {
     return this.StartDate1
       ? new Date(this.StartDate1).getMinutes()
       : this.orgEndMinute;
   }
-
   getBreakStartHour() {
     return this.StartDate2
       ? new Date(this.StartDate2).getHours()
       : this.orgStartHour;
   }
-
   getBreakStartMinute() {
     return this.StartDate2
       ? new Date(this.StartDate2).getMinutes()
       : this.orgStartMinute;
   }
-
   onStartTimeChange1() {
     const selectedTime = new Date(this.StartDate);
     this.StartDate = this.roundMinutesToNearestInterval(selectedTime);
-
     this.initializeTimeRestrictions();
   }
-
   onendTimeChange1() {
     const selectedTime = new Date(this.StartDate1);
     this.StartDate1 = this.roundMinutesToNearestInterval(selectedTime);
@@ -2659,11 +2287,8 @@ export class TechnicianMasterdrawerComponent {
   onBreakStartTimeChange() {
     const selectedTime = new Date(this.StartDate2);
     this.StartDate2 = this.roundMinutesToNearestInterval(selectedTime);
-
     this.initializeTimeRestrictions();
   }
-
-  // map
   mapDraweVisible = false;
   mapDrawerTitle = 'Select Location';
   selectedLocation: any;
@@ -2699,7 +2324,6 @@ export class TechnicianMasterdrawerComponent {
       this.StateDataValues(this.countrySearch, this.stateSearch, this.postcodeSearch, this.districtSearch)
     }
   }
-
   openmapModal() {
     if (
       !this.data.ADDRESS_LINE1 ||
@@ -2711,9 +2335,7 @@ export class TechnicianMasterdrawerComponent {
     } else if (this.address1) {
       this.noaddress = false;
     }
-
     let addressParts: any = [];
-
     if (this.data.COUNTRY_ID) {
       let country = this.CountryData.find(
         (c) => c.ID === this.data.COUNTRY_ID
@@ -2739,19 +2361,11 @@ export class TechnicianMasterdrawerComponent {
     if (this.data.ADDRESS_LINE2) {
       addressParts.push(this.data.ADDRESS_LINE2);
     }
-    // if (this.data.CITY_NAME) {
-    //   addressParts.push(this.data.CITY_NAME);
-    // }
-    // Final Address String
-    // if (!this.data.HOME_LATTITUDE && !this.data.HOME_LATTITUDE) {
-    //   this.selectedLocation = addressParts.join(', ');
-    // }
     if (Number(this.data.HOME_LATTITUDE) && Number(this.data.HOME_LATTITUDE)) {
       this.selectedLocation = addressParts.join(', ');
     } else {
       this.selectedLocation = '';
     }
-
     if ((Number(this.data.HOME_LATTITUDE) && Number(this.data.HOME_LONGITUDE)) ||
       (this.data.PINCODE !== null && this.data.PINCODE !== undefined && this.data.PINCODE !== '') ||
       (this.data.ADDRESS_LINE1 !== null && this.data.ADDRESS_LINE1 !== undefined && this.data.ADDRESS_LINE1 !== '') ||
@@ -2761,10 +2375,7 @@ export class TechnicianMasterdrawerComponent {
     } else {
       this.selectedLocation = '';
     }
-    // Open modal after setting location
     this.mapDraweVisible = true;
-
-    // Set search box value and trigger search after modal opens
     setTimeout(() => {
       const searchBox = document.getElementById(
         'searchBox'
@@ -2775,31 +2386,22 @@ export class TechnicianMasterdrawerComponent {
         } else {
           searchBox.value = '';
         }
-        // this.handleSearch(this.selectedLocation);
-
         this.handleSearch({ target: { value: this.selectedLocation } });
       }
     }, 100);
-
     if (!this.data.COUNTRY_ID) {
-      // Convert latitude and longitude to numbers
       this.data.HOME_LATTITUDE = Number(this.data.HOME_LATTITUDE);
       this.data.HOME_LONGITUDE = Number(this.data.HOME_LONGITUDE);
-
-      // this.mapDraweVisible = true;
       setTimeout(() => {
         this.loadMap();
       }, 5);
     }
     if (this.data.ID) {
-      // Convert latitude and longitude to numbers
       this.data.HOME_LATTITUDE = this.data.HOME_LATTITUDE;
       this.data.HOME_LONGITUDE = this.data.HOME_LONGITUDE;
-      // this.selectedLocation = '';
       if (this.data.HOME_LATTITUDE && this.data.HOME_LONGITUDE) {
         this.selectedLocation = '';
       }
-      // this.mapDraweVisible = true;
       setTimeout(() => {
         this.loadMap();
       }, 5);
@@ -2808,34 +2410,25 @@ export class TechnicianMasterdrawerComponent {
   loadMap() {
     const map2Element = document.getElementById('map');
     if (!map2Element) return;
-
     const lat = Number(this.data.HOME_LATTITUDE) || 20.5937;
     const lng = Number(this.data.HOME_LONGITUDE) || 78.9629;
-
     this.map2 = new google.maps.Map(map2Element, {
       center: { lat, lng },
       zoom: this.data.HOME_LATTITUDE && this.data.HOME_LONGITUDE ? 14 : 5,
     });
-
     if (!isNaN(lat) && !isNaN(lng)) {
       this.marker = new google.maps.Marker({
         position: { lat, lng },
         map: this.map2,
       });
-
       this.getAddress(lat, lng);
     }
-
     const input = document.getElementById('searchBox') as HTMLInputElement;
     if (!input) return;
-
     const searchBox = new google.maps.places.SearchBox(input);
-    // this.map2.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-
     searchBox.addListener('places_changed', () => {
       const places = searchBox.getPlaces();
       if (!places || places.length === 0) return;
-
       const place = places[0];
       const lat = place.geometry?.location?.lat() || 0;
       const lng = place.geometry?.location?.lng() || 0;
@@ -2843,34 +2436,25 @@ export class TechnicianMasterdrawerComponent {
       var formattedaddress: any = ''
       formattedaddress = place?.formatted_address || '';
       this.selectedLocation = formattedaddress;
-
       this.map2.setCenter({ lat, lng });
       setTimeout(() => {
-        this.map2.setZoom(19); // Try 19–21
+        this.map2.setZoom(19); 
       }, 100);
-
-
       if (this.marker) {
         this.marker.setMap(null);
-        //  this.marker.setMap(null);
         this.marker = null;
       }
       this.marker = new google.maps.Marker({
         position: { lat, lng },
         map: this.map2,
       });
-
       this.getAddress(lat, lng, place);
     });
-
     this.map2.addListener('click', (event: any) => {
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
-
-
       if (this.marker) {
         this.marker.setMap(null);
-        //  this.marker.setMap(null);
         this.marker = null;
       }
       this.marker = new google.maps.Marker({
@@ -2885,70 +2469,55 @@ export class TechnicianMasterdrawerComponent {
   }
   handleSearch(event: any) {
     const query = event.target.value;
-
     let lat = this.data.HOME_LATTITUDE
       ? parseFloat(this.data.HOME_LATTITUDE)
       : 18.5204;
     let lng = this.data.HOME_LONGITUDE
       ? parseFloat(this.data.HOME_LONGITUDE)
       : 73.8567;
-
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
-
     this.map2 = new google.maps.Map(mapElement, {
       center: { lat, lng },
       zoom: this.data.HOME_LATTITUDE && this.data.HOME_LONGITUDE ? 14 : 5,
     });
-
     this.marker = new google.maps.Marker({
       position: { lat, lng },
       map: this.map2,
     });
-
-    // **Ensure Google Places Autocomplete provides global suggestions**
     const input = document.getElementById('searchBox') as HTMLInputElement;
     if (input) {
       const autocomplete = new google.maps.places.Autocomplete(input);
-
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
         if (!place.geometry || !place.geometry.location) return;
-
         lat = place.geometry.location.lat();
         lng = place.geometry.location.lng();
         this.placeName = place?.name || '';
-        this.getAddress(lat, lng, place); // Still use OSM for better address sometimes
-
+        this.getAddress(lat, lng, place); 
         this.map2.setCenter(place.geometry.location);
         setTimeout(() => {
-          this.map2.setZoom(19); // Try 19–21
+          this.map2.setZoom(19); 
         }, 100);
         this.marker.setPosition(place.geometry.location);
       });
     }
-
     if (query !== null && query !== undefined && query !== '') {
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ address: query }, (results, status) => {
         if (status === 'OK' && results[0]) {
           const location = results[0].geometry.location;
           lat = location.lat();
           lng = location.lng();
-
           this.getAddress(lat, lng, null);
-
           this.map2.setCenter(location);
           setTimeout(() => {
-            this.map2.setZoom(19); // Try 19–21
+            this.map2.setZoom(19); 
           }, 100);
           this.marker.setPosition(location);
         }
       });
     }
-
-
     this.map2.addListener('click', (event: any) => {
       lat = event.latLng.lat();
       lng = event.latLng.lng();
@@ -2956,97 +2525,77 @@ export class TechnicianMasterdrawerComponent {
       var formattedaddress1: any = ''
       formattedaddress1 = '';
       this.selectedLocation = formattedaddress1;
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ location: { lat, lng } }, (results, status) => {
         if (status === 'OK' && results[0]) {
           const placeId = results[0].place_id;
-
-          // Get full place details using placeId
           const service = new google.maps.places.PlacesService(this.map2);
           service.getDetails({ placeId: placeId }, (placeResult, placeStatus) => {
             if (placeStatus === 'OK' && placeResult) {
-              this.placeName = placeResult.name || ''; // <- Now you get name too
-              this.getAddress(lat, lng, placeResult);  // Call your function with place
+              this.placeName = placeResult.name || ''; 
+              this.getAddress(lat, lng, placeResult);  
             } else {
               this.getAddress(lat, lng, null);
             }
           });
         } else {
-          // fallback if geocoding fails
           console.warn('Geocoder failed:', status);
           this.getAddress(lat, lng, null);
         }
       });
     });
   }
-
   handleSearch1(event: any) {
     const query = event.target.value;
-
     let lat = this.data.HOME_LATTITUDE
       ? parseFloat(this.data.HOME_LATTITUDE)
       : 18.5204;
     let lng = this.data.HOME_LONGITUDE
       ? parseFloat(this.data.HOME_LONGITUDE)
       : 73.8567;
-
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
-
     this.map2 = new google.maps.Map(mapElement, {
       center: { lat, lng },
       zoom: this.data.HOME_LATTITUDE && this.data.HOME_LONGITUDE ? 14 : 5,
     });
-
     this.marker = new google.maps.Marker({
       position: { lat, lng },
       map: this.map2,
     });
-
-    // **Ensure Google Places Autocomplete provides global suggestions**
     const input = document.getElementById('searchBox') as HTMLInputElement;
     if (input) {
       const autocomplete = new google.maps.places.Autocomplete(input);
-
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
         if (!place.geometry || !place.geometry.location) return;
-
         lat = place.geometry.location.lat();
         lng = place.geometry.location.lng();
         this.placeName = place?.name || '';
-        this.getAddress(lat, lng, place); // Still use OSM for better address sometimes
-
+        this.getAddress(lat, lng, place); 
         this.map2.setCenter(place.geometry.location);
         setTimeout(() => {
-          this.map2.setZoom(19); // Try 19–21
+          this.map2.setZoom(19); 
         }, 100);
         this.marker.setPosition(place.geometry.location);
       });
     }
-
     if (query !== null && query !== undefined && query !== '') {
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ address: query }, (results, status) => {
         if (status === 'OK' && results[0]) {
           const location = results[0].geometry.location;
           lat = location.lat();
           lng = location.lng();
-
           this.getAddress(lat, lng, null);
-
           this.map2.setCenter(location);
           setTimeout(() => {
-            this.map2.setZoom(19); // Try 19–21
+            this.map2.setZoom(19); 
           }, 100);
           this.marker.setPosition(location);
         }
       });
     }
-
-
     this.map2.addListener('click', (event: any) => {
       lat = event.latLng.lat();
       lng = event.latLng.lng();
@@ -3054,24 +2603,20 @@ export class TechnicianMasterdrawerComponent {
       var formattedaddress1: any = ''
       formattedaddress1 = '';
       this.selectedLocation = formattedaddress1;
-
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ location: { lat, lng } }, (results, status) => {
         if (status === 'OK' && results[0]) {
           const placeId = results[0].place_id;
-
-          // Get full place details using placeId
           const service = new google.maps.places.PlacesService(this.map2);
           service.getDetails({ placeId: placeId }, (placeResult, placeStatus) => {
             if (placeStatus === 'OK' && placeResult) {
-              this.placeName = placeResult.name || ''; // <- Now you get name too
-              this.getAddress(lat, lng, placeResult);  // Call your function with place
+              this.placeName = placeResult.name || ''; 
+              this.getAddress(lat, lng, placeResult);  
             } else {
               this.getAddress(lat, lng, null);
             }
           });
         } else {
-          // fallback if geocoding fails
           console.warn('Geocoder failed:', status);
           this.getAddress(lat, lng, null);
         }
@@ -3087,7 +2632,6 @@ export class TechnicianMasterdrawerComponent {
       }
     }
   }
-
   getStatesByLocationFetch(countryId: any, value: boolean, state: any, postcode: any, distt: any) {
     this.isStateSpinning = true;
     if (value == true) {
@@ -3101,7 +2645,6 @@ export class TechnicianMasterdrawerComponent {
       this.CityData = [];
       this.PincodeData = [];
     }
-
     this.api
       .getState(
         0,
@@ -3114,7 +2657,6 @@ export class TechnicianMasterdrawerComponent {
         (data) => {
           if (data['code'] === 200) {
             this.StateData = data['data'];
-
             if (state) {
               var stateDatas: any = this.StateData.find((c: any) => c.NAME === state)?.ID;
               if (stateDatas !== null && stateDatas !== undefined && stateDatas !== '') {
@@ -3125,19 +2667,15 @@ export class TechnicianMasterdrawerComponent {
             this.isStateSpinning = false;
           } else {
             this.StateData = [];
-            // this.message.error('Failed To Get State Data...', '');
             this.isStateSpinning = false;
           }
         },
         () => {
-          // this.message.error('Something went wrong.', '');
         }
       );
   }
-
   getDistrictByLocationFetch(stateId: any, value: boolean, postcode: any, distt: any) {
     this.isDistrictSpinning = true;
-
     if (value == true) {
       this.data.DISTRICT_ID = null;
       this.data.CITY_ID = null;
@@ -3147,7 +2685,6 @@ export class TechnicianMasterdrawerComponent {
       this.CityData = [];
       this.PincodeData = [];
     }
-
     this.api
       .getdistrict(
         0,
@@ -3161,7 +2698,6 @@ export class TechnicianMasterdrawerComponent {
           if (data['code'] == 200) {
             this.isDistrictSpinning = false;
             this.DistrictData = data['data'];
-
             if (distt) {
               var DistrictDatas: any = this.DistrictData.find((c: any) => c.NAME === distt)?.ID;
               if (DistrictDatas !== null && DistrictDatas !== undefined && DistrictDatas !== '') {
@@ -3171,12 +2707,10 @@ export class TechnicianMasterdrawerComponent {
             }
           } else {
             this.DistrictData = [];
-            // this.message.error('Failed To Get District Data...', '');
             this.isDistrictSpinning = false;
           }
         },
         () => {
-          // this.message.error('Something Went Wrong ...', '');
         }
       );
   }
@@ -3188,8 +2722,7 @@ export class TechnicianMasterdrawerComponent {
       this.CityData = [];
       this.PincodeData = [];
     }
-
-    this.isPincodeSpinning = true; // Set loading to true when fetching data
+    this.isPincodeSpinning = true; 
     this.api
       .getAllPincode(
         0,
@@ -3211,17 +2744,14 @@ export class TechnicianMasterdrawerComponent {
             }
           } else {
             this.PincodeData = [];
-            // this.message.error('Failed To Get Pincode Data...', '');
           }
-          this.isPincodeSpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isPincodeSpinning = false; 
         },
         () => {
-          // this.message.error('Something went wrong.', '');
-          this.isPincodeSpinning = false; // Ensure spinning state is turned off on error
+          this.isPincodeSpinning = false; 
         }
       );
   }
-
   getpincodename1(pincode: any) {
     if (pincode != null && pincode != undefined && pincode != '') {
       var pin = this.PincodeData.filter((i) => i.ID == pincode);
@@ -3240,8 +2770,6 @@ export class TechnicianMasterdrawerComponent {
       this.data.PINCODE = null;
     }
   }
-
-
   getAddress(lat: number, lng: number, placeId?: any) {
     const geocoder = new google.maps.Geocoder();
     const latlng = { lat, lng };
@@ -3257,10 +2785,8 @@ export class TechnicianMasterdrawerComponent {
     this.districtSearch = '';
     this.street_number = '';
     this.subpremise = '';
-    // this.placeName = '';
     this.floor = '';
     const geocodeRequest = placeId?.place_id ? { placeId: placeId.place_id } : { location: latlng };
-
     geocoder.geocode(geocodeRequest, (results, status) => {
       if (status === 'OK' && results[0]) {
         const addressComponents: any = results[0].address_components;
@@ -3276,7 +2802,6 @@ export class TechnicianMasterdrawerComponent {
             if (types.includes('country')) {
               this.countrySearch = component?.long_name || '';
             }
-
             if (types.some((type: any) => ['sublocality_level_2', 'neighborhood'].includes(type))) {
               this.locality1Search = component.long_name || '';
             }
@@ -3284,7 +2809,6 @@ export class TechnicianMasterdrawerComponent {
               this.locality2Search = component.long_name || '';
             }
             if (types.includes('premise')) {
-              // this.buildingSearch = component?.long_name || '';
               this.buildingSearch += (this.buildingSearch ? ', ' : '') + (component?.long_name || '');
             }
             if (types.includes('landmark')) {
@@ -3293,9 +2817,6 @@ export class TechnicianMasterdrawerComponent {
             if (types.includes('route')) {
               this.building1Search = component?.long_name || '';
             }
-            // if (types.includes('street_number')) {
-            //   this.street_number = component?.long_name || '';
-            // }
             if (types.some((type: any) => ['plus_code', 'street_number'].includes(type))) {
               this.street_number = component.long_name || '';
             }
@@ -3318,101 +2839,75 @@ export class TechnicianMasterdrawerComponent {
             this.data.ADDRESS_LINE2 = this.citySearch ? this.citySearch : this.districtSearch;
           }
           this.data.ADDRESS_LINE1 = [this.floor, this.street_number, this.subpremise, this.placeName, this.buildingSearch, this.locality1Search].filter(partad => !!partad && partad.trim() !== '').join(', ');
-
         }
-
-        // Preserve coordinates
         this.data.HOME_LATTITUDE = Number(lat) || lat;
         this.data.HOME_LONGITUDE = Number(lng) || lng;
-
-
-        // Respect your conditions
         if (!this.noaddress) {
           this.data.ADDRESS_LINE1 = this.data.ADDRESS_LINE1;
         } else {
           this.address1 = this.data.ADDRESS_LINE1;
         }
         this.data.ADDRESS_LINE1 = this.data.ADDRESS_LINE1 || '';
-
         if (typeof this.selectedLocation !== 'object') {
           this.selectedLocation = '';
         }
         this.selectedLocation = this.data.ADDRESS_LINE2
       } else {
-        // this.selectedLocation = this.selectedLocation || {};
         this.selectedLocation = '';
       }
     });
   }
-
-
   clearSearchBox() {
     this.selectedLocation = '';
-
     this.closemapModal();
   }
-
-
   UrlImageOne;
   progressBarImageOne: boolean = false;
   percentImageOne = 0;
   timer: any;
   urlImageOneShow: boolean = false;
   fileURL: any = null;
-
   deleteCancel() { }
   removeImage() {
     this.data.PROFILE_PHOTO = null;
     this.fileURL = null;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   imageDeleteConfirm(data: any) {
     this.fileURL = null;
     this.UrlImageOne = null;
     this.data.PROFILE_PHOTO = null;
     this.fileURL = null;
   }
-
   sanitizedFileURL: SafeUrl | null = null;
   imageshow;
-
   imagePreview: any;
   selectedFile: any;
   onFileSelected(event: any): void {
-    const maxFileSize = 1 * 1024 * 1024; // 1 MB
+    const maxFileSize = 1 * 1024 * 1024; 
     const allowedWidth = 128;
     const allowedHeight = 128;
-
     if (event.target.files[0]?.type.match(/image\/(jpeg|jpg|png)/)) {
       this.fileURL = this.base64ToFile(this.croppedImage, 'cropped-image.png');
-
       if (this.fileURL.size > maxFileSize) {
         this.message.error('File size should not exceed 1MB.', '');
         this.fileURL = null;
         return;
       }
-
-      // Validate image dimensions
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const img = new Image();
         img.src = this.croppedImage;
         const input = event.target as HTMLInputElement;
-
         if (input?.files?.length) {
           this.selectedFile = input.files[0];
-
-          // Generate a preview of the selected image
           const reader = new FileReader();
           reader.onload = () => {
-            this.imagePreview = this.croppedImage; // Base64 image data
+            this.imagePreview = this.croppedImage; 
           };
           reader.readAsDataURL(this.selectedFile);
         }
@@ -3425,7 +2920,6 @@ export class TechnicianMasterdrawerComponent {
             this.fileURL = null;
             this.sanitizedFileURL = null;
           } else {
-            // Sanitize the file URL for preview
             this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
               URL.createObjectURL(this.fileURL)
             );
@@ -3433,7 +2927,6 @@ export class TechnicianMasterdrawerComponent {
           }
         };
       };
-
       reader.readAsDataURL(this.fileURL);
       this.CropImageModalVisible = false;
     } else {
@@ -3447,7 +2940,6 @@ export class TechnicianMasterdrawerComponent {
     }
   }
   imagePreviewURL;
-
   removeImage1(): void {
     this.data.PROFILE_PHOTO = null;
     this.fileURL = null;
@@ -3456,44 +2948,37 @@ export class TechnicianMasterdrawerComponent {
   }
   openImageInNewWindow(): void {
     if (this.fileURL) {
-      const imageURL = URL.createObjectURL(this.fileURL); // Get blob URL
+      const imageURL = URL.createObjectURL(this.fileURL); 
       window.open(imageURL, '_blank');
     } else {
       alert('No Profile Photo selected to view.');
     }
   }
   deleteImage(): void {
-    // Remove selected file and its preview
     this.fileURL = null;
     this.sanitizedFileURL = null;
   }
   ondaystartTimeChange1() {
     const selectedTime = new Date(this.StartDate1);
-
     this.StartDate1 = this.roundMinutesToNearestInterval(selectedTime);
   }
   roundMinutesToNearestInterval(date: Date): Date {
     const minutes = date.getMinutes();
     const roundedMinutes = Math.round(minutes / 10) * 10;
-
     let finalHour = date.getHours();
     let finalMinutes = roundedMinutes;
-
     if (roundedMinutes >= 60) {
       finalMinutes = 0;
       finalHour = (finalHour + 1) % 24;
     }
-
     const roundedDate = new Date(date);
     roundedDate.setHours(finalHour);
     roundedDate.setMinutes(finalMinutes);
     roundedDate.setSeconds(0);
-
     return roundedDate;
   }
   loadEmail: boolean = false;
   loadMobile: boolean = false;
-
   checkduplicate() {
     if (
       this.data.EMAIL_ID == null ||
@@ -3523,7 +3008,6 @@ export class TechnicianMasterdrawerComponent {
           (data) => {
             if (data['code'] == 200) {
               this.loadEmail = false;
-
               if (data['count'] > 0) {
                 this.message.info('Email already exist', '');
               } else {
@@ -3539,7 +3023,6 @@ export class TechnicianMasterdrawerComponent {
         );
     }
   }
-
   checkduplicateMobile() {
     if (
       this.data.MOBILE_NUMBER == null ||

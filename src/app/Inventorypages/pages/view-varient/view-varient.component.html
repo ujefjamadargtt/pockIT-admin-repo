@@ -1,23 +1,23 @@
 <div nz-row>
   <div nz-col nzSpan="24">
     <nz-table #tableeeeeeee [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords"
-      [nzSize]="'small'" [nzScroll]="{ x: '1400px', y: '60vh' }" nzShowSizeChanger="false" class="my-scroll no-wrap1"
-      nzBordered style="white-space: pre-line">
+      [nzSize]="'small'" [nzScroll]="{ x: '1400px', y: '60vh' }" nzShowSizeChanger="false"
+      class="my-scroll no-wrap1 inv-table-whitespace" nzBordered>
       <thead>
         <tr>
-          <th *ngIf="decreptedroleId != 23" nzWidth="100px" nzLeft style="font-weight: bold; text-align: center">
+          <th *ngIf="decreptedroleId != 23" nzWidth="100px" nzLeft class="inv-th-bold-center">
             Units
           </th>
-          <th nzLeft nzWidth="100px" style="font-weight: bold; text-align: center">
+          <th nzLeft nzWidth="100px" class="inv-th-bold-center">
             Image(s)
           </th>
-          <th nzLeft nzWidth="100px" style="font-weight: bold; text-align: center">
+          <th nzLeft nzWidth="100px" class="inv-th-bold-center">
             Stock
           </th>
-          <th nzLeft nzWidth="100px" style="font-weight: bold; text-align: center">
+          <th nzLeft nzWidth="100px" class="inv-th-bold-center">
             Logs
           </th>
-          <th nzLeft [nzSortFn]="true" [nzFilterFn]="true" nzWidth="300px" style="font-weight: bold; text-align: center"
+          <th nzLeft [nzSortFn]="true" [nzFilterFn]="true" nzWidth="300px" class="inv-th-bold-center"
             nzColumnKey="ITEM_NAME" nzCustomFilter>
             Item Name
             <nz-filter-trigger [(nzVisible)]="itemNameVisible" [nzDropdownMenu]="itemName">
@@ -26,8 +26,8 @@
                 }"></span>
             </nz-filter-trigger>
           </th>
-          <th [nzSortFn]="true" [nzFilterFn]="true" nzWidth="200px" style="font-weight: bold; text-align: center"
-            nzColumnKey="HSN_NAME" nzCustomFilter>
+          <th [nzSortFn]="true" [nzFilterFn]="true" nzWidth="200px" class="inv-th-bold-center" nzColumnKey="HSN_NAME"
+            nzCustomFilter>
             HSN Code
             <nz-filter-trigger [(nzVisible)]="hsncodevisible" [nzDropdownMenu]="hsncodedrop">
               <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
@@ -35,8 +35,8 @@
                 }"></span>
             </nz-filter-trigger>
           </th>
-          <th [nzSortFn]="true" [nzFilterFn]="true" nzWidth="200px" style="font-weight: bold; text-align: center"
-            nzColumnKey="SKU_CODE" nzCustomFilter>
+          <th [nzSortFn]="true" [nzFilterFn]="true" nzWidth="200px" class="inv-th-bold-center" nzColumnKey="SKU_CODE"
+            nzCustomFilter>
             SKU Code
             <nz-filter-trigger [(nzVisible)]="barcodevisible" [nzDropdownMenu]="barcodedrop">
               <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
@@ -49,15 +49,13 @@
             (nzFilterChange)="ontackingTypeFilterChange($event)">
             Tracking Type
           </th>
-          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="ALERT_STOCK_LEVEL"
-            nzCustomFilter>
+          <th nzWidth="150px" class="inv-th-bold-center" nzColumnKey="ALERT_STOCK_LEVEL" nzCustomFilter>
             Alert Level
           </th>
-          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="AVG_LEVEL" nzCustomFilter>
+          <th nzWidth="150px" class="inv-th-bold-center" nzColumnKey="AVG_LEVEL" nzCustomFilter>
             Avg. Level
           </th>
-          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="REORDER_STOCK_LEVEL"
-            nzCustomFilter>
+          <th nzWidth="150px" class="inv-th-bold-center" nzColumnKey="REORDER_STOCK_LEVEL" nzCustomFilter>
             Re-Order Level
           </th>
           <th nzWidth="100px" nzShowSort nzColumnKey="{{ 'STATUS' }}" [nzSortFn]="true" [nzFilters]="listOfFilter"
@@ -66,50 +64,47 @@
           </th>
         </tr>
       </thead>
-
       <tbody>
-        <tr *ngFor="let data of tableeeeeeee.data; let i = index" style="text-align: center">
-          <td nzLeft style="text-align: center" *ngIf="decreptedroleId != 23">
+        <tr *ngFor="let data of tableeeeeeee.data; let i = index" class="inv-tr-center">
+          <td nzLeft class="inv-td-center" *ngIf="decreptedroleId != 23">
             <nz-tag nzColor="#2db7f5" *ngIf="data['ID']; else MapUnitblock" (click)="ItemMapping(data, i)" nz-tooltip
-              nzTooltipTitle="Unit Mapping" style="cursor: pointer">
-              <span nz-icon nzType="link" nzTheme="outline" style="font-size: 15px">
+              nzTooltipTitle="Unit Mapping" class="inv-tag-cursor">
+              <span nz-icon nzType="link" nzTheme="outline" class="inv-icon-size">
               </span>&nbsp;&nbsp;Map
             </nz-tag>
-
             <ng-template #MapUnitblock>-</ng-template>
           </td>
-          <td nzLeft style="text-align: center">
+          <td nzLeft class="inv-td-center">
             <nz-tag nzColor="#2db7f5" (click)="openItemImagesDrawer(data)" nzTooltipTitle="Add Image(s)"
-              *ngIf="data['ID']; else MapUnitblock" nz-tooltip style="cursor: pointer">
-              <span nz-icon nzType="plus" nzTheme="outline" style="font-size: 15px">
+              *ngIf="data['ID']; else MapUnitblock" nz-tooltip class="inv-tag-cursor">
+              <span nz-icon nzType="plus" nzTheme="outline" class="inv-icon-size">
               </span>&nbsp;&nbsp;Add
             </nz-tag>
             <ng-template #MapUnitblock>-</ng-template>
           </td>
           <td nzLeft align="center">
             <nz-tag nzColor="#2db7f5" (click)="ViewStockDetails(data)" nzTooltipTitle="View Stock Details" nz-tooltip
-              style="cursor: pointer">
-              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 11px !important">
+              class="inv-tag-cursor">
+              <span nz-icon nzType="eye" nzTheme="outline" class="inv-icon-small">
               </span>&nbsp;&nbsp;View
             </nz-tag>
           </td>
           <td nzLeft align="center">
             <nz-tag nzColor="#2db7f5" (click)="Viewinventorylogs(data)" nzTooltipTitle="View Inventory Logs" nz-tooltip
-              style="cursor: pointer">
-              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 11px !important">
+              class="inv-tag-cursor">
+              <span nz-icon nzType="eye" nzTheme="outline" class="inv-icon-small">
               </span>&nbsp;&nbsp;View
             </nz-tag>
           </td>
           <td nzLeft align="left">
             {{ data.ITEM_NAME }} <br />
-            <span *ngIf="data['VARIANT_NAME']" style="font-size: 11px !important">
+            <span *ngIf="data['VARIANT_NAME']" class="inv-variant-text">
               {{
               data["VARIANT_NAME"].length > 18
               ? (data["VARIANT_NAME"] | slice : 0 : 18) + "..."
               : data["VARIANT_NAME"]
               }}
             </span>
-
             <span *ngIf="!data['VARIANT_NAME']">-</span>
           </td>
           <td align="center">
@@ -147,7 +142,6 @@
     </nz-table>
   </div>
 </div>
-<!-- Item Name -->
 <nz-dropdown-menu #itemName="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
@@ -178,7 +172,6 @@
     </div>
   </div>
 </nz-dropdown-menu>
-
 <nz-dropdown-menu #hsncodedrop="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
@@ -207,7 +200,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-
 <div *ngIf="drawerStockDetails">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(105% - 55px)',
@@ -221,8 +213,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-
-<!-- Add Image Drawer -->
 <div *ngIf="itemImagesDrawerVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -238,8 +228,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-
-<!-- Unit mapping drawer -->
 <div *ngIf="ItemMappingDrawerVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',

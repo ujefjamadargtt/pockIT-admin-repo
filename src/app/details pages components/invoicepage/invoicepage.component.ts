@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { ExportService } from 'src/app/Service/export.service';
 import { endOfMonth, startOfYear, endOfYear, startOfMonth } from 'date-fns';
-
 @Component({
   selector: 'app-invoicepage',
   templateUrl: './invoicepage.component.html',
@@ -57,23 +56,16 @@ export class InvoicepageComponent {
     private sanitizer: DomSanitizer,
     private httpClient: HttpClient, private _exportService: ExportService,
   ) { }
-
   filterqueryVendor: any = '';
   ngOnInit(): void {
-    // First day of the month
     const now = new Date();
     this.value1 = this.datePipe.transform(new Date(now.getFullYear(), now.getMonth(), 1), 'yyyy-MM-dd');
-    // Last day of the month
     this.value2 = this.datePipe.transform(new Date(now.getFullYear(), now.getMonth() + 1, 0), 'yyyy-MM-dd');
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using DatePipe
     const formattedStartDate: any = this.datePipe.transform(startOfMonth, 'yyyy-MM-dd');
     const formattedEndDate: any = this.datePipe.transform(endOfMonth, 'yyyy-MM-dd');
-
-    // Store the formatted dates in the selectedDate array
     this.selectedDate = [formattedStartDate, formattedEndDate];
     if (this.TYPE == 'VENDOR') {
       var TECH_IDS: any = [];
@@ -84,7 +76,6 @@ export class InvoicepageComponent {
           (data) => {
             if (data['code'] == 200) {
               this.loaddata = false;
-
               data['data'].forEach((element) => {
                 if (element.ID) TECH_IDS.push(element.ID);
               });
@@ -99,17 +90,13 @@ export class InvoicepageComponent {
           },
           (err) => {
             this.loaddata = false;
-
           }
         );
     } else {
       this.getInvoiceLog();
     }
     this.getCustomers();
-
   }
-
-
   filterdata: any = '';
   dataListOrder: any = [];
   JOB: any;
@@ -148,32 +135,21 @@ export class InvoicepageComponent {
         })
       );
   }
-
-
   sort(params: NzTableQueryParams): void {
-    // if (this.invoicefilter != null && this.invoicefilter != '') {
-
-
     const { pageSize, pageIndex, sort } = params;
-
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     if (currentSort != null && currentSort.value != undefined) {
@@ -183,7 +159,6 @@ export class InvoicepageComponent {
         this.getInvoiceLog();
       }
     }
-    // }
   }
   Customers: any = [];
   filterQuery1: any = '';
@@ -193,10 +168,7 @@ export class InvoicepageComponent {
   filterQuery4: any = '';
   filterQuery5: any = '';
   filterQuery6: any = '';
-
-
   CustomersData: any = []
-
   getCustomers() {
     this.api.getAllCustomer(0, 0, 'NAME', 'desc', ' AND ACCOUNT_STATUS=1').subscribe(data => {
       if (data['code'] == 200) {
@@ -247,16 +219,13 @@ export class InvoicepageComponent {
       sort = '';
     }
     var likeQuery = '';
-
     if (this.searchText != '' && this.searchText.length > 0) {
       likeQuery = ' AND(';
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
       likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ') ';
-
     }
-
     if ((this.selectedDate == undefined) || (this.selectedDate.length == 0)) {
       this.filterQuery = '';
     } else {
@@ -283,7 +252,6 @@ export class InvoicepageComponent {
     } else {
       this.filterQuery3 = '';
     }
-
     if (this.TYPE == 'JOB' && this.FILTER_ID != null && this.FILTER_ID != null && this.FILTER_ID != '') {
       this.filterQuery4 = " AND JOB_CARD_ID=" + this.FILTER_ID;
     } else {
@@ -299,10 +267,7 @@ export class InvoicepageComponent {
     } else {
       this.filterQuery6 = '';
     }
-    // likeQuery = this.filterQuery1;
-
     likeQuery = this.filterQuery + this.filterQuery1 + this.filterQuery2 + this.filterQuery3 + this.filterQuery4 + this.filterQuery5 + this.filterQuery6 + this.filterQueryJob;
-
     this.loadingRecords = true;
     if (this.TYPE == 'TECHNICIAN' && this.FILTER_ID == '') {
       this.invoiceData = [];
@@ -317,7 +282,6 @@ export class InvoicepageComponent {
               this.loadingRecords = false;
               this.invoiceDataCount = data['count'];
               this.invoiceData = data['data'];
-
             } else {
               this.invoiceData = [];
               this.invoiceDataCount = 0;
@@ -360,12 +324,9 @@ export class InvoicepageComponent {
           this.loadingRecords = false;
           this.message.info("At least one record must be present in the table to download the Excel file.", "")
         }
-
       }
     }
-
   }
-
   getInvoiceLog1(reset: boolean = false, exportInExcel: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
@@ -379,16 +340,13 @@ export class InvoicepageComponent {
       sort = '';
     }
     var likeQuery = '';
-
     if (this.searchText != '' && this.searchText.length > 0) {
       likeQuery = ' AND(';
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
       likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ') ';
-
     }
-
     if ((this.selectedDate == undefined) || (this.selectedDate.length == 0)) {
       this.filterQuery = '';
     } else {
@@ -415,7 +373,6 @@ export class InvoicepageComponent {
     } else {
       this.filterQuery3 = '';
     }
-
     if (this.TYPE == 'JOB' && this.FILTER_ID != null && this.FILTER_ID != null && this.FILTER_ID != '') {
       this.filterQuery4 = " AND JOB_CARD_ID=" + this.FILTER_ID;
     } else {
@@ -431,10 +388,7 @@ export class InvoicepageComponent {
     } else {
       this.filterQuery6 = '';
     }
-    // likeQuery = this.filterQuery1;
-
     likeQuery = this.filterQuery + this.filterQuery1 + this.filterQuery2 + this.filterQuery3 + this.filterQuery4 + this.filterQuery5 + this.filterQuery6 + this.filterQueryJob + this.filterqueryVendors1;
-
     this.loadingRecords = true;
     if (this.TYPE == 'TECHNICIAN' && this.FILTER_ID == '') {
       this.invoiceData = [];
@@ -449,7 +403,6 @@ export class InvoicepageComponent {
               this.loadingRecords = false;
               this.invoiceDataCount = data['count'];
               this.invoiceData = data['data'];
-
             } else {
               this.invoiceData = [];
               this.invoiceDataCount = 0;
@@ -492,12 +445,9 @@ export class InvoicepageComponent {
           this.loadingRecords = false;
           this.message.info("At least one record must be present in the table to download the Excel file.", "")
         }
-
       }
     }
-
   }
-
   clearFilter() {
     this.pageIndex = 1;
     this.filterQuery = '';
@@ -510,16 +460,11 @@ export class InvoicepageComponent {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using DatePipe
     const formattedStartDate: any = this.datePipe.transform(startOfMonth, 'yyyy-MM-dd');
     const formattedEndDate: any = this.datePipe.transform(endOfMonth, 'yyyy-MM-dd');
-
-    // Store the formatted dates in the selectedDate array
     this.selectedDate = [formattedStartDate, formattedEndDate];
     const now = new Date();
     this.value1 = this.datePipe.transform(new Date(now.getFullYear(), now.getMonth(), 1), 'yyyy-MM-dd');
-    // Last day of the month
     this.value2 = this.datePipe.transform(new Date(now.getFullYear(), now.getMonth() + 1, 0), 'yyyy-MM-dd');
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
@@ -528,20 +473,16 @@ export class InvoicepageComponent {
     } else {
       this.getInvoiceLog(true);
     }
-
-
   }
   handleCancel(): void {
     this.isModalVisible = false;
   }
-
   isModalVisible: boolean = false;
   pdfUrl: any
   showInvoiceModal(data: any): void {
     if (data?.INVOICE_URL) {
       const a = this.api.retriveimgUrl + 'Invoices' + '/' + data.INVOICE_URL;
       this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(a);
-
       this.isModalVisible = true;
     } else {
       this.message.error('Invoice URL not available', '');
@@ -559,38 +500,21 @@ export class InvoicepageComponent {
     }
   }
   downloadPDF(): void {
-    // Extract the original URL from the sanitized URL (without breaking security)
     const urlString = this.pdfUrl.changingThisBreaksApplicationSecurity || '';
-
-
     if (!urlString) {
       return;
     }
-
-    // Create HTTP request headers to force the PDF MIME type
     const headers = new HttpHeaders().set('Accept', 'application/pdf');
-
-    // Fetch the PDF as a Blob from the server with forced MIME type
     this.httpClient.get(urlString, { responseType: 'blob', headers: headers }).subscribe(
       (response: Blob) => {
-        // Log the received Blob to ensure it's a PDF
-
-
-        // Create a temporary Blob URL
         const blobUrl = URL.createObjectURL(response);
-
-        // Create an anchor element for download
         const a = document.createElement('a');
         a.href = blobUrl;
-        a.download = urlString.split('/').pop() || 'invoice.pdf'; // Use the file name from URL
-        a.target = '_self'; // Download in the same tab
-
-        // Trigger the download
+        a.download = urlString.split('/').pop() || 'invoice.pdf'; 
+        a.target = '_self'; 
         document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a); // Clean up the DOM
-
-        // Revoke the Blob URL after the download starts
+        document.body.removeChild(a); 
         URL.revokeObjectURL(blobUrl);
       },
       (error) => {
@@ -604,15 +528,12 @@ export class InvoicepageComponent {
       this.getInvoiceLog(true, true);
     }
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
     for (var i = 0; i < this.exportdataList.length; i++) {
       obj1['Invoice Date'] = this.exportdataList[i]['INVOICE_DATE'] ? this.datePipe.transform(this.exportdataList[i]['INVOICE_DATE'], 'dd/MM/yyyy') : "-";
-
       obj1['Customer Name'] = this.exportdataList[i]['CUSTOMER_NAME'] ? this.exportdataList[i]['CUSTOMER_NAME'] : "-";
-
       obj1['Mobile No.'] = this.exportdataList[i]['MOBILE_NO'] ? this.exportdataList[i]['MOBILE_NO'] : "-";
       obj1['Email ID'] = this.exportdataList[i]['EMAIL'] ? this.exportdataList[i]['EMAIL'] : "-";
       if (this.exportdataList[i]['CUSTOMER_TYPE'] == 'I') {
@@ -626,9 +547,6 @@ export class InvoicepageComponent {
       obj1['Tax Amount'] = this.exportdataList[i]['TAX_AMOUNT'] ? this.exportdataList[i]['TAX_AMOUNT'] : "0";
       obj1['Discount Amount'] = this.exportdataList[i]['DISCOUNT_AMOUNT'] ? this.exportdataList[i]['DISCOUNT_AMOUNT'] : "0";
       obj1['Final Amount'] = this.exportdataList[i]['FINAL_AMOUNT'] ? this.exportdataList[i]['FINAL_AMOUNT'] : "0";
-      // obj1['Invoice PDF'] = this.exportdataList[i]['INVOICE_URL']
-      //   ? `=HYPERLINK("${appkeys.retriveimgUrl}Invoices/${this.exportdataList[i]['INVOICE_URL']}", "Download")`
-      //   : "-";
       arry1.push(Object.assign({}, obj1));
       if (i == this.exportdataList.length - 1) {
         this._exportService.exportExcel(
@@ -643,11 +561,8 @@ export class InvoicepageComponent {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
-
   }
-
   applyFilter() {
-    // this.loadingRecords = true;
     if (this.selectedDate != null && this.selectedDate.length === 2) {
       this.value1 = this.datePipe.transform(this.selectedDate[0], 'yyyy-MM-dd');
       this.value2 = this.datePipe.transform(this.selectedDate[1], 'yyyy-MM-dd');
@@ -663,9 +578,7 @@ export class InvoicepageComponent {
       this.filterQuery = '';
       this.isFilterApplied = 'default';
     }
-    // this.loadingRecords = false;
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.searchText.length > 3 && event.key === 'Enter') {
       if (this.TYPE == 'VENDOR') {
@@ -675,7 +588,6 @@ export class InvoicepageComponent {
       }
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById('buttonss');
     if (element != null) element.focus();

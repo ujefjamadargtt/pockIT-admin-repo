@@ -5,37 +5,105 @@
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-.select{
-width: 200px;
-padding: 8px;
-display: block;
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
+.kb-search-header {
+  display: flex;
+  justify-content: flex-end;
+}
+.kb-filter-item {
+  width: 47px;
+}
+.kb-filter-row-top {
+  padding-top: 0px;
+}
+.kb-text-center {
+  text-align: center;
+}
+.kb-filter-item-wrapper {
+  margin-bottom: 8px;
+}
+.kb-filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.kb-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.kb-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.kb-filter-selected-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.kb-filter-card-actions-row {
+  margin-top: 7px;
+}
+.kb-filter-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.kb-filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.kb-filter-tag-icon {
+  font-size: 10px !important;
+}
+.kb-filter-view-tag {
+  margin-right: 0px;
+}
+.kb-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.kb-filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.kb-footer-btn {
+  margin-right: 10px;
+}
+.kb-table-preline {
+  white-space: pre-line;
+}
+.kb-selected-query-center {
+  text-align: center;
+}

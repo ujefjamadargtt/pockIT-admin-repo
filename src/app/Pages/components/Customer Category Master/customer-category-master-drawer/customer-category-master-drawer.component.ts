@@ -4,7 +4,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { NgForm } from '@angular/forms';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { CustmoerCategoryData } from 'src/app/Pages/Models/CustomerCategoryMaster';
-
 @Component({
   selector: 'app-customer-category-master-drawer',
   templateUrl: './customer-category-master-drawer.component.html',
@@ -27,7 +26,6 @@ export class CustomerCategoryMasterDrawerComponent {
     CategoryDrawer.form.markAsPristine();
     CategoryDrawer.form.markAsUntouched();
   }
-
   save(addNew: boolean, CountryDrawer: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -39,7 +37,6 @@ export class CustomerCategoryMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Customer Category Name.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {

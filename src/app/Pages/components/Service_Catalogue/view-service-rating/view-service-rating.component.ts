@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ServiceCatMasterDataNew } from 'src/app/Pages/Models/ServiceCatMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 @Component({
   selector: 'app-view-service-rating',
   templateUrl: './view-service-rating.component.html',
@@ -13,14 +12,12 @@ export class ViewServiceRatingComponent {
   @Input() data: any = ServiceCatMasterDataNew;
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private datePipe: DatePipe
   ) { }
   isSpinning = false;
-
   ratingdata: any = [];
   progressList: any;
   averageRating;
@@ -35,7 +32,6 @@ export class ViewServiceRatingComponent {
       ? `${this.api.retriveimgUrl}CustomerProfile/${profilePhoto}`
       : 'assets/img/blueEmpImage.png';
   }
-
   custToServiceRating() {
     this.isSpinning = true
     this.api
@@ -55,21 +51,17 @@ export class ViewServiceRatingComponent {
             this.globalRating = data['count'];
             this.progressList = data['progress'].reverse();
             this.isSpinning = false
-
           } else {
             this.ratingdata = [];
             this.isSpinning = false
-
           }
         },
         (err) => {
           this.ratingdata = [];
           this.isSpinning = false
-
         }
       );
   }
-
   roundRating(rating: number): number {
     if (rating !== null && rating !== undefined && rating > 0) {
       return Math.round(rating * 2) / 2;

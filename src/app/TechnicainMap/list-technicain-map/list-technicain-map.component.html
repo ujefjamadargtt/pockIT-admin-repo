@@ -1,13 +1,12 @@
 <div>
   <nz-spin [nzSpinning]="spinnnnnnn">
     <div nz-row [nzGutter]="16">
-      <!-- First Column -->
-      <div nz-col [nzSpan]="7" style="padding: 10px; border: 1px solid #0000001f">
+      <div nz-col [nzSpan]="7" class="sched-col-left-border">
         <div nz-row [nzGutter]="8">
           <div nz-col [nzSpan]="24">
-            <nz-form-item style="margin-bottom: 4px !important">
+            <nz-form-item class="sched-form-item-mb4">
               <nz-form-control>
-                <nz-select nzShowSearch nzAllowClear="false" style="width: 100%" nzPlaceHolder="Select Territory"
+                <nz-select nzShowSearch nzAllowClear="false" class="sched-width-full" nzPlaceHolder="Select Territory"
                   [(ngModel)]="selectedterritory2" name="serviceName2"
                   (ngModelChange)="getpendingjobdatafilter2($event)">
                   <nz-option [nzValue]="0" [nzLabel]="'All'"> </nz-option>
@@ -17,10 +16,9 @@
               </nz-form-control>
             </nz-form-item>
           </div>
-
           <div nz-col [nzSpan]="20">
             <nz-spin [nzSpinning]="onsearchload">
-              <nz-form-item style="margin-bottom: 4px !important">
+              <nz-form-item class="sched-form-item-mb4">
                 <nz-input-group [nzSuffix]="suffixIconSearch">
                   <input type="text" nz-input placeholder="Min 3 chars required" [(ngModel)]="searchValue"
                     name="search1111" (input)="onSearchChange(searchValue)" />
@@ -31,15 +29,14 @@
               </nz-form-item>
             </nz-spin>
           </div>
-          <div nz-col [nzSpan]="4" style="text-align: center">
-            <nz-form-item style="margin-bottom: 4px !important">
+          <div nz-col [nzSpan]="4" class="sched-text-center">
+            <nz-form-item class="sched-form-item-mb4">
               <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip
                 [nzType]="filterClassss ? 'primary' : 'default'" (click)="showMainFilter()">
                 <i nz-icon nzType="filter"></i>
               </button>
             </nz-form-item>
           </div>
-
           <div nz-col nzSpan="24">
             <div class="filter {{ filterClass }}">
               <div class="filter-box">
@@ -49,13 +46,13 @@
                       <nz-form-control nzHasFeedback nzErrorTip="Select From and To Date">
                         <nz-form-label nzRequired nzNoColon>
                           Date</nz-form-label>
-                        <nz-range-picker style="width: 100%" [nzFormat]="'dd/MM/yyyy'" name="filterdate"
+                        <nz-range-picker class="sched-width-full" [nzFormat]="'dd/MM/yyyy'" name="filterdate"
                           [(ngModel)]="filterdate" required></nz-range-picker>
                       </nz-form-control>
                     </nz-form-item>
                   </div>
                 </div>
-                <div style="text-align: end">
+                <div class="sched-text-end">
                   <button nz-button nzType="primary" (click)="getpendingjobdataforfilter()">
                     Apply Filter
                   </button>
@@ -64,94 +61,47 @@
             </div>
           </div>
         </div>
-
         <nz-card>
-          <div style="
-              font-weight: 600;
-              font-size: 12px;
-              padding-left: 10px;
-              padding-top: 5px;
-            ">
+          <div class="sched-pending-jobs-header">
             Pending Jobs
           </div>
-          <div id="scrollableDiv" (scroll)="onScroll($event)" style="
-              cursor: pointer;
-              padding: 10px;
-              margin-bottom: 10px;
-
-              max-height: 55vh;
-              overflow: auto;
-            ">
+          <div id="scrollableDiv" (scroll)="onScroll($event)" class="sched-scrollable-container">
             <div nz-row *ngFor="let orderNo of getKeys(groupedData)">
-              <div nz-col nzSpan="24" style="margin-bottom: 5px" class="cardstyle1111">
-                <div nz-row style="padding-bottom: 5px">
-                  <div nz-col nzSpan="12" style="
-                      font-weight: 600;
-                      font-size: 12px !important;
-                      padding-left: 10px;
-                      padding-top: 5px;
-                    ">
+              <div nz-col nzSpan="24" class="sched-order-card cardstyle1111">
+                <div nz-row class="sched-order-header">
+                  <div nz-col nzSpan="12" class="sched-order-number">
                     {{ orderNo }}<br />
-                    <span *ngIf="groupedData[orderNo].length > 1" style="font-size: 9px !important">
+                    <span *ngIf="groupedData[orderNo].length > 1" class="sched-estimated-time-text">
                       Estimated Time:
                       {{ getistimatetime(groupedData[orderNo]) }}</span>
                   </div>
-                  <div nz-col nzSpan="12" style="text-align: end">
+                  <div nz-col nzSpan="12" class="sched-text-end">
                     <div>
                       <nz-tag *ngIf="groupedData[orderNo].length > 1" (click)="orderassigndraweropen(orderNo)"
-                        style="font-size: 9px !important" nzColor="volcano">Schedule order
+                        class="sched-schedule-order-tag" nzColor="volcano">Schedule order
                       </nz-tag>
                     </div>
                   </div>
                 </div>
-                <!-- <div style="text-align: center">
-                  <span 
-                    style="
-                      font-weight: 600;
-                      font-size: 12px !important;
-                      padding-left: 10px;
-                      padding-top: 5px;
-                    "
-                  >
-                    {{ orderNo }}
-                  </span>
-                </div> -->
                 <div nz-row>
-                  <div nz-col nzSpan="24" style="margin-bottom: 5px" class="cardstyle"
+                  <div nz-col nzSpan="24" class="sched-job-card-item cardstyle"
                     *ngFor="let data of groupedData[orderNo]; let i = index">
                     <div nz-row>
                       <div class="mainnam" nz-col nzSpan="12" #ORDER_NOn
-                        [attr.title]="isTextOverflowing(ORDER_NOn) ? data.ORDER_NO : null" style="text-align: start">
-                        <span style="
-                            color: #1d39c4 !important;
-                            background: #f0f5ff !important;
-                            border-color: #adc6ff !important;
-                            padding: 5px;
-                            font-size: 11px !important;
+                        [attr.title]="isTextOverflowing(ORDER_NOn) ? data.ORDER_NO : null" class="sched-text-start">
+                        <span class="sched-order-badge
                           " [attr.title]='data.ORDER_NO'>
                           {{ data.ORDER_NO }}</span>
                       </div>
-                      <div class="mainnam" nz-col nzSpan="12" style="text-align: end" #subnameElement
+                      <div class="mainnam" nz-col nzSpan="12" class="sched-text-end" #subnameElement
                         [attr.title]="isTextOverflowing(subnameElement)? data.JOB_CARD_NO: null"
                         (click)="openjobcarddetails(data)">
-                        <span style="
-                            color: #1d39c4 !important;
-                            background: #f0f5ff !important;
-                            border-color: #adc6ff !important;
-                            padding: 5px;
-                            font-size: 11px !important;
+                        <span class="sched-order-badge
                           " [attr.title]='data.JOB_CARD_NO'>
                           {{ data.JOB_CARD_NO }}</span>
                       </div>
-
-                      <div class="subnam" nz-col nzSpan="16" style="
-                          font-size: 10px !important;
-                          margin-top: 4px;
-                          display: flex;
-                          justify-content: flex-start;
-                        ">
+                      <div class="subnam" nz-col nzSpan="16" class="sched-customer-info">
                         <span *ngIf="data.CUSTOMER_TYPE == 'I'" nz-icon nzType="user" nzTheme="outline"></span>
-
                         <svg *ngIf="data.CUSTOMER_TYPE != 'I'" enable-background="new 0 0 55 55" height="17px"
                           id="Layer_1" version="1.1" viewBox="0 0 55 55" width="17px" xml:space="preserve"
                           xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -174,19 +124,13 @@
                               checkOverflow(textContainer1, tooltipRef)
                             ">{{ data.CUSTOMER_NAME }}</span>
                         </ng-template>
-                        <!-- {{ data.CUSTOMER_NAME }} -->
                       </div>
-                      <div class="subnam" nz-col nzSpan="8" style="
-                          font-size: 10px !important;
-                          margin-top: 4px;
-                          text-align: end;
-                          font-weight: 600;
-                        ">
+                      <div class="subnam" nz-col nzSpan="8" class="sched-service-amount">
                         ₹ {{ data.SERVICE_AMOUNT | number}}
                       </div>
                       <div nz-col nzSpan="24">
                         <div nz-row>
-                          <div nz-col nzSpan="1" style="align-self: center; margin-bottom: -6px">
+                          <div nz-col nzSpan="1" class="sched-location-icon">
                             <svg viewBox="0 0 600 600" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                               enable-background="new 0 0 600 600">
                               <path
@@ -194,135 +138,64 @@
                                 fill="#ff1612" class="fill-ff7979"></path>
                             </svg>
                           </div>
-                          <div class="subname" nz-col nzSpan="23" style="font-size: 10px !important" #SERVICE_ADDRESSs
+                          <div class="subname" nz-col nzSpan="23" class="sched-service-address-text" #SERVICE_ADDRESSs
                             [attr.title]="isTextOverflowing(SERVICE_ADDRESSs)? data.SERVICE_ADDRESS: null">
                             {{data["SERVICE_ADDRESS"]? data["SERVICE_ADDRESS"]: "-"}}
-                            <!-- <span
-                          class="subnam"
-                          style="font-size: 10px !important"
-                          *ngIf="data['SERVICE_ADDRESS'] != null"
-                        >
-                          <span
-                            style="font-size: 10px !important"
-                            *ngIf="data['SERVICE_ADDRESS'].length >= 40"
-                            nz-popover
-                            [nzPopoverContent]="data['SERVICE_ADDRESS']"
-                            nzPopoverPlacement="topLeft"
-                          >
-                            {{
-                              data["SERVICE_ADDRESS"] == null
-                                ? "-"
-                                : (data["SERVICE_ADDRESS"] | slice : 0 : 40)
-                            }}{{
-                              data["SERVICE_ADDRESS"].length > 40 ? "..." : ""
-                            }}
-                          </span>
-                          <span
-                            style="font-size: 10px !important"
-                            *ngIf="data['SERVICE_ADDRESS'].length < 40"
-                          >
-                            {{
-                              data["SERVICE_ADDRESS"] == null
-                                ? "-"
-                                : (data["SERVICE_ADDRESS"] | slice : 0 : 40)
-                            }}
-                            {{ data["SERVICE_ADDRESS"].length > 40 ? "..." : "" }}
-                          </span>
-                        </span>
-                        <span *ngIf="data['SERVICE_ADDRESS'] == null">-</span> -->
                           </div>
                         </div>
                       </div>
-                      <div class="subnam" nz-col nzSpan="12" style="font-size: 10px !important" #PINCODEa [attr.title]="
+                      <div class="subnam" nz-col nzSpan="12" class="sched-pincode-text" #PINCODEa [attr.title]="
                           isTextOverflowing(PINCODEa) ? data.PINCODE : null
                         ">
                         Pincode : {{ data.PINCODE }}
                       </div>
-                      <div class="subnam" nz-col nzSpan="12" style="font-size: 10px !important; text-align: end"
-                        #TERRITORY_NAMEs [attr.title]="isTextOverflowing(TERRITORY_NAMEs)? data.TERRITORY_NAME: null">
+                      <div class="subnam" nz-col nzSpan="12" class="sched-territory-text" #TERRITORY_NAMEs
+                        [attr.title]="isTextOverflowing(TERRITORY_NAMEs)? data.TERRITORY_NAME: null">
                         Territory Name : {{ data.TERRITORY_NAME }}
                       </div>
-                      <div class="subnam" nz-col nzSpan="24" style="font-size: 10px !important; text-align: start">
+                      <div class="subnam" nz-col nzSpan="24" class="sched-service-name-text">
                         Service : {{ data.SERVICE_NAME }}
                       </div>
-                      <div class="subnam" nz-col nzSpan="24" style="font-size: 10px !important; text-align: start">
+                      <div class="subnam" nz-col nzSpan="24" class="sched-expected-date-text">
                         Expected on
                         {{
                         data.EXPECTED_DATE_TIME | date : "dd/MM/yyyy HH:mm a"
                         }}
-                        <!-- Scheduled on:
-                    {{ data.SCHEDULED_DATE_TIME | date : "dd/MM/yyyy HH:mm a" }} -->
                       </div>
-                      <div class="subnam" nz-col nzSpan="12" style="font-size: 10px !important; text-align: start">
+                      <div class="subnam" nz-col nzSpan="12" class="sched-estimated-time-start">
                         Estimated Time:
                         {{ data.ESTIMATED_TIME_IN_MIN }} min.
                       </div>
-                      <div class="subnam" nz-col nzSpan="12" style="font-size: 10px !important; text-align: end">
-                        <b *ngIf="data.IS_REMOTE_JOB == 1" style="
-                            border: 1px solid #ffa0af !important;
-                            padding: 0px 5px;
-                            border-radius: 8px;
-                            color: #ff7676 !important;
-                            font-weight: 500;
-                          ">Remote Job</b>
+                      <div class="subnam" nz-col nzSpan="12" class="sched-remote-job-end">
+                        <b *ngIf="data.IS_REMOTE_JOB == 1" class="sched-remote-job-badge">Remote Job</b>
                       </div>
-                      <div class="subnam" nz-col nzSpan="8" style="
-                          font-size: 10px !important;
-                          text-align: start;
-                          margin-top: 5px;
-                        ">
-                        <!-- <span
-                      style="
-                        color: #1d39c4 !important;
-                        background: #f0f5ff !important;
-                        border-color: #adc6ff !important;
-                        padding: 1px;
-                      "
-                    >
-                      ₹ {{ data.TOTAL_AMOUNT }}</span
-                    >
-                    {{ data.PAYMENT_MODE }} -->
+                      <div class="subnam" nz-col nzSpan="8" class="sched-action-start">
                       </div>
-                      <div class="subnam" nz-col nzSpan="8" style="
-                          font-size: 10px !important;
-                          text-align: center;
-                          margin-top: 5px;
-                        ">
-                        <nz-tag (click)="jobassigndraweropen(data)" style="
-                            border-top-left-radius: 40%;
-                            border-top-right-radius: 40%;
-                            font-size: 10px !important;
-                          " nzColor="volcano">Schedule
+                      <div class="subnam" nz-col nzSpan="8" class="sched-action-center">
+                        <nz-tag (click)="jobassigndraweropen(data)" class="sched-schedule-tag"
+                          nzColor="volcano">Schedule
                         </nz-tag>
                       </div>
-
-                      <div class="subnam" nz-col nzSpan="8" style="
-                          font-size: 12px !important;
-                          text-align: end;
-                          margin-top: 5px;
-                        "></div>
+                      <div class="subnam" nz-col nzSpan="8" class="sched-action-end"></div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <!-- </div> -->
             </div>
             <div nz-row *ngIf="jobdatss.length == 0">
-              <div nz-col nzSpan="24" *ngIf="jobdatss.length == 0" style="text-align: center">
+              <div nz-col nzSpan="24" *ngIf="jobdatss.length == 0" class="sched-text-center">
                 <nz-empty></nz-empty>
               </div>
             </div>
           </div>
         </nz-card>
       </div>
-
-      <div nz-col [nzSpan]="17" style="padding: 10px; border: 1px solid #0000001f">
+      <div nz-col [nzSpan]="17" class="sched-col-right-border">
         <div nz-row>
           <div nz-col nzSpan="8">
-            <nz-form-item style="margin: 0px !important">
+            <nz-form-item class="sched-form-item-margin-zero">
               <nz-form-control>
-                <nz-select nzShowSearch nzAllowClear="false" style="width: 100%" nzPlaceHolder="Select Territory"
+                <nz-select nzShowSearch nzAllowClear="false" class="sched-width-full" nzPlaceHolder="Select Territory"
                   [(ngModel)]="selectedterritory" name="serviceName" (ngModelChange)="getpendingjobdatafilter($event)">
                   <nz-option *ngFor="let tt of territorydata" [nzValue]="tt.ID" [nzLabel]="tt.NAME">
                   </nz-option>
@@ -334,31 +207,21 @@
             <nz-spin [nzSpinning]="tableloading">
               <div nz-row>
                 <div nz-col nzSpan="4">
-                  <div style="text-align: right">
+                  <div class="sched-text-right">
                     <button nz-button nzType="primary" nzShape="circle" nzTooltipTitle="Previous"
                       nzTooltipPlacement="top" nz-tooltip (click)="navigateBackward()">
                       <span nz-icon nzType="left" nzTheme="outline"></span>
                     </button>
                   </div>
                 </div>
-
-                <div nz-col nzSpan="16" style="
-                    text-align: center;
-                    align-content: space-evenly;
-                    justify-content: center;
-                    justify-items: center;
-                    text-align-last: center;
-                  ">
-                  <!-- <span (click)="datechange.open()">
-                {{ todaydate | date : "dd MM yyyy" }}</span
-              > -->
-                  <nz-date-picker style="text-align: center" nzBorderless [(ngModel)]="todaydate"
+                <div nz-col nzSpan="16" class="sched-date-picker-center">
+                  <nz-date-picker class="sched-text-center" nzBorderless [(ngModel)]="todaydate"
                     [nzFormat]="'dd/MM/yyyy'" name="todaydate" nzPlaceHolder="Select Date"
                     (ngModelChange)="oncalenderdatechange($event)">
                   </nz-date-picker>
                 </div>
                 <div nz-col nzSpan="4">
-                  <div style="text-align: left">
+                  <div class="sched-text-left">
                     <button nz-button nzType="primary" nzShape="circle" nzTooltipTitle="Next" nzTooltipPlacement="top"
                       nz-tooltip (click)="navigateForward()">
                       <span nz-icon nzType="right" nzTheme="outline"></span>
@@ -367,34 +230,16 @@
                 </div>
               </div>
             </nz-spin>
-
-            <!-- {{ todaydate | date : "dd MM yyyy" }} -->
           </div>
-          <div nz-col nzSpan="8" style="justify-items: end; align-self: center; text-align: end">
-            <span style="font-weight: 800; text-decoration: underline"
-              *ngIf="terriotrystarttime1 != null && terriotryendtime1 != null">
+          <div nz-col nzSpan="8" class="sched-time-display">
+            <span class="sched-time-text" *ngIf="terriotrystarttime1 != null && terriotryendtime1 != null">
               {{ gettime() }}
             </span>
           </div>
         </div>
         <div nz-row [nzGutter]="16">
-          <div nz-col [nzSpan]="24" style="max-height: 70vh">
-            <!-- <app-ordercalendar></app-ordercalendar> -->
-            <!-- <div nz-col [nzSpan]="24"> -->
-            <div nz-row style="margin-top: 10px">
-              <!-- <div nz-col nzSpan="24" style="text-align: center">
-                <nz-empty *ngIf="sheduledata.length==0"
-                nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                [nzNotFoundContent]="contentTpl"
-              >
-              <ng-template #contentTpl>
-                <span>
-                 No data found
-                </span>
-              </ng-template>
-            </nz-empty>
-              </div> -->
-
+          <div nz-col [nzSpan]="24" class="sched-table-max-height">
+            <div nz-row class="sched-table-margin-top">
               <nz-table class="grid no-select" #tableElement [nzData]="sheduledata" [nzLoading]="tableloading"
                 nzSize="small" [nzFrontPagination]="false" [nzBordered]="true" [nzScroll]="{
                   x: sheduledata.length == 0 ? getdataaaaa() : getdataaaaa1(),
@@ -402,43 +247,17 @@
                 }">
                 <thead>
                   <tr>
-                    <td nzLeft="0px" nzWidth="150px" style="
-                        font-size: 11px !important;
-                        padding: 5px 6px 5px 6px;
-                        background-color: #f0f0f0;
-                        width: 150px;
-                        z-index: 20;
-                      ">
+                    <td nzLeft="0px" nzWidth="150px" class="sched-table-header-name">
                       Name
                     </td>
-                    <!-- [ngClass]="getColumnHeaderColor(column)" -->
-
                     <ng-container *ngFor="let column of columns; let j = index">
-                      <td align="center" colSpan="2" style="
-                          font-size: 10px !important;
-                          padding: 1px;
-                          width: 44px;
-                        ">
+                      <td align="center" colSpan="2" class="sched-table-header-column">
                         <br />
                         {{ column }} <br />
-
-                        <!-- <span style="font-weight: normal; font-size: 10px; color: blue;">
-                          {{bookedRooms[j]}}/{{bookingData.length}}
-                        </span> -->
                       </td>
-
-                      <!-- <td align="center" *ngIf="j == (columns.length - 1)" colSpan="2" [ngClass]="'otherColumn'"
-                        style="font-size: 10px; padding: 1px; width: 44px;">
-                      </td>
-            
-                      <td align="center" *ngIf="(j == columns.length - 1) && (columns.length == 28)" colSpan="2"
-                        [ngClass]="'otherColumn'" style="font-size: 10px; padding: 1px; width: 44px;">
-                        NA
-                      </td> -->
                     </ng-container>
                   </tr>
                 </thead>
-
                 <tbody>
                   <tr *ngFor="let row of tableElement.data; let rowIndex = index">
                     <td nzLeft="0px" nzWidth="150px" [ngStyle]="{
@@ -446,33 +265,11 @@
                           row['IS_SPECIAL'] == 1
                             ? '#ffbdbd'
                             : 'rgb(227, 227, 249)'
-                      }" style="
-                        font-size: 10px !important;
-                        padding: 5px 2px 5px 2px;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        border: 1px solid #ccc;
-                        width: 150px;
-                        z-index: 20;
-                      ">
+                      }" class="sched-table-body-name">
                       {{ row["TECHNICIAN_NAME"] }}
                     </td>
-                    <!-- [class.selected]="isSelected(rowIndex, columnIndex)"
-                    (mousedown)="onMouseDown(rowIndex, columnIndex, row[column])"
-                    (mousemove)="onMouseMove(rowIndex, columnIndex, row[column])" (mouseup)="onMouseUp(row['ROOM_ID']) -->
-                    <!-- (click)="openInfoModal(row['ROOM_ID'], column, row[column])" -->
                     <ng-container *ngFor="let column of columns; let columnIndex = index">
-                      <td style="
-                          position: relative;
-                          cursor: pointer;
-                          text-align: center;
-                          font-size: 10px !important;
-                          padding: 0px;
-                          border: 1px solid #ccc;
-                          width: 44px;
-                        " colSpan="2">
-                        <!-- [ngStyle]="{'background-color': getColorName(row[column]), 'width': getWidth(mainCellMergeArray[rowIndex][columnIndex], row[column]), 'left': getLeft(mainCellMergeArray[rowIndex][columnIndex], row[column])}" -->
+                      <td class="sched-table-body-cell" colSpan="2">
                         <div nz-popover [nzPopoverContent]="popoverTemplate" [nzPopoverTrigger]="'hover'"
                           [nzPopoverPlacement]="'top'" (mouseenter)="updatePopoverContext(row, row[column])" [ngStyle]="{
                             'background-color': getColorName(row[column]),
@@ -484,31 +281,12 @@
                               mainCellMergeArray[rowIndex][columnIndex],
                               row[column]
                             )
-                          }" style="
-                            position: absolute;
-                            top: 11px;
-                            z-index: 10;
-                            border-radius: 13px;
-                            transform: translate(-50%, -50%);
-                            background-color: lightgray;
-                            max-height: 16px;
-                            min-height: 16px;
-                            padding: 1px 0px;
-                            font-weight: normal;
-                          " *ngIf="
+                          }" class="sched-table-cell-bar" *ngIf="
                             row[column] != null &&
                             row[column] != undefined &&
                             row[columns[columnIndex - 1]] != row[column]
                           ">
-                          <!-- <span
-                           >
-                           {{ row[column].length>5?row[column].substring(0,5)+"...":row[column] }}
-                          </span> -->
-
-                          <span style="font-size: 10px !important; white-space: nowrap !important;
-                        overflow: hidden !important;display: block;
-    width: 100%;
-                        text-overflow: ellipsis !important;" *ngIf="
+                          <span class="sched-cell-text-small" *ngIf="
                               mainCellMergeArray[rowIndex][columnIndex] == 1 ||
                               mainCellMergeArray[rowIndex][columnIndex] == 0
                             ">
@@ -521,11 +299,7 @@
                             : row[column].split(",")[0]
                             }}
                           </span>
-
-                          <span style="font-size: 10px !important;white-space: nowrap !important;
-                        overflow: hidden !important;
-                        text-overflow: ellipsis !important;display: block;
-    width: 100%;" *ngIf="
+                          <span class="sched-cell-text-medium" *ngIf="
                               mainCellMergeArray[rowIndex][columnIndex] == 2
                             ">
                             {{
@@ -537,11 +311,7 @@
                             : row[column].split(",")[0]
                             }}
                           </span>
-
-                          <span style="font-size: 10px !important;white-space: nowrap !important;
-                        overflow: hidden !important;
-                        text-overflow: ellipsis !important;display: block;
-    width: 100%;" *ngIf="
+                          <span class="sched-cell-text-large" *ngIf="
                               mainCellMergeArray[rowIndex][columnIndex] > 2
                             ">
                             {{
@@ -555,57 +325,34 @@
                           </span>
                         </div>
                       </td>
-
-                      <!-- <td align="center" *ngIf="columnIndex == columns.length - 1" colSpan="2"
-                        style="font-size: 10px; padding: 0px; width: 44px; border: 1px solid #CCC;">
-                      </td>
-            
-                      <td align="center" *ngIf="(columnIndex == columns.length - 1) && (columns.length == 28)" colSpan="2"
-                        style="font-size: 10px; padding: 0px; width: 44px; border: 1px solid #CCC;">
-                        NA
-                      </td> -->
                     </ng-container>
                   </tr>
                 </tbody>
               </nz-table>
-
               <ng-template #popoverTemplate>
-                <div style="padding: 5px !important">
-                  <!-- <p><strong>Data:</strong> {{ currentPopoverData || 'No Data' }}</p> -->
-                  <b style="
-                      font-size: 11px !important;
-                      box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+                <div class="sched-popover-padding">
+                  <b class="sched-popover-jobno
                     ">{{ jobno }}</b>
-                  <p style="font-size: 10px !important">
+                  <p class="sched-popover-tech-name">
                     {{ currentPopoverData.TECHNICIAN_NAME }}
                   </p>
-
-                  <div style="margin-top: 2px" *ngIf="decreptedroleID===7 && decreptedbackofficeId===custidHover">
-                    <nz-tag style="cursor: pointer; font-size: 10px !important" [nzColor]="'cyan'"
-                      (click)="jobviewdetails()">View
+                  <div class="sched-popover-actions" *ngIf="decreptedroleID===7 && decreptedbackofficeId===custidHover">
+                    <nz-tag class="sched-popover-tag-cursor" [nzColor]="'cyan'" (click)="jobviewdetails()">View
                       Job</nz-tag>&nbsp;&nbsp;
-                    <nz-tag *ngIf="jobnoedit == 'AS'" style="cursor: pointer; font-size: 10px !important"
-                      [nzColor]="'purple'" (click)="getpendingjobsforedit()">Edit</nz-tag>
+                    <nz-tag *ngIf="jobnoedit == 'AS'" class="sched-popover-tag-cursor" [nzColor]="'purple'"
+                      (click)="getpendingjobsforedit()">Edit</nz-tag>
                   </div>
-                  <div style="margin-top: 2px" *ngIf="decreptedroleID!==7">
-                    <nz-tag style="cursor: pointer; font-size: 10px !important" [nzColor]="'cyan'"
-                      (click)="jobviewdetails()">View Job</nz-tag>&nbsp;&nbsp;
-                    <nz-tag *ngIf="jobnoedit == 'AS'" style="cursor: pointer; font-size: 10px !important"
-                      [nzColor]="'purple'" (click)="getpendingjobsforedit()">Edit</nz-tag>
+                  <div class="sched-popover-actions" *ngIf="decreptedroleID!==7">
+                    <nz-tag class="sched-popover-tag-cursor" [nzColor]="'cyan'" (click)="jobviewdetails()">View
+                      Job</nz-tag>&nbsp;&nbsp;
+                    <nz-tag *ngIf="jobnoedit == 'AS'" class="sched-popover-tag-cursor" [nzColor]="'purple'"
+                      (click)="getpendingjobsforedit()">Edit</nz-tag>
                   </div>
-
-                  <!-- <p>{{currentPopoverData.SCHEDULED_DATE_TIME | date:'dd MM yyyy HH:mm a'}}</p> -->
                 </div>
               </ng-template>
             </div>
-
-            <!-- <h1>hii</h1
-              > -->
-            <!-- <app-paymenttransactionpage></app-paymenttransactionpage> -->
-            <!-- </div> -->
           </div>
-
-          <div nz-col [nzSpan]="24" style="text-align: end; margin-top: 10px" *ngIf="shedulecount.length > 0">
+          <div nz-col [nzSpan]="24" class="sched-stats-container" *ngIf="shedulecount.length > 0">
             <nz-tag nzColor="blue">
               Total Jobs | {{ shedulecount[0]["TOTAL_COUNT"] }}
             </nz-tag>
@@ -622,7 +369,6 @@
     </div>
   </nz-spin>
 </div>
-
 <div *ngIf="jobdetailsshow">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -637,7 +383,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-
 <div *ngIf="jobassignshow">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -655,78 +400,29 @@
     </ng-container>
   </nz-drawer>
 </div>
-
 <nz-modal [(nzVisible)]="openModal" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="350px"
   nzClosable="false" [nzFooter]="contextofrules" nzMaskClosable="false">
   <ng-container *nzModalContent>
-    <h5 style="font-size: 15px">Please Select Territory</h5>
-    <hr style="margin: 8px 0" />
-    <p style="font-size: 13px; margin-bottom: 10px"></p>
+    <h5 class="sched-modal-title">Please Select Territory</h5>
+    <hr class="sched-modal-hr" />
+    <p class="sched-modal-p"></p>
     <nz-spin [nzSpinning]="spinnnnnnn">
-      <!-- <div nz-row *ngIf="
-          territorydata != null &&
-          territorydata != '' &&
-          territorydata != undefined
-        ">
-        <div nz-col nzSpan="24" *ngIf="territorydata.length > 0">
-          <nz-form-item style="margin-bottom: 4px !important">
-            <nz-form-control>
-              <nz-select nzShowSearch nzAllowClear="false" style="width: 100%" nzPlaceHolder="Select Territory"
-                [(ngModel)]="selectedterritory" name="serviceName" (ngModelChange)="getpendingjobdatafilter($event)">
-                <nz-option *ngFor="let tt of territorydata" [nzValue]="tt.ID" [nzLabel]="tt.NAME">
-                </nz-option>
-              </nz-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col nzSpan="24" *ngIf="territorydata.length == 0" style="text-align: center">
-          <b>Territory Data Not Found</b>
-        </div>
-        <div nz-col nzSpan="24" *ngIf="
-            territorydata == null ||
-            territorydata == '' ||
-            territorydata == undefined
-          " style="text-align: center">
-          <b>Territory Data Not Found</b>
-        </div>
-      </div> -->
       <div nz-row *ngIf="
           territorydata == null ||
           territorydata == '' ||
           territorydata == undefined
         ">
-        <div nz-col nzSpan="24" style="text-align: center">
+        <div nz-col nzSpan="24" class="sched-text-center">
           <b>Territory Data Not Found</b>
         </div>
-        <div nz-col nzSpan="24" style="text-align: center; margin-top: 5px;">
-          <nz-tag style="font-size: 9px !important;padding: 2px 10px;color: #e76118 !important;" nzColor="volcano"> <a
-              href="/masters/menu" style="color: #e76118 !important;">Back To Menu</a>
+        <div nz-col nzSpan="24" class="sched-modal-link-container">
+          <nz-tag class="sched-modal-link-tag" nzColor="volcano">
+            <a href="/masters/menu" class="sched-modal-link">Back To Menu</a>
           </nz-tag>
-
         </div>
       </div>
-
     </nz-spin>
   </ng-container>
-
   <ng-template #contextofrules>
-    <!-- <button
-      nz-button
-      [nzLoading]="isSpinning"
-      nzType="primary"
-      class="btn btn-primary"
-      (click)="assigntechhdata()"
-    >
-      Save & Close
-    </button>
-    <button
-      nz-button
-      [nzLoading]="isSpinning"
-      nzType="default"
-      class="btn btn-primary"
-      (click)="closemodelll()"
-    >
-      Cancel
-    </button> -->
   </ng-template>
 </nz-modal>

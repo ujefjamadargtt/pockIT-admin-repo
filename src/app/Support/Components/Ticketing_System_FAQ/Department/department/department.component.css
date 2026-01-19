@@ -6,17 +6,31 @@
   margin-bottom: 12px;
   background-color: #fafafa;
 }
-
 .header {
   position: absolute;
   top: 0px;
-  /* border-top: 1px solid whit; */
   padding: 10px 430px;
 }
-
 nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
+}
+.kb-char-count {
+  color: red;
+  font-size: 10px;
+}
+.kb-status-switch {
+  margin-top: 5px;
+}
+.kb-footer-cancel {
+  margin-right: 8px;
+}
+.kb-footer-menu {
+  border-radius: 4px;
+  color: white !important;
+}
+.kb-footer-link {
+  color: white !important;
 }

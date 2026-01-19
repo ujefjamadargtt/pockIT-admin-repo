@@ -2,49 +2,152 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
+    max-width: 100%;
     display: inline-block;
-  }
-
-  th {
-    text-align: center !important;
-    vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
+th {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
 .select {
     width: 200px;
     padding: 8px;
     display: block;
 }
-
 .search-box {
     padding: 8px;
 }
-
 .search-box input {
     width: 188px;
     display: block;
 }
-
 .search-box button {
     width: 90px;
 }
-
 .search-button {
     margin-right: 8px;
 }
-
 nz-select {
     width: 100%;
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
-  }
+}
+.back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.excel-btn {
+  color: white;
+}
+
+.filter-btn-wrap {
+  width: 47px;
+}
+
+.filter-row-top {
+  padding-top: 0px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.filter-card-col {
+  margin-bottom: 8px;
+}
+
+.filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.filter-card-actions {
+  margin-top: 7px;
+}
+
+.filter-action-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+
+.filter-tag-view {
+  margin-right: 0px;
+}
+
+.filter-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+
+.no-filter-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+.th-center {
+  text-align: center;
+}
+
+.th-center-bold {
+  text-align: center;
+  font-weight: bold;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.full-wdth{
+  width: 100%;
+}
+.filter-dropdown-300 {
+  width: 300px;
+}
+
+.filter-search-280 {
+  width: 280px;
+}

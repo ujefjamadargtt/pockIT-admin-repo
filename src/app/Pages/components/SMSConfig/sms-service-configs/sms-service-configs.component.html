@@ -2,25 +2,13 @@
   <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8">
     <div class="formname">
       <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
-        style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp;
+        class="back-arrow-icon"></span>&nbsp;&nbsp;
       <b> {{ formTitle }} </b>
     </div>
   </div>
-  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="16" style="display: flex; justify-content: flex-end">
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="16" class="flex-end-container">
     <form nz-form [nzLayout]="'inline'">
-      <!-- <nz-form-item>
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-          <input type="text" name="search" (keyup)="mainsearchkeyup($event)" [(ngModel)]="searchText" nz-input
-            placeholder="Min 3 chars required." #searchInput (keydown.enter)="preventDefault($event)" autocomplete="off" />
-        </nz-input-group>
-        <ng-template #suffixIconButton>
-          <button nz-button nzType="primary" (click)="search(true)" nzSearch id="search">
-            <i nz-icon nzType="search"></i>
-          </button>
-        </ng-template>
-      </nz-form-item> -->
-      <!-- *ngIf="showadd()" -->
-      <nz-form-item style="margin-right: 0px" *ngIf="showadd()">
+      <nz-form-item class="new-button-container" *ngIf="showadd()">
         <button nz-button nzType="primary" (click)="add()" nzJustify="end" [nzLoading]="loadingRecords">
           <i nz-icon nzType="plus"></i>New SMS service Config
         </button>
@@ -28,224 +16,54 @@
     </form>
   </div>
 </div>
-<div nz-row style="margin-top: 10px">
+<div nz-row class="table-row-margin">
   <div nz-col nzSpan="24">
-    <nz-table class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger [nzFrontPagination]="false"
+    <nz-table class="my-scroll no-wrap1 table-pre-line" nzBordered #table nzShowSizeChanger [nzFrontPagination]="false"
       [nzData]="smsServiceConfigData" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
       [(nzPageSize)]="pageSize" (nzQueryParams)="sort($event)" (nzPageIndexChange)="search()" [nzSize]="'small'"
-      style="white-space: pre-line" [nzScroll]="{ x: '600px', y: '55vh' }">
+      [nzScroll]="{ x: '600px', y: '55vh' }">
       <thead>
         <tr>
-          <th nzWidth="80px" style="text-align: center" nzAlign="center" nzLeft>
+          <th nzWidth="80px" class="action-header-center" nzAlign="center" nzLeft>
             <b>Action</b>
           </th>
           <th nzLeft nzWidth="240px" nzShowSort align="center" nzColumnKey="{{ 'SERVICE_PROVIDER' }}" [nzSortFn]="true"
             nzCustomFilter>
             Service Provider
-            <!-- <nz-filter-trigger [(nzVisible)]="ProviderVisible" [nzDropdownMenu]="Provider">
-              <span nz-icon nzType="filter" nzTheme="fill"
-              [ngStyle]="{ color: isProviderTextApplied ? '#092B9C!important' : 'inherit' }">
-            </span>
-            </nz-filter-trigger> -->
           </th>
           <th nzLeft nzWidth="200px" nzShowSort align="center" nzColumnKey="{{ 'AUTHENTICATION_TYPE' }}"
             [nzSortFn]="true" nzCustomFilter>
             Authentication Type
-            <!-- <nz-filter-trigger [(nzVisible)]="TypeVisible" [nzDropdownMenu]="Type">
-              <span nz-icon nzType="filter" nzTheme="fill"
-              [ngStyle]="{ color: isAuthenticiationFilterApplied ? '#092B9C!important' : 'inherit' }">
-            </span>
-            </nz-filter-trigger> -->
           </th>
           <th nzWidth="300px" nzShowSort align="center" nzColumnKey="{{ 'API_URL' }}" [nzSortFn]="true" nzCustomFilter>
             API URL
-            <!-- <nz-filter-trigger [(nzVisible)]="URLVisible" [nzDropdownMenu]="URL">
-               <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isURLTextApplied ? '#092B9C!important' : 'inherit' }">
-              </span>
-            </nz-filter-trigger> -->
           </th>
           <th nzWidth="250px" nzShowSort align="center" nzColumnKey="{{ 'API_KEY' }}" [nzSortFn]="true" nzCustomFilter>
             API Key
-            <!-- <nz-filter-trigger [(nzVisible)]="KeyVisible" [nzDropdownMenu]="Key">
-               <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isKeyTextApplied ? '#092B9C!important' : 'inherit' }">
-              </span>
-            </nz-filter-trigger> -->
           </th>
           <th nzWidth="250px" nzShowSort align="center" nzColumnKey="{{ 'SENDER_NAME' }}" [nzSortFn]="true"
             nzCustomFilter>
             Sender Name
-            <!-- <nz-filter-trigger [(nzVisible)]="SenderVisible" [nzDropdownMenu]="Sender">
-               <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isSenderTextApplied ? '#092B9C!important' : 'inherit' }">
-              </span>
-            </nz-filter-trigger> -->
           </th>
           <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'DEFAULT_COUNTRY_CODE' }}" [nzSortFn]="true"
             nzCustomFilter>
             Country Code
-            <!-- <nz-filter-trigger [(nzVisible)]="CountryVisible" [nzDropdownMenu]="Country">
-               <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isCountryCodeFilterApplied ? '#092B9C!important' : 'inherit' }">
-              </span>
-            </nz-filter-trigger> -->
           </th>
           <th nzWidth="250px" nzShowSort align="center" nzColumnKey="{{ 'USERNAME' }}" [nzSortFn]="true" nzCustomFilter>
             Username
-            <!-- <nz-filter-trigger [(nzVisible)]="UserVisible" [nzDropdownMenu]="User">
-               <span nz-icon nzType="filter" nzTheme="fill"
-                [ngStyle]="{ color: isUserTextApplied ? '#092B9C!important' : 'inherit' }">
-              </span>
-            </nz-filter-trigger> -->
           </th>
-          <th nzShowSort nzColumnKey="{{ 'IS_ACTIVE' }}" nzWidth="110px" style="text-align: center">
+          <th nzShowSort nzColumnKey="{{ 'IS_ACTIVE' }}" nzWidth="110px" class="status-header-center">
             Status
-            <!-- [nzSortFn]="true"
-            [nzFilters]="listOfFilter" [nzFilterFn]="true" [nzFilterMultiple]="false"
-            (nzFilterChange)="onStatusFilterChange($event)" -->
           </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of table.data">
           <td align="center" nzLeft>
-            <!-- <a (click)="edit(data)">
-              <span nz-icon nzType="edit" nzTheme="twotone" style="font-size: 15px" nzTooltipTitle="Edit"
-                nz-tooltip></span>
-            </a> -->
-            <nz-tag nzColor="#2db7f5" (click)="edit(data)" style="cursor: pointer">
-              <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 15px">
+            <nz-tag nzColor="#2db7f5" (click)="edit(data)" class="edit-tag">
+              <span nz-icon nzType="edit" nzTheme="outline" class="edit-icon">
               </span>&nbsp;&nbsp;Edit</nz-tag>
           </td>
-          <!-- <td align="left" nzLeft>
-            <span *ngIf="data['SERVICE_PROVIDER'] != null">
-              <span *ngIf="data['SERVICE_PROVIDER'].length >= 60" nz-popover
-                [nzPopoverContent]="data['SERVICE_PROVIDER']" nzPopoverPlacement="topLeft">
-                {{
-                data["SERVICE_PROVIDER"] == null
-                ? "-"
-                : (data["SERVICE_PROVIDER"] | slice : 0 : 60)
-                }}{{ data["SERVICE_PROVIDER"].length > 60 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['SERVICE_PROVIDER'].length < 60">
-                {{
-                data["SERVICE_PROVIDER"] == null
-                ? "-"
-                : (data["SERVICE_PROVIDER"] | slice : 0 : 60)
-                }}
-                {{ data["SERVICE_PROVIDER"].length > 60 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['SERVICE_PROVIDER'] == null">-</span>
-          </td>
-          <td align="left" nzLeft>
-            <span *ngIf="data['AUTHENTICATION_TYPE'] != null">
-              <span *ngIf="data['AUTHENTICATION_TYPE'].length >= 30" nz-popover
-                [nzPopoverContent]="data['AUTHENTICATION_TYPE']" nzPopoverPlacement="topLeft">
-                {{
-                data["AUTHENTICATION_TYPE"] == null
-                ? "-"
-                : (data["AUTHENTICATION_TYPE"] | slice : 0 : 30)
-                }}{{ data["AUTHENTICATION_TYPE"].length > 30 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['AUTHENTICATION_TYPE'].length < 30">
-                {{
-                data["AUTHENTICATION_TYPE"] == null
-                ? "-"
-                : (data["AUTHENTICATION_TYPE"] | slice : 0 : 30)
-                }}
-                {{ data["AUTHENTICATION_TYPE"].length > 30 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['AUTHENTICATION_TYPE'] == null">-</span>
-          </td>
-          <td align="left">
-            <span *ngIf="data['API_URL'] != null">
-              <span *ngIf="data['API_URL'].length >= 30" nz-popover [nzPopoverContent]="data['API_URL']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["API_URL"] == null
-                ? "-"
-                : (data["API_URL"] | slice : 0 : 30)
-                }}{{ data["API_URL"].length > 30 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['API_URL'].length < 30">
-                {{
-                data["API_URL"] == null
-                ? "-"
-                : (data["API_URL"] | slice : 0 : 30)
-                }}
-                {{ data["API_URL"].length > 30 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['API_URL'] == null">-</span>
-          </td>
-          <td align="left">
-            <span *ngIf="data['API_KEY'] != null">
-              <span *ngIf="data['API_KEY'].length >= 30" nz-popover [nzPopoverContent]="data['API_KEY']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["API_KEY"] == null
-                ? "-"
-                : (data["API_KEY"] | slice : 0 : 30)
-                }}{{ data["API_KEY"].length > 30 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['API_KEY'].length < 30">
-                {{
-                data["API_KEY"] == null
-                ? "-"
-                : (data["API_KEY"] | slice : 0 : 30)
-                }}
-                {{ data["API_KEY"].length > 30 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['API_KEY'] == null">-</span>
-          </td>
-          <td align="left">
-            <span *ngIf="data['SENDER_NAME'] != null">
-              <span *ngIf="data['SENDER_NAME'].length >= 30" nz-popover [nzPopoverContent]="data['SENDER_NAME']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["SENDER_NAME"] == null
-                ? "-"
-                : (data["SENDER_NAME"] | slice : 0 : 30)
-                }}{{ data["SENDER_NAME"].length > 30 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['SENDER_NAME'].length < 30">
-                {{
-                data["SENDER_NAME"] == null
-                ? "-"
-                : (data["SENDER_NAME"] | slice : 0 : 30)
-                }}
-                {{ data["SENDER_NAME"].length > 30 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['SENDER_NAME'] == null">-</span>
-          </td>
-          <td align="center">{{ data.DEFAULT_COUNTRY_CODE ?? "-" }}</td>
-          <td align="left">
-            <span *ngIf="data['USERNAME'] != null">
-              <span *ngIf="data['USERNAME'].length >= 60" nz-popover [nzPopoverContent]="data['USERNAME']"
-                nzPopoverPlacement="topLeft">
-                {{
-                data["USERNAME"] == null
-                ? "-"
-                : (data["USERNAME"] | slice : 0 : 60)
-                }}{{ data["USERNAME"].length > 60 ? "..." : "" }}
-              </span>
-              <span *ngIf="data['USERNAME'].length < 60">
-                {{
-                data["USERNAME"] == null
-                ? "-"
-                : (data["USERNAME"] | slice : 0 : 60)
-                }}
-                {{ data["USERNAME"].length > 60 ? "..." : "" }}
-              </span>
-            </span>
-            <span *ngIf="data['USERNAME'] == null">-</span>
-          </td> -->
-
           <td align="left" nzLeft>
             <span *ngIf="data['SERVICE_PROVIDER']; else noData">
               <span *ngIf="shouldTruncateAt25(data['SERVICE_PROVIDER'])" nz-popover
@@ -281,7 +99,6 @@
               </span>
             </span>
           </td>
-
           <td align="left">
             <span *ngIf="data['API_URL']; else noData">
               <span *ngIf="shouldTruncateAt25(data['API_URL'])" nz-popover [nzPopoverContent]="data['API_URL']"
@@ -300,7 +117,6 @@
             </span>
             <ng-template #noData>-</ng-template>
           </td>
-
           <td align="left">
             <span *ngIf="data['API_KEY']; else noData">
               <span *ngIf="shouldTruncateAt25(data['API_KEY'])" nz-popover [nzPopoverContent]="data['API_KEY']"
@@ -337,7 +153,6 @@
             </span>
             <ng-template #noData>-</ng-template>
           </td>
-
           <td align="center">{{ data.DEFAULT_COUNTRY_CODE ?? "-" }}</td>
           <td align="left">
             <span *ngIf="data['USERNAME']; else noData">
@@ -384,12 +199,11 @@
     <nz-dropdown-menu #Type="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="select">
-          <nz-select style="width: 100%" nzShowSearch nzAllowClear nzPlaceHolder="Select Authentication Type"
+          <nz-select class="full-width-select" nzShowSearch nzAllowClear nzPlaceHolder="Select Authentication Type"
             nzMode="multiple" [(ngModel)]="authenticiation" (ngModelChange)="onServiceChange()">
             <nz-option *ngFor="let data of whatsappApiAuthentication" [nzValue]="data.Name"
               [nzLabel]="data.Name"></nz-option>
           </nz-select>
-
           <ng-template #multipleTemplate let-selected>
             <div class="ant-select-selection-item-content">
               <span nz-icon [nzType]="selected.nzValue"></span>
@@ -447,7 +261,7 @@
     <nz-dropdown-menu #Country="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="select">
-          <nz-select style="width: 100%" nzShowSearch nzAllowClear nzPlaceHolder="Select Country Code" nzMode="multiple"
+          <nz-select class="full-width-select" nzShowSearch nzAllowClear nzPlaceHolder="Select Country Code" nzMode="multiple"
             [(ngModel)]="selectedCountryCode" (ngModelChange)="onCountryCodeChange()">
             <nz-option *ngFor="let data of countryCodes" [nzValue]="data.value" [nzLabel]="data.label"></nz-option>
           </nz-select>
@@ -475,43 +289,14 @@
         </div>
       </div>
     </nz-dropdown-menu>
-
-    <!-- <nz-dropdown-menu #Type="nzDropdownMenu">
-      <div class="ant-table-filter-dropdown">
-        <div class="select">
-          <nz-select
-            style="width: 100%"
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="Select Encryption Type"
-            nzMode="multiple"
-            [nzCustomTemplate]="multipleTemplate"
-            [(ngModel)]="selectedTypes"
-            (ngModelChange)="onTypeChange()"
-          >
-            <nz-option
-              *ngFor="let data of EncryptionData"
-              [nzValue]="data.Id"
-              [nzLabel]="data.Name"
-            ></nz-option>
-          </nz-select>
-          <ng-template #multipleTemplate let-selected>
-            <div class="ant-select-selection-item-content">
-              <span nz-icon [nzType]="selected.nzValue"></span>
-              {{ selected.nzLabel }}
-            </div>
-          </ng-template>
-        </div>
-      </div>
-    </nz-dropdown-menu> -->
   </div>
 </div>
-
 <nz-drawer [nzBodyStyle]="{
     height: 'calc(100% - 55px)',
     overflow: 'auto',
     'padding-bottom': '53px'
-  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="true" [nzWidth]="700" [nzVisible]="drawerVisible"
+  }"
+  [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="true" [nzWidth]="700" [nzVisible]="drawerVisible"
   [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
   <ng-container *nzDrawerContent>
     <app-sms-service-config [drawerClose]="closeCallback" [drawerVisible]="drawerVisible" [data]="drawerData">

@@ -1,45 +1,34 @@
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 .select {
     width: 200px;
     padding: 8px;
     display: block;
 }
-
 .search-box {
     padding: 8px;
 }
-
 .search-box input {
     width: 188px;
     display: block;
 }
-
 .search-box button {
     width: 90px;
 }
-
 .search-button {
     margin-right: 8px;
 }
-
 nz-select {
     width: 100%;
 }
-
-
-/* for dynamic length  */
 .my-scroll .ant-table-tbody td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;
 }
-
 .my-scroll .ant-table-tbody td span[nz-popover] {
     display: inline-block;
     max-width: 100%;
@@ -47,19 +36,108 @@ nz-select {
     text-overflow: ellipsis;
     vertical-align: middle;
 }
-
 .my-scroll .ant-table-tbody td span[nz-popover]:hover {
     overflow: visible;
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
 }
-
 .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
+    max-width: 100%;
     display: inline-block;
-  }
+}
+.back-icon-bold-pointer-hs11 {
+    font-weight: bold;
+    cursor: pointer;
+}
+.header-flex-end-hs12 {
+    display: flex;
+    justify-content: flex-end;
+}
+.filter-item-width-hs13 {
+    width: 47px;
+}
+.new-btn-no-margin-hs14 {
+    margin-right: 0px;
+}
+.filter-row-pt-zz01 {
+    padding-top: 0px;
+}
+.text-center-zz02 {
+    text-align: center;
+}
+.filter-item-mb-zz03 {
+    margin-bottom: 8px;
+}
+.filter-card-zz04 {
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    border-radius: 7px;
+}
+.filter-card-header-zz05 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+}
+.filter-card-title-zz06 {
+    color: black;
+    text-align: center;
+    font-size: 25px;
+    white-space: nowrap;
+}
+.filter-applied-icon-zz07 {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.filter-card-footer-row-zz08 {
+    margin-top: 7px;
+}
+.filter-card-actions-zz09 {
+    display: flex;
+    justify-content: space-between;
+}
+.filter-tag-action-zz10 {
+    cursor: pointer;
+    font-size: 10px !important;
+}
+.filter-tag-icon-zz11 {
+    font-size: 10px !important;
+}
+.filter-tag-view-zz12 {
+    cursor: pointer;
+    font-size: 10px !important;
+    margin-right: 0px;
+}
+.no-data-text-zz13 {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.filter-footer-actions-zz14 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: left;
+    margin-top: 10px;
+}
+.filter-footer-btn-mr-zz15 {
+    margin-right: 10px;
+}
+.kb-category-select-width-njy61 {
+    width: 100%;
+}
+.query-details-text-center-rp61 {
+    text-align: center;
+}
+.table-edit-tag-js21 {
+  cursor: pointer;
+}
+.table-edit-icon-js22 {
+  font-size: 15px;
+}

@@ -1,245 +1,262 @@
-<div nz-row nzGutter="10px">
-    <b>
-        <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
-            style="font-weight: bold; cursor: pointer;margin-bottom:30px"></span>&nbsp;&nbsp;Back
-    </b>
+<div nz-row nzGutter="10px" class="back-navigation">
+  <b>
+    <span
+      (click)="back()"
+      nz-icon
+      nzType="arrow-left"
+      nzTheme="outline"
+      class="back-arrow-icon"
+    ></span
+    >&nbsp;&nbsp;Back
+  </b>
 </div>
-
-
-
-<!-- Order reports -->
-
-<div nz-row [nzGutter]="10" style="margin-bottom: 20px;">
-    <div nz-col nzSpan="24" *ngFor="let title of objectKeys(titleWiseChildren); let i = index">
-        <nz-card [nzTitle]="cardTitle" [nzBodyStyle]="{ 'border': 'none' }" class="card-container">
-
-            <ng-template #cardTitle>
-                <div style="display: flex; align-items: center;">
-                    <i nz-icon [nzType]="forms[i]?.icon" style="margin-right: 5px; font-size:13x;"></i>
-                    <span style="font-size:17px !important">{{ title }}</span>
-                </div>
-            </ng-template>
-
-            <!-- First and Second row -->
-            <div nz-row [nzGutter]="16">
-                <div nz-col *ngFor="let child of titleWiseChildren[title]" nzSpan="6" class="report-card"
-                    style="margin-bottom: 15px;">
-
-                    <p [routerLink]="child.link" (click)="onMenuClick()"
-                        style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                        <nz-avatar [nzIcon]="child.icon" style="
-                 margin-right: 5px;
-                  border-radius: 50%;
-                  background-color: #092b9c;
-                  font-size:13px;
-                  color:white
-                "></nz-avatar>
-                        <!-- <i nz-icon [nzType]="child.icon" nzTheme="fill" style="margin-right: 5px;"></i> -->
-                        <span *ngIf="child.title.length > 30" nz-tooltip [nzTooltipTitle]="child.title"
-                            style="cursor: pointer;">
-                            {{ child.title | slice: 0:30 }}...
-                        </span>
-                        <span *ngIf="child.title.length <= 30">
-                            {{ child.title }}
-                        </span>
-                    </p>
-
-                </div>
-            </div>
-
-        </nz-card>
-    </div>
+<div nz-row [nzGutter]="10" class="cards-row">
+  <div
+    nz-col
+    nzSpan="24"
+    *ngFor="let title of objectKeys(titleWiseChildren); let i = index"
+  >
+    <nz-card
+      [nzTitle]="cardTitle"
+      [nzBodyStyle]="{ border: 'none' }"
+      class="card-container"
+    >
+      <ng-template #cardTitle>
+        <div class="card-title-container">
+          <i nz-icon [nzType]="forms[i]?.icon" class="card-title-icon"></i>
+          <span class="card-title-text">{{ title }}</span>
+        </div>
+      </ng-template>
+      <div nz-row [nzGutter]="16">
+        <div
+          nz-col
+          *ngFor="let child of titleWiseChildren[title]"
+          nzSpan="6"
+          class="report-card"
+        >
+          <p
+            [routerLink]="child.link"
+            (click)="onMenuClick()"
+            class="menu-item-link"
+          >
+            <nz-avatar
+              [nzIcon]="child.icon"
+              class="menu-item-avatar"
+            ></nz-avatar>
+            <span
+              *ngIf="child.title.length > 30"
+              nz-tooltip
+              [nzTooltipTitle]="child.title"
+              class="truncated-menu-title"
+            >
+              {{ child.title | slice : 0 : 30 }}...
+            </span>
+            <span *ngIf="child.title.length <= 30" class="full-menu-title">
+              {{ child.title }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </nz-card>
+  </div>
 </div>
-
-
-<!-- Coupon reports  -->
-<div nz-row [nzGutter]="10" style="margin-bottom: 20px;">
-    <div nz-col nzSpan="24" *ngFor="let title of objectKeys(titleWiseChildren1); let i = index">
-        <nz-card [nzTitle]="cardTitle" [nzBodyStyle]="{ 'border': 'none' }" class="card-container">
-
-            <ng-template #cardTitle>
-                <div style="display: flex; align-items: center;">
-                    <i nz-icon [nzType]="forms[i]?.icon" style="margin-right: 5px; font-size:13x;"></i>
-                    <span style="font-size:17px !important">{{ title }}</span>
-                </div>
-            </ng-template>
-
-            <!-- First and Second row -->
-            <div nz-row [nzGutter]="16">
-                <div nz-col *ngFor="let child of titleWiseChildren1[title]" nzSpan="6" class="report-card"
-                    style="margin-bottom: 15px;">
-
-                    <p [routerLink]="child.link" (click)="onMenuClick()"
-                        style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                        <nz-avatar [nzIcon]="child.icon" style="
-                 margin-right: 5px;
-                  border-radius: 50%;
-                  background-color: #092b9c;
-                  font-size:13px;
-                  color:white
-                "></nz-avatar>
-                        <!-- <i nz-icon [nzType]="child.icon" nzTheme="fill" style="margin-right: 5px;"></i> -->
-                        <span *ngIf="child.title.length > 30" nz-tooltip [nzTooltipTitle]="child.title"
-                            style="cursor: pointer;">
-                            {{ child.title | slice: 0:30 }}...
-                        </span>
-                        <span *ngIf="child.title.length <= 30">
-                            {{ child.title }}
-                        </span>
-                    </p>
-
-                </div>
-            </div>
-
-        </nz-card>
-    </div>
+<div nz-row [nzGutter]="10" class="cards-row">
+  <div
+    nz-col
+    nzSpan="24"
+    *ngFor="let title of objectKeys(titleWiseChildren1); let i = index"
+  >
+    <nz-card
+      [nzTitle]="cardTitle"
+      [nzBodyStyle]="{ border: 'none' }"
+      class="card-container"
+    >
+      <ng-template #cardTitle>
+        <div class="card-title-container">
+          <i nz-icon [nzType]="forms[i]?.icon" class="card-title-icon"></i>
+          <span class="card-title-text">{{ title }}</span>
+        </div>
+      </ng-template>
+      <div nz-row [nzGutter]="16">
+        <div
+          nz-col
+          *ngFor="let child of titleWiseChildren1[title]"
+          nzSpan="6"
+          class="report-card"
+        >
+          <p
+            [routerLink]="child.link"
+            (click)="onMenuClick()"
+            class="menu-item-link"
+          >
+            <nz-avatar
+              [nzIcon]="child.icon"
+              class="menu-item-avatar"
+            ></nz-avatar>
+            <span
+              *ngIf="child.title.length > 30"
+              nz-tooltip
+              [nzTooltipTitle]="child.title"
+              class="truncated-menu-title"
+            >
+              {{ child.title | slice : 0 : 30 }}...
+            </span>
+            <span *ngIf="child.title.length <= 30" class="full-menu-title">
+              {{ child.title }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </nz-card>
+  </div>
 </div>
-
-
-
-
-
-
-
-<!-- Ticket reports  -->
-
-<div nz-row [nzGutter]="10" style="margin-bottom: 20px;">
-    <div nz-col nzSpan="24" *ngFor="let title of objectKeys(titleWiseChildren2); let i = index">
-        <nz-card [nzTitle]="cardTitle" [nzBodyStyle]="{ 'border': 'none' }" class="card-container">
-
-            <ng-template #cardTitle>
-                <div style="display: flex; align-items: center;">
-                    <i nz-icon [nzType]="forms[i]?.icon" style="margin-right: 5px; font-size:13x;"></i>
-                    <span style="font-size:17px !important">{{ title }}</span>
-                </div>
-            </ng-template>
-
-
-
-            <!-- First and Second row -->
-            <div nz-row [nzGutter]="16">
-                <div nz-col *ngFor="let child of titleWiseChildren2[title]" nzSpan="6" class="report-card"
-                    style="margin-bottom: 15px;">
-
-                    <p [routerLink]="child.link" (click)="onMenuClick()"
-                        style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                        <nz-avatar [nzIcon]="child.icon" style="
-                 margin-right: 5px;
-                  border-radius: 50%;
-                  background-color: #092b9c;
-                  font-size:13px;
-                  color:white
-                "></nz-avatar>
-                        <!-- <i nz-icon [nzType]="child.icon" nzTheme="fill" style="margin-right: 5px;"></i> -->
-                        <span *ngIf="child.title.length > 30" nz-tooltip [nzTooltipTitle]="child.title"
-                            style="cursor: pointer;">
-                            {{ child.title | slice: 0:30 }}...
-                        </span>
-                        <span *ngIf="child.title.length <= 30">
-                            {{ child.title }}
-                        </span>
-                    </p>
-
-                </div>
-            </div>
-
-        </nz-card>
-    </div>
+<div nz-row [nzGutter]="10" class="cards-row">
+  <div
+    nz-col
+    nzSpan="24"
+    *ngFor="let title of objectKeys(titleWiseChildren2); let i = index"
+  >
+    <nz-card
+      [nzTitle]="cardTitle"
+      [nzBodyStyle]="{ border: 'none' }"
+      class="card-container"
+    >
+      <ng-template #cardTitle>
+        <div class="card-title-container">
+          <i nz-icon [nzType]="forms[i]?.icon" class="card-title-icon"></i>
+          <span class="card-title-text">{{ title }}</span>
+        </div>
+      </ng-template>
+      <div nz-row [nzGutter]="16">
+        <div
+          nz-col
+          *ngFor="let child of titleWiseChildren2[title]"
+          nzSpan="6"
+          class="report-card"
+        >
+          <p
+            [routerLink]="child.link"
+            (click)="onMenuClick()"
+            class="menu-item-link"
+          >
+            <nz-avatar
+              [nzIcon]="child.icon"
+              class="menu-item-avatar"
+            ></nz-avatar>
+            <span
+              *ngIf="child.title.length > 30"
+              nz-tooltip
+              [nzTooltipTitle]="child.title"
+              class="truncated-menu-title"
+            >
+              {{ child.title | slice : 0 : 30 }}...
+            </span>
+            <span *ngIf="child.title.length <= 30" class="full-menu-title">
+              {{ child.title }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </nz-card>
+  </div>
 </div>
-
-
-
-
-<!-- Transaction Reports  -->
-
-<div nz-row [nzGutter]="10" style="margin-bottom: 20px;">
-    <div nz-col nzSpan="24" *ngFor="let title of objectKeys(titleWiseChildren3); let i = index">
-        <nz-card [nzTitle]="cardTitle" [nzBodyStyle]="{ 'border': 'none' }" class="card-container">
-
-            <ng-template #cardTitle>
-                <div style="display: flex; align-items: center;">
-                    <i nz-icon [nzType]="forms[i]?.icon" style="margin-right: 5px; font-size:13x;"></i>
-                    <span style="font-size:17px !important">{{ title }}</span>
-                </div>
-            </ng-template>
-
-
-
-            <!-- First and Second row -->
-            <div nz-row [nzGutter]="16">
-                <div nz-col *ngFor="let child of titleWiseChildren3[title]" nzSpan="6" class="report-card"
-                    style="margin-bottom: 15px;">
-
-                    <p [routerLink]="child.link" (click)="onMenuClick()"
-                        style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                        <nz-avatar [nzIcon]="child.icon" style="
-                 margin-right: 5px;
-                  border-radius: 50%;
-                  background-color: #092b9c;
-                  font-size:13px;
-                  color:white
-                "></nz-avatar>
-                        <!-- <i nz-icon [nzType]="child.icon" nzTheme="fill" style="margin-right: 5px;"></i> -->
-                        <span *ngIf="child.title.length > 30" nz-tooltip [nzTooltipTitle]="child.title"
-                            style="cursor: pointer;">
-                            {{ child.title | slice: 0:30 }}...
-                        </span>
-                        <span *ngIf="child.title.length <= 30">
-                            {{ child.title }}
-                        </span>
-                    </p>
-
-                </div>
-            </div>
-
-        </nz-card>
-    </div>
+<div nz-row [nzGutter]="10" class="cards-row">
+  <div
+    nz-col
+    nzSpan="24"
+    *ngFor="let title of objectKeys(titleWiseChildren3); let i = index"
+  >
+    <nz-card
+      [nzTitle]="cardTitle"
+      [nzBodyStyle]="{ border: 'none' }"
+      class="card-container"
+    >
+      <ng-template #cardTitle>
+        <div class="card-title-container">
+          <i nz-icon [nzType]="forms[i]?.icon" class="card-title-icon"></i>
+          <span class="card-title-text">{{ title }}</span>
+        </div>
+      </ng-template>
+      <div nz-row [nzGutter]="16">
+        <div
+          nz-col
+          *ngFor="let child of titleWiseChildren3[title]"
+          nzSpan="6"
+          class="report-card"
+        >
+          <p
+            [routerLink]="child.link"
+            (click)="onMenuClick()"
+            class="menu-item-link"
+          >
+            <nz-avatar
+              [nzIcon]="child.icon"
+              class="menu-item-avatar"
+            ></nz-avatar>
+            <span
+              *ngIf="child.title.length > 30"
+              nz-tooltip
+              [nzTooltipTitle]="child.title"
+              class="truncated-menu-title"
+            >
+              {{ child.title | slice : 0 : 30 }}...
+            </span>
+            <span *ngIf="child.title.length <= 30" class="full-menu-title">
+              {{ child.title }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </nz-card>
+  </div>
 </div>
-
-
-
-
-
-<!-- Other Reports  -->
-
-<div nz-row [nzGutter]="10" style="margin-bottom: 20px;">
-    <div nz-col nzSpan="24" *ngFor="let title of objectKeys(titleWiseChildren4); let i = index">
-        <nz-card [nzTitle]="cardTitle" [nzBodyStyle]="{ 'border': 'none' }" class="card-container">
-
-            <ng-template #cardTitle>
-                <div style="display: flex; align-items: center;">
-                    <i nz-icon [nzType]="forms[i]?.icon" style="margin-right: 5px; font-size:13x;"></i>
-                    <span style="font-size:17px !important">{{ title }}</span>
-                </div>
-            </ng-template>
-
-            <!-- First and Second row -->
-            <div nz-row [nzGutter]="16">
-                <div nz-col *ngFor="let child of titleWiseChildren4[title]" nzSpan="6" class="report-card"
-                    style="margin-bottom: 15px;">
-
-                    <p [routerLink]="child.link" (click)="onMenuClick()"
-                        style="display: flex; align-items: center; font-size: 13px; cursor: pointer;">
-                        <nz-avatar [nzIcon]="child.icon" style="
-                 margin-right: 5px;
-                  border-radius: 50%;
-                  background-color: #092b9c;
-                  font-size:13px;
-                  color:white
-                "></nz-avatar>
-                        <!-- <i nz-icon [nzType]="child.icon" nzTheme="fill" style="margin-right: 5px;"></i> -->
-                        <span *ngIf="child.title.length > 30" nz-tooltip [nzTooltipTitle]="child.title"
-                            style="cursor: pointer;">
-                            {{ child.title | slice: 0:30 }}...
-                        </span>
-                        <span *ngIf="child.title.length <= 30">
-                            {{ child.title }}
-                        </span>
-                    </p>
-
-                </div>
-            </div>
-
-        </nz-card>
-    </div>
+<div nz-row [nzGutter]="10" class="cards-row">
+  <div
+    nz-col
+    nzSpan="24"
+    *ngFor="let title of objectKeys(titleWiseChildren4); let i = index"
+  >
+    <nz-card
+      [nzTitle]="cardTitle"
+      [nzBodyStyle]="{ border: 'none' }"
+      class="card-container"
+    >
+      <ng-template #cardTitle>
+        <div class="card-title-container">
+          <i nz-icon [nzType]="forms[i]?.icon" class="card-title-icon"></i>
+          <span class="card-title-text">{{ title }}</span>
+        </div>
+      </ng-template>
+      <div nz-row [nzGutter]="16">
+        <div
+          nz-col
+          *ngFor="let child of titleWiseChildren4[title]"
+          nzSpan="6"
+          class="report-card"
+        >
+          <p
+            [routerLink]="child.link"
+            (click)="onMenuClick()"
+            class="menu-item-link"
+          >
+            <nz-avatar
+              [nzIcon]="child.icon"
+              class="menu-item-avatar"
+            ></nz-avatar>
+            <span
+              *ngIf="child.title.length > 30"
+              nz-tooltip
+              [nzTooltipTitle]="child.title"
+              class="truncated-menu-title"
+            >
+              {{ child.title | slice : 0 : 30 }}...
+            </span>
+            <span *ngIf="child.title.length <= 30" class="full-menu-title">
+              {{ child.title }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </nz-card>
+  </div>
 </div>

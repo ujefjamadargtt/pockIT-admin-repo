@@ -2,12 +2,11 @@
   <form nz-form #accountMasterPage="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
       <div nz-row>
-        <div nz-col nzSpan="24" class="my-box" style="margin-top: 0px;">
+        <div nz-col nzSpan="24" class="my-box kb-box-top">
           <div nz-row>
             <div nz-col nzSpan="8">
               <nz-form-item>
                 <nz-form-label nzNoColon>FAQ For</nz-form-label>
-
                 <nz-input-group>
                   <nz-radio-group name="FAQ_TYPE" [(ngModel)]="data.FAQ_TYPE" (ngModelChange)="radiochange($event)">
                     <label nz-radio nzValue="C">Customer</label>
@@ -18,11 +17,10 @@
             </div>
             <div nz-col nzSpan="9">
               <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>FAQ Head Name
-                </nz-form-label>
+                <nz-form-label nzRequired nzNoColon>FAQ Head Name</nz-form-label>
                 <nz-input-group>
                   <nz-form-control nzErrorTip="Please Select Valid FAQ Head Name">
-                    <nz-select nzShowSearch nzAllowClear name="faq_head_id" nzShowSearch style="width: 100%"
+                    <nz-select nzShowSearch nzAllowClear name="faq_head_id" nzShowSearch class="kb-full-width"
                       nzPlaceHolder="Select FAQ Head Name" [(ngModel)]="data.FAQ_HEAD_ID">
                       <nz-option *ngFor="let val of faqHeads" [nzValue]="val.ID" [nzLabel]="val.NAME">
                       </nz-option>
@@ -45,24 +43,12 @@
                 <nz-form-label nzNoColon>Status</nz-form-label>
                 <nz-form-control>
                   <nz-switch name="status" [(ngModel)]="data.STATUS" nzCheckedChildren="Active"
-                    nzUnCheckedChildren="Inactive"></nz-switch>
+                    nzUnCheckedChildren="Inactive">
+                  </nz-switch>
                 </nz-form-control>
               </nz-form-item>
             </div>
           </div>
-          <!-- <div nz-row>
-            <div nz-col nzSpan="24">
-              <nz-form-item>
-                <nz-form-label nzRequired nzNoColon>Tags (Press Enter key After Each Tag)</nz-form-label>
-                <nz-form-control nzErrorTip="Please Enter Valid Tags">
-                  <nz-select auto nzMode="tags" name="tags" [(ngModel)]="data.TAGS_STRING" nzPlaceHolder="Enter Tags">
-                    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value">
-                    </nz-option>
-                  </nz-select>
-                </nz-form-control>
-              </nz-form-item>
-            </div>
-          </div> -->
         </div>
         <div nz-col nzSpan="24" class="my-box">
           <div nz-row>
@@ -73,8 +59,7 @@
                   <textarea nz-input rows="2" name="question" maxlength="256" [(ngModel)]="data.QUESTION"
                     placeHolder="Enter Question" required (focus)="isFocused = 'questions'"
                     (blur)="isFocused = ''"></textarea>
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                      isFocused === 'questions' ||
+                  <h6 class="kb-char-count" *ngIf="isFocused === 'questions' ||
                       (data.QUESTION != undefined &&
                         data.QUESTION != null &&
                         data.QUESTION != '' &&
@@ -94,11 +79,7 @@
                   <textarea nz-input rows="4" name="answer" maxlength="1024" [(ngModel)]="data.ANSWER"
                     placeHolder="Enter Answer" required (focus)="isFocused = 'answer'"
                     (blur)="isFocused = ''"></textarea>
-                  <!-- <small style="color: red" *ngIf="data.ANSWER != undefined">
-                    {{ data.ANSWER.length }}/2048
-                  </small> -->
-                  <h6 style="color: red; font-size: 10px" *ngIf="
-                      isFocused === 'answer' ||
+                  <h6 class="kb-char-count" *ngIf="isFocused === 'answer' ||
                       (data.ANSWER != undefined &&
                         data.ANSWER != null &&
                         data.ANSWER != '' &&
@@ -111,31 +92,20 @@
             </div>
           </div>
         </div>
-        <!-- <div nz-col nzSpan="11">
-          <nz-form-item>
-            <nz-form-label nzNoColon>URL </nz-form-label>
-            <input
-              type="file"
-              accept="image/*"
-              (change)="onFileSelectedURL($event)"
-            />
-          </nz-form-item>
-        </div> -->
         <div nz-col nzSpan="1"></div>
-        <div nz-col nzSpan="12" *ngIf="fileURL != null" style="overflow: hidden; padding-left: 11px; font-size: 13px">
+        <div nz-col nzSpan="12" *ngIf="fileURL != null" class="kb-file-name">
           {{ fileURL.name }}
         </div>
         <div nz-col nzSpan="24">
           <nz-form-item *ngIf="data.URL != undefined && data.URL != ''">
-            <img src="{{ getUrl(data.URL) }}" style="width: 250px; height: 250px" />
+            <img src="{{ getUrl(data.URL) }}" class="kb-preview-image" />
           </nz-form-item>
         </div>
       </div>
-      <!-- </div> -->
     </nz-spin>
   </form>
   <div class="footer">
-    <button type="button" nz-button (click)="close(accountMasterPage)" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close(accountMasterPage)" class="ant-btn kb-footer-cancel">
       <span>Cancel</span>
     </button>
     <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
@@ -144,8 +114,10 @@
     </button>
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
-          <a (click)="save(true, accountMasterPage)" style="color: white !important">Save & New</a>
+        <li nz-menu-item class="menuc kb-footer-menu">
+          <a (click)="save(true, accountMasterPage)" class="kb-footer-link">
+            Save & New
+          </a>
         </li>
       </ul>
     </nz-dropdown-menu>
@@ -153,27 +125,5 @@
       (click)="save(false, accountMasterPage)">
       <span>Update & close</span>
     </button>
-    <!-- <nz-button-group>
-      <button
-        type="button"
-        class="ant-btn-danger"
-        nz-button
-        [nzLoading]="isSpinning"
-        *ngIf="data.STATUS == 'P' || data.STATUS == 'A'"
-        (click)="response('R', data)"
-      >
-        <span>Rejected</span>
-      </button>
-      <button
-        type="button"
-        class="ant-btn ant-btn-primary"
-        nz-button
-        [nzLoading]="isSpinning"
-        *ngIf="data.STATUS == 'P'"
-        (click)="response('A', data)"
-      >
-        <span>Accepted</span>
-      </button>
-    </nz-button-group> -->
   </div>
 </div>

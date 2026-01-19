@@ -1,0 +1,12 @@
+.table-wrapper {
+    position: relative;
+}
+.pre-line {
+    white-space: pre-line;
+}
+.full-width {
+    width: 100%;
+}
+.footer-btn-cancel {
+    margin-right: 8px;
+}

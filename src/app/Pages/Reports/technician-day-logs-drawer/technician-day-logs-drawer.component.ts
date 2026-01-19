@@ -16,7 +16,6 @@ export class TechnicianDayLogsDrawerComponent {
   @Input() drawerClose: Function;
   @Input() techdetailsdata: any;
   @Input() techId: any;
-
   activeTabIndex: number = 0;
   tabs = [
     {
@@ -32,7 +31,6 @@ export class TechnicianDayLogsDrawerComponent {
       disabled: false,
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -49,12 +47,9 @@ export class TechnicianDayLogsDrawerComponent {
   totalRecords = 1;
   dataList: any[] = [];
   columns: string[][] = [['NAME', 'NAME']];
-
   FROM_DATE: any = new Date();
   TO_DATE: any = new Date();
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -63,7 +58,6 @@ export class TechnicianDayLogsDrawerComponent {
       tooltip.hide();
     }
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -79,7 +73,6 @@ export class TechnicianDayLogsDrawerComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
@@ -88,10 +81,8 @@ export class TechnicianDayLogsDrawerComponent {
   ngOnInit(): void {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
-
     this.getTeritory();
     this.searchCustomer('');
     this.searchService('');
@@ -104,7 +95,6 @@ export class TechnicianDayLogsDrawerComponent {
       return;
     } else {
     }
-
     if (this.searchText) {
       this.SEARCHVALUE = this.searchText;
     } else {
@@ -115,14 +105,12 @@ export class TechnicianDayLogsDrawerComponent {
       this.sortKey = '_id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -137,12 +125,10 @@ export class TechnicianDayLogsDrawerComponent {
     }
     this.FROM_DATE = this.datePipe.transform(this.FROM_DATE, 'yyyy-MM-dd');
     this.TO_DATE = this.datePipe.transform(this.TO_DATE, 'yyyy-MM-dd');
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     this.loadingRecords = true;
     if (exportInExcel == false) {
       this.loadingRecords = true;
-
       this.api
         .gettechnicianactivitylogsreport(
           this.techId,
@@ -194,7 +180,6 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.exportLoading = true;
       this.loadingRecords = true;
-
       this.api
         .gettechnicianactivitylogsreport(
           this.techId,
@@ -219,8 +204,6 @@ export class TechnicianDayLogsDrawerComponent {
               this.loadingRecords = false;
               this.excelData = data.body['data'];
               this.search1(true, true);
-
-              // this.convertInExcel();
             } else {
               this.excelData = [];
               this.exportLoading = false;
@@ -242,49 +225,36 @@ export class TechnicianDayLogsDrawerComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
   formatTime(time: string): string {
-    // Ensure the time is valid and in the format HH:mm:ss or HH:mm
     if (time && /^[0-9]{2}:[0-9]{2}(?::[0-9]{2})?$/.test(time)) {
-      // Split the time into hours and minutes (ignore seconds if present)
       const [hours, minutes] = time.split(':').map(Number);
-
-      // Convert 24-hour format to 12-hour format
       const period = hours >= 12 ? 'PM' : 'AM';
-      const hour12 = hours % 12 || 12; // Convert 0 to 12 (midnight)
-
-      // Return formatted time
+      const hour12 = hours % 12 || 12; 
       return `${this.padZero(hour12)}:${this.padZero(minutes)} ${period}`;
     }
     return '';
   }
-
   padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
   }
-
-  // filter
   filterQuery: string = '';
   filterClass: string = 'filter-invisible';
   userId = sessionStorage.getItem('userId');
   USER_ID: number;
   isFilterApplied: any = 'default';
   isSpinning = false;
-
   customertype: any[] = [];
   CustomerName: any = [];
   CustomerData: any = [];
@@ -299,23 +269,17 @@ export class TechnicianDayLogsDrawerComponent {
   territoryData: any = [];
   TerritoryName: any = [];
   territoryID: any = [];
-
   jobcardData: any = [];
   jobcardName: any = [];
   jobcardID: any = [];
-
-  // JoiningDate: any = [];
   JoiningDate: any = [new Date(), new Date()];
-
   value1: string | null = null;
   value2: string | null = null;
-
   disableFutureDates = (current: Date): boolean => {
     var tomorrow: any = new Date();
     tomorrow.setDate(tomorrow.getDate());
     return current.getTime() >= tomorrow.getTime();
   };
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
@@ -328,20 +292,16 @@ export class TechnicianDayLogsDrawerComponent {
     this.loadingRecords = true;
     this.filterQuery = '';
     this.pageIndex = 1;
-
     if (this.JoiningDate != null && this.JoiningDate.length == 2) {
       this.value1 = this.datePipe.transform(this.JoiningDate[0], 'yyyy-MM-dd');
       this.value2 = this.datePipe.transform(this.JoiningDate[1], 'yyyy-MM-dd');
-
       this.FROM_DATE = this.value1;
       this.value1 = this.datePipe.transform(this.JoiningDate[0], 'yyyy-MM-dd');
       this.value2 = this.datePipe.transform(this.JoiningDate[1], 'yyyy-MM-dd');
-
       this.TO_DATE = this.value2;
       this.isFilterApplied = 'primary';
       this.isfilter = true;
     }
-
     if (this.customertype.length > 0) {
       const customertypeList = this.customertype
         .map((status) => `'${status}'`)
@@ -351,7 +311,6 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.custtype = [];
     }
-
     if (
       this.CustomerName.length > 0 &&
       this.CustomerName != null &&
@@ -363,7 +322,6 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.custid = [];
     }
-
     if (
       this.OrderName.length > 0 &&
       this.OrderName != null &&
@@ -375,7 +333,6 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.ordID = [];
     }
-
     if (
       this.ServiceName.length > 0 &&
       this.ServiceName != null &&
@@ -387,7 +344,6 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.serID = [];
     }
-
     if (
       this.TerritoryName.length > 0 &&
       this.TerritoryName != null &&
@@ -399,7 +355,6 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.territoryID = [];
     }
-
     if (
       this.jobcardName.length > 0 &&
       this.jobcardName != null &&
@@ -411,11 +366,9 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.jobcardID = [];
     }
-
     this.loadingRecords = false;
     if (this.isfilter) {
       this.loadingRecords = true;
-
       this.search();
       this.search1();
       this.search2();
@@ -425,7 +378,6 @@ export class TechnicianDayLogsDrawerComponent {
       this.isFilterApplied = 'default';
     }
   }
-
   clearFilter() {
     this.filterClass = 'filter-invisible';
     this.isFilterApplied = 'default';
@@ -440,7 +392,6 @@ export class TechnicianDayLogsDrawerComponent {
     this.serID = [];
     this.TerritoryName = [];
     this.territoryID = [];
-
     this.jobcardName = [];
     this.jobcardID = [];
     this.filterQuery = '';
@@ -461,7 +412,6 @@ export class TechnicianDayLogsDrawerComponent {
       var pageSize = 10;
       var pageindex = 1;
     }
-
     this.api
       .getServiceItem(pageindex, pageSize, '', 'asc', filterCondition)
       .subscribe((data) => {
@@ -477,7 +427,6 @@ export class TechnicianDayLogsDrawerComponent {
         }
       });
   }
-
   searchCustomer(searchValue: string): void {
     if (searchValue.length >= 3) {
       var filterCondition = ` AND ACCOUNT_STATUS=1 AND NAME LIKE '%${searchValue}%'`;
@@ -514,21 +463,15 @@ export class TechnicianDayLogsDrawerComponent {
       }
     });
   }
-
-  // order select fillter
   searchkey = '';
   totalrecords = 0;
   isLoading = false;
-
   getOrder(event) {
     event =
       event != '' && event != undefined && event != null
         ? ' AND (ORDER_NUMBER like "%' + event + '%")'
         : '';
-
     this.api
-      // .getOrdersData(this.pageIndex1, 8, '', 'asc', event)
-
       .getDistinctOrderNumbers(
         this.pageIndex3,
         8,
@@ -544,7 +487,6 @@ export class TechnicianDayLogsDrawerComponent {
         this.isLoading = false;
       });
   }
-
   getord(event) {
     this.searchkey = event;
     if (event.length >= 3) {
@@ -553,14 +495,12 @@ export class TechnicianDayLogsDrawerComponent {
       this.getOrder(this.searchkey);
     }
   }
-
   loadMore() {
     if (this.totalrecords > this.orderData.length) {
       this.pageIndex3++;
       this.getOrder(this.searchkey);
     }
   }
-
   keyup3(event) {
     if (
       this.searchkey == '' &&
@@ -571,8 +511,6 @@ export class TechnicianDayLogsDrawerComponent {
       this.getOrder('');
     }
   }
-
-  // job select fillter
   searchkey1 = '';
   totalrecords1 = 0;
   isLoading1 = false;
@@ -582,7 +520,6 @@ export class TechnicianDayLogsDrawerComponent {
       event != '' && event != undefined && event != null
         ? ' AND (JOB_CARD_NO like "%' + event + '%")'
         : '';
-
     this.api
       .getpendinjobsdataa(
         this.pageIndex4,
@@ -599,7 +536,6 @@ export class TechnicianDayLogsDrawerComponent {
         this.isLoading1 = false;
       });
   }
-
   gejob(event) {
     this.searchkey1 = event;
     if (event.length >= 3) {
@@ -608,14 +544,12 @@ export class TechnicianDayLogsDrawerComponent {
       this.getJobCard(this.searchkey1);
     }
   }
-
   loadMore1() {
     if (this.totalrecords1 > this.jobcardData.length) {
       this.pageIndex4++;
       this.getJobCard(this.searchkey1);
     }
   }
-
   keyup4(event) {
     if (
       this.searchkey1 == '' &&
@@ -626,9 +560,6 @@ export class TechnicianDayLogsDrawerComponent {
       this.getJobCard('');
     }
   }
-
-  // tab 2
-
   searchText1: string = '';
   pageIndex1 = 1;
   pageSize1 = 10;
@@ -638,21 +569,16 @@ export class TechnicianDayLogsDrawerComponent {
   totalRecords1 = 1;
   dataList1: any[] = [];
   columns1: string[][] = [['NAME', 'NAME']];
-
   filterQuery1: string = '';
   filterClass1: string = 'filter-invisible';
-
   isFilterApplied1: any = 'default';
   isSpinning1 = false;
-
   LogTextVisible;
   isLogTextVisibleFilterApplied: boolean = false;
   Logtext: string = '';
-
   LogDateVisible;
   isLogDateFilterApplied: boolean = false;
   selectedLogDate: any;
-
   keyup1(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -663,17 +589,14 @@ export class TechnicianDayLogsDrawerComponent {
       this.search1();
     }
   }
-
   onEnterKey1(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
   }
-
   onKeyup(keys: any, type: string): void {
     const element = window.document.getElementById('button');
     if (type == 'logtext' && this.Logtext.length >= 3 && keys.key === 'Enter') {
       this.search1();
-
       this.isLogTextVisibleFilterApplied = true;
     } else if (
       type == 'logtext' &&
@@ -681,14 +604,12 @@ export class TechnicianDayLogsDrawerComponent {
       keys.key === 'Backspace'
     ) {
       this.search1();
-
       this.isLogTextVisibleFilterApplied = false;
     }
   }
   reset(): void {
     this.searchText1 = '';
     this.Logtext = '';
-
     this.search1();
   }
   showFilter1() {
@@ -700,8 +621,6 @@ export class TechnicianDayLogsDrawerComponent {
   filterQueryDate1: any;
   value3: any = '';
   value4: any = '';
-
-  //filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -711,7 +630,6 @@ export class TechnicianDayLogsDrawerComponent {
     { text: 'Online', value: 'EN' },
     { text: 'Offline', value: 'DE' },
   ];
-
   onLogDateangeChange() {
     if (this.selectedLogDate && this.selectedLogDate.length === 2) {
       const [start, end] = this.selectedLogDate;
@@ -720,40 +638,33 @@ export class TechnicianDayLogsDrawerComponent {
         this.isLogDateFilterApplied = true;
       }
     } else {
-      this.selectedLogDate = null; // or [] if you prefer
+      this.selectedLogDate = null; 
       this.search1();
       this.isLogDateFilterApplied = false;
     }
   }
-
   search1(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText1.length < 3 && this.searchText1.length !== 0) {
       return;
     } else {
     }
-
     if (reset) {
       this.pageIndex1 = 1;
       this.sortKey1 = '_id';
       this.sortValue1 = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue1.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery: any = {};
-
     if (this.techId) {
       likeQuery = {
-        // Include existing conditions if any
         $and: [{ TECHNICIAN_ID: this.techId }],
       };
     }
-
     this.filterQueryDate = {
       $and: [
         {
@@ -767,7 +678,7 @@ export class TechnicianDayLogsDrawerComponent {
                       date: '$LOG_DATE_TIME',
                     },
                   },
-                  this.FROM_DATE, // Start date
+                  this.FROM_DATE, 
                 ],
               },
               {
@@ -778,13 +689,13 @@ export class TechnicianDayLogsDrawerComponent {
                       date: '$LOG_DATE_TIME',
                     },
                   },
-                  this.TO_DATE, // End date
+                  this.TO_DATE, 
                 ],
               },
             ],
           },
         },
-        { TECHNICIAN_ID: this.techId }, // Combine this condition directly within the same `$and` array
+        { TECHNICIAN_ID: this.techId }, 
       ],
     };
     if (this.selectedLogDate?.length === 2) {
@@ -805,7 +716,6 @@ export class TechnicianDayLogsDrawerComponent {
                     .toString()
                     .padStart(2, '0')}:00`
           );
-
         this.filterQueryDate.$and.push({
           LOG_DATE_TIME: {
             $gte: formatDate(new Date(start)),
@@ -814,14 +724,6 @@ export class TechnicianDayLogsDrawerComponent {
         });
       }
     }
-
-    // if (this.statusFilter) {
-    //   if (likeQuery !== '') {
-    //     likeQuery += ' AND ';
-    //   }
-    //   likeQuery += `STATUS = ${this.statusFilter}`;
-    // }
-
     if (this.Logtext !== '') {
       this.filterQueryDate.$and.push({
         LOG_TEXT: { $regex: this.Logtext.trim(), $options: 'i' },
@@ -830,7 +732,6 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.isLogTextVisibleFilterApplied = false;
     }
-
     if (this.statusFilter) {
       this.filterQueryDate.$and.push({
         STATUS: this.statusFilter,
@@ -874,7 +775,6 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.exportLoading = true;
       this.loadingRecords1 = true;
-
       this.api
         .gettechniciandaylogsreport(
           0,
@@ -891,7 +791,6 @@ export class TechnicianDayLogsDrawerComponent {
               this.exportLoading = false;
               this.loadingRecords1 = false;
               this.excelData1 = data.body['data'];
-              // this.convertInExcel();
               this.search2(true, true);
             } else {
               this.excelData1 = [];
@@ -906,7 +805,6 @@ export class TechnicianDayLogsDrawerComponent {
         );
     }
   }
-
   sort1(params: NzTableQueryParams) {
     this.loadingRecords1 = true;
     const { pageSize, pageIndex, sort } = params;
@@ -915,22 +813,18 @@ export class TechnicianDayLogsDrawerComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex1 = pageIndex;
     this.pageSize1 = pageSize;
-
     if (this.pageSize1 != pageSize) {
       this.pageIndex1 = 1;
       this.pageSize1 = pageSize;
     }
-
     if (this.sortKey1 != sortField) {
       this.pageIndex1 = 1;
       this.pageSize1 = pageSize;
     }
-
     this.sortKey1 = sortField;
     this.sortValue1 = sortOrder;
     this.search1();
   }
-
   searchText2: string = '';
   pageIndex2 = 1;
   pageSize2 = 10;
@@ -940,17 +834,13 @@ export class TechnicianDayLogsDrawerComponent {
   totalRecords2 = 1;
   dataList2: any[] = [];
   columns2: string[][] = [['NAME', 'NAME']];
-
   filterQuery2: string = '';
   filterClass2: string = 'filter-invisible';
-
   isFilterApplied2: any = 'default';
   isSpinning2 = false;
-
   LogDateVisible1;
   isLogDateFilterApplied1: boolean = false;
   selectedLogDate1: any;
-
   keyup2(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -961,12 +851,10 @@ export class TechnicianDayLogsDrawerComponent {
       this.search2();
     }
   }
-
   onEnterKey2(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
   }
-
   showFilter2() {
     if (this.filterClass2 === 'filter-visible')
       this.filterClass2 = 'filter-invisible';
@@ -980,13 +868,11 @@ export class TechnicianDayLogsDrawerComponent {
         this.isLogDateFilterApplied1 = true;
       }
     } else {
-      this.selectedLogDate1 = null; // or [] if you prefer
+      this.selectedLogDate1 = null; 
       this.search2();
       this.isLogDateFilterApplied1 = false;
     }
   }
-
-  //filter
   statusFilter1: string | undefined = undefined;
   onStatusFilterChange1(selectedStatus: string) {
     this.statusFilter1 = selectedStatus;
@@ -996,35 +882,28 @@ export class TechnicianDayLogsDrawerComponent {
     { text: 'Available', value: 'true' },
     { text: 'Holiday', value: 'false' },
   ];
-
   search2(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText2.length < 3 && this.searchText2.length !== 0) {
       return;
     } else {
     }
-
     if (reset) {
       this.pageIndex2 = 1;
       this.sortKey2 = '_id';
       this.sortValue2 = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue2.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery: any = {};
-
     if (this.techId) {
       likeQuery = {
-        // Include existing conditions if any
         $and: [{ TECHNICIAN_ID: this.techId }],
       };
     }
-
     this.filterQueryDate1 = {
       $and: [
         {
@@ -1038,7 +917,7 @@ export class TechnicianDayLogsDrawerComponent {
                       date: '$DATE_OF_MONTH',
                     },
                   },
-                  this.FROM_DATE2, // Start date
+                  this.FROM_DATE2, 
                 ],
               },
               {
@@ -1049,16 +928,15 @@ export class TechnicianDayLogsDrawerComponent {
                       date: '$DATE_OF_MONTH',
                     },
                   },
-                  this.TO_DATE2, // End date
+                  this.TO_DATE2, 
                 ],
               },
             ],
           },
         },
-        { TECHNICIAN_ID: this.techId }, // Combine this condition directly within the same `$and` array
+        { TECHNICIAN_ID: this.techId }, 
       ],
     };
-
     if (this.selectedLogDate1?.length === 2) {
       const [start, end] = this.selectedLogDate1;
       if (start && end) {
@@ -1077,7 +955,6 @@ export class TechnicianDayLogsDrawerComponent {
                     .toString()
                     .padStart(2, '0')}:00`
           );
-
         this.filterQueryDate1.$and.push({
           DATE_OF_MONTH: {
             $gte: formatDate(new Date(start)),
@@ -1086,7 +963,6 @@ export class TechnicianDayLogsDrawerComponent {
         });
       }
     }
-
     if (this.statusFilter1) {
       this.filterQueryDate1.$and.push({
         IS_SERIVCE_AVAILABLE: this.statusFilter1,
@@ -1097,14 +973,11 @@ export class TechnicianDayLogsDrawerComponent {
         DAY_START_TIME: { $gte: this.startfromTime, $lte: this.starttoTime },
       });
     }
-
-    // End Time Range Filter
     if (this.endfromTime1 && this.endtoTime1) {
       this.filterQueryDate1.$and.push({
         DAY_END_TIME: { $gte: this.endfromTime1, $lte: this.endtoTime1 },
       });
     }
-
     if (this.startfromTime2 && this.starttoTime2) {
       this.filterQueryDate1.$and.push({
         BREAK_START_TIME: {
@@ -1113,8 +986,6 @@ export class TechnicianDayLogsDrawerComponent {
         },
       });
     }
-
-    // End Time Range Filter
     if (this.endfromTime12 && this.endtoTime12) {
       this.filterQueryDate1.$and.push({
         BREAK_END_TIME: { $gte: this.endfromTime12, $lte: this.endtoTime12 },
@@ -1158,7 +1029,6 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       this.exportLoading = true;
       this.loadingRecords2 = true;
-
       this.api
         .gettechnicianactivitycalreport(
           0,
@@ -1176,7 +1046,6 @@ export class TechnicianDayLogsDrawerComponent {
               this.loadingRecords2 = false;
               this.excelData2 = data.body['data'];
               setTimeout(() => this.convertInExcel(), 1000);
-              // this.convertInExcel();
             } else {
               this.excelData2 = [];
               this.exportLoading = false;
@@ -1190,7 +1059,6 @@ export class TechnicianDayLogsDrawerComponent {
         );
     }
   }
-
   sort2(params: NzTableQueryParams) {
     this.loadingRecords2 = true;
     const { pageSize, pageIndex, sort } = params;
@@ -1199,17 +1067,14 @@ export class TechnicianDayLogsDrawerComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex2 = pageIndex;
     this.pageSize2 = pageSize;
-
     if (this.pageSize2 != pageSize) {
       this.pageIndex2 = 1;
       this.pageSize2 = pageSize;
     }
-
     if (this.sortKey2 != sortField) {
       this.pageIndex2 = 1;
       this.pageSize2 = pageSize;
     }
-
     this.sortKey2 = sortField;
     this.sortValue2 = sortOrder;
     this.search2();
@@ -1226,36 +1091,30 @@ export class TechnicianDayLogsDrawerComponent {
     0
   );
   JoiningDate2: any = [
-    new Date(new Date().getFullYear(), new Date().getMonth(), 1), // 1st day of current month
-    new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), // Last day of current month
+    new Date(new Date().getFullYear(), new Date().getMonth(), 1), 
+    new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), 
   ];
   value6: string | null = null;
   value7: string | null = null;
-
   applyFilter2() {
     this.isFilterApplied2 = 'primary';
     this.isfilter2 = false;
     this.loadingRecords2 = true;
     this.filterQuery2 = '';
     this.pageIndex = 1;
-
     if (this.JoiningDate2 != null && this.JoiningDate2.length == 2) {
       this.value6 = this.datePipe.transform(this.JoiningDate2[0], 'yyyy-MM-dd');
       this.value7 = this.datePipe.transform(this.JoiningDate2[1], 'yyyy-MM-dd');
-
       this.FROM_DATE2 = this.value6;
       this.value6 = this.datePipe.transform(this.JoiningDate2[0], 'yyyy-MM-dd');
       this.value7 = this.datePipe.transform(this.JoiningDate2[1], 'yyyy-MM-dd');
-
       this.TO_DATE2 = this.value7;
       this.isFilterApplied2 = 'primary';
       this.isfilter2 = true;
     }
-
     this.loadingRecords2 = false;
     if (this.isfilter2) {
       this.loadingRecords2 = true;
-
       this.search2();
       this.filterClass2 = 'filter-invisible';
     } else {
@@ -1263,18 +1122,15 @@ export class TechnicianDayLogsDrawerComponent {
       this.isFilterApplied2 = 'default';
     }
   }
-
   clearFilter2() {
     this.filterClass2 = 'filter-invisible';
     this.isFilterApplied2 = 'default';
     this.dataList2 = [];
-
     this.filterQuery2 = '';
     this.JoiningDate2 = [
-      new Date(new Date().getFullYear(), new Date().getMonth(), 1), // 1st day of current month
-      new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), // Last day of current month
+      new Date(new Date().getFullYear(), new Date().getMonth(), 1), 
+      new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), 
     ];
-
     this.FROM_DATE2 = new Date(
       new Date().getFullYear(),
       new Date().getMonth(),
@@ -1285,46 +1141,36 @@ export class TechnicianDayLogsDrawerComponent {
       new Date().getMonth() + 1,
       0
     );
-
     this.search2();
   }
-
   endfromTime: any;
   endtoTime: any;
   endfromTime1;
   endtoTime1;
-
   fromTime: any;
   toTime: any;
   startfromTime;
   starttoTime;
-
   endfromTime2: any;
   endtoTime2: any;
   endfromTime12;
   endtoTime12;
-
   fromTime2: any;
   toTime2: any;
   startfromTime2;
   starttoTime2;
-
   StartTimeVisible;
   isStartTimeFilterApplied: boolean = false;
   StartTimetext: string = '';
-
   EndTimeVisible;
   isEndTimeFilterApplied: boolean = false;
   EndTimetext: string = '';
-
   StartTimeVisible1;
   isStartTimeFilterApplied1: boolean = false;
   StartTimetext1: string = '';
-
   EndTimeVisible1;
   isEndTimeFilterApplied1: boolean = false;
   EndTimetext1: string = '';
-
   updateStartFromTime(value: any): void {
     let timeString: string;
     if (value instanceof Date) {
@@ -1338,23 +1184,19 @@ export class TechnicianDayLogsDrawerComponent {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
     date.setHours(hours, minutes, 0);
   }
   onTimeFilterChange(): void {
     if (this.fromTime && this.toTime) {
-      // Extract hours and minutes, ensure it's in 'HH:mm:ss' format
       const startHours = this.fromTime.getHours().toString().padStart(2, '0');
       const startMinutes = this.fromTime
         .getMinutes()
@@ -1362,29 +1204,20 @@ export class TechnicianDayLogsDrawerComponent {
         .padStart(2, '0');
       const endHours = this.toTime.getHours().toString().padStart(2, '0');
       const endMinutes = this.toTime.getMinutes().toString().padStart(2, '0');
-
-      // Concatenate in 'HH:mm:ss' format
       this.startfromTime = `${startHours}:${startMinutes}:00`;
       this.starttoTime = `${endHours}:${endMinutes}:00`;
-
-      // Set the filter as applied
       this.isStartTimeFilterApplied = true;
     } else {
-      // Clear the filter
       this.fromTime = null;
       this.toTime = null;
       this.startfromTime = null;
       this.starttoTime = null;
       this.isStartTimeFilterApplied = false;
     }
-
-    // Now, call searchTable (filtering logic is handled inside searchTable)
     this.search2();
   }
-
   onendTimeFilterChange(): void {
     if (this.endfromTime && this.endtoTime) {
-      // Extract hours and minutes, ensure it's in 'HH:mm:ss' format
       const startHours = this.endfromTime
         .getHours()
         .toString()
@@ -1398,29 +1231,20 @@ export class TechnicianDayLogsDrawerComponent {
         .getMinutes()
         .toString()
         .padStart(2, '0');
-
-      // Concatenate in 'HH:mm:ss' format
       this.endfromTime1 = `${startHours}:${startMinutes}:00`;
       this.endtoTime1 = `${endHours}:${endMinutes}:00`;
-
-      // Set the filter as applied
       this.isEndTimeFilterApplied = true;
     } else {
-      // Clear the filter
       this.endfromTime = null;
       this.endtoTime = null;
       this.endfromTime1 = null;
       this.endtoTime1 = null;
       this.isEndTimeFilterApplied = false;
     }
-
-    // Now, call searchTable (filtering logic is handled inside searchTable)
     this.search2();
   }
-
   onTimeFilterChange1(): void {
     if (this.fromTime2 && this.toTime2) {
-      // Extract hours and minutes, ensure it's in 'HH:mm:ss' format
       const startHours = this.fromTime2.getHours().toString().padStart(2, '0');
       const startMinutes = this.fromTime2
         .getMinutes()
@@ -1428,29 +1252,20 @@ export class TechnicianDayLogsDrawerComponent {
         .padStart(2, '0');
       const endHours = this.toTime2.getHours().toString().padStart(2, '0');
       const endMinutes = this.toTime2.getMinutes().toString().padStart(2, '0');
-
-      // Concatenate in 'HH:mm:ss' format
       this.startfromTime2 = `${startHours}:${startMinutes}:00`;
       this.starttoTime2 = `${endHours}:${endMinutes}:00`;
-
-      // Set the filter as applied
       this.isStartTimeFilterApplied1 = true;
     } else {
-      // Clear the filter
       this.fromTime2 = null;
       this.toTime2 = null;
       this.startfromTime2 = null;
       this.starttoTime2 = null;
       this.isStartTimeFilterApplied1 = false;
     }
-
-    // Now, call searchTable (filtering logic is handled inside searchTable)
     this.search2();
   }
-
   onendTimeFilterChange1(): void {
     if (this.endfromTime2 && this.endtoTime2) {
-      // Extract hours and minutes, ensure it's in 'HH:mm:ss' format
       const startHours = this.endfromTime2
         .getHours()
         .toString()
@@ -1464,39 +1279,27 @@ export class TechnicianDayLogsDrawerComponent {
         .getMinutes()
         .toString()
         .padStart(2, '0');
-
-      // Concatenate in 'HH:mm:ss' format
       this.endfromTime12 = `${startHours}:${startMinutes}:00`;
       this.endtoTime12 = `${endHours}:${endMinutes}:00`;
-
-      // Set the filter as applied
       this.isEndTimeFilterApplied1 = true;
     } else {
-      // Clear the filter
       this.endfromTime2 = null;
       this.endtoTime2 = null;
       this.endfromTime12 = null;
       this.endtoTime12 = null;
       this.isEndTimeFilterApplied1 = false;
     }
-
-    // Now, call searchTable (filtering logic is handled inside searchTable)
     this.search2();
   }
-
   exportLoading;
   excelData: any = [];
   excelData1: any = [];
   excelData2: any = [];
-
   importInExcel() {
     this.search(true, true);
-    // Delay to ensure data is ready
   }
-
   convertInExcel() {
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-
     const formatData = (data: any[]) =>
       data.map((item) => ({
         'Job Created Date': item['JOB_CREATED_DATE']
@@ -1506,9 +1309,7 @@ export class TechnicianDayLogsDrawerComponent {
           )
           : '-',
         'Job No.': item['JOB_CARD_NO'] ? item['JOB_CARD_NO'] : '-',
-
         'Order No.': item['ORDER_NO'] ? item['ORDER_NO'] : '-',
-
         Status:
           item['CUSTOMER_TYPE'] === 'I'
             ? 'Individual'
@@ -1528,7 +1329,6 @@ export class TechnicianDayLogsDrawerComponent {
         'Start Time': item['START_TIME']
           ? this.formatTime(item['START_TIME'])
           : '-',
-
         'End Time': item['END_TIME'] ? this.formatTime(item['END_TIME']) : '-',
         'Reached At Location': item['REACHED_AT_LOCATION']
           ? this.datePipe.transform(
@@ -1593,7 +1393,6 @@ export class TechnicianDayLogsDrawerComponent {
         'Day Start Time': item['DAY_START_TIME']
           ? this.formatTime(item['DAY_START_TIME'])
           : '-',
-
         'Day End Time': item['DAY_END_TIME']
           ? this.formatTime(item['DAY_END_TIME'])
           : '-',
@@ -1610,8 +1409,6 @@ export class TechnicianDayLogsDrawerComponent {
               ? 'Holiday'
               : '-',
       }));
-
-    // Creating sheets with formatted data
     XLSX.utils.book_append_sheet(
       workbook,
       XLSX.utils.json_to_sheet(formatData(this.excelData)),
@@ -1627,7 +1424,6 @@ export class TechnicianDayLogsDrawerComponent {
       XLSX.utils.json_to_sheet(formatData2(this.excelData2)),
       'Technician Availability Logs'
     );
-
     XLSX.writeFile(
       workbook,
       `Technician Performance Details Report_${this.datePipe.transform(

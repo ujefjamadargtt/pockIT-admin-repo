@@ -1,64 +1,123 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
-.select{
-width: 200px;
-padding: 8px;
-display: block;
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-/* for dynamic length  */
-/* .my-scroll .ant-table-tbody td {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px; 
-}
-
-.my-scroll .ant-table-tbody td span[nz-popover] {
-  display: inline-block;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: middle;
-}
-
-.my-scroll .ant-table-tbody td span[nz-popover]:hover {
-  overflow: visible;
-} */
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%;
   display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.kb-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.kb-header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.kb-filter-width {
+  width: 47px;
+}
+.kb-add-btn {
+  margin-right: 0px;
+}
+.kb-padding-top-zero {
+  padding-top: 0px;
+}
+.kb-text-center {
+  text-align: center;
+}
+.kb-filter-item {
+  margin-bottom: 8px;
+}
+.kb-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.kb-filter-card-head {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.kb-filter-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.kb-selected-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.kb-filter-actions-row {
+  margin-top: 7px;
+}
+.kb-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.kb-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.kb-tag-icon {
+  font-size: 10px !important;
+}
+.kb-tag-view {
+  margin-right: 0px;
+}
+.kb-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.kb-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.kb-btn-space {
+  margin-right: 10px;
+}
+.tag-clickable {
+  cursor: pointer;
+}
+.tag-icon-md {
+  font-size: 15px;
+}
+.qr-txt-cnt {
+  text-align: center;
 }

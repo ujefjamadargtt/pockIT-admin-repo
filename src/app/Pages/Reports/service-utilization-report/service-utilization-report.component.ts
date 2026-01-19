@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-service-utilization-report',
   templateUrl: './service-utilization-report.component.html',
@@ -20,8 +19,7 @@ export class ServiceUtilizationReportComponent {
     private router: Router,
     public datepipe: DatePipe,
     private _exportService: ExportService
-  ) { }
-
+  ) {}
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -45,7 +43,6 @@ export class ServiceUtilizationReportComponent {
   Seqtext: any;
   excelData: any = [];
   exportLoading: boolean = false;
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -62,7 +59,6 @@ export class ServiceUtilizationReportComponent {
       groups: [],
     },
   ];
-
   onKeyupS(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -76,9 +72,7 @@ export class ServiceUtilizationReportComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -103,9 +97,6 @@ export class ServiceUtilizationReportComponent {
     }
   }
   filterQuery: string = '';
-  // Search function to apply filters and fetch data
-
-  // Sorting function
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -114,40 +105,32 @@ export class ServiceUtilizationReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
-    this.search(); // Perform search again with sorting applied
+    this.search(); 
   }
-
   close() {
     this.drawervisible = false;
   }
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
-  //For Input
   countrytext: string = '';
   orderNumberText: string = '';
   orderDateText: string = '';
   finalAmountText: string = '';
   orderStatusText: string = '';
-  // Filter Visibility
   nameVisible = false;
   orderCountVisible = false;
   completedVisible = false;
@@ -155,11 +138,9 @@ export class ServiceUtilizationReportComponent {
   cancelledVisible = false;
   rejectedVisible = false;
   finalAmountVisible = false;
-
   Shortcodetext: string = '';
   ShortCodevisible = false;
   Seqvisible = false;
-
   nameText: string = '';
   orderCountText: string = '';
   completedText: string = '';
@@ -176,7 +157,6 @@ export class ServiceUtilizationReportComponent {
     this.finalAmountText = '';
     this.search(true);
   }
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -188,29 +168,20 @@ export class ServiceUtilizationReportComponent {
   ];
   dataList: any = [];
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Customer Name', value: 'NAME' },
   ];
-
-  // new filter
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-
   applyCondition: any;
-
   isLoading = false;
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   userId = sessionStorage.getItem('userId');
   USER_ID: number;
   savedFilters: any;
   currentClientId = 1;
-
   searchopen() {
     if (this.searchText.length >= 0) {
       this.search(true);
@@ -218,13 +189,10 @@ export class ServiceUtilizationReportComponent {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   isfilterapply: boolean = false;
   drawerTitle!: string;
-
   filterClass: string = 'filter-invisible';
   filterloading: boolean = false;
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -233,9 +201,7 @@ export class ServiceUtilizationReportComponent {
       this.loadFilters();
     }
   }
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -255,7 +221,6 @@ export class ServiceUtilizationReportComponent {
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -263,13 +228,11 @@ export class ServiceUtilizationReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -278,13 +241,11 @@ export class ServiceUtilizationReportComponent {
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
       )
-      // Use USER_ID as a number
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -299,21 +260,15 @@ export class ServiceUtilizationReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -327,7 +282,6 @@ export class ServiceUtilizationReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -336,7 +290,6 @@ export class ServiceUtilizationReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -353,9 +306,7 @@ export class ServiceUtilizationReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -381,7 +332,6 @@ export class ServiceUtilizationReportComponent {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -390,27 +340,20 @@ export class ServiceUtilizationReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   openfilter() {
     this.drawerTitle = 'Service Utilization Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -419,13 +362,9 @@ export class ServiceUtilizationReportComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -442,7 +381,6 @@ export class ServiceUtilizationReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -460,7 +398,6 @@ export class ServiceUtilizationReportComponent {
       },
     ];
   }
-
   get filtercloseCallback() {
     return this.drawerflterClose.bind(this);
   }
@@ -473,14 +410,12 @@ export class ServiceUtilizationReportComponent {
       this.sortKey = '';
       this.sortValue = 'desc';
     }
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -493,36 +428,13 @@ export class ServiceUtilizationReportComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.nameText.trim()) {
       likeQuery += `NAME LIKE '%${this.nameText.trim()}%'`;
     }
-    // if (this.orderCountText.trim()) {
-    //   likeQuery += likeQuery ? ` AND order_count LIKE '%${this.orderCountText.trim()}%'` : `order_count LIKE '%${this.orderCountText.trim()}%'`;
-    // }
-    // if (this.completedText.trim()) {
-    //   likeQuery += likeQuery ? ` AND COMPLETED LIKE '%${this.completedText.trim()}%'` : `COMPLETED LIKE '%${this.completedText.trim()}%'`;
-    // }
-    // if (this.pendingText.trim()) {
-    //   likeQuery += likeQuery ? ` AND PENDING LIKE '%${this.pendingText.trim()}%'` : `PENDING LIKE '%${this.pendingText.trim()}%'`;
-    // }
-    // if (this.cancelledText.trim()) {
-    //   likeQuery += likeQuery ? ` AND CANCELLED LIKE '%${this.cancelledText.trim()}%'` : `CANCELLED LIKE '%${this.cancelledText.trim()}%'`;
-    // }
-    // if (this.rejectedText.trim()) {
-    //   likeQuery += likeQuery ? ` AND REJECTED LIKE '%${this.rejectedText.trim()}%'` : `REJECTED LIKE '%${this.rejectedText.trim()}%'`;
-    // }
-    // if (this.finalAmountText.trim()) {
-    //   likeQuery += likeQuery ? ` AND FINAL_AMOUNT LIKE '%${this.finalAmountText.trim()}%'` : `FINAL_AMOUNT LIKE '%${this.finalAmountText.trim()}%'`;
-    // }
-
     this.loadingRecords = true;
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     if (exportInExcel == false) {
       this.loadingRecords = true;
-
       this.api
         .getServiceUtilizationReport(
           this.pageIndex,
@@ -559,7 +471,6 @@ export class ServiceUtilizationReportComponent {
     } else {
       this.exportLoading = true;
       this.loadingRecords = true;
-
       this.api
         .getServiceUtilizationReport(
           0,
@@ -604,38 +515,27 @@ export class ServiceUtilizationReportComponent {
       placeholder: 'Enter Name',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   selectedFilter: string | null = null;
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-
     this.isModalVisible = true;
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -650,7 +550,7 @@ export class ServiceUtilizationReportComponent {
           this._exportService.exportExcel(
             arry1,
             'Service Utilization Report ' +
-            this.datepipe.transform(new Date(), 'dd/MM/yyyy')
+              this.datepipe.transform(new Date(), 'dd/MM/yyyy')
           );
         }
       }
@@ -658,9 +558,7 @@ export class ServiceUtilizationReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

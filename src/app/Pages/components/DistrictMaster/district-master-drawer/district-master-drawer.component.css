@@ -1,6 +1,28 @@
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.tm-country-dropdown {
+  max-width: 300px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.tm-char-count {
+  color: red;
+  font-size: 10px;
+}
+.tm-seq-input {
+  width: 150px;
+}
+.tm-footer-cancel {
+  margin-right: 12px;
+}
+.tm-save-new-item {
+  border-radius: 4px;
+  color: white !important;
+}
+.tm-save-new-link {
+  color: white !important;
+}

@@ -1,35 +1,22 @@
 <div>
-  <div nz-row *ngIf="loading">
-    <div nz-col nzSpan="24" style="text-align: center">
+  <div nz-row *ngIf="loading" class="loading-container">
+    <div nz-col nzSpan="24" class="loading-col">
       <nz-spin [nzSpinning]="loading"></nz-spin>
     </div>
   </div>
-
   <form nz-form *ngIf="!loading">
     <nz-spin [nzSpinning]="isSpinning">
-      <div nz-row style="
-          margin-top: -45px;
-          position: fixed;
-          z-index: 10;
-          width: 485px;
-          cursor: pointer;
-        ">
-        <div nz-col nzSpan="24" style="
-            padding: 5px;
-            border-radius: 0px 0px 20px 20px;
-            background-color: #1890ff;
-            border: 1px solid white;
-          ">
+      <div nz-row class="header-row">
+        <div nz-col nzSpan="24" class="header-col">
           <div class="name">
             {{ newstr }}
           </div>
         </div>
       </div>
-
       <div *ngFor="let data of data2; let i = index">
-        <div nz-row *ngIf="data.data.length > 0" style="text-align: center; margin-top: 20px">
-          <div nz-col nzSpan="24" style="padding-top: 16px">
-            <nz-tag [nzColor]="'red'">
+        <div nz-row *ngIf="data.data.length > 0" class="date-tag-row">
+          <div nz-col nzSpan="24" class="date-tag-col">
+            <nz-tag [nzColor]="'red'" class="date-tag">
               {{
               (data.key | date : "ddMMyyyy") ===
               (todayDate | date : "ddMMyyyy")
@@ -39,91 +26,56 @@
             </nz-tag>
           </div>
         </div>
-
         <div *ngFor="let data of data.data">
-          <div nz-col nzSpan="24" style="text-align: center; margin-top: 10px" *ngIf="data.SENDER == 'X'">
-            <nz-tag [nzColor]="'green'">
+          <div nz-col nzSpan="24" class="system-message-container" *ngIf="data.SENDER == 'X'">
+            <nz-tag [nzColor]="'green'" class="system-message-tag">
               <div nz-row>
-                <div nz-col nzSpan="24" style="text-align: center">
+                <div nz-col nzSpan="24" class="system-message-content">
                   <div class="noty">
                     {{ data.DESCRIPTION }}
                   </div>
                 </div>
-
-                <div nz-col nzSpan="24" style="text-align: right">
+                <div nz-col nzSpan="24" class="system-message-time">
                   {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
                 </div>
               </div>
             </nz-tag>
           </div>
-
-          <div nz-col nzSpan="24">
-            <div nz-col nzSpan="14" *ngIf="data.SENDER == 'U'" style="
-                margin-top: 10px;
-                padding: 5px 10px 0px;
-                border: 1px solid #1890ff;
-                border-radius: 0px 20px 20px 20px;
-                background-color: white;
-                font-size: 12px;
-              ">
-              <div style="font-weight: bold">
-                <!-- {{ getSenderEmpName(data.USER_ID) }} -->
+          <div nz-col nzSpan="24" class="message-container">
+            <div nz-col nzSpan="14" *ngIf="data.SENDER == 'U'" class="user-message user-sent">
+              <div class="sender-name">
                 {{data.CREATER_NAME}}
-
               </div>
-              <div>{{ data.DESCRIPTION }}</div>
-              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL"
-                style="width: 100%; margin-bottom: 5px" />
-              <div style="text-align: right">
+              <div class="message-text">{{ data.DESCRIPTION }}</div>
+              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL" class="message-image" />
+              <div class="message-time">
                 {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
               </div>
             </div>
-
-            <div nz-col nzSpan="14" *ngIf="data.SENDER == 'S' && data.SENDER_ID != decrepteduserID" style="
-                margin-top: 10px;
-                padding: 5px 10px 0px;
-                border: 1px solid #1890ff;
-                border-radius: 0px 20px 20px 20px;
-                background-color: white;
-                font-size: 12px;
-              ">
-              <div style="font-weight: bold">
+            <div nz-col nzSpan="14" *ngIf="data.SENDER == 'S' && data.SENDER_ID != decrepteduserID" class="staff-message staff-other">
+              <div class="sender-name">
                 {{ getSenderEmpName(data.SENDER_ID) }}
               </div>
-              <div>{{ data.DESCRIPTION }}</div>
-              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL"
-                style="width: 100%; margin-bottom: 5px" />
-              <div style="text-align: right">
+              <div class="message-text">{{ data.DESCRIPTION }}</div>
+              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL" class="message-image" />
+              <div class="message-time">
                 {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
               </div>
             </div>
           </div>
-
-          <div nz-col nzSpan="24">
-            <div nz-col nzSpan="10"></div>
-
-            <div nz-col nzOffset="10" nzSpan="14" *ngIf="data.SENDER == 'S' && data.SENDER_ID == decrepteduserID" style="
-                margin-top: 10px;
-                padding: 5px 10px 0px;
-                border: 1px solid #1890ff;
-                border-radius: 20px 0px 20px 20px;
-                background-color: #b1e1ff;
-                color: black;
-                font-size: 12px;
-              ">
-              <div style="color: black">{{ data.DESCRIPTION }}</div>
-              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL"
-                style="width: 100%; margin-bottom: 5px" />
-              <div style="text-align: right; color: black">
+          <div nz-col nzSpan="24" class="message-container-right">
+            <div nz-col nzSpan="10" class="spacer-col"></div>
+            <div nz-col nzOffset="10" nzSpan="14" *ngIf="data.SENDER == 'S' && data.SENDER_ID == decrepteduserID" class="staff-message staff-self">
+              <div class="message-text-self">{{ data.DESCRIPTION }}</div>
+              <img src="{{ getUrl(data.URL) }}" (click)="urlClick(data.URL)" *ngIf="data.URL" class="message-image" />
+              <div class="message-time-self">
                 {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="data2.length <= 0"
-        style="font-weight: 600; margin-top: 10%; margin-top: 20px">
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="data2.length <= 0" class="no-data-container">
         <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
           [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
           <ng-template #contentTpl>
@@ -134,11 +86,9 @@
       </div>
     </nz-spin>
   </form>
-
-  <div id=":h8" class="a1 aaA aMZ" style="user-select: none">
-    <div class="a3I" style="user-select: none">&nbsp;</div>
+  <div id=":h8" class="a1 aaA aMZ scroll-spacer">
+    <div class="a3I">&nbsp;</div>
   </div>
-
   <div class="footer" *ngIf="userroleid1!==1 && userroleid1!==8">
     <div nz-row *ngIf="
         data.IS_TAKEN == 1 &&
@@ -147,129 +97,83 @@
           data.STATUS == 'S' ||
           data.STATUS == 'H') &&
         data.TAKEN_BY_USER_ID == decrepteduserID
-      ">
+      " class="reply-section">
       <div nz-col nzSpan="24">
         <nz-form-item>
           <div nz-row>
-            <div nz-col nzSpan="24" style="text-align: center">
+            <div nz-col nzSpan="24" class="image-close-container">
               <span *ngIf="
                   fileDataLOGO_URL != undefined || fileDataLOGO_URL != null
                 ">
-                <i *ngIf="imageSrc != ''" (click)="clearImg()" nz-icon nzType="close-circle" nzTheme="fill"></i>
+                <i *ngIf="imageSrc != ''" (click)="clearImg()" nz-icon nzType="close-circle" nzTheme="fill" class="image-close-icon"></i>
               </span>
             </div>
-
-            <div nz-col nzSpan="24" style="text-align: center">
+            <div nz-col nzSpan="24" class="image-preview-container">
               <span *ngIf="
                   fileDataLOGO_URL != undefined || fileDataLOGO_URL != null
                 ">
-                <img [src]="imageSrc" *ngIf="imageSrc != ''" style="height: 150px; max-width: 100%" />
+                <img [src]="imageSrc" *ngIf="imageSrc != ''" class="preview-image" />
               </span>
             </div>
           </div>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="20">
+      <div nz-col nzSpan="20" class="reply-textarea-col">
         <nz-form-item>
           <nz-form-control>
-            <textarea nz-input name="question" rows="1" [(ngModel)]="DESCRIPTION"
-              style="border-radius: 5px; margin-top: 8px" placeholder="Enter solution"></textarea>
+            <textarea nz-input name="question" rows="1" [(ngModel)]="DESCRIPTION" class="reply-textarea" placeholder="Enter solution"></textarea>
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <!-- <div nz-col nzSpan="20" *ngIf="data.TRANSFER_USER_ID == userId">
-                <nz-form-item>
-                    <nz-form-control>
-                        <textarea nz-input name="question" rows="1" [(ngModel)]="DESCRIPTION"
-                            style="border-radius: 5px;" placeholder="Enter solution"></textarea>
-                    </nz-form-control>
-                </nz-form-item>
-            </div> -->
-
-      <div nz-col nzSpan="2">
+      <div nz-col nzSpan="2" class="attachment-col">
         <nz-form-item>
           <nz-form-control>
-            <button nz-button nzType="primary" (click)="file.click()" style="width: 40px; margin-top: 8px">
-              <i nz-icon nzType="paper-clip" nzTheme="outline" style="font-size: 20px"></i>
+            <button nz-button nzType="primary" (click)="file.click()" class="attachment-button">
+              <i nz-icon nzType="paper-clip" nzTheme="outline" class="attachment-icon"></i>
             </button>
-
-            <input type="file" #file style="display: none" (change)="onFileSelectedLOGO_URL($event)" />
+            <input type="file" #file class="file-input" (change)="onFileSelectedLOGO_URL($event)" />
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="2">
+      <div nz-col nzSpan="2" class="send-col">
         <nz-form-item>
           <nz-form-control>
-            <button nz-button nzType="primary" (click)="send(data)" style="width: 40px; margin-top: 8px">
-              <img src="/assets/img/sendIcon.png" style="height: 15px; width: 15px" alt="" />
+            <button nz-button nzType="primary" (click)="send(data)" class="send-button">
+              <img src="/assets/img/sendIcon.png" class="send-icon" alt="" />
             </button>
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <!-- <div nz-col nzSpan="2" *ngIf="data.TRANSFER_USER_ID == userId">
-                <nz-form-item>
-                    <nz-form-control>
-                        <button nz-button nzType="primary" (click)="file.click()" style="width: 40px;margin-top: 8px;">
-                            <i nz-icon nzType="paper-clip" nzTheme="outline" style="font-size: 20px;"></i>
-                        </button>
-
-                        <input type="file" #file style="display: none" (change)="onFileSelectedLOGO_URL($event)" />
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-
-            <div nz-col nzSpan="2" *ngIf="data.TRANSFER_USER_ID == userId">
-                <nz-form-item>
-                    <nz-form-control>
-                        <button nz-button nzType="primary" (click)="send(data)" style="width: 40px;margin-top: 8px;">
-                            <img src="/assets/img/sendIcon.png" style="height: 15px; width: 15px;" alt="">
-                        </button>
-                    </nz-form-control>
-                </nz-form-item>
-            </div> -->
     </div>
-
-    <div style="text-align: center">
-      <button nz-button nzType="primary" *ngIf="data.IS_TAKEN == 0 && data.STATUS != 'R'" (click)="takeTicket(data)">
+    <div class="ticket-actions">
+      <button nz-button nzType="primary" *ngIf="data.IS_TAKEN == 0 && data.STATUS != 'R'" (click)="takeTicket(data)" class="action-button take-ticket-btn">
         Take Ticket
       </button>
-
       <button nz-button nzType="primary" *ngIf="
           data.IS_TAKEN == 1 &&
           data.STATUS != 'H' &&
           data.STATUS != 'C' &&
           data.STATUS != 'B' &&
           data.TAKEN_BY_USER_ID == decrepteduserID
-        " (click)="keepOnHold(data)">
+        " (click)="keepOnHold(data)" class="action-button hold-btn">
         Keep On Hold
       </button>
-
       <button nz-button nzType="primary" *ngIf="
           data.IS_TAKEN == 1 &&
           data.STATUS == 'B' &&
           data.TAKEN_BY_USER_ID == decrepteduserID
-        " (click)="unbannTicket(data)">
+        " (click)="unbannTicket(data)" class="action-button unban-btn">
         Un-Ban Ticket
       </button>
-
-      <button style="margin-left: 10px" nz-button nzType="primary" *ngIf="
+      <button nz-button nzType="primary" *ngIf="
           data.IS_TAKEN == 1 &&
           data.STATUS != 'C' &&
           (data.STATUS == 'R' || data.STATUS == 'O') &&
           data.TAKEN_BY_USER_ID == decrepteduserID
-        " (click)="bannTicket(data)">
+        " (click)="bannTicket(data)" class="action-button ban-btn">
         Ban Ticket
       </button>
-
-      <!-- <button style="margin-left : 10px" nz-button nzType="primary"
-                *ngIf="data.IS_TAKEN ==1 && data.STATUS !='C' && (data.STATUS=='R' || data.STATUS=='O') && data.TAKEN_BY_USER_ID==userId && data.TRANSFER_USER_ID==userId "
-                (click)="bannTicket(data)">Ban Ticket</button> -->
-
-      <button style="margin-left: 10px" nz-button nzType="primary" (click)="transferTicket(data)" *ngIf="
+      <button nz-button nzType="primary" (click)="transferTicket(data)" *ngIf="
           data.IS_TAKEN == 1 &&
           data.TAKEN_BY_USER_ID == decrepteduserID &&
           data.STATUS != 'S' &&
@@ -277,38 +181,22 @@
           data.STATUS != 'B' &&
           data.STATUS != 'O' &&
           data.STATUS != 'H'
-        ">
+        " class="action-button transfer-btn">
         Transfer Ticket
       </button>
-
-      <!-- <button style="margin-left : 10px" nz-button nzType="primary" (click)="transferTicket(data)"
-                *ngIf="data.IS_TAKEN==1 && data.TRANSFER_USER_ID=='' && data.STATUS !='C'  && data.STATUS !='B'&& ok11==true">
-                Transfer Ticket</button> -->
     </div>
-
-    <!-- <div nz-row *ngIf="data.IS_TAKEN ==1 && data.TAKEN_BY_USER_ID == userId"
-            style="text-align: center; margin-top: 5px">
-            <nz-form-item>
-                <button nz-button nzType="primary" (click)="transferTicket(data)">
-                    Transfer Ticket</button>
-            </nz-form-item>
-        </div> -->
-
-    <!-- {{data.IS_TAKEN == 1 && data.TAKEN_BY_USER_ID != 0 && data.TAKEN_BY_USER_ID != userId && data.STATUS !='B' && data.TRANSFER_USER_ID != userId}} -->
     <div *ngIf="
         data.IS_TAKEN == 1 &&
         data.TAKEN_BY_USER_ID != 0 &&
         data.TAKEN_BY_USER_ID != decrepteduserID &&
         data.STATUS != 'B'
-      " style="text-align: center">
+      " class="taken-by-other">
       <nz-form-item>
-        <nz-form-label nzNoColon style="white-space: pre-wrap; font-weight: bold">Taken By Another User
-        </nz-form-label>
+        <nz-form-label nzNoColon class="taken-by-label">Taken By Another User</nz-form-label>
       </nz-form-item>
     </div>
   </div>
 </div>
-
 <div *ngIf="drawerVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 100px)',

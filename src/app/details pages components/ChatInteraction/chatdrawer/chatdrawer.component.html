@@ -1,152 +1,222 @@
 <div class="chat-container">
-  <div style="text-align: center;margin-bottom: 5px;">
-    <span nz-tooltip nzTooltipTitle="Refresh Chat" nz-icon nzType="reload" nzTheme="outline" [nzSpin]="msgspin"
-      (click)="getmsgs()"></span>
+  <div class="refresh-container">
+    <span
+      nz-tooltip
+      nzTooltipTitle="Refresh Chat"
+      nz-icon
+      nzType="reload"
+      nzTheme="outline"
+      [nzSpin]="msgspin"
+      (click)="getmsgs()"
+    ></span>
   </div>
-  <div class="message-box" style="height: 80vh; overflow: auto" id="scrollableDivvvvv" #scrollableDivvvvv>
-
-    <!-- Customer's message -->
+  <div class="message-box" id="scrollableDivvvvv" #scrollableDivvvvv>
     <div *ngIf="groupeddata != undefined && groupeddata != null">
       <nz-spin [nzSpinning]="msgspin">
         <div *ngFor="let msgdate of getKeys(groupeddata)">
-          <div style="text-align: center; font-size: 10px; font-weight: 800">
+          <div class="date-header">
             {{ msgdate | date : "dd/MM/yyyy" }}
           </div>
-
           <div *ngFor="let messageeee of groupeddata[msgdate]">
-            <div class="message customer-message" *ngIf="messageeee['MSG_SEND_BY'] == 'T'">
+            <div
+              class="message customer-message"
+              *ngIf="messageeee['MSG_SEND_BY'] == 'T'"
+            >
               <span class="customer-name">{{
                 messageeee["TECHNICIAN_NAME"]
-                }}</span>
-              <div>
-                <div class="message-text" style="overflow-wrap: anywhere">
+              }}</span>
+              <div class="message-content">
+                <div class="message-text">
                   {{ messageeee["MESSAGE"] }}
-
-                  <div *ngIf="
-                    messageeee['ATTACHMENT_URL'] != null &&
-                    messageeee['ATTACHMENT_URL'] != '' &&
-                    messageeee['ATTACHMENT_URL'] != undefined
-                  ">
-                    <img *ngIf="
-                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'png' ||
-                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'jpeg' ||
-                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'jpg'||
-                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'avif'||
-                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'jifi'
-                    " nz-image width="100%" height="100px" nzSrc="{{ urllll }}JobChat/{{
-                      messageeee['ATTACHMENT_URL']
-                    }}" alt="" />
-                    <video width="100%" height="100px" controls
+                  <div
+                    *ngIf="
+                      messageeee['ATTACHMENT_URL'] != null &&
+                      messageeee['ATTACHMENT_URL'] != '' &&
+                      messageeee['ATTACHMENT_URL'] != undefined
+                    "
+                    class="attachment-container"
+                  >
+                    <img
                       *ngIf="
-                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'mp4' || messageeee['ATTACHMENT_URL'].split('.').pop() == 'mov'
-                      || messageeee['ATTACHMENT_URL'].split('.').pop() == 'avi' || messageeee['ATTACHMENT_URL'].split('.').pop() == 'wmv'|| messageeee['ATTACHMENT_URL'].split('.').pop() == 'mkv'">
-                      <source src="{{ urllll }}JobChat/{{ messageeee['ATTACHMENT_URL']}}" type="video/mp4" />
+                        messageeee['ATTACHMENT_URL'].split('.').pop() ==
+                          'png' ||
+                        messageeee['ATTACHMENT_URL'].split('.').pop() ==
+                          'jpeg' ||
+                        messageeee['ATTACHMENT_URL'].split('.').pop() ==
+                          'jpg' ||
+                        messageeee['ATTACHMENT_URL'].split('.').pop() ==
+                          'avif' ||
+                        messageeee['ATTACHMENT_URL'].split('.').pop() == 'jifi'
+                      "
+                      nz-image
+                      class="chat-image"
+                      nzSrc="{{ urllll }}JobChat/{{
+                        messageeee['ATTACHMENT_URL']
+                      }}"
+                      alt=""
+                    />
+                    <video
+                      class="chat-video"
+                      controls
+                      *ngIf="
+                        messageeee['ATTACHMENT_URL'].split('.').pop() ==
+                          'mp4' ||
+                        messageeee['ATTACHMENT_URL'].split('.').pop() ==
+                          'mov' ||
+                        messageeee['ATTACHMENT_URL'].split('.').pop() ==
+                          'avi' ||
+                        messageeee['ATTACHMENT_URL'].split('.').pop() ==
+                          'wmv' ||
+                        messageeee['ATTACHMENT_URL'].split('.').pop() == 'mkv'
+                      "
+                    >
+                      <source
+                        src="{{ urllll }}JobChat/{{
+                          messageeee['ATTACHMENT_URL']
+                        }}"
+                        type="video/mp4"
+                      />
                     </video>
                   </div>
                 </div>
-
-                <div style="text-align: right !important; width: 100%" class="timestamp">
+                <div class="timestamp-right">
                   {{ messageeee["SEND_DATE"] | date : "dd/MM | HH:mm a" }}
                 </div>
               </div>
             </div>
-
-            <!-- Technician's message -->
-            <div class="message technician-message" *ngIf="messageeee['MSG_SEND_BY'] == 'B'">
+            <div
+              class="message technician-message"
+              *ngIf="messageeee['MSG_SEND_BY'] == 'B'"
+            >
               <span class="technician-name">{{
                 messageeee["SENDER_USER_ID_USER"]
-                }}</span>
-              <div class="message-text" style="overflow-wrap: anywhere">
-                <div [innerHTML]="transform(messageeee['MESSAGE'])"></div>
-
-                <div *ngIf="
-                  messageeee['ATTACHMENT_URL'] != null &&
-                  messageeee['ATTACHMENT_URL'] != '' &&
-                  messageeee['ATTACHMENT_URL'] != undefined
-                ">
-                  <img *ngIf="
-                    messageeee['ATTACHMENT_URL'].split('.').pop() == 'png' ||
-                    messageeee['ATTACHMENT_URL'].split('.').pop() == 'jpeg' ||
-                    messageeee['ATTACHMENT_URL'].split('.').pop() == 'jpg'
-                  " nz-image width="100%" height="100px" nzSrc="{{ urllll }}JobChat/{{ messageeee['ATTACHMENT_URL'] }}"
-                    alt="" />
-                  <video width="100%" height="100px" controls
-                    *ngIf="messageeee['ATTACHMENT_URL'].split('.').pop() == 'mp4'">
-                    <source src="{{ urllll }}JobChat/{{ messageeee['ATTACHMENT_URL'] }}" type="video/mp4" />
+              }}</span>
+              <div class="message-content">
+                <div
+                  class="message-text"
+                  [innerHTML]="transform(messageeee['MESSAGE'])"
+                ></div>
+                <div
+                  *ngIf="
+                    messageeee['ATTACHMENT_URL'] != null &&
+                    messageeee['ATTACHMENT_URL'] != '' &&
+                    messageeee['ATTACHMENT_URL'] != undefined
+                  "
+                  class="attachment-container"
+                >
+                  <img
+                    *ngIf="
+                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'png' ||
+                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'jpeg' ||
+                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'jpg'
+                    "
+                    nz-image
+                    class="chat-image"
+                    nzSrc="{{ urllll }}JobChat/{{
+                      messageeee['ATTACHMENT_URL']
+                    }}"
+                    alt=""
+                  />
+                  <video
+                    class="chat-video"
+                    controls
+                    *ngIf="
+                      messageeee['ATTACHMENT_URL'].split('.').pop() == 'mp4'
+                    "
+                  >
+                    <source
+                      src="{{ urllll }}JobChat/{{
+                        messageeee['ATTACHMENT_URL']
+                      }}"
+                      type="video/mp4"
+                    />
                     <source src="movie.ogg" type="video/ogg" />
                   </video>
                 </div>
               </div>
-              <span class="timestamp">
-                {{ messageeee["SEND_DATE"] | date : "dd/MM | HH:mm a" }}</span>
+              <span class="timestamp-left">
+                {{ messageeee["SEND_DATE"] | date : "dd/MM | HH:mm a" }}</span
+              >
             </div>
           </div>
         </div>
       </nz-spin>
     </div>
   </div>
-  <div *ngIf="showimagebox">
-    <img *ngIf="
+  <div *ngIf="showimagebox" class="image-preview-container">
+    <img
+      *ngIf="
         ICON.split('.').pop() == 'png' ||
         ICON.split('.').pop() == 'jpeg' ||
         ICON.split('.').pop() == 'jpg'
-      " nz-image width="200px" height="200px" nzSrc="{{ urllll }}JobChat/{{ ICON }}" alt="" />
-    <video width="100%" height="200px" controls *ngIf="ICON.split('.').pop() == 'mp4'">
+      "
+      nz-image
+      class="preview-image"
+      nzSrc="{{ urllll }}JobChat/{{ ICON }}"
+      alt=""
+    />
+    <video
+      class="preview-video"
+      controls
+      *ngIf="ICON.split('.').pop() == 'mp4'"
+    >
       <source src="{{ urllll }}JobChat/{{ ICON }}" type="video/mp4" />
     </video>
   </div>
   <nz-spin [nzSpinning]="isSpinning">
     <div class="input-area">
-      <button nz-button nzType="default" class="paper-clip" *ngIf="!progressBarImageOne">
-        <span (click)="fileInput.click()" style="font-size: 20px !important" nz-icon nzType="paper-clip"
-          nzTheme="outline"></span>
+      <button
+        nz-button
+        nzType="default"
+        class="paper-clip-btn"
+        *ngIf="!progressBarImageOne"
+      >
+        <span
+          (click)="fileInput.click()"
+          class="paper-clip-icon"
+          nz-icon
+          nzType="paper-clip"
+          nzTheme="outline"
+        ></span>
       </button>
-      <nz-progress [nzPercent]="percentImageOne" [nzWidth]="30" nzType="circle"
-        *ngIf="progressBarImageOne"></nz-progress>
-      <input accept="image/*,video/*" #fileInput name="albumimage" type="file" (change)="onFileSelected($event)"
-        style="display: none" required />
-      <!-- <button nz-button nzType="default" class="paper-clip" (click)="showemoj()">
-        <span style="font-size: 16px !important" nz-icon nzType="smile" nzTheme="outline"></span>
-      </button> -->
-
-      <!-- <ng-template #popoverTemplate>
-        <div style="padding: 0px !important">
-          <nz-progress
-            [nzPercent]="percentImageOne"
-            [nzWidth]="30"
-            nzType="circle"
-            *ngIf="progressBarImageOne"
-          ></nz-progress>
-          <span
-            *ngIf="!progressBarImageOne"
-            nz-icon
-            nzType="upload"
-            nzTheme="outline"
-            (click)="fileInput.click()"
-          ></span>
-          <input
-            accept="image/*,video/*"
-            #fileInput
-            name="albumimage"
-            type="file"
-            (change)="onFileSelected($event)"
-            style="display: none"
-            required
-          />
-        </div>
-      </ng-template> -->
-      <textarea placeholder="Type your message..." rows="1" #textArea id="messages2" (mouseup)="onEditorMouseUp($event)"
-        (mousedown)="onEditorMouseUp($event)" (mousemove)="onEditorMouseUp($event)"
-        (mouseenter)="onEditorMouseUp($event)" (mouseleave)="onEditorMouseUp($event)" (input)="checkInput1()"
-        (keyup)="checkCurlyBraces($event)" (keydown)="handleEnter($event)" [(ngModel)]="BODY_TEXT"
-        name="BODY_TEXT"></textarea>
-      <div style="text-align: end">
-        <button type="button" class="whatsapp-send-icon" style="width: 100% !important" (click)="sendmessage()">
+      <nz-progress
+        [nzPercent]="percentImageOne"
+        [nzWidth]="30"
+        nzType="circle"
+        *ngIf="progressBarImageOne"
+        class="upload-progress"
+      ></nz-progress>
+      <input
+        accept="image/*,video/*"
+        #fileInput
+        name="albumimage"
+        type="file"
+        (change)="onFileSelected($event)"
+        class="file-input"
+        required
+      />
+      <textarea
+        placeholder="Type your message..."
+        rows="1"
+        #textArea
+        id="messages2"
+        (mouseup)="onEditorMouseUp($event)"
+        (mousedown)="onEditorMouseUp($event)"
+        (mousemove)="onEditorMouseUp($event)"
+        (mouseenter)="onEditorMouseUp($event)"
+        (mouseleave)="onEditorMouseUp($event)"
+        (input)="checkInput1()"
+        (keyup)="checkCurlyBraces($event)"
+        (keydown)="handleEnter($event)"
+        [(ngModel)]="BODY_TEXT"
+        name="BODY_TEXT"
+        class="message-textarea"
+      ></textarea>
+      <div class="send-button-container">
+        <button type="button" class="whatsapp-send-btn" (click)="sendmessage()">
           <span nz-icon nzType="send" nzTheme="outline"></span>
         </button>
       </div>
     </div>
   </nz-spin>
-  <!-- (emojiSelect)="onEmojiSelect($event)" -->
-  <!-- <emoji-mart *ngIf="showEmojiPicker" (emojiSelect)="onEmojiSelect($event)" [showPreview]="false"></emoji-mart> -->
 </div>

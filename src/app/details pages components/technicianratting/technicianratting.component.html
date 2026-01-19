@@ -5,21 +5,18 @@
       <div nz-col nzSpan="12">
         <div class="formname" *ngIf="TYPE === ''">
           <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
-            style="font-weight: bold; cursor: pointer"></span>&nbsp;&nbsp;Technician Ratings for Customers
+            class="clickable-bold"></span>&nbsp;&nbsp;Technician Ratings for Customers
         </div>
-        <!-- <div class="formname" *ngIf="TYPE == ''">Technician Ratings for Customers</div> -->
       </div>
-
       <div nz-col nzSpan="12">
-        <div style="display: flex; justify-content: flex-end; align-items: center">
-          <button nz-button style="margin-right: 10px" nzTooltipTitle="Filter" [nzType]="isFilterApplied"
+        <div class="header-right">
+          <button nz-button class="filter-btn" nzTooltipTitle="Filter" [nzType]="isFilterApplied"
             nzTooltipPlacement="top" nz-tooltip (click)="showFilter()">
             <i nz-icon nzType="filter"></i>
           </button>
         </div>
       </div>
     </div>
-
     <div nz-row>
       <div nz-col nzSpan="24">
         <div class="filter {{ filterClass }}">
@@ -27,32 +24,27 @@
             <form nz-form>
               <div nz-row>
                 <div nz-col nzSpan="8" *ngIf="TYPE != 'CUSTOMER' && TYPE != 'JOB' && TYPE != 'VENDOR'">
-                  <nz-form-item style="margin-right: 10px !important">
+                  <nz-form-item class="form-item-gap">
                     <nz-form-label nzNoColon>Customers</nz-form-label>
                     <nz-select nzShowSearch nzAllowClear nzMode="multiple" nzPlaceHolder="Select Customers"
-                      [nzShowArrow]="true" style="width: 100%; font-weight: 100 !important" [nzMaxTagCount]="2"
-                      name="Customerss" [(ngModel)]="Customers">
+                      [nzShowArrow]="true" class="full-width-light" [nzMaxTagCount]="2" name="Customerss"
+                      [(ngModel)]="Customers">
                       <nz-option *ngFor="let list of CustomersData" [nzValue]="list.ID"
                         [nzLabel]="list.NAME"></nz-option>
                     </nz-select>
                   </nz-form-item>
                 </div>
                 <div nz-col nzSpan="8" *ngIf="TYPE != 'TECHNICIAN'">
-                  <nz-form-item style="margin-right: 10px !important">
+                  <nz-form-item class="form-item-gap">
                     <nz-form-label nzNoColon>Technician</nz-form-label>
                     <nz-select nzShowSearch nzAllowClear nzMode="multiple" nzPlaceHolder="Select Technician"
-                      [nzShowArrow]="true" style="width: 100%; font-weight: 100 !important" [nzMaxTagCount]="2"
-                      name="Technicians" [(ngModel)]="Technician">
+                      [nzShowArrow]="true" class="full-width-light" [nzMaxTagCount]="2" name="Technicians"
+                      [(ngModel)]="Technician">
                       <nz-option *ngFor="let list of TechData" [nzValue]="list.ID" [nzLabel]="list.NAME"></nz-option>
                     </nz-select>
                   </nz-form-item>
                 </div>
-                <div nz-col nzSpan="8" style="
-                    display: flex;
-                    gap: 10px;
-                    padding-top: 0px;
-                    align-self: center;
-                  ">
+                <div nz-col nzSpan="8" class="filter-action-box">
                   <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons" (click)="applyFilter()">
                     <i nz-icon nzType="filter"></i>Apply Filter
                   </button>
@@ -67,51 +59,20 @@
       </div>
     </div>
     <nz-divider></nz-divider>
-
     <div nz-row *ngIf="technicianData.length > 0">
       <div nz-col nzSpan="12">
         <nz-rate [(ngModel)]="averageTechnicianRating" nzDisabled></nz-rate>
         <span class="ant-rate-text">{{ averageTechnicianRating }} Out Of 5</span>
         <span class="ant-rate-text">({{ globalTechnicianRating }} global ratings)</span>
       </div>
-
-      <!-- <div *ngFor="let progTech of progressTechList">
-          <div nz-row>
-            <div nz-col nzSpan="4">{{ progTech.rating }} Star</div>
-            <div nz-col nzSpan="20">
-              <nz-progress
-                [nzPercent]="progTech.progress_percentage"
-                [nzStrokeColor]="'Yellow'"
-                [nzShowInfo]="false"
-              >
-              </nz-progress>
-              <ng-container
-                *ngIf="
-                  progTech.progress_percentage === 100;
-                  else showPercentage
-                "
-              >
-                <span class="custom-text">100%</span>
-              </ng-container>
-              <ng-template #showPercentage>
-                <span class="custom-text">
-                  {{ progTech.progress_percentage }}%
-                </span>
-              </ng-template>
-            </div>
-          </div>
-        </div> -->
-
-      <div nz-col nzSpan="12" style="align-items: end">
+      <div nz-col nzSpan="12" class="align-end">
         <div *ngFor="let progTech of progressTechList">
           <div nz-row>
             <div nz-col nzSpan="4">{{ progTech.rating }} Star</div>
-
             <div nz-col nzSpan="20">
               <nz-progress [nzPercent]="progTech.progress_percentage" [nzStrokeColor]="'Yellow'" [nzStatus]="
                   progTech.progress_percentage === 100 ? 'normal' : 'active'
                 ">
-                <!-- Custom Text for 100% -->
                 <ng-template #text>
                   {{
                   progTech.progress_percentage === 100
@@ -124,27 +85,18 @@
           </div>
         </div>
       </div>
-
       <nz-divider nzText="Comments" nzOrientation="center"></nz-divider>
-
-      <div nz-col nzSpan="24" style="
-          margin-top: 5px;
-          padding: 5px;
-          max-height: 40vh;
-          overflow: auto;
-          padding-right: 10px;
-        ">
+      <div nz-col nzSpan="24" class="comment-container">
         <div *ngFor="let data of technicianData; let i=index;">
           <nz-comment nzAuthor="{{ data['TECHNICIAN_NAME'] }}">
             <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="assets/img/blueEmpImage.png"></nz-avatar>
-
             <nz-comment-content>
-              <span *ngIf="technicianData != null && data.CUSTOMER_NAME"
-                style="font-weight: 600;font-size: 12px !important;">To Customer : {{ data.CUSTOMER_NAME }}</span><br />
+              <span *ngIf="technicianData != null && data.CUSTOMER_NAME" class="comment-to">To Customer : {{
+                data.CUSTOMER_NAME }}</span><br />
               <span>
                 {{ data["COMMENTS"] }}
               </span>
-              <div style="margin-top: 0px">
+              <div class="rating-margin">
                 <nz-rate [ngModel]="roundRating(data.RATING)" nzAllowHalf="true" name="ratess{{ i }}"
                   nzDisabled></nz-rate>
               </div>
@@ -152,9 +104,8 @@
           </nz-comment>
         </div>
       </div>
-
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="technicianData.length == 0"
-        style="font-weight: 600; margin-top: 10%">
+       class="no-data">
         <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
           [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
           <ng-template #contentTpl>
@@ -163,9 +114,8 @@
           <ng-template #footerTpl> </ng-template>
         </nz-empty>
       </div>
-
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="totalRecords > 10">
-        <div style="text-align: center" *ngIf="totalRecords > technicianData.length">
+        <div class="center-text" *ngIf="totalRecords > technicianData.length">
           <button nz-button nzType="primary" (click)="loadMoreTechnician()">
             Load More
           </button>
@@ -173,7 +123,7 @@
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="technicianData.length == 0"
-      style="font-weight: 600; margin-top: 10%">
+     class="no-data">
       <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
         [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
         <ng-template #contentTpl>

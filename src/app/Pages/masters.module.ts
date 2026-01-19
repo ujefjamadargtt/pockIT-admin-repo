@@ -40,7 +40,6 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTreeModule } from 'ng-zorro-antd/tree';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
-
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NgxPrintModule } from 'ngx-print';
@@ -48,7 +47,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
-
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { MastersRoutingModule } from './masters-routing.module';
@@ -246,7 +244,8 @@ import { APKVersionReportComponent } from './Reports/apkversion-report/apkversio
 import { CustomerwiseOrderDetailedReportComponent } from './Reports/customerwise-order-detailed-report/customerwise-order-detailed-report.component';
 import { CouponterritotymappingComponent } from './components/Coupon/couponterritotymapping/couponterritotymapping.component';
 import { TerritoryCalendarComponent } from './components/Territory Master/territory-calendar/territory-calendar.component';
-
+import { OrdercancelchargeReportComponent } from './Reports/ordercancelcharge-report/ordercancelcharge-report.component';
+import { InvoiceReportsComponent } from './Reports/invoice-reports/invoice-reports.component';
 @NgModule({
   declarations: [
     MastersComponent,
@@ -435,7 +434,9 @@ import { TerritoryCalendarComponent } from './components/Territory Master/territ
     MapEmailToChildCustomerComponent,
     CustomerwiseOrderDetailedReportComponent,
     CouponterritotymappingComponent,
-    TerritoryCalendarComponent
+    TerritoryCalendarComponent,
+    OrdercancelchargeReportComponent,
+    InvoiceReportsComponent,
   ],
   imports: [
     // PickerComponent,
@@ -573,7 +574,6 @@ import { TerritoryCalendarComponent } from './components/Territory Master/territ
     WhatsappServiceConfigsComponent,
     CustomerconfigComponent,
     CustomerconfigsComponent,
-
     TerritoryPincodeMappingComponent,
     TerritoryServiceMappingComponent,
     TerritoryMappingComponent,
@@ -585,6 +585,7 @@ import { TerritoryCalendarComponent } from './components/Territory Master/territ
     SkillMappingComponent,
     InventoryTransactionReportComponent,
     PaymentGatewayTransactionReportComponent,
+    InvoiceReportsComponent,
   ],
 })
 export class MasterModule { }

@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-technician-time-sheet-report',
   templateUrl: './technician-time-sheet-report.component.html',
@@ -30,7 +29,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -38,7 +36,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   datefilter: any = '';
   ngOnInit() {
     this.datefilter =
@@ -51,7 +48,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     this.getJobCard(this.selectedjob, this.selectedTechnician);
     this.getOrder(this.selectedorder, this.selectedTechnician);
   }
-
   formTitle = 'Technician Time sheet Report';
   excelData: any = [];
   exportLoading: boolean = false;
@@ -84,8 +80,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   totalRecords = 1;
-  // selectedDate: Date = new Date();
-
   selectedDate1: Date;
   columns: string[][] = [
     ['TECHNICIAN_NAME', 'TECHNICIAN_NAME'],
@@ -93,16 +87,13 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     ['ORDER_NO', 'ORDER_NO'],
     ['JOB_CARD_NO', 'JOB_CARD_NO'],
     ['SERVICE_NAME', 'SERVICE_NAME'],
-
     ['WORK_DEVIATION', 'WORK_DEVIATION'],
   ];
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   isSpinning: boolean = false;
   value1: any = '';
   value2: any = '';
@@ -112,14 +103,12 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
   enddate: Date = new Date();
   TYPE: any;
   isFilterApplied: any = 'default';
-
   applyFilter() {
     this.isFilterApplied = 'primary';
     this.loadingRecords = true;
     this.filterQuery = '';
     this.datefilter = '';
     this.pageIndex = 1;
-
     if (this.startdate != null && this.enddate != null) {
       this.value1 = this.datepipe.transform(this.startdate, 'yyyy-MM-dd');
       this.value2 = this.datepipe.transform(this.enddate, 'yyyy-MM-dd');
@@ -131,19 +120,16 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         "'";
       this.isFilterApplied = 'primary';
     }
-
     if (this.selectedTechnician.length > 0) {
       this.filterQuery +=
         ' AND TECHNICIAN_ID IN (' + this.selectedTechnician + ')';
     }
-
     if (this.selectedjob.length > 0 && this.selectedType == 'Job') {
       this.filterQuery += ' AND JOB_CARD_ID IN (' + this.selectedjob + ')';
     }
     if (this.selectedorder.length > 0 && this.selectedType == 'Order') {
       this.filterQuery += ` AND ORDER_NO IN ('${this.selectedorder}')`;
     }
-
     this.loadingRecords = false;
     if (this.filterQuery) {
       this.search();
@@ -153,11 +139,9 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.isFilterApplied = 'default';
     }
   }
-
   clearFilter() {
     this.filterClass = 'filter-invisible';
     this.isFilterApplied = 'default';
-
     this.startdate = new Date();
     this.enddate = new Date();
     this.selectedTechnician = [];
@@ -170,16 +154,12 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       "' AND '" +
       this.datepipe.transform(new Date(), 'yyyy-MM-dd') +
       "'";
-
     this.search();
   }
-
   onSelectionChange() { }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   reset(): void {
     this.searchText = '';
     this.ordernumbertext = '';
@@ -187,58 +167,38 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     this.jobcardnumbertext = '';
     this.search();
   }
-
   distinctData: any = [];
   jobData: any = [];
   orderData: any = [];
   selectedTechnician: any = [];
   istechniciannameFilterApplied: boolean = false;
   techniciannameVisible = false;
-
   isexpectedDateFilterApplied: boolean = false;
   expectedDateVisible = false;
-
   ordernumbertext: string = '';
   isordernumberFilterApplied: boolean = false;
   ordernumberVisible = false;
-
   jobcardnumbertext: string = '';
   isjobcardnumberFilterApplied: boolean = false;
   jobcardnumberVisible = false;
-
   servicenametext: string = '';
   isservicenameFilterApplied: boolean = false;
   servicenameVisible = false;
-
   isstarttimeFilterApplied: boolean = false;
   starttimeVisible = false;
-
   isendtimeFilterApplied: boolean = false;
   endtimeVisible = false;
-
   isscheduledDateTimeFilterApplied: boolean = false;
   scheduledDateTimeVisible = false;
-
   isendDateTimeFilterApplied: boolean = false;
   enddDateTimeVisible = false;
-
   isjobcompleteDateFilterApplied: boolean = false;
   jobcompleteDateVisible = false;
-
-  // isassignedDateFilterApplied: boolean = false;
-  // assignedDateVisible = false;
-
   formatTime(time: string): string {
-    // Ensure the time is valid and in the format HH:mm:ss or HH:mm
     if (time && /^[0-9]{2}:[0-9]{2}(?::[0-9]{2})?$/.test(time)) {
-      // Split the time into hours and minutes (ignore seconds if present)
       const [hours, minutes] = time.split(':').map(Number);
-
-      // Convert 24-hour format to 12-hour format
       const period = hours >= 12 ? 'PM' : 'AM';
-      const hour12 = hours % 12 || 12; // Convert 0 to 12 (midnight)
-
-      // Return formatted time
+      const hour12 = hours % 12 || 12; 
       return `${this.padZero(hour12)}:${this.padZero(minutes)} ${period}`;
     }
     return '';
@@ -246,11 +206,9 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
   padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
   }
-
   importInExcel() {
     this.search(true, true);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -258,7 +216,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.filterClass = 'filter-visible';
     }
   }
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -267,17 +224,14 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         this.isexpectedDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isexpectedDateFilterApplied = false;
     }
   }
-
   today: Date = new Date();
-
   StartDate1: any = [];
   EndDate1: any = [];
-
   onDateRangeChange1(): void {
     if (this.StartDate1 && this.StartDate1.length === 2) {
       const [start, end] = this.StartDate1;
@@ -286,12 +240,11 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         this.isscheduledDateTimeFilterApplied = true;
       }
     } else {
-      this.StartDate1 = null; // or [] if you prefer
+      this.StartDate1 = null; 
       this.search();
       this.isscheduledDateTimeFilterApplied = false;
     }
   }
-
   StartDate2: any = [];
   EndDate2: any = [];
   onDateRangeChange2(): void {
@@ -302,12 +255,11 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         this.isendDateTimeFilterApplied = true;
       }
     } else {
-      this.StartDate2 = null; // or [] if you prefer
+      this.StartDate2 = null; 
       this.search();
       this.isendDateTimeFilterApplied = false;
     }
   }
-
   StartDate3: any = [];
   EndDate3: any = [];
   onDateRangeChange3(): void {
@@ -318,21 +270,18 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         this.isjobcompleteDateFilterApplied = true;
       }
     } else {
-      this.StartDate3 = null; // or [] if you prefer
+      this.StartDate3 = null; 
       this.search();
       this.isjobcompleteDateFilterApplied = false;
     }
   }
-
-  StartTime: Date | null = null; // Holds selected time
-
+  StartTime: Date | null = null; 
   onTimeChange(time: Date | null): void {
-    this.isstarttimeFilterApplied = !!time; // Apply filter state change
+    this.isstarttimeFilterApplied = !!time; 
   }
   onTimeChange1(time: Date | null): void {
-    this.isendtimeFilterApplied = !!time; // Apply filter state change
+    this.isendtimeFilterApplied = !!time; 
   }
-
   onKeyup(keys) {
     if (this.jobcardnumbertext.length > 0 && keys.key === 'Enter') {
       this.search();
@@ -341,7 +290,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.search();
       this.isjobcardnumberFilterApplied = false;
     }
-
     if (this.servicenametext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isservicenameFilterApplied = true;
@@ -349,7 +297,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.search();
       this.isservicenameFilterApplied = false;
     }
-
     if (this.ordernumbertext.length > 0 && keys.key === 'Enter') {
       this.search();
       this.isordernumberFilterApplied = true;
@@ -358,7 +305,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.isordernumberFilterApplied = false;
     }
   }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -369,18 +315,15 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
   }
-
   listOfFilter: any[] = [
     { text: 'Completed', value: 'Completed' },
     { text: 'Assigned', value: 'Assigned' },
     { text: 'Pending', value: 'Pending' },
   ];
-
   listOforderstatusFilter: any[] = [
     { text: 'Order Placed', value: 'Order Placed' },
     { text: 'Order Accepted', value: 'Order Accepted' },
@@ -414,37 +357,30 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       value: 'Cancellation request rejected',
     },
   ];
-
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   statusFilter1: string | undefined = undefined;
   onStatusFilterChange1(selectedStatus1: string) {
     this.statusFilter1 = selectedStatus1;
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
   endfromTime: any;
   endtoTime: any;
   endfromTime1;
   endtoTime1;
-
   fromTime: any;
   toTime: any;
   startfromTime;
   starttoTime;
-
   onTypeChange(event) {
     if (event == 'Job') {
       this.selectedorder = [];
@@ -473,7 +409,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         }
       });
   }
-
   onTechnicianChange() {
     this.getJobCard('', this.selectedTechnician);
     this.getOrder('', this.selectedTechnician);
@@ -486,19 +421,12 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     }
     this.jobcardData = [];
     this.orderData = [];
-
     if (this.selectedType == 'Job') {
-      // this.selectedjob = [];
-      // this.jobcardData = [];
       this.pageIndex1 = 1;
     } else {
-      // this.selectedorder = [];
-      // this.orderData = [];
       this.pageIndex2 = 1;
     }
   }
-
-  // job select fillter
   searchkey1 = '';
   totalrecords1 = 0;
   isLoading1 = false;
@@ -510,7 +438,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       event != '' && event != undefined && event != null
         ? ' AND (JOB_CARD_NO like "%' + event + '%")'
         : '';
-
     if (
       !this.selectedTechnician ||
       this.selectedTechnician == '' ||
@@ -531,7 +458,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         this.isLoading1 = false;
       });
   }
-
   gejob(event) {
     this.searchkey1 = event;
     if (event.length >= 3) {
@@ -540,14 +466,12 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.getJobCard(this.searchkey1, this.selectedTechnician);
     }
   }
-
   loadMore1() {
     if (this.totalrecords1 > this.jobcardData.length) {
       this.pageIndex1++;
       this.getJobCard(this.searchkey1, this.selectedTechnician);
     }
   }
-
   keyup4(event) {
     if (
       this.searchkey1 == '' &&
@@ -558,20 +482,17 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.getJobCard('', this.selectedTechnician);
     }
   }
-
   searchkey = '';
   totalrecords = 0;
   isLoading = false;
   selectedorder: any = [];
   pageIndex2 = 1;
   orderfilter: any = '';
-
   getOrder(event, techid) {
     event =
       event != '' && event != undefined && event != null
         ? ' AND (ORDER_NUMBER like "%' + event + '%")'
         : '';
-
     if (
       !this.selectedTechnician ||
       this.selectedTechnician == '' ||
@@ -582,7 +503,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.orderfilter = ' AND TECHNICIAN_ID IN (' + techid + ')' + event;
     }
-
     this.api
       .getDistinctOrderNumbers(this.pageIndex2, 8, '', 'asc', this.orderfilter)
       .subscribe((data) => {
@@ -593,7 +513,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         this.isLoading = false;
       });
   }
-
   getord(event) {
     this.searchkey = event;
     if (event.length >= 3) {
@@ -602,14 +521,12 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.getOrder(this.searchkey, this.selectedTechnician);
     }
   }
-
   loadMore() {
     if (this.totalrecords > this.orderData.length) {
       this.pageIndex2++;
       this.getOrder(this.searchkey, this.selectedTechnician);
     }
   }
-
   keyup3(event) {
     if (
       this.searchkey == '' &&
@@ -620,11 +537,8 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.getOrder('', this.selectedTechnician);
     }
   }
-
   selectedTechnician1: any[] = [];
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -636,14 +550,12 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
   onTechnicianChange1(): void {
     if (this.selectedTechnician1?.length) {
       this.search();
-      this.istechniciannameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.istechniciannameFilterApplied = true; 
     } else {
       this.search();
-      this.istechniciannameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.istechniciannameFilterApplied = false; 
     }
-    // this.search();
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -656,21 +568,16 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.sortKey = 'TECHNICIAN_NAME';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
     let filter: any = {};
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -681,7 +588,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     if (this.selectedTechnician1?.length) {
       const categories = this.selectedTechnician1.join(',');
       likeQuery +=
@@ -690,13 +596,11 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.istechniciannameFilterApplied = false;
     }
-
-    // Date Range Filter
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `EXPECTED_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -705,7 +609,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.isexpectedDateFilterApplied = false;
     }
-
     if (this.ordernumbertext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -714,7 +617,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.isordernumberFilterApplied = false;
     }
-
     if (this.jobcardnumbertext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -723,7 +625,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.isjobcardnumberFilterApplied = false;
     }
-
     if (this.servicenametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -732,27 +633,21 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.isservicenameFilterApplied = false;
     }
-
-    // Start Time Range Filter
     if (this.startfromTime && this.starttoTime) {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `START_TIME BETWEEN '${this.startfromTime.trim()}' AND '${this.starttoTime.trim()}'`;
     }
-
-    // End Time Range Filter
     if (this.endfromTime1 && this.endtoTime1) {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `END_TIME BETWEEN '${this.endfromTime1.trim()}' AND '${this.endtoTime1.trim()}'`;
     }
-
-    // Date Range Filter
     if (this.StartDate1 && this.StartDate1.length === 2) {
       const [start, end] = this.StartDate1;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `SCHEDULED_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -761,13 +656,11 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.isscheduledDateTimeFilterApplied = false;
     }
-
-    // Date Range Filter
     if (this.StartDate2 && this.StartDate2.length === 2) {
       const [start, end] = this.StartDate2;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `DATE(END_DATE_TIME) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -776,13 +669,11 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.isendDateTimeFilterApplied = false;
     }
-
-    // Date Range Filter
     if (this.StartDate3 && this.StartDate3.length === 2) {
       const [start, end] = this.StartDate3;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `JOB_COMPLETED_DATETIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -791,13 +682,11 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.isjobcompleteDateFilterApplied = false;
     }
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     const finalDataList =
       this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
     if (exportInExcel == false) {
       this.loadingRecords = true;
-
       this.api
         .getTechnicianTimeSheetReport(
           this.pageIndex,
@@ -841,7 +730,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     } else {
       this.loadingRecords = true;
       this.exportLoading = true;
-
       this.api
         .getTechnicianTimeSheetReport(
           0,
@@ -876,7 +764,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -885,41 +772,23 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
     if (this.excelData.length > 0) {
       for (var i = 0; i < this.excelData.length; i++) {
-        // obj1['Technician Name'] = this.excelData[i]['TECHNICIAN_NAME']
-        // obj1['Job Card Number'] = this.excelData[i]['JOB_CARD_NUMBER']
-        // obj1['Service Name'] = this.excelData[i]['SERVICE_NAME']
-        // obj1['Order Name'] = this.excelData[i]['ORDER_NUMBER']
-        // obj1['Job Card Status'] = this.excelData[i]['JOB_CARD_STATUS']
-        // obj1['Order Status'] = this.excelData[i]['ORDER_STATUS']
-        // obj1['Order Date Time'] = this.excelData[i]['ORDER_DATE_TIME']
-        // obj1['Scheduled Date'] = this.excelData[i]['SCHEDULED_DATE']
-        // obj1['Assigned Date'] = this.excelData[i]['ASSIGNED_DATE']
-        // obj1['Job Completed Date Time'] = this.excelData[i]['JOB_COMPLETED_DATETIME']
-        // obj1['Start Time'] = this.excelData[i]['START_TIME']
-        // obj1['End Time'] = this.excelData[i]['END_TIME']
-        // obj1['Total Time'] = this.excelData[i]['TOTAL_TIME']
-
         obj1['Technician Name'] = this.excelData[i]['TECHNICIAN_NAME'] || '-';
         (obj1['Expected Date Time'] = this.excelData[i]['EXPECTED_DATE_TIME']
           ? this.datepipe.transform(
@@ -934,7 +803,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
           this.formatTime(this.excelData[i]['START_TIME']) || '-';
         obj1['End Time'] =
           this.formatTime(this.excelData[i]['END_TIME']) || '-';
-
         (obj1['Scheduled Date Time'] = this.excelData[i]['SCHEDULED_DATE_TIME']
           ? this.datepipe.transform(
             this.excelData[i]['SCHEDULED_DATE_TIME'],
@@ -956,7 +824,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
             )
             : '-'),
           (obj1['Total Time'] = this.excelData[i]['TOTAL_TIME'] || '-');
-
         obj1['Work Deviation'] = this.excelData[i]['WORK_DEVIATION'] || '-';
         obj1['Is Early Or Late ?'] =
           this.excelData[i]['IS_EARLY_OR_LATE'] == 'E' ? 'Early' : 'Late';
@@ -973,7 +840,6 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       this.message.error('There is a No Data', '');
     }
   }
-
   updateStartFromTime(value: any): void {
     let timeString: string;
     if (value instanceof Date) {
@@ -988,10 +854,8 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
       return;
     }
   }
-
   onTimeFilterChange(): void {
     if (this.fromTime && this.toTime) {
-      // Extract hours and minutes, ensure it's in 'HH:mm:ss' format
       const startHours = this.fromTime.getHours().toString().padStart(2, '0');
       const startMinutes = this.fromTime
         .getMinutes()
@@ -999,29 +863,20 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         .padStart(2, '0');
       const endHours = this.toTime.getHours().toString().padStart(2, '0');
       const endMinutes = this.toTime.getMinutes().toString().padStart(2, '0');
-
-      // Concatenate in 'HH:mm:ss' format
       this.startfromTime = `${startHours}:${startMinutes}:00`;
       this.starttoTime = `${endHours}:${endMinutes}:00`;
-
-      // Set the filter as applied
       this.isstarttimeFilterApplied = true;
     } else {
-      // Clear the filter
       this.fromTime = null;
       this.toTime = null;
       this.startfromTime = null;
       this.starttoTime = null;
       this.isstarttimeFilterApplied = false;
     }
-
-    // Now, call searchTable (filtering logic is handled inside searchTable)
     this.search();
   }
-
   onendTimeFilterChange(): void {
     if (this.endfromTime && this.endtoTime) {
-      // Extract hours and minutes, ensure it's in 'HH:mm:ss' format
       const startHours = this.endfromTime
         .getHours()
         .toString()
@@ -1035,23 +890,16 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
         .getMinutes()
         .toString()
         .padStart(2, '0');
-
-      // Concatenate in 'HH:mm:ss' format
       this.endfromTime1 = `${startHours}:${startMinutes}:00`;
       this.endtoTime1 = `${endHours}:${endMinutes}:00`;
-
-      // Set the filter as applied
       this.isendtimeFilterApplied = true;
     } else {
-      // Clear the filter
       this.endfromTime = null;
       this.endtoTime = null;
       this.endfromTime1 = null;
       this.endtoTime1 = null;
       this.isendtimeFilterApplied = false;
     }
-
-    // Now, call searchTable (filtering logic is handled inside searchTable)
     this.search();
   }
 }

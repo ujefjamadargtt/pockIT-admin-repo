@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-transfer-ticket-drawer',
   templateUrl: './transfer-ticket-drawer.component.html',
@@ -17,7 +16,6 @@ export class TransferTicketDrawerComponent implements OnInit {
   @Input() data2: any;
   @Input() EMPLOYEE_ID: any;
   isLoading = false;
-
   constructor(
     private cookie: CookieService,
     private datePipe: DatePipe,
@@ -25,29 +23,23 @@ export class TransferTicketDrawerComponent implements OnInit {
     private message: NzNotificationService
   ) { }
   public commonFunction = new CommonFunctionService();
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   decrepteduserID = parseInt(this.decrepteduserIDString, 10);
-
   backofficeid = sessionStorage.getItem('backofficeId');
   decreptedbackofficeIDString = this.backofficeid
     ? this.commonFunction.decryptdata(this.backofficeid)
     : '';
   decreptedbackofficeID = parseInt(this.decreptedbackofficeIDString, 10);
-
   ngOnInit() {
     this.getMappedDepartments();
   }
-  // userId = Number(this.cookie.get('userId'));
-  // EMPLOYEE_ID: any;
   @Input() empList: any = [];
   data3: any[] = [];
   departmentmappeddata: any;
   backofficeId: any = [];
-
   getMappedDepartments() {
     this.departmentmappeddata = [];
     this.api
@@ -56,7 +48,6 @@ export class TransferTicketDrawerComponent implements OnInit {
         0,
         '',
         '',
-
         ' AND IS_ACTIVE = 1 AND DEPARTMENT_ID =' + this.data2.DEPARTMENT_ID
       )
       .subscribe(
@@ -67,13 +58,11 @@ export class TransferTicketDrawerComponent implements OnInit {
               this.departmentmappeddata[i]['BACKOFFICE_ID']
             );
           }
-
           this.getAllEmployee();
         },
         (err) => { }
       );
   }
-
   getAllEmployee() {
     this.empList = [];
     const filteredBackofficeIds = this.backofficeId.filter(
@@ -96,19 +85,15 @@ export class TransferTicketDrawerComponent implements OnInit {
         );
     }
   }
-
   close(myForm: NgForm) {
     this.drawerClose();
     this.resetPage(myForm);
   }
-
   resetPage(myForm: NgForm) {
     myForm.form.reset();
   }
-
   save(myForm: NgForm) {
     var isOk = true;
-
     if (this.EMPLOYEE_ID != undefined) {
       if (this.EMPLOYEE_ID == null || this.EMPLOYEE_ID == 0) {
         isOk = false;
@@ -118,15 +103,11 @@ export class TransferTicketDrawerComponent implements OnInit {
       isOk = false;
       this.message.error('Please Select Valid Employee Name', '');
     }
-
     if (isOk) {
-      // this.data2.STATUS='R'
       this.data2.TAKEN_BY_USER_ID = this.EMPLOYEE_ID;
-      // this.data2.RECIVER_ID = this.EMPLOYEE_ID;
       this.data2['TAKEN_FROM_USER_ID'] = this.decrepteduserID;
       this.data2.TRANSFER_USER_ID = this.EMPLOYEE_ID;
       this.isLoading = true;
-
       this.api.transferTicket(this.data2).subscribe(
         (successCode) => {
           if (successCode['status'] == '200') {

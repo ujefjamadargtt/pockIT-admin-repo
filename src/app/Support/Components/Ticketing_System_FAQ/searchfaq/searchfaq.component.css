@@ -1,11 +1,9 @@
 ::-webkit-scrollbar {
     width: 5px;
 }
-
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(116, 116, 116, 0.3);
 }
-
 ::-webkit-scrollbar-thumb {
     background-color: darkgrey;
     outline         : 1px solid rgb(170, 182, 194);
@@ -13,9 +11,220 @@
 .example::-webkit-scrollbar {
     display: none;
 }
-
-/* Hide scrollbar for IE, Edge and Firefox */
 .example {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
+.search-header {
+    width: 105%;
+    margin-left: -25px;
+    margin-top: -30px;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 4px 4px 3px #cbcaca;
+}
+.main-title {
+    text-align: center;
+    font-weight: bold;
+}
+.search-container {
+    max-width: 70%;
+    margin: 10px auto;
+}
+.search-input {
+    border: none;
+    border-radius: 8px;
+    background-color: #f8f6f6;
+}
+.search-icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+.faq-heads-container {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 50vh;
+}
+.breadcrumb-top {
+    margin-top: 15px;
+}
+.faq-head-card-col {
+    margin-bottom: 10px;
+}
+.faq-head-card {
+    border: none;
+    border-radius: 6px;
+    width: 95%;
+    height: 180px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+.faq-head-title {
+    cursor: pointer;
+    margin-top: -11px;
+    margin-bottom: 0px;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+}
+.faq-head-description {
+    margin-top: 5px;
+    height: 100px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.view-all-link {
+    margin-top: 8px;
+}
+.view-all-text {
+    color: #c8c5c5;
+    cursor: pointer;
+}
+.search-results {
+}
+.search-breadcrumb {
+    margin-top: 10px;
+}
+.search-spacer {
+    margin-top: 10px;
+}
+.faq-collapse-container {
+    overflow: hidden;
+    overflow-y: auto;
+    height: 50vh;
+    max-width: 611px;
+}
+.faq-collapse {
+    margin-top: 13px;
+}
+.no-results {
+}
+.no-results-content {
+    padding: 20px 0px;
+}
+.back-button {
+    cursor: pointer;
+}
+.faq-details {
+}
+.details-breadcrumb {
+    margin-top: 10px;
+    max-width: 750px;
+}
+.details-spacer {
+    max-width: 750px;
+}
+.faq-category-name {
+    max-width: 750px;
+    margin-top: 20px;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 6vh;
+}
+.category-text {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(255, 38, 67);
+}
+.faq-question-container {
+    max-width: 750px;
+    margin-top: 20px;
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 20vh;
+    margin-left: 123px;
+}
+.question-text {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(22, 54, 145);
+}
+.faq-image-container {
+}
+.faq-image-wrapper {
+    text-align: center;
+    max-width: 943px;
+}
+.faq-image {
+    width: 62%;
+    height: 318px;
+    margin-top: 10px;
+}
+.empty-image-container {
+}
+.empty-image-wrapper {
+    text-align: center;
+    margin-top: -40px;
+    max-width: 750px;
+}
+.empty-image-spacer {
+    margin-top: 21px;
+}
+.faq-answer-container {
+    max-width: 750px;
+    margin-top: 20px;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 28vh;
+    margin-left: 123px;
+}
+.answer-text {
+    margin-bottom: 5px;
+    font-size: 17px;
+    color: rgb(53, 53, 53);
+}
+.feedback-section {
+}
+.feedback-grid {
+}
+.feedback-title {
+    text-align: center;
+}
+.feedback-title-text {
+    font-weight: bold;
+}
+.feedback-spacer-left {
+}
+.feedback-option {
+    text-align: center;
+}
+.yes-option {
+    padding-left: 5px;
+}
+.no-option {
+}
+.feedback-icon {
+    cursor: pointer;
+}
+.option-label {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+.feedback-spacer-right {
+}
+.suggestion-spacer {
+}
+.suggestion-container {
+}
+.suggestion-title {
+    margin-bottom: 10px;
+}
+.suggestion-textarea {
+    width: 100%;
+    resize: vertical;
+}
+.suggestion-buttons {
+    text-align: right;
+    margin-top: 10px;
+    max-width: 611px;
+}
+.cancel-button {
+    cursor: pointer;
+}
+.save-button {
+    margin-left: 20px;
+    max-width: 611px;
+    cursor: pointer;
 }

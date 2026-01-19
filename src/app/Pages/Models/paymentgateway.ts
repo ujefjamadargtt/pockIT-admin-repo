@@ -1,5 +1,3 @@
-
-
 export class paymentgateway {
     ID: number;
     GATEWAY_NAME: string = '';
@@ -9,7 +7,6 @@ export class paymentgateway {
     MERCHANT_ID: string;
     ENDPOINT_URL: string = '';
     WEBHOOK_URL: string = '';
-    // SUPPORTED_CURRENCIES: number[] | number | null;
     SUPPORTED_CURRENCIES: string;
     IS_ACTIVE: boolean = true;
     MODE: string = 'Test';
@@ -18,5 +15,3 @@ export class paymentgateway {
     MIN_AMOUNT: number;
     MAX_AMOUNT: number;
 }
-
-

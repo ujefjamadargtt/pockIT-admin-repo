@@ -4,8 +4,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-// import { ApiServiceService } from '../Service/api-service.service';
-
 @Component({
   selector: 'app-view-varientstock',
   templateUrl: './view-varientstock.component.html',
@@ -32,7 +30,6 @@ export class ViewVarientStockComponent {
     private message: NzNotificationService
   ) { }
   commonFunction = new CommonFunctionService();
-
   userId = sessionStorage.getItem('userId');
   USER_ID: number;
   backofficeId = sessionStorage.getItem('backofficeId');
@@ -44,11 +41,9 @@ export class ViewVarientStockComponent {
       ? this.commonFunction.decryptdata(this.userId)
       : '0';
     this.USER_ID = Number(decryptedUserId);
-
     const decryptedUserId1 = this.roleid
       ? this.commonFunction.decryptdata(this.roleid)
       : '0';
-
     this.roleID = Number(decryptedUserId1);
     const decryptedbackofficeId = this.backofficeId
       ? this.commonFunction.decryptdata(this.backofficeId)
@@ -64,50 +59,39 @@ export class ViewVarientStockComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
     }
-
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'ITEM_ID';
       this.sortValue = 'desc';
     }
-
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-
     if (this.searchText != '') {
       likeQuery = ' AND';
-
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
     }
     if (
@@ -118,7 +102,6 @@ export class ViewVarientStockComponent {
       likeQuery +=
         ' AND WAREHOUSE_ID IN (' + this.WAREHOUSE_ID.toString() + ')';
     }
-
     if (
       (this.BACKOFFICE_ID != null &&
         this.BACKOFFICE_ID != undefined &&
@@ -151,7 +134,6 @@ export class ViewVarientStockComponent {
           },
           (err: HttpErrorResponse) => {
             this.loadingRecords = false;
-
             if (err.status === 0) {
               this.message.error(
                 'Unable to connect. Please check your internet or server connection and try again shortly.',
@@ -167,9 +149,7 @@ export class ViewVarientStockComponent {
       this.loadingRecords = false;
     }
   }
-
   drawerinventorylogs: boolean = false;
-
   drawerTitleinventorylogs!: string;
   widthsss: any = '100%';
   serviceid: any;
@@ -183,28 +163,24 @@ export class ViewVarientStockComponent {
     this.ITEM_NAME = data.ITEM_NAME + ' ' + data.VARIANT_NAME;
     this.drawerinventorylogs = true;
   }
-
   drawerCloseinventorylogs(): void {
     this.drawerinventorylogs = false;
   }
   get closeCallbackinventorylogs() {
     return this.drawerCloseinventorylogs.bind(this);
   }
-
   WAREHOUSE_ID: any = [];
   Loadwarehouse: any;
   iswarehouseLoading = false;
   getWarehouses(): void {
     this.Loadwarehouse = [];
     this.WAREHOUSE_ID = [];
-
     if (
       this.BACKOFFICE_ID != null &&
       this.BACKOFFICE_ID != undefined &&
       this.BACKOFFICE_ID != 0
     ) {
       this.iswarehouseLoading = true;
-
       this.api
         .getWarehouses(
           0,
@@ -254,18 +230,14 @@ export class ViewVarientStockComponent {
       );
     }
   }
-
   drawerStockDetails: boolean = false;
-
   drawerTitleStockDetails!: string;
-
   ViewStockDetails(data: any): void {
     this.drawerTitleStockDetails = `All Stock Details`;
     this.serviceid = data.ITEM_ID;
     this.ITEM_NAME = data.ITEM_NAME + ' ' + data.VARIANT_NAME;
     this.drawerStockDetails = true;
   }
-
   drawerCloseStockDetails(): void {
     this.drawerStockDetails = false;
   }

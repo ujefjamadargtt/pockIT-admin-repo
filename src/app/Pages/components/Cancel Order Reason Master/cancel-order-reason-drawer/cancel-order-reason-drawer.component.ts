@@ -4,7 +4,6 @@ import { NzNotificationService } from "ng-zorro-antd/notification";
 import { CancelOrderReasonMaster } from "src/app/Pages/Models/CancelOrderReasonMaster";
 import { ApiServiceService } from "src/app/Service/api-service.service";
 import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
-
 @Component({
   selector: "app-cancel-order-reason-drawer",
   templateUrl: "./cancel-order-reason-drawer.component.html",
@@ -13,35 +12,27 @@ import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
 export class CancelOrderReasonDrawerComponent {
   isSpinning: boolean = false;
   isOk = true;
-
   ngOnInit(): void { }
-
   public commonFunction = new CommonFunctionService();
   @Input() data: any = CancelOrderReasonMaster;
   @Input()
   drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   resetDrawer(CancelOrderReasonmaster: NgForm) {
     this.data = new CancelOrderReasonMaster();
     CancelOrderReasonmaster.form.markAsPristine();
     CancelOrderReasonmaster.form.markAsUntouched();
   }
-
   techData: any = [];
-
   skillData: any = [];
   isFocused: string = "";
-
   save(addNew: boolean, CancelOrderReasonmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (this.isOk) {
       if (
         this.data.REASON == null ||
@@ -52,10 +43,8 @@ export class CancelOrderReasonDrawerComponent {
         this.message.error(" Please Enter Reason", "");
       }
     }
-
     if (this.isOk) {
       this.isSpinning = true;
-
       if (this.data.ID) {
         this.api.updateCancelOrderReason(this.data).subscribe(
           (successCode: any) => {
@@ -65,7 +54,6 @@ export class CancelOrderReasonDrawerComponent {
                 "Cancel Order Reason Updated Successfully", ""
               );
               if (!addNew) this.drawerClose();
-
             } else {
               this.message.error("Cancel Order Reason Updation Failed", "");
               this.isSpinning = false;
@@ -110,7 +98,6 @@ export class CancelOrderReasonDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }

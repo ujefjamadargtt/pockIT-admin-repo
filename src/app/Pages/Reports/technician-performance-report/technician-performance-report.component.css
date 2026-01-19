@@ -1,11 +1,90 @@
-:host::ng-deep .ant-card-body {
-  padding: 0px;
+.back-arrow-bold-pointer {
+  font-weight: bold;
+  cursor: pointer;
 }
-
+.header-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-btn-text-white {
+  color: #ffffff;
+}
+.text-center {
+  text-align: center
+}
+.filter-btn-width-fixed {
+  width: 47px;
+}
+:host::ng-deep .ant-card-body {
+  padding: 0;
+}
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%;
   display: inline-block;
+}
+.filter-row-no-padding {
+  padding-top: 0px;
+}
+.filter-loading-center {
+  text-align: center;
+}
+.filter-card-wrapper {
+  margin-bottom: 8px;
+}
+.filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.filter-title {
+  color: black;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-card-actions-row {
+  margin-top: 7px;
+}
+.filter-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-icon {
+  font-size: 10px !important;
+  margin-right: 4px;
+}
+.no-right-margin {
+  margin-right: 0;
+}
+.filter-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.footer-btn-margin {
+  margin-right: 10px;
+}
+.no-data-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
 }

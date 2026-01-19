@@ -1,16 +1,16 @@
-<div nz-row nzType="flex" style="margin-bottom: 10px">
+<div nz-row nzType="flex" class="header-margin">
   <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="8">
     <div class="formname"><b> Technicians </b></div>
   </div>
-  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="16" style="display: flex; justify-content: flex-end">
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="16" class="flex-end">
     <form nz-form [nzLayout]="'inline'">
-      <nz-form-item style="width: 47px; display: none">
+      <nz-form-item class="filter-hidden">
         <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip
           [nzType]="isfilterapply ? 'primary' : 'default'">
           <i nz-icon nzType="filter"></i>
         </button>
       </nz-form-item>
-      <nz-form-item class="Changeformitm" style="margin-right: -6px" style="width: 290px">
+      <nz-form-item class="Changeformitm search-width">
         <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
           <input type="text" name="webbannersearch" (keydown.enter)="onKeypressEvent($event)" [(ngModel)]="searchText"
             nz-input placeholder="Search" />
@@ -24,10 +24,9 @@
     </form>
   </div>
 </div>
-
 <nz-spin nzTip="Loading..." [nzSpinning]="isSpinning">
   <div nz-row *ngIf="count > 0; else emptyblock">
-    <div nz-col nzSpan="8" style="padding: 0px 5px 10px" *ngFor="let tech of originalTechniciansData"
+    <div nz-col nzSpan="8" class="card-padding" *ngFor="let tech of originalTechniciansData"
       (click)="openjobcarddetails(tech)">
       <div class="cardstyle">
         <div nz-row>
@@ -35,69 +34,63 @@
             nzPopoverPlacement="topLeft">
             <div nz-row>
               <div nz-col nzSpan="20">
-                <b>Name: </b><span style="font-size: 12px !important">{{
+                <b>Name: </b><span class="font-small">{{
                   tech?.NAME
                   }}</span>
               </div>
               <div nz-col nzSpan="4">
-                <nz-tag *ngIf="tech?.IS_ACTIVE == 0" nzColor="#cd201f" style="border-radius: 15px">
+                <nz-tag *ngIf="tech?.IS_ACTIVE == 0" nzColor="#cd201f" class="tag-rounded">
                   <span>Inactive</span></nz-tag>
-                <nz-tag *ngIf="tech?.IS_ACTIVE == 1" nzColor="#28a745"
-                  style="border-radius: 15px"><span>Active</span></nz-tag>
+                <nz-tag *ngIf="tech?.IS_ACTIVE == 1" nzColor="#28a745" class="tag-rounded"><span>Active</span></nz-tag>
               </div>
             </div>
           </div>
-
           <div nz-row>
             <div class="subname" nz-col nzSpan="24">
               <b>Email: </b>
-              <a style="font-size: 12px !important" href="mailto:{{ tech?.EMAIL_ID }}" nz-popover
-                [nzPopoverContent]="tech['EMAIL_ID']" nzPopoverPlacement="topLeft">{{ tech?.EMAIL_ID }}</a>
+              <a class="font-small" href="mailto:{{ tech?.EMAIL_ID }}" nz-popover [nzPopoverContent]="tech['EMAIL_ID']"
+                nzPopoverPlacement="topLeft">{{ tech?.EMAIL_ID }}</a>
             </div>
-
             <div class="subname" nz-col nzSpan="12">
-              <b>Mobile: </b><a style="font-size: 12px !important" href="tel:{{ tech?.MOBILE_NUMBER }}">{{
+              <b>Mobile: </b><a class="font-small" href="tel:{{ tech?.MOBILE_NUMBER }}">{{
                 tech?.MOBILE_NUMBER }}</a>
             </div>
-
             <div nz-col nzSpan="12" class="subname">
               <b>Experience Level:</b>
-              <span style="font-size: 12px !important" *ngIf="tech.EXPERIENCE_LEVEL == 'J'">
+              <span class="font-small" *ngIf="tech.EXPERIENCE_LEVEL == 'J'">
                 Junior</span>
-              <span style="font-size: 12px !important" *ngIf="tech.EXPERIENCE_LEVEL == 'F'">
+              <span class="font-small" *ngIf="tech.EXPERIENCE_LEVEL == 'F'">
                 Fresher</span>
-              <span style="font-size: 12px !important" *ngIf="tech.EXPERIENCE_LEVEL == 'M'">
+              <span class="font-small" *ngIf="tech.EXPERIENCE_LEVEL == 'M'">
                 Mid-Level</span>
-              <span style="font-size: 12px !important" *ngIf="tech.EXPERIENCE_LEVEL == 'S'">
+              <span class="font-small" *ngIf="tech.EXPERIENCE_LEVEL == 'S'">
                 Senior</span>
-              <span style="font-size: 12px !important" *ngIf="tech.EXPERIENCE_LEVEL == 'L'">
+              <span class="font-small" *ngIf="tech.EXPERIENCE_LEVEL == 'L'">
                 Lead</span>
-              <span style="font-size: 12px !important" *ngIf="tech.EXPERIENCE_LEVEL == 'E'">
+              <span class="font-small" *ngIf="tech.EXPERIENCE_LEVEL == 'E'">
                 Expert</span>
             </div>
           </div>
-
           <div nz-row>
             <div nz-col nzSpan="24" class="subname">
               <b>Type :</b>
-              <span style="font-size: 12px !important" *ngIf="tech.TYPE == 'V'">
+              <span class="font-small" *ngIf="tech.TYPE == 'V'">
                 Vendor Managed</span>
-              <span style="font-size: 12px !important" *ngIf="tech.TYPE == 'F'">
+              <span class="font-small" *ngIf="tech.TYPE == 'F'">
                 Freelancer</span>
-              <span style="font-size: 12px !important" *ngIf="tech.TYPE == 'O'">
+              <span class="font-small" *ngIf="tech.TYPE == 'O'">
                 On Payroll</span>
             </div>
           </div>
-
-          <div class="subname" style="text-align: right" nz-col nzSpan="8" *ngIf="tech?.IS_ACTIVE == 1"></div>
-          <div class="subname" style="text-align: right" nz-col nzSpan="8" *ngIf="tech?.IS_ACTIVE == 0"></div>
+          <div class="subname text-right" nz-col nzSpan="8" *ngIf="tech?.IS_ACTIVE == 1"></div>
+          <div class="subname text-right" nz-col nzSpan="8" *ngIf="tech?.IS_ACTIVE == 0"></div>
         </div>
       </div>
     </div>
   </div>
   <ng-template #emptyblock>
     <div nz-row>
-      <div nz-col nzSpan="24" style="font-weight: 600; margin-top: 10%">
+      <div nz-col nzSpan="24" class="empty-state">
         <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
           [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
           <ng-template #contentTpl>

@@ -2,50 +2,264 @@
     display: inline-block;
     margin-bottom: 5px;
     width: -webkit-fill-available;
-   
   }
-
   th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 .select{
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
     padding: 8px;
   }
-
   .search-box input {
     width: 188px;
     display: block;
   }
-
   .search-box button {
     width: 90px;
   }
-
   .search-button {
     margin-right: 8px;
   }
-
   nz-select {
     width: 100%;
   }
-
   :host::ng-deep .ant-card-body {
     padding: 0px;
   }
-
   .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
+    max-width: 100%; 
     display: inline-block;
   }
+.skill-verification-container {
+  width: 100%;
+}
+.back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.action-column {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-button-item {
+  width: 47px;
+}
+.filter-button {
+  cursor: pointer;
+}
+.search-input-group {
+  margin-left: 8px;
+}
+.search-input {
+  min-width: 200px;
+}
+.search-button {
+  cursor: pointer;
+}
+.filter-top-row {
+  padding-top: 0px;
+}
+.filter-loading {
+  text-align: center;
+}
+.filters-grid {
+  margin-bottom: 8px;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.edit-tag {
+  margin-right: 4px;
+}
+.apply-tag, .clear-tag, .delete-tag, .view-tag {
+  margin-left: 4px;
+  margin-right: 0px;
+}
+.view-tag {
+  margin-right: 0px;
+}
+.tag-icon {
+  font-size: 10px !important;
+}
+.no-filters-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-button, .new-filter-button {
+  margin-right: 10px;
+}
+.status-container {
+  margin-top: 10px;
+}
+.status-spacer {
+  padding: 5px;
+}
+.status-column {
+  padding: 5px;
+  cursor: pointer;
+}
+.status-wrapper {
+  text-align: center;
+}
+.status-label {
+  border: 1px solid blue;
+  padding: 3px;
+  border-radius: 5px 0 0 5px;
+  background-color: rgb(205, 205, 249);
+  font-size: 12px;
+  cursor: pointer;
+}
+.active-status-label {
+  z-index: 1;
+  background-color: rgb(205, 205, 249);
+}
+.inactive-status-label {
+  background-color: rgb(205, 205, 249);
+}
+.status-count {
+  border: 1px solid blue;
+  padding: 3px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.active-status-count {
+  z-index: 1;
+  background-color: #cdcdf9;
+  border-radius: 0 4px 4px 0;
+}
+.inactive-status-count {
+  margin-left: -1px;
+  border-radius: 0 5px 5px 0;
+  background-color: rgb(227, 227, 249);
+}
+.active-count-text {
+  color: blue;
+}
+.table-row {
+  padding-top: 10px;
+}
+.skill-verification-table {
+  white-space: pre-line;
+}
+.action-column-header, .table-header {
+  font-weight: bold;
+  text-align: center;
+}
+.action-cell, .date-cell {
+  text-align: center;
+}
+.action-tag {
+  cursor: pointer;
+}
+.approve-tag {
+  margin-right: 8px;
+}
+.reject-tag {
+  margin-left: 8px;
+}
+.approver-cell, .technician-cell, .skill-cell, .remark-cell {
+  text-align: left;
+}
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.date-range-picker {
+  width: 100%;
+}
+.filter-search-input {
+  width: 100%;
+}
+.filter-text-modal .filter-text-content {
+  text-align: center;
+}
+.action-confirmation-modal .confirmation-text {
+  font-size: 16px !important;
+  font-weight: 500;
+}
+.approve-text, .reject-text {
+  display: block;
+  margin-bottom: 16px;
+}
+.remark-form-item {
+  margin-top: 16px;
+}
+.remark-label {
+  font-weight: 500;
+}
+.remark-textarea {
+  margin-top: 9px;
+  width: 100%;
+}
+.character-count {
+  color: red;
+  font-size: 10px;
+  margin-top: 4px;
+}
+.modal-button {
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.confirm-button {
+  margin-right: 8px;
+}
+.cancel-button {
+  margin-left: 8px;
+}
+.wpPr{
+  white-space: pre-line
+}

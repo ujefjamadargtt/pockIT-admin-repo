@@ -1,6 +1,63 @@
-nz-form-item  {
+nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 5px;
+}
+.status-title-count {
+  color: red;
+  font-size: 10px;
+}
+.jobcard-desc-textarea {
+  width: 100%;
+}
+.upload-icon-btn {
+  height: 28px;
+  padding: 0px 7px;
+  font-size: 12px;
+}
+.hidden-file-input {
+  display: none;
+}
+.icon-preview-wrapper {
+  display: flex;
+  justify-content: left;
+}
+.view-icon-link {
+  color: blue;
+  margin-right: 9px;
+}
+.delete-icon-wrapper {
+  cursor: pointer;
+}
+.footer-cancel-btn {
+  margin-right: 12px;
+}
+.footer-menu-item {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-menu-link {
+  color: white !important;
+}
+.icon-modal-content {
+  align-items: center;
+}
+.icon-preview-img {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600px;
+  max-height: 400px;
+}
+.icon-preview-style {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600px;
+  max-height: 400px;
+  align-items: center;
+}
+.icon-align-center {
+  align-items: center;
 }

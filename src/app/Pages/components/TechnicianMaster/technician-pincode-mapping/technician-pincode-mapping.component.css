@@ -4,7 +4,6 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 .custom-spin-container {
   position: absolute;
   top: 50%;
@@ -12,13 +11,101 @@ nz-form-item {
   transform: translate(-50%, -50%);
   z-index: 10;
   display: flex;
-  flex-direction: column; /* Vertical alignment */
+  flex-direction: column; 
   align-items: center;
-  gap: 10px; /* Adds space between spinner and text */
+  gap: 10px; 
 }
-
 .custom-spin-text {
   font-size: 16px;
   font-weight: 500;
-  color: #092B9C; /* Optional: Matches Ant Design's theme */
+  color: #092B9C; 
+}
+.tag-list-wrapper {
+  margin-top: 4px;      
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  min-width: 50px;
+}
+.tag-input-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 4px;
+  min-height: 32px;
+}
+.tag-input-wrapper nz-tag {
+  margin-right: 4px;
+  margin-bottom: 2px;
+}
+.tag-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  min-width: 80px;
+}
+.btn-danger-custom {
+  color: red !important;
+  border:none;
+  height: 22px !important;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 3px !important;
+}
+.territory-select-fullwidth {
+  width: 100%;
+}
+.territory-action-col {
+  padding-right: 4px;
+}
+.territory-apply-btn {
+  margin-top: 26px;
+}
+.pm-left-info {
+  text-align: left;
+  padding-left: 10px;
+}
+.pm-right-search {
+  text-align: right;
+  padding-right: 10px;
+}
+.pm-inline-form {
+  display: inline-flex;
+}
+.pm-search-margin {
+  margin-left: 26px !important;
+}
+.pm-search-input {
+  height: 32px;
+}
+.pm-clear-text {
+  font-size: 4px !important;
+}
+.pm-relative {
+  position: relative;
+}
+.pm-preline {
+  white-space: pre-line;
+}
+.pm-center-text {
+  text-align: center;
+}
+.pm-center-column {
+  align-self: center;
+  text-align: center;
+  align-items: center;
+}
+.pm-arrow-icon {
+  font-size: 26px !important;
+}
+.pm-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+.pm-flex {
+  display: flex;
+}
+.pm-right-small {
+  text-align: right;
+  padding-right: 5px;
 }

@@ -4,23 +4,16 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 .select-container {
   display: flex;
   justify-content: center;
 }
-
 body {
   font-family: Arial, sans-serif;
 }
-
 .customer-message {
-  
   max-width: 50%; 
 }
-
-
-
 .chat-container {
   max-height: 88vh;
   margin: 0 auto;
@@ -31,48 +24,37 @@ body {
   display: flex;
   flex-direction: column; 
   justify-content: flex-start; 
- 
 }
-
 .message-box {
-  
   flex-grow: 1;
   overflow-y: auto; 
   margin-bottom: 10px;
   padding-right: 10px;
   scrollbar-width: thin; 
   scrollbar-color: #888 #f4f4f4; 
-  
 }
-
-
 .message-box::-webkit-scrollbar {
   width: 2px; 
 }
-
 .message-box::-webkit-scrollbar-thumb {
   background-color: #888; 
   border-radius: 3px; 
 }
-
 .message-box::-webkit-scrollbar-track {
   background-color: #f4f4f4; 
   border-radius: 3px; 
 }
-
 .message {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
 }
-
 .customer-message {
   max-width: 70%; 
   align-items: flex-start; 
   display: flex;
   flex-direction: column;
 }
-
 .technician-message {
   max-width: 70%; 
   align-items: flex-end; 
@@ -80,20 +62,16 @@ body {
   flex-direction: column;
   margin-left: auto; 
 }
-
 .customer-name,
 .technician-name {
   font-weight: bold;
   font-size: 10px !important;
 }
-
 .timestamp {
-  
   font-size: 10px !important;
   color: gray;
   margin-top: 5px;
 }
-
 .message-text {
   font-size:13px;
   margin-top: 5px;
@@ -101,16 +79,13 @@ body {
   padding: 5px;
   border-radius: 5px;
 }
-
 .technician-message .message-text {
   background-color: #d3f9d8; 
 }
-
 .input-area {
   display: flex;
   justify-content: space-between;
 }
-
 textarea {
   width: 80%;
   padding: 8px;
@@ -119,7 +94,6 @@ textarea {
   border: 1px solid #ddd;
   resize: none;
 }
-
 .whatsapp-send-icon {
   width: 13%;
   background-color: #4CAF50;
@@ -132,12 +106,9 @@ textarea {
   height: 37px;
   cursor: pointer;
 }
-
 .whatsapp-send-icon:hover {
   background-color: #45a049;
 }
-
-
 .paper-clip {
   margin-right: 2px;
   background-color: #f4f4f4; 
@@ -146,4 +117,154 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.refresh-container {
+  text-align: center;
+  margin-bottom: 5px;
+}
+.message-box {
+  height: 80vh;
+  overflow: auto;
+}
+.date-header {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 800;
+  margin: 10px 0;
+}
+.message-content {
+  position: relative;
+}
+.message-text {
+  overflow-wrap: anywhere;
+  margin-bottom: 4px;
+}
+.timestamp-right {
+  text-align: right !important;
+  width: 100%;
+  font-size: 10px;
+  color: #666;
+  margin-top: 2px;
+}
+.timestamp-left {
+  font-size: 10px;
+  color: #666;
+  margin-top: 2px;
+  display: inline-block;
+}
+.attachment-container {
+  margin-top: 8px;
+}
+.chat-image {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.chat-video {
+  width: 100%;
+  height: 100px;
+  border-radius: 4px;
+}
+.image-preview-container {
+  margin: 10px 0;
+  text-align: center;
+}
+.preview-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.preview-video {
+  width: 100%;
+  height: 200px;
+  border-radius: 4px;
+}
+.input-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+.paper-clip-btn {
+  padding: 4px 8px;
+  height: auto;
+}
+.paper-clip-icon {
+  font-size: 20px !important;
+}
+.upload-progress {
+  margin-right: 8px;
+}
+.file-input {
+  display: none;
+}
+.message-textarea {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  resize: none;
+  min-height: 36px;
+  max-height: 100px;
+  font-family: inherit;
+  font-size: 14px;
+}
+.message-textarea:focus {
+  outline: none;
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+.send-button-container {
+  text-align: end;
+}
+.whatsapp-send-btn {
+  width: 100% !important;
+  padding: 8px 16px;
+  background: #25D366;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.whatsapp-send-btn:hover {
+  background: #1da851;
+}
+.customer-message {
+  text-align: left;
+  margin: 8px 0;
+  padding: 8px;
+  background: #e6f7ff;
+  border-radius: 8px;
+  max-width: 80%;
+  margin-right: auto;
+}
+.technician-message {
+  text-align: right;
+  margin: 8px 0;
+  padding: 8px;
+  background: #f6ffed;
+  border-radius: 8px;
+  max-width: 80%;
+  margin-left: auto;
+}
+.customer-name,
+.technician-name {
+  font-weight: bold;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.customer-name {
+  color: #1890ff;
+}
+.technician-name {
+  color: #52c41a;
 }

@@ -12,7 +12,6 @@ import { ChannelMaster } from "../../ChannelMaster";
   styleUrls: ['./channellist.component.css']
 })
 export class ChannellistComponent implements OnInit {
-
   drawerVisible: boolean = false;
   drawerData: ChannelMaster = new ChannelMaster();
   searchText: string = "";
@@ -24,7 +23,6 @@ export class ChannellistComponent implements OnInit {
   chapters: any = [];
   isLoading = true;
   hide: boolean = true;
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: "AND",
@@ -41,39 +39,31 @@ export class ChannellistComponent implements OnInit {
       groups: [],
     },
   ];
-
   back() {
     this.router.navigate(["/masters/menu"]);
   }
-
   channeltext: string = "";
   channeldesctext: string = "";
-
   channelVisible: boolean = false;
   channeldescVisible: boolean = false;
-
   operators: string[] = ["AND", "OR"];
   query = "";
   query2 = "";
   showquery: any;
   isSpinner: boolean = false;
-
   public visiblesave = false;
   filterQuery1: any = "";
   QUERY_NAME: string = "";
   name1: any;
   name2: any;
   INSERT_NAMES: any[] = [];
-
   isChannelNameFilterApplied = false;
   isDescFilterApplied = false;
-
   columns1: { label: string; value: string }[] = [
     { label: "Channel Name", value: "CHANNEL_NAME" },
     { label: "Description", value: "DESCRIPTION" },
     { label: "Status", value: "STATUS" },
   ];
-
   columns: string[][] = [
     ["CHANNEL_NAME", "CHANNEL_NAME"],
     ["DESCRIPTION", "DESCRIPTION"],
@@ -83,9 +73,7 @@ export class ChannellistComponent implements OnInit {
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
-
   statusFilter: string | undefined = undefined;
-
   listOfFilter: any[] = [
     { text: "Active", value: "1" },
     { text: "Inactive", value: "0" },
@@ -96,8 +84,6 @@ export class ChannellistComponent implements OnInit {
     private message: NzNotificationService,
     private router: Router
   ) { }
-
-
   ngOnInit(): void {
     this.useridd = this.commonFunction.decryptdata(
       sessionStorage.getItem('userId') || ''
@@ -105,15 +91,6 @@ export class ChannellistComponent implements OnInit {
     this.getUser()
     this.loadRoles()
   }
-  // keyup() {
-  //   if (this.searchText.length >= 3) {
-  //     this.search();
-  //   }
-  //   else if (this.searchText.length === 0) {
-  //     this.dataList = []
-  //     this.search()
-  //   }
-  // }
   userData: any = [];
   getUser() {
     this.api.getAllUsers(0, 0, '', '', ' AND ID=' + this.useridd).subscribe(
@@ -129,7 +106,6 @@ export class ChannellistComponent implements OnInit {
           }
         } else {
           this.message.error('Failed To Get user Data...', '');
-
         }
       },
       () => {
@@ -139,10 +115,8 @@ export class ChannellistComponent implements OnInit {
   }
   roles: any = [];
   loadRoles() {
-
     this.api.getAllRoles(0, 0, '', '', '').subscribe(
       (data) => {
-        // this.roles = roles['data'];
         if (data["code"] == "200") {
           if (data["count"] > 0) {
             data["data"].forEach((element) => {
@@ -161,8 +135,6 @@ export class ChannellistComponent implements OnInit {
   }
   distinctData: any = [];
   onFilterClick(columnKey: string): void {
-
-
     this.api.getDistinctData(this.TabId, columnKey).subscribe(
       (data) => {
         if (data["code"] == 200) {
@@ -183,23 +155,19 @@ export class ChannellistComponent implements OnInit {
     } else if (this.searchText.length == 0 && event.key === "Backspace") {
       this.search(true);
     }
-
     if (this.channeltext.length >= 3 && event.key === "Enter") {
       this.search();
     } else if (this.channeltext.length == 0 && event.key === "Backspace") {
       this.search();
     }
-
     if (this.channeldesctext.length >= 3 && event.key === "Enter") {
       this.search();
     } else if (this.channeldesctext.length == 0 && event.key === "Backspace") {
       this.search();
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById("button");
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === "Enter") {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == "Backspace") {
@@ -207,38 +175,24 @@ export class ChannellistComponent implements OnInit {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = "id";
       this.sortValue = "desc";
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith("a") ? "asc" : "desc";
     } catch (error) {
       sort = "";
     }
-
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    // }
-
     var likeQuery = "";
     var globalSearchQuery = "";
-    // Global Search (using searchText)
     if (this.searchText !== "") {
       globalSearchQuery =
         " AND (" +
@@ -249,7 +203,6 @@ export class ChannellistComponent implements OnInit {
           .join(" OR ") +
         ")";
     }
-
     this.loadingRecords = true;
     if (this.channeltext !== "") {
       likeQuery +=
@@ -258,7 +211,6 @@ export class ChannellistComponent implements OnInit {
     } else {
       this.isChannelNameFilterApplied = false;
     }
-
     if (this.channeldesctext !== "") {
       likeQuery +=
         (likeQuery ? " AND " : "") +
@@ -267,18 +219,13 @@ export class ChannellistComponent implements OnInit {
     } else {
       this.isDescFilterApplied = false;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== "") {
         likeQuery += " AND ";
       }
       likeQuery += `STATUS = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? " AND " + likeQuery : "");
-
     this.api
       .getChannelData(
         this.pageIndex,
@@ -319,7 +266,6 @@ export class ChannellistComponent implements OnInit {
         }
       );
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -328,66 +274,53 @@ export class ChannellistComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || "desc";
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   add(): void {
     this.drawerTitle = "Add New Channel ";
     this.drawerData = new ChannelMaster();
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   edit(data: ChannelMaster): void {
     this.drawerTitle = "Update Channel";
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
   showcolumn = [
     { label: "Channel", key: "CHANNEL_NAME", visible: true },
     { label: "Status", key: "STATUS", visible: true },
   ];
-
   reset(): void {
     this.searchText = "";
     this.channeltext = "";
     this.channeldesctext = "";
     this.search();
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem("userId");
@@ -400,7 +333,6 @@ export class ChannellistComponent implements OnInit {
   filterQuery: string = "";
   filterClass: string = "filter-invisible";
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === "filter-visible") {
       this.filterClass = "filter-invisible";
@@ -409,7 +341,6 @@ export class ChannellistComponent implements OnInit {
       this.loadFilters();
     }
   }
-
   loadFilters() {
     this.api
       .getFilterData1(
@@ -418,7 +349,7 @@ export class ChannellistComponent implements OnInit {
         "",
         "",
         ` AND TAB_ID = '${this.TabId.toString()}' AND USER_ID = ${this.USER_ID}`
-      ) // Ensure TAB_ID is treated as a string
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
@@ -432,10 +363,8 @@ export class ChannellistComponent implements OnInit {
           this.message.error("An error occurred while loading filters.", "");
         }
       );
-
     this.filterQuery = "";
   }
-
   Clearfilter() {
     this.filterClass = "filter-invisible";
     this.selectedFilter = "";
@@ -443,19 +372,14 @@ export class ChannellistComponent implements OnInit {
     this.filterQuery = "";
     this.search();
   }
-
   openfilter() {
     this.drawerTitle = "Channel Filter";
     this.drawerFilterVisible = true;
     this.filterFields[0]["options"] = this.userData;
     this.filterFields[1]["options"] = this.roles;
-
-    // Edit code 2
-
     this.editButton = "N";
     this.FILTER_NAME = "";
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: "AND",
@@ -472,36 +396,15 @@ export class ChannellistComponent implements OnInit {
         groups: [],
       },
     ];
-
-
   }
-
   drawerflterClose(): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
-    // {
-    //   key: "USER_ID",
-    //   label: "User",
-    //   type: "select",
-    //   comparators: ["=", "!="],
-    //   options: [],
-    //   placeholder: "Select User",
-    // },
-    // {
-    //   key: "ROLE_ID",
-    //   label: "Role",
-    //   type: "select",
-    //   comparators: ["=", "!="],
-    //   options: [],
-    //   placeholder: "Select Role",
-    // },
     {
       key: "CHANNEL_NAME",
       label: "Channel Name",
@@ -516,7 +419,6 @@ export class ChannellistComponent implements OnInit {
       ],
       placeholder: "Enter Channel Name",
     },
-
     {
       key: "DESCRIPTION",
       label: "Description",
@@ -531,7 +433,6 @@ export class ChannellistComponent implements OnInit {
       ],
       placeholder: "Enter Description",
     },
-
     {
       key: "STATUS",
       label: "Status",
@@ -544,18 +445,13 @@ export class ChannellistComponent implements OnInit {
       placeholder: "Select Status",
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose();
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
-
     this.isDeleting = true;
     this.api.deleteFilterById(item.ID).subscribe(
       (data) => {
@@ -567,7 +463,6 @@ export class ChannellistComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = "filter-invisible";
-
           this.loadFilters();
           this.filterQuery = "";
           this.search(true);
@@ -589,9 +484,7 @@ export class ChannellistComponent implements OnInit {
       }
     );
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = "filter-invisible";
     this.selectedFilter = item.ID;
@@ -599,29 +492,23 @@ export class ChannellistComponent implements OnInit {
     this.filterQuery = " AND (" + item.FILTER_QUERY + ")";
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = "";
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON);
     this.FILTER_NAME = data.FILTER_NAME;
-
     this.EditQueryData = data;
     this.editButton = "Y";
     this.drawerTitle = "Edit Query";
     this.drawerFilterVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = "";

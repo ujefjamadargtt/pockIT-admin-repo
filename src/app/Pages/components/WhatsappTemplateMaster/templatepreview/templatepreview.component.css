@@ -4,16 +4,13 @@
   margin: 0;
   padding: 0;
   background-image: url('/assets/whatsapp.jpg');
-  /* Replace with your background image URL */
   background-repeat: repeat;
-  /* You can use 'repeat', 'repeat-x', or 'repeat-y' to create a pattern */
   background-size: cover;
   font-family: 'Roboto', sans-serif !important;
   overflow-y: scroll;
 }
 .vertical{
   margin-bottom: 10px;
-  /* font-family: Helvetica; */
   font-family: 'Roboto', sans-serif !important;
   background-color: rgb(255, 255, 255);
   border-radius:0px 24px 24px 24px;
@@ -22,5 +19,109 @@
   position: relative;
   overflow-wrap: break-word;
   padding: 10px;
-
+}
+.message-template-container {
+  padding-top: 14px;
+}
+.template-name-container {
+  text-align: center;
+}
+.card-content-wrapper {
+  padding: 10px 20px 10px 20px;
+}
+.header-text {
+  font-size: 13px;
+}
+.image-container {
+  background-color: #fff;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #efefef;
+  border-radius: 10px;
+}
+.video-container {
+  background-color: #fff;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px 10px 3px 10px;
+  border: 1px solid #efefef;
+  border-radius: 10px;
+}
+.video-element {
+  width: 100%;
+  height: 100px;
+}
+.document-container {
+  background-color: #fdfdfd;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid #efefef;
+  padding: 6px;
+  border-radius: 10px;
+  text-align: left;
+}
+.document-icon-wrapper {
+  display: flex;
+  align-items: center;
+}
+.file-icon {
+  display: block;
+}
+.document-spacer {
+  min-width: 4px;
+}
+.document-content {
+  display: flex;
+  align-items: center;
+}
+.body-text {
+  font-size: 11px;
+  white-space: pre-line !important;
+  display: inline-block;
+  word-wrap: break-word;
+  width: 100%;
+}
+.footer-text {
+  font-size: 11px;
+  font-weight: lighter;
+  color: #938370b0;
+  align-self: center;
+}
+.separator-line {
+  width: 211px;
+  border-top: 1px solid rgb(232, 234, 242);
+  display: block;
+}
+.button-container {
+  margin-top: 10px;
+  text-align: center;
+}
+.button-row {
+  width: 100px;
+}
+.button-cell {
+  width: 150px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.button-icon {
+  display: inline-block;
+}
+.button-text {
+  display: inline-block;
+}
+.timestamp {
+  font-size: 11px;
+  font-weight: lighter;
+  color: #0a0a09b0;
+  float: right;
+}
+.pt-14
+{
+  padding-top: 14px
 }

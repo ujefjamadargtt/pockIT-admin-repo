@@ -76,7 +76,7 @@ export class ShpoorderlistComponent {
   ngOnInit(): void {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
 
     var decreptedroleIdString = this.roleId
@@ -120,7 +120,7 @@ export class ShpoorderlistComponent {
     } else {
       this.search(true);
     }
-    // this.getDatas();
+    
     this.getDatas();
   }
   isTextOverflow = false;
@@ -223,7 +223,7 @@ export class ShpoorderlistComponent {
           ')';
       }
 
-      // Combine global search query and column-specific search query
+      
       likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
 
       this.isSpinning = true;
@@ -263,7 +263,7 @@ export class ShpoorderlistComponent {
             this.message.error('Invalid filter parameter', '');
           } else {
             this.dataList = [...this.dataList, ...[]];
-            // this.message.error('Something Went Wrong ...', '');
+            
             this.isSpinning = false;
           }
         },
@@ -314,7 +314,7 @@ export class ShpoorderlistComponent {
         ')';
     }
 
-    // Combine global search query and column-specific search query
+    
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
 
     this.isSpinning = true;
@@ -380,7 +380,7 @@ export class ShpoorderlistComponent {
 
     this.drawerVisible = false;
   }
-  //Drawer Methods
+  
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
@@ -390,7 +390,7 @@ export class ShpoorderlistComponent {
     this.ordercreateVisible = false;
   }
 
-  //Drawer Methods
+  
   get closeCallbackorder() {
     return this.drawerCloseorder.bind(this);
   }
@@ -406,7 +406,7 @@ export class ShpoorderlistComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
+  
   applyCondition: any;
   filterData: any;
   openfilter() {
@@ -454,7 +454,7 @@ export class ShpoorderlistComponent {
     ];
 
     this.filterFields[0]['options'] = this.customer;
-    // this.filterFields[6]['options'] = this.teritory;
+    
     this.filterFields[3]['options'] = this.statuses;
     this.drawerFilterVisible = true;
   }
@@ -469,7 +469,7 @@ export class ShpoorderlistComponent {
     if (buttontype == 'SA') {
       this.loadFilters();
 
-      //  this.applyfilter(this.savedFilters[0]['FILTER_QUERY'])
+      
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
@@ -568,7 +568,7 @@ export class ShpoorderlistComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
 
         switch (comparator) {
           case 'Contains':
@@ -586,12 +586,12 @@ export class ShpoorderlistComponent {
 
       const nestedGroups = (group.groups || []).map(processGroup);
 
-      // Combine conditions and nested group queries using the group's operator
+      
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
 
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
 
   showFilter() {
@@ -606,15 +606,15 @@ export class ShpoorderlistComponent {
   oldFilter: any[] = [];
 
   filterQuery = '';
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
 
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
 
-  // shreya
+  
   drawerVisibleCustomers: boolean;
   drawerTitleCustomers: string;
   drawerDataCustomers: customer = new customer();
@@ -635,11 +635,11 @@ export class ShpoorderlistComponent {
   }
 
   selectedFilter: string | null = null;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
+  TabId: number; 
 
   applyfilter(item) {
     this.selectedFilter = item.ID;
@@ -673,7 +673,7 @@ export class ShpoorderlistComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
@@ -746,7 +746,7 @@ export class ShpoorderlistComponent {
     this.applyCondition = '';
     this.filterFields[0]['options'] = this.customer;
     this.filterFields[3]['options'] = this.statuses;
-    // this.filterFields[6]['options'] = this.teritory;
+    
     this.drawerFilterVisible = true;
   }
 
@@ -799,8 +799,8 @@ export class ShpoorderlistComponent {
 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.SHOW_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    
+    this.isModalVisible = true; 
   }
   type = 'a';
   addresses = [];
@@ -1024,12 +1024,12 @@ export class ShpoorderlistComponent {
             this.servicescatalogue = data['data'];
 
             this.serviceCatName = this.servicescatalogue[0]['CATEGORY_NAME'];
-            // this.category= this.servicescatalogue[0].CATEGORY_NAME
+            
             this.serviceSubCatName =
               this.servicescatalogue[0]['SUB_CATEGORY_NAME'];
 
-            // this.serviceCatName = this.servicescatalogue[0].SERVICE_NAME;
-            // this.serviceItem= this.servicescatalogue[0].NAME
+            
+            
             this.servicescatalogue.forEach((element, i) => {
               this.servicescatalogue[i].QUANTITY = 1;
               this.servicescatalogue[i].TOTAL_AMOUNT = Number(
@@ -1070,7 +1070,7 @@ export class ShpoorderlistComponent {
           if (datas['code'] == 200) {
             this.servicescatalogue = datas['data'];
             this.serviceCatName = this.servicescatalogue[0]['CATEGORY_NAME'];
-            // this.category= this.servicescatalogue[0].CATEGORY_NAME
+            
             this.serviceSubCatName =
               this.servicescatalogue[0].SUB_CATEGORY_NAME;
 
@@ -1107,7 +1107,7 @@ export class ShpoorderlistComponent {
 
     const today = new Date();
 
-    this.currentDate = new Date(today); // Create a copy of the current date
+    this.currentDate = new Date(today); 
 
     this.currentDate.setMinutes(
       this.currentDate.getMinutes() + data.MAX_DURARTION_MIN
@@ -1121,8 +1121,8 @@ export class ShpoorderlistComponent {
     );
     var date1: any = new Date(this.currentDate);
     date1.setHours(hours1, minutes1, 0, 0);
-    const differenceInMs: any = date1 - date; // Difference in milliseconds
-    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); //
+    const differenceInMs: any = date1 - date; 
+    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); 
 
     if (differenceInMinutes > 0) {
     } else if (differenceInMinutes < 0) {
@@ -1137,7 +1137,7 @@ export class ShpoorderlistComponent {
     this.drawershoporderVisible = false;
   }
   drawerdata: any = [];
-  //Drawer Methods
+  
   get closeshoporderCallback() {
     return this.drawershoporderClose.bind(this);
   }

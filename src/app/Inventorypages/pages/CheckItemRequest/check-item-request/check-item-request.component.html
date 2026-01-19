@@ -1,20 +1,39 @@
-<div nz-row nzType="flex">
+<div nz-row nzType="flex" class="header-container">
   <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="6" nzXl="6">
     <div class="formname">
       <b>{{ formTitle }}</b>
     </div>
   </div>
-
-  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="18" nzXl="18" style="display: flex; justify-content: flex-end">
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="24"
+    nzLg="18"
+    nzXl="18"
+    class="search-container"
+  >
     <form nz-form [nzLayout]="'inline'">
       <nz-form-item>
         <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-          <input type="text" name="search" nz-input placeholder="Search Records" (keyup)="keyup($event)"
-            [(ngModel)]="searchText" />
+          <input
+            type="text"
+            name="search"
+            nz-input
+            placeholder="Search Records"
+            (keyup)="keyup($event)"
+            [(ngModel)]="searchText"
+            class="search-input"
+          />
         </nz-input-group>
-
         <ng-template #suffixIconButton>
-          <button nz-button nzType="primary" (click)="search(true)" nzSearch>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="search(true)"
+            nzSearch
+            class="search-button"
+          >
             <i nz-icon nzType="search"></i>
           </button>
         </ng-template>
@@ -22,54 +41,90 @@
     </form>
   </div>
 </div>
-
 <br />
-<div nz-row>
+<div nz-row class="table-container">
   <div nz-col nzSpan="24">
-    <nz-table class="my-scroll no-wrap1" nzBordered #CheckItemTable nzShowSizeChanger [nzFrontPagination]="false"
-      [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
-      [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)"
-      (nzQueryParams)="sort($event)" [nzScroll]="{ x: '1500px', y: '460px' }" nzSize="small">
+    <nz-table
+      class="my-scroll no-wrap1 check-item-table"
+      nzBordered
+      #CheckItemTable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+      [nzScroll]="{ x: '1500px', y: '460px' }"
+      nzSize="small"
+    >
       <thead>
         <tr>
-          <th nzLeft nzWidth="40px" style="z-index: 4">Action</th>
-          <th [nzSortFn]="true" nzColumnKey="DATE" nzWidth="90px">Date</th>
-          <th [nzSortFn]="true" nzColumnKey="MOVEMENT_REQUEST_NO" nzWidth="90px">Movement Request No.</th>
-          <th [nzSortFn]="true" nzColumnKey="FROM_GODOWN_NAME" nzWidth="90px">From Godown Name</th>
-          <th [nzSortFn]="true" nzColumnKey="TO_GODOWN_NAME" nzWidth="90px">To Godown Name</th>
-          <th [nzSortFn]="true" nzColumnKey="VEHICLE_NO" nzWidth="90px">Vehicle No</th>
-          <th [nzSortFn]="true" nzColumnKey="TOTAL_ITEMS" nzWidth="60px">Total Items</th>
+          <th nzLeft class="action-header">Action</th>
+          <th [nzSortFn]="true" nzColumnKey="DATE" class="date-header">Date</th>
+          <th
+            [nzSortFn]="true"
+            nzColumnKey="MOVEMENT_REQUEST_NO"
+            class="movement-no-header"
+          >
+            Movement Request No.
+          </th>
+          <th
+            [nzSortFn]="true"
+            nzColumnKey="FROM_GODOWN_NAME"
+            class="from-godown-header"
+          >
+            From Godown Name
+          </th>
+          <th
+            [nzSortFn]="true"
+            nzColumnKey="TO_GODOWN_NAME"
+            class="to-godown-header"
+          >
+            To Godown Name
+          </th>
+          <th
+            [nzSortFn]="true"
+            nzColumnKey="VEHICLE_NO"
+            class="vehicle-no-header"
+          >
+            Vehicle No
+          </th>
+          <th
+            [nzSortFn]="true"
+            nzColumnKey="TOTAL_ITEMS"
+            class="total-items-header"
+          >
+            Total Items
+          </th>
         </tr>
       </thead>
-
       <tbody>
-        <tr *ngFor="let data of CheckItemTable.data">
-          <td align="center" nzLeft>
-            <a (click)="edit(data)">
-              <span nz-icon style="font-size: 15px;color: #1890ff;">Check</span>
+        <tr *ngFor="let data of CheckItemTable.data" class="table-row">
+          <td align="center" nzLeft class="action-cell">
+            <a (click)="edit(data)" class="edit-link">
+              <span nz-icon class="edit-icon">Check</span>
             </a>
           </td>
-          <td style="text-align: center ; white-space: pre-line">
-            {{ data["DATE"] | date:'dd/MM/yyyy' }}
+          <td class="date-cell">
+            {{ data["DATE"] | date : "dd/MM/yyyy" }}
           </td>
-
-          <td style="white-space: pre-line; text-align: center; white-space: pre-line;">
+          <td class="movement-no-cell">
             {{ data["MOVEMENT_REQUEST_NO"] }}
           </td>
-
-          <td style="white-space: pre-line; text-align: center; white-space: pre-line;">
+          <td class="from-godown-cell">
             {{ data["FROM_GODOWN_NAME"] }}
           </td>
-
-          <td style="white-space: pre-line; text-align: center; white-space: pre-line;">
+          <td class="to-godown-cell">
             {{ data["TO_GODOWN_NAME"] }}
           </td>
-
-          <td style="white-space: pre-line; text-align: center; white-space: pre-line;">
+          <td class="vehicle-no-cell">
             {{ data["VEHICLE_NO"] }}
           </td>
-
-          <td style="white-space: pre-line; text-align: center; white-space: pre-line;">
+          <td class="total-items-cell">
             {{ data["TOTAL_ITEMS"] }}
           </td>
         </tr>
@@ -77,17 +132,27 @@
     </nz-table>
   </div>
 </div>
-
 <div *ngIf="drawerVisible">
-  <nz-drawer [nzBodyStyle]="{
-      height: 'calc(100% - 55px)',
-      overflow: 'auto',
-      'padding-bottom': '53px'
-    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzVisible]="drawerVisible" [nzTitle]="drawerTitle"
-    (nzOnClose)="drawerClose()" (nzKeyboard)="(true)" [nzWidth]="unitWidth">
+  <nz-drawer
+    [nzBodyStyle]="drawerBodyStyle"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerClose()"
+    (nzKeyboard)="(true)"
+    [nzWidth]="unitWidth"
+  >
     <ng-container *nzDrawerContent>
-      <app-check-item [drawerClose]="closeCallback" [drawerVisible]="drawerVisible" [data]="drawerData" [items]="items"
-        [editdata]="editdata" [update]="update">
+      <app-check-item
+        [drawerClose]="closeCallback"
+        [drawerVisible]="drawerVisible"
+        [data]="drawerData"
+        [items]="items"
+        [editdata]="editdata"
+        [update]="update"
+      >
       </app-check-item>
     </ng-container>
   </nz-drawer>

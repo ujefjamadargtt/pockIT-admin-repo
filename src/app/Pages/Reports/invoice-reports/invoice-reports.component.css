@@ -1,0 +1,39 @@
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; 
+  display: inline-block;
+}
+.inv-back-bold {
+  font-weight: bold;
+  cursor: pointer;
+}
+.inv-header-flex {
+  display: flex;
+  justify-content: flex-end;
+}
+.inv-radio-margin {
+  margin-top: -4px;
+}
+.inv-zip-white {
+  color: white;
+}
+.inv-table-container {
+  margin-top: 8px;
+}
+.inv-invoice-header,
+.inv-date-header,
+.inv-customer-header,
+.inv-amount-header {
+  text-align: center;
+}
+.inv-tooltip-cell {
+  text-align: left;
+}
+.inv-modal-title {
+  text-align: center;
+}

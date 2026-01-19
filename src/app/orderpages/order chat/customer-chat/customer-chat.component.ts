@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 @Component({
   selector: 'app-customer-chat',
   templateUrl: './customer-chat.component.html',
@@ -12,14 +11,12 @@ export class CustomerChatComponent {
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   ngOnInit() {
     this.getTechnicianData();
   }
   techData: any = [];
   TECHNICIAN_NAME: any;
   selectedTechnicianName: string = '';
-
   getTechnicianData() {
     this.api.getTechnicianData(0, 0, '', '', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -35,7 +32,6 @@ export class CustomerChatComponent {
       }
     );
   }
-
   onTechnicianChange() {
     const selectedTechnician = this.techData.find(tech => tech.ID === this.TECHNICIAN_NAME);
     if (selectedTechnician) {

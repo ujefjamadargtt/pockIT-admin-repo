@@ -54,14 +54,12 @@ export class ChatlistComponent implements OnInit {
   ngOnInit(): void {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-
     var decreptedroleIdString = this.roleId
       ? this.commonFunction.decryptdata(this.roleId)
       : '';
     this.decreptedroleId = parseInt(decreptedroleIdString, 10);
-
     var decreptedvendorId = this.vendorId
       ? this.commonFunction.decryptdata(this.vendorId)
       : '';
@@ -79,7 +77,6 @@ export class ChatlistComponent implements OnInit {
     }
     this.getDatas();
   }
-
   vieworderdata: any;
   isSpinning: boolean = false;
   orderDetails: any;
@@ -94,7 +91,6 @@ export class ChatlistComponent implements OnInit {
         }
       }
     });
-
     this.TERRITORY_IDS = [];
     if (this.decreptedroleId == 9) {
       this.api
@@ -170,7 +166,6 @@ export class ChatlistComponent implements OnInit {
     this.drawerTitle = 'Order Details';
     this.orderDetails = data;
     this.isSpinning = true;
-
     this.api.getorderdetails(0, 0, '', '', '', data.ID).subscribe((data) => {
       this.vieworderdata = data;
       this.api
@@ -189,7 +184,6 @@ export class ChatlistComponent implements OnInit {
       this.isSpinning = false;
     });
   }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -200,23 +194,19 @@ export class ChatlistComponent implements OnInit {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
   }
-
   loadMore() {
     if (this.dataList.length < this.totalRecords) {
       this.pageIndex = this.pageIndex + 1;
-
       var sort: string;
       try {
         sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
       } catch (error) {
         sort = '';
       }
-
       var likeQuery = '';
       let globalSearchQuery = '';
       if (this.searchText !== '') {
@@ -229,12 +219,8 @@ export class ChatlistComponent implements OnInit {
             .join(' OR ') +
           ')';
       }
-
-      // Combine global search query and column-specific search query
       likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
       this.isSpinning = true;
-
       if (this.TYPE == 'CUSTOMER') {
         likeQuery = likeQuery + ' AND CUSTOMER_ID =' + this.FILTER_ID;
       } else if (this.TYPE == 'ORDER') {
@@ -297,21 +283,18 @@ export class ChatlistComponent implements OnInit {
         }
       );
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -324,12 +307,8 @@ export class ChatlistComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.isSpinning = true;
-
     if (this.TYPE == 'CUSTOMER') {
       likeQuery = likeQuery + ' AND CUSTOMER_ID =' + this.FILTER_ID;
       this.getOrdersData(sort, likeQuery);
@@ -353,7 +332,6 @@ export class ChatlistComponent implements OnInit {
         this.getOrdersData(sort, likeQuery);
       }
     } else this.getOrdersData(sort, likeQuery);
-    //
   }
   getOrdersData(sort, likeQuery) {
     this.api
@@ -395,27 +373,20 @@ export class ChatlistComponent implements OnInit {
         }
       );
   }
-
   drawerClose(): void {
     this.search(true);
-
     this.drawerVisible = false;
   }
-  //Drawer Methods
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   drawerCloseorder(): void {
     this.search(true);
     this.ordercreateVisible = false;
   }
-
-  //Drawer Methods
   get closeCallbackorder() {
     return this.drawerCloseorder.bind(this);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -427,15 +398,12 @@ export class ChatlistComponent implements OnInit {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
   filterData: any;
   openfilter() {
     this.filterFields[0]['options'] = this.customer;
     this.drawerFilterVisible = true;
-
     this.drawerTitle = 'Backoffice-Technician Chat Filter';
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -444,7 +412,6 @@ export class ChatlistComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
     this.applyCondition = '';
     this.filterGroups = [
       {
@@ -479,27 +446,20 @@ export class ChatlistComponent implements OnInit {
       },
     ];
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
-
-      //  this.applyfilter(this.savedFilters[0]['FILTER_QUERY'])
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'CUSTOMER_ID',
@@ -530,7 +490,6 @@ export class ChatlistComponent implements OnInit {
       ],
       placeholder: 'Select Customer Type',
     },
-
     {
       key: 'MOBILE_NO',
       label: 'Mobile Number',
@@ -546,7 +505,6 @@ export class ChatlistComponent implements OnInit {
       placeholder: 'Enter Mobile Number',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
@@ -555,8 +513,7 @@ export class ChatlistComponent implements OnInit {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -570,53 +527,25 @@ export class ChatlistComponent implements OnInit {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
-  // deleteItem(item: any) {
-  //   this.oldFilter = this.oldFilter.filter((i) => i !== item);
-  //   if (this.isfilterapply == true && this.oldFilter.length == 0) {
-  //     this.isfilterapply = false;
-  //     this.filterQuery = '';
-  //     this.search(true);
-  //   }
-  // }
   filterQuery = '';
-  // applyfilter(item) {
-  //   this.filterQuery = ' AND (' + item.query + ')';
-  //   this.isfilterapply = true;
-  //   this.search(true);
-  // }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
-  // toggleLiveDemo(query: string, name: string): void {
-  //   this.selectedQuery = query;
-
-  //   // Assign the query to display
-  //   this.isModalVisible = true; // Show the modal
-  // }
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
-  // shreya
   drawerVisibleCustomers: boolean;
   drawerTitleCustomers: string;
   drawerDataCustomers: customer = new customer();
@@ -624,7 +553,6 @@ export class ChatlistComponent implements OnInit {
   custid = 0;
   view(data: any): void {
     this.custid = data.CUSTOMER_ID;
-
     this.drawerTitleCustomers = `View details of ${data.CUSTOMER_NAME}`;
     this.drawerDataCustomers = Object.assign({}, data);
     this.drawerVisibleCustomers = true;
@@ -635,14 +563,12 @@ export class ChatlistComponent implements OnInit {
   get closeCallbackCustomers() {
     return this.drawerCloseCustomers.bind(this);
   }
-
   selectedFilter: string | null = null;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  TabId: number; // Ensure TabId is defined and initialized
-
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
+  TabId: number; 
   applyfilter(item) {
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -663,10 +589,8 @@ export class ChatlistComponent implements OnInit {
   filterloading: boolean = false;
   whichbutton;
   updateBtn;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -674,16 +598,12 @@ export class ChatlistComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-            // 
-            // 
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -698,18 +618,15 @@ export class ChatlistComponent implements OnInit {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -723,7 +640,6 @@ export class ChatlistComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   filterGroups: any = [
     {
       operator: 'AND',
@@ -740,7 +656,6 @@ export class ChatlistComponent implements OnInit {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -757,23 +672,17 @@ export class ChatlistComponent implements OnInit {
       groups: [],
     },
   ];
-
   editQuery(data) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.filterData = data;
     this.drawerTitle = 'Chat Filter';
     this.applyCondition = '';
     this.filterFields[0]['options'] = this.customer;
     this.drawerFilterVisible = true;
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -789,12 +698,10 @@ export class ChatlistComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           } else {
             this.isfilterapply = true;
           }
@@ -819,10 +726,8 @@ export class ChatlistComponent implements OnInit {
   }
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   chatdata: any;
   chatdrawerClose() {
     this.chatdrawerVisible = false;
@@ -832,7 +737,6 @@ export class ChatlistComponent implements OnInit {
   get chatcloseCallback() {
     return this.chatdrawerClose.bind(this);
   }
-
   openchat() {
     this.chatdrawerVisible = true;
     this.chatdrawerTitle = 'chat details';

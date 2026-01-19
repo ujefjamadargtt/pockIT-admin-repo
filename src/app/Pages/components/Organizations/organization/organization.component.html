@@ -1,8 +1,6 @@
 <div>
-
   <form nz-form #accountMasterPage="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
-
       <div nz-row>
         <div nz-col nzSpan="24">
           <nz-form-item>
@@ -11,11 +9,10 @@
               <input nz-input name="name" maxlength="128" placeholder="Enter Organization Name" [(ngModel)]="data.NAME"
                 required [pattern]="namepattern" />
             </nz-form-control>
-            <span style="color: red; font-size: 10px" *ngIf="data.NAME">{{ data.NAME.length }}/128</span>
+            <span class="text-length-indicator" *ngIf="data.NAME">{{ data.NAME.length }}/128</span>
           </nz-form-item>
         </div>
       </div>
-
       <div nz-row>
         <div nz-col nzSpan="12">
           <nz-form-item>
@@ -25,7 +22,7 @@
               <input nz-input name="email" placeholder="Enter Email" [disabled]="data.ID ? true:false"
                 [(ngModel)]="data.EMAIL_ID" required maxlength="128" #email="ngModel" />
             </nz-form-control>
-            <span style="color: red; font-size: 10px" *ngIf="data.EMAIL_ID">{{ data.EMAIL_ID.length }}/128</span>
+            <span class="text-length-indicator" *ngIf="data.EMAIL_ID">{{ data.EMAIL_ID.length }}/128</span>
           </nz-form-item>
         </div>
         <div nz-col nzSpan="6">
@@ -47,20 +44,9 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <!-- <div nz-col nzSpan="16">
-          <nz-form-item>
-            <nz-form-label nzNoColon>Is Have Service Price Edit Access?</nz-form-label>
-            <nz-form-control>
-              <nz-switch name="servicepriceOrg" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-                [(ngModel)]="data.CAN_CHANGE_SERVICE_PRICE"></nz-switch>
-            </nz-form-control>
-          </nz-form-item>
-        </div> -->
       </div>
-
       <div nz-row>
         <div nz-col nzSpan="24">
-
           <div class="my-box">
             <span><b>Organization Address Details</b></span>
             <div nz-row>
@@ -70,18 +56,17 @@
                   <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Address">
                     <textarea nz-input rows="2" name="address1" autocomplete="off" placeholder="Enter Address"
                       maxlength="512" required="required" [(ngModel)]="data.ADDRESS"></textarea>
-                    <span style="color: red; font-size: 10px" *ngIf="data.ADDRESS">{{ data.ADDRESS.length }}/512</span>
+                    <span class="text-length-indicator" *ngIf="data.ADDRESS">{{ data.ADDRESS.length }}/512</span>
                   </nz-form-control>
                 </nz-form-item>
               </div>
             </div>
-
             <div nz-row>
               <div nz-col nzSpan="12">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Country</nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Select Country Name">
-                    <nz-select name="countryId" nzPlaceHolder="Select Country Name" nzShowSearch style="width: 100%"
+                    <nz-select name="countryId" nzPlaceHolder="Select Country Name" nzShowSearch class="full-width"
                       [(ngModel)]="data.COUNTRY_ID" (ngModelChange)="
                         getStatesByCountry(data.COUNTRY_ID, false)
                       " [ngModelOptions]="{ standalone: true }" required nzAllowClear>
@@ -95,7 +80,7 @@
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>State</nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Select State Name">
-                    <nz-select name="stateId" nzPlaceHolder="Select State Name" nzShowSearch style="width: 100%"
+                    <nz-select name="stateId" nzPlaceHolder="Select State Name" nzShowSearch class="full-width"
                       [(ngModel)]="data.STATE_ID" [ngModelOptions]="{ standalone: true }" required nzAllowClear
                       (ngModelChange)="getDistByState(data.STATE_ID, false)" [nzLoading]="isStateSpinning">
                       <nz-option *ngFor="let data of StateData" [nzValue]="data.ID" [nzLabel]="data.NAME">
@@ -110,7 +95,7 @@
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>District</nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Select District Name">
-                    <nz-select name="distId" nzPlaceHolder="Select District Name" nzShowSearch style="width: 100%"
+                    <nz-select name="distId" nzPlaceHolder="Select District Name" nzShowSearch class="full-width"
                       [(ngModel)]="data.DISTRICT_ID" [ngModelOptions]="{ standalone: true }" required nzAllowClear
                       [nzLoading]="isDistSpinning" (ngModelChange)="onDistrictChange($event)">
                       <nz-option *ngFor="let data of DistData" [nzValue]="data.ID" [nzLabel]="data.NAME">
@@ -123,7 +108,7 @@
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>City</nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Select City Name">
-                    <nz-select name="cityId" nzPlaceHolder="Select City Name" nzShowSearch style="width: 100%"
+                    <nz-select name="cityId" nzPlaceHolder="Select City Name" nzShowSearch class="full-width"
                       [(ngModel)]="data.CITY_ID" [ngModelOptions]="{ standalone: true }" required nzAllowClear=""
                       [nzLoading]="isCitySpinning">
                       <nz-option *ngFor="let data of CityData" [nzValue]="data.ID" [nzLabel]="data.NAME">
@@ -136,7 +121,7 @@
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Pincode </nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Select Pincode ">
-                    <nz-select name="pincode" nzPlaceHolder="Select Pincode" nzShowSearch style="width: 100%"
+                    <nz-select name="pincode" nzPlaceHolder="Select Pincode" nzShowSearch class="full-width"
                       [(ngModel)]="data.PINCODE_ID" [ngModelOptions]="{ standalone: true }" required nzAllowClear=""
                       [nzLoading]="isPincodeSpinning" (keypress)="omit($event)"
                       (ngModelChange)="getpincodename($event)">
@@ -148,38 +133,32 @@
               </div>
             </div>
           </div>
-
           <div nz-row>
-
           </div>
-
         </div>
       </div>
-
-
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button type="button" nz-button style="margin-right: 8px;" class="ant-btn" style="margin-right: 8px;"
-      (click)="close(accountMasterPage)">
+    <button type="button" nz-button class="ant-btn footer-btn-margin" (click)="close(accountMasterPage)">
       <span>Cancel</span>
     </button>
-
     <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
       (click)="save(false,accountMasterPage)">
       <span>Save & Close</span>
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px;color: white !important;">
-          <a (click)="save(true,accountMasterPage)" style="color: white!important;">Save & New</a>
+        <li nz-menu-item class="menuc footer-dropdown-item">
+          <a class="footer-dropdown-link" (click)="save(true,accountMasterPage)">
+            Save & New
+          </a>
         </li>
       </ul>
     </nz-dropdown-menu>
-
     <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
-      (click)="save(false,accountMasterPage)"><span>Update & close</span></button>
+      (click)="save(false,accountMasterPage)">
+      <span>Update & close</span>
+    </button>
   </div>
 </div>

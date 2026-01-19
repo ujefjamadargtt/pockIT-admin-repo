@@ -29,7 +29,6 @@ export class InventoryCategoryMasterComponent {
     ['SEQ_NO', 'SEQ_NO'],
     ['IS_ACTIVE', 'IS_ACTIVE'],
   ];
-
   loadingRecords = false;
   totalRecords = 1;
   dataList: any = [];
@@ -37,15 +36,12 @@ export class InventoryCategoryMasterComponent {
   isFilterApplied: boolean = false;
   isDescriptionFilterApplied: boolean = false;
   isCategoryFilterApplied: boolean = false;
-
   categoryvisible = false;
   sequencevisible = false;
   descriptionvisible = false;
-
   categoryText: string = '';
   descriptiontext: string = '';
   sequenceText: string = '';
-
   statusFilter: string | undefined = undefined;
   filterClass: string = 'filter-invisible';
   isfilterapply: boolean = false;
@@ -55,13 +51,10 @@ export class InventoryCategoryMasterComponent {
     private router: Router,
     private sanitizer: DomSanitizer
   ) { }
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
-  // Main Filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -70,37 +63,16 @@ export class InventoryCategoryMasterComponent {
       this.loadFilters();
     }
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   keyup(keys) {
-    // if (this.searchText.length >= 3) {
-    //   this.search();
-    // }
-    // else if (this.searchText.length === 0) {
-    //   this.dataList = []
-    //   this.search()
-    // }
-    // const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
-    // if (this.searchText.length >= 3 && keys.key === 'Enter') {
-    //   this.search();
-    // }
-    // else if (this.searchText.length === 0 && keys.key == 'Backspace') {
-    //   this.dataList = []
-    //   this.search()
-    // }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -108,7 +80,6 @@ export class InventoryCategoryMasterComponent {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   reset(): void {
     this.searchText = '';
     this.categoryText = '';
@@ -116,7 +87,6 @@ export class InventoryCategoryMasterComponent {
     this.sequenceText = '';
     this.search();
   }
-
   filterBox = [
     {
       CONDITION: '',
@@ -130,14 +100,6 @@ export class InventoryCategoryMasterComponent {
       ],
     },
   ];
-
-  // columns1: { label: string; value: string }[] = [
-  //   { label: 'Category Name', value: 'CATEGORY_NAME' },
-  //   { label: 'Description', value: 'DESCRIPTION' },
-  //   { label: 'Sequence number', value: 'SEQ_NO' },
-  //   { label: 'Status', value: 'IS_ACTIVE' },
-  // ];
-
   operators: string[] = ['AND', 'OR'];
   countryData: any = [];
   stateData: any = [];
@@ -150,7 +112,6 @@ export class InventoryCategoryMasterComponent {
   QUERY_NAME: string = '';
   filterQuery1: any = '';
   INSERT_NAMES: any[] = [];
-
   restrictedKeywords = [
     'SELECT',
     'INSERT',
@@ -173,126 +134,19 @@ export class InventoryCategoryMasterComponent {
     'COMMIT',
     '--',
     ';',
-    '/*',
-    '*/',
+    '',
   ];
-
   isModalVisible = false;
   selectedQuery: string = '';
-
-  // toggleLiveDemo(query: string, name: string): void {
-
-  //   this.selectedQuery = query;
-
-  //   // Assign the query to display
-  //   this.isModalVisible = true; // Show the modal
-  // }
-
-  // handleOkTop(): void {
-  //   // this.createFilterQuery();
-
-  //   const lastFilterIndex = this.filterBox.length - 1; 1
-  //   const lastSubFilterIndex = this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
-  //   const selection1 = this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex]['SELECTION1'];
-  //   const selection2 = this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex]['SELECTION2'];
-  //   const selection3 = this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex]['SELECTION3'];
-  //   const selection4 = this.filterBox[lastFilterIndex]['CONDITION'];
-
-  //   if (!selection1) {
-  //     this.message.error("Please select a column", '');
-  //   } else if (!selection2) {
-  //     this.message.error("Please select a comparison", '');
-  //   } else if (!selection3 || selection3.length < 1) {
-  //     this.message.error("Please enter a valid value with at least 1 characters", '');
-  //   }
-
-  //   else if (!selection4 && lastFilterIndex > 0) {
-  //     this.message.error("Please Select the Operator", '');
-  //   }
-
-  //   else {
-
-  //     this.isSpinner = true;
-
-  //     for (let i = 0; i < this.filterBox.length; i++) {
-  //       if (i != 0) {
-  //         this.query += ') ' + this.filterBox[i]['CONDITION'] + ' (';
-  //       } else this.query = '(';
-
-  //       this.query2 = '';
-  //       for (let j = 0; j < this.filterBox[i]['FILTER'].length; j++) {
-  //         const filter = this.filterBox[i]['FILTER'][j];
-  //         if (j == 0) {
-  //           //this.query2 += '(';
-  //         } else {
-  //           if (filter['CONDITION'] == 'AND') {
-  //             this.query2 = this.query2 + ' AND ';
-  //           } else {
-  //             this.query2 = this.query2 + ' OR ';
-  //           }
-  //         }
-
-  //         let selection1 = filter['SELECTION1'];
-  //         let selection2 = filter['SELECTION2'];
-  //         let selection3 = filter['SELECTION3'];
-
-  //         if (selection2 == 'Contains') {
-  //           this.query2 += `${selection1} LIKE '%${selection3}%'`;
-  //         } else if (selection2 == 'End With') {
-  //           this.query2 += `${selection1} LIKE '%${selection3}'`;
-  //         } else if (selection2 == 'Start With') {
-  //           this.query2 += `${selection1} LIKE '${selection3}%'`;
-  //         } else {
-  //           this.query2 += `${selection1} ${selection2} '${selection3}'`;
-  //         }
-  //         if (j + 1 == this.filterBox[i]['FILTER'].length) {
-  //           //this.query2 += ') ';
-  //           this.query += this.query2;
-  //         }
-  //       }
-
-  //       if (i + 1 == this.filterBox.length) {
-  //         this.query += ')';
-  //       }
-  //     }
-
-  //     this.showquery = this.query;
-
-  //   }
-
-  //   if (this.QUERY_NAME == '' || this.QUERY_NAME.trim() == '') {
-  //     this.message.error('Please Enter Query Name', '')
-  //   }
-  //   else {
-  //     this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
-  //     this.visiblesave = false;
-  //     this.QUERY_NAME = ''; // Clear input after adding
-  //   }
-  //   this.visiblesave = false;
-  // }
-
-  // handleCancelTop(): void {
-  //   this.visiblesave = false;
-  // }
-
-  // handleCancel(): void {
-  //   this.isModalVisible = false; // Close the modal
-  //   this.selectedQuery = ''; // Clear the selected query
-  // }
-
   public visiblesave = false;
   saveQuery() {
     this.visiblesave = !this.visiblesave;
   }
-
   createFilterQuery(): void {
     const lastFilterIndex = this.filterBox.length - 1;
     1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -306,7 +160,6 @@ export class InventoryCategoryMasterComponent {
       'SELECTION3'
       ];
     const selection4 = this.filterBox[lastFilterIndex]['CONDITION'];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -320,17 +173,14 @@ export class InventoryCategoryMasterComponent {
       this.message.error('Please Select the Operator', '');
     } else {
       this.isSpinner = true;
-
       for (let i = 0; i < this.filterBox.length; i++) {
         if (i != 0) {
           this.query += ') ' + this.filterBox[i]['CONDITION'] + ' (';
         } else this.query = '(';
-
         this.query2 = '';
         for (let j = 0; j < this.filterBox[i]['FILTER'].length; j++) {
           const filter = this.filterBox[i]['FILTER'][j];
           if (j == 0) {
-            //this.query2 += '(';
           } else {
             if (filter['CONDITION'] == 'AND') {
               this.query2 = this.query2 + ' AND ';
@@ -338,11 +188,9 @@ export class InventoryCategoryMasterComponent {
               this.query2 = this.query2 + ' OR ';
             }
           }
-
           let selection1 = filter['SELECTION1'];
           let selection2 = filter['SELECTION2'];
           let selection3 = filter['SELECTION3'];
-
           if (selection2 == 'Contains') {
             this.query2 += `${selection1} LIKE '%${selection3}%'`;
           } else if (selection2 == 'End With') {
@@ -353,23 +201,17 @@ export class InventoryCategoryMasterComponent {
             this.query2 += `${selection1} ${selection2} '${selection3}'`;
           }
           if (j + 1 == this.filterBox[i]['FILTER'].length) {
-            //this.query2 += ') ';
             this.query += this.query2;
           }
         }
-
         if (i + 1 == this.filterBox.length) {
           this.query += ')';
         }
       }
-
       this.showquery = this.query;
-
       var newQuery = ' AND ' + this.query;
-
       this.filterQuery1 = newQuery;
-
-      let sort = ''; // Assign a default value to sort
+      let sort = ''; 
       let filterQuery = '';
       this.api
         .getInventoryCategory(
@@ -378,7 +220,6 @@ export class InventoryCategoryMasterComponent {
           this.sortKey,
           sort,
           newQuery
-          // filterQuery
         )
         .subscribe(
           (data) => {
@@ -396,11 +237,9 @@ export class InventoryCategoryMasterComponent {
             if (err['ok'] === false) this.message.error('Server Not Found', '');
           }
         );
-
       this.QUERY_NAME = '';
     }
   }
-
   resetValues(): void {
     this.filterBox = [
       {
@@ -417,7 +256,6 @@ export class InventoryCategoryMasterComponent {
     ];
     this.search();
   }
-
   search(reset: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -430,22 +268,13 @@ export class InventoryCategoryMasterComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    // }
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -458,38 +287,28 @@ export class InventoryCategoryMasterComponent {
         ')';
     }
     this.loadingRecords = true;
-
-    // Category Name
     if (this.categoryText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `CATEGORY_NAME LIKE '%${this.categoryText.trim()}%'`;
     }
-
-    // Description
     if (this.descriptiontext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DESCRIPTION LIKE '%${this.descriptiontext.trim()}%'`;
     }
-    // Sequence
     if (this.sequenceText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SEQ_NO LIKE '%${this.sequenceText.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // this.loadingRecords = false;
-
     this.api
       .getInventoryCategory(
         this.pageIndex,
@@ -531,54 +350,39 @@ export class InventoryCategoryMasterComponent {
         }
       );
   }
-
   categoryInputTimeout: any;
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   onCategoryFilter() {
     if (this.categoryText.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.categoryText.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   onDescriptionFilter() {
     if (this.descriptiontext.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      this.search(true); // Reload original data
+      this.searchText = ''; 
+      this.search(true); 
     } else if (this.descriptiontext.length >= 3) {
-      // Apply the filter for DESCRIPTION
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   onSequencenFilter() {
     if (this.sequenceText.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      this.search(true); // Reload original data
+      this.searchText = ''; 
+      this.search(true); 
     } else if (this.sequenceText.length >= 1) {
-      // Apply the filter for DESCRIPTION
       this.search();
     } else {
       this.message.warning('Please enter at least 1 characters to filter.', '');
     }
   }
-
-  // debounceTimer: any;
-
   onKeyup(event: KeyboardEvent): void {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -595,7 +399,6 @@ export class InventoryCategoryMasterComponent {
       this.search();
       this.isCategoryFilterApplied = false;
     }
-
     if (this.descriptiontext.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isDescriptionFilterApplied = true;
@@ -603,7 +406,6 @@ export class InventoryCategoryMasterComponent {
       this.search();
       this.isDescriptionFilterApplied = false;
     }
-
     if (this.sequenceText.length > 0 && event.key === 'Enter') {
       this.search();
       this.isFilterApplied = true;
@@ -612,7 +414,6 @@ export class InventoryCategoryMasterComponent {
       this.isFilterApplied = false;
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -621,27 +422,22 @@ export class InventoryCategoryMasterComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   add(): void {
     this.drawerTitle = 'Add New Inventory Category ';
     this.drawerData = new InventoryCategoryData();
     this.drawerVisible = true;
-
     this.api.getInventoryCategory(1, 1, 'SEQ_NO', 'desc', '').subscribe(
       (data) => {
         if (data['code'] == 200) {
@@ -657,14 +453,11 @@ export class InventoryCategoryMasterComponent {
       (err: HttpErrorResponse) => {
         this.loadingRecords = false;
         if (err.status === 0) {
-          // Network error
           this.message.error(
             'Unable to connect. Please check your internet or server connection and try again shortly.',
             ''
           );
-          // this.dataList = [];
         } else {
-          // Other errors
           this.message.error('Something Went Wrong.', '');
         }
       }
@@ -674,17 +467,14 @@ export class InventoryCategoryMasterComponent {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   edit(data: InventoryCategoryData): void {
     this.drawerTitle = 'Update Inventory category';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   filterFields: any[] = [
     {
       key: 'CATEGORY_NAME',
@@ -700,7 +490,6 @@ export class InventoryCategoryMasterComponent {
       ],
       placeholder: 'Enter Category Name',
     },
-
     {
       key: 'DESCRIPTION',
       label: 'Description',
@@ -729,7 +518,6 @@ export class InventoryCategoryMasterComponent {
       ],
       placeholder: 'Enter Sequence Number',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -745,20 +533,14 @@ export class InventoryCategoryMasterComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Inventory category Filter';
-
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -767,13 +549,9 @@ export class InventoryCategoryMasterComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -790,7 +568,6 @@ export class InventoryCategoryMasterComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -808,55 +585,43 @@ export class InventoryCategoryMasterComponent {
       },
     ];
   }
-
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  TabId: number; 
   public commonFunction = new CommonFunctionService();
   ngOnInit() {
-    // Ensure USER_ID is assigned a valid number
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
-
   filterloading: boolean = false;
-
   isDeleting: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -864,13 +629,12 @@ export class InventoryCategoryMasterComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -891,14 +655,9 @@ export class InventoryCategoryMasterComponent {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -912,7 +671,6 @@ export class InventoryCategoryMasterComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -921,7 +679,6 @@ export class InventoryCategoryMasterComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -938,9 +695,7 @@ export class InventoryCategoryMasterComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -967,8 +722,6 @@ export class InventoryCategoryMasterComponent {
     );
   }
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -977,21 +730,13 @@ export class InventoryCategoryMasterComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-  // get filtercloseCallback() {
-  //   return this.drawerfilterClose.bind(this);
-  // }
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -1008,7 +753,6 @@ export class InventoryCategoryMasterComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -1025,15 +769,12 @@ export class InventoryCategoryMasterComponent {
       groups: [],
     },
   ];
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1041,17 +782,13 @@ export class InventoryCategoryMasterComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-  // profile photo
   isSpinning = false;
-
   ViewImage: any;
   ImageModalVisible: boolean = false;
   imageshow;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
@@ -1062,8 +799,6 @@ export class InventoryCategoryMasterComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
 }

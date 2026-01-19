@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-inventory-inward-details',
   templateUrl: './inventory-inward-details.component.html',
@@ -31,12 +30,8 @@ export class InventoryInwardDetailsComponent {
     ['WARANTEE_IN_DAYS', 'WARANTEE_IN_DAYS'],
     ['EXPIRY_DATE', 'EXPIRY_DATE'],
   ];
-
-  //New Advance Filter
-
   filterData: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -53,7 +48,6 @@ export class InventoryInwardDetailsComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -70,43 +64,34 @@ export class InventoryInwardDetailsComponent {
       groups: [],
     },
   ];
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private datePipe: DatePipe
   ) { }
-
   ngOnInit(): void { }
-
   close(): void {
     this.drawerClose();
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search(false);
   }
-
   search(reset: boolean = false): void {
     if (
       this.searchText.trim().length < 3 &&
@@ -114,25 +99,19 @@ export class InventoryInwardDetailsComponent {
     ) {
       return;
     }
-
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -143,29 +122,9 @@ export class InventoryInwardDetailsComponent {
           .join(' OR ') +
         ')';
     }
-
-    // if (this.PONotext !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') +
-    //     `PO_NUMBER LIKE '%${this.PONotext.trim()}%'`;
-    // }
-
-    // if (this.InwardNotext !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') +
-    //     `INWARD_NO LIKE '%${this.InwardNotext.trim()}%'`;
-    // }
-
-    // if (this.warehouseNametext !== '') {
-    //   likeQuery +=
-    //     (likeQuery ? ' AND ' : '') +
-    //     `WAREHOUSE_NAME LIKE '%${this.warehouseNametext.trim()}%'`;
-    // }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     let masterIDFilter = ' AND INWARD_MASTER_ID = ' + this.INWARD_MASTER_TD;
     this.loadingRecords = true;
-
     this.api
       .getInventoryInwardDetails(
         this.pageIndex,
@@ -204,18 +163,13 @@ export class InventoryInwardDetailsComponent {
         }
       );
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   keyup(keys): void {
     const element = window.document.getElementById('button');
-
     if (element != null) element.focus();
-
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
@@ -223,8 +177,6 @@ export class InventoryInwardDetailsComponent {
       this.search(true);
     }
   }
-
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -238,31 +190,20 @@ export class InventoryInwardDetailsComponent {
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
   drawerTitle!: string;
-
   showMainFilter() {
-
-
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
     } else {
-
-
       this.filterClass = 'filter-visible';
       this.loadFilters();
     }
   }
-
   filterloading: boolean = false;
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
-
-
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -270,16 +211,12 @@ export class InventoryInwardDetailsComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-            // 
-            // 
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -300,14 +237,9 @@ export class InventoryInwardDetailsComponent {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -321,11 +253,8 @@ export class InventoryInwardDetailsComponent {
       );
     this.filterQuery = '';
   }
-
   selectedFilter: string | null = null;
-
   applyfilter(item) {
-
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -333,28 +262,22 @@ export class InventoryInwardDetailsComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -362,13 +285,11 @@ export class InventoryInwardDetailsComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   convertToQuery(filterGroups: any[]): string {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -382,19 +303,13 @@ export class InventoryInwardDetailsComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -410,7 +325,6 @@ export class InventoryInwardDetailsComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
@@ -435,7 +349,6 @@ export class InventoryInwardDetailsComponent {
       }
     );
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -444,36 +357,25 @@ export class InventoryInwardDetailsComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
-
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'ITEM_NAME',
@@ -546,7 +448,6 @@ export class InventoryInwardDetailsComponent {
       ],
       placeholder: 'Enter Batch Number',
     },
-
     {
       key: 'UNIQUE_NO',
       label: 'Serial Number',
@@ -575,7 +476,6 @@ export class InventoryInwardDetailsComponent {
       ],
       placeholder: 'Enter Quantity per unit',
     },
-
     {
       key: 'EXPIRY_DATE',
       label: 'Expiry Date',
@@ -591,11 +491,9 @@ export class InventoryInwardDetailsComponent {
       placeholder: 'Enter Expiry Date',
     },
   ];
-
   openfilter() {
     this.drawerTitle = 'Inventory Stock Check-In Details Filter';
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -604,13 +502,9 @@ export class InventoryInwardDetailsComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -627,7 +521,6 @@ export class InventoryInwardDetailsComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',

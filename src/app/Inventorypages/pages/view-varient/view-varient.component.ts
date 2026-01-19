@@ -6,8 +6,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { AddInventoryImagesComponent } from '../add-inventory-images/add-inventory-images.component';
 import { appkeys } from 'src/app/app.constant';
-// import { ApiServiceService } from '../Service/api-service.service';
-
 @Component({
   selector: 'app-view-varient',
   templateUrl: './view-varient.component.html',
@@ -42,7 +40,6 @@ export class ViewVarientComponent {
     private message: NzNotificationService
   ) { }
   commonFunction = new CommonFunctionService();
-
   userId = sessionStorage.getItem('userId');
   USER_ID: number;
   backofficeId = sessionStorage.getItem('backofficeId');
@@ -98,7 +95,6 @@ export class ViewVarientComponent {
       ? this.commonFunction.decryptdata(this.userId)
       : '0';
     this.USER_ID = Number(decryptedUserId);
-
     const decryptedUserId1 = this.roleid
       ? this.commonFunction.decryptdata(this.roleid)
       : '0';
@@ -107,7 +103,6 @@ export class ViewVarientComponent {
       ? this.commonFunction.decryptdata(roleId)
       : '';
     this.decreptedroleId = parseInt(decreptedroleIdString, 10);
-
     this.roleID = Number(decryptedUserId1);
     const decryptedbackofficeId = this.backofficeId
       ? this.commonFunction.decryptdata(this.backofficeId)
@@ -133,7 +128,6 @@ export class ViewVarientComponent {
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -144,7 +138,6 @@ export class ViewVarientComponent {
     { text: 'Serial No. Wise', value: 'S' },
     { text: 'None', value: 'N' },
   ];
-
   tackingTypeFilter: string | undefined = undefined;
   ontackingTypeFilterChange(selectedtackingType: string) {
     this.tackingTypeFilter = selectedtackingType;
@@ -177,7 +170,6 @@ export class ViewVarientComponent {
         });
     }
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.itemNametext.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -186,7 +178,6 @@ export class ViewVarientComponent {
       this.search();
       this.isitemnameFilterApplied = false;
     }
-
     if (this.barcodetext.length >= 1 && event.key === 'Enter') {
       this.search();
       this.isbarcodeFilterApplied = true;
@@ -210,50 +201,39 @@ export class ViewVarientComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
     }
-
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
-
     var sort: string;
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-
     if (this.searchText != '') {
       likeQuery = ' AND';
-
       this.columns.forEach((column) => {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
-
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
     }
     if (this.barcodetext !== '') {
@@ -266,20 +246,16 @@ export class ViewVarientComponent {
         (likeQuery ? ' AND ' : '') +
         `HSN_CODE LIKE '%${this.hsncodetext.trim()}%'`;
     }
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-
       likeQuery += `STATUS = ${this.statusFilter}`;
     }
-    // Tracking Type Filter
     if (this.tackingTypeFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-
       likeQuery += `INVENTORY_TRACKING_TYPE = ${this.tackingTypeFilter}`;
     }
     if (
@@ -290,7 +266,6 @@ export class ViewVarientComponent {
       likeQuery +=
         ' AND WAREHOUSE_ID IN (' + this.WAREHOUSE_ID.toString() + ')';
     }
-
     this.api
       .getInventory(0, 0, '', '', ' AND PARENT_ID = ' + this.Inventorydata.ID)
       .subscribe(
@@ -304,7 +279,6 @@ export class ViewVarientComponent {
         },
         (err: HttpErrorResponse) => {
           this.loadingRecords = false;
-
           if (err.status === 0) {
             this.message.error(
               'Unable to connect. Please check your internet or server connection and try again shortly.',
@@ -316,9 +290,7 @@ export class ViewVarientComponent {
         }
       );
   }
-
   drawerinventorylogs: boolean = false;
-
   drawerTitleinventorylogs!: string;
   widthsss: any = '100%';
   serviceid: any;
@@ -329,28 +301,24 @@ export class ViewVarientComponent {
     this.ITEM_NAME = data.ITEM_NAME + '-' + data.VARIANT_NAME;
     this.drawerinventorylogs = true;
   }
-
   drawerCloseinventorylogs(): void {
     this.drawerinventorylogs = false;
   }
   get closeCallbackinventorylogs() {
     return this.drawerCloseinventorylogs.bind(this);
   }
-
   WAREHOUSE_ID: any = [];
   Loadwarehouse: any;
   iswarehouseLoading = false;
   getWarehouses(): void {
     this.Loadwarehouse = [];
     this.WAREHOUSE_ID = [];
-
     if (
       this.BACKOFFICE_ID != null &&
       this.BACKOFFICE_ID != undefined &&
       this.BACKOFFICE_ID != 0
     ) {
       this.iswarehouseLoading = true;
-
       this.api
         .getWarehouses(
           0,
@@ -382,9 +350,7 @@ export class ViewVarientComponent {
       this.search(true);
     }
   }
-
   drawerStockDetails: boolean = false;
-
   drawerTitleStockDetails!: string;
   viewdrawerData;
   ViewStockDetails(data: any): void {
@@ -393,43 +359,35 @@ export class ViewVarientComponent {
     this.ITEM_NAME = data.ITEM_NAME + ' ' + data.VARIANT_NAME;
     this.drawerStockDetails = true;
   }
-
   drawerCloseStockDetails(): void {
     this.drawerStockDetails = false;
   }
   get closeCallbackStockDetails() {
     return this.drawerCloseStockDetails.bind(this);
   }
-
   isTextOverflowing(element: HTMLElement): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
-
   itemImagesDrawerVisible: boolean = false;
   itemImagesDrawerTitle: string = '';
   addImageDrawerData: any;
   @ViewChild(AddInventoryImagesComponent)
   AddInventoryImagesComponentVar!: AddInventoryImagesComponent;
-
   openItemImagesDrawer(data: any): void {
     this.addImageDrawerData = Object.assign({}, data);
     this.itemImagesDrawerTitle = 'Inventory Image(s)';
     this.itemImagesDrawerVisible = true;
-
     setTimeout(() => {
       this.AddInventoryImagesComponentVar.getPreviousImages(data.ID);
     });
   }
-
   itemImagesDrawerClose(): void {
     this.itemImagesDrawerVisible = false;
     this.search(false);
   }
-
   get itemImagesDrawerCloseCallback() {
     return this.itemImagesDrawerClose.bind(this);
   }
-
   ItemId: any;
   Unitid: any;
   itemcategoryis: any;
@@ -437,7 +395,6 @@ export class ViewVarientComponent {
   Unitname: any;
   ItemMappingDrawerVisible: boolean = false;
   drawerData: any;
-
   ItemMapping(data: any, i: any): void {
     this.Unitname = data.UNIT_CODE;
     this.Unitid = data.BASE_UNIT_ID;
@@ -447,12 +404,10 @@ export class ViewVarientComponent {
     this.ItemMappingDrawerTitle = 'Unit Mapping To ' + data.ITEM_NAME;
     this.ItemMappingDrawerVisible = true;
   }
-
   ItemMappingDrawerClose(): void {
     this.search();
     this.ItemMappingDrawerVisible = false;
   }
-
   get ItemMappingCloseCallback() {
     return this.ItemMappingDrawerClose.bind(this);
   }

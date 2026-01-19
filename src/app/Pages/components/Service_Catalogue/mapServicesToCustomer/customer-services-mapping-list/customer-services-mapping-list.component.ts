@@ -34,8 +34,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
   updatedRecords: any[] = [];
   organizationid: any = sessionStorage.getItem('orgId');
   orgidd: any;
-
-  // Disable hours before the current hour for START_TIME
   disableBeforeCurrentHour = (): any[] => {
     const hours: any[] = [];
     for (let i = 0; i < this.currentHour; i++) {
@@ -43,7 +41,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
     }
     return hours;
   };
-
   changeAmount(event: any, datas: any) {
     if (event == 'B') {
       datas.B2C_PRICE = null;
@@ -51,21 +48,20 @@ export class CustomerServicesMappingListComponent implements OnInit {
       datas.B2B_PRICE = null;
     }
   }
-
   restrictMinutes(event: any, datas: any): void {
     const input = event.target.value;
     if (input > 59) {
-      event.target.value = 59; // Prevent values greater than 59
-      datas.PREPARATION_MINUTES = 59; // Update the model value
+      event.target.value = 59; 
+      datas.PREPARATION_MINUTES = 59; 
     } else if (input < 0) {
-      event.target.value = ''; // Prevent negative values
+      event.target.value = ''; 
       datas.PREPARATION_MINUTES = null;
     } else {
-      datas.PREPARATION_MINUTES = input; // Update model for valid input
+      datas.PREPARATION_MINUTES = input; 
     }
   }
   disableBeforeStartMinutes(i: number, selectedHour: number): number[] {
-    const datas = this.dataListBulk[i]; // Reference the current row's data
+    const datas = this.dataListBulk[i]; 
     if (!datas.START_TIME) {
       return [];
     }
@@ -85,7 +81,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
     this.searchText = '';
   }
   disableBeforeStartHour(i: number): number[] {
-    const datas = this.dataListBulk[i]; // Reference the current row's data
+    const datas = this.dataListBulk[i]; 
     if (!datas.START_TIME) {
       return [];
     }
@@ -96,7 +92,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
     }
     return hours;
   }
-
   formTitle = 'Customer Wise Service Change Management';
   pageIndex = 1;
   pageSize = 9;
@@ -104,7 +99,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
   sortKey: string = '';
   chapters: any = [];
   GLOBAL_TABLE_CARD: string = 'C';
-
   isLoading = true;
   SERVER_URL = appkeys.retriveimgUrl + 'Item/';
   @Input() data: any = customer;
@@ -116,28 +110,20 @@ export class CustomerServicesMappingListComponent implements OnInit {
     ['CATEGORY_NAME', 'CATEGORY_NAME'],
     ['SUB_CATEGORY_NAME', 'SUB_CATEGORY_NAME'],
   ];
-
   columnsBulk: string[][] = [['NAME', 'NAME']];
-
   columns11: string[][] = [
     ['NAME', 'NAME'],
-    // ["B2B_PRICE", "B2B_PRICE"],
-    // ["B2C_PRICE", "B2C_PRICE"],
-    // ["EXPRESS_COST", "EXPRESS_COST"],
   ];
-
   loadingRecordsBulk: boolean = false;
   totalRecordsBulk: any = 0;
   dataListBulk: any = [];
   dataListBulk1: any = [];
-
   loadingRecords = false;
   totalRecords = 0;
   dataList: any = [];
   drawerTitle!: string;
   servicename: any;
   statusFilter: string | undefined = undefined;
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
@@ -145,50 +131,38 @@ export class CustomerServicesMappingListComponent implements OnInit {
   showcloumnVisible: boolean = false;
   servicecattext: string = '';
   sercatnameVisible: boolean = false;
-
   servicecatdesctext: string = '';
   sercatdescVisible: boolean = false;
-
   B2Btext: string = '';
   b2bVisible: boolean = false;
-
   B2Ctext: string = '';
   b2cVisible: boolean = false;
-
   expresspriceb2b: string = '';
   expressb2bVisible: boolean = false;
-
   expresspriceb2c: string = '';
   expressb2cVisible: boolean = false;
-
   estimationTimemins: string = '';
   estimationTimeVisible: boolean = false;
-
   widths: string = '35%';
   widths1: string = '100%';
   widths11: string = '60%';
   widthsMain: string = '90%';
-
   day_start_time: any;
   day_end_time: any;
   selectedCategories: number[] = [];
   categoryVisible = false;
-
   selectedSubCategories: number[] = [];
   subcategoryVisible = false;
   ServiceData1: any = [];
   ServiceDataMulti: any = [];
   isSpinningMulti: boolean = false;
   selectedLeafKeys: any = [];
-
   showcolumn = [
     { label: 'Price B2B', key: 'B2B_PRICE', visible: true },
-    // { label: 'Price B2C', key: 'B2C_PRICE', visible: true },
     { label: 'Express Price For B2B', key: 'EXPRESS_COST', visible: true },
     { label: 'Estimation Time', key: 'DURATION', visible: true },
     { label: 'Catlogue Image', key: 'SERVICE_IMAGE', visible: true },
   ];
-
   CAN_CHANGE_SERVICE_PRICE1: any = sessionStorage.getItem(
     'CAN_CHANGE_SERVICE_PRICE'
   );
@@ -200,14 +174,12 @@ export class CustomerServicesMappingListComponent implements OnInit {
     private router: Router,
     public datepipe: DatePipe
   ) { }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
   close() {
     this.drawerCloset();
   }
-
   index = -1;
   setIndex(i) {
     this.index = i;
@@ -216,39 +188,31 @@ export class CustomerServicesMappingListComponent implements OnInit {
     var disabledMinutes: number[] = [];
     const endHour = Number(this.day_end_time.split(':')[0]);
     const endMinute = Number(this.day_end_time.split(':')[1]);
-
-    const minuteStep = 10; // Matches [nzMinuteStep]
+    const minuteStep = 10; 
     const allMinutes = Array.from(
       { length: 60 / minuteStep },
       (_, i) => i * minuteStep
     );
     var selectedStartHour: any;
     var selectedStartMinute: any;
-
     selectedStartHour = this.extractHour(
       this.dataListBulk[this.index]?.START_TIME
     );
     selectedStartMinute = this.extractMinute(
       this.dataListBulk[this.index]?.START_TIME
     );
-
     if (hour === selectedStartHour) {
-      // If END_TIME hour matches START_TIME hour, disable minutes less than START_TIME minutes
       return allMinutes.filter((m) => m <= selectedStartMinute);
     } else if (hour === endHour) {
-      // If the hour matches the organization's endHour, disable minutes greater than endMinute
       return allMinutes.filter((m) => m > endMinute);
     }
     return disabledMinutes;
   };
-
   getDisabledHours(type: string, index: number): () => number[] {
     return () => {
       let startHour = Number(this.day_start_time.split(':')[0]);
       let endHour = Number(this.day_end_time.split(':')[0]);
-
       if (type === 'START_TIME') {
-        // Disable hours outside organization start and end hours
         return Array.from({ length: 24 }, (_, h) => h).filter(
           (h) => h < startHour || h > endHour
         );
@@ -268,15 +232,13 @@ export class CustomerServicesMappingListComponent implements OnInit {
       return [];
     };
   }
-
   getDisabledMinutes(type: string, index: number): () => number[] {
     return () => {
       const startHour = Number(this.day_start_time.split(':')[0]);
       const startMinute = Number(this.day_start_time.split(':')[1]);
       const endHour = Number(this.day_end_time.split(':')[0]);
       const endMinute = Number(this.day_end_time.split(':')[1]);
-
-      const minuteStep = 10; // Matches [nzMinuteStep]
+      const minuteStep = 10; 
       const allMinutes = Array.from(
         { length: 60 / minuteStep },
         (_, i) => i * minuteStep
@@ -284,13 +246,11 @@ export class CustomerServicesMappingListComponent implements OnInit {
       var selectedStartHour: any;
       var selectedEndHour: any;
       var selectedStartMinute: any;
-
       if (type === 'START_TIME') {
         selectedStartHour = this.extractHour(
           this.dataListBulk[index]?.START_TIME || this.day_start_time
         );
         if (selectedStartHour === startHour) {
-          // Disable minutes before the organization startMinute
           return allMinutes.filter((m) => m < startMinute);
         }
       } else if (type === 'END_TIME') {
@@ -302,18 +262,14 @@ export class CustomerServicesMappingListComponent implements OnInit {
         );
         selectedEndHour = this.extractHour(this.dataListBulk[index]?.END_TIME);
         if (selectedEndHour === selectedStartHour) {
-          // If END_TIME hour matches START_TIME hour, disable minutes less than START_TIME minutes
           return allMinutes.filter((m) => m < selectedStartMinute);
         } else if (selectedEndHour === endHour) {
-          // If the hour matches the organization's endHour, disable minutes greater than endMinute
           return allMinutes.filter((m) => m > endMinute);
         }
       }
       return [];
     };
   }
-
-  // Helper functions to extract hour and minute
   extractHour(time: any): number {
     if (typeof time === 'string') {
       return Number(time.split(':')[0]);
@@ -325,7 +281,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
     }
     return 0;
   }
-
   extractMinute(time: any): number {
     if (typeof time === 'string') {
       return Number(time.split(':')[1]);
@@ -337,21 +292,17 @@ export class CustomerServicesMappingListComponent implements OnInit {
     }
     return 0;
   }
-
-  // Check if the column is visible
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
   keyup(event: KeyboardEvent) {
     if (this.searchText.length >= 3 && event.key === 'Enter') {
-      // this.search(true);
     } else if (this.searchText.length == 0 && event.key === 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
   }
-
   ngOnInit() {
     this.organizationid = sessionStorage.getItem('orgId');
     this.orgidd = this.organizationid
@@ -379,10 +330,8 @@ export class CustomerServicesMappingListComponent implements OnInit {
         }
       },
       () => {
-        // this.message.error("Something Went Wrong", "");
       }
     );
-
     this.api
       .getAllOrganizations(1, 1, '', 'desc', ' AND ID= 1')
       .subscribe((data) => {
@@ -391,8 +340,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
             if (data['body']['data'][0].DAY_START_TIME) {
               this.day_start_time = data['body']['data'][0].DAY_START_TIME;
             }
-
-            // Parse organization end time
             if (data['body']['data'][0].DAY_END_TIME) {
               this.day_end_time = data['body']['data'][0].DAY_END_TIME;
             }
@@ -401,9 +348,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
       });
   }
   isSpinningMulti1: boolean = false;
-
   getServiceHierarchyget() {
-    // this.isSpinningMulti = true;
     this.isSpinningMulti1 = true;
     this.api.getMultiServiceHierarchyForB2b(this.data.ID).subscribe(
       (data) => {
@@ -412,7 +357,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
           this.isSpinningMulti1 = false;
           if (data['data'][0]['categories'].length > 0) {
             this.ServiceDataMulti = data['data'][0]['categories'];
-            // console.log(this.ServiceDataMulti, "this.ServiceDataMulti")
             this.ModalVisibleMultiple = true;
           } else {
             this.message.info('No Services Found', '');
@@ -428,7 +372,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
         this.ServiceDataMulti = [];
         this.isSpinningMulti = false;
         this.isSpinningMulti1 = false;
-        // this.message.error("Something Went Wrong", "");
       }
     );
   }
@@ -453,19 +396,15 @@ export class CustomerServicesMappingListComponent implements OnInit {
       () => {
         this.ServiceData1 = [];
         this.isSpinningMulti = false;
-        // this.message.error("Something Went Wrong", "");
       }
     );
   }
-
   isSelectAll: boolean = false;
-
   allSelected1: any;
   selectedPincode111: any;
   allSelected: boolean = false;
   tableIndeterminate: boolean = false;
   selectedPincode: any[] = [];
-
   SubCategoryData: any = [];
   getsubcategoryData() {
     this.api.getSubCategoryData(0, 0, 'SEQ_NO', 'asc', ' AND STATUS=1').subscribe(
@@ -478,7 +417,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
         }
       },
       () => {
-        // this.message.error("Something Went Wrong", "");
       }
     );
   }
@@ -490,26 +428,15 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-    // if (this.searchText != "") {
-    //   likeQuery = " AND";
-    //   this.columns.forEach((column) => {
-    //     likeQuery += " " + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    // }
     this.loadingRecords = true;
-
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -520,48 +447,41 @@ export class CustomerServicesMappingListComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     this.loadingRecords = true;
     if (this.servicecattext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.servicecattext.trim()}%'`;
     }
-    // category Filter
     if (this.selectedCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; 
     }
-
-    // subcategory Filter
     if (this.selectedSubCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `SUB_CATEGORY_ID IN (${this.selectedSubCategories.join(
         ','
-      )})`; // Update with actual field name in the DB
+      )})`; 
     }
     if (this.servicecatdesctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DESCRIPTION LIKE '%${this.servicecatdesctext.trim()}%'`;
     }
-
     if (this.B2Btext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2B_PRICE LIKE '%${this.B2Btext.trim()}%'`;
     }
-
     if (this.B2Ctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2C_PRICE LIKE '%${this.B2Ctext.trim()}%'`;
     }
-
     if (this.expresspriceb2b !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -572,18 +492,13 @@ export class CustomerServicesMappingListComponent implements OnInit {
         (likeQuery ? ' AND ' : '') +
         `DURATION LIKE '%${this.estimationTimemins.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ADDED= ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getServiceTerritoryNongetB2B(
         this.pageIndex,
@@ -597,7 +512,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
           if (data['code'] == 200) {
             this.loadingRecords = false;
             this.totalRecords = data['count'];
-            // this.dataList = data["data"];
             this.dataList = [...this.dataList, ...data['data']];
           } else if (data['code'] == 400) {
             this.loadingRecords = false;
@@ -608,7 +522,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
             this.loadingRecords = false;
             this.totalRecords = 0;
             this.dataList = [];
-            // this.message.error("Something Went Wrong ...", "");
           }
         },
         (err: HttpErrorResponse) => {
@@ -628,17 +541,14 @@ export class CustomerServicesMappingListComponent implements OnInit {
         }
       );
   }
-
   onKeypressEvent1(keys: KeyboardEvent) {
     const element = window.document.getElementById('button1');
     if (this.searchTextBulk.length >= 3 && keys.key === 'Enter') {
       this.addmultiple(true);
     } else if (this.searchTextBulk.length == 0 && keys.key == 'Backspace') {
-      // this.dataList = []
       this.addmultiple(true);
     }
   }
-
   searchopenBulk() {
     if (this.searchTextBulk.length >= 3) {
       this.addmultiple(true);
@@ -652,19 +562,15 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.sortKeyBulk = 'ID';
       this.sortValueBulk = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValueBulk.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     this.loadingRecordsBulk = true;
-
     var globalSearchQuery = '';
-    // Global Search (using searchText)
     if (this.searchTextBulk !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -675,48 +581,41 @@ export class CustomerServicesMappingListComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
     this.loadingRecordsBulk = true;
     if (this.servicecattext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.servicecattext.trim()}%'`;
     }
-    // category Filter
     if (this.selectedCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `CATEGORY_ID IN (${this.selectedCategories.join(',')})`; 
     }
-
-    // subcategory Filter
     if (this.selectedSubCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `SUB_CATEGORY_ID IN (${this.selectedSubCategories.join(
         ','
-      )})`; // Update with actual field name in the DB
+      )})`; 
     }
     if (this.servicecatdesctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DESCRIPTION LIKE '%${this.servicecatdesctext.trim()}%'`;
     }
-
     if (this.B2Btext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2B_PRICE LIKE '%${this.B2Btext.trim()}%'`;
     }
-
     if (this.B2Ctext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `B2C_PRICE LIKE '%${this.B2Ctext.trim()}%'`;
     }
-
     if (this.expresspriceb2b !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -727,18 +626,13 @@ export class CustomerServicesMappingListComponent implements OnInit {
         (likeQuery ? ' AND ' : '') +
         `DURATION LIKE '%${this.estimationTimemins.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ADDED= ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getServiceTerritoryNongetB2B(
         0,
@@ -754,31 +648,28 @@ export class CustomerServicesMappingListComponent implements OnInit {
             this.totalRecordsBulk = data['count'];
             this.dataListBulk = data['data'];
             this.dataListBulk.forEach((record) => {
-              // Check and update START_TIME
               if (
                 record.START_TIME != undefined &&
                 record.START_TIME != null &&
                 record.START_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = record.START_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = record.START_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
-                  record.START_TIME = new Date(today); // Update START_TIME for the current record
+                  record.START_TIME = new Date(today); 
                 }
               }
-
-              // Check and update END_TIME
               if (
                 record.END_TIME != undefined &&
                 record.END_TIME != null &&
                 record.END_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = record.END_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = record.END_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
-                  record.END_TIME = new Date(today); // Update END_TIME for the current record
+                  record.END_TIME = new Date(today); 
                 }
               }
             });
@@ -792,7 +683,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
             this.loadingRecordsBulk = false;
             this.totalRecordsBulk = 0;
             this.dataListBulk = [];
-            // this.message.error("Something Went Wrong ...", "");
           }
         },
         (err: HttpErrorResponse) => {
@@ -812,7 +702,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
         }
       );
   }
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -820,7 +709,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   sortBulk(params: NzTableQueryParams) {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
@@ -828,17 +716,14 @@ export class CustomerServicesMappingListComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndexBulk = pageIndex;
     this.pageSizeBulk = pageSize;
-
     if (this.pageSizeBulk != pageSize) {
       this.pageIndexBulk = 1;
       this.pageSizeBulk = pageSize;
     }
-
     if (this.sortKeyBulk != sortField) {
       this.pageIndexBulk = 1;
       this.pageSizeBulk = pageSize;
     }
-
     this.sortKeyBulk = sortField;
     if (sortOrder == 'descend') {
       this.sortValueBulk = 'desc';
@@ -851,92 +736,71 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.addmultiple();
     }
   }
-
   add(): void {
     this.servicename = null;
-    // this.addbulkservice = false;
     this.getServiceTerritoryget();
   }
   ModalVisibleMultiple: boolean = false;
   addMultiService(): void {
     this.Service_HEI_DATA1 = [];
     this.Service_HEI_DATA = [];
-
     this.getServiceHierarchyget();
   }
-
   closeMultiSerModal() {
     this.ModalVisibleMultiple = false;
   }
   toggleAll(selectAll: boolean): void {
     this.allSelected = selectAll;
     this.tableIndeterminate = false;
-    // Select or deselect all items
     this.ServiceDataMulti.forEach((item) => {
       item.selected = selectAll;
     });
-    // Update selected pincodes
     this.selectedPincode = selectAll
       ? this.ServiceDataMulti.map((item) => ({
         MASTER_ID: item.ID,
       }))
       : [];
   }
-
   onPincodeSelecttable(data: any, selected: boolean): void {
     data.selected = selected;
-
-    // Update selected pincodes
     this.selectedPincode = this.ServiceDataMulti.filter(
       (item) => item.selected
     ).map((item) => ({
       MASTER_ID: item.ID,
     }));
-    // Update Select All and Indeterminate states
     const totalSelected = this.selectedPincode.length;
     const totalPincodes = this.ServiceDataMulti.length;
     this.allSelected = totalSelected === totalPincodes && totalPincodes > 0;
     this.tableIndeterminate =
       totalSelected > 0 && totalSelected < totalPincodes;
   }
-
   Service_HEI_DATA: any = [];
   Service_HEI_DATA1: any = [];
-
   onChange(selectedValue: any): void {
-    this.Service_HEI_DATA = []; // Reset the selected data
-    // Loop through each selected value (key)
+    this.Service_HEI_DATA = []; 
     selectedValue.forEach((key: string) => {
-      this.findAndProcessItem(this.ServiceDataMulti, key); // Call recursive function
+      this.findAndProcessItem(this.ServiceDataMulti, key); 
     });
   }
-
   findAndProcessItem(data: any[], key: string): boolean {
     for (let item of data) {
       if (item.key === key) {
-        // If the current item matches the selected key
         this.extractServiceIds(item);
-        return true; // Stop further recursion for this key
+        return true; 
       }
-
-      // If the item has children, continue searching recursively
       if (item.children && this.findAndProcessItem(item.children, key)) {
         return true;
       }
     }
-
-    return false; // Return false if the key is not found in the current data
+    return false; 
   }
-
   extractServiceIds(item: any): void {
     if (item.isLeaf) {
-      // If it's a service (leaf node), extract its ID
-      const serviceId = item.key.split('-').pop(); // Get last part of the key
+      const serviceId = item.key.split('-').pop(); 
       if (!this.Service_HEI_DATA.includes(serviceId)) {
         this.Service_HEI_DATA.push(serviceId);
       }
     } else if (item.children) {
-      // If it's a category or subcategory, process its children
       item.children.forEach((child: any) => this.extractServiceIds(child));
     }
   }
@@ -984,7 +848,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
         );
     }
   }
-
   drawerClose(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -993,11 +856,9 @@ export class CustomerServicesMappingListComponent implements OnInit {
     this.addmultiple();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   parentSerId: any;
   sername: any;
   editclick: any = 'N';
@@ -1014,7 +875,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.drawerData.START_TIME != ''
     ) {
       const today = new Date();
-      const timeParts = this.drawerData.START_TIME.split(':'); // Split "HH:mm:ss"
+      const timeParts = this.drawerData.START_TIME.split(':'); 
       if (timeParts.length > 1) {
         today.setHours(+timeParts[0], +timeParts[1], 0);
         this.drawerData.START_TIME = new Date(today);
@@ -1025,22 +886,15 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.drawerData.END_TIME != null &&
       this.drawerData.END_TIME != ''
     ) {
-      // this.drawerData.END_TIME = this.datepipe.transform(
-      //   new Date(),
-      //   'yyyy-MM-dd' + 'T' + this.drawerData.END_TIME
-      // );
       const today = new Date();
-      const timeParts = this.drawerData.END_TIME.split(':'); // Split "HH:mm:ss"
+      const timeParts = this.drawerData.END_TIME.split(':'); 
       if (timeParts.length > 1) {
         today.setHours(+timeParts[0], +timeParts[1], 0);
         this.drawerData.END_TIME = new Date(today);
       }
     }
-
     this.drawerVisible = true;
-    // this.drawerData.DURATION = "";
   }
-  // Main Filter code
   isfilterapply: boolean = false;
   filterQuery: string = '';
   visible = false;
@@ -1059,7 +913,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
     'Start With',
     'End With',
   ];
-
   getComparisonOptions(selectedColumn: string): string[] {
     if (
       selectedColumn === 'CATEGORY_ID' ||
@@ -1081,21 +934,17 @@ export class CustomerServicesMappingListComponent implements OnInit {
       'End With',
     ];
   }
-
   columns2: string[][] = [['AND'], ['OR']];
-
   columns1: { label: string; value: string }[] = [
     { label: 'Category', value: 'CATEGORY_ID' },
     { label: 'Sub Category', value: 'SUB_CATEGORY_ID' },
     { label: 'Service Name', value: 'NAME' },
     { label: 'Service Description', value: 'DESCRIPTION' },
     { label: 'Price B2B (₹)', value: 'B2B_PRICE' },
-    // { label: 'Price B2C (₹)', value: 'B2C_PRICE' },
     { label: 'Express Price For B2B (₹)', value: 'EXPRESS_COST' },
     { label: 'Estimation Time (mins)', value: 'DURATION' },
     { label: 'Status', value: 'IS_ADDED' },
   ];
-
   filterClass: string = 'filter-invisible';
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
@@ -1104,23 +953,18 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.filterClass = 'filter-visible';
     }
   }
-
   showFilter = false;
   toggleFilter() {
     this.showFilter = !this.showFilter;
   }
-
   showSortFilter = false;
   toggleSortFilter() {
     this.showSortFilter = !this.showSortFilter;
   }
-
   SELECTCOLOUM_NAME: any;
   TABLE_VALUE: any;
   COMPARISION_VALUE: any;
-
   conditions: any[] = [];
-
   InsertNewCondition() {
     this.conditions.push({
       SELECTCOLOUM_NAME: '',
@@ -1128,15 +972,11 @@ export class CustomerServicesMappingListComponent implements OnInit {
       TABLE_VALUE: '',
     });
   }
-
   deleteCondition(index: number) {
     this.conditions.splice(index, 1);
   }
-
   operators: string[] = ['AND', 'OR'];
-  // QUERY_NAME: string = '';
   showQueriesArray = [];
-
   filterBox = [
     {
       CONDITION: '',
@@ -1150,7 +990,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       ],
     },
   ];
-
   addCondition() {
     this.filterBox.push({
       CONDITION: '',
@@ -1164,16 +1003,13 @@ export class CustomerServicesMappingListComponent implements OnInit {
       ],
     });
   }
-
   removeCondition(index: number) {
     this.filterBox.splice(index, 1);
   }
-
   insertSubCondition(conditionIndex: number, subConditionIndex: number) {
     const lastFilterIndex = this.filterBox.length - 1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1186,7 +1022,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION3'
       ];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1206,12 +1041,10 @@ export class CustomerServicesMappingListComponent implements OnInit {
       });
     }
   }
-
   removeSubCondition(conditionIndex: number, subConditionIndex: number) {
     this.hide = true;
     this.filterBox[conditionIndex].FILTER.splice(subConditionIndex, 1);
   }
-
   generateQuery() {
     var isOk = true;
     var i = this.filterBox.length - 1;
@@ -1237,7 +1070,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       isOk = false;
       this.message.error('Please select operator.', '');
     }
-
     if (isOk) {
       this.filterBox.push({
         CONDITION: '',
@@ -1252,8 +1084,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       });
     }
   }
-
-  /*******  Create filter query***********/
   query = '';
   query2 = '';
   showquery: any;
@@ -1263,7 +1093,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
     1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1277,7 +1106,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       'SELECTION3'
       ];
     const selection4 = this.filterBox[lastFilterIndex]['CONDITION'];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1291,17 +1119,14 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.message.error('Please Select the Operator', '');
     } else {
       this.isSpinner = true;
-
       for (let i = 0; i < this.filterBox.length; i++) {
         if (i != 0) {
           this.query += ') ' + this.filterBox[i]['CONDITION'] + ' (';
         } else this.query = '(';
-
         this.query2 = '';
         for (let j = 0; j < this.filterBox[i]['FILTER'].length; j++) {
           const filter = this.filterBox[i]['FILTER'][j];
           if (j == 0) {
-            //this.query2 += '(';
           } else {
             if (filter['CONDITION'] == 'AND') {
               this.query2 = this.query2 + ' AND ';
@@ -1309,11 +1134,9 @@ export class CustomerServicesMappingListComponent implements OnInit {
               this.query2 = this.query2 + ' OR ';
             }
           }
-
           let selection1 = filter['SELECTION1'];
           let selection2 = filter['SELECTION2'];
           let selection3 = filter['SELECTION3'];
-
           if (selection2 == 'Contains') {
             this.query2 += `${selection1} LIKE '%${selection3}%'`;
           } else if (selection2 == 'End With') {
@@ -1324,23 +1147,17 @@ export class CustomerServicesMappingListComponent implements OnInit {
             this.query2 += `${selection1} ${selection2} '${selection3}'`;
           }
           if (j + 1 == this.filterBox[i]['FILTER'].length) {
-            //this.query2 += ') ';
             this.query += this.query2;
           }
         }
-
         if (i + 1 == this.filterBox.length) {
           this.query += ')';
         }
       }
-
       this.showquery = this.query;
-
       var newQuery = ' AND ' + this.query;
-
       this.filterQuery1 = newQuery;
-
-      let sort = ''; // Assign a default value to sort
+      let sort = ''; 
       let filterQuery = '';
       this.api
         .getServiceTerritoryNongetB2B(
@@ -1368,11 +1185,9 @@ export class CustomerServicesMappingListComponent implements OnInit {
             if (err['ok'] === false) this.message.error('Server Not Found', '');
           }
         );
-
       this.QUERY_NAME = '';
     }
   }
-
   restrictedKeywords = [
     'SELECT',
     'INSERT',
@@ -1395,23 +1210,18 @@ export class CustomerServicesMappingListComponent implements OnInit {
     'COMMIT',
     '--',
     ';',
-    '/*',
-    '*/',
+    '',
   ];
-
   isValidInput(input: string): boolean {
     return !this.restrictedKeywords.some((keyword) =>
       input.toUpperCase().includes(keyword)
     );
   }
-
   applyFilter(i, j) {
     const inputValue = this.filterBox[i].FILTER[j].SELECTION3;
-
     const lastFilterIndex = this.filterBox.length - 1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1424,7 +1234,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION3'
       ];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1438,20 +1247,15 @@ export class CustomerServicesMappingListComponent implements OnInit {
       typeof inputValue === 'string' &&
       !this.isValidInput(inputValue)
     ) {
-      // Show error message
       this.message.error(`Invalid Input: ${inputValue} is not allowed.`, '');
     } else {
-      // var DemoData:any = this.filterBox
       let sort: string;
       let filterQuery = '';
-
       try {
         sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
       } catch (error) {
         sort = '';
       }
-      // Define a function to get the comparison value filter
-
       this.isSpinner = true;
       const getComparisonFilter = (
         comparisonValue: any,
@@ -1478,7 +1282,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
             return '';
         }
       };
-
       const FILDATA = this.filterBox[i]['FILTER']
         .map((item) => {
           const filterCondition = getComparisonFilter(
@@ -1489,7 +1292,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
           return `AND (${filterCondition})`;
         })
         .join(' ');
-
       this.api
         .getServiceTerritoryNongetB2B(
           0,
@@ -1518,7 +1320,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
         );
     }
   }
-
   resetValues(): void {
     this.filterBox = [
       {
@@ -1533,83 +1334,54 @@ export class CustomerServicesMappingListComponent implements OnInit {
         ],
       },
     ];
-    // this.searchTable();
   }
-
   public visiblesave = false;
-
   saveQuery() {
     this.visiblesave = !this.visiblesave;
   }
-
   QUERY_NAME: string = '';
   name1: any;
   name2: any;
   INSERT_NAMES: any[] = [];
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
-  // Insertname() {
-  //   if (this.QUERY_NAME.trim()) {
-  //     this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
-  //
-  //     this.visiblesave = false;
-  //     this.QUERY_NAME = ""; // Clear input after adding
-  //   } else {
-  //
-  //   }
-  // }
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(query: string, name: string): void {
     this.selectedQuery = query;
-
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
   deleteItem(item: any) {
     this.INSERT_NAMES = this.INSERT_NAMES.filter((i) => i !== item);
   }
-
   handleLiveDemoChange(event: any) {
     this.visible = event;
   }
   toggleLiveDemo1() {
     this.visible = false;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
   SerModalVisible: boolean = false;
   imageshow;
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + 'Item/' + link;
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
   loadingRecordsservice: boolean = false;
-
   closeser() {
     this.SerModalVisible = false;
     this.servicename = null;
   }
-
   saveservice() {
     if (
       this.servicename == null ||
@@ -1635,7 +1407,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
                   this.drawerData.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.drawerData.START_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.drawerData.START_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.drawerData.START_TIME = new Date(today);
@@ -1647,7 +1419,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
                   this.drawerData.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.drawerData.END_TIME.split(':'); // Split "HH:mm:ss"
+                  const timeParts = this.drawerData.END_TIME.split(':'); 
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.drawerData.END_TIME = new Date(today);
@@ -1674,13 +1446,11 @@ export class CustomerServicesMappingListComponent implements OnInit {
         );
     }
   }
-
   handleOkTop(): void {
     const lastFilterIndex = this.filterBox.length - 1;
     1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1694,7 +1464,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       'SELECTION3'
       ];
     const selection4 = this.filterBox[lastFilterIndex]['CONDITION'];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1708,17 +1477,14 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.message.error('Please Select the Operator', '');
     } else {
       this.isSpinner = true;
-
       for (let i = 0; i < this.filterBox.length; i++) {
         if (i != 0) {
           this.query += ') ' + this.filterBox[i]['CONDITION'] + ' (';
         } else this.query = '(';
-
         this.query2 = '';
         for (let j = 0; j < this.filterBox[i]['FILTER'].length; j++) {
           const filter = this.filterBox[i]['FILTER'][j];
           if (j == 0) {
-            //this.query2 += '(';
           } else {
             if (filter['CONDITION'] == 'AND') {
               this.query2 = this.query2 + ' AND ';
@@ -1726,11 +1492,9 @@ export class CustomerServicesMappingListComponent implements OnInit {
               this.query2 = this.query2 + ' OR ';
             }
           }
-
           let selection1 = filter['SELECTION1'];
           let selection2 = filter['SELECTION2'];
           let selection3 = filter['SELECTION3'];
-
           if (selection2 == 'Contains') {
             this.query2 += `${selection1} LIKE '%${selection3}%'`;
           } else if (selection2 == 'End With') {
@@ -1741,39 +1505,31 @@ export class CustomerServicesMappingListComponent implements OnInit {
             this.query2 += `${selection1} ${selection2} '${selection3}'`;
           }
           if (j + 1 == this.filterBox[i]['FILTER'].length) {
-            //this.query2 += ') ';
             this.query += this.query2;
           }
         }
-
         if (i + 1 == this.filterBox.length) {
           this.query += ')';
         }
       }
-
       this.showquery = this.query;
     }
-
     if (this.QUERY_NAME == '' || this.QUERY_NAME.trim() == '') {
       this.message.error('Please Enter Query Name', '');
     } else {
       this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
       this.visiblesave = false;
-      this.QUERY_NAME = ''; // Clear input after adding
+      this.QUERY_NAME = ''; 
     }
     this.visiblesave = false;
   }
-
   handleCancelTop(): void {
     this.visiblesave = false;
   }
-
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   onViewReference(imageUrl: string): void {
     if (imageUrl) {
       window.open(appkeys.retriveimgUrl + 'Item/' + '/' + imageUrl, '_blank');
@@ -1806,10 +1562,8 @@ export class CustomerServicesMappingListComponent implements OnInit {
   seqvisible = false;
   selectedServices: number[] = [];
   selectedServicessub: number[] = [];
-
   serviceVisible = false;
   subserviceVisible = false;
-
   datalistforTable: any = [];
   loadtable: boolean = false;
   totalREcordTable: any = 0;
@@ -1821,7 +1575,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
   pageSizeBulk: any = 0;
   sortValueBulk: string = 'desc';
   sortKeyBulk: any = '';
-
   addbulkservice: boolean = false;
   add1() {
     this.addmultiple(true);
@@ -1836,31 +1589,19 @@ export class CustomerServicesMappingListComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
   updateValue(index: number, key: string, value: any) {
-    // Get the original item from the duplicate array
     const originalItem = this.dublcatearray[index];
-
-    // Check if the value has actually changed
     if (originalItem[key] !== value) {
-      // Update the value in the main data array
       this.dataListBulk[index][key] = value;
-
-      // Check if the record is already in updatedRecords
       const existingRecordIndex = this.updatedRecords.findIndex((item) => {
-        return item.SERVICE_ID === originalItem.SERVICE_ID; // Explicit return
+        return item.SERVICE_ID === originalItem.SERVICE_ID; 
       });
-
       if (existingRecordIndex !== -1) {
-        // If the record is already in updatedRecords, update the specific field
         this.updatedRecords[existingRecordIndex][key] = value;
       } else {
         const newRecord = { ...originalItem, [key]: value };
         this.updatedRecords.push(newRecord);
-        // If the record is not in updatedRecords, add a copy of it with the updated field
-        // this.updatedRecords.push({ ...originalItem });
       }
-
       const selectedTime = new Date(value);
       if (key == 'START_TIME' || key == 'END_TIME') {
         this.dataListBulk[index][key] =
@@ -1871,7 +1612,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
   }
   save(): void {
     if (this.updatedRecords.length > 0) {
-      let isValid = true; // Flag to track if the validation passes
+      let isValid = true; 
       let commonErrorMessage = '';
       this.updatedRecords.forEach((data, i) => {
         if (
@@ -1959,32 +1700,24 @@ export class CustomerServicesMappingListComponent implements OnInit {
           isValid = false;
         }
       });
-
       if (isValid) {
         this.updatedRecords.forEach((data, i) => {
-
           if (data.START_TIME) {
             data.START_TIME = this.formatTimeToHHmm(data.START_TIME);
           }
           if (data.END_TIME) {
             data.END_TIME = this.formatTimeToHHmm(data.END_TIME);
           }
-
-
         });
-
         const requests = this.updatedRecords.map(row =>
           this.api.getServiceItem(0, 0, '', '', ' AND ID=' + row.SERVICE_ID)
         );
-
         forkJoin(requests).subscribe(responses => {
           responses.forEach((datas, index) => {
             const rowData = this.updatedRecords[index];
-
             if (datas['code'] == 200) {
               const serviceData = datas['data'][0];
               rowData.TERRITORY_ID = 0;
-
               rowData.DURATION_HOUR = serviceData?.DURATION_HOUR
                 ? serviceData?.DURATION_HOUR
                 : 0;
@@ -2013,7 +1746,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
                 ? serviceData?.STATUS
                 : false;
             }
-
           })
           this.isSpinning = true;
           this.api
@@ -2054,21 +1786,16 @@ export class CustomerServicesMappingListComponent implements OnInit {
       );
     }
   }
-
   formatTimeToHHmm(time: any): string {
-    const date = new Date(time); // Assuming time is a valid timestamp or ISO string
+    const date = new Date(time); 
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
   }
-
-  // singlerow
   loadingRecordsreceipt: { [key: number]: boolean } = {};
-
   updateSingleRow(rowData: any): void {
-    let isValid = true; // Flag to track if validation passes
-    let commonErrorMessage = ''; // Variable to store the common error message
-
+    let isValid = true; 
+    let commonErrorMessage = ''; 
     if (
       (rowData.SERVICE_TYPE == 'B' || rowData.SERVICE_TYPE == 'O') &&
       (rowData.B2B_PRICE === null ||
@@ -2078,15 +1805,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       commonErrorMessage = 'Please enter B2B cost for this record.';
       isValid = false;
     }
-    // else if (
-    //   (rowData.SERVICE_TYPE === 'O') &&
-    //   (rowData.B2C_PRICE === null ||
-    //     rowData.B2C_PRICE === undefined ||
-    //     rowData.B2C_PRICE === '' || rowData.B2C_PRICE <= 0)
-    // ) {
-    //   commonErrorMessage = 'Please enter B2C cost for this record.';
-    //   isValid = false;
-    // }
     else if (
       rowData.TECHNICIAN_COST === null ||
       rowData.TECHNICIAN_COST === undefined ||
@@ -2151,15 +1869,12 @@ export class CustomerServicesMappingListComponent implements OnInit {
       commonErrorMessage = 'Service preparation time must be greater than 0';
       isValid = false;
     }
-
-    // If valid, process the row
     if (isValid) {
       this.api
         .getServiceItem(0, 0, '', '', ' AND ID=' + rowData.SERVICE_ID)
         .subscribe(
           (datas) => {
             if (datas['code'] == 200) {
-              // Convert START_TIME and END_TIME to HH:mm format
               if (rowData.START_TIME) {
                 rowData.START_TIME = this.formatTimeToHHmm(rowData.START_TIME);
               }
@@ -2183,14 +1898,12 @@ export class CustomerServicesMappingListComponent implements OnInit {
               rowData.UNIT_ID = datas['data'][0].UNIT_ID
                 ? datas['data'][0].UNIT_ID
                 : 0;
-
               rowData.TAX_NAME = datas['data'][0].TAX_NAME
                 ? datas['data'][0].TAX_NAME
                 : null;
               rowData.UNIT_NAME = datas['data'][0].UNIT_NAME
                 ? datas['data'][0].UNIT_NAME
                 : null;
-
               rowData.SHORT_CODE = datas['data'][0].SHORT_CODE
                 ? datas['data'][0].SHORT_CODE
                 : 0;
@@ -2254,69 +1967,47 @@ export class CustomerServicesMappingListComponent implements OnInit {
           (err: HttpErrorResponse) => { }
         );
     } else {
-      // Show error message if validation fails
       this.message.error(commonErrorMessage, '');
       return;
     }
   }
   getDisabledHoursForStart(): number[] {
-    const startRange = 9; // Start of the allowed range
-    const endRange = 19; // End of the allowed range (7 PM)
+    const startRange = 9; 
+    const endRange = 19; 
     return Array.from({ length: 24 }, (_, i) => i).filter(
       (hour) => hour < startRange || hour >= endRange
     );
   }
-
   getDisabledMinutesForStart(hour: number): number[] {
-    // Allow only whole hours without restricting minutes
     return hour === 19
       ? Array.from({ length: 60 }, (_, i) => i).filter((minute) => minute > 0)
       : [];
   }
-
   getDisabledHoursForEnd(rowData: any): number[] {
     const startHour = rowData.START_TIME ? rowData.START_TIME.getHours() : 9;
-    const endRange = 19; // End of the allowed range (7 PM)
+    const endRange = 19; 
     return Array.from({ length: 24 }, (_, i) => i).filter(
       (hour) => hour < startHour || hour >= endRange
     );
   }
-
   getDisabledMinutesForEnd(hour: number, rowData: any): number[] {
     if (!rowData.START_TIME) return [];
     const startHour = rowData.START_TIME.getHours();
     const startMinute = rowData.START_TIME.getMinutes();
-
     if (hour === startHour) {
-      // Restrict minutes to greater than or equal to start time
       return Array.from({ length: 60 }, (_, i) => i).filter(
         (minute) => minute < startMinute
       );
     }
-
     if (hour === 19) {
-      // Restrict minutes past 7 PM
       return Array.from({ length: 60 }, (_, i) => i).filter(
         (minute) => minute > 0
       );
     }
-
     return [];
   }
-
-  // onStartTimeChange(rowData: any, index: number): void {
-  //   // Ensure END_TIME is greater than or equal to START_TIME
-  //   if (rowData.END_TIME && rowData.START_TIME && rowData.END_TIME < rowData.START_TIME) {
-  //     rowData.END_TIME = null; // Reset END_TIME if invalid
-  //   }
-  // }
-
   OnendTimeChange(rowIndex: number, selectedTime: Date): void {
     if (selectedTime) {
-      // Round the time to the nearest 10 minutes
-      // this.dataListBulk[rowIndex].START_TIME = this.roundToNearestTenMinutes(new Date(selectedTime));
-
-      // Reset END_TIME if it's earlier than the new START_TIME
       if (
         this.dataListBulk[rowIndex].END_TIME &&
         this.dataListBulk[rowIndex].END_TIME <
@@ -2326,13 +2017,8 @@ export class CustomerServicesMappingListComponent implements OnInit {
       }
     }
   }
-
   onStartTimeChange(rowIndex: number, selectedTime: Date): void {
     if (selectedTime) {
-      // Round the time to the nearest 10 minutes
-      // this.dataListBulk[rowIndex].START_TIME = this.roundToNearestTenMinutes(new Date(selectedTime));
-
-      // Reset END_TIME if it's earlier than the new START_TIME
       if (
         this.dataListBulk[rowIndex].END_TIME &&
         this.dataListBulk[rowIndex].END_TIME <
@@ -2342,12 +2028,10 @@ export class CustomerServicesMappingListComponent implements OnInit {
       }
     }
   }
-
   loadMore() {
     this.pageIndex += 1;
     this.search();
   }
-
   drawerserviceVisibleMaped: boolean = false;
   drawerDataMaped: ServiceCatMasterDataNewNonB2b =
     new ServiceCatMasterDataNewNonB2b();
@@ -2360,7 +2044,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
     this.drawerDataMaped = Object.assign({}, data);
     this.drawerserviceVisibleMaped = true;
   }
-
   drawerServiceMappingCloseMaped(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -2371,11 +2054,8 @@ export class CustomerServicesMappingListComponent implements OnInit {
   get closeServiceMappingCallbackMaped() {
     return this.drawerServiceMappingCloseMaped.bind(this);
   }
-
-  //Mapping
   drawerMappigVisible: boolean = false;
   drawerMappingTitle!: string;
-
   draweMappingClose(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -2383,9 +2063,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
     this.search();
     this.drawerMappigVisible = false;
   }
-
   mapSkill(data: any) {
-    // this.dataList = [];
     this.pageIndex = 1;
     this.searchText = '';
     this.drawerMappingTitle = `Map Skills to ${data.NAME} Service`;
@@ -2395,10 +2073,8 @@ export class CustomerServicesMappingListComponent implements OnInit {
   get closeCallbackMapping() {
     return this.draweMappingClose.bind(this);
   }
-
   drawerMappigVisibleHelp: boolean = false;
   drawerMappingTitleHelp!: string;
-
   draweMappingCloseHelp(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -2418,7 +2094,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
   get HelpcloseCallbackMapping() {
     return this.draweMappingCloseHelp.bind(this);
   }
-
   drawerTitleMains!: string;
   drawerVisibleMains: boolean = false;
   drawerDataMains: ServiceCatMasterDataNewB2b =
@@ -2431,7 +2106,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
     this.drawerDataMains = new ServiceCatMasterDataNewB2b();
     this.drawerVisibleMains = true;
   }
-
   drawerCloseMains(): void {
     this.dataList = [];
     this.pageIndex = 1;
@@ -2439,11 +2113,9 @@ export class CustomerServicesMappingListComponent implements OnInit {
     this.search(true);
     this.drawerVisibleMains = false;
   }
-
   get closeCallbackMains() {
     return this.drawerCloseMains.bind(this);
   }
-
   bulkupdatebutton = false;
   StartDate: any;
   submittedDateVisible: boolean = false;
@@ -2464,30 +2136,17 @@ export class CustomerServicesMappingListComponent implements OnInit {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
     date.setHours(hours, minutes, 0);
     const formattedStartTime = date.toISOString();
-
-    // this.dataListBulk.forEach((item) => {
-    //   item.START_TIME = formattedStartTime;
-    //   const endTime = new Date(item.END_TIME);
-
-    //   if (endTime < date) {
-    //     item.END_TIME = null;
-    //   }
-    // });
-
     this.dataListBulk.forEach((item, index) => {
       const endTime = new Date(item.END_TIME);
       if (endTime < date) {
@@ -2495,13 +2154,10 @@ export class CustomerServicesMappingListComponent implements OnInit {
       }
       this.updateValue(index, 'START_TIME', formattedStartTime);
     });
-
-
     this.bulkupdatebutton = true;
     this.submittedDateVisible = false;
     this.updateEndTimeRestrictions();
   }
-
   EndDate: any;
   endDateVisible: boolean = false;
   isendDateFilterApplied: boolean = false;
@@ -2521,33 +2177,22 @@ export class CustomerServicesMappingListComponent implements OnInit {
     } else {
       return;
     }
-
     const [time, modifier] = timeString.split(' ');
     let [hours, minutes] = time.split(':').map(Number);
-
     if (modifier === 'PM' && hours < 12) {
       hours += 12;
     }
     if (modifier === 'AM' && hours === 12) {
       hours = 0;
     }
-
     const date = new Date();
     date.setHours(hours, minutes, 0);
     const formattedStartTime = date.toISOString();
-
-    // this.dataListBulk.forEach((item) => {
-    //   item.END_TIME = formattedStartTime;
-    // });
-
     this.dataListBulk.forEach((item, index) => {
       this.updateValue(index, 'END_TIME', formattedStartTime);
     });
-
-
     this.endDateVisible = false;
   }
-
   disableStartHours: () => number[] = () => [];
   disableStartMinutes: (hour: number) => number[] = () => [];
   disableEndHours: () => number[] = () => [];
@@ -2556,7 +2201,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
   orgStartMinute: any = 0;
   orgEndHour: any = 23;
   orgEndMinute: any = 59;
-
   getorgData() {
     this.api
       .getAllOrganizations(1, 1, '', 'desc', ' AND ID= 1')
@@ -2575,7 +2219,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
                 );
               }
             }
-
             if (data['body']['data'][0].DAY_END_TIME) {
               const endParts = data['body']['data'][0].DAY_END_TIME.split(':');
               this.orgEndHour = +endParts[0];
@@ -2588,9 +2231,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
                 );
               }
             }
-
             this.initializeTimeRestrictions();
-
             if (data['body'].count > 0 && !this.data.ID) {
               if (
                 data['body']['data'][0].DAY_START_TIME != undefined &&
@@ -2598,7 +2239,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
                 data['body']['data'][0].DAY_START_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = data['body']['data'][0].DAY_START_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = data['body']['data'][0].DAY_START_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.StartDate = new Date(today);
@@ -2610,7 +2251,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
                 data['body']['data'][0].DAY_END_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = data['body']['data'][0].DAY_END_TIME.split(':'); // Split "HH:mm:ss"
+                const timeParts = data['body']['data'][0].DAY_END_TIME.split(':'); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.EndDate = new Date(today);
@@ -2626,7 +2267,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < this.orgStartHour || hour > this.orgEndHour
       );
-
     this.disableStartMinutes = (hour: number) =>
       hour === this.orgStartHour
         ? Array.from({ length: 60 }, (_, i) => i).filter(
@@ -2637,18 +2277,15 @@ export class CustomerServicesMappingListComponent implements OnInit {
             (minute) => minute > this.orgEndMinute
           )
           : [];
-
     this.disableEndHours = () => {
       const startHour = this.getStartHour();
       return Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < startHour || hour > this.orgEndHour
       );
     };
-
     this.disableEndMinutes = (hour: number) => {
       const startHour = this.getStartHour();
       const startMinute = this.getStartMinute();
-
       if (hour === startHour) {
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute <= startMinute
@@ -2662,32 +2299,25 @@ export class CustomerServicesMappingListComponent implements OnInit {
       }
     };
   }
-
   getStartHour() {
     return this.StartDate
       ? new Date(this.StartDate).getHours()
       : this.orgStartHour;
   }
-
   getStartMinute() {
     return this.StartDate
       ? new Date(this.StartDate).getMinutes()
       : this.orgStartMinute;
   }
-
   onStartTimeChange1() {
     const selectedTime = new Date(this.StartDate);
     this.StartDate = this.roundMinutesToNearestInterval(selectedTime);
-
     this.initializeTimeRestrictions();
-    // this.updateEndTimeRestrictions();
   }
   updateEndTimeRestrictions() {
     if (!this.StartDate) return;
-
     const startHour = this.StartDate.getHours();
     const startMinute = this.StartDate.getMinutes();
-
     this.getDisabledHours = (type: string, index: number) => {
       return () => {
         if (type === 'END_TIME') {
@@ -2696,7 +2326,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
         return [];
       };
     };
-
     this.getDisabledMinutes2 = (hour: number) => {
       if (hour === startHour) {
         return [...Array(startMinute + 1).keys()];
@@ -2704,7 +2333,6 @@ export class CustomerServicesMappingListComponent implements OnInit {
       return [];
     };
   }
-
   onendTimeChange1() {
     const selectedTime = new Date(this.EndDate);
     this.EndDate = this.roundMinutesToNearestInterval(selectedTime);
@@ -2712,27 +2340,21 @@ export class CustomerServicesMappingListComponent implements OnInit {
   roundMinutesToNearestInterval(date: Date): Date {
     const minutes = date.getMinutes();
     const roundedMinutes = Math.round(minutes / 10) * 10;
-
     let finalHour = date.getHours();
     let finalMinutes = roundedMinutes;
-
     if (roundedMinutes >= 60) {
       finalMinutes = 0;
       finalHour = (finalHour + 1) % 24;
     }
-
     const roundedDate = new Date(date);
     roundedDate.setHours(finalHour);
     roundedDate.setMinutes(finalMinutes);
     roundedDate.setSeconds(0);
-
     return roundedDate;
   }
-
   bulkupdate() {
     let isValid = true;
     let commonErrorMessage = '';
-
     for (const rowData of this.dataListBulk) {
       if (
         (rowData.SERVICE_TYPE == 'C' || rowData.SERVICE_TYPE == 'O') &&
@@ -2826,36 +2448,16 @@ export class CustomerServicesMappingListComponent implements OnInit {
         break;
       }
     }
-
-    // If validation fails, show error and return
     if (!isValid) {
       this.message.error(commonErrorMessage, '');
       return;
     }
-    // const hasNullEndTime = this.dataListBulk.some(
-    //   (item) => item.END_TIME === null
-    // );
-
-    // if (hasNullEndTime) {
-    //   this.message.error('Please Select End Time.', '');
-    //   return;
-    // }
-    // const hasNullStartTime = this.dataListBulk.some(
-    //   (item) => item.START_TIME === null
-    // );
-
-    // if (hasNullStartTime) {
-    //   this.message.error('Please Select Start Time.', '');
-    //   return;
-    // }
-
     const updatedDataList = this.dataListBulk.map((item) => {
       const formatedstarttime = this.formatTimeToHHmm(item.START_TIME);
       const formatedendtime = this.formatTimeToHHmm(item.END_TIME);
       const updatedItem = this.updatedRecords.find(
         (record) => record.ID === item.ID
       );
-
       return {
         ...item,
         ...updatedItem,
@@ -2865,9 +2467,7 @@ export class CustomerServicesMappingListComponent implements OnInit {
         END_TIME: formatedendtime,
       };
     });
-
     this.isSpinning = true;
-
     this.api.BulkServiceUpdateB2b(this.data.ID, updatedDataList).subscribe(
       (successCode: any) => {
         if (successCode.code === 200) {

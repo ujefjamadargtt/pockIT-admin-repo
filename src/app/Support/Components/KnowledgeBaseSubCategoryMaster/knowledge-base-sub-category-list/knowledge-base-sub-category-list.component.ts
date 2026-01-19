@@ -6,7 +6,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { KnowledgeBaseSubCategory } from 'src/app/Support/Models/KnowledgeBaseSubCategory';
-
 @Component({
   selector: 'app-knowledge-base-sub-category-list',
   templateUrl: './knowledge-base-sub-category-list.component.html',
@@ -21,7 +20,6 @@ export class KnowledgeBaseSubCategoryListComponent {
   pageSize = 10;
   sortValue: string = 'desc';
   sortKey: string = 'NAME';
-
   isLoading = true;
   columns: string[][] = [
     ['NAME', 'NAME'],
@@ -32,7 +30,6 @@ export class KnowledgeBaseSubCategoryListComponent {
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
-
   knowledgeBaseSubCategoryName: string = '';
   subcategoryvisible = false;
   categoryvisible: boolean = false;
@@ -44,7 +41,6 @@ export class KnowledgeBaseSubCategoryListComponent {
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   filterQuery: string = '';
@@ -61,16 +57,11 @@ export class KnowledgeBaseSubCategoryListComponent {
     { label: 'Description', value: 'DESCRIPTION' },
     { label: 'Status', value: 'IS_ACTIVE' },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router
   ) { }
-
-
-
-
   filterGroups: any[] = [
     {
       operator: "AND",
@@ -87,7 +78,6 @@ export class KnowledgeBaseSubCategoryListComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -104,8 +94,6 @@ export class KnowledgeBaseSubCategoryListComponent {
       groups: [],
     },
   ];
-
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -117,7 +105,6 @@ export class KnowledgeBaseSubCategoryListComponent {
     }
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -129,9 +116,7 @@ export class KnowledgeBaseSubCategoryListComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (
       this.knowledgeBaseSubCategoryName.length >= 3 &&
@@ -165,19 +150,16 @@ export class KnowledgeBaseSubCategoryListComponent {
   onCategoryChange(): void {
     if (this.selectedCategories?.length) {
       this.search();
-      this.iscategoryFilterApplied = true; // Filter applied if selectedCategories has values
+      this.iscategoryFilterApplied = true; 
     } else {
       this.search();
-      this.iscategoryFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.iscategoryFilterApplied = false; 
     }
-    // this.search();
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   reset(): void {
     this.searchText = '';
     this.knowledgeBaseSubCategoryName = '';
@@ -190,22 +172,17 @@ export class KnowledgeBaseSubCategoryListComponent {
     this.getcategorydata();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
-
   CategoryData: any = [];
   getcategoryData() {
     this.api
       .getKnowledgeBaseCategoryData(0, 0, '', '', ' AND IS_ACTIVE = 1')
       .subscribe(
         (data: HttpResponse<any>) => {
-          //
-
           const statusCode = data.status;
           const responseBody = data.body;
-
           if (statusCode == 200) {
             this.CategoryData = responseBody['data'];
           } else {
@@ -221,15 +198,11 @@ export class KnowledgeBaseSubCategoryListComponent {
         }
       );
   }
-
   categorydate1: any = [];
-
   getcategorydata() {
     this.api
       .getKnowledgeBaseCategoryData(0, 0, '', 'asc', ' AND IS_ACTIVE =1')
       .subscribe((data: HttpResponse<any>) => {
-        //
-
         const statusCode = data.status;
         const responseBody = data.body;
         if (statusCode == 200) {
@@ -244,7 +217,6 @@ export class KnowledgeBaseSubCategoryListComponent {
         }
       });
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -254,18 +226,14 @@ export class KnowledgeBaseSubCategoryListComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -277,42 +245,31 @@ export class KnowledgeBaseSubCategoryListComponent {
         ')';
     }
     this.loadingRecords = true;
-
-    // knowledgeBaseSubCategoryName Filter
     if (this.knowledgeBaseSubCategoryName !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `NAME LIKE '%${this.knowledgeBaseSubCategoryName.trim()}%'`;
     }
-
-    // DESCRIPTION Filter
     if (this.description !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `DESCRIPTION LIKE '%${this.description.trim()}%'`;
     }
-
-    // selectedCategories Filter
     if (this.selectedCategories.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `KNOWLEDGEBASE_CATEGORY_ID IN (${this.selectedCategories.join(
         ','
-      )})`; // Update with actual field name in the DB
+      )})`; 
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getKnowledgeBasesubCategoryData(
         this.pageIndex,
@@ -323,11 +280,8 @@ export class KnowledgeBaseSubCategoryListComponent {
       )
       .subscribe(
         (data: HttpResponse<any>) => {
-          //
-
           const statusCode = data.status;
           const responseBody = data.body;
-
           if (statusCode == 200) {
             this.loadingRecords = false;
             this.totalRecords = responseBody['count'];
@@ -359,13 +313,11 @@ export class KnowledgeBaseSubCategoryListComponent {
         }
       );
   }
-
   add(): void {
     this.drawerTitle = 'Add New Subcategory';
     this.drawerData = new KnowledgeBaseSubCategory();
     this.drawerVisible = true;
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -374,38 +326,30 @@ export class KnowledgeBaseSubCategoryListComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   edit(data: KnowledgeBaseSubCategory): void {
     this.drawerTitle = 'Update Subcategory';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
-  // Main Filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -414,8 +358,6 @@ export class KnowledgeBaseSubCategoryListComponent {
       this.loadFilters();
     }
   }
-
-  // Main Filter code
   hide: boolean = true;
   filterQuery1: any = '';
   INSERT_NAME: any;
@@ -431,7 +373,6 @@ export class KnowledgeBaseSubCategoryListComponent {
     'Start With',
     'End With',
   ];
-
   getComparisonOptions(selectedColumn: string): string[] {
     if (
       selectedColumn === 'IS_ACTIVE' ||
@@ -453,23 +394,18 @@ export class KnowledgeBaseSubCategoryListComponent {
     ];
   }
   columns2: string[][] = [['AND'], ['OR']];
-
   showFilter = false;
   toggleFilter() {
     this.showFilter = !this.showFilter;
   }
-
   showSortFilter = false;
   toggleSortFilter() {
     this.showSortFilter = !this.showSortFilter;
   }
-
   SELECTCOLOUM_NAME: any;
   TABLE_VALUE: any;
   COMPARISION_VALUE: any;
-
   conditions: any[] = [];
-
   InsertNewCondition() {
     this.conditions.push({
       SELECTCOLOUM_NAME: '',
@@ -477,15 +413,11 @@ export class KnowledgeBaseSubCategoryListComponent {
       TABLE_VALUE: '',
     });
   }
-
   deleteCondition(index: number) {
     this.conditions.splice(index, 1);
   }
-
   operators: string[] = ['AND', 'OR'];
-  // QUERY_NAME: string = '';
   showQueriesArray = [];
-
   filterBox = [
     {
       CONDITION: '',
@@ -499,7 +431,6 @@ export class KnowledgeBaseSubCategoryListComponent {
       ],
     },
   ];
-
   addCondition() {
     this.filterBox.push({
       CONDITION: '',
@@ -513,16 +444,13 @@ export class KnowledgeBaseSubCategoryListComponent {
       ],
     });
   }
-
   removeCondition(index: number) {
     this.filterBox.splice(index, 1);
   }
-
   insertSubCondition(conditionIndex: number, subConditionIndex: number) {
     const lastFilterIndex = this.filterBox.length - 1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -535,7 +463,6 @@ export class KnowledgeBaseSubCategoryListComponent {
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION3'
       ];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -555,12 +482,10 @@ export class KnowledgeBaseSubCategoryListComponent {
       });
     }
   }
-
   removeSubCondition(conditionIndex: number, subConditionIndex: number) {
     this.hide = true;
     this.filterBox[conditionIndex].FILTER.splice(subConditionIndex, 1);
   }
-
   generateQuery() {
     var isOk = true;
     var i = this.filterBox.length - 1;
@@ -586,7 +511,6 @@ export class KnowledgeBaseSubCategoryListComponent {
       isOk = false;
       this.message.error('Please select operator.', '');
     }
-
     if (isOk) {
       this.filterBox.push({
         CONDITION: '',
@@ -601,52 +525,40 @@ export class KnowledgeBaseSubCategoryListComponent {
       });
     }
   }
-
-  /*******  Create filter query***********/
   query = '';
   query2 = '';
   showquery: any;
   isSpinner: boolean = false;
-
   public visiblesave = false;
-
   saveQuery() {
     this.visiblesave = !this.visiblesave;
   }
-
   QUERY_NAME: string = '';
   name1: any;
   name2: any;
   INSERT_NAMES: any[] = [];
-
   Insertname() {
     if (this.QUERY_NAME.trim()) {
       this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
       this.visiblesave = false;
-      this.QUERY_NAME = ''; // Clear input after adding
+      this.QUERY_NAME = ''; 
     } else {
     }
   }
-
   handleLiveDemoChange(event: any) {
     this.visible = event;
   }
   toggleLiveDemo1() {
     this.visible = false;
   }
-
   handleCancelTop(): void {
     this.visiblesave = false;
   }
   handleOkTop(): void {
-    // this.createFilterQuery();
-
     const lastFilterIndex = this.filterBox.length - 1;
     1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -660,7 +572,6 @@ export class KnowledgeBaseSubCategoryListComponent {
       'SELECTION3'
       ];
     const selection4 = this.filterBox[lastFilterIndex]['CONDITION'];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -674,17 +585,14 @@ export class KnowledgeBaseSubCategoryListComponent {
       this.message.error('Please Select the Operator', '');
     } else {
       this.isSpinner = true;
-
       for (let i = 0; i < this.filterBox.length; i++) {
         if (i != 0) {
           this.query += ') ' + this.filterBox[i]['CONDITION'] + ' (';
         } else this.query = '(';
-
         this.query2 = '';
         for (let j = 0; j < this.filterBox[i]['FILTER'].length; j++) {
           const filter = this.filterBox[i]['FILTER'][j];
           if (j == 0) {
-            //this.query2 += '(';
           } else {
             if (filter['CONDITION'] == 'AND') {
               this.query2 = this.query2 + ' AND ';
@@ -692,11 +600,9 @@ export class KnowledgeBaseSubCategoryListComponent {
               this.query2 = this.query2 + ' OR ';
             }
           }
-
           let selection1 = filter['SELECTION1'];
           let selection2 = filter['SELECTION2'];
           let selection3 = filter['SELECTION3'];
-
           if (selection2 == 'Contains') {
             this.query2 += `${selection1} LIKE '%${selection3}%'`;
           } else if (selection2 == 'End With') {
@@ -707,30 +613,24 @@ export class KnowledgeBaseSubCategoryListComponent {
             this.query2 += `${selection1} ${selection2} '${selection3}'`;
           }
           if (j + 1 == this.filterBox[i]['FILTER'].length) {
-            //this.query2 += ') ';
             this.query += this.query2;
           }
         }
-
         if (i + 1 == this.filterBox.length) {
           this.query += ')';
         }
       }
-
       this.showquery = this.query;
     }
-
     if (this.QUERY_NAME == '' || this.QUERY_NAME.trim() == '') {
       this.message.error('Please Enter Query Name', '');
     } else {
       this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
       this.visiblesave = false;
-      this.QUERY_NAME = ''; // Clear input after adding
+      this.QUERY_NAME = ''; 
     }
     this.visiblesave = false;
   }
-
   filterFields: any[] = [
     {
       key: 'KNOWLEDGEBASE_CATGORY_NAME',
@@ -755,10 +655,8 @@ export class KnowledgeBaseSubCategoryListComponent {
         { value: 'Starts With', display: 'Starts With' },
         { value: 'Ends With', display: 'Ends With' },
       ],
-
       placeholder: 'Enter Subcategory Name',
     },
-
     {
       key: 'DESCRIPTION',
       label: 'Description',
@@ -773,7 +671,6 @@ export class KnowledgeBaseSubCategoryListComponent {
       ],
       placeholder: 'Enter Description',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -789,12 +686,8 @@ export class KnowledgeBaseSubCategoryListComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
-  // filterQuery = '';
   applyfilter(item) {
-
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -802,34 +695,25 @@ export class KnowledgeBaseSubCategoryListComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   filterData: any;
   currentClientId = 1
   openfilter() {
     this.drawerTitle = 'Knowledgebase Subcategory Filter';
-    // this.applyCondition = "";
     this.filterFields[0]['options'] = this.categorydate1;
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -838,13 +722,9 @@ export class KnowledgeBaseSubCategoryListComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -861,10 +741,6 @@ export class KnowledgeBaseSubCategoryListComponent {
         groups: [],
       },
     ];
-
-
-
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -882,23 +758,13 @@ export class KnowledgeBaseSubCategoryListComponent {
       },
     ];
   }
-
-
-  // drawerflterClose(): void {
-  //   this.drawerFilterVisible = false;
-  // }
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   editQuery(data: any) {
-
-
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -906,9 +772,8 @@ export class KnowledgeBaseSubCategoryListComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   restrictedKeywords = [
     'SELECT',
     'INSERT',
@@ -931,66 +796,42 @@ export class KnowledgeBaseSubCategoryListComponent {
     'COMMIT',
     '--',
     ';',
-    '/*',
-    '*/',
+    '',
   ];
-
   isValidInput(input: string): boolean {
     return !this.restrictedKeywords.some((keyword) =>
       input.toUpperCase().includes(keyword)
     );
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  TabId: number; // Ensure TabId is defined and initialized
-
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  TabId: number; 
   selectedFilter: any;
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   isDeleting: boolean = false;
-
   drawerfilterClose(buttontype, updateButton): void {
-
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
-
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-
       this.loadFilters();
     }
   }
-
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
-
-
-
-
   get filtercloseCallback() {
     return this.drawerfilterClose.bind(this);
   }
   filterloading: boolean = false;
-
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -998,16 +839,12 @@ export class KnowledgeBaseSubCategoryListComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1022,22 +859,15 @@ export class KnowledgeBaseSubCategoryListComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1051,8 +881,6 @@ export class KnowledgeBaseSubCategoryListComponent {
       );
     this.filterQuery = '';
   }
-
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1061,12 +889,7 @@ export class KnowledgeBaseSubCategoryListComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
-
-
   deleteItem(item: any): void {
-
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -1082,14 +905,10 @@ export class KnowledgeBaseSubCategoryListComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-
           }
         } else {
           this.message.error('Failed to delete filter.', '');
@@ -1110,7 +929,4 @@ export class KnowledgeBaseSubCategoryListComponent {
       }
     );
   }
-
-
-
 }

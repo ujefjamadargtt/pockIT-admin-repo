@@ -11,39 +11,180 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
 .mainnam {
   color: #000;
   font-size: 13px !important;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .subnamm {
   color: #6A6A6A;
   font-size: 12px !important;
   font-weight: 500;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .ant-drawer-body {
   padding: 8px 20px !important;
 }
-
 .emptyDataTex {
   color: grey;
   font-weight: 500;
 }
-
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.order-header-row {
+  margin-bottom: 10px;
+}
+.order-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.order-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.order-filter-btn-wrapper {
+  width: 47px;
+}
+.order-filter-row-top {
+  padding-top: 0;
+}
+.order-center-text {
+  text-align: center;
+}
+.order-filter-item {
+  margin-bottom: 8px;
+}
+.order-filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.order-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.order-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.order-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.order-filter-actions-row {
+  margin-top: 7px;
+}
+.order-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.order-filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.order-filter-tag-icon {
+  font-size: 10px !important;
+}
+.order-filter-tag-view {
+  margin-right: 0;
+}
+.order-no-data-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.order-filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.order-filter-footer-btn {
+  margin-right: 10px;
+}
+.order-card-wrapper {
+  padding: 10px;
+}
+.order-card-left {
+  text-align: start;
+}
+.order-card-right {
+  text-align: end;
+}
+.order-font-12 {
+  font-size: 12px !important;
+}
+.order-badge-sm {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+  font-size: 12px !important;
+}
+.order-customer-row {
+  font-size: 12px !important;
+  margin-top: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-start;
+}
+.order-phone-link {
+  font-size: 12px !important;
+  color: black !important;
+}
+.order-price-left {
+  font-size: 12px !important;
+  text-align: start;
+  margin-top: 5px;
+}
+.order-price-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 1px;
+}
+.order-status-row {
+  font-size: 12px !important;
+  text-align: center;
+  margin-top: 5px;
+}
+.order-load-more {
+  text-align: center;
+  padding-top: 10px;
+}
+.order-empty-state {
+  padding-top: 20vh;
+}
+.order-query-text {
+  text-align: center;
+  font-family: monospace !important;
+  font-size: 13px;
+}
+.order-customer-row {
+  font-size: 12px !important;
+  margin-top: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-start;
+}
+.order-status-row {
+  font-size: 12px !important;
+  text-align: center;
+  margin-top: 5px;
 }

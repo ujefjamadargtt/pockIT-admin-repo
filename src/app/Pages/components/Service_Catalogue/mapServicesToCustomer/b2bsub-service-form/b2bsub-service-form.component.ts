@@ -7,7 +7,6 @@ import { NzNotificationService } from "ng-zorro-antd/notification";
 import { ServiceCatMasterDataNewB2b } from "src/app/Pages/Models/ServiceCatMasterData";
 import { ApiServiceService } from "src/app/Service/api-service.service";
 import { CommonFunctionService } from "src/app/Service/CommonFunctionService";
-
 @Component({
   selector: "app-b2bsub-service-form",
   templateUrl: "./b2bsub-service-form.component.html",
@@ -28,13 +27,9 @@ export class B2bsubServiceFormComponent implements OnInit {
   fileURL: any = "";
   subcategoryData: any = [];
   currencyData: any = [];
-  // hours: any='00';
-  // minutes: any='00';
-
   organizationid: any = sessionStorage.getItem("orgId");
   oldservicename: any;
   public commonFunction = new CommonFunctionService();
-
   @Input() data: any = ServiceCatMasterDataNewB2b;
   @Input() dataMain: any = ServiceCatMasterDataNewB2b;
   @Input() drawerVisible: boolean = false;
@@ -82,13 +77,10 @@ export class B2bsubServiceFormComponent implements OnInit {
       );
     }
     this.getSubCategoryData();
-
     this.getUnits();
   }
-
   currentHour = new Date().getHours();
   currentMinute = new Date().getMinutes();
-  // Disable hours before the current hour for START_TIME
   disableBeforeCurrentHour = (): number[] => {
     const hours: number[] = [];
     for (let i = 0; i < this.currentHour; i++) {
@@ -96,8 +88,6 @@ export class B2bsubServiceFormComponent implements OnInit {
     }
     return hours;
   };
-
-  // Disable minutes before the current minute for START_TIME (if the current hour is selected)
   disableBeforeCurrentMinutes = (selectedHour: number): number[] => {
     const minutes: number[] = [];
     if (selectedHour === this.currentHour) {
@@ -107,8 +97,6 @@ export class B2bsubServiceFormComponent implements OnInit {
     }
     return minutes;
   };
-
-  // Disable hours before the selected START_TIME for END_TIME
   disableBeforeStartHour = (): number[] => {
     if (!this.data.START_TIME) {
       return [];
@@ -128,7 +116,6 @@ export class B2bsubServiceFormComponent implements OnInit {
   orgStartMinute: number = 0;
   orgEndHour: number = 23;
   orgEndMinute: number = 59;
-  // Disable minutes before the selected START_TIME for END_TIME (if the selected hour is the same as START_TIME)
   disableBeforeStartMinutes = (selectedHour: number): number[] => {
     if (!this.data.START_TIME) {
       return [];
@@ -157,7 +144,6 @@ export class B2bsubServiceFormComponent implements OnInit {
         this.message.error("Something Went Wrong", "");
       }
     );
-
     this.api
       .getAllOrganizations(1, 1, "", "desc", " AND ID= 1")
       .subscribe((data) => {
@@ -175,8 +161,6 @@ export class B2bsubServiceFormComponent implements OnInit {
                 );
               }
             }
-
-            // Parse organization end time
             if (data['body']["data"][0].DAY_END_TIME) {
               const endParts = data['body']["data"][0].DAY_END_TIME.split(":");
               this.orgEndHour = +endParts[0];
@@ -189,10 +173,7 @@ export class B2bsubServiceFormComponent implements OnInit {
                 );
               }
             }
-
-            // Initialize time restrictions
             this.initializeTimeRestrictions();
-
             if (data['body'].count > 0 && !this.data.ID) {
               if (
                 data['body']["data"][0].DAY_START_TIME != undefined &&
@@ -200,7 +181,7 @@ export class B2bsubServiceFormComponent implements OnInit {
                 data['body']["data"][0].DAY_START_TIME != ""
               ) {
                 const today = new Date();
-                const timeParts = data['body']["data"][0].DAY_START_TIME.split(":"); // Split "HH:mm:ss"
+                const timeParts = data['body']["data"][0].DAY_START_TIME.split(":"); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -212,7 +193,7 @@ export class B2bsubServiceFormComponent implements OnInit {
                 data['body']["data"][0].DAY_END_TIME != ""
               ) {
                 const today = new Date();
-                const timeParts = data['body']["data"][0].DAY_END_TIME.split(":"); // Split "HH:mm:ss"
+                const timeParts = data['body']["data"][0].DAY_END_TIME.split(":"); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -224,12 +205,10 @@ export class B2bsubServiceFormComponent implements OnInit {
       });
   }
   initializeTimeRestrictions() {
-    // Disable Start Hours
     this.disableStartHours = () =>
       Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < this.orgStartHour || hour > this.orgEndHour
       );
-
     this.disableStartMinutes = (hour: number) =>
       hour === this.orgStartHour
         ? Array.from({ length: 60 }, (_, i) => i).filter(
@@ -240,50 +219,38 @@ export class B2bsubServiceFormComponent implements OnInit {
             (minute) => minute > this.orgEndMinute
           )
           : [];
-
-    // Disable End Hours
     this.disableEndHours = () => {
       const startHour = this.getStartHour();
       return Array.from({ length: 24 }, (_, i) => i).filter(
         (hour) => hour < startHour || hour > this.orgEndHour
       );
     };
-
     this.disableEndMinutes = (hour: number) => {
       const startHour = this.getStartHour();
       const startMinute = this.getStartMinute();
-
       if (hour === startHour) {
-        // Disable minutes less than or equal to the start time's minutes
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute <= startMinute
         );
       } else if (hour === this.orgEndHour) {
-        // Disable minutes beyond the organization's end minute
         return Array.from({ length: 60 }, (_, i) => i).filter(
           (minute) => minute > this.orgEndMinute
         );
       } else {
-        // No restriction for other hours
         return [];
       }
     };
   }
-
-  // Getters for dynamic restrictions on End Time based on Start Time
   getStartHour() {
     return this.data.START_TIME
       ? new Date(this.data.START_TIME).getHours()
       : this.orgStartHour;
   }
-
   getStartMinute() {
     return this.data.START_TIME
       ? new Date(this.data.START_TIME).getMinutes()
       : this.orgStartMinute;
   }
-
-  // Update End Time picker restrictions on Start Time change
   onStartTimeChange() {
     this.data.END_TIME = null;
     this.initializeTimeRestrictions();
@@ -309,8 +276,6 @@ export class B2bsubServiceFormComponent implements OnInit {
                 );
               }
             }
-
-            // Parse organization end time
             if (data['body']["data"][0].DAY_END_TIME) {
               const endParts = data['body']["data"][0].DAY_END_TIME.split(":");
               this.orgEndHour = +endParts[0];
@@ -323,10 +288,7 @@ export class B2bsubServiceFormComponent implements OnInit {
                 );
               }
             }
-
-            // Initialize time restrictions
             this.initializeTimeRestrictions();
-
             if (data['body'].count > 0 && !this.data.ID) {
               if (
                 data['body']["data"][0].DAY_START_TIME != undefined &&
@@ -334,7 +296,7 @@ export class B2bsubServiceFormComponent implements OnInit {
                 data['body']["data"][0].DAY_START_TIME != ""
               ) {
                 const today = new Date();
-                const timeParts = data['body']["data"][0].DAY_START_TIME.split(":"); // Split "HH:mm:ss"
+                const timeParts = data['body']["data"][0].DAY_START_TIME.split(":"); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -346,7 +308,7 @@ export class B2bsubServiceFormComponent implements OnInit {
                 data['body']["data"][0].DAY_END_TIME != ""
               ) {
                 const today = new Date();
-                const timeParts = data['body']["data"][0].DAY_END_TIME.split(":"); // Split "HH:mm:ss"
+                const timeParts = data['body']["data"][0].DAY_END_TIME.split(":"); 
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -359,7 +321,6 @@ export class B2bsubServiceFormComponent implements OnInit {
     ServiceCatmaster.form.markAsPristine();
     ServiceCatmaster.form.markAsUntouched();
   }
-
   getUnits() {
     this.api
       .getUnitData(0, 0, "ID", "desc", " AND IS_ACTIVE =1")
@@ -370,7 +331,6 @@ export class B2bsubServiceFormComponent implements OnInit {
           this.uniteDta = [];
         }
       });
-
     this.api
       .getTaxData(0, 0, "ID", "desc", " AND IS_ACTIVE =1")
       .subscribe((data) => {
@@ -392,7 +352,6 @@ export class B2bsubServiceFormComponent implements OnInit {
   save(addNew: boolean, ServiceCatmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
-
     if (
       this.data.NAME == null ||
       this.data.NAME == undefined ||
@@ -568,7 +527,6 @@ export class B2bsubServiceFormComponent implements OnInit {
           "HH:mm"
         );
       }
-
       {
         this.data.CUSTOMER_ID = this.custid;
         this.data.IS_FOR_B2B = true;
@@ -582,7 +540,6 @@ export class B2bsubServiceFormComponent implements OnInit {
         this.data.SERVICE_TYPE = "B";
         if (this.data.ID) {
           this.data.OLD_SERVICE_NAME = this.oldservicename;
-
           this.api.updateServiceMain(this.data).subscribe(
             (successCode: any) => {
               if (successCode.code == "200") {
@@ -645,41 +602,32 @@ export class B2bsubServiceFormComponent implements OnInit {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }
-
   onFileSelected(event: any) {
     const maxFileSize = 1 * 1024 * 1024;
-
-    // File validation
     if (
       event.target.files[0].type === "image/jpeg" ||
       event.target.files[0].type === "image/jpg" ||
       event.target.files[0].type === "image/png"
     ) {
       this.fileURL = <File>event.target.files[0];
-
       if (this.fileURL.size > maxFileSize) {
         this.message.error("File size should not exceed 1MB.", "");
         return;
       }
-
-      // Check image dimensions
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const img = new Image();
         img.onload = () => {
           if (img.height === 128 && img.width === 128) {
-            // Image dimensions are valid, proceed with upload
             var number = Math.floor(100000 + Math.random() * 900000);
             var fileExt = this.fileURL.name.split(".").pop();
             var d = this.datePipe.transform(new Date(), "yyyyMMdd");
             var url = "";
             url = d == null ? "" : d + number + "." + fileExt;
             this.UrlImageOne = url;
-
             if (
               this.data.SERVICE_IMAGE != undefined &&
               this.data.SERVICE_IMAGE.trim() != ""
@@ -689,16 +637,13 @@ export class B2bsubServiceFormComponent implements OnInit {
                 url = arr[5];
               }
             }
-
             this.progressBarImageOne = true;
             this.urlImageOneShow = true;
             this.isSpinning = true;
-
             this.timer = this.api
               .onUpload("Item", this.fileURL, this.UrlImageOne)
               .subscribe((res) => {
                 this.data.SERVICE_IMAGE = this.UrlImageOne;
-
                 if (res.type === HttpEventType.Response) {
                 }
                 if (res.type === HttpEventType.UploadProgress) {
@@ -714,7 +659,6 @@ export class B2bsubServiceFormComponent implements OnInit {
                   }
                 } else if (res.type == 2 && res.status != 200) {
                   this.message.error("Failed To Upload Catalogue Image...", "");
-
                   this.isSpinning = false;
                   this.progressBarImageOne = false;
                   this.percentImageOne = 0;
@@ -725,7 +669,6 @@ export class B2bsubServiceFormComponent implements OnInit {
                       "Catalogue Image Uploaded Successfully...",
                       ""
                     );
-
                     this.isSpinning = false;
                     this.data.SERVICE_IMAGE = this.UrlImageOne;
                   } else {
@@ -748,14 +691,12 @@ export class B2bsubServiceFormComponent implements OnInit {
             this.data.SERVICE_IMAGE = null;
           }
         };
-
         img.onerror = () => {
           this.message.error(
             "Failed to load image for dimension validation.",
             ""
           );
         };
-
         img.src = e.target.result;
       };
       reader.readAsDataURL(this.fileURL);
@@ -768,53 +709,40 @@ export class B2bsubServiceFormComponent implements OnInit {
       this.data.SERVICE_IMAGE = null;
     }
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = "";
-
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + "Item/" + link;
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   image1DeleteConfirm(data: any) {
     this.UrlImageOne = null;
     this.data.SERVICE_IMAGE = " ";
-
     this.fileURL = null;
   }
   deleteCancel() { }
-
   removeImage() {
     this.data.URL = " ";
     this.data.SERVICE_IMAGE = " ";
     this.fileURL = null;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   imageshow;
-
   expressAvailable(event: any) {
     if (event == true) {
       this.data.EXPRESS_COST = null;
     }
   }
-
   subServiceAvailable(event: any) {
     if (event == true) {
       this.data.B2B_PRICE = null;
@@ -837,54 +765,52 @@ export class B2bsubServiceFormComponent implements OnInit {
       this.data.QTY = 1;
     }
   }
-
   restrictMinutes(event: any): void {
     const input = event.target.value;
     if (input > 59) {
-      event.target.value = 59; // Prevent values greater than 59
-      this.data.DURARTION_MIN = 59; // Update the model value
+      event.target.value = 59; 
+      this.data.DURARTION_MIN = 59; 
     } else if (input < 0) {
-      event.target.value = ""; // Prevent negative values
+      event.target.value = ""; 
       this.data.DURARTION_MIN = null;
     } else {
-      this.data.DURARTION_MIN = input; // Update model for valid input
+      this.data.DURARTION_MIN = input; 
     }
   }
   restrictMinutes1(event: any): void {
     const input = event.target.value;
     if (input > 59) {
-      event.target.value = 59; // Prevent values greater than 59
-      this.data.PREPARATION_MINUTES = 59; // Update the model value
+      event.target.value = 59; 
+      this.data.PREPARATION_MINUTES = 59; 
     } else if (input < 0) {
-      event.target.value = ""; // Prevent negative values
+      event.target.value = ""; 
       this.data.PREPARATION_MINUTES = null;
     } else {
-      this.data.PREPARATION_MINUTES = input; // Update model for valid input
+      this.data.PREPARATION_MINUTES = input; 
     }
   }
-
   restrictHours(event: any): void {
     const input = event.target.value;
     if (input > 24) {
-      event.target.value = 24; // Prevent values greater than 60
-      this.data.DURARTION_HOUR = 24; // Update the model value
+      event.target.value = 24; 
+      this.data.DURARTION_HOUR = 24; 
     } else if (input < 0) {
-      event.target.value = ""; // Prevent negative values
+      event.target.value = ""; 
       this.data.DURARTION_HOUR = null;
     } else {
-      this.data.DURARTION_HOUR = input; // Update model for valid input
+      this.data.DURARTION_HOUR = input; 
     }
   }
   restrictHours1(event: any): void {
     const input = event.target.value;
     if (input > 24) {
-      event.target.value = 24; // Prevent values greater than 60
-      this.data.PREPARATION_HOURS = 24; // Update the model value
+      event.target.value = 24; 
+      this.data.PREPARATION_HOURS = 24; 
     } else if (input < 0) {
-      event.target.value = ""; // Prevent negative values
+      event.target.value = ""; 
       this.data.PREPARATION_HOURS = null;
     } else {
-      this.data.PREPARATION_HOURS = input; // Update model for valid input
+      this.data.PREPARATION_HOURS = input; 
     }
   }
 }

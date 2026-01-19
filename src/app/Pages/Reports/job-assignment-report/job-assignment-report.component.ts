@@ -7,7 +7,6 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
-
 @Component({
   selector: 'app-job-assignment-report',
   templateUrl: './job-assignment-report.component.html',
@@ -30,7 +29,6 @@ export class JobAssignmentReportComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -38,7 +36,6 @@ export class JobAssignmentReportComponent {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   formTitle = 'Job Assignment Report';
   excelData: any = [];
   exportLoading: boolean = false;
@@ -58,7 +55,6 @@ export class JobAssignmentReportComponent {
   savedFilters: any[] = [];
   TabId: number;
   isDeleting: boolean = false;
-
   drawerTitle!: string;
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
@@ -71,7 +67,6 @@ export class JobAssignmentReportComponent {
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   totalRecords = 1;
-
   columns: string[][] = [
     ['JOB_CARD_NO', 'JOB_CARD_NO'],
     ['TECHNICIAN_NAME', 'TECHNICIAN_NAME'],
@@ -89,9 +84,7 @@ export class JobAssignmentReportComponent {
   }
   territoryData: any = [];
   territoryData1: any = [];
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -100,7 +93,6 @@ export class JobAssignmentReportComponent {
       tooltip.hide();
     }
   }
-
   getTeritory() {
     this.api.getTeritory(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -117,9 +109,6 @@ export class JobAssignmentReportComponent {
       }
     );
   }
-
-  // categories1: any = [];
-
   getteritorydata() {
     this.api.getTeritory(0, 0, '', '', ' AND IS_ACTIVE=1').subscribe((data) => {
       if (data['code'] == '200') {
@@ -134,56 +123,36 @@ export class JobAssignmentReportComponent {
       }
     });
   }
-
   territoryVisible = false;
   selectedterritory: any[] = [];
   isterritorynameFilterApplied = false;
   onTerritoryChange(): void {
     if (this.selectedterritory?.length) {
       this.search();
-      this.isterritorynameFilterApplied = true; // Filter applied if selectedCategories has values
+      this.isterritorynameFilterApplied = true; 
     } else {
       this.search();
-      this.isterritorynameFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isterritorynameFilterApplied = false; 
     }
-    // this.search();
   }
-
-  // importInExcel() {
-  //   this.search(true, true);
-  // }
-
   jobtext: string = '';
   isjobFilterApplied: boolean = false;
   jobvisible = false;
-
   techniciantext: string = '';
   istechnicianFilterApplied: boolean = false;
   technicianvisible = false;
-
   usertext: string = '';
   usernameVisible = false;
   isuserFilterApplied: boolean = false;
-  // mobiletext: string = '';
-  // ismobileFilterApplied: boolean = false;
-  // mobileVisible = false;
-
   scheduleDateVisible = false;
   isscheduleDateFilterApplied: boolean = false;
-
   reset(): void {
     this.searchText = '';
     this.jobtext = '';
     this.techniciantext = '';
     this.usertext = '';
-    // this.emailtext = "";
-    // this.servicename = "";
-    // this.ratingtext = "";
-    // this.commenttext = "";
-
     this.search();
   }
-
   listOfFilter: any[] = [
     { text: 'Completed', value: 'Completed' },
     { text: 'Assigned', value: 'Assigned' },
@@ -194,23 +163,14 @@ export class JobAssignmentReportComponent {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
-    // if (this.nametext.trim() === "") {
-    //   this.searchText = "";
-    // } else if (this.nametext.length >= 3 ) {
-    //   this.search();
-    // }
-
     if (this.jobtext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isjobFilterApplied = true;
@@ -218,7 +178,6 @@ export class JobAssignmentReportComponent {
       this.search();
       this.isjobFilterApplied = false;
     }
-
     if (this.techniciantext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.istechnicianFilterApplied = true;
@@ -234,13 +193,10 @@ export class JobAssignmentReportComponent {
       this.isuserFilterApplied = false;
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -255,7 +211,6 @@ export class JobAssignmentReportComponent {
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -263,13 +218,12 @@ export class JobAssignmentReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -284,21 +238,15 @@ export class JobAssignmentReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -312,7 +260,6 @@ export class JobAssignmentReportComponent {
       );
     this.filterQuery = '';
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -325,20 +272,15 @@ export class JobAssignmentReportComponent {
       this.sortKey = 'JOB_CARD_NO';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -349,7 +291,6 @@ export class JobAssignmentReportComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.jobtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -358,7 +299,6 @@ export class JobAssignmentReportComponent {
     } else {
       this.isjobFilterApplied = false;
     }
-
     if (this.techniciantext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -367,7 +307,6 @@ export class JobAssignmentReportComponent {
     } else {
       this.istechnicianFilterApplied = false;
     }
-
     if (this.usertext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -376,29 +315,17 @@ export class JobAssignmentReportComponent {
     } else {
       this.isuserFilterApplied = false;
     }
-
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `JOB_CARD_STATUS = '${this.statusFilter}'`;
     }
-
-    // if (this.mobiletext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.mobiletext.trim()}%'`;
-    //   this.ismobileFilterApplied = true;
-    // } else {
-    //   this.ismobileFilterApplied = false;
-    // }
-
-    // Date Range Filter
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           ` DATE(ASSIGNED_DATE) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -411,32 +338,11 @@ export class JobAssignmentReportComponent {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `TERRITORY_ID IN (${this.selectedterritory.join(',')})`; 
     }
-
-    // if (this.ratingtext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.ratingtext.trim()}%'`;
-    //   this.isratingNameFilterApplied = true;
-    // } else {
-    //   this.isratingNameFilterApplied = false;
-    // }
-
-    // if (this.commenttext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `TECHNICIAN_NAME LIKE '%${this.commenttext.trim()}%'`;
-    //   this.iscommentFilterApplied = true;
-    // } else {
-    //   this.iscommentFilterApplied = false;
-    // }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     const finalDataList =
       this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
-
     if (exportInExcel == false) {
       this.api
         .getjobAssignmentReport(
@@ -481,7 +387,6 @@ export class JobAssignmentReportComponent {
     } else {
       this.loadingRecords = false;
       this.exportLoading = true;
-
       this.api
         .getjobAssignmentReport(
           0,
@@ -505,7 +410,6 @@ export class JobAssignmentReportComponent {
           (err: HttpErrorResponse) => {
             this.loadingRecords = false;
             this.exportLoading = false;
-
             if (err.status === 0) {
               this.message.error(
                 'Unable to connect. Please check your internet or server connection and try again shortly.',
@@ -519,7 +423,6 @@ export class JobAssignmentReportComponent {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -528,22 +431,18 @@ export class JobAssignmentReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -552,7 +451,6 @@ export class JobAssignmentReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -569,19 +467,15 @@ export class JobAssignmentReportComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Job Assignment Report Filter';
     this.drawerFilterVisible = true;
     this.filterFields[4]['options'] = this.territoryData1;
-    // Edit Code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -598,7 +492,6 @@ export class JobAssignmentReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -615,7 +508,6 @@ export class JobAssignmentReportComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -625,13 +517,11 @@ export class JobAssignmentReportComponent {
       FILTER_JSON: {},
     };
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
     if (this.excelData.length > 0) {
       for (var i = 0; i < this.excelData.length; i++) {
-        // obj1["Assigned Date"] = this.excelData[i]["SCHEDULED_DATE_TIME"];
         obj1['Assigned Date'] = this.excelData[i]['ASSIGNED_DATE']
           ? this.datepipe.transform(
             this.excelData[i]['ASSIGNED_DATE'],
@@ -663,7 +553,6 @@ export class JobAssignmentReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -680,9 +569,7 @@ export class JobAssignmentReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -708,11 +595,8 @@ export class JobAssignmentReportComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -720,30 +604,23 @@ export class JobAssignmentReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.filterFields[4]['options'] = this.territoryData1;
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -751,32 +628,23 @@ export class JobAssignmentReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-  // excelData: any = [];
-  // exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'ASSIGNED_DATE',
@@ -806,7 +674,6 @@ export class JobAssignmentReportComponent {
       ],
       placeholder: 'Enter Job No',
     },
-
     {
       key: 'TECHNICIAN_NAME',
       label: 'Assigned Technician',
@@ -821,7 +688,6 @@ export class JobAssignmentReportComponent {
       ],
       placeholder: 'Enter Technician Name',
     },
-
     {
       key: 'USER_NAME',
       label: 'Assigned By',
@@ -851,7 +717,6 @@ export class JobAssignmentReportComponent {
       options: [],
       placeholder: 'Enter Territory Name',
     },
-
     {
       key: 'JOB_CARD_STATUS',
       label: 'Status',
@@ -868,14 +733,11 @@ export class JobAssignmentReportComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -884,7 +746,7 @@ export class JobAssignmentReportComponent {
         this.isscheduleDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isscheduleDateFilterApplied = false;
     }

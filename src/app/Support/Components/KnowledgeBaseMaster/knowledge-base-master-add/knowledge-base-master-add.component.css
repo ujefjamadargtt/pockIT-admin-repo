@@ -4,38 +4,79 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
-
-.container {  
+.container {
   max-width: 100%;
   margin-right: auto;
-  margin-left: auto;    
+  margin-left: auto;
 }
-
 .quote {
-    color: #8cc540;
-    font-style: italic;
+  color: #8cc540;
+  font-style: italic;
 }
-
 .redText {
-    color: Red;
-    font-size: 12px;
-    font-family: Arial;
+  color: Red;
+  font-size: 12px;
+  font-family: Arial;
 }
-
 h1.titleText {
-    color: #69a8cf;
-    text-align: left;
-    margin-top: 40px;
-    font-weight: normal;
+  color: #69a8cf;
+  text-align: left;
+  margin-top: 40px;
+  font-weight: normal;
 }
-
 :host::ng-deep angular-editor .angular-editor-toolbar button {
-  position: relative; /* Ensures toolbar buttons are positioned relative */
+  position: relative;
 }
-
 :host::ng-deep angular-editor .angular-editor-toolbar .color-picker-dropdown {
-  left: auto !important; /* Adjust the horizontal positioning */
-  right: 0; /* Ensures it opens on the correct side */
-  z-index: 1000; /* Prevents overlapping issues */
+  left: auto !important;
+  right: 0;
+  z-index: 1000;
+}
+.kb-title-length,
+.kb-desc-length,
+.kb-link-length {
+  color: red;
+  font-size: 10px;
+}
+.kb-desc-error {
+  color: red;
+  font-size: 11px;
+}
+.kb-upload-btn {
+  padding: 0px 7px;
+  font-size: 10px;
+}
+.kb-hidden-input {
+  display: none ! important;
+}
+.kb-doc-link {
+  color: blue;
+  margin-right: 9px;
+}
+.kb-delete-icon {
+  cursor: pointer;
+}
+.kb-footer-cancel {
+  margin-right: 12px;
+}
+.kb-footer-menu {
+  border-radius: 4px;
+  color: white !important;
+}
+.kb-footer-link {
+  color: white !important;
+}
+.kb-image-view {
+  max-height: 80vh;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.kb-image-iframe {
+  width: 950px;
+  height: 550px;
+  max-width: 100%;
+  max-height: 80vh;
+  border: none;
 }

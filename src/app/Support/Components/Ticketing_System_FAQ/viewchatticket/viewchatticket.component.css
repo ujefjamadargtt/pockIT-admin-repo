@@ -2,21 +2,17 @@
    height: 5px;
    width: 5px;
  }
-
  ::-webkit-scrollbar-track {
    box-shadow: inset 0 0 5px rgb(233, 233, 233);
    border-radius: 10px;
  }
-
  ::-webkit-scrollbar-thumb {
    background: rgb(131, 131, 131);
    border-radius: 10px;
  }
-
  ::-webkit-scrollbar-thumb:hover {
    background: #aaaaaa;
  }
-
  .name {
    height: auto;
    width: 480px;
@@ -27,7 +23,6 @@
    text-align: center;
    color: white;
  }
-
  .name:hover {
    height: auto;
    width: 480px;
@@ -38,7 +33,6 @@
    text-align: center;
    color: white;
  }
-
  .noty {
   height: auto;
   width: 480px;
@@ -48,7 +42,6 @@
   white-space: nowrap;
   text-align: center;
 }
-
 .noty:hover {
   height: auto;
   width: 480px;
@@ -57,4 +50,195 @@
   white-space: normal;
   word-wrap: break-word;
   text-align: center;
+}
+.spinner-container {
+    text-align: center;
+}
+.spinner-col {
+    text-align: center;
+}
+.chat-form {
+    margin-bottom: 60px;
+}
+.chat-header {
+    margin-top: -45px;
+    position: fixed;
+    z-index: 10;
+    width: 485px;
+    cursor: pointer;
+}
+.header-content {
+    padding: 5px;
+    border-radius: 0px 0px 20px 20px;
+    background-color: #1890ff;
+    border: 1px solid white;
+}
+.name {
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+.date-row {
+    text-align: center;
+    margin-top: 20px;
+}
+.date-col {
+    padding-top: 16px;
+}
+.date-tag {
+    font-weight: bold;
+}
+.message-row {
+    margin-top: 10px;
+}
+.system-message-col {
+    text-align: center;
+}
+.system-message-tag {
+    padding: 8px 12px;
+}
+.noty {
+    font-style: italic;
+    margin-bottom: 5px;
+}
+.staff-message-col {
+    padding: 5px 10px;
+    border: 1px solid #1890ff;
+    border-radius: 0px 20px 20px 20px;
+    background-color: white;
+    font-size: 12px;
+}
+.user-message-col {
+    padding: 5px 10px;
+    border: 1px solid #1890ff;
+    border-radius: 20px 0px 20px 20px;
+    background-color: #b1e1ff;
+    color: black;
+    font-size: 12px;
+}
+.sender-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.message-text {
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+.message-text-self {
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+.message-image {
+    width: 100%;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.message-time-right {
+    text-align: right;
+    font-size: 11px;
+    color: #666;
+}
+.no-data-container {
+    font-weight: 600;
+    margin-top: 20px;
+}
+.scroll-spacer {
+    user-select: none;
+}
+.footer {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #e8e8e8;
+}
+.reply-section {
+    margin-bottom: 15px;
+}
+.image-close-container {
+    text-align: center;
+    margin-bottom: 5px;
+}
+.image-close-icon {
+    color: #ff4d4f;
+    cursor: pointer;
+    font-size: 18px;
+}
+.image-preview-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.preview-image {
+    height: 150px;
+    max-width: 100%;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+}
+.reply-textarea {
+    border-radius: 5px;
+    resize: vertical;
+    min-height: 80px;
+}
+.reply-controls-row {
+    width: 100%;
+    margin-top: 10px;
+}
+.attachment-col {
+    text-align: center;
+}
+.attachment-button {
+    padding: 8px 15px;
+}
+.attachment-icon {
+    font-size: 20px;
+}
+.file-input {
+    display: none;
+}
+.send-col {
+    text-align: center;
+}
+.send-button {
+    padding: 8px 20px;
+}
+.ticket-action {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.closed-action {
+    margin-top: 20px;
+}
+.answered-action {
+    margin-top: 20px;
+}
+.banned-action {
+    margin-top: 15px;
+}
+.hold-action {
+    margin-top: 15px;
+}
+.action-question {
+    font-size: 17px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.reopen-button {
+    padding: 8px 20px;
+}
+.close-button {
+    padding: 8px 20px;
+}
+.banned-label {
+    white-space: pre-wrap;
+    font-weight: bold;
+    color: #ff4d4f;
+}
+.hold-label {
+    white-space: pre-wrap;
+    font-weight: bold;
+    color: #faad14;
+}
+.scroll-down-button {
+    margin-left: 10px;
+    display: none;
 }

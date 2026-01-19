@@ -1,45 +1,173 @@
-th {
-    text-align: center !important;
-    vertical-align: middle !important;
-    /* font-weight: bold; */
+.back-icon {
+  font-weight: bold;
+  cursor: pointer;
 }
-
-.select{
+.top-action-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-item {
+  width: 47px;
+}
+.new-btn-item {
+  margin-right: 0;
+}
+.table-nowrap {
+  white-space: pre-line;
+}
+th {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.filter-name {
+  font-size: 25px;
+  white-space: nowrap;
+}
+.applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.select {
   width: 200px;
   padding: 8px;
-  display: block;
 }
-
 .search-box {
-    padding: 8px;
-  }
-
-  .search-box input {
-    width: 188px;
-    display: block;
-  }
-
-  .search-box button {
-    width: 90px;
-  }
-
-  .search-button {
-    margin-right: 8px;
-  }
-
-  nz-select {
-    width: 100%;
-  }
-
-  :host::ng-deep .ant-card-body {
-    padding: 0px;
-  }
-
-
-  .truncate-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; /* Adjust as needed */
-    display: inline-block;
-  }
+  padding: 8px;
+}
+.search-box input {
+  width: 188px;
+}
+nz-select {
+  width: 100%;
+}
+.action-tag {
+  cursor: pointer;
+}
+.action-tag span {
+  font-size: 15px;
+}
+:host::ng-deep .ant-card-body {
+  padding: 0;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+.filter-row {
+  margin-top: 7px;
+}
+.filter-action-container {
+  display: flex !important;
+  justify-content: space-between;
+}
+.filter-action-container {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-tag-view {
+  margin-right: 0;
+}
+.filter-tag-icon {
+  font-size: 10px !important;
+}
+.filter-row-top {
+  padding-top: 0px;
+}
+.spin-container {
+  text-align: center;
+}
+.no-data-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-grid {
+  margin-bottom: 8px;
+}
+.filter-col {
+  margin-bottom: 8px;
+}
+.filter-actions-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-btn {
+  margin-right: 10px;
+}
+.new-filter-btn {
+  margin-right: 10px;
+}
+.drawerBodyStyle {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.drawerPincodeBodyStyle {
+  height: calc(105% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.drawerServiceBodyStyle {
+  height: calc(105% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.drawerFilterBodyStyle {
+  height: calc(100% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.drawerServiceMapedBodyStyle {
+  height: calc(105% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.drawerSlotsBodyStyle {
+  height: calc(105% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+  padding-top: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.drawerCalendarBodyStyle {
+  height: calc(105% - 55px);
+  overflow: auto;
+  padding-bottom: 53px;
+}
+.modal-text-center {
+  text-align: center;
+}
+.fw-bold{
+font-weight: bold; text-align: center
+}
+.cP{
+cursor: pointer
+}
+.w-100
+{
+  width: 100%
+}

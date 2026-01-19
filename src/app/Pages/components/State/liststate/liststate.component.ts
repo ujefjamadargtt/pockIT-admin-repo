@@ -1,5 +1,3 @@
-// import { StateMaster } from '../../Models/state';
-
 import { Component } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -8,7 +6,6 @@ import { StateMaster } from '../../../Models/state';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-liststate',
   templateUrl: './liststate.component.html',
@@ -34,8 +31,6 @@ export class ListstateComponent {
     ['SHORT_CODE', 'SHORT_CODE'],
   ];
   adminId: any;
-
-  // Column Filter
   selectedCountries: number[] = [];
   countryVisible: boolean = false;
   statetext: string = '';
@@ -48,7 +43,6 @@ export class ListstateComponent {
   visible = false;
   ShortCodevisible = false;
   Shortcodetext: string = '';
-  // Main filter
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   columns1: { label: string; value: string }[] = [
@@ -56,7 +50,6 @@ export class ListstateComponent {
     { label: 'State', value: 'NAME' },
     { label: 'Status', value: 'IS_ACTIVE' },
   ];
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -73,7 +66,6 @@ export class ListstateComponent {
       groups: [],
     },
   ];
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -90,7 +82,6 @@ export class ListstateComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -109,7 +100,6 @@ export class ListstateComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   ngOnInit(): void {
     this.adminId = Number(sessionStorage.getItem('roleId'));
@@ -117,7 +107,7 @@ export class ListstateComponent {
     this.getCountyData();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
   }
   isStateApplied = false;
@@ -138,7 +128,6 @@ export class ListstateComponent {
       this.isShortCodeApplied = false;
     }
   }
-
   countryData: any = [];
   getCountyData() {
     this.api
@@ -158,16 +147,14 @@ export class ListstateComponent {
   }
   iscountryFilterApplied = false;
   onCountryChange(): void {
-    //this.search();
     if (this.selectedCountries?.length) {
       this.search();
-      this.iscountryFilterApplied = true; // Filter applied if selectedCategories has values
+      this.iscountryFilterApplied = true; 
     } else {
       this.search();
-      this.iscountryFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.iscountryFilterApplied = false; 
     }
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
@@ -179,7 +166,6 @@ export class ListstateComponent {
       this.search(true);
     }
   }
-
   distinctData: any = [];
   onFilterClick(columnKey: string): void {
     this.api.getDistinctData(97, columnKey).subscribe(
@@ -196,7 +182,6 @@ export class ListstateComponent {
       }
     );
   }
-
   isFilterApplied;
   statekeyup() {
     if (this.statetext.length >= 3) {
@@ -207,10 +192,8 @@ export class ListstateComponent {
       this.search();
       this.isFilterApplied = false;
     } else if (this.statetext.length < 3) {
-      // this.message.warning("Please Enter at least Three Characters ...", "");
     }
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -220,20 +203,15 @@ export class ListstateComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -244,8 +222,6 @@ export class ListstateComponent {
           .join(' OR ') +
         ')';
     }
-
-    // City Filter
     if (this.statetext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.statetext.trim()}%'`;
@@ -255,26 +231,19 @@ export class ListstateComponent {
         (likeQuery ? ' AND ' : '') +
         `SHORT_CODE LIKE '%${this.Shortcodetext.trim()}%'`;
     }
-    // Country Filter
     if (this.selectedCountries.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; 
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-    // Call API with updated search query
     this.api
       .getState(
         this.pageIndex,
@@ -316,18 +285,15 @@ export class ListstateComponent {
         }
       );
   }
-
   reset(): void {
     this.searchText = '';
     this.statetext = '';
     this.Shortcodetext = '';
     this.search();
   }
-
   add(): void {
     this.drawerTitle = 'Add New State';
     this.drawerData = new StateMaster();
-
     this.api.getState(1, 1, 'SEQ_NO', 'desc', '').subscribe(
       (data) => {
         if (data['count'] == 0) {
@@ -338,56 +304,42 @@ export class ListstateComponent {
       },
       (err) => { }
     );
-
     this.drawerVisible = true;
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-    //
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   edit(data: StateMaster): void {
     this.drawerTitle = ' Update State';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
-  //Drawer Methods
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
-  // new filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -396,17 +348,13 @@ export class ListstateComponent {
       this.loadFilters();
     }
   }
-
   filterloading: boolean = false;
   updateButton: any;
   updateBtn: any;
-
   whichbutton: any;
   isDeleting: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -414,16 +362,12 @@ export class ListstateComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -438,21 +382,15 @@ export class ListstateComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -466,7 +404,6 @@ export class ListstateComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -475,10 +412,7 @@ export class ListstateComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
-    //  
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -494,12 +428,10 @@ export class ListstateComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //  
           } else {
             this.isfilterapply = true;
           }
@@ -522,20 +454,16 @@ export class ListstateComponent {
       }
     );
   }
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   filterData: any;
   currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'State Filter';
     this.drawerFilterVisible = true;
     this.filterFields[0]['options'] = this.countryData;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -544,13 +472,9 @@ export class ListstateComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -567,7 +491,6 @@ export class ListstateComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -585,7 +508,6 @@ export class ListstateComponent {
       },
     ];
   }
-
   filterFields: any[] = [
     {
       key: 'COUNTRY_NAME',
@@ -616,7 +538,6 @@ export class ListstateComponent {
       ],
       placeholder: 'Enter State Name',
     },
-
     {
       key: 'SHORT_CODE',
       label: 'Short Code',
@@ -645,7 +566,6 @@ export class ListstateComponent {
       ],
       placeholder: 'Enter Sequence Number',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -661,13 +581,11 @@ export class ListstateComponent {
       placeholder: 'Select Status',
     },
   ];
-
   convertToQuery(filterGroups: any[]): string {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -681,26 +599,17 @@ export class ListstateComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   oldFilter: any[] = [];
   isLoading = false;
-
   public commonFunction = new CommonFunctionService();
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -708,70 +617,45 @@ export class ListstateComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  //TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
   TabId: number;
-
   drawerfilterClose(buttontype, updateButton): void {
-    //  
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-      //  
-      //  
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-      //  
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
-  // get filtercloseCallback() {
-  //   return this.drawerfilterClose.bind(this);
-  // }
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterFields[0]['options'] = this.countryData;
-
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -779,9 +663,7 @@ export class ListstateComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

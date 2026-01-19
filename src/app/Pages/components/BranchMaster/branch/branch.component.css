@@ -2,24 +2,65 @@
   border: 1px dashed #e9e9e9;
   border-radius: 6px;
   padding: 8px;
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin: 12px 0;
   background-color: #fafafa;
 }
 
-.header {
-  position: absolute;
-  top: 0px;
+.section-title {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.char-count {
+  color: red;
+  font-size: 10px;
+  margin: 0;
+}
+
+.full-width {
   width: 100%;
-  border-top: 1px solid rgb(232, 232, 232);
-  padding: 10px 16px;
+}
+
+.footer {
   text-align: right;
-  right: 0px;
+  margin-top: 12px;
+}
+
+.footer-btn {
+  margin-right: 8px;
+}
+
+.menuc {
+  border-radius: 4px;
+  background-color: #1890ff !important;
+}
+
+.menuc a {
+  color: #ffffff !important;
 }
 
 nz-form-item {
   display: inline-block;
-  margin-bottom: 5px;
   width: -webkit-fill-available;
-  padding: 0px 10px;
+  padding: 0 10px;
+  margin-bottom: 5px;
+}
+
+.menuc11 {
+  border-radius: 4px;
+  color: white !important;
+}
+
+.btncolor {
+  color: white !important;
+}
+
+.cm-save-new-menu {
+  border-radius: 4px;
+  color: white !important;
+  background-color: #092B9C !important
+}
+
+.cm-save-new-link {
+  color: white !important;
 }

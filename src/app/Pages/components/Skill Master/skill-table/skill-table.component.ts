@@ -24,7 +24,7 @@ export class SkillTableComponent {
   chapters: any = [];
   isLoading = true;
   hide: boolean = true;
-  // Edit Code 3
+  
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -97,15 +97,15 @@ export class SkillTableComponent {
     private router: Router
   ) { }
 
-  // keyup() {
-  //   if (this.searchText.length >= 3) {
-  //     this.search();
-  //   }
-  //   else if (this.searchText.length === 0) {
-  //     this.dataList = []
-  //     this.search()
-  //   }
-  // }
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   onKeyup(event: KeyboardEvent): void {
     if (this.searchText.length >= 3 && event.key === 'Enter') {
@@ -129,7 +129,7 @@ export class SkillTableComponent {
 
   onKeypressEvent(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
+    
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
@@ -141,7 +141,7 @@ export class SkillTableComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
+    
   }
 
   search(reset: boolean = false) {
@@ -158,17 +158,17 @@ export class SkillTableComponent {
       sort = '';
     }
 
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    // }
+    
+    
+    
+    
+    
+    
+    
 
     var likeQuery = '';
     var globalSearchQuery = '';
-    // Global Search (using searchText)
+    
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -198,7 +198,7 @@ export class SkillTableComponent {
       this.isDescFilterApplied = false;
     }
 
-    // Status Filter
+    
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -206,7 +206,7 @@ export class SkillTableComponent {
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
 
-    // Combine global search query and column-specific search query
+    
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
 
     this.api
@@ -318,7 +318,7 @@ export class SkillTableComponent {
     this.search(true);
   }
 
-  // new  Main filter
+  
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
@@ -356,7 +356,7 @@ export class SkillTableComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
@@ -391,9 +391,9 @@ export class SkillTableComponent {
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
+            
+            
+            
 
             this.filterQuery = '';
           } else {
@@ -419,7 +419,7 @@ export class SkillTableComponent {
   }
 
   deleteItem(item: any): void {
-    //  
+    
 
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -442,7 +442,7 @@ export class SkillTableComponent {
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //  
+            
           } else {
             this.isfilterapply = true;
           }
@@ -467,7 +467,7 @@ export class SkillTableComponent {
   }
 
   applyfilter(item) {
-    //  
+    
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -513,7 +513,7 @@ export class SkillTableComponent {
     this.drawerTitle = 'Skill Filter';
     this.drawerFilterVisible = true;
 
-    // Edit code 2
+    
 
     this.editButton = 'N';
     this.FILTER_NAME = '';
@@ -624,14 +624,14 @@ export class SkillTableComponent {
   isDeleting: boolean = false;
 
   selectedFilter: string | null = null;
-  // filterQuery = '';
-  // applyfilter(item) {
-  //   this.filterClass = 'filter-invisible';
-  //   this.selectedFilter = item.ID;
-  //   this.isfilterapply = true;
-  //   this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
-  //   this.search(true);
-  // }
+  
+  
+  
+  
+  
+  
+  
+  
 
   isModalVisible = false;
   selectedQuery: string = '';
@@ -641,7 +641,7 @@ export class SkillTableComponent {
     this.isModalVisible = true;
   }
 
-  // Edit Code 1
+  
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;

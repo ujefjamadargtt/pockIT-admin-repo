@@ -1,97 +1,100 @@
 <div>
-  <div nz-row *ngIf="isSpinning">
-    <div nz-col nzSpan="24" style="text-align: center">
+  <div nz-row *ngIf="isSpinning" class="spinner-container">
+    <div nz-col nzSpan="24" class="spinner-col">
       <nz-spin [nzSpinning]="isSpinning"></nz-spin>
     </div>
   </div>
-
-  <form nz-form style="margin-bottom: 60px" *ngIf="!isSpinning">
+  <form nz-form class="chat-form" *ngIf="!isSpinning">
     <nz-spin [nzSpinning]="isSpinning">
-      <div nz-row style="
-          margin-top: -45px;
-          position: fixed;
-          z-index: 10;
-          width: 485px;
-          cursor: pointer;
-        ">
-        <div nz-col nzSpan="24" style="
-            padding: 5px;
-            border-radius: 0px 0px 20px 20px;
-            background-color: #1890ff;
-            border: 1px solid white;
-          ">
+      <div nz-row class="chat-header">
+        <div nz-col nzSpan="24" class="header-content">
           <div class="name">
             {{ newstr }}
           </div>
         </div>
       </div>
       <div *ngFor="let data of data2; let i = index">
-        <div nz-row *ngIf="data.data.length > 0" style="text-align: center; margin-top: 20px">
-          <div nz-col nzSpan="24" style="padding-top: 16px">
-            <nz-tag [nzColor]="'red'">
+        <div nz-row *ngIf="data.data.length > 0" class="date-row">
+          <div nz-col nzSpan="24" class="date-col">
+            <nz-tag [nzColor]="'red'" class="date-tag">
               {{
-              (data.key | date : "ddMMyyyy") ===
-              (todayDate | date : "ddMMyyyy")
-              ? "Today"
-              : (data.key | date : "dd/MM/yyyy")
+                (data.key | date : "ddMMyyyy") ===
+                (todayDate | date : "ddMMyyyy")
+                  ? "Today"
+                  : (data.key | date : "dd/MM/yyyy")
               }}
             </nz-tag>
           </div>
         </div>
-
-        <div nz-row *ngFor="let data of data.data" style="margin-top: 10px">
-          <!-- Sender X (Centered Message) -->
-          <div nz-col nzSpan="24" *ngIf="data.SENDER == 'X'" style="text-align: center">
-            <nz-tag [nzColor]="'green'">
+        <div nz-row *ngFor="let data of data.data" class="message-row">
+          <div
+            nz-col
+            nzSpan="24"
+            *ngIf="data.SENDER == 'X'"
+            class="system-message-col"
+          >
+            <nz-tag [nzColor]="'green'" class="system-message-tag">
               <div class="noty">{{ data.DESCRIPTION }}</div>
-              <div style="text-align: right">
+              <div class="message-time-right">
                 {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
               </div>
             </nz-tag>
           </div>
-
-          <!-- Sender S (Left-Aligned) -->
-          <div nz-col nzSpan="14" *ngIf="data.SENDER == 'S'" style="
-              padding: 5px 10px;
-              border: 1px solid #1890ff;
-              border-radius: 0px 20px 20px 20px;
-              background-color: white;
-              font-size: 12px;
-            ">
-            <div style="font-weight: bold">
+          <div
+            nz-col
+            nzSpan="14"
+            *ngIf="data.SENDER == 'S'"
+            class="staff-message-col"
+          >
+            <div class="sender-name">
               {{ getSenderEmpName(data.SENDER_ID) }}
             </div>
-            <div>{{ data.DESCRIPTION }}</div>
-            <img *ngIf="data.URL" [src]="getUrl(data.URL)" (click)="urlClick(data.URL)"
-              style="width: 100%; margin-bottom: 5px" />
-            <div style="text-align: right">
+            <div class="message-text">{{ data.DESCRIPTION }}</div>
+            <img
+              *ngIf="data.URL"
+              [src]="getUrl(data.URL)"
+              (click)="urlClick(data.URL)"
+              class="message-image"
+            />
+            <div class="message-time-right">
               {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
             </div>
           </div>
-
-          <!-- Sender U (Right-Aligned for Current User) -->
-          <div nz-col nzOffset="10" nzSpan="14" *ngIf="data.SENDER == 'U' && data.SENDER_ID == decrepteduserID" style="
-              padding: 5px 10px;
-              border: 1px solid #1890ff;
-              border-radius: 20px 0px 20px 20px;
-              background-color: #b1e1ff;
-              color: black;
-              font-size: 12px;
-            ">
-            <div>{{ data.DESCRIPTION }}</div>
-            <img *ngIf="data.URL" [src]="getUrl(data.URL)" (click)="urlClick(data.URL)"
-              style="width: 100%; margin-bottom: 5px" />
-            <div style="text-align: right">
+          <div
+            nz-col
+            nzOffset="10"
+            nzSpan="14"
+            *ngIf="data.SENDER == 'U' && data.SENDER_ID == decrepteduserID"
+            class="user-message-col"
+          >
+            <div class="message-text-self">{{ data.DESCRIPTION }}</div>
+            <img
+              *ngIf="data.URL"
+              [src]="getUrl(data.URL)"
+              (click)="urlClick(data.URL)"
+              class="message-image"
+            />
+            <div class="message-time-right">
               {{ data.CREATED_MODIFIED_DATE | date : "HH:mm a" }}
             </div>
           </div>
         </div>
       </div>
-
-      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="data2.length <= 0"
-        style="font-weight: 600; margin-top: 10%; margin-top: 20px">
-        <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-          [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
+      <div
+        nz-col
+        nzXs="24"
+        nzSm="24"
+        nzMd="24"
+        nzLg="24"
+        nzXl="24"
+        *ngIf="data2.length <= 0"
+        class="no-data-container"
+      >
+        <nz-empty
+          nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+          [nzNotFoundContent]="contentTpl"
+          [nzNotFoundFooter]="footerTpl"
+        >
           <ng-template #contentTpl>
             <span> Data Not Found</span>
           </ng-template>
@@ -99,63 +102,107 @@
         </nz-empty>
       </div>
     </nz-spin>
-
-    <div id="bottom"></div>
+    <div id="bottom" class="bottom-anchor"></div>
   </form>
-
-  <div id=":h8" class="a1 aaA aMZ" style="user-select: none">
-    <div class="a3I" style="user-select: none">&nbsp;</div>
+  <div id=":h8" class="a1 aaA aMZ scroll-spacer">
+    <div class="a3I">&nbsp;</div>
   </div>
-
-  <div class="footer" *ngIf="userroleid1!==1 && userroleid1!==8">
-    <div nz-row *ngIf="data.STATUS == 'P' || data.STATUS == 'R' || data.STATUS == 'O'">
+  <div class="footer" *ngIf="userroleid1 !== 1 && userroleid1 !== 8">
+    <div
+      nz-row
+      *ngIf="data.STATUS == 'P' || data.STATUS == 'R' || data.STATUS == 'O'"
+      class="reply-section"
+    >
       <div nz-col nzSpan="24">
         <nz-form-item>
           <div nz-row>
-            <div nz-col nzSpan="24" style="text-align: center">
-              <span *ngIf="
+            <div nz-col nzSpan="24" class="image-close-container">
+              <span
+                *ngIf="
                   fileDataLOGO_URL != undefined || fileDataLOGO_URL != null
-                ">
-                <i *ngIf="imageSrc != ''" (click)="clearImg()" nz-icon nzType="close-circle" nzTheme="fill"></i>
+                "
+              >
+                <i
+                  *ngIf="imageSrc != ''"
+                  (click)="clearImg()"
+                  nz-icon
+                  nzType="close-circle"
+                  nzTheme="fill"
+                  class="image-close-icon"
+                ></i>
               </span>
             </div>
-
-            <div nz-col nzSpan="24" style="text-align: center">
-              <span *ngIf="
+            <div nz-col nzSpan="24" class="image-preview-container">
+              <span
+                *ngIf="
                   fileDataLOGO_URL != undefined || fileDataLOGO_URL != null
-                ">
-                <img [src]="imageSrc" *ngIf="imageSrc != ''" style="height: 150px; max-width: 100%" />
+                "
+              >
+                <img
+                  [src]="imageSrc"
+                  *ngIf="imageSrc != ''"
+                  class="preview-image"
+                />
               </span>
             </div>
           </div>
         </nz-form-item>
       </div>
-
       <div nz-col nzSpan="24">
         <nz-form-item>
-          <nz-form-control> {{userroleid}}
-            <textarea nz-input name="question" rows="3" [(ngModel)]="DESCRIPTION" style="border-radius: 5px"
-              placeholder="Mention Your Problem"></textarea>
+          <nz-form-control>
+            <textarea
+              nz-input
+              name="question"
+              rows="3"
+              [(ngModel)]="DESCRIPTION"
+              class="reply-textarea"
+              placeholder="Mention Your Problem"
+            ></textarea>
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <nz-row nzJustify="end" nzAlign="middle" nzGutter="10" style="width: 100%">
-        <nz-col>
+      <nz-row
+        nzJustify="end"
+        nzAlign="middle"
+        nzGutter="10"
+        class="reply-controls-row"
+      >
+        <nz-col class="attachment-col">
           <nz-form-item>
             <nz-form-control>
-              <button nz-button nzType="primary" (click)="file.click()" nz-tooltip="Upload Image">
-                <i nz-icon nzType="paper-clip" nzTheme="outline" style="font-size: 20px"></i>
+              <button
+                nz-button
+                nzType="primary"
+                (click)="file.click()"
+                nz-tooltip="Upload Image"
+                class="attachment-button"
+              >
+                <i
+                  nz-icon
+                  nzType="paper-clip"
+                  nzTheme="outline"
+                  class="attachment-icon"
+                ></i>
               </button>
-              <input type="file" #file style="display: none" (change)="onFileSelectedLOGO_URL($event)" />
+              <input
+                type="file"
+                #file
+                class="file-input"
+                (change)="onFileSelectedLOGO_URL($event)"
+              />
             </nz-form-control>
           </nz-form-item>
         </nz-col>
-
-        <nz-col>
+        <nz-col class="send-col">
           <nz-form-item>
             <nz-form-control>
-              <button nz-button nzType="primary" (click)="send(data)">
+              <button
+                nz-button
+                nzType="primary"
+                (click)="send(data)"
+                class="send-button"
+              >
                 Send
               </button>
             </nz-form-control>
@@ -163,37 +210,54 @@
         </nz-col>
       </nz-row>
     </div>
-
-    <div style="text-align: center" *ngIf="data.STATUS == 'C' && data.IS_TAKEN != 0">
-      <div style="font-size: 17px">Issue still open?</div>
-      <button nz-button nzType="primary" (click)="reopenTicket(data)" [nzLoading]="isSpinning">
+    <div
+      class="ticket-action closed-action"
+      *ngIf="data.STATUS == 'C' && data.IS_TAKEN != 0"
+    >
+      <div class="action-question">Issue still open?</div>
+      <button
+        nz-button
+        nzType="primary"
+        (click)="reopenTicket(data)"
+        [nzLoading]="isSpinning"
+        class="reopen-button"
+      >
         Re-Open Ticket
       </button>
     </div>
-
-    <div style="text-align: center" *ngIf="data.STATUS == 'R'">
-      <div style="font-size: 17px">Is this helpful?</div>
-      <button nz-button nzType="primary" (click)="closeTicket(data)" [nzLoading]="isSpinning">
+    <div class="ticket-action answered-action" *ngIf="data.STATUS == 'R'">
+      <div class="action-question">Is this helpful?</div>
+      <button
+        nz-button
+        nzType="primary"
+        (click)="closeTicket(data)"
+        [nzLoading]="isSpinning"
+        class="close-button"
+      >
         Mark As Closed
       </button>
     </div>
-
-    <div style="text-align: center" *ngIf="data.STATUS == 'B'">
+    <div class="ticket-action banned-action" *ngIf="data.STATUS == 'B'">
       <nz-form-item>
-        <nz-form-label nzNoColon style="white-space: pre-wrap; font-weight: bold">Support team has banned your ticket.
-        </nz-form-label>
+        <nz-form-label nzNoColon class="banned-label"
+          >Support team has banned your ticket.</nz-form-label
+        >
       </nz-form-item>
     </div>
-
-    <div style="text-align: center" *ngIf="data.STATUS == 'H'">
+    <div class="ticket-action hold-action" *ngIf="data.STATUS == 'H'">
       <nz-form-item>
-        <nz-form-label nzNoColon style="white-space: pre-wrap; font-weight: bold">
+        <nz-form-label nzNoColon class="hold-label">
           Support user kept your ticket on hold.
         </nz-form-label>
       </nz-form-item>
     </div>
-
-    <button id="scrollDown" style="margin-left: 10px; display: none" nz-button nzType="primary" (click)="bottom()">
+    <button
+      id="scrollDown"
+      class="scroll-down-button"
+      nz-button
+      nzType="primary"
+      (click)="bottom()"
+    >
       Scroll To Bottom
     </button>
   </div>

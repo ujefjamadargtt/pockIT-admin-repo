@@ -21,23 +21,18 @@ export class CoupontypesComponent implements OnInit {
   sortValue: string = 'desc';
   sortKey: string = 'id';
   searchText: string = '';
-  // filterQuery: string = '';
   isFilterApplied: string = 'default';
   logtext: string = '';
-
   CouponTypetext: string = '';
   couponTypeVisible: boolean = false;
   isCouponTypeFilterApplied = false;
   filterloading: boolean = false;
   statusFilter: string | undefined = undefined;
-
   columns: string[][] = [['NAME', 'Name']];
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   filterGroups: any[] = [
     {
       operator: "AND",
@@ -54,10 +49,6 @@ export class CoupontypesComponent implements OnInit {
       groups: [],
     },
   ];
-
-
-
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -74,21 +65,15 @@ export class CoupontypesComponent implements OnInit {
       groups: [],
     },
   ];
-
-
-
-  //drawer Variables
   drawerVisible: boolean;
   drawerTitle: string;
   drawerData: Coupontype = new Coupontype();
-
   constructor(
     public api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router
   ) { }
   ngOnInit() { }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -97,45 +82,35 @@ export class CoupontypesComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   onKeyDownEvent(event) {
     this.search(true);
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.searchText.length >= 3 && event.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length == 0 && event.key === 'Backspace') {
       this.search(true);
     }
-
     if (this.CouponTypetext.length >= 3 && event.key === 'Enter') {
       this.search();
     } else if (this.CouponTypetext.length == 0 && event.key === 'Backspace') {
       this.search();
     }
   }
-
-
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById("button");
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === "Enter") {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == "Backspace") {
@@ -143,23 +118,17 @@ export class CoupontypesComponent implements OnInit {
       this.search(true);
     }
   }
-
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   back() {
     this.router.navigate(["/masters/menu"]);
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
@@ -171,10 +140,8 @@ export class CoupontypesComponent implements OnInit {
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     var globalSearchQuery = '';
-
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -185,9 +152,6 @@ export class CoupontypesComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
-
-
     this.loadingRecords = true;
     if (this.CouponTypetext !== '') {
       likeQuery +=
@@ -197,17 +161,13 @@ export class CoupontypesComponent implements OnInit {
     } else {
       this.isCouponTypeFilterApplied = false;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getAllCoupontypes(
         this.pageIndex,
@@ -226,35 +186,28 @@ export class CoupontypesComponent implements OnInit {
         (err) => { }
       );
   }
-  //Drawer Methods
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   add(): void {
     this.drawerTitle = 'Add New Coupon Type';
     this.drawerData = new Coupontype();
     this.drawerVisible = true;
   }
-
   edit(data: Coupontype): void {
     this.drawerTitle = 'Update Coupon Type';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   reset(): void {
     this.searchText = '';
     this.CouponTypetext = '';
     this.search();
   }
-
-
   searchopen() {
     if (this.searchText.length >= 3) {
       this.search(true);
@@ -262,9 +215,6 @@ export class CoupontypesComponent implements OnInit {
       this.message.info('Please enter atleast 3 characters to search', '');
     }
   }
-
-  //Advance Filter
-  // new  Main filter
   TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem("userId");
@@ -277,7 +227,6 @@ export class CoupontypesComponent implements OnInit {
   filterQuery: string = "";
   filterClass: string = "filter-invisible";
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === "filter-visible") {
       this.filterClass = "filter-invisible";
@@ -286,16 +235,11 @@ export class CoupontypesComponent implements OnInit {
       this.loadFilters();
     }
   }
-
-
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -303,14 +247,12 @@ export class CoupontypesComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -326,21 +268,15 @@ export class CoupontypesComponent implements OnInit {
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
                 ;
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -354,8 +290,6 @@ export class CoupontypesComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -364,11 +298,7 @@ export class CoupontypesComponent implements OnInit {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
-
-
   deleteItem(item: any): void {
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -384,10 +314,7 @@ export class CoupontypesComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -414,9 +341,7 @@ export class CoupontypesComponent implements OnInit {
       }
     );
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -425,40 +350,25 @@ export class CoupontypesComponent implements OnInit {
       tooltip.hide();
     }
   }
-
-
-
-
-
-
   drawerfilterClose(buttontype, updateButton): void {
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
-
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterData: any;
   currentClientId = 1
   openfilter() {
     this.drawerTitle = 'Coupon Types Filter';
     this.drawerFilterVisible = true;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -467,13 +377,9 @@ export class CoupontypesComponent implements OnInit {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -490,10 +396,6 @@ export class CoupontypesComponent implements OnInit {
         groups: [],
       },
     ];
-
-
-
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -511,9 +413,6 @@ export class CoupontypesComponent implements OnInit {
       },
     ];
   }
-
-
-
   filterFields: any[] = [
     {
       key: "NAME",
@@ -544,22 +443,13 @@ export class CoupontypesComponent implements OnInit {
       placeholder: "Select Status",
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
-
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -568,23 +458,18 @@ export class CoupontypesComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   isModalVisible = false;
   selectedQuery: string = "";
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -592,8 +477,6 @@ export class CoupontypesComponent implements OnInit {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = "";

@@ -12,8 +12,6 @@ export class ServiceCatMasterData {
     SERVICE_IMAGE_URL: any
     AVAILABILITY_STATUS: boolean = true
 }
-
-
 export class ServiceCatMasterDataNew {
     HSN_CODE_ID: number;
     HSN_CODE: any
@@ -104,9 +102,7 @@ export class ServiceCatMasterDataNewB2b {
     TERRITORY_ID: number = 0;
     OLD_SERVICE_NAME: any;
     IS_AVAILABLE: boolean = true;
-
 }
-
 export class ServiceCatMasterDataNewNon {
     NAME: any = ''
     DESCRIPTION: any;
@@ -114,8 +110,6 @@ export class ServiceCatMasterDataNewNon {
     B2B_PRICE: number
     ORG_ID: any;
     B2C_PRICE: number
-    // B2B_EXPRESS_COST: number
-    // B2C_EXPRESS_COST: number
     EXPRESS_COST: number;
     SERVICE_IMAGE: any
     STATUS: boolean = true
@@ -142,9 +136,7 @@ export class ServiceCatMasterDataNewNon {
     TERRITORY_ID: number;
     IS_AVAILABLE: boolean = true;
     OLD_SERVICE_NAME: any;
-
 }
-
 export class ServiceCatMasterDataNewNonB2b {
     NAME: any = ''
     DESCRIPTION: any;
@@ -183,5 +175,3 @@ export class ServiceCatMasterDataNewNonB2b {
     SUB_CATEGORY_NAME: any;
     IS_JOB_CREATED_DIRECTLY: boolean = false;
 }
-
-

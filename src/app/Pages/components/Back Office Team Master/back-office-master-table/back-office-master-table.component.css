@@ -1,44 +1,143 @@
+.team-header-row {
+  width: 100%;
+}
+.team-form-title {
+  display: flex;
+  align-items: center;
+}
+.team-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.padt {
+  padding-top: 0px
+}
+.fsize {
+  font-size: 10px !important;
+}
+.mart {
+  margin-bottom: 8px
+}
+.team-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.team-filter-btn {
+  width: 47px;
+}
 th {
   text-align: center !important;
   vertical-align: middle !important;
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  /* Adjust as needed */
   display: inline-block;
 }
-
-:host::ng-deep .ant-card-body {
-  padding: 0px;
+:host ::ng-deep .ant-card-body {
+  padding: 0;
+}
+.filter-loading-center {
+  text-align: center;
+}
+.filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-text {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-selected-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-card-footer {
+  margin-top: 7px;
+}
+.filter-action-row {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-tag-btn {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-tag-no-margin {
+  margin-right: 0;
+}
+.filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-bottom-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.filter-bottom-btn {
+  margin-right: 10px;
+}
+.team-bold-center {
+  font-weight: bold;
+  text-align: center;
+}
+.team-action-tag {
+  cursor: pointer;
+}
+.team-action-icon {
+  font-size: 15px;
+}
+.textcenter {
+  text-align: center
+}
+.profile-image-container {
+  height: 300px;
+  overflow: auto;
+  text-align: center;
+}
+.profile-image-preview {
+  width: auto;
+  height: auto;
+  max-width: 600px;
+  max-height: 400px;
+}
+.full-wdth{
+  width: 100%
 }

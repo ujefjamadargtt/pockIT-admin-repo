@@ -1,23 +1,6 @@
 <div>
-  <form nz-form #Skillmaster="ngForm" style="margin-top: 10px;">
-
+  <form nz-form #Skillmaster="ngForm" class="skill-form-margin">
     <div nz-row>
-      <!-- <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
-        <nz-form-item>
-          <nz-form-label nzRequired nzNoColon>Skill Name</nz-form-label>
-          <nz-form-control nzHasFeedback nzErrorTip="Enter Skill Name">
-            <input nz-input name="name" placeholder="Enter Skill Name" required [(ngModel)]="data.NAME"
-              #nameField="ngModel" (keypress)="commonFunction.allowOnly($event)" maxlength="256" />
-            <h6 style="color: red; font-size: 10px" *ngIf="
-              data.NAME != undefined &&
-              data.NAME != null &&
-              data.NAME != ''
-            ">
-              {{ data.NAME.length }}/256
-            </h6>
-          </nz-form-control>
-        </nz-form-item>
-      </div> -->
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Skill Name</nz-form-label>
@@ -25,8 +8,7 @@
             <input nz-input name="name" placeholder="Enter Skill Name" required [(ngModel)]="data.NAME"
               #nameField="ngModel" (keypress)="commonFunction.allowOnly($event)" (focus)="isFocused = 'skillName'"
               (blur)="isFocused = ''" maxlength="256" autocomplete="off" />
-            <!-- Dynamic Character Count -->
-            <h6 style="color: red; font-size: 10px" *ngIf="
+            <h6 class="character-count" *ngIf="
                 isFocused === 'skillName' ||
                 (data.NAME != undefined && data.NAME != null && data.NAME != '' && isFocused === 'skillName')
               ">
@@ -35,29 +17,8 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
     </div>
-
     <div nz-row>
-      <!-- <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
-        <nz-form-item>
-          <nz-form-label nzNoColon>Description</nz-form-label>
-          <nz-form-control>
-            <textarea nz-input name="desc" placeholder="Enter Description" [(ngModel)]="data.DESCRIPTION"
-              #nameField="ngModel" (keypress)="commonFunction.allowOnly($event)" maxlength="512"
-              [nzAutosize]="{ minRows: 3, maxRows: 6 }"></textarea>
-            <h6 style="color: red; font-size: 10px" *ngIf="
-            data.DESCRIPTION != undefined &&
-            data.DESCRIPTION != null &&
-            data.DESCRIPTION != ''
-          ">
-              {{ data.DESCRIPTION.length }}/512
-            </h6>
-          </nz-form-control>
-        </nz-form-item>
-      </div> -->
-
-
       <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
         <nz-form-item>
           <nz-form-label nzNoColon>Description</nz-form-label>
@@ -65,9 +26,8 @@
             <textarea nz-input name="desc" placeholder="Enter Description" [(ngModel)]="data.DESCRIPTION"
               #nameField="ngModel" (keypress)="commonFunction.allowOnly($event)" (focus)="isFocused = 'description'"
               (blur)="isFocused = ''" maxlength="512" [nzAutosize]="{ minRows: 3, maxRows: 6 }" autocomplete="off"
-              style="width: 100%"></textarea>
-            <!-- Dynamic Character Count -->
-            <h6 style="color: red; font-size: 10px" *ngIf="
+              class="description-textarea"></textarea>
+            <h6 class="character-count" *ngIf="
                 isFocused === 'description' ||
                 (data.DESCRIPTION != undefined &&
                   data.DESCRIPTION != null &&
@@ -79,11 +39,6 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
-
-
-
-
       <div nz-col nzSpan="8">
         <nz-form-item>
           <nz-form-label nzNoColon>Status</nz-form-label>
@@ -96,25 +51,21 @@
     </div>
   </form>
 </div>
-
 <div class="footer">
-  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+  <button nz-button nzType="default" (click)="close()" class="ant-btn footer-cancel-button">
     Cancel
   </button>
-
   <button nz-button *ngIf="!data.ID" nzType="primary" nz-dropdown [nzDropdownMenu]="menu" [nzLoading]="isSpinning"
     (click)="save(false, Skillmaster)" class="ant-btn ant-btn-primary">
     Save & Close
   </button>
-
   <nz-dropdown-menu #menu="nzDropdownMenu">
     <ul nz-menu>
-      <li nz-menu-item class="menuc" style="border-radius: 4px; color: white!important;">
-        <a class="footer-button" style="color: white!important" (click)="save(true, Skillmaster)">Save & New</a>
+      <li nz-menu-item class="menuc menu-item-dropdown">
+        <a class="footer-button footer-link-white" (click)="save(true, Skillmaster)">Save & New</a>
       </li>
     </ul>
   </nz-dropdown-menu>
-
   <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
     (click)="save(false, Skillmaster)">
     <span>Update & Close</span>

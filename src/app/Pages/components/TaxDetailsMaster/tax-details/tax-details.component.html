@@ -7,7 +7,7 @@
       nz-icon
       nzType="arrow-left"
       nzTheme="outline"
-      style="font-weight: bold; cursor: pointer"
+      class="back-arrow-icon"
       ></span>&nbsp;&nbsp;{{ formTitle }}
       </div>
     </div>
@@ -18,10 +18,10 @@
       nzMd="4"
       nzLg="6"
       nzXl="16"
-      style="display: flex; justify-content: flex-end"
+      class="flex-end-container"
     >
       <form nz-form [nzLayout]="'inline'">
-        <nz-form-item style="width: 47px">
+        <nz-form-item class="filter-button-container">
           <button
             nz-button
             nzTooltipTitle="Filter"
@@ -50,7 +50,7 @@
             </button>
           </ng-template>
         </nz-form-item>
-        <nz-form-item style="margin-right: 0px">
+        <nz-form-item class="new-button-container">
           <button nz-button nzType="primary" (click)="add()" nzJustify="end">
             <i nz-icon nzType="plus"></i>Add New Tax Details
           </button>
@@ -59,14 +59,13 @@
     </div>
   </div>
   <br />
-  <!-- Main Filter -->
   <div nz-row>
     <div nz-col nzSpan="24">
       <div class="filter {{ filterClass }}">
         <div class="filter-box">
           <form nz-form>
             <div *ngFor="let filter of filterBox; let i = index">
-              <div nz-row [nzGutter]="24" style="margin: 10px 0px">
+              <div nz-row [nzGutter]="24" class="filter-margin-vertical">
                 <div nz-col [nzSpan]="9"></div>
                 <div nz-col [nzSpan]="6">
                   <nz-select
@@ -84,26 +83,12 @@
                 </div>
                 <div nz-col [nzSpan]="9"></div>
               </div>
-  
-              <div
-                style="
-                  border: 1px dashed black;
-                  border-radius: 5px;
-                  padding: 10px;
-                "
-              >
-                <!-- <nz-card style="border: 1px dashed black; border-radius: 5px; padding: 0px;">
-                <nz-card-meta [nzTitle]="'Condition ' + (i + 1)">
-                  <span *ngIf="filterBox.length > 1">
-                    <i nz-icon nzType="delete" nzTheme="fill" (click)="removeCondition(i)"></i>
-                  </span>
-                </nz-card-meta> -->
-  
+              <div class="dashed-border-box">
                 <div
                   nz-row
                   [nzGutter]="24"
                   *ngFor="let subfilter of filter.FILTER; let j = index"
-                  style="margin-bottom: 5px"
+                  class="subfilter-margin-bottom"
                 >
                   <div nz-col [nzSpan]="8">
                     <nz-select
@@ -181,17 +166,10 @@
                       minlength="3"
                       maxlength="32"
                     />
-  
-                    <!-- <label nz-radio-group *ngIf="filter.FILTER[j].SELECTION1 === 'IS_EXPRESS_SERVICE_AVAILABLE'"
-                       name="selection3-dropdown"
-                       [(ngModel)]="filter.FILTER[j].SELECTION3" name="radioGroup">
-                        <label nz-radio [nzValue]="'Yes'">Yes</label>
-                        <label nz-radio [nzValue]="'No'">No</label>
-                      </label> -->
                   </div>
                   <div nz-col [nzSpan]="4">
                     <button
-                      style="margin-right: 10px"
+                      class="btn-margin-right"
                       nz-button
                       nzType="primary"
                       (click)="insertSubCondition(i, j)"
@@ -217,30 +195,27 @@
                     </button>
                   </div>
                 </div>
-  
                 <div
                   *ngIf="filter.FILTER.length > 2"
-                  style="color: red; font-size: 11px"
+                  class="filter-warning-text"
                 >
                   *If you use mixed comparers, then AND operator will have 1st
                   preference.
                 </div>
               </div>
-              <!-- </nz-card> -->
             </div>
-  
-            <div nz-row [nzGutter]="24" style="padding-top: 10px">
+            <div nz-row [nzGutter]="24" class="padding-top-10">
               <div nz-col [nzSpan]="4"></div>
               <div
                 nz-col
                 [nzSpan]="20"
-                style="display: flex; justify-content: flex-end"
+                class="flex-justify-end"
               >
                 <button
                   nz-button
                   nzType="primary"
                   (click)="generateQuery()"
-                  style="margin-right: 10px"
+                  class="btn-margin-right"
                 >
                   Insert New Condition
                 </button>
@@ -248,7 +223,7 @@
                   nz-button
                   nzType="primary"
                   (click)="saveQuery()"
-                  style="margin-right: 10px"
+                  class="btn-margin-right"
                 >
                   Save
                 </button>
@@ -256,7 +231,7 @@
                   nz-button
                   nzType="primary"
                   (click)="createFilterQuery()"
-                  style="margin-right: 10px"
+                  class="btn-margin-right"
                 >
                   Apply Filter
                 </button>
@@ -265,16 +240,9 @@
                 </button>
               </div>
             </div>
-  
-            <div nz-row style="padding-top: 10px">
+            <div nz-row class="padding-top-10">
               <div nz-col [nzSpan]="24">
-                <div
-                  style="
-                    border: 1px dashed black;
-                    border-radius: 5px;
-                    padding: 10px;
-                  "
-                >
+                <div class="dashed-border-box">
                   <ng-container
                     *ngIf="INSERT_NAMES && INSERT_NAMES.length > 0; else noData"
                   >
@@ -285,9 +253,7 @@
                     </ng-container>
                   </ng-container>
                   <ng-template #noData>
-                    <div
-                      style="text-align: center; color: red; font-weight: bold"
-                    >
+                    <div class="no-data-message">
                       No Previous Filters Are Found
                     </div>
                   </ng-template>
@@ -299,13 +265,10 @@
       </div>
     </div>
   </div>
-  <!-- End Main Filter -->
-
-
   <div nz-row>
     <div nz-col nzSpan="24">
       <nz-table
-        class="my-scroll no-wrap1"
+        class="my-scroll no-wrap1 table-pre-line"
         nzBordered
         #organizationTable
         nzShowSizeChanger
@@ -321,11 +284,10 @@
         (nzPageSizeChange)="search(true)"
         (nzQueryParams)="sort($event)"
         [nzScroll]="{ x: '1500px' }"
-        style="white-space: pre-line"
       >
         <thead nzSingleSort>
           <tr>
-            <th style="text-align: center" nzLeft nzWidth="80px">Action
+            <th class="action-header-center" nzLeft nzWidth="80px">Action
               <nz-filter-trigger
               [(nzVisible)]="showcloumnVisible"
               [nzDropdownMenu]="showcolumn1"
@@ -333,8 +295,6 @@
               <span nz-icon nzType="down" nzTheme="outline"></span>
             </nz-filter-trigger>
             </th>
-            <!-- <th style="text-align:right;" *ngFor="let column of columns"   nzColumnKey="{{column[0]}}" [nzSortFn]="true">{{column[1]}}</th> -->
-
             <th nzColumnKey="{{ 'TAX_ID' }}" nzShowSort nzWidth="200px" [nzFilterFn]="true"
             nzCustomFilter >
               <b>Tax name</b>
@@ -345,7 +305,6 @@
               <span nz-icon nzType="filter" nzTheme="fill"></span>
             </nz-filter-trigger>
             </th>
-
             <th nzColumnKey="{{ 'TYPE' }}" nzShowSort nzWidth="100px"  [nzFilterFn]="true"
             nzCustomFilter>
               <b>Tax Type</b>
@@ -365,7 +324,6 @@
               <span nz-icon nzType="filter" nzTheme="fill"></span>
             </nz-filter-trigger>
             </th>
-
             <th nzColumnKey="{{ 'COUNTRY_NAME' }}" nzShowSort nzWidth="100px" [nzFilterFn]="true"
             nzCustomFilter>
               <b>Country</b>
@@ -382,7 +340,7 @@
             <th nzColumnKey="{{ 'EXPIRY_DATE' }}" nzShowSort nzWidth="100px">
               <b>Expiry Date</b>
             </th>
-            <th style="text-align: center" nzWidth="80px" nzShowSort [nzFilters]="listOfFilter"
+            <th class="status-header-center" nzWidth="80px" nzShowSort [nzFilters]="listOfFilter"
             [nzFilterFn]="true"
             [nzFilterMultiple]="false"
             (nzFilterChange)="onStatusFilterChange($event)">Status</th>
@@ -390,17 +348,16 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of organizationTable.data">
-            <td nzLeft style="text-align: center">
+            <td nzLeft class="action-cell-center">
               <a (click)="edit(data)" nz-tooltip nzTooltipTitle="Edit">
                 <span
                   nz-icon
                   nzType="edit"
                   nzTheme="twotone"
-                  style="font-size: 15px"
+                  class="edit-icon-size"
                 ></span>
               </a>
             </td>
-
             <td *ngFor="let column of columns">{{ data[column[0]] }}</td>
             <td align="center">
               <i
@@ -421,7 +378,6 @@
           </tr>
         </tbody>
       </nz-table>
-<!-- Hide show -->
 <nz-dropdown-menu #showcolumn1="nzDropdownMenu">
   <ul nz-menu nzPlacement="bottomRight">
     <li nz-menu-item *ngFor="let column of showcolumn">
@@ -435,13 +391,11 @@
     </li>
   </ul>
 </nz-dropdown-menu>
-
-      <!-- tax Filter -->
     <nz-dropdown-menu #taxdropdown="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="select">
           <nz-select
-            style="width: 100%"
+            class="full-width-select"
             nzShowSearch
             nzAllowClear
             nzPlaceHolder="Select Tax"
@@ -465,13 +419,11 @@
         </div>
       </div>
     </nz-dropdown-menu>
-
-    <!-- tax type Filter -->
     <nz-dropdown-menu #taxtypedropdown="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="select">
           <nz-select
-            style="width: 100%"
+            class="full-width-select"
             nzShowSearch
             nzAllowClear
             nzPlaceHolder="Select Tax Type"
@@ -495,13 +447,11 @@
         </div>
       </div>
     </nz-dropdown-menu>
-
-    <!-- Country Filter -->
     <nz-dropdown-menu #country="nzDropdownMenu">
       <div class="ant-table-filter-dropdown">
         <div class="select">
           <nz-select
-            style="width: 100%"
+            class="full-width-select"
             nzShowSearch
             nzAllowClear
             nzPlaceHolder="Select Country"
@@ -525,7 +475,6 @@
         </div>
       </div>
     </nz-dropdown-menu>
-<!-- rate  -->
 <nz-dropdown-menu #ratedropdown="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
@@ -561,7 +510,7 @@
   </div>
 </div>
 <nz-drawer
-  [nzBodyStyle]="{
+    [nzBodyStyle]="{
     height: 'calc(100% - 55px)',
     overflow: 'auto',
     'padding-bottom': '53px'

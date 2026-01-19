@@ -3,7 +3,6 @@
     margin: 0 auto;
     height: 70vh;
 }
-
 .body::before {
     content: "";
     position: absolute;
@@ -14,18 +13,31 @@
     background-repeat: no-repeat;
     background-position: center center;
     filter: blur(8px);
-    /* Adjust the blur value as needed */
     -webkit-filter: blur(8px);
-    /* For Safari */
 }
-
 .inner-body {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
-/* iframe {
-    pointer-events: none !important;
-} */
+.welcome-container {
+    text-align: center;
+}
+.welcome-title {
+    font-size: 40px !important;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+.user-name {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 25px !important;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+.email-display {
+    font-size: 12px !important;
+    display: inline-block;
+}

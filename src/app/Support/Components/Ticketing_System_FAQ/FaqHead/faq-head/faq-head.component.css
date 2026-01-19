@@ -1,7 +1,26 @@
-nz-form-item{
+nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
-  /* font-family: '"Poppins", sans-serif !important'; */
+}
+.kb-hidden {
+  display: none;
+}
+.kb-full-width {
+  width: 100%;
+}
+.kb-char-count {
+  color: red;
+  font-size: 10px;
+}
+.kb-footer-cancel {
+  margin-right: 8px;
+}
+.kb-footer-menu {
+  border-radius: 4px;
+  color: white !important;
+}
+.kb-footer-link {
+  color: white !important;
 }

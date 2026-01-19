@@ -3,19 +3,6 @@ table {
     border-collapse: collapse;
     width: 100%;
 }
-
-/* td,
-th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 5px;
-    text-align: center !important;
-    vertical-align: middle !important;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-} */
 .vv {
     margin-top: 2%;
     position: relative;
@@ -31,12 +18,10 @@ tr:nth-child(even) {
     border-radius: 4px;
     transition: all .3s;
 }
-
 .container {
     height: 100px;
     position: relative;
 }
-
 .vertical-center {
     margin: 0;
     position: relative;
@@ -44,18 +29,101 @@ tr:nth-child(even) {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
-
-
-
 .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
+  .text-center{
+    text-align: center
+  }
+  .header-back-icon-bold-pointer {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.header-excel-btn-white-text {
+  color: white;
+}
+.filter-btn-fixed-width {
+  width: 47px;
+}
+.filter-row-no-padding-top {
+  padding-top: 0px;
+}
+.filter-loader-center {
+  text-align: center;
+}
+.saved-filter-col-spacing {
+  margin-bottom: 8px;
+}
+.saved-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.saved-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.saved-filter-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.saved-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.saved-filter-actions-row {
+  margin-top: 7px;
+}
+.saved-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.saved-filter-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.saved-filter-tag-icon {
+  font-size: 10px !important;
+}
+.saved-filter-view-tag {
+  margin-right: 0px;
+}
+.saved-filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.saved-filter-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.saved-filter-footer-btn {
+  margin-right: 10px;
+}
+.ticket-group-filter-active {
+  color: #092b9c;
+}
+.ticket-total-bold {
+  font-weight: bold;
+}

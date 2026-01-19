@@ -3,10 +3,125 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
   }
+.back-nav-arrow-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-controls-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-export-button {
+  color: white;
+}
+.filter-form-item-width {
+  width: 47px;
+}
+.filter-row-padding {
+  padding-top: 0px;
+}
+.filter-loader-center {
+  text-align: center;
+}
+.filter-card-margin {
+  margin-bottom: 8px;
+}
+.filter-card-design {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.filter-card-content-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-text-display {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-indicator {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-margin-top {
+  margin-top: 7px;
+}
+.filter-actions-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.edit-action-btn {
+  margin-right: 4px;
+}
+.apply-action-btn {
+  margin-left: 4px;
+}
+.clear-action-btn {
+  margin-left: 4px;
+}
+.delete-action-btn {
+  margin-left: 4px;
+}
+.view-action-btn-last {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.filter-tag-icon {
+  font-size: 10px !important;
+}
+.no-filters-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-control-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.filter-control-button {
+  margin-right: 10px;
+}
+.reset-filter-btn {
+  margin-right: 10px;
+}
+.new-filter-btn {
+  margin-right: 10px;
+}
+.sms-table-margin {
+  margin-top: 10px;
+}
+.table-header-left {
+  text-align: left;
+}
+.table-header-center {
+  text-align: center;
+}
+.filter-text-modal .filter-text-center {
+  text-align: center;
+}
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

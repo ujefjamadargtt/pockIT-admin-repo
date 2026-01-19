@@ -4,23 +4,19 @@
       <div nz-col nzSpan="5">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Quantity per unit</nz-form-label>
-
           <nz-form-control nzHasFeedback nzErrorTip="Enter Quantity per unit">
-            <nz-input-group style="width: 100%" [nzAddOnAfter]="UnitName">
+            <nz-input-group class="input-group-full-width" [nzAddOnAfter]="UnitName">
               <input nz-input autocomplete="off" [(ngModel)]="data2.QUANTITY_PER_UNIT" name="QUANTITY_PER_UNIT"
                 maxlength="10" (keypress)="commonFunction.onlynum($event)" placeHolder="Enter Quantity per unit" />
-              <!-- (ngModelChange)="onQuantityChange()" -->
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
       </div>
-
       <div nz-col nzSpan="5">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Unit</nz-form-label>
-
           <nz-form-control nzErrorTip="Enter Unit">
-            <nz-input-group style="width: 100%" nzAddOnBefore="1">
+            <nz-input-group class="input-group-full-width" nzAddOnBefore="1">
               <nz-select name="ExtraUnit" [(ngModel)]="data2.UNIT_ID" required nzPlaceHolder="Select Unit ">
                 <nz-option *ngFor="let prod of UnitData" [nzValue]="prod.ID" [nzLabel]="prod.NAME">
                 </nz-option>
@@ -32,71 +28,44 @@
       <div nz-col nzSpan="4">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Average Level</nz-form-label>
-
           <nz-form-control nzErrorTip="Enter Average Level">
-            <nz-input-group style="width: 100%">
-              <input style="width: 100%" nz-input name="AVG_LEVEL" maxlength="8"
+            <nz-input-group class="input-group-full-width">
+              <input class="input-full-width" nz-input name="AVG_LEVEL" maxlength="8"
                 (keypress)="commonFunction.onlynumdot($event)" [(ngModel)]="data2.AVG_LEVEL" placeholder="Average Level"
                 autocomplete="off" type="text" required />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
       </div>
-
       <div nz-col nzSpan="4">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Re-Order Level</nz-form-label>
-
           <nz-form-control nzErrorTip="Enter Re-Order Level">
-            <nz-input-group style="width: 100%">
-              <input style="width: 100%" nz-input name="REORDER_STOCK_LEVEL" maxlength="8"
+            <nz-input-group class="input-group-full-width">
+              <input class="input-full-width" nz-input name="REORDER_STOCK_LEVEL" maxlength="8"
                 (keypress)="commonFunction.onlynumdot($event)" [(ngModel)]="data2.REORDER_STOCK_LEVEL"
                 placeholder="Re-Order Level" autocomplete="off" type="text" required />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
       </div>
-
       <div nz-col nzSpan="4">
         <nz-form-item>
           <nz-form-label nzRequired nzNoColon>Alert Level</nz-form-label>
-
           <nz-form-control nzErrorTip="Enter Alert Level">
-            <nz-input-group style="width: 100%">
-              <input style="width: 100%" nz-input name="ALERT_STOCK_LEVEL" maxlength="8"
+            <nz-input-group class="input-group-full-width">
+              <input class="input-full-width" nz-input name="ALERT_STOCK_LEVEL" maxlength="8"
                 (keypress)="commonFunction.onlynumdot($event)" [(ngModel)]="data2.ALERT_STOCK_LEVEL"
                 placeholder="Alert Level" autocomplete="off" type="text" required />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <!-- <div nz-col nzSpan="1">
-        <nz-form-item>
-          <nz-form-label nzNoColon></nz-form-label>
-          <nz-form-control nzHasFeedback> = </nz-form-control>
-        </nz-form-item>
-      </div>
-
-      <div nz-col nzSpan="6">
-        <nz-form-item>
-          <nz-form-label nzRequired nzNoColon>Ratio</nz-form-label>
-
-          <nz-form-control nzHasFeedback nzErrorTip="Select Ratio">
-            <nz-input-group style="width: 100%;" >
-              <input nz-input autocomplete="off" [(ngModel)]="data2.RATIO_RATE" name="RATIO" maxlength="9.2"
-                (keypress)="commonFunction.onlynumdot($event)" placeHolder="Enter Ratio" [disabled]="true" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-      </div> -->
-
       <div nz-col nzSpan="2">
-        <nz-form-item style="margin-top: 5px">
+        <nz-form-item class="form-item-margin-top">
           <div>
             <nz-form-label nzNoColon></nz-form-label>
           </div>
-
           <nz-form-control>
             <button nz-button nzType="primary" nzJustify="end" (click)="addData(true, formData)">
               <i nz-icon nzType="plus"></i>
@@ -106,79 +75,60 @@
       </div>
     </div>
   </form>
-  <hr style="margin-top: 10px !important; margin-bottom: 7px !important" />
+  <hr class="hr-margin" />
   <div>
     <div nz-row>
       <div nz-col nzSpan="24">
-        <nz-table class="my-scroll no-wrap1" nzBordered [nzLoading]="loadingRecords" #DataTable nzShowSizeChanger
-          [nzFrontPagination]="false" [nzData]="Data" nzSize="small" [nzScroll]="{ y: '60vh' }">
+        <nz-table class="my-scroll no-wrap1 table-bordered" nzBordered [nzLoading]="loadingRecords" #DataTable
+          nzShowSizeChanger [nzFrontPagination]="false" [nzData]="Data" nzSize="small" [nzScroll]="{ y: '60vh' }">
           <thead>
             <tr>
-              <th nzWidth="50px" style="text-align: center">Action</th>
-
-              <th nzWidth="120px " style="text-align: center">
+              <th nzWidth="50px" class="th-center">Action</th>
+              <th nzWidth="120px" class="th-center">
                 Quantity per unit
               </th>
-
-              <th nzWidth="80px" style="text-align: center">Unit</th>
-              <th nzWidth="100px" style="text-align: center">Avg Level</th>
-              <th nzWidth="100px" style="text-align: center">Re-Order Level</th>
-              <th nzWidth="100px" style="text-align: center">Alert Level</th>
-              <!-- <th nzWidth="100px" style="text-align: center;">Ratio</th> -->
+              <th nzWidth="80px" class="th-center">Unit</th>
+              <th nzWidth="100px" class="th-center">Avg Level</th>
+              <th nzWidth="100px" class="th-center">Re-Order Level</th>
+              <th nzWidth="100px" class="th-center">Alert Level</th>
             </tr>
           </thead>
-
           <tbody>
             <tr *ngFor="let data of DataTable.data; let i = index">
-              <td style="text-align: center">
-                <!-- <nz-tag nzColor="#2db7f5" *ngIf="data.ID !== data2['ID']" style="cursor: pointer;" nz-popconfirm
-                  nzPopconfirmTitle="Are you sure want delete?" nzPopconfirmPlacement="top"
-                  (nzOnConfirm)="confirmDeleterelation(data, i)" (nzOnCancel)="cancel()">
-                  <span nz-icon nzType="delete" nzTheme="outline" nz-tooltip nzTooltipTitle="Delete"
-                    style="font-size: 15px">
-                  </span>&nbsp;&nbsp;Delete
-                </nz-tag>
-                &nbsp; -->
+              <td class="td-center">
                 <nz-tag nzColor="#2db7f5" *ngIf="data.UNIT_ID !== UnitId" (click)="edit1(data, i)" nz-tooltip
-                  nzTooltipTitle="Edit" style="cursor: pointer">
-                  <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 15px">
+                  nzTooltipTitle="Edit" class="action-tag">
+                  <span nz-icon nzType="edit" nzTheme="outline" class="action-tag-icon">
                   </span>&nbsp;&nbsp;Edit
                 </nz-tag>
               </td>
-
-              <td style="white-space: pre-line; text-align: center">
+              <td class="td-preline td-center">
                 {{ data["QUANTITY_PER_UNIT"] }}
               </td>
-
-              <td style="white-space: pre-line; text-align: center">
+              <td class="td-preline td-center">
                 {{ data["UNIT_NAME"] }}
               </td>
-              <td style="white-space: pre-line; text-align: center">
+              <td class="td-preline td-center">
                 {{ data["AVG_LEVEL"] }}
               </td>
-              <td style="white-space: pre-line; text-align: center">
+              <td class="td-preline td-center">
                 {{ data["REORDER_STOCK_LEVEL"] }}
               </td>
-              <td style="white-space: pre-line; text-align: center">
+              <td class="td-preline td-center">
                 {{ data["ALERT_STOCK_LEVEL"] }}
               </td>
-              <!-- <td style="white-space: pre-line; text-align: center" nzWidth="150px">
-                {{ data["RATIO_RATE"] }}
-              </td> -->
             </tr>
           </tbody>
         </nz-table>
       </div>
     </div>
   </div>
-
   <div class="footer">
-    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close()" class="ant-btn footer-button-cancel">
       <span>Cancel</span>
     </button>
-
-    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="loadingRecords" (nzOnConfirm)="save()"
-      [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
+    <button type="button" class="ant-btn ant-btn-primary footer-button-primary" nz-button [nzLoading]="loadingRecords"
+      (nzOnConfirm)="save()" [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
       nzPopconfirmTitle="Are you sure, you want to map units to this inventory?" nzPopconfirmPlacement="top">
       <span>Map & Close</span>
     </button>

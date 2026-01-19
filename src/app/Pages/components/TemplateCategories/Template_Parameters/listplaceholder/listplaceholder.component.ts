@@ -6,15 +6,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { PlaceholderMaster } from 'src/app/Pages/Models/PlaceholderMaster';
-
 @Component({
   selector: 'app-listplaceholder',
   templateUrl: './listplaceholder.component.html',
   styleUrls: ['./listplaceholder.component.css'],
 })
 export class ListplaceholderComponent {
-  // [data]="drawerData"
-
   drawerVisible!: boolean;
   drawerTitle!: string;
   drawerData: PlaceholderMaster = new PlaceholderMaster();
@@ -33,8 +30,6 @@ export class ListplaceholderComponent {
     ['TEMPLATE_CATEGORY_NAME', 'TEMPLATE_CATEGORY_NAME'],
   ];
   adminId: any;
-
-  // Column Filter
   selectedCountries: number[] = [];
   countryVisible: boolean = false;
   statetext: string = '';
@@ -47,7 +42,6 @@ export class ListplaceholderComponent {
   visible = false;
   ShortCodevisible = false;
   Shortcodetext: string = '';
-  // Main filter
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   columns1: { label: string; value: string }[] = [
@@ -55,7 +49,6 @@ export class ListplaceholderComponent {
     { label: 'State', value: 'NAME' },
     { label: 'Status', value: 'IS_ACTIVE' },
   ];
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -72,7 +65,6 @@ export class ListplaceholderComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -91,7 +83,6 @@ export class ListplaceholderComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   ngOnInit(): void {
     this.adminId = Number(sessionStorage.getItem('roleId'));
@@ -99,9 +90,8 @@ export class ListplaceholderComponent {
     this.TemplateCategory1();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters(); // Convert decryptedUserId to a number
     this.tableOptionss();
   }
   isStateApplied = false;
@@ -122,7 +112,6 @@ export class ListplaceholderComponent {
       this.isShortCodeApplied = false;
     }
   }
-
   countryData: any = [];
   getCountyData() {
     this.api
@@ -142,16 +131,14 @@ export class ListplaceholderComponent {
   }
   iscountryFilterApplied = false;
   onCountryChange(): void {
-    //this.search();
     if (this.selectedCountries?.length) {
       this.search();
-      this.iscountryFilterApplied = true; // Filter applied if selectedCategories has values
+      this.iscountryFilterApplied = true; 
     } else {
       this.search();
-      this.iscountryFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.iscountryFilterApplied = false; 
     }
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
@@ -163,25 +150,6 @@ export class ListplaceholderComponent {
       this.search();
     }
   }
-
-  // distinctData: any = [];
-  // onFilterClick(columnKey: string): void {
-
-  //   this.api.getDistinctData(97, columnKey).subscribe(
-  //     (data) => {
-  //       if (data["code"] == 200) {
-  //         this.distinctData = data["data"];
-  //       } else {
-  //         this.distinctData = [];
-  //         this.message.error("Failed To Get Distinct data Data", "");
-  //       }
-  //     },
-  //     () => {
-  //       this.message.error("Something Went Wrong", "");
-  //     }
-  //   );
-  // }
-
   TemplateCategory1() {
     this.api
       .getTemplateCategory(0, 0, 'SEQ_NO', 'asc', ' AND IS_ACTIVE = 1')
@@ -206,10 +174,8 @@ export class ListplaceholderComponent {
         }
       );
   }
-
   templateCategoryOptions: any = [];
   templateCategoryOptions1: any = [];
-
   TemplateCategory(columnKey: string): void {
     this.api.getTemplateCategorytable(164, columnKey).subscribe(
       (data) => {
@@ -225,27 +191,6 @@ export class ListplaceholderComponent {
       }
     );
   }
-
-  // templateCategoryOptions: any = []
-
-  // TemplateCategory() {
-  //   this.api
-  //     .getTemplateCategory(0, 0, 'SEQ_NO', 'asc', ' AND IS_ACTIVE = 1')
-  //     .subscribe(
-  //       (data) => {
-  //         if (data['code'] == 200) {
-  //           this.templateCategoryOptions = data['data'];
-  //         } else {
-  //           this.templateCategoryOptions = [];
-  //           this.message.error('Failed To Get Template Category Data', '');
-  //         }
-  //       },
-  //       () => {
-  //         this.message.error('Something Went Wrong', '');
-  //       }
-  //     );
-  // }
-
   isFilterApplied;
   statekeyup() {
     if (this.statetext.length >= 3) {
@@ -256,10 +201,8 @@ export class ListplaceholderComponent {
       this.search();
       this.isFilterApplied = false;
     } else if (this.statetext.length < 3) {
-      // this.message.warning("Please Enter at least Three Characters ...", "");
     }
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -269,20 +212,15 @@ export class ListplaceholderComponent {
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -293,8 +231,6 @@ export class ListplaceholderComponent {
           .join(' OR ') +
         ')';
     }
-
-    // City Filter
     if (this.statetext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.statetext.trim()}%'`;
@@ -304,28 +240,21 @@ export class ListplaceholderComponent {
         (likeQuery ? ' AND ' : '') +
         `LABEL LIKE '%${this.Shortcodetext.trim()}%'`;
     }
-    // Country Filter
     if (this.selectedCountries.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `TEMPLATE_CATEGORY_NAME IN ('${this.selectedCountries.join(
         "','"
-      )}')`; // Update with actual field name in the DB
+      )}')`; 
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-    // Call API with updated search query
     this.api
       .getplaceholder(
         this.pageIndex,
@@ -340,10 +269,7 @@ export class ListplaceholderComponent {
             this.loadingRecords = false;
             this.totalRecords = data['count'];
             this.dataList = data['data'];
-
             this.TabId = data['TAB_ID'];
-
-            //this.loadFilters();
           } else if (data['code'] == 400) {
             this.loadingRecords = false;
             this.dataList = [];
@@ -370,66 +296,43 @@ export class ListplaceholderComponent {
         }
       );
   }
-
   reset(): void {
     this.searchText = '';
     this.statetext = '';
     this.Shortcodetext = '';
     this.search();
   }
-
   add(): void {
     this.drawerTitle = 'Add New Placeholder';
     this.drawerData = new PlaceholderMaster();
-
     this.selectedTable =
-      // this.api.getState(1, 1, "SEQ_NO", "desc", "").subscribe(
-      //   (data) => {
-      //     if (data["count"] == 0) {
-      //       this.drawerData.SEQ_NO = 1;
-      //     } else {
-      //       this.drawerData.SEQ_NO = data["data"][0]["SEQ_NO"] + 1;
-      //     }
-      //   },
-      //   (err) => { }
-      // );
-
       this.drawerVisible = true;
   }
-
   sort(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'ID';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-    //
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   TABLE_NAME: any;
   TABLE_COLUMN: any;
   selectedTable: any;
   keyOptions: any;
   tableOptions: any[] = [];
-
   tableOptionss() {
-    // this.isCountrySpinning = true;
     this.api.getallTable(0, 0, 'TABLE_NAME', 'asc', '').subscribe(
       (data) => {
         if (data.code === 200) {
@@ -438,62 +341,34 @@ export class ListplaceholderComponent {
           this.tableOptions = [];
           this.message.error('Failed To Get Table Options Data', '');
         }
-        // this.isCountrySpinning = false;
       },
       () => {
         this.message.error('Something Went Wrong', '');
-        // this.isCountrySpinning = false;
       }
     );
   }
-
   edit(data: PlaceholderMaster): void {
     this.drawerTitle = 'Update Placeholder';
     this.drawerData = Object.assign({}, data);
-
-    // Assign the selected table name
     this.selectedTable = this.drawerData.TABLE_NAME;
-
-    // Find the matching table data from tableOptions
     const selectedTableData = this.tableOptions.find(
       (table: any) => table.TABLE_NAME === this.selectedTable
     );
-
-    // Extract COLUMN_JSON keys if found
     this.keyOptions = selectedTableData?.COLUMN_JSON
       ? Object.keys(selectedTableData.COLUMN_JSON)
       : [];
-
     this.drawerVisible = true;
   }
-
-  // edit(data: PlaceholderMaster): void {
-  //   this.drawerTitle = " Update Placeholder";
-  //   this.drawerData = Object.assign({}, data);
-
-  //
-
-  //   this.drawerVisible = true;
-
-  //
-  //
-  // }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
-  //Drawer Methods
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
-  // new filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -505,17 +380,11 @@ export class ListplaceholderComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   openfilter() {
     this.drawerTitle = 'Placeholder Filter';
-    // this.applyCondition = "";
     this.filterFields[1]['options'] = this.templateCategoryOptions1;
-
     this.drawerFilterVisible = true;
-
-    // Edit code 2
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -524,13 +393,9 @@ export class ListplaceholderComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -547,7 +412,6 @@ export class ListplaceholderComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -565,11 +429,9 @@ export class ListplaceholderComponent {
       },
     ];
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'LABEL',
@@ -585,7 +447,6 @@ export class ListplaceholderComponent {
       ],
       placeholder: 'Enter Label Name',
     },
-
     {
       key: 'TEMPLATE_CATEGORY_NAME',
       label: 'Template Category',
@@ -601,7 +462,6 @@ export class ListplaceholderComponent {
       options: [],
       placeholder: 'Select Template Category',
     },
-
     {
       key: 'IS_ACTIVE',
       label: 'Status',
@@ -617,7 +477,6 @@ export class ListplaceholderComponent {
       placeholder: 'Select Status',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
@@ -626,8 +485,7 @@ export class ListplaceholderComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -641,52 +499,38 @@ export class ListplaceholderComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
   isLoading = false;
-
   public commonFunction = new CommonFunctionService();
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  //TabId: number; // Ensure TabId is defined and initialized
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
   TabId: number;
   filterloading: boolean = false;
-
   whichbutton: any;
-
   updateButton: any;
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -694,13 +538,12 @@ export class ListplaceholderComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -715,21 +558,15 @@ export class ListplaceholderComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -743,7 +580,6 @@ export class ListplaceholderComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -752,12 +588,8 @@ export class ListplaceholderComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
-    //
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -773,13 +605,10 @@ export class ListplaceholderComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //
           } else {
             this.isfilterapply = true;
           }
@@ -802,9 +631,7 @@ export class ListplaceholderComponent {
       }
     );
   }
-
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -812,27 +639,17 @@ export class ListplaceholderComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
-    //
-
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-      //
-      //
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
-      //
       this.loadFilters();
     }
   }
-
   drawerfilterClose() {
     this.drawerFilterVisible = false;
     this.loadFilters();
@@ -842,11 +659,9 @@ export class ListplaceholderComponent {
   }
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -863,16 +678,13 @@ export class ListplaceholderComponent {
       groups: [],
     },
   ];
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterFields[1]['options'] = this.templateCategoryOptions1;
-
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -880,9 +692,7 @@ export class ListplaceholderComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

@@ -1,11 +1,114 @@
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%; 
   display: inline-block;
+}
+.back-btn-bold {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-end-flex {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-white-btn {
+  color: white;
+}
+.filter-width-fixed {
+  width: 47px;
+}
+.filter-row-nopadding {
+  padding-top: 0px;
+}
+.spin-align-center {
+  text-align: center;
+}
+.filter-col-margin {
+  margin-bottom: 8px;
+}
+.filter-card-centered {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-header-layout {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-title-large {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.checkmark-abs-position {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-tag-spacing {
+  margin-top: 7px;
+}
+.filter-tag-layout {
+  display: flex;
+  justify-content: space-between;
+}
+.tag-edit-pointer,
+.tag-apply-pointer,
+.tag-clear-pointer,
+.tag-delete-pointer {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.tag-view-pointer {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.icon-micro-edit,
+.icon-micro-search,
+.icon-micro-close,
+.icon-micro-delete,
+.icon-micro-eye {
+  font-size: 10px !important;
+}
+.no-filter-alert {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-btn-group {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-btn-spaced,
+.new-btn-spaced {
+  margin-right: 10px;
+}
+.table-row-spaced {
+  margin-top: 8px;
+}
+.reg-date-header,
+.cust-name-header,
+.email-header-center,
+.mobile-header-center {
+  text-align: center;
+}
+.date-picker-full {
+  width: 100%;
+}
+.filter-text-center {
+  text-align: center;
 }

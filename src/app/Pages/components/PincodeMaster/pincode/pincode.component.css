@@ -1,86 +1,63 @@
-.my-box {
-  border: 1px dashed #e9e9e9;
-  border-radius: 6px;
-  padding: 8px;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  background-color: #fafafa;
-
-}
-.header {
-
-  position: absolute;
-
-  top: 0px;
-
-  /* bottom: 0px; */
-
-  width: 100%;
-
-  border-top: 1px solid rgb(232, 232, 232);
-
-  padding: 10px 16px;
-
-  text-align: right;
-
-  /* left: 0px; */
-
-  right: 0px;
-
-  /* background: #fff; */
-
-}
-nz-form-item {
-display: inline-block;
-margin-bottom: 5px;
-width: -webkit-fill-available;
-padding: 0px 10px;
-}
-
-
-
-.custom-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Pushes items to edges */
-  width: 100%;
-  
-  }
-  
-  .left-section {
-  display: flex;
-  align-items: center;
-  }
-  
-  .close-icon {
-  cursor: pointer;
-  font-size: 18px;
-  color: #333;
-  margin-right: 10px;
-  }
-  
-  .search-text {
-    font-size: 16px !important;
-    font-weight: 500;
-    color: #333;
-    }
-  
-  .search-container {
-  flex-grow: 1;
-  max-width: 280px;
-  }
-  
-  .search-container input {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  font-size: 14px;
-  outline: none;
-  }
-  
-  
-  :host::ng-deep .ant-modal-header {
-  padding: 9px 19px;
-  }
-  
+ nz-form-item {
+   display: inline-block;
+   width: 100%;
+   margin-bottom: 8px;
+ }
+ .error-msg {
+   color: red;
+   font-size: 10px;
+   text-align: left;
+ }
+ .custom-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
+ .text-white-important {
+   color: #ffffff !important;
+ }
+ .cursor-icon {
+   cursor: pointer
+ }
+ .high-wdth {
+   height: 300px;
+   width: 100%
+ }
+ .mrg-right {
+   margin-right: 8px
+ }
+ .wt-100 {
+   width: 100%
+ }
+ .primary-bg-rounded {
+   border-radius: 4px;
+   background-color: #092B9C !important;
+ }
+ .left-section {
+   display: flex;
+   align-items: center;
+ }
+ .close-icon {
+   cursor: pointer;
+   font-size: 18px;
+   margin-right: 10px;
+ }
+ .search-text {
+   font-size: 16px;
+   font-weight: 500;
+ }
+ .search-container {
+   flex-grow: 1;
+   max-width: 280px;
+ }
+ .search-container input {
+   width: 100%;
+   padding: 8px 12px;
+   border-radius: 20px;
+   border: 1px solid #ccc;
+   font-size: 14px;
+   outline: none;
+ }
+ .footer button {
+   margin-left: 8px;
+ }

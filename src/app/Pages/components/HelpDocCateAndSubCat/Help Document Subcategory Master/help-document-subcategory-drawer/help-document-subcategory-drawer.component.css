@@ -4,3 +4,21 @@ nz-form-item {
     width: -webkit-fill-available;
     padding: 0px 10px;
 }
+
+.subcategory-charcount-text-lm81 {
+    color: red;
+    font-size: 10px;
+}
+
+.footer-cancel-mr-lm82 {
+    margin-right: 12px;
+}
+
+.footer-dropdown-item-lm83 {
+    border-radius: 4px;
+    color: white !important;
+}
+
+.footer-dropdown-link-lm84 {
+    color: white !important;
+}

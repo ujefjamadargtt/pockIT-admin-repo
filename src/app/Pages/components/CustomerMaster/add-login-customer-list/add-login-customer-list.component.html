@@ -1,8 +1,8 @@
 <div>
   <div nz-row nzType="flex">
-    <div nz-col nzSpan="24" style="display: flex; justify-content: flex-end">
+    <div nz-col nzSpan="24" class="bo-flex-end">
       <form nz-form [nzLayout]="'inline'">
-        <nz-form-item style="width: 47px"> </nz-form-item>
+        <nz-form-item class="bo-empty-item"> </nz-form-item>
         <nz-form-item>
           <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
             <input type="text" name="search" (keyup)="keyup($event)" (keydown.enter)="onEnterKey($event)"
@@ -14,7 +14,7 @@
             </button>
           </ng-template>
         </nz-form-item>
-        <nz-form-item style="margin-right: 0px">
+        <nz-form-item class="bo-no-margin-right">
           <button nz-button nzType="primary" (click)="add()" nzJustify="end">
             <i nz-icon nzType="plus"></i>New Login
           </button>
@@ -25,97 +25,67 @@
 </div>
 <div nz-row>
   <div nz-col nzSpan="24">
-    <nz-table class="my-scroll no-wrap1" nzBordered #organizationTable nzShowSizeChanger [nzFrontPagination]="false"
-      [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
-      [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)"
-      (nzQueryParams)="sort($event)" [nzSize]="'small'" style="white-space: pre-line" [nzScroll]="{ y: '50vh' }">
+    <nz-table class="my-scroll no-wrap1 bo-table-pre-line" nzBordered #organizationTable nzShowSizeChanger
+      [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)" nzSize="small" [nzScroll]="{ y: '50vh' }">
       <thead>
         <tr>
-          <th nzWidth="150px" nzLeft style="font-weight: bold; text-align: center">
+          <th nzWidth="150px" nzLeft class="bo-th-center-bold">
             Action
           </th>
-          <th nzWidth="150px" nzLeft style="font-weight: bold; text-align: center">
+          <th nzWidth="150px" nzLeft class="bo-th-center-bold">
             View Logs
           </th>
-          <!-- <th nzWidth="150px" style="font-weight: bold; text-align: center">
-            Map Email IDs
-          </th> -->
-          <th nzWidth="300px" style="font-weight: bold; text-align: center" nzColumnKey="NAME" [nzSortFn]="true">
+          <th nzWidth="300px" class="bo-th-center-bold" nzColumnKey="NAME" [nzSortFn]="true">
             Customer Name
           </th>
-
-          <th nzWidth="280px" style="font-weight: bold; text-align: center" nzColumnKey="EMAIL" [nzSortFn]="true">
+          <th nzWidth="280px" class="bo-th-center-bold" nzColumnKey="EMAIL" [nzSortFn]="true">
             Email ID
           </th>
-          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="MOBILE_NO" [nzSortFn]="true">
+          <th nzWidth="150px" class="bo-th-center-bold" nzColumnKey="MOBILE_NO" [nzSortFn]="true">
             Mobile No.
           </th>
-
           <th nzWidth="130px" nzShowSort align="center" nzColumnKey="{{ 'SHORT_CODE' }}" [nzSortFn]="true"
             nzCustomFilter>
             Short Code
-            <!-- <nz-filter-trigger
-              [(nzVisible)]="shortcodeVisible"
-              [nzDropdownMenu]="shortcode"
-            >
-              <span
-                nz-icon
-                nzType="filter"
-                nzTheme="fill"
-                [ngStyle]="{
-                  color: isShortCodeFilterApplied ? '#092B9C' : 'inherit'
-                }"
-              ></span>
-            </nz-filter-trigger> -->
           </th>
-
-          <th nzWidth="90px" style="font-weight: bold; text-align: center" nzColumnKey="ACCOUNT_STATUS"
-            [nzSortFn]="true">
+          <th nzWidth="90px" class="bo-th-center-bold" nzColumnKey="ACCOUNT_STATUS" [nzSortFn]="true">
             Status
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of organizationTable.data" style="text-align: center">
-          <td nzLeft style="display: flex; justify-content: center">
-            <nz-tag nzColor="#2db7f5" (click)="edit(data)" style="cursor: pointer">
-              <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 15px">
+        <tr *ngFor="let data of organizationTable.data" class="bo-text-center">
+          <td nzLeft class="bo-flex-center">
+            <nz-tag nzColor="#2db7f5" (click)="edit(data)" class="bo-clickable">
+              <span nz-icon nzType="edit" nzTheme="outline" class="bo-icon-md">
               </span>&nbsp;&nbsp;Edit</nz-tag>
           </td>
           <td nzLeft>
-            <nz-tag nzColor="#2db7f5" (click)="viewLogs(data)" style="cursor: pointer" nzTooltipTitle="View" nz-tooltip>
-              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
+            <nz-tag nzColor="#2db7f5" (click)="viewLogs(data)" class="bo-clickable" nzTooltipTitle="View" nz-tooltip>
+              <span nz-icon nzType="eye" nzTheme="outline" class="bo-icon-md">
               </span>&nbsp;&nbsp;View</nz-tag>
           </td>
-          <!-- <td>
-            <nz-tag nzColor="#2db7f5" (click)="addEmailID(data)" style="cursor: pointer" nzTooltipTitle="Map Email IDs"
-              nz-tooltip>
-              <span nz-icon nzType="eye" nzTheme="outline" style="font-size: 15px">
-              </span>&nbsp;&nbsp;Map</nz-tag>
-          </td> -->
           <td align="left" [nzTooltipTitle]="isTextOverflow ? data['NAME'] : null" #tooltipRef1="nzTooltip" nz-tooltip>
             <div #textContainer1 class="truncate-text" (mouseenter)="checkOverflow(textContainer1, tooltipRef1)">
               {{ data["NAME"] ? commonFunction.convertHtmlToPlainText(data["NAME"]) : "-" }}
             </div>
           </td>
-
           <td align="left" [nzTooltipTitle]="isTextOverflow ? data['EMAIL'] : null" #tooltipRef2="nzTooltip" nz-tooltip>
             <div #textContainer2 class="truncate-text" (mouseenter)="checkOverflow(textContainer2, tooltipRef2)">
               {{ data["EMAIL"] ? commonFunction.convertHtmlToPlainText(data["EMAIL"]) : "-" }}
             </div>
           </td>
-
           <td align="center">
             <span *ngIf="data['MOBILE_NO'] != null">
               {{ data.COUNTRY_CODE }}&nbsp;&nbsp;{{ commonFunction.convertHtmlToPlainText(data["MOBILE_NO"]) }}
             </span>
             <span *ngIf="data['MOBILE_NO'] == null">-</span>
           </td>
-
           <td align="left">
             {{ data["SHORT_CODE"] ? commonFunction.convertHtmlToPlainText(data["SHORT_CODE"]) : "-" }}
           </td>
-
           <td>
             <i nz-icon *ngIf="data['ACCOUNT_STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
               [nzTwotoneColor]="'#52c41a'"></i>
@@ -125,12 +95,8 @@
         </tr>
       </tbody>
     </nz-table>
-
-    <!-- Column Visibility Toggle Dropdown -->
   </div>
 </div>
-
-<!-- DropDown For Short No -->
 <nz-dropdown-menu #shortcode="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
@@ -147,7 +113,6 @@
     </div>
   </div>
 </nz-dropdown-menu>
-
 <div *ngIf="drawerCustomerAddLoginVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(105% - 55px)',
@@ -159,12 +124,10 @@
     <ng-container *nzDrawerContent>
       <app-add-login-customer [drawerClose]="closeCustomerAddLoginCallback"
         [drawerVisible]="drawerCustomerAddLoginVisible" [data]="drawerDataAddLogin" [custid]="custid"
-        [mainCustData]="mainCustData" [companyName]="companyName"  [isParentId]="isparentId"></app-add-login-customer>
+        [mainCustData]="mainCustData" [companyName]="companyName" [isParentId]="isparentId"></app-add-login-customer>
     </ng-container>
   </nz-drawer>
 </div>
-
-<!-- sanjana -->
 <div *ngIf="drawerVisibleCustomersLogs">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -180,8 +143,6 @@
     </ng-container>
   </nz-drawer>
 </div>
-
-<!--Customers Email Map -->
 <div *ngIf="drawerCustomerEmailVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(105% - 55px)',

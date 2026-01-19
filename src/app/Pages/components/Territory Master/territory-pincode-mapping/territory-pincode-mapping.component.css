@@ -2,7 +2,47 @@ nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
-  padding: 0px 10px;
+  padding: 0 10px;
+}
+.full-width-select {
+  width: 100%;
+}
+.apply-btn-col {
+  padding-right: 4px;
+}
+.apply-btn {
+  margin-top: 26px;
+}
+.left-info {
+  text-align: left;
+  padding-left: 10px;
+}
+.right-info {
+  text-align: right;
+  padding-right: 10px;
+}
+.inline-form {
+  display: inline-flex;
+}
+.search-input-wrapper {
+  margin-left: 26px !important;
+}
+.search-input {
+  height: 32px;
+}
+.table-wrapper {
+  position: relative;
+}
+.pre-line {
+  white-space: pre-line !important;
+  margin-top: 8px;
+}
+.center-icon-col {
+  align-self: center;
+  text-align: center;
+}
+.arrow-icon {
+  font-size: 26px !important;
 }
 .custom-spin-container {
   position: absolute;
@@ -11,13 +51,85 @@ nz-form-item {
   transform: translate(-50%, -50%);
   z-index: 10;
   display: flex;
-  flex-direction: column; /* Vertical alignment */
+  flex-direction: column;
   align-items: center;
-  gap: 10px; /* Adds space between spinner and text */
+  gap: 10px;
 }
-
 .custom-spin-text {
   font-size: 16px;
   font-weight: 500;
-  color: #092B9C; /* Optional: Matches Ant Design's theme */
+  color: #092B9C;
+}
+.tag-list-wrapper {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  min-width: 50px;
+}
+.btn-danger-custom {
+  color: red !important;
+  border: none;
+  height: 22px !important;
+  cursor: pointer;
+  padding: 3px !important;
+  transition: all 0.3s;
+}
+.left-info-col {
+  text-align: left;
+  padding-left: 10px;
+}
+.record-count, .total-records {
+  display: block;
+}
+.right-info-col {
+  text-align: right;
+  padding-right: 10px;
+}
+.inline-form {
+  display: inline-flex;
+}
+.checkbox-cell {
+  text-align: center;
+}
+.right-section-header {
+  display: flex;
+  justify-content: space-between;
+}
+.left-header-section {
+  display: flex;
+}
+.record-count-left {
+  text-align: left;
+  padding-left: 10px;
+}
+.selected-count, .total-count {
+  display: block;
+}
+.switch-container {
+  text-align: left;
+  padding-left: 10px;
+}
+.switch-cell {
+  white-space: pre-line;
+}
+.right-header-section {
+  text-align: right;
+  padding-right: 10px;
+}
+.inline-form-right {
+  display: inline-flex;
+  margin-left: 26px !important;
+}
+.pincode-search-input {
+  height: 32px;
+}
+.right-table-container {
+  position: relative;
+}
+.pre-line-table {
+  white-space: pre-line;
+}
+.switch-cell-table {
+  white-space: pre-line;
 }

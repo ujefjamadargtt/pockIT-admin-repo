@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { TerritoryMaster } from 'src/app/Pages/Models/TerritoryMaster';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-
 export class Data {
   PINCODE_ID: any = [];
   PINCODE: any = [];
@@ -15,7 +14,6 @@ export class Data {
   CITY_NAME: string;
   IS_ACTIVE: boolean = true;
 }
-
 @Component({
   selector: 'app-territory-pincode-mapping',
   templateUrl: './territory-pincode-mapping.component.html',
@@ -32,7 +30,6 @@ export class TerritoryPincodeMappingComponent {
   pageSize = 10;
   PincodeMappingdata: any[] = [];
   PincodeMappingdatass: any[] = [];
-
   mappedPincodeIds: number[] = [];
   searchText: string = '';
   isSpinning = false;
@@ -47,7 +44,6 @@ export class TerritoryPincodeMappingComponent {
   selectedPincode: any[] = [];
   city: any[] = [];
   state: any[] = [];
-  // filterQuery: string = '';
   filterQuery: any = {};
   constructor(
     private api: ApiServiceService,
@@ -56,7 +52,6 @@ export class TerritoryPincodeMappingComponent {
   ) { }
   ngOnInit() {
     this.getStateData();
-    // this.PincodeMapping();
     this.allChecked = this.mappingdata.every((item) => item.IS_ACTIVE);
   }
   stateData: any = [];
@@ -96,46 +91,33 @@ export class TerritoryPincodeMappingComponent {
   STATE_ID: any;
   cityData: any = [];
   pincodeData: any = [];
-  // isCitySpinning = false;
-  // isStateSpinning = false;
-  // PincodeMappingdata: any = [];
   onStateChange(stateId: number): void {
     this.STATE_ID = stateId;
     this.searchText = '';
-    this.DISTRICT_ID = null; // Clear district selection
-    this.cityData = []; // Clear district data
-    this.PincodeMappingdata = []; // Clear pincode mapping data
-
+    this.DISTRICT_ID = null; 
+    this.cityData = []; 
+    this.PincodeMappingdata = []; 
+    this.searchTags = [];
     if (stateId) {
-      this.getCityData(stateId); // Fetch districts for the selected state
+      this.getCityData(stateId); 
     }
   }
-  onDistChange(): void {
-    this.PincodeMappingdata = [];
-    this.searchText = '';
-  }
-
+  showMaxDist = false;
+  previousDistrictIds: any[] = [];
+  previousStateIds: any[] = [];
   searchPincode: string = '';
   datalist2: any[] = [];
-
   handleEnterPincodeKey(event: any): void {
     const keyboardEvent = event as KeyboardEvent;
-
-    // Handle Enter key press
     if (keyboardEvent.key === 'Enter') {
-      keyboardEvent.preventDefault(); // Prevent default form submission
-
-      // Call SearchPincode if input length is >= 3
+      keyboardEvent.preventDefault(); 
       if (this.searchPincode.trim().length >= 3) {
         this.SearchPincode(this.searchPincode);
       } else {
       }
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
-        // Use a small delay to ensure the model updates
         if (this.searchPincode.trim().length === 0) {
           this.mappingdata = this.originalTraineeData1;
           this.PincodeMapping111();
@@ -143,19 +125,12 @@ export class TerritoryPincodeMappingComponent {
       }, 0);
     }
   }
-
   SearchPincode(data: any) {
     this.isSpinning = true;
-
     if (data && data.trim().length >= 3) {
-      // Convert the search term to lowercase for case-insensitive comparison
       const searchTerm = data.toLowerCase();
-
-      // Filter the data based on the SKILL_NAME field
       this.mappingdata = this.originalTraineeData1.filter((record) => {
         return (
-          // (record.OFFICE_NAME &&
-          //   record.OFFICE_NAME.toLowerCase().includes(searchTerm)) ||
           (record.STATE_NAME &&
             record.STATE_NAME.toLowerCase().includes(searchTerm)) ||
           (record.DISTRICT_NAME &&
@@ -166,23 +141,19 @@ export class TerritoryPincodeMappingComponent {
       });
       this.isSpinning = false;
     } else if (data.trim().length === 0) {
-      // Reset the table data to the original dataset
       this.isSpinning = false;
       this.mappingdata = [...this.originalTraineeData1];
     } else {
-      // If less than 3 characters, do not filter and show the original data
       this.isSpinning = false;
     }
   }
   datalist1: any[] = [];
   originalTraineeData: any[] = [];
   originalTraineeData1: any[] = [];
-
   getCityData(stateId: number): void {
     if (!stateId) {
-      return; // No need to proceed if stateId is invalid
+      return; 
     }
-
     this.isCitySpinning = true;
     this.api
       .getdistrict(
@@ -212,40 +183,53 @@ export class TerritoryPincodeMappingComponent {
         }
       );
   }
-
+  get visibleTags() {
+    return this.searchTags.slice(0, 7);
+  }
+  get hiddenTagCount() {
+    return this.searchTags.length > 7 ? this.searchTags.length - 7 : 0;
+  }
   handleEnterKey(event: any): void {
     const keyboardEvent = event as KeyboardEvent;
-
-    // Handle Enter key press
-
+    const value = this.searchText.trim();
     if (keyboardEvent.key === 'Enter') {
       keyboardEvent.preventDefault();
-      if (this.searchText.trim().length >= 3) {
-        this.SearchOffice(this.searchText);
+      if (value.length === 0) {
+        return;
       }
+      if (this.searchTags.some(t => t.trim().toLowerCase() === value.toLowerCase())) {
+        this.message.error("This is already in search", '');
+        this.searchText = "";
+        return;
+      }
+      const matches = this.originalTraineeData.filter(item =>
+        (item?.OfficeName && item.OfficeName.toLowerCase().includes(value.toLowerCase())) ||
+        (item?.TALUKA && item.TALUKA.toLowerCase().includes(value.toLowerCase())) ||
+        (item?.PINCODE && item.PINCODE.toString().includes(value))
+      );
+      if (matches.length === 0) {
+        this.searchText = "";
+        return;
+      }
+      this.searchTags = [value, ...this.searchTags];
+      this.SearchOffice();
+      this.searchText = "";
+      return;
     }
-
-    // Handle Backspace key press
     if (keyboardEvent.key === 'Backspace') {
       setTimeout(() => {
-        if (this.searchText.trim().length === 0) {
-          // Reset to original data and sort selected records to the top
+        if (this.searchText.trim().length === 0 && this.searchTags.length === 0) {
           this.PincodeMappingdata = this.originalTraineeData.map((record) => ({
             ...record,
             selected: this.selectedPincodeSet.has(record.ID),
           }));
-
-          this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
-
-          // Update selection states
+          this.PincodeMappingdata.sort((a, b) => Number(b.selected) - Number(a.selected));
           this.updateSelectionStates();
         }
       }, 0);
     }
   }
-
   pincodemappingdata() {
-    //this.isSpinning = true;
     this.isSpinning11 = true;
     var sort: string;
     try {
@@ -253,8 +237,6 @@ export class TerritoryPincodeMappingComponent {
     } catch (error) {
       sort = '';
     }
-
-    // Call the API with the constructed query
     this.api
       .getTechnicianunMappedpincodesDataterritory(
         0,
@@ -269,8 +251,7 @@ export class TerritoryPincodeMappingComponent {
           if (data['code'] === 200) {
             this.PincodeMappingdata = data['data'];
             this.originalTraineeData = [...this.PincodeMappingdata];
-
-            this.selectedPincode = [];
+            this.updateSelectionStates();
           } else {
             this.PincodeMappingdata = [];
             this.selectedPincode = [];
@@ -286,7 +267,6 @@ export class TerritoryPincodeMappingComponent {
         }
       );
   }
-
   sort(params: NzTableQueryParams) {
     if (this.STATE_ID && this.DISTRICT_ID) {
       this.isSpinning11 = true;
@@ -321,7 +301,6 @@ export class TerritoryPincodeMappingComponent {
     teritorymaster.form.markAsPristine();
     teritorymaster.form.markAsUntouched();
   }
-  // Add into table
   add(technicianmaster: NgForm): void {
     if (
       (this.saveData.PINCODE_ID == 0 ||
@@ -359,15 +338,12 @@ export class TerritoryPincodeMappingComponent {
       return;
     } else {
       this.issaveSpinning = true;
-      // Find the selected state name
       const selectedState = this.stateData.find(
         (state) => state.ID === this.saveData.STATE_ID
       )?.NAME;
       const selectedCity = this.cityData.find(
         (city) => city.ID === this.saveData.CITY_ID
       )?.NAME;
-
-      // Map the selected pincodes to their names and IDs
       const selectedPincodes = this.saveData.PINCODE_ID.map((pincodeId) => {
         const pincode = this.pincodeData.find((pin) => pin.ID === pincodeId);
         return {
@@ -375,8 +351,6 @@ export class TerritoryPincodeMappingComponent {
           PINCODE_ID: pincodeId,
         };
       });
-      // Add entries for each selected pincode to the table
-
       selectedPincodes.forEach((pincode) => {
         const entry = {
           STATE_NAME: selectedState,
@@ -384,9 +358,8 @@ export class TerritoryPincodeMappingComponent {
           CITY_NAME: selectedCity,
           CITY_ID: this.saveData.CITY_ID,
           ...pincode,
-          IS_ACTIVE: true, // Default status
+          IS_ACTIVE: true, 
         };
-        // Prevent duplicate entries
         const exists = this.PincodeMappingdata.some(
           (item) =>
             item.STATE_ID === entry.STATE_ID &&
@@ -396,36 +369,23 @@ export class TerritoryPincodeMappingComponent {
         if (!exists) {
           this.PincodeMappingdata.push(entry);
         }
-
         this.PincodeMappingdata = [...[], ...this.PincodeMappingdata];
       });
-      // Reset the inputs
       this.resetDrawer(technicianmaster);
-      // Notify success
       this.message.success("Pincode's added successfully.", '');
       this.issaveSpinning = false;
       this.pincodeData = [];
     }
   }
-  // select all pincode toggle button
   isSelectAll: boolean = false;
   toggleSelectAll(isSelectAll: boolean): void {
     if (isSelectAll) {
-      // Select all available pincodes
       this.saveData.PINCODE_ID = this.pincodeData.map((pincode) => pincode.ID);
     } else {
-      // Deselect all pincodes
       this.saveData.PINCODE_ID = [];
     }
   }
-
-  apply() {
-    // this.isSpinning = true
-    this.isSpinning11 = true;
-    // this.filterQuery = {};
-
-    this.selectedPincodeSet.clear();
-
+  apply_orginal() {
     if (
       this.STATE_ID == null ||
       this.STATE_ID == undefined ||
@@ -435,6 +395,7 @@ export class TerritoryPincodeMappingComponent {
       this.message.error('Please select State.', '');
       this.isSpinning = false;
       this.isSpinning11 = false;
+      return;
     }
     if (
       this.DISTRICT_ID == null ||
@@ -445,17 +406,19 @@ export class TerritoryPincodeMappingComponent {
       this.message.error('Please select District.', '');
       this.isSpinning = false;
       this.isSpinning11 = false;
+      return;
     }
     if (
-      this.STATE_ID ||
-      (this.STATE_ID != null &&
-        this.STATE_ID != undefined &&
-        this.STATE_ID.length != 0 &&
-        this.DISTRICT_ID &&
-        this.DISTRICT_ID != null &&
-        this.DISTRICT_ID != undefined &&
+      this.STATE_ID &&
+      (this.STATE_ID != null ||
+        this.STATE_ID != undefined ||
+        this.STATE_ID.length != 0 ||
+        this.DISTRICT_ID ||
+        this.DISTRICT_ID != null ||
+        this.DISTRICT_ID != undefined ||
         this.DISTRICT_ID.length != 0)
     ) {
+      this.isSpinning11 = true;
       this.filterQuery =
         ' AND DISTRICT IN (' +
         this.DISTRICT_ID +
@@ -466,17 +429,14 @@ export class TerritoryPincodeMappingComponent {
       this.pincodemappingdata();
     }
   }
-
   clear(filter) {
     this.city = [];
     this.state = [];
-    // this.filterQuery = '';
     this.filterQuery = {};
     this.pincodemappingdata();
   }
   mapSelected() {
     this.isSpinning = true;
-    // Proceed with saving data if all entries are valid
     const dataToSave = this.PincodeMappingdata.map((data) => ({
       PINCODE_ID: data.PINCODE_ID,
       IS_ACTIVE: data.IS_ACTIVE,
@@ -485,7 +445,6 @@ export class TerritoryPincodeMappingComponent {
   unmapSelected() { }
   allSelected1: any;
   selectedPincode111: any;
-
   selectedPincode11: any = [];
   onPincodeSelecttable11(data: any, selected: boolean): void {
     data.selected = selected;
@@ -493,17 +452,12 @@ export class TerritoryPincodeMappingComponent {
     const selectedRows = this.mappingdata.filter(
       (item) => item.selected
     ).length;
-
-    // Update Select All and Indeterminate states
     this.allSelected1 = selectedRows === totalRows && totalRows > 0;
     this.tableIndeterminate11 = selectedRows > 0 && selectedRows < totalRows;
-
-    // Update selected pincodes
     this.selectedPincode11 = this.mappingdata
       .filter((item) => item.selected)
       .map((item) => item.PINCODE_ID);
   }
-
   sort11(params: NzTableQueryParams) {
     this.isSpinning = true;
     this.isSpinning22 = true;
@@ -525,26 +479,19 @@ export class TerritoryPincodeMappingComponent {
     this.sortValue = sortOrder;
     this.PincodeMapping111();
   }
-
   mappingdata: any = [];
   mappingdataMain: any = [];
-
   isSpinning22: boolean = false;
   isSpinning11: boolean = false;
   PincodeMapping111() {
     this.isSpinning = true;
     this.isSpinning22 = true;
     var sort: string;
-    // this.sortKey = 'OFFICE_NAME';
-    // sort = 'asc';
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
-    // Call the API with the constructed query
     this.api
       .getterritoryPincodeData11(
         0,
@@ -557,7 +504,6 @@ export class TerritoryPincodeMappingComponent {
         (data) => {
           if (data['code'] === 200) {
             this.mappingdata = data['data'];
-            // this.mappingdataMain = data['data'];
             this.originalTraineeData1 = [...this.mappingdata];
             this.totoalrecordsss = this.mappingdata.length;
             this.selectedPincode11 = [];
@@ -579,11 +525,8 @@ export class TerritoryPincodeMappingComponent {
       );
   }
   totoalrecordsss = 0;
-
   mapdatatopincode() {
     this.isSpinning = true;
-
-    // Ensure only the selected pincodes are included in the request
     if (this.selectedPincode.length > 0) {
       this.api
         .addTechnicianPincodeMappingteroorty(
@@ -599,7 +542,6 @@ export class TerritoryPincodeMappingComponent {
                 ''
               );
               this.isSpinning = false;
-              // Clear the selected pincodes
               this.selectedPincode = [];
               this.selectedPincodeSet = new Set();
               this.PincodeMapping111();
@@ -618,12 +560,10 @@ export class TerritoryPincodeMappingComponent {
           }
         );
     } else {
-      // Handle case where no pincode is selected
       this.message.error('No Pincode selected for mapping.', '');
       this.isSpinning = false;
     }
   }
-
   onPincodeSelecttable11111(data: any, selected: boolean): void {
     const dataToSend = [
       {
@@ -632,85 +572,71 @@ export class TerritoryPincodeMappingComponent {
       },
     ];
     this.isSpinning = true;
-
     this.api.markasinactivedatatettory(this.data.ID, dataToSend).subscribe(
       (response) => {
         if (response.code === 200) {
-          // Update the active status of the current data
           data.IS_ACTIVE = selected;
-
-          // Recalculate `allChecked` state
           this.allChecked = this.mappingdata.every((item) => item.IS_ACTIVE);
-
-          // Show success message based on selection
           const successMessage = selected
             ? 'Pincodes Successfully mapped to the Territory.'
             : 'Pincodes Successfully Unmapped to the Territory.';
           this.message.success(successMessage, '');
-
-          // Reset state variables
           this.isSpinning = false;
           this.selectedPincode11 = [];
           this.allSelected1 = false;
         } else if (response.code === 300) {
-          // Handle error for specific code
-          data.IS_ACTIVE = false; // Ensure IS_ACTIVE is set to false
+          data.IS_ACTIVE = false; 
           this.isSpinning = false;
           this.message.error(response.message, '');
         } else {
-          // General failure message
           this.isSpinning = false;
           this.message.error('Failed to Map Pincodes to the Territory', '');
         }
       },
       (error) => {
-        // Handle API error
         this.isSpinning = false;
         this.message.error('Something Went Wrong.', '');
       }
     );
   }
-
   selectedPincodeSet: Set<number> = new Set();
-
-  SearchOffice(data: string): void {
+  searchTags: string[] = [];
+  SearchOffice(data?: string): void {
     this.isSpinning = true;
-
-    if (data && data.trim().length >= 3) {
-      // Filter the data based on the search input
-      this.datalist1 = this.PincodeMappingdata.filter((record) => {
-        return (
-          // (record.OFFICE_NAME &&
-          //   record.OFFICE_NAME.toLowerCase().includes(data.toLowerCase())) ||
-          (record.TALUKA &&
-            record.TALUKA.toLowerCase().includes(data.toLowerCase())) ||
-          (record.PINCODE && record.PINCODE.toString().includes(data))
-        );
-      });
-
-      // Map the filtered data to include the selected state
-      this.PincodeMappingdata = this.datalist1.map((record) => ({
-        ...record,
-        selected: this.selectedPincodeSet.has(record.ID),
-      }));
-
-      // Sort selected records to the top
-      this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
-    } else if (data.trim().length === 0) {
-      // Reset to the original data and sort selected records to the top
-      this.PincodeMappingdata = this.originalTraineeData.map((record) => ({
-        ...record,
-        selected: this.selectedPincodeSet.has(record.ID),
-      }));
-
-      this.PincodeMappingdata.sort((a, b) => b.selected - a.selected);
+    const source = this.originalTraineeData || [];
+    const hasData = typeof data === 'string' && data.trim().length >= 3;
+    if (hasData) {
+      const value = data.trim().toLowerCase();
+      if (!this.searchTags.some(t => t.trim().toLowerCase() === value)) {
+        this.searchTags = [data.trim(), ...this.searchTags,];
+      }
+      this.searchText = "";
     }
-
+    const qTags = this.searchTags.map(t => t.toLowerCase());
+    this.datalist1 = source.filter(record => {
+      if (qTags.length === 0) return true;
+      return qTags.some(tag =>
+        (record.TALUKA && record.TALUKA.toLowerCase().includes(tag)) ||
+        (record.OFFICE_NAME && record.OFFICE_NAME.toLowerCase().includes(tag)) ||
+        (record.PINCODE && record.PINCODE.toString().includes(tag))
+      );
+    });
+    this.PincodeMappingdata = this.datalist1.map(r => ({
+      ...r,
+      selected: this.selectedPincodeSet.has(r.ID),
+    }));
+    this.PincodeMappingdata.sort((a, b) => Number(b.selected) - Number(a.selected));
     this.isSpinning = false;
   }
-
-  onPincodeSelecttable(data: any, selected: boolean): void {
-    // Track selected items based on checkbox status
+  removeTag(index: number) {
+    this.searchTags.splice(index, 1);
+    this.SearchOffice('');
+  }
+  clearAllTags(): void {
+    this.searchTags = [];
+    this.SearchOffice('');
+  }
+  onPincodeSelecttable_original(data: any, selected: boolean): void {
     var selectedItem: any = {
       PINCODE_ID: data.ID,
       PINCODE: data.PINCODE,
@@ -726,68 +652,28 @@ export class TerritoryPincodeMappingComponent {
       DISTRICT_NAME: data.DISTRICT_NAME,
       ID: data.ID,
     };
-
     if (selected) {
       this.selectedPincodeSet.add(data.ID);
-      this.selectedPincode.push(selectedItem);
+      if (!this.selectedPincode.some(x => x.PINCODE_ID === data.ID)) {
+        this.selectedPincode.push(selectedItem);
+      }
     } else {
       this.selectedPincodeSet.delete(data.ID);
       this.selectedPincode = this.selectedPincode.filter(
         (element) => element.PINCODE_ID !== data.ID
       );
     }
-
     this.updateSelectionStates();
   }
-
-  // toggleAll(selectAll: boolean): void {
-  //   this.allSelected = selectAll;
-  //   this.tableIndeterminate = false;
-
-  //   if (selectAll) {
-  //     this.PincodeMappingdata.forEach((item) => {
-  //       var selectedItem: any = {
-  //         PINCODE_ID: item.ID,
-  //         PINCODE: item.PINCODE,
-  //         COUNTRY_NAME: item.COUNTRY_NAME,
-  //         COUNTRY_ID: item.COUNTRY_ID,
-  //         STATE: item.STATE,
-  //         STATE_NAME: item.STATE_NAME,
-  //         OFFICE_NAME: item.OFFICE_NAME,
-  //         CIRCLE_NAME: item.CIRCLE_NAME,
-  //         DIVISION_NAME: item.DIVISION_NAME,
-  //         TALUKA: item.TALUKA,
-  //         DISTRICT: item.DISTRICT,
-  //         DISTRICT_NAME: item.DISTRICT_NAME,
-  //         ID: item.ID,
-  //       };
-  //       this.selectedPincodeSet.add(item.ID);
-  //       this.selectedPincode.push(selectedItem);
-  //       item.selected = true;
-  //     });
-  //   } else {
-  //     this.PincodeMappingdata.forEach((item) => {
-  //       this.selectedPincodeSet.delete(item.ID);
-  //       this.selectedPincode = [];
-  //       item.selected = false;
-  //     });
-  //   }
-
-  //   this.updateSelectionStates();
-  // }
-
   isLoading: boolean = false;
   loadingMessage: string = '';
-
   async toggleAll(selectAll: boolean): Promise<void> {
     this.isLoading = true;
     this.loadingMessage = selectAll
       ? 'Selecting all records. Please wait...'
       : 'Deselecting all records. Please wait...';
-
     const batchSize = 50;
     const totalRecords = this.PincodeMappingdata.length;
-
     const processBatch = async (startIndex: number) => {
       for (
         let i = startIndex;
@@ -795,7 +681,6 @@ export class TerritoryPincodeMappingComponent {
         i++
       ) {
         const item = this.PincodeMappingdata[i];
-
         if (selectAll) {
           const selectedItem: any = {
             PINCODE_ID: item.ID,
@@ -821,7 +706,6 @@ export class TerritoryPincodeMappingComponent {
           item.selected = false;
         }
       }
-
       if (startIndex + batchSize < totalRecords) {
         setTimeout(() => processBatch(startIndex + batchSize), 0);
       } else {
@@ -829,20 +713,19 @@ export class TerritoryPincodeMappingComponent {
         this.isLoading = false;
       }
     };
-
     processBatch(0);
   }
-
   updateSelectionStates(): void {
-    const visibleRecords = this.PincodeMappingdata; // Currently displayed data in the table
+    const visibleRecords = this.PincodeMappingdata; 
     const totalVisibleRecords = visibleRecords.length;
-
-    // Count selected records in the visible data
+    if (!this.PincodeMappingdata) return;
+    this.PincodeMappingdata = this.PincodeMappingdata.map(row => ({
+      ...row,
+      selected: this.selectedPincodeSet.has(row.ID)
+    }));
     const totalSelectedVisibleRecords = visibleRecords.filter((record) =>
       this.selectedPincodeSet.has(record.ID)
     ).length;
-
-    // Update allSelected and indeterminate states based on visible data
     this.allSelected =
       totalSelectedVisibleRecords === totalVisibleRecords &&
       totalVisibleRecords > 0;
@@ -850,20 +733,15 @@ export class TerritoryPincodeMappingComponent {
       totalSelectedVisibleRecords > 0 &&
       totalSelectedVisibleRecords < totalVisibleRecords;
   }
-
   allChecked = false;
-
   allChange(selected: boolean): void {
-    this.allChecked = selected; // Set allChecked state
+    this.allChecked = selected; 
     this.isSpinning = true;
-
-    // Prepare data for batch update
     const dataToSend = this.mappingdata.map((item) => ({
       PINCODE_ID: item.PINCODE_ID,
       IS_ACTIVE: selected,
     }));
     var dataid: any = '';
-
     this.api.markasinactivedatatettory(this.data.ID, dataToSend).subscribe(
       (response) => {
         if (response.code === 200) {
@@ -877,30 +755,24 @@ export class TerritoryPincodeMappingComponent {
         } else {
           this.message.error('Failed to Update Skills.', '');
         }
-        this.isSpinning = false; // Hide spinner
+        this.isSpinning = false; 
       },
       (error) => {
-        this.isSpinning = false; // Hide spinner on error
+        this.isSpinning = false; 
         this.message.error('Something Went Wrong.', '');
       }
     );
   }
   fetchMappingData(selected: boolean): void {
     this.isSpinning = true;
-
     this.api.markasinactivedatatettory(this.data.ID, []).subscribe(
       (response) => {
         this.mappingdata = response.data || [];
         this.mappingdataMain = [...this.mappingdata];
-
-        // Explicitly set IS_ACTIVE to false for all records
         this.mappingdata.forEach((item) => {
           item.IS_ACTIVE = false;
         });
-
-        // Update the allChecked state to false since all items are now "off"
         this.allChecked = false;
-
         this.isSpinning = false;
       },
       (error) => {
@@ -908,5 +780,114 @@ export class TerritoryPincodeMappingComponent {
         this.message.error('Failed to Fetch Data.', '');
       }
     );
+  }
+  onPincodeSelecttable(data: any, selected: boolean): void {
+    var selectedItem: any = {
+      PINCODE_ID: data.ID,
+      PINCODE: data.PINCODE,
+      COUNTRY_NAME: data.COUNTRY_NAME,
+      COUNTRY_ID: data.COUNTRY_ID,
+      STATE: data.STATE,
+      STATE_NAME: data.STATE_NAME,
+      OFFICE_NAME: data.OFFICE_NAME,
+      CIRCLE_NAME: data.CIRCLE_NAME,
+      DIVISION_NAME: data.DIVISION_NAME,
+      TALUKA: data.TALUKA,
+      DISTRICT: data.DISTRICT,
+      DISTRICT_NAME: data.DISTRICT_NAME,
+      ID: data.ID,
+    };
+    if (selected) {
+      this.selectedPincodeSet.add(data.ID);
+      if (!this.selectedPincode.some(x => x.PINCODE_ID === data.ID)) {
+        this.selectedPincode.push(selectedItem);
+      }
+    } else {
+      this.selectedPincodeSet.delete(data.ID);
+      this.selectedPincode = this.selectedPincode.filter(
+        (element) => element.PINCODE_ID !== data.ID
+      );
+    }
+    this.updateSelectionStates();
+  }
+  apply() {
+    if (
+      this.STATE_ID == null ||
+      this.STATE_ID == undefined ||
+      this.STATE_ID == '' ||
+      this.STATE_ID.length == 0
+    ) {
+      this.message.error('Please select State.', '');
+      this.isSpinning = false;
+      this.isSpinning11 = false;
+      return;
+    }
+    if (
+      this.DISTRICT_ID == null ||
+      this.DISTRICT_ID == undefined ||
+      this.DISTRICT_ID == '' ||
+      this.DISTRICT_ID.length == 0
+    ) {
+      this.message.error('Please select District.', '');
+      this.isSpinning = false;
+      this.isSpinning11 = false;
+      return;
+    }
+    if (
+      this.STATE_ID &&
+      (this.STATE_ID != null ||
+        this.STATE_ID != undefined ||
+        this.STATE_ID.length != 0 ||
+        this.DISTRICT_ID ||
+        this.DISTRICT_ID != null ||
+        this.DISTRICT_ID != undefined ||
+        this.DISTRICT_ID.length != 0)
+    ) {
+      this.isSpinning11 = true;
+      this.filterQuery =
+        ' AND DISTRICT IN (' +
+        this.DISTRICT_ID +
+        ')' +
+        ' AND STATE IN (' +
+        this.STATE_ID +
+        ')';
+      this.pincodemappingdata();
+    }
+  }
+  onDistChange(): void {
+    const removedDistricts = this.previousDistrictIds.filter(
+      d => !this.DISTRICT_ID.includes(d)
+    );
+    const stateChanged =
+      JSON.stringify(this.previousStateIds) !== JSON.stringify(this.STATE_ID);
+    if (stateChanged) {
+      this.selectedPincode = [];
+      this.selectedPincodeSet.clear();
+    }
+    else if (removedDistricts.length > 0) {
+      this.selectedPincode = this.selectedPincode.filter(
+        p => !removedDistricts.includes(p.DISTRICT)
+      );
+      this.selectedPincodeSet = new Set(
+        this.selectedPincode.map(p => p.PINCODE_ID)
+      );
+    }
+    this.previousDistrictIds = [...this.DISTRICT_ID];
+    this.previousStateIds = this.STATE_ID;
+    if (this.DISTRICT_ID.length == 3) {
+      this.message.info('You have reached the maximum limit of 3 districts.', '');
+    }
+    this.PincodeMappingdata = [];
+    this.searchTags = [];
+    this.searchText = '';
+    this.allSelected = false;
+    this.tableIndeterminate = false;
+  }
+  restoreSelectionState(): void {
+    if (this.PincodeMappingdata && this.PincodeMappingdata.length > 0) {
+      this.PincodeMappingdata.forEach(item => {
+        item.selected = this.selectedPincodeSet.has(item.ID);
+      });
+    }
   }
 }

@@ -1,14 +1,14 @@
 <div *ngIf="drawerfor == 'ADDORUPDATE'">
   <form nz-form #stockmaster="ngForm" [ngStyle]="screenwidth > 500 ? {} : { 'margin-left': '20px' }">
     <nz-spin [nzSpinning]="isSpinning">
-      <div nz-row style="display: inline-block; width: 100%">
+      <div nz-row class="tech-row-block">
         <div class="my-box">
           <div nz-row>
             <div nz-col nzXs="4" nzSm="4" nzMd="4" nzLg="4" nzXl="4">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Date</nz-form-label>
                 <nz-form-control nzHasFeedback nzErrorTip="Please Select Date">
-                  <nz-date-picker name="date" style="width: 100%" [nzFormat]="commonFunction.dateFormatMMM"
+                  <nz-date-picker name="date" class="tech-width-full" [nzFormat]="commonFunction.dateFormatMMM"
                     [(ngModel)]="data.DATE" [nzShowToday]="false" required disabled>
                   </nz-date-picker>
                 </nz-form-control>
@@ -26,11 +26,9 @@
                 </nz-form-control>
               </nz-form-item>
             </div>
-
             <div nz-col nzSpan="10" *ngIf="data.TRANSFER_MODE == 'T'">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Technician</nz-form-label>
-
                 <nz-form-control nzHasFeedback nzErrorTip="Select Technician">
                   <nz-select name="Destinationgodown" nzPlaceHolder="Select Technician"
                     [nzLoading]="isFromGodownLoading" [(ngModel)]="data.TECHNICIAN_ID" nzAllowClear="false"
@@ -72,7 +70,6 @@
             <div nz-col nzSpan="10" *ngIf="data.TRANSFER_MODE == 'W'">
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>Technician</nz-form-label>
-
                 <nz-form-control nzHasFeedback nzErrorTip="Select Technician">
                   <nz-select name="Destinationgodown" nzPlaceHolder="Select Technician"
                     [nzLoading]="isFromGodownLoading" [(ngModel)]="data.TECHNICIAN_ID"
@@ -86,34 +83,14 @@
             </div>
           </div>
         </div>
-
         <form nz-form #form2="ngForm">
           <div class="my-box">
-            <!-- <div nz-row>
-              <nz-form-item>
-                <nz-form-label nzNoColon nzRequired>
-                  Transfer Mode
-                </nz-form-label>
-                <nz-form-control>
-                  <nz-radio-group
-                    name="movementtype"
-                    [(ngModel)]="radioValue"
-                    (ngModelChange)="onChangeMovementType($event)"
-                  >
-                    <label nz-radio nzValue="S">Serial No. Wise</label>
-                    <label nz-radio nzValue="B">Batch Wise</label>
-                    <label nz-radio nzValue="N">Generic</label>
-                  </nz-radio-group>
-                </nz-form-control>
-              </nz-form-item>
-            </div> -->
             <div nz-row>
               <div nz-col [nzSpan]="showvariant ? 12 : 12">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Item Name</nz-form-label>
-
                   <nz-form-control nzHasFeedback nzErrorTip="Please Select Item Name">
-                    <nz-tree-select name="INVENTORY_ID" style="width: 100%" [nzDropdownStyle]="{
+                    <nz-tree-select name="INVENTORY_ID" class="tech-width-full" [nzDropdownStyle]="{
                         'min-height': '10px',
                         'max-height': '300px',
                         'overflow-x': 'auto'
@@ -167,10 +144,10 @@
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Stock</nz-form-label>
                   <nz-form-control nzHasFeedback nzErrorTip="Select Stock">
-                    <input nz-input type="text" name="Stock" autocomplete="off"
-                      style="width: 50%; padding: 4.7px 11px !important" (keypress)="commonFunction.onlynum($event)"
-                      placeHolder="Stock" [(ngModel)]="data2.STOCK" maxlength="7" disabled />
-                    <nz-select class="custom-select-width" style="width: 50%" nzShowSearch nzAllowClear="false"
+                    <input nz-input type="text" name="Stock" autocomplete="off" class="tech-input-width-half"
+                      (keypress)="commonFunction.onlynum($event)" placeHolder="Stock" [(ngModel)]="data2.STOCK"
+                      maxlength="7" disabled />
+                    <nz-select class="custom-select-width tech-select-width-half" nzShowSearch nzAllowClear="false"
                       nzPlaceHolder="Unit" name="STOCK_UNIT_ID" [nzLoading]="Unitload" [(ngModel)]="data2.STOCK_UNIT_ID"
                       disabled>
                       <nz-option *ngFor="let unit of itemWiseUnitList" [nzValue]="unit.UNIT_ID"
@@ -180,42 +157,19 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-              <!-- (ngModelChange)="onItemSelection($event)" -->
               <div nz-col [nzSpan]="showvariant ? 6 : 5">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Quantity</nz-form-label>
-
                   <nz-form-control>
-                    <input nz-input type="text" name="QUANTITY" autocomplete="off"
-                      style="width: 100%; padding: 4.7px 11px !important" (keypress)="commonFunction.onlynum($event)"
-                      placeHolder="Qty" [(ngModel)]="data2.QUANTITY" (ngModelChange)="checkQuantity($event)"
-                      maxlength="7" />
-                    <!-- <nz-select
-                      class="custom-select-width"
-                      style="width: 60%"
-                      nzShowSearch
-                      nzAllowClear="false"
-                      nzPlaceHolder="Unit"
-                      name="UNIT_ID"
-                      [nzLoading]="Unitload"
-                      [(ngModel)]="data2.UNIT_ID"
-                      (ngModelChange)="onUnitSelection($event)"
-                    >
-                      <nz-option
-                        *ngFor="let unit of itemWiseUnitList"
-                        [nzValue]="unit.UNIT_ID"
-                        [nzLabel]="unit.UNIT_NAME"
-                      >
-                      </nz-option>
-                    </nz-select> -->
+                    <input nz-input type="text" name="QUANTITY" autocomplete="off" class="tech-input-qty"
+                      (keypress)="commonFunction.onlynum($event)" placeHolder="Qty" [(ngModel)]="data2.QUANTITY"
+                      (ngModelChange)="checkQuantity($event)" maxlength="7" />
                   </nz-form-control>
                 </nz-form-item>
               </div>
-
               <div nz-col [nzSpan]="showvariant ? 3 : 4">
                 <nz-form-item>
                   <nz-form-label nzNoColon></nz-form-label>
-
                   <nz-form-control>
                     <button [ngStyle]="{ 'margin-top': showvariant ? '4px' : '4px' }" nz-button nzType="primary"
                       (click)="addData(true, form2)">
@@ -227,13 +181,12 @@
                 </nz-form-item>
               </div>
             </div>
-
-            <div nz-row style="padding: 0px 10px">
+            <div nz-row class="tech-padding-row">
               <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
-                <nz-table class="my-scroll no-wrap1" nzBordered #maptrainpoint nzShowSizeChanger [nzData]="items"
-                  [nzBordered]="true" [nzFrontPagination]="false" [nzTotal]="totaldata" [(nzPageIndex)]="pageIndex"
-                  [(nzPageSize)]="pageSize" [nzShowPagination]="false" [nzScroll]="{ y: '290px' }" nzSize="small"
-                  style="white-space: pre-line">
+                <nz-table class="my-scroll no-wrap1 tech-table-whitespace" nzBordered #maptrainpoint nzShowSizeChanger
+                  [nzData]="items" [nzBordered]="true" [nzFrontPagination]="false" [nzTotal]="totaldata"
+                  [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" [nzShowPagination]="false"
+                  [nzScroll]="{ y: '290px' }" nzSize="small">
                   <thead>
                     <tr>
                       <th nzWidth="40px">Action</th>
@@ -247,39 +200,38 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let data of maptrainpoint.data; let i = index">
-                      <td style="text-align: center">
+                      <td class="tech-td-center">
                         <nz-space>
                           <a *nzSpaceItem (click)="edit(data, i)" nz-tooltip nzTooltipTitle="Edit">
                             <span nz-icon nzType="edit" nzTheme="twotone"></span>
                           </a>
-
                           <a *nzSpaceItem nz-tooltip nzTooltipTitle="Delete">
-                            <span *ngIf="index == -1" style="cursor: pointer" nz-popconfirm
+                            <span *ngIf="index == -1" class="tech-cursor-pointer" nz-popconfirm
                               nzPopconfirmTitle="Are you sure, you want to delete?" nzPopconfirmPlacement="top"
                               (nzOnConfirm)="delete(data, i)" (nzOnCancel)="cancel()">
-                              <span nz-icon nzType="delete" nzTheme="outline" style="color: red" nz-tooltip
+                              <span nz-icon nzType="delete" nzTheme="outline" class="tech-color-red" nz-tooltip
                                 nzTooltipTitle="Delete">
                               </span>
                             </span>
                           </a>
                         </nz-space>
                       </td>
-                      <td style="white-space: pre-line; text-align: left">
+                      <td class="tech-td-preline-left">
                         {{ data["INVENTORY_NAME"] }}
                       </td>
-                      <td style="white-space: pre-line; text-align: left">
+                      <td class="tech-td-preline-left">
                         {{ data["VARIANT_NAME"] }}
                       </td>
-                      <td style="white-space: pre-line; text-align: left">
+                      <td class="tech-td-preline-left">
                         {{ data["SERIAL_NO"] }}
                       </td>
-                      <td style="white-space: pre-line; text-align: left">
+                      <td class="tech-td-preline-left">
                         {{ data["BATCH_NO"] }}
                       </td>
-                      <td style="white-space: pre-line; text-align: left">
+                      <td class="tech-td-preline-left">
                         {{ data["STOCK"] }} {{ data["STOCK_UNIT_NAME"] }}
                       </td>
-                      <td style="white-space: pre-line; text-align: left">
+                      <td class="tech-td-preline-left">
                         {{ data["QUANTITY"] }} {{ data["UNIT_NAME"] }}
                       </td>
                     </tr>
@@ -292,42 +244,34 @@
       </div>
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close()" class="ant-btn tech-margin-right">
       <span>Cancel</span>
     </button>
-
     <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" [nzLoading]="isSpinning" nz-button
       nz-dropdown [nzDropdownMenu]="menu" (click)="save(false, stockmaster)">
       <span>Save & Close</span>
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
-          <a style="color: white !important" (click)="save(true, stockmaster)">
+        <li nz-menu-item class="menuc tech-menu-item">
+          <a class="tech-menu-link" (click)="save(true, stockmaster)">
             Save & New
           </a>
         </li>
       </ul>
     </nz-dropdown-menu>
-
     <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
       (click)="save(false, stockmaster)">
       <span>Update & Close</span>
     </button>
   </div>
 </div>
-
 <div *ngIf="drawerfor == 'VIEW' || drawerfor == 'APPROVE'">
-  <div nz-row style="padding: 10px 20px">
+  <div nz-row class="tech-view-padding">
     <div nz-col nzSpan="8">
       <b>Date :</b> {{ data.DATE | date : "dd/MM/yyyy HH:mm a" }}
     </div>
-    <!-- <div nz-col nzSpan="12" class="mainnam">
-      Movement No. : {{ data.MOVEMENT_NUMBER }}
-    </div> -->
     <div nz-col nzSpan="8" class="mainnam">
       <b *ngIf="data.TRANSFER_MODE == 'T'">Technician to Warehouse</b>
       <b *ngIf="data.TRANSFER_MODE == 'W'">Warehouse to Technician</b>
@@ -345,12 +289,11 @@
         }}</span>
     </div>
   </div>
-
-  <div nz-row style="padding: 0px 10px">
+  <div nz-row class="tech-padding-row">
     <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
-      <nz-table class="my-scroll no-wrap1" nzBordered #maptrainpoint nzShowSizeChanger [nzData]="items"
-        [nzBordered]="true" [nzFrontPagination]="false" [nzTotal]="totaldata" [nzShowPagination]="false"
-        [nzScroll]="{ y: '290px' }" nzSize="small" style="white-space: pre-line">
+      <nz-table class="my-scroll no-wrap1 tech-table-whitespace" nzBordered #maptrainpoint nzShowSizeChanger
+        [nzData]="items" [nzBordered]="true" [nzFrontPagination]="false" [nzTotal]="totaldata"
+        [nzShowPagination]="false" [nzScroll]="{ y: '290px' }" nzSize="small">
         <thead>
           <tr>
             <th nzWidth="120px">Item Name</th>
@@ -359,90 +302,39 @@
             <th nzWidth="120px">Batch No</th>
             <th nzWidth="60px">Quantity</th>
             <th nzWidth="60px">Unit</th>
-            <!-- <th nzWidth="60px" *ngIf="drawerfor == 'APPROVE'">
-                Available Quantity
-              </th>
-              <th nzWidth="100px">Approval Quantity</th> -->
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of maptrainpoint.data; let i = index">
-            <td style="white-space: pre-line; text-align: left">
+            <td class="tech-td-preline-left">
               {{ data["INVENTORY_NAME"] }}
             </td>
-            <td style="white-space: pre-line; text-align: left">
+            <td class="tech-td-preline-left">
               {{ data["VARIANT_NAME"] }}
             </td>
-            <td style="white-space: pre-line; text-align: left">
+            <td class="tech-td-preline-left">
               {{ data["SERIAL_NO"] ? data["SERIAL_NO"] : "-" }}
             </td>
-            <td style="white-space: pre-line; text-align: left">
+            <td class="tech-td-preline-left">
               {{ data["BATCH_NO"] ? data["BATCH_NO"] : "-" }}
             </td>
-            <td style="white-space: pre-line; text-align: left">
+            <td class="tech-td-preline-left">
               {{ data["QUANTITY"] }}
             </td>
-            <td style="white-space: pre-line; text-align: left">
+            <td class="tech-td-preline-left">
               {{ data["UNIT_NAME"] }}
             </td>
-            <!-- <td style="white-space: pre-line" *ngIf="drawerfor == 'APPROVE'">
-                {{ data.INWARD_QUANTITY }}
-              </td>
-              <td style="white-space: pre-line" *ngIf="drawerfor == 'APPROVE'">
-                <input
-                  style="width: 100%"
-                  nz-input
-                  name="APPROVAL_QUANTITY{{ i }}"
-                  maxlength="8"
-                  nzSize="small"
-                  (ngModelChange)="approvalQuantityChange($event, i, data)"
-                  (keypress)="commonFunction.onlynumdot($event)"
-                  [(ngModel)]="items[i].APPROVAL_QUANTITY"
-                  placeholder="Approval Quntity"
-                  autocomplete="off"
-                  type="text"
-                  required
-                />
-              </td> -->
-            <!-- <td style="white-space: pre-line" *ngIf="drawerfor == 'VIEW'">
-                {{ data.APPROVAL_QUANTITY }}
-              </td> -->
           </tr>
         </tbody>
       </nz-table>
     </div>
   </div>
-
   <div class="footer">
-    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <button type="button" nz-button (click)="close()" class="ant-btn tech-margin-right">
       <span>Cancel</span>
     </button>
-
-    <!-- <button
-        type="button"
-        class="ant-btn ant-btn-primary"
-        nz-button
-        [nzLoading]="isSpinning"
-        *ngIf="data.ID"
-        (click)="reject111()"
-        style="margin-right: 8px"
-      >
-        <span>Reject</span>
-      </button>
-      <button
-        type="button"
-        class="ant-btn ant-btn-primary"
-        nz-button
-        [nzLoading]="isSpinning"
-        *ngIf="data.ID"
-        (click)="approve()"
-      >
-        <span>Approve</span>
-      </button> -->
   </div>
 </div>
-<!-- </div> -->
-
 <nz-modal [nzWidth]="500" [(nzVisible)]="showreject" nzMaskClosable="false" nzClosable="false" [nzContent]="content"
   [nzTitle]="'Profile Photo View'" [nzFooter]="ImageModalFooter">
   <ng-template #content>
@@ -451,13 +343,11 @@
         <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
           <nz-form-item>
             <nz-form-label nzNoColon>Reject Remark</nz-form-label>
-
             <nz-form-control>
               <textarea nz-input rows="2" name="data.REASON" autocomplete="off" autofill="off"
                 placeholder="Enter Reject Remark" [(ngModel)]="data.REASON" maxlength="500">
               </textarea>
-
-              <h6 style="color: red; font-size: 10px" *ngIf="data.REASON != undefined">
+              <h6 class="tech-char-count" *ngIf="data.REASON != undefined">
                 {{ data.REASON.length }}/ 500
               </h6>
             </nz-form-control>

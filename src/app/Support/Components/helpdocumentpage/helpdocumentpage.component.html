@@ -1,149 +1,168 @@
 <nz-layout class="main-layout">
-  <nz-sider nzWidth="220px" nzTheme="light" [nzReverseArrow]="false" (nzCollapsedChange)="isCollapsed = $event"
-    class="custom-sider" style="background: white !important">
-    <div class="logo" style="display: flex; border-bottom: 1px solid #d9d9d9">
-      <div>
-
-        <span _ngcontent-tft-c99="" nz-icon="" nztype="read" nztheme="outline" ng-reflect-nz-type="read"
-          ng-reflect-nz-theme="outline" class="anticon anticon-read" style="
-          display: inline-block;
-          width: 40px;
-          height: 40px;
-          background-color: #ffffff;
-          border-radius: 40%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-bottom: 0px;border: 2px solid #092b9c;
-          border-radius: 50%;
-        "><svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="20px" height="20px"
-            data-icon="read" aria-hidden="true">
+  <nz-sider
+    nzWidth="220px"
+    nzTheme="light"
+    [nzReverseArrow]="false"
+    (nzCollapsedChange)="isCollapsed = $event"
+    class="custom-sider sider-background"
+  >
+    <div class="logo logo-container">
+      <div class="logo-icon-wrapper">
+        <span
+          _ngcontent-tft-c99=""
+          nz-icon=""
+          nztype="read"
+          nztheme="outline"
+          class="anticon anticon-read logo-icon"
+        >
+          <svg
+            viewBox="64 64 896 896"
+            focusable="false"
+            fill="currentColor"
+            width="20px"
+            height="20px"
+            data-icon="read"
+            aria-hidden="true"
+          >
             <path
-              d="M928 161H699.2c-49.1 0-97.1 14.1-138.4 40.7L512 233l-48.8-31.3A255.2 255.2 0 00324.8 161H96c-17.7 0-32 14.3-32 32v568c0 17.7 14.3 32 32 32h228.8c49.1 0 97.1 14.1 138.4 40.7l44.4 28.6c1.3.8 2.8 1.3 4.3 1.3s3-.4 4.3-1.3l44.4-28.6C602 807.1 650.1 793 699.2 793H928c17.7 0 32-14.3 32-32V193c0-17.7-14.3-32-32-32zM324.8 721H136V233h188.8c35.4 0 69.8 10.1 99.5 29.2l48.8 31.3 6.9 4.5v462c-47.6-25.6-100.8-39-155.2-39zm563.2 0H699.2c-54.4 0-107.6 13.4-155.2 39V298l6.9-4.5 48.8-31.3c29.7-19.1 64.1-29.2 99.5-29.2H888v488zM396.9 361H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5zm223.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0-4.1-3.2-7.5-7.1-7.5H627.1c-3.9 0-7.1 3.4-7.1 7.5zM396.9 501H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5zm416 0H627.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5z">
-            </path>
-          </svg></span>
+              d="M928 161H699.2c-49.1 0-97.1 14.1-138.4 40.7L512 233l-48.8-31.3A255.2 255.2 0 00324.8 161H96c-17.7 0-32 14.3-32 32v568c0 17.7 14.3 32 32 32h228.8c49.1 0 97.1 14.1 138.4 40.7l44.4 28.6c1.3.8 2.8 1.3 4.3 1.3s3-.4 4.3-1.3l44.4-28.6C602 807.1 650.1 793 699.2 793H928c17.7 0 32-14.3 32-32V193c0-17.7-14.3-32-32-32zM324.8 721H136V233h188.8c35.4 0 69.8 10.1 99.5 29.2l48.8 31.3 6.9 4.5v462c-47.6-25.6-100.8-39-155.2-39zm563.2 0H699.2c-54.4 0-107.6 13.4-155.2 39V298l6.9-4.5 48.8-31.3c29.7-19.1 64.1-29.2 99.5-29.2H888v488zM396.9 361H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5zm223.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0-4.1-3.2-7.5-7.1-7.5H627.1c-3.9 0-7.1 3.4-7.1 7.5zM396.9 501H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5zm416 0H627.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c.1-4.1-3.1-7.5-7-7.5z"
+            ></path>
+          </svg>
+        </span>
       </div>
-
-      <div style="text-align: left; align-self: center !important">
-        <span style="font-size: 19px !important; padding-left: 10px">Help Guide</span><br />
+      <div class="logo-text-wrapper">
+        <span class="logo-text">Help Guide</span><br />
       </div>
     </div>
-    <!-- <div class="menu-container"> -->
-    <!-- <ul nz-menu nzMode="inline" class="sider-menu" style="border-right: none">
-      <li style="font-size: 13px;font-weight: 700;" *ngFor="let menu of menuItems" nz-submenu [nzTitle]="menu.title"
-        [(nzOpen)]="menu.open" (nzOpenChange)="getSubCategories(menu, $event)">
-        <ul style="font-size: 12px">
-          <li style="padding-top: 0px !important" nz-menu-group>
+    <ul nz-menu nzMode="inline" class="sider-menu sider-menu-border">
+      <li
+        class="menu-item-header"
+        *ngFor="let menu of menuItems"
+        nz-submenu
+        [nzTitle]="
+          menu.title?.length > 20 ? menu.title.slice(0, 20) + '...' : menu.title
+        "
+        nzTooltipPlacement="bottom"
+        nz-tooltip
+        [nzTooltipTitle]="menu.title"
+        [(nzOpen)]="menu.open"
+        (nzOpenChange)="getSubCategories(menu, $event)"
+      >
+        <ul class="submenu-list">
+          <li class="submenu-group" nz-menu-group>
             <ul>
-              <li nz-popover [nzPopoverTitle]="group.NAME?.length >= 20 ? group.NAME : ''"
-                *ngFor="let group of menu.children" nz-menu-item (click)="onMenuItemClick(group)">
-                <span style="
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;font-weight: 500 !important;
-                  " *ngIf="group.NAME?.length >= 20">{{ group.NAME?.slice(0, 20) + "..." }}</span>
-                <span *ngIf="group.NAME?.length < 20" style="font-weight: 500!important;">{{ group.NAME }}</span>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul> -->
-
-    <ul nz-menu nzMode="inline" class="sider-menu" style="border-right: none">
-      <li style="font-size: 13px;font-weight: 700;" *ngFor="let menu of menuItems" nz-submenu
-        [nzTitle]="menu.title?.length > 20 ? menu.title.slice(0, 20) + '...' : menu.title" nzTooltipPlacement="bottom"
-        nz-tooltip [nzTooltipTitle]="menu.title" [(nzOpen)]="menu.open" (nzOpenChange)="getSubCategories(menu, $event)">
-        <ul style="font-size: 12px">
-          <li style="padding-top: 0px !important" nz-menu-group>
-            <ul>
-              <li nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="menu.title"
-                [nzTooltipTitle]="group.NAME?.length >= 20 ? group.NAME : ''" *ngFor="let group of menu.children"
-                nz-menu-item (click)="onMenuItemClick(group)">
-                <span style="
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                  " *ngIf="group.NAME?.length >= 20">{{ group.NAME?.slice(0, 20) + "..." }}</span>
-                <span *ngIf="group.NAME?.length < 20" style="font-weight: 500!important;">{{ group.NAME }}</span>
+              <li
+                class="submenu-item"
+                nz-tooltip
+                nzTooltipPlacement="right"
+                [nzTooltipTitle]="menu.title"
+                [nzTooltipTitle]="group.NAME?.length >= 20 ? group.NAME : ''"
+                *ngFor="let group of menu.children"
+                nz-menu-item
+                (click)="onMenuItemClick(group)"
+              >
+                <span class="truncated-text" *ngIf="group.NAME?.length >= 20">{{
+                  group.NAME?.slice(0, 20) + "..."
+                }}</span>
+                <span *ngIf="group.NAME?.length < 20" class="normal-text">{{
+                  group.NAME
+                }}</span>
               </li>
             </ul>
           </li>
         </ul>
       </li>
     </ul>
-
-    <!-- </div> -->
   </nz-sider>
-
-  <!-- Main Content -->
   <nz-layout class="content-layout">
-    <nz-content style="background: white !important; padding: 20px">
-      <div style="margin-top: 70px">
+    <nz-content class="content-background">
+      <div class="content-margin">
         <nz-spin [nzSpinning]="isSpinning">
-
           <nz-row [nzGutter]="16" class="card-row">
-
-
-            <nz-col *ngFor="let item of selectedContent" style="margin-bottom: 12px;" [nzSpan]="6">
+            <nz-col
+              *ngFor="let item of selectedContent"
+              class="card-col"
+              [nzSpan]="6"
+            >
               <nz-card class="document-card border-blue">
                 <div class="card-content">
                   <div class="icon-container">
-                    <i nz-icon [nzType]="item.TYPE === 'D' ? 'file-text' : 'link'" nzTheme="outline"></i>
+                    <i
+                      nz-icon
+                      [nzType]="item.TYPE === 'D' ? 'file-text' : 'link'"
+                      nzTheme="outline"
+                    ></i>
                   </div>
                   <div class="text-container">
-                    <h4 nzTooltipPlacement="bottom" nz-tooltip [nzTooltipTitle]="item.NAME">
+                    <h4
+                      nzTooltipPlacement="bottom"
+                      nz-tooltip
+                      [nzTooltipTitle]="item.NAME"
+                      class="item-name"
+                    >
                       {{
-                      item.NAME.length > 20
-                      ? (item.NAME | slice : 0 : 20) + "..."
-                      : item.NAME
+                        item.NAME.length > 20
+                          ? (item.NAME | slice : 0 : 20) + "..."
+                          : item.NAME
                       }}
                     </h4>
-                    <p>{{ item.TYPE === "D" ? "Document" : "Link" }}</p>
+                    <p class="item-type">
+                      {{ item.TYPE === "D" ? "Document" : "Link" }}
+                    </p>
                   </div>
                 </div>
-                <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
-                  <button nz-button nzType="primary" style="padding-bottom: 12px;    margin-top: 6px;" nzBlock
-                    class="view-btn" (click)="openDocument(item)">
+                <div class="button-container">
+                  <button
+                    nz-button
+                    nzType="primary"
+                    class="view-btn"
+                    (click)="openDocument(item)"
+                  >
                     <i nz-icon nzType="eye" nzTheme="outline"></i> View
                   </button>
                 </div>
               </nz-card>
             </nz-col>
-
             <div *ngIf="!selectedContent?.length" class="select-message">
-
-              <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                [nzNotFoundContent]="contentTpl43" [nzNotFoundFooter]="footerTpl43" style="margin-top: 38px">
+              <nz-empty
+                nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                [nzNotFoundContent]="contentTpl43"
+                [nzNotFoundFooter]="footerTpl43"
+                class="empty-state"
+              >
                 <ng-template #contentTpl43>
                   <span> Data Not Found</span>
                 </ng-template>
-                <ng-template #footerTpl43>
-                </ng-template>
+                <ng-template #footerTpl43> </ng-template>
               </nz-empty>
-
-
             </div>
           </nz-row>
         </nz-spin>
-
       </div>
-
-      <!-- Modal for Viewing PDF/Image -->
-
-      <nz-modal [nzWidth]="900" [(nzVisible)]="isModalVisible" nzMaskClosable="false" nzClosable="false"
-        [nzTitle]="'Document View'" [nzContent]="content" (nzOnCancel)="handleCancel()" [nzFooter]="ImageModalFooter">
+      <nz-modal
+        [nzWidth]="900"
+        [(nzVisible)]="isModalVisible"
+        nzMaskClosable="false"
+        nzClosable="false"
+        [nzTitle]="'Document View'"
+        [nzContent]="content"
+        (nzOnCancel)="handleCancel()"
+        [nzFooter]="ImageModalFooter"
+      >
         <ng-template #content>
           <nz-spin [nzSpinning]="loaddocs">
-            <!-- style="height: 70vh; overflow: auto" -->
-            <div *ngIf="pdfUrl" class="ss">
-              <iframe [src]="pdfUrl" style="width: 100%; height: 70vh; border: none"></iframe>
+            <div *ngIf="pdfUrl" class="pdf-container">
+              <iframe [src]="pdfUrl" class="pdf-iframe"></iframe>
             </div>
-
           </nz-spin>
         </ng-template>
         <ng-template #ImageModalFooter>
-          <button nz-button nzType="default" (click)="handleCancel()">
+          <button
+            nz-button
+            nzType="default"
+            (click)="handleCancel()"
+            class="modal-close-btn"
+          >
             Close
           </button>
         </ng-template>

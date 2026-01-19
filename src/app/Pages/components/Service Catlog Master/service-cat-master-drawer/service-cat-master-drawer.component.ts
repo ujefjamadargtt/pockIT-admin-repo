@@ -7,15 +7,12 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ServiceCatMasterData } from 'src/app/Pages/Models/ServiceCatMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-service-cat-master-drawer',
   templateUrl: './service-cat-master-drawer.component.html',
   styleUrls: ['./service-cat-master-drawer.component.css']
 })
 export class ServiceCatMasterDrawerComponent {
-
-
   isSpinning = false;
   isOk = true;
   UrlImageOne;
@@ -27,34 +24,24 @@ export class ServiceCatMasterDrawerComponent {
   categoryData: any = [];
   subcategoryData: any = [];
   currencyData: any = [];
-  // hours: any='00';
-  // minutes: any='00';
-
   ngOnInit(): void {
     this.getCategoryData();
     this.getSubCategoryData();
   }
-
-
   public commonFunction = new CommonFunctionService();
   @Input() data: any = ServiceCatMasterData;
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer
   ) { }
-
-
   getCategoryData() {
     this.api.getCategoryData(0, 0, 'SEQ_NO', 'asc', ' AND STATUS=1').subscribe(
       (data) => {
         if (data['code'] == 200) {
-
-
           this.categoryData = data['data'];
         } else {
           this.categoryData = [];
@@ -66,13 +53,10 @@ export class ServiceCatMasterDrawerComponent {
       }
     );
   }
-
   getSubCategoryData() {
     this.api.getSubCategoryData(0, 0, 'SEQ_NO', 'asc', ' AND STATUS=1').subscribe(
       (data) => {
         if (data['code'] == 200) {
-
-
           this.subcategoryData = data['data'];
         } else {
           this.subcategoryData = [];
@@ -84,15 +68,11 @@ export class ServiceCatMasterDrawerComponent {
       }
     );
   }
-
-
   resetDrawer(ServiceCatmaster: NgForm) {
     this.data = new ServiceCatMasterData();
     ServiceCatmaster.form.markAsPristine();
     ServiceCatmaster.form.markAsUntouched();
   }
-
-
   save(addNew: boolean, ServiceCatmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -130,7 +110,6 @@ export class ServiceCatMasterDrawerComponent {
       (this.data.SERVICE_IMAGE_URL == '' ||
         this.data.SERVICE_IMAGE_URL == null ||
         this.data.SERVICE_IMAGE_URL == undefined)
-
     ) {
       this.isOk = false;
       this.message.error('Please Fill All The Required Fields', '');
@@ -151,7 +130,6 @@ export class ServiceCatMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Select Sub Category', '');
     }
-
     else if (
       this.data.NAME == null ||
       this.data.NAME == undefined ||
@@ -168,7 +146,6 @@ export class ServiceCatMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Description', '');
     }
-
     else if (
       this.data.REGULAR_PRICE_B2C == null ||
       this.data.REGULAR_PRICE_B2C == undefined ||
@@ -217,148 +194,9 @@ export class ServiceCatMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Select Catlogue Image', '');
     }
-
-
-
-    // if (this.isOk) {
-    //   this.isSpinning = true;
-    //   {
-    //     if (this.data.ID) {
-    //       if (this.fileURL != null && this.fileURL != "") {
-    //       this.timer = this.api
-    //       .onUpload("Icons", this.fileURL, this.UrlImageOne)
-    //       .subscribe((res) => {
-    //         this.data.SERVICE_IMAGE_URL = this.UrlImageOne;
-
-    //         if (res.type === HttpEventType.Response) {
-    //         }
-
-    //           if (res.type == 4 && res.status == 200) {
-    //           if (res.body["code"] == 200) {
-    //             this.message.success("Icon Uploaded Successfully...", "");
-    //             
-    //             this.isSpinning = false;
-    //             this.data.SERVICE_IMAGE_URL = this.UrlImageOne;
-
-
-    //       this.api
-    //         .updateServiceCat(this.data)
-    //         .subscribe((successCode: any) => {
-    //           if (successCode.code == "200") {
-    //             this.message.success(
-    //               "Service Catalogue Updated Successfully",
-    //               ""
-    //             );
-    //             if (!addNew) this.drawerClose();
-    //             this.isSpinning = false;
-    //           } else {
-    //             this.message.error("Service Catalogue Updation Failed", "");
-    //             this.isSpinning = false;
-    //           }
-    //         });
-    //       }
-
-    //     }
-    //         else if (res.type == 2 && res.status != 200) {
-    //           this.message.error("Failed to upload file", "");
-    //           
-
-    //           this.isSpinning = false;
-    //           this.progressBarImageOne = false;
-    //           this.percentImageOne = 0;
-    //           this.data.SERVICE_IMAGE_URL = null;
-    //         }
-    //         else {
-    //           
-    //           this.isSpinning = false;
-    //           this.progressBarImageOne = false;
-    //           this.percentImageOne = 0;
-    //           this.data.SERVICE_IMAGE_URL = null;
-    //         }
-    //       });
-    //     }
-    //     else{
-    //       this.api
-    //       .updateServiceCat(this.data)
-    //       .subscribe((successCode: any) => {
-    //         if (successCode.code == "200") {
-    //           this.message.success(
-    //             "Service Catalogue Updated Successfully",
-    //             ""
-    //           );
-    //           if (!addNew) this.drawerClose();
-    //           this.isSpinning = false;
-    //         } else {
-    //           this.message.error("Service Catalogue Updation Failed", "");
-    //           this.isSpinning = false;
-    //         }
-    //       });
-    //     }
-    //     } else {
-    //       this.timer = this.api
-    //       .onUpload("ServiceCatalog", this.fileURL, this.UrlImageOne)
-    //       .subscribe((res) => {
-    //         this.data.SERVICE_IMAGE_URL = this.UrlImageOne;
-
-    //         if (res.type === HttpEventType.Response) {
-    //         }
-
-    //           if (res.type == 4 && res.status == 200) {
-    //           if (res.body["code"] == 200) {
-    //             this.message.success("Icon Uploaded Successfully...", "");
-    //             
-    //             this.isSpinning = false;
-    //             this.data.SERVICE_IMAGE_URL = this.UrlImageOne;
-
-    //       this.api
-    //         .createServiceCat(this.data)
-    //         .subscribe((successCode: any) => {
-    //           if (successCode.code == "200") {
-    //             this.message.success(
-    //               "Service Catalogue Created Successfully",
-    //               ""
-    //             );
-    //             if (!addNew) this.drawerClose();
-    //             else {
-    //               this.data = new ServiceCatMasterData();
-    //               this.resetDrawer(ServiceCatmaster);
-
-    //             }
-    //             this.isSpinning = false;
-    //           } else {
-    //             this.message.error("Service Catalogue Creation Failed", "");
-    //             this.isSpinning = false;
-    //           }
-    //         });
-    //       }
-    //     }
-    //     else if (res.type == 2 && res.status != 200) {
-    //       this.message.error("Failed to upload file", "");
-    //       
-
-    //       this.isSpinning = false;
-    //       this.progressBarImageOne = false;
-    //       this.percentImageOne = 0;
-    //       this.data.SERVICE_IMAGE_URL = null;
-    //     }
-    //     else {
-    //       
-    //       this.isSpinning = false;
-    //       this.progressBarImageOne = false;
-    //       this.percentImageOne = 0;
-    //       this.data.SERVICE_IMAGE_URL = null;
-    //     }
-    //   });
-    //     }
-    //   }
-    // }
-
     if (this.isOk) {
       this.isSpinning = true;
-
       {
-
-
         if (this.data.ID) {
           this.api.updateServiceCat(this.data).subscribe((successCode: any) => {
             if (successCode.code == '200') {
@@ -378,8 +216,6 @@ export class ServiceCatMasterDrawerComponent {
               else {
                 this.data = new ServiceCatMasterData();
                 this.resetDrawer(ServiceCatmaster);
-
-
               }
               this.isSpinning = false;
             } else {
@@ -391,18 +227,11 @@ export class ServiceCatMasterDrawerComponent {
       }
     }
   }
-
-
   close() {
     this.drawerClose();
   }
-
-
   onFileSelected(event: any) {
-
-
     const maxFileSize = 1 * 1024 * 1024;
-
     if (
       event.target.files[0].type == "image/jpeg" ||
       event.target.files[0].type == "image/jpg" ||
@@ -434,7 +263,6 @@ export class ServiceCatMasterDrawerComponent {
         .onUpload("ServiceCatalog", this.fileURL, this.UrlImageOne)
         .subscribe((res) => {
           this.data.SERVICE_IMAGE_URL = this.UrlImageOne;
-
           if (res.type === HttpEventType.Response) {
           }
           if (res.type === HttpEventType.UploadProgress) {
@@ -448,8 +276,6 @@ export class ServiceCatMasterDrawerComponent {
             }
           } else if (res.type == 2 && res.status != 200) {
             this.message.error("Failed To Upload Icon...", "");
-
-
             this.isSpinning = false;
             this.progressBarImageOne = false;
             this.percentImageOne = 0;
@@ -457,18 +283,14 @@ export class ServiceCatMasterDrawerComponent {
           } else if (res.type == 4 && res.status == 200) {
             if (res.body["code"] == 200) {
               this.message.success("Icon Uploaded Successfully...", "");
-
               this.isSpinning = false;
               this.data.SERVICE_IMAGE_URL = this.UrlImageOne;
             } else {
-
               this.isSpinning = false;
               this.progressBarImageOne = false;
               this.percentImageOne = 0;
               this.data.SERVICE_IMAGE_URL = null;
             }
-
-
           }
         });
     } else {
@@ -481,53 +303,32 @@ export class ServiceCatMasterDrawerComponent {
     }
   }
   viewImage(imageURL: string): void {
-
-
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = "";
-
   GetImage(link: string) {
-
     let imagePath = this.api.retriveimgUrl + "ServiceCatalog/" + link;
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
-
   image1DeleteConfirm(data: any) {
-
-
     this.UrlImageOne = null;
     this.data.SERVICE_IMAGE_URL = " ";
-
     this.fileURL = null;
   }
   deleteCancel() { }
-
-
   removeImage() {
     this.data.URL = " ";
     this.data.SERVICE_IMAGE_URL = " ";
     this.fileURL = null;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
-
   imageshow;
-
-
 }

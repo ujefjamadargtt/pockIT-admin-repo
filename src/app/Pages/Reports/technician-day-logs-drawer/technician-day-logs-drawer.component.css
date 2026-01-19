@@ -2,29 +2,24 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%; 
   display: inline-block;
 }
-
 .filter-box nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select{
 width: 200px;
 padding: 8px;
 display: block;
 }
-
 .search-box {
   padding: 8px;
 }
@@ -37,7 +32,6 @@ display: block;
 .inputgroup>span>span {
   font-size: 11px !important;
 }
-
 .optiongroup>div {
   font-size: 11px !important;
 }
@@ -45,15 +39,220 @@ display: block;
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
+}
+.tab-header-row {
+    justify-content: flex-end;
+}
+.tab-header-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+.excel-button {
+    color: white;
+}
+.filter-toggle-button {
+    cursor: pointer;
+}
+.search-input-wide {
+    width: 300px;
+}
+.job-details-section {
+    margin-top: 15px;
+}
+.day-logs-section {
+    margin-top: 15px;
+}
+.availability-logs-section {
+    margin-top: 15px;
+}
+.filter-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.filter-grid-simple {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.filter-col {
+    margin-bottom: 15px;
+    padding-right: 10px;
+}
+.filter-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.date-range-picker {
+    width: 100%;
+}
+.filter-select {
+    width: 100%;
+}
+.dropdown-spinner {
+    padding: 10px;
+    text-align: center;
+}
+.filter-action-col {
+    margin-top: 25px;
+}
+.filter-action-col-simple {
+    margin-top: 25px;
+}
+.filter-action-buttons {
+    display: flex;
+    align-items: center;
+}
+.filter-action-button {
+    margin-right: 10px;
+}
+.table-container {
+    margin-top: 10px;
+}
+.table-header {
+    font-weight: bold;
+}
+.date-header {
+    text-align: center;
+}
+.jobno-header {
+    text-align: center;
+}
+.orderno-header {
+    text-align: center;
+}
+.customertype-header {
+    text-align: center;
+}
+.customername-header {
+    text-align: center;
+}
+.technician-header {
+    text-align: center;
+}
+.address-header {
+    text-align: center;
+}
+.service-header {
+    text-align: center;
+}
+.time-header {
+    text-align: center;
+}
+.pincode-header {
+    text-align: center;
+}
+.territory-header {
+    text-align: center;
+}
+.amount-header {
+    text-align: right;
+}
+.mobile-header {
+    text-align: center;
+}
+.cost-header {
+    text-align: right;
+}
+.status-header {
+    text-align: center;
+}
+.complete-header {
+    text-align: center;
+}
+.logtext-header {
+    text-align: center;
+}
+.date-cell {
+    text-align: center;
+}
+.jobno-cell {
+    text-align: center;
+}
+.orderno-cell {
+    text-align: center;
+}
+.customertype-cell {
+    text-align: center;
+}
+.customername-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.technician-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.address-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.service-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.time-cell {
+    text-align: center;
+}
+.pincode-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.territory-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.amount-cell {
+    text-align: right;
+}
+.mobile-cell {
+    text-align: center;
+}
+.cost-cell {
+    text-align: right;
+}
+.status-cell {
+    text-align: center;
+}
+.complete-cell {
+    text-align: center;
+}
+.logtext-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.date-range-filter-picker {
+    width: 100%;
+}
+.time-picker-container {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+.time-picker-from {
+    width: 100%;
+    margin-right: 8px;
+}
+.time-picker-to-label {
+    margin: 0 8px;
+}
+.time-picker-to {
+    width: 100%;
+    margin-left: 8px;
 }

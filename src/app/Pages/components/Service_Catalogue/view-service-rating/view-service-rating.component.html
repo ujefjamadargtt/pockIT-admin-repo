@@ -1,21 +1,17 @@
 <nz-spin [nzSpinning]="isSpinning">
-
   <div nz-row *ngIf="ratingdata.length > 0">
     <div nz-col nzSpan="12">
       <nz-rate [(ngModel)]="averageRating" nzDisabled></nz-rate>
       <span class="ant-rate-text">{{ averageRating }} Out Of 5</span>
       <span class="ant-rate-text">({{ globalRating }} global ratings)</span>
     </div>
-
-    <div nz-col nzSpan="12" style="align-items: end">
+    <div nz-col nzSpan="12" class="rating-progress-container">
       <div *ngFor="let prog of progressList">
-        <div nz-row>
-          <div nz-col nzSpan="5">{{ prog.rating }} Star</div>
-
+        <div nz-row class="rating-progress-row">
+          <div nz-col nzSpan="5" class="rating-star-label">{{ prog.rating }} Star</div>
           <div nz-col nzSpan="19">
             <nz-progress [nzPercent]="prog.progress_percentage" [nzStrokeColor]="'Yellow'"
               [nzStatus]="prog.progress_percentage === 100 ? 'normal' : 'active'">
-              <!-- Custom Text for 100% -->
               <ng-template #text>
                 {{
                 prog.progress_percentage === 100
@@ -28,26 +24,16 @@
         </div>
       </div>
     </div>
-
     <nz-divider nzText="Comments" nzOrientation="center"></nz-divider>
-
-    <div nz-col nzSpan="24" style="
-      margin-top: 5px;
-      padding: 5px;
-      max-height: 40vh;
-      overflow: auto;
-      padding-right: 10px;
-    ">
-      <!-- <p class="formname">Technician Comments</p> -->
+    <div nz-col nzSpan="24" class="comments-container">
       <div *ngFor="let item of ratingdata; let i=index;">
         <nz-comment nzAuthor="{{ item['CUSTOMER_NAME'] }}">
           <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="getProfileImage(item.PROFILE_PHOTO)"></nz-avatar>
-
           <nz-comment-content>
             <span>
               {{ item["COMMENTS"] }}
             </span>
-            <div style="margin-top: 0px">
+            <div class="comment-rating-container">
               <nz-rate [ngModel]="roundRating(item.RATING)" nzAllowHalf="true" name="RATINGss{{ i }}"
                 nzDisabled="true"></nz-rate>
             </div>
@@ -55,15 +41,9 @@
         </nz-comment>
       </div>
     </div>
-
-
-
-
   </div>
-
   <div nz-row>
-    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="ratingdata.length == 0"
-      style="font-weight: 600; margin-top: 10%">
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="ratingdata.length == 0" class="empty-rating-state">
       <nz-empty nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
         [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl">
         <ng-template #contentTpl>

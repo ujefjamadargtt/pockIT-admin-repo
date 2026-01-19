@@ -1,107 +1,165 @@
 <div>
-    <form nz-form #StateMasterPage="ngForm">
-        <nz-spin [nzSpinning]="isSpinning">
-            <div nz-row>
-                <div nz-col nzSpan="24">
-                    <nz-form-item>
-                        <nz-form-label nzNoColon>Label</nz-form-label>
-                        <nz-form-control nzHasFeedback>
-                            <input nz-input name="LABEL" [(ngModel)]="data.LABEL" placeholder="Enter Label" required
-                                autocomplete="off" />
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-            </div>
-
-            <div nz-row>
-                <div nz-col nzSpan="24">
-                    <nz-form-item>
-                        <nz-form-label nzRequired nzNoColon>Template Category</nz-form-label>
-                        <nz-form-control nzHasFeedback nzErrorTip="Select Template Category ID">
-                            <nz-select name="TEMPLATE_CATEGORY_ID" [(ngModel)]="data.TEMPLATE_CATEGORY_ID"
-                                nzPlaceHolder="Select Template Category" required>
-                                <nz-option *ngFor="let data of templateCategoryOptions" [nzValue]="data.ID"
-                                    [nzLabel]="data.NAME"></nz-option>
-                            </nz-select>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-            </div>
-
-            <div nz-row>
-                <!-- Table Name Dropdown -->
-                <div nz-col nzSpan="12">
-                    <nz-form-item>
-                        <nz-form-label nzRequired nzNoColon>Table Name</nz-form-label>
-                        <nz-form-control nzHasFeedback nzErrorTip="Select Table Name">
-                            <nz-select name="TABLE_NAME" [(ngModel)]="data.TABLE_NAME" nzShowSearch
-                                (ngModelChange)="onTableSelect($event)" nzPlaceHolder="Select Table Name" required>
-                                <nz-option *ngFor="let option of tableOptions" [nzValue]="option.TABLE_NAME"
-                                    [nzLabel]="option.TABLE_NAME">
-                                </nz-option>
-                            </nz-select>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-
-                <!-- Column Key Dropdown -->
-                <div nz-col nzSpan="12">
-                    <nz-form-item>
-                        <nz-form-label nzRequired nzNoColon>Key</nz-form-label>
-                        <nz-form-control nzHasFeedback nzErrorTip="Select Key">
-                            <nz-select name="TABLE_COLUMN" [(ngModel)]="data.TABLE_COLUMN" nzShowSearch
-                                nzPlaceHolder="Select Key" required>
-                                <nz-option *ngFor="let key of keyOptions" [nzValue]="key" [nzLabel]="key"></nz-option>
-                            </nz-select>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-            </div>
-
-            <div nz-row>
-                <div nz-col nzSpan="24">
-                    <nz-form-item>
-                        <nz-form-label nzNoColon>Description</nz-form-label>
-                        <nz-form-control>
-                            <textarea nz-input name="DESCRIPTION" [(ngModel)]="data.DESCRIPTION"
-                                placeholder="Enter Description" rows="3"></textarea>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-            </div>
-
-            <div nz-row>
-                <div nz-col nzSpan="8">
-                    <nz-form-item>
-                        <nz-form-label nzNoColon>Status</nz-form-label>
-                        <nz-form-control>
-                            <nz-switch name="IS_ACTIVE" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
-                                [(ngModel)]="data.IS_ACTIVE"></nz-switch>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-            </div>
-        </nz-spin>
-    </form>
-
-    <div class="footer">
-        <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
-            <span>Cancel</span>
-        </button>
-        <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown
-            [nzDropdownMenu]="menu" [nzLoading]="isSpinning" (click)="save(false, StateMasterPage)">
-            <span>Save & Close</span>
-        </button>
-        <nz-dropdown-menu #menu="nzDropdownMenu">
-            <ul nz-menu>
-                <li nz-menu-item class="menuc" style="border-radius: 4px; color: white !important">
-                    <a style="color: white !important" (click)="save(true, StateMasterPage)">Save & New</a>
-                </li>
-            </ul>
-        </nz-dropdown-menu>
-        <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
-            (click)="save(false, StateMasterPage)">
-            <span>Update & Close</span>
-        </button>
-    </div>
+  <form nz-form #StateMasterPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Label</nz-form-label>
+            <nz-form-control nzHasFeedback>
+              <input
+                nz-input
+                name="LABEL"
+                [(ngModel)]="data.LABEL"
+                placeholder="Enter Label"
+                required
+                autocomplete="off"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon
+              >Template Category</nz-form-label
+            >
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Select Template Category ID"
+            >
+              <nz-select
+                name="TEMPLATE_CATEGORY_ID"
+                [(ngModel)]="data.TEMPLATE_CATEGORY_ID"
+                nzPlaceHolder="Select Template Category"
+                required
+              >
+                <nz-option
+                  *ngFor="let data of templateCategoryOptions"
+                  [nzValue]="data.ID"
+                  [nzLabel]="data.NAME"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Table Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Table Name">
+              <nz-select
+                name="TABLE_NAME"
+                [(ngModel)]="data.TABLE_NAME"
+                nzShowSearch
+                (ngModelChange)="onTableSelect($event)"
+                nzPlaceHolder="Select Table Name"
+                required
+              >
+                <nz-option
+                  *ngFor="let option of tableOptions"
+                  [nzValue]="option.TABLE_NAME"
+                  [nzLabel]="option.TABLE_NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Key</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Key">
+              <nz-select
+                name="TABLE_COLUMN"
+                [(ngModel)]="data.TABLE_COLUMN"
+                nzShowSearch
+                nzPlaceHolder="Select Key"
+                required
+              >
+                <nz-option
+                  *ngFor="let key of keyOptions"
+                  [nzValue]="key"
+                  [nzLabel]="key"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Description</nz-form-label>
+            <nz-form-control>
+              <textarea
+                nz-input
+                name="DESCRIPTION"
+                [(ngModel)]="data.DESCRIPTION"
+                placeholder="Enter Description"
+                rows="3"
+              ></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="8">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch
+                name="IS_ACTIVE"
+                nzCheckedChildren="Active"
+                nzUnCheckedChildren="Inactive"
+                [(ngModel)]="data.IS_ACTIVE"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn footer-cancel-btn"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      *ngIf="!data.ID"
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning"
+      (click)="save(false, StateMasterPage)"
+    >
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc menu-item-custom">
+          <a class="menu-link" (click)="save(true, StateMasterPage)"
+            >Save & New</a
+          >
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID"
+      (click)="save(false, StateMasterPage)"
+    >
+      <span>Update & Close</span>
+    </button>
+  </div>
 </div>

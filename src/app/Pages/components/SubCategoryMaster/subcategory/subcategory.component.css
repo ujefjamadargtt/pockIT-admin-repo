@@ -5,16 +5,65 @@
   margin-top: 12px;
   margin-bottom: 12px;
   background-color: #fafafa;
-
 }
-
 nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 nz-divider {
   border-color: #7cb305 !important;
+}
+.subcat-char-count-rx21 {
+  color: red;
+  font-size: 10px;
+}
+.seqno-input-rx21 {
+  width: 110px;
+}
+.upload-icon-btn-rx21 {
+  height: 28px;
+  padding: 0 7px;
+  font-size: 12px;
+}
+.hidden-file-input-rx21 {
+  display: none !important;
+}
+.icon-preview-row-rx21 {
+  display: flex;
+  justify-content: left;
+}
+.icon-name-text-rx21 {
+  color: #092b9c;
+}
+.icon-view-link-rx21 {
+  color: #092b9c;
+  margin-right: 9px !important;
+}
+.icon-delete-action-rx21 {
+  cursor: pointer;
+}
+.icon-delete-action-alt-rx21 {
+  cursor: pointer;
+  margin-left: 10px;
+}
+.icon-preview-img-u91 {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.crop-container-u91 {
+  height: 500px;
+  overflow: scroll;
+}
+.crop-preview-center-u91 {
+  text-align: center;
+}
+.icon-view-container-u91 {
+  height: 200px;
+}
+.icon-view-iframe-u91 {
+  width: 800px;
+  height: 400px;
 }

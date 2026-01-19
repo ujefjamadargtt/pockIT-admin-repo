@@ -1,40 +1,147 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 .margin-row {
   margin: 10px 0px;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.invsubcat-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.invsubcat-form-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.invsubcat-filter-width {
+  width: 47px;
+}
+.invsubcat-form-item-mr {
+  margin-right: 0px;
+}
+.invsubcat-filter-padding {
+  padding-top: 0px;
+}
+.invsubcat-text-center {
+  text-align: center;
+}
+.invsubcat-card-mb {
+  margin-bottom: 8px;
+}
+.invsubcat-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.invsubcat-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.invsubcat-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.invsubcat-check-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.invsubcat-actions-mt {
+  margin-top: 7px;
+}
+.invsubcat-actions-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.invsubcat-tag-action {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.invsubcat-icon-small {
+  font-size: 10px !important;
+}
+.invsubcat-tag-view {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.invsubcat-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.invsubcat-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.invsubcat-btn-mr {
+  margin-right: 10px;
+}
+.invsubcat-table-mt {
+  margin-top: 10px;
+}
+.invsubcat-table-whitespace {
+  white-space: pre-line;
+}
+.invsubcat-th-bold-center {
+  font-weight: bold;
+  text-align: center;
+}
+.invsubcat-tag-cursor {
+  cursor: pointer;
+}
+.invsubcat-icon-size {
+  font-size: 15px;
+}
+.invsubcat-select-width {
+  width: 100%;
+}
+.invsubcat-seq-input {
+  margin-top: 5px;
+  width: 100%;
+}
+.invsubcat-image-container {
+  height: 300px;
+  overflow: auto;
+}
+.invsubcat-image-preview {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600;
+  max-height: 400;
 }

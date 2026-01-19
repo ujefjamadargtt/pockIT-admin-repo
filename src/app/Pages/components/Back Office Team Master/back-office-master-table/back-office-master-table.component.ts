@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { BackOfficeMasterData } from 'src/app/Pages/Models/BackOfficeMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-back-office-master-table',
   templateUrl: './back-office-master-table.component.html',
@@ -26,28 +25,20 @@ export class BackOfficeMasterTableComponent {
   sortKey: string = 'NAME';
   chapters: any = [];
   isLoading = true;
-
   statusFilter: string | undefined = undefined;
-
   nametext: string = '';
   nameVisible: boolean = false;
-
   roleVisible: boolean = false;
   selectedRole: number[] = [];
-
   emailtext: string = '';
   emailVisible: boolean = false;
-
   mobiletext: string = '';
   mobileVisible: boolean = false;
-
   isSpinning = false;
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
   columns: string[][] = [
     ['ROLE_NAME', 'ROLE_NAME'],
     ['NAME', 'NAME'],
@@ -55,14 +46,11 @@ export class BackOfficeMasterTableComponent {
     ['MOBILE_NUMBER', 'MOBILE_NUMBER'],
     ['IS_ACTIVE', 'IS_ACTIVE'],
   ];
-
   loadingRecords = false;
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
   drawerMappingTitle!: string;
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -79,14 +67,12 @@ export class BackOfficeMasterTableComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router,
     private sanitizer: DomSanitizer
   ) { }
-
   ngOnInit() {
     this.userroleid = this.commonFunction.decryptdata(
       sessionStorage.getItem('roleId') || ''
@@ -94,7 +80,6 @@ export class BackOfficeMasterTableComponent {
     this.userid = this.commonFunction.decryptdata(
       sessionStorage.getItem('userId') || ''
     );
-
     if (this.userroleid == '5') {
       var filterrrr = ' AND USER_ID=' + this.userid;
       this.api.getBackOfficeData(0, 0, '', '', filterrrr).subscribe(
@@ -111,9 +96,7 @@ export class BackOfficeMasterTableComponent {
         }
       );
     } else {
-      // this.getroles();
     }
-
     this.getroles();
   }
   roleidfilter: any;
@@ -131,14 +114,10 @@ export class BackOfficeMasterTableComponent {
         (data) => {
           if (data['code'] == 200) {
             this.roleData = data['data'];
-
-            // Map the role data to options
             this.roleOptions = this.roleData.map((role: any) => ({
               value: String(role.ID),
               display: role.NAME,
             }));
-
-            // Update the ROLE_ID field options dynamically
             const roleField = this.filterFields.find(
               (field) => field.key === 'ROLE_ID'
             );
@@ -165,14 +144,12 @@ export class BackOfficeMasterTableComponent {
         }
       );
   }
-
   shouldTruncateAt25(value: string): boolean {
-    const mCount = (value.match(/m/g) || []).length; // Count the number of 'm's
-    return value.length > 35 && mCount > 6; // Truncate at 25 if length > 25 and 'm' count > 4
+    const mCount = (value.match(/m/g) || []).length; 
+    return value.length > 35 && mCount > 6; 
   }
-
   mainsearchkeyup(event: KeyboardEvent) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault(); 
     if (
       this.searchText.length === 0 ||
       (event.key === 'Enter' && this.searchText.length >= 3)
@@ -180,14 +157,11 @@ export class BackOfficeMasterTableComponent {
       this.search();
     }
   }
-
   isnametextApplied = false;
   isEmailApplied = false;
   isMobileApplied = false;
-
   onKeyup(event: KeyboardEvent, field: string): void {
-    const fieldValue = this[field]; // Dynamically access the field value
-
+    const fieldValue = this[field]; 
     if (event.key === 'Enter') {
       if (fieldValue.length >= 3) {
         this.search();
@@ -198,8 +172,6 @@ export class BackOfficeMasterTableComponent {
       this.setFilterApplied(field, false);
     }
   }
-
-  // Helper method to set filter applied states dynamically
   setFilterApplied(field: string, value: boolean): void {
     switch (field) {
       case 'nametext':
@@ -215,33 +187,26 @@ export class BackOfficeMasterTableComponent {
         break;
     }
   }
-
   isRoleFilterApplied = false;
-
   onRoleChange(): void {
     this.isRoleFilterApplied =
       this.selectedRole && this.selectedRole.length > 0;
     this.search();
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     var globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -252,14 +217,6 @@ export class BackOfficeMasterTableComponent {
           .join(' OR ') +
         ')';
     }
-
-    // if (this.searchText != '') {
-    //   likeQuery = ' AND';
-    //   this.columns.forEach((column) => {
-    //     likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
-    //   });
-    //   likeQuery = likeQuery.substring(0, likeQuery.length - 2);
-    // }
     var idfilter = '';
     this.loadingRecords = true;
     if (this.userroleid == '5') {
@@ -268,46 +225,36 @@ export class BackOfficeMasterTableComponent {
         const likeConditions = this.territoryidfilter
           .map((id) => `TERITORY_IDS LIKE '%${id}%'`)
           .join(' OR ');
-
         idfilter += ` AND (${likeConditions})`;
       }
     }
-    // Country Filter
     if (this.selectedRole.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `ROLE_ID IN (${this.selectedRole.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `ROLE_ID IN (${this.selectedRole.join(',')})`; 
     }
-
     if (this.nametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.nametext.trim()}%'`;
     }
-
     if (this.emailtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `EMAIL_ID LIKE '%${this.emailtext.trim()}%'`;
     }
-
     if (this.mobiletext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `MOBILE_NUMBER LIKE '%${this.mobiletext.trim()}%'`;
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getBackOfficeData11(
         this.pageIndex,
@@ -351,7 +298,6 @@ export class BackOfficeMasterTableComponent {
         }
       );
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -360,59 +306,47 @@ export class BackOfficeMasterTableComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   @ViewChild('searchInput') searchInput!: ElementRef;
-
   preventDefault(event: Event) {
     event.preventDefault();
     this.searchInput.nativeElement.focus();
   }
-
   add(): void {
     this.drawerTitle = 'Create New Back Office Team Member';
     this.drawerData = new BackOfficeMasterData();
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   draweMappingClose(): void {
     this.search();
     this.drawerMappigVisible = false;
   }
-
   get closeCallbackMapping() {
     return this.draweMappingClose.bind(this);
   }
-
   edit(data: BackOfficeMasterData): void {
     this.drawerTitle = 'Update Back Office Team Member';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   reset(): void {
     this.isnametextApplied = false;
     this.isEmailApplied = false;
@@ -421,36 +355,29 @@ export class BackOfficeMasterTableComponent {
     this.nametext = '';
     this.search();
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   mapTerritory(data: any) {
     this.drawerMappingTitle = `Map the territory to ${data.NAME}`;
     this.drawerData = Object.assign({}, data);
     this.drawerMappigVisible = true;
   }
-
   back() {
-    this.router.navigate(['/masters/menu']); // Navigates to the masters/menu route
+    this.router.navigate(['/masters/menu']); 
   }
-
-  // New main filter
   TabId: number;
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
-
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
   filterQuery: string = '';
   filterClass: string = 'filter-invisible';
   savedFilters: any[] = [];
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -459,10 +386,7 @@ export class BackOfficeMasterTableComponent {
       this.loadFilters();
     }
   }
-
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -475,20 +399,12 @@ export class BackOfficeMasterTableComponent {
     this.drawerFilterVisible = false;
     this.loadFilters();
   }
-
-  // get closefilterCallback() {
-  //   return this.drawerflterClose.bind(this);
-  // }
-
   filterloading: boolean = false;
   whichbutton: any;
-
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -496,14 +412,12 @@ export class BackOfficeMasterTableComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -518,22 +432,15 @@ export class BackOfficeMasterTableComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -548,7 +455,6 @@ export class BackOfficeMasterTableComponent {
     this.filterQuery = '';
   }
   selectedFilter: string | null = null;
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -557,7 +463,6 @@ export class BackOfficeMasterTableComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -568,16 +473,13 @@ export class BackOfficeMasterTableComponent {
           this.savedFilters = this.savedFilters.filter(
             (filter) => filter.ID !== item.ID
           );
-
           this.message.success('Filter deleted successfully.', '');
           sessionStorage.removeItem('ID');
           this.filterloading = true;
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -604,7 +506,6 @@ export class BackOfficeMasterTableComponent {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -613,21 +514,17 @@ export class BackOfficeMasterTableComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -644,21 +541,15 @@ export class BackOfficeMasterTableComponent {
       groups: [],
     },
   ];
-
   filterData: any;
   currentClientId = 1;
-
   openfilter() {
     this.drawerTitle = 'Back Office Team Member Filter';
     this.drawerFilterVisible = true;
     this.filterFields[0]['options'] = this.roleOptions;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -675,7 +566,6 @@ export class BackOfficeMasterTableComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -692,7 +582,6 @@ export class BackOfficeMasterTableComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -702,11 +591,9 @@ export class BackOfficeMasterTableComponent {
       FILTER_JSON: {},
     };
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'ROLE_NAME',
@@ -780,26 +667,19 @@ export class BackOfficeMasterTableComponent {
       placeholder: 'Select Status',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.filterFields[0]['options'] = this.roleOptions;
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -807,41 +687,22 @@ export class BackOfficeMasterTableComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
-  // oldFilter: any[] = [];
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // editQuery(data: any) {
-  //   this.filterGroups = JSON.parse(data.FILTER_JSON);
-  //   this.FILTER_NAME = data.FILTER_NAME;
-  //   //
-  //   this.EditQueryData = data;
-  //   this.editButton = 'Y';
-  //   this.drawerTitle = 'Edit Query';
-  //   this.drawerFilterVisible = true;
-  // }
-
-  // profile photo
   ViewImage: any;
   ImageModalVisible: boolean = false;
   imageshow;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
@@ -852,8 +713,6 @@ export class BackOfficeMasterTableComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
 }

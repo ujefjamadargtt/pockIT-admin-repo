@@ -1,19 +1,111 @@
+.back-arrow-icon {
+    font-weight: bold;
+    cursor: pointer;
+}
+.header-action-flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+.excel-btn-white-text {
+    color: #ffffff;
+}
+.filter-btn-fixed-width {
+    width: 47px;
+}
+.search-input {
+    min-width: 200px;
+}
 .select {
     width: 200px;
     padding: 8px;
     display: block;
 }
-
-
 .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
 }
-
 :host::ng-deep .ant-card-body {
-    padding: 0px;
-  }
+    padding: 0;
+}
+.filter-row-no-padding {
+    padding-top: 0;
+}
+.filter-loading-center {
+    text-align: center;
+}
+.filter-card-wrapper {
+    margin-bottom: 8px;
+}
+.filter-card {
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    border-radius: 7px;
+}
+.filter-card-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+}
+.filter-title {
+    color: black;
+    font-size: 25px;
+    white-space: nowrap;
+}
+.filter-applied-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.filter-card-actions-row {
+    margin-top: 7px;
+}
+.filter-card-actions {
+    display: flex;
+    justify-content: space-between;
+}
+.filter-action-tag {
+    cursor: pointer;
+    font-size: 10px !important;
+}
+.filter-action-icon {
+    font-size: 10px !important;
+    margin-right: 4px;
+}
+.no-right-margin {
+    margin-right: 0;
+}
+.filter-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.footer-btn-margin {
+    margin-right: 10px;
+}
+.no-data-text {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.table-row-margin-top {
+    margin-top: 8px;
+}
+.table-header-bold {
+    font-weight: bold;
+}
+.table-header-bold-center {
+    font-weight: bold;
+    text-align: center;
+}
+.full-width-control {
+    width: 100%;
+}
+.wdt {
+    width: 100%
+}

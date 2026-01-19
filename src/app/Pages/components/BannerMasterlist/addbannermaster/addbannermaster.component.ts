@@ -9,7 +9,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { HttpEventType } from '@angular/common/http';
-
 @Component({
   selector: 'app-addbannermaster',
   templateUrl: './addbannermaster.component.html',
@@ -23,11 +22,9 @@ export class AddbannermasterComponent implements OnInit {
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer
   ) { }
-
   retriveimgUrl = appkeys.retriveimgUrl;
   fullImageUrl: string;
   uploadedImage: any = '';
-
   ngOnInit(): void {
     if (
       this.data.ID != null &&
@@ -40,17 +37,14 @@ export class AddbannermasterComponent implements OnInit {
       this.uploadedImage = this.data.IMAGE_URL;
     } else {
     }
-
     if (this.data.ID && this.data.ID != null && this.data.ID != undefined) {
       this.titlecolor = this.data.TITLE_COLOR;
       this.subtitlecolor = this.data.SUB_TITLE_COLOR;
       this.subtitlecolor1 = this.data.SUB_TITLE_COLOR_1;
     }
   }
-
   @Input() list = [];
   @Input() list1 = [];
-
   listOfOption: Array<{ label: string; value: string }> = [];
   public commonFunction = new CommonFunctionService();
   isFocused: string = '';
@@ -63,7 +57,6 @@ export class AddbannermasterComponent implements OnInit {
   @Input() subtitlecolor1: any;
   @Input() buttontextcolor: any;
   @Input() descolor: any;
-
   @Input()
   drawerClose!: Function;
   @Input()
@@ -76,7 +69,6 @@ export class AddbannermasterComponent implements OnInit {
   @Input() height: any;
   @Input() width: any;
   isokfile1: boolean = true;
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -84,7 +76,6 @@ export class AddbannermasterComponent implements OnInit {
     }
     return true;
   }
-
   nonumchar(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode == 32) return false;
@@ -93,7 +84,6 @@ export class AddbannermasterComponent implements OnInit {
     if (97 <= charCode && charCode <= 122) return false;
     return false;
   }
-
   alphaOnly(event: any) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -106,13 +96,11 @@ export class AddbannermasterComponent implements OnInit {
     }
     return true;
   }
-
   getbannertype(event: any) {
     var i = this.bannertype.findIndex((item: any) => item.ID == event);
     this.height = this.bannertype[i]['IMAGE_HEIGHT'];
     this.width = this.bannertype[i]['IMAGE_WIDTH'];
   }
-
   resetImage() {
     this.data.IMAGE_URL = '';
     this.fileURL = null;
@@ -138,7 +126,6 @@ export class AddbannermasterComponent implements OnInit {
     this.data.BANNER_TYPE = 'M';
   }
   resetDrawer(form: NgForm) {
-    // form.form.reset();
     this.data = new bannermodal();
     this.titlecolor = '';
     this.subtitlecolor = '';
@@ -147,7 +134,6 @@ export class AddbannermasterComponent implements OnInit {
     form.form.markAsUntouched();
     form.form.markAsPristine();
   }
-
   close(): void {
     this.drawerClose();
   }
@@ -155,7 +141,6 @@ export class AddbannermasterComponent implements OnInit {
   imgHeight: any;
   imgweight: any;
   CropImageModalVisible = false;
-  // CropImageModalFooter: string|TemplateRef<{}>|ModalButtonOptions<any>[]|null|undefined;
   isSpinningCrop = false;
   cropimageshow: any;
   @ViewChild('image1') myElementRef!: ElementRef;
@@ -178,16 +163,11 @@ export class AddbannermasterComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   fileChangeEvent(event: any): void {
-    //
-
     this.CropImageModalVisible = true;
     this.cropimageshow = true;
-
     this.imageChangedEvent = event;
   }
-
   cropperPosition = { x1: 0, y1: 0, x2: 1290, y2: 300 };
-
   imageCropped(event: any) {
     let cropWidth: any;
     let cropHeight: any;
@@ -201,12 +181,10 @@ export class AddbannermasterComponent implements OnInit {
       cropWidth = 1290;
       cropHeight = 300;
     }
-
     this.enhanceImageQuality(event.base64, cropWidth, cropHeight);
     this.imageWidth = event?.original?.size.width;
     this.imageHeight = event?.original?.size.height;
   }
-
   async enhanceImageQuality(
     base64: any,
     finalWidth: number,
@@ -216,27 +194,19 @@ export class AddbannermasterComponent implements OnInit {
       this.croppedImage = await new Promise((resolve, reject) => {
         const img = new Image();
         img.src = base64;
-        img.crossOrigin = 'Anonymous'; // Prevents tainted canvas issues.
-
+        img.crossOrigin = 'Anonymous'; 
         img.onload = async () => {
-          await img.decode(); // Ensures the image is fully loaded
-
-          // **Create initial high-resolution canvas**
+          await img.decode(); 
           const tempCanvas = document.createElement('canvas');
           const tempCtx = tempCanvas.getContext('2d');
-
           if (!tempCtx) return reject('Canvas context not available');
-
-          tempCanvas.width = img.width * 2; // Upscale before downscaling
+          tempCanvas.width = img.width * 2; 
           tempCanvas.height = img.height * 2;
-
           tempCtx.imageSmoothingEnabled = true;
           tempCtx.imageSmoothingQuality = 'high';
-          tempCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+          tempCtx.fillStyle = 'white'; 
           tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
           tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
-
-          // **Stepwise Downscaling**
           const downscaleCanvas = (
             sourceCanvas: HTMLCanvasElement,
             width: number,
@@ -244,72 +214,53 @@ export class AddbannermasterComponent implements OnInit {
           ): HTMLCanvasElement => {
             const newCanvas = document.createElement('canvas');
             const newCtx = newCanvas.getContext('2d');
-
             if (!newCtx) return sourceCanvas;
-
             newCanvas.width = width;
             newCanvas.height = height;
-
             newCtx.imageSmoothingEnabled = true;
             newCtx.imageSmoothingQuality = 'high';
-            newCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+            newCtx.fillStyle = 'white'; 
             newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
             newCtx.drawImage(sourceCanvas, 0, 0, width, height);
-
             return newCanvas;
           };
-
           let currentCanvas = tempCanvas;
           const downscaleSteps = [
-            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], // Step 1
-            [finalWidth * 2, finalHeight * 2], // Step 2
-            [finalWidth, finalHeight], // Final resolution
+            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], 
+            [finalWidth * 2, finalHeight * 2], 
+            [finalWidth, finalHeight], 
           ];
-
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
           }
-
-          // **Convert to PNG at Max Quality**
           resolve(currentCanvas.toDataURL('image/png', 1.0));
         };
-
         img.onerror = (err) => reject(`Image load error: ${err}`);
       });
     } catch (error) {
-      // console.error("Image enhancement failed:", error);
     }
   }
-
-  // Function to compress image and ensure size < 1MB
   compressImage(canvas: HTMLCanvasElement, quality: number) {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-
-        const sizeInMB = blob.size / (1024 * 1024); // Convert to MB
-
+        const sizeInMB = blob.size / (1024 * 1024); 
         if (sizeInMB > 1 && quality > 0.1) {
-          // If size is still >1MB, reduce quality and try again
           this.compressImage(canvas, quality - 0.1);
         } else {
-          // Final compressed image (size is now below 1MB)
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             this.croppedImage = reader.result as string;
-            //
           };
         }
       },
       'image/jpeg',
       quality
-    ); // Convert to JPEG with given quality
+    ); 
   }
-
   imageWidth: number = 0;
   imageHeight: number = 0;
-
   imageLoaded(event) {
     setTimeout(() => {
       if (this.data.BANNER_TYPE === 'O') {
@@ -328,16 +279,9 @@ export class AddbannermasterComponent implements OnInit {
     }, 50);
     this.imagePreview = this.croppedImage;
   }
-
   cropperReady(event) {
-    //
-    // Cropper ready
-    // event.height = 128;
-    // event.width = 128;
   }
-
   loadImageFailed() {
-    // Image failed to load
   }
   save(addNew: boolean, form: NgForm): void {
     this.isSpinning = false;
@@ -345,7 +289,6 @@ export class AddbannermasterComponent implements OnInit {
     this.data.TITLE_COLOR = this.titlecolor;
     this.data.SUB_TITLE_COLOR = this.subtitlecolor;
     this.data.SUB_TITLE_COLOR_1 = this.subtitlecolor1;
-
     if (this.data.BANNER_TYPE === 'M') {
       if (
         this.data.SEQ_NO == undefined ||
@@ -423,29 +366,19 @@ export class AddbannermasterComponent implements OnInit {
         this.message.error('Please Upload Banner Image', '');
       }
     }
-
     if (this.isOk) {
-      //  this.isSpinning=false;
       if (this.data.TITLE === '') {
         this.data.TITLE = null;
       }
       if (this.data.SUB_TITLE === '') {
         this.data.SUB_TITLE = null;
       }
-      // if (this.data.TITLE === '') {
-      //   this.data.TITLE = null;
-      // }
-      // if (this.data.TITLE === '') {
-      //   this.data.TITLE = null;
-      // }
       this.isSpinning = true;
-
       if (this.fileURL) {
         const number = Math.floor(100000 + Math.random() * 900000);
         const fileExt = this.fileURL.name.split('.').pop();
         const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
         this.UrlImageOne = `${d ?? ''}${number}.${fileExt}`;
-
         this.api
           .onUpload('BannerImages', this.fileURL, this.UrlImageOne)
           .subscribe((res) => {
@@ -517,12 +450,10 @@ export class AddbannermasterComponent implements OnInit {
   image: any;
   onFileSelected1(event: any) {
     this.event1 = event;
-
     const reader = new FileReader();
     let isLtsize = false;
     let imgs = new Image();
     imgs.src = window.URL.createObjectURL(event.target.files[0]);
-
     imgs.onload = () => {
       if (this.height == imgs.height && imgs.width == this.width) {
         isLtsize = true;
@@ -553,13 +484,9 @@ export class AddbannermasterComponent implements OnInit {
             reader.onload = () => {
               this.image = reader.result as string;
             };
-
             var number = Math.floor(100000 + Math.random() * 900000);
-
             var fileExt = this.fileURL.name.split('.').pop();
-
             var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-
             var url = '';
             url = d == null ? '' : d + number + '.' + fileExt;
             this.event1 = url;
@@ -575,11 +502,9 @@ export class AddbannermasterComponent implements OnInit {
       }
     };
   }
-
   fileDataTHUMBNAIL_URL: any;
   thumbUrl: any;
   folderName: any;
-
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -602,114 +527,35 @@ export class AddbannermasterComponent implements OnInit {
     toolbarPosition: 'top',
     toolbarHiddenButtons: [['fonts', 'uploadUrl'], ['video']],
   };
-
-  // image upload
   UrlImageOne;
   progressBarImageOne: boolean = false;
   percentImageOne = 0;
   timer: any;
   urlImageOneShow: boolean = false;
-
   deleteCancel() { }
   removeImage() {
     this.data.IMAGE_URL = ' ';
     this.fileURL = null;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   imageDeleteConfirm(data: any) {
     this.fileURL = null;
     this.UrlImageOne = null;
     this.data.IMAGE_URL = ' ';
     this.fileURL = null;
   }
-
   sanitizedFileURL: SafeUrl | null = null;
   imageshow;
-
   imagePreview: any;
   selectedFile: any;
-  allowedWidth; // Initialize with default values
+  allowedWidth; 
   allowedHeight;
-
-  // onFileSelected(event: any): void {
-  //   const maxFileSize = 1 * 1024 * 1024; // 1 MB
-  //   if (this.data.BANNER_TYPE === 'M' && this.data.BANNER_FOR === 'W') {
-  //     this.allowedWidth = 1290;
-  //     this.allowedHeight = 300;
-  //   }
-  //   if (this.data.BANNER_TYPE === 'M' && this.data.BANNER_FOR === 'M') {
-  //     this.allowedWidth = 645;
-  //     this.allowedHeight = 299;
-  //   }
-  //   if (this.data.BANNER_TYPE === 'O') {
-  //     this.allowedWidth = 364;
-  //     this.allowedHeight = 400;
-  //   }
-
-  //   if (event.target.files[0]?.type.match(/image\/(jpeg|jpg|png)/)) {
-  //     this.fileURL = this.base64ToFile(this.croppedImage, 'cropped-image.png');
-
-  //     if (this.fileURL.size > maxFileSize) {
-  //       this.message.error('File size should not exceed 1MB.', '');
-  //       this.fileURL = null;
-  //       return;
-  //     }
-
-  //     // Validate image dimensions
-  //     const reader = new FileReader();
-  //     reader.onload = (e: any) => {
-  //       const img = new Image();
-  //       img.src = this.croppedImage;
-  //       const input = event.target as HTMLInputElement;
-
-  //       if (input?.files?.length) {
-  //         this.selectedFile = input.files[0];
-
-  //         const reader = new FileReader();
-  //         reader.onload = () => {
-  //           this.imagePreview = this.croppedImage;
-  //         };
-  //         reader.readAsDataURL(this.selectedFile);
-  //       }
-  //       img.onload = () => {
-  //         if (img.width !== this.allowedWidth && img.height !== this.allowedHeight) {
-  //           this.message.error(
-  //             `Image dimensions should be exactly ${this.allowedWidth}x${this.allowedHeight}px.`,
-  //             ''
-  //           );
-  //           this.fileURL = null;
-  //           this.sanitizedFileURL = null;
-  //         } else {
-  //           this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
-  //             URL.createObjectURL(this.fileURL)
-  //           );
-  //           this.data.IMAGE_URL = this.fileURL.name;
-  //         }
-  //       };
-  //     };
-
-  //     reader.readAsDataURL(this.fileURL);
-  //     this.CropImageModalVisible = false;
-  //   } else {
-  //     this.message.error(
-  //       'Please select a valid image file (PNG, JPG, JPEG).',
-  //       ''
-  //     );
-  //     event.target.value = null;
-  //     this.fileURL = null;
-  //     this.sanitizedFileURL = null;
-  //   }
-  // }
-
   onFileSelected(event: any) {
-    const maxFileSize = 1 * 1024 * 1024; // 5MB
+    const maxFileSize = 1 * 1024 * 1024; 
     if (this.data.BANNER_TYPE === 'M' && this.data.BANNER_FOR === 'W') {
       this.allowedWidth = 1290;
       this.allowedHeight = 300;
@@ -728,21 +574,16 @@ export class AddbannermasterComponent implements OnInit {
       event.target.files[0]?.type === 'image/png'
     ) {
       const input = event.target as HTMLInputElement;
-
       if (input?.files?.length) {
         this.selectedFile = input.files[0];
-
-        // Validate file size
         if (this.selectedFile.size > maxFileSize) {
           this.message.error('Banner Image size should not exceed 1MB.', '');
           return;
         }
-
         const reader = new FileReader();
         reader.onload = (e: any) => {
           const image = new Image();
           image.src = e.target.result;
-
           image.onload = () => {
             if (
               image.width !== this.allowedWidth ||
@@ -757,16 +598,12 @@ export class AddbannermasterComponent implements OnInit {
               this.selectedFile = null;
               return;
             }
-
-            // If dimensions are valid, continue upload logic
             this.imagePreview = e.target.result;
             this.fileURL = this.selectedFile;
-
             var number = Math.floor(100000 + Math.random() * 900000);
             var fileExt = this.fileURL.name.split('.').pop();
             var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
             var url = d == null ? '' : d + number + '.' + fileExt;
-
             if (
               this.data.IMAGE_URL != undefined &&
               this.data.IMAGE_URL.trim() !== ''
@@ -776,15 +613,12 @@ export class AddbannermasterComponent implements OnInit {
                 url = arr[5];
               }
             }
-
             const uploadedfileExt = this.uploadedImage.split('.').pop();
-
             if (this.data.ID && this.data.IMAGE_URL) {
               this.UrlImageOne = this.uploadedImage.split('?')[0];
             } else {
               this.UrlImageOne = url;
             }
-
             this.timer = this.api
               .onUpload('BannerImages', this.fileURL, this.UrlImageOne)
               .subscribe((res) => {
@@ -840,7 +674,6 @@ export class AddbannermasterComponent implements OnInit {
     }
   }
   imagePreviewURL;
-
   removeImage1(): void {
     this.data.IMAGE_URL = null;
     this.fileURL = null;

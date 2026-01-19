@@ -8,7 +8,6 @@
     text-align: center;
     color: white;
   }
- 
   .name:hover {
     height: auto;
     width: 480px;
@@ -19,7 +18,6 @@
     text-align: center;
     color: white;
   }
-
 .noty {
     height: auto;
     width: 480px;
@@ -29,7 +27,6 @@
     white-space: nowrap;
     text-align: center;
 }
-
 .noty:hover {
     height: auto;
     width: 480px;
@@ -38,4 +35,87 @@
     white-space: normal;
     word-wrap: break-word;
     text-align: center;
+}
+.loading-text-center {
+  text-align: center;
+}
+.form-margin-bottom {
+  margin-bottom: 60px;
+}
+.fixed-header-row {
+  margin-top: -45px;
+  position: fixed;
+  z-index: 10;
+  width: 485px;
+  cursor: pointer;
+}
+.fixed-header-col {
+  padding: 5px;
+  border-radius: 0px 0px 20px 20px;
+  background-color: #1890ff;
+  border: 1px solid white;
+}
+.date-row-center {
+  text-align: center;
+  margin-top: 20px;
+}
+.date-col-padding {
+  padding-top: 16px;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.sender-x-container {
+  text-align: center;
+  margin-top: 10px;
+}
+.sender-s-box {
+  margin-top: 10px;
+  padding: 5px 10px 0px;
+  border: 1px solid #1890ff;
+  border-radius: 0px 20px 20px 20px;
+  background-color: white;
+  font-size: 12px;
+}
+.sender-name-bold {
+  font-weight: bold;
+}
+.sender-u-box {
+  margin-top: 10px;
+  padding: 5px 10px 0px;
+  border: 1px solid #1890ff;
+  border-radius: 20px 0px 20px 20px;
+  background-color: #1890ff;
+  font-size: 12px;
+}
+.sender-u-name {
+  font-weight: bold;
+  color: white;
+}
+.sender-u-text {
+  color: white;
+}
+.sender-u-time {
+  text-align: right;
+  color: white;
+}
+.chat-image {
+  width: 100%;
+  margin-bottom: 5px;
+}
+.empty-state-text {
+  font-weight: 600;
+  margin-top: 20px;
+}
+.no-user-select {
+  user-select: none;
+}
+.footer-hidden {
+  display: none;
+}
+.scroll-btn-margin {
+  margin-left: 10px;
 }

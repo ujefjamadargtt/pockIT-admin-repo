@@ -3,12 +3,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ServiceCatMasterDataNew } from 'src/app/Pages/Models/ServiceCatMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-add-details-drawer-main',
   templateUrl: './add-details-drawer-main.component.html',
@@ -20,7 +18,6 @@ export class AddDetailsDrawerMainComponent implements OnInit {
   isOk = true;
   fileURL: any = "";
   public commonFunction = new CommonFunctionService();
-
   @Input() dataDesigner: any = ServiceCatMasterDataNew;
   @Input() drawerVisibleDesigner: boolean = false;
   @Input() closeCallbacksubDesigner: any = Function;
@@ -42,7 +39,6 @@ export class AddDetailsDrawerMainComponent implements OnInit {
       this.dataDesigner.FILE_CONTENT = '';
     });
   }
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
@@ -82,14 +78,11 @@ export class AddDetailsDrawerMainComponent implements OnInit {
     toolbarPosition: 'top',
     toolbarHiddenButtons: [['fonts']],
   };
-
   resetDrawer(ServiceCatmaster: NgForm) {
     this.dataDesigner = new ServiceCatMasterDataNew();
     ServiceCatmaster.form.markAsPristine();
     ServiceCatmaster.form.markAsUntouched();
   }
-
-
   save(addNew: boolean, ServiceCatmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -124,8 +117,6 @@ export class AddDetailsDrawerMainComponent implements OnInit {
       }
     }
   }
-
-
   close() {
     this.closeCallbacksubDesigner();
   }

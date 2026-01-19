@@ -5,34 +5,24 @@ nz-form-item {
     padding: 0px 10px;
     width: 100%;
 }
-
 .custom-select-width {
     width: 100px;
 }
-
 tr:nth-child(even) td {
     background-color: #f4f3f3;
 }
-
 tr:nth-child(odd) td {
     background-color: #ebeaea;
 }
-
 td {
     font-size: 12px;
 }
-
-
 .mainnam {
-    /* color: #000; */
     font-size: 14px !important;
-    /* font-weight: 600; */
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .subname {
     color: #4c4c4ceb;
     font-size: 11px !important;
@@ -40,4 +30,235 @@ td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.responsive-form-margin {
+    margin-left: 20px;
+}
+.form-container {
+    display: inline-block;
+    width: 100%;
+}
+.date-picker-width {
+    width: 100%;
+}
+.option-container {
+    padding: 4px 0;
+}
+.option-category {
+    font-size: 12px;
+    color: #4a5568;
+    white-space: pre-line;
+    line-height: 1.2;
+}
+.option-name {
+    font-size: 14px;
+    color: #2d3748;
+    font-weight: 500;
+    white-space: pre-line;
+    line-height: 1.4;
+}
+.add-button-col {
+    align-self: center !important;
+}
+.add-button-form-item {
+    margin-bottom: 0px !important;
+}
+.add-update-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.inventory-info-row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.inventory-info-label {
+    font-weight: 600 !important;
+    color: #333;
+}
+.inventory-info-value {
+    font-weight: 500 !important;
+    color: #555;
+}
+.inventory-divider {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #e8e8e8;
+}
+.table-container {
+    padding: 0px 10px;
+}
+.inventory-table {
+    white-space: pre-line;
+    font-size: 12px;
+}
+.action-column,
+.part-name-column,
+.serial-no-column,
+.batch-no-column,
+.quantity-column {
+    text-align: center;
+    font-weight: 600;
+}
+.action-column {
+    width: 40px;
+}
+.part-name-column {
+    width: 100px;
+}
+.serial-no-column,
+.batch-no-column {
+    width: 50px;
+}
+.quantity-column {
+    width: 60px;
+}
+.inventory-row {
+    height: 40px;
+}
+.action-cell,
+.part-name-cell,
+.serial-no-cell,
+.batch-no-cell,
+.quantity-cell {
+    white-space: pre-line;
+    text-align: left;
+    padding: 8px 4px;
+    vertical-align: middle;
+}
+.action-cell {
+    text-align: center;
+}
+.part-name-text {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+.variant-name {
+    display: block;
+    font-size: 11px;
+    color: #666;
+    margin-top: 2px;
+}
+.edit-action,
+.delete-action {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+.edit-action:hover {
+    opacity: 0.8;
+}
+.delete-icon-wrapper {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+.delete-icon {
+    color: red;
+}
+.delete-icon:hover {
+    opacity: 0.8;
+}
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 0;
+    gap: 8px;
+}
+.cancel-button,
+.save-close-button,
+.update-close-button,
+.view-cancel-button {
+    margin-right: 8px;
+}
+.dropdown-menu-item {
+    border-radius: 4px;
+    color: white !important;
+    background-color: #1890ff;
+}
+.dropdown-menu-link {
+    color: white !important;
+    text-decoration: none;
+    display: block;
+    padding: 8px 12px;
+}
+.dropdown-menu-link:hover {
+    background-color: #40a9ff;
+}
+.view-header {
+    padding: 10px 20px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #e8e8e8;
+}
+.view-date,
+.view-customer,
+.view-technician {
+    font-size: 14px;
+    line-height: 1.6;
+}
+.customer-name,
+.technician-name {
+    cursor: pointer;
+    color: #1890ff;
+}
+.customer-name:hover,
+.technician-name:hover {
+    text-decoration: underline;
+}
+.view-table-container {
+    padding: 0px 10px;
+    margin-top: 16px;
+}
+.view-inventory-table {
+    white-space: pre-line;
+    font-size: 12px;
+}
+.view-item-name-column,
+.view-serial-no-column,
+.view-batch-no-column,
+.view-quantity-column {
+    text-align: center;
+    font-weight: 600;
+    width: 120px;
+}
+.view-quantity-column {
+    width: 60px;
+}
+.view-inventory-row {
+    height: 40px;
+}
+.view-item-name-cell,
+.view-serial-no-cell,
+.view-batch-no-cell,
+.view-quantity-cell {
+    white-space: pre-line;
+    text-align: left;
+    padding: 8px 4px;
+    vertical-align: middle;
+}
+.item-name-text {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.reject-remark-textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 80px;
+    max-height: 150px;
+}
+.character-counter {
+    color: red;
+    font-size: 10px;
+    margin-top: 4px;
+}
+.modal-close-button,
+.modal-reject-button {
+    min-width: 80px;
 }

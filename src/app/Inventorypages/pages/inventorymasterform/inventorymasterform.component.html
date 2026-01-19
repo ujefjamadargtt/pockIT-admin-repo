@@ -5,9 +5,8 @@
         <div nz-col nzSpan="6">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Sub Category Name</nz-form-label>
-
             <nz-form-control nzErrorTip="Select Category">
-              <nz-tree-select name="INVENTRY_SUB_CATEGORY_ID" style="width: 100%" [nzHideUnMatched]="true"
+              <nz-tree-select name="INVENTRY_SUB_CATEGORY_ID" class="tree-select-full-width" [nzHideUnMatched]="true"
                 [nzDropdownStyle]="{
                   'min-height': '10px',
                   'max-height': '300px',
@@ -19,23 +18,18 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="8">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Name</nz-form-label>
-
             <nz-form-control nzErrorTip="Enter Name">
-              <!-- Item Name Input -->
               <input [(ngModel)]="data.ITEM_NAME" (keypress)="commonFunction.allowOnly($event)" name="itemname"
                 autocomplete="off" nz-input maxlength="128" placeholder="Enter Name" required
                 (focus)="isFocused = 'ITEM_NAME'" (blur)="isFocused = ''" />
             </nz-form-control>
-
-            <!-- Dynamic Character Count -->
             <h6 *ngIf="
                 isFocused === 'ITEM_NAME' ||
                 (data.ITEM_NAME && isFocused === 'ITEM_NAME')
-              " style="color: red; font-size: 10px">
+              " class="char-counter-red">
               {{ data.ITEM_NAME?.length || 0 }}/128
             </h6>
           </nz-form-item>
@@ -43,10 +37,9 @@
         <div nz-col nzSpan="5">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Inventory Type</nz-form-label>
-
             <nz-form-control nzHasFeedback nzErrorTip="Select Inventory Type">
-              <nz-select nzShowSearch nzAllowClear="false" style="width: 100%" [nzDisabled]="data.ID ? true : false"
-                nzPlaceHolder="Select Inventory Type" [(ngModel)]="data.INVENTORY_TYPE" name="INVENTORY_TYPE">
+              <nz-select nzShowSearch nzAllowClear="false" class="select-full-width" [nzDisabled]="data.ID ? true : false"
+              nzPlaceHolder="Select Inventory Type" [(ngModel)]="data.INVENTORY_TYPE" name="INVENTORY_TYPE">
                 <nz-option nzValue="B" nzLabel="Both Sellable & Technician Parts"></nz-option>
                 <nz-option nzValue="P" nzLabel="Sellable Inventory"></nz-option>
                 <nz-option nzValue="S" nzLabel="Technician Parts Only"></nz-option>
@@ -54,22 +47,18 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="3">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
-
             <nz-form-control nzErrorTip="Enter Short Code">
-              <input style="width: 100%" nz-input name="ProductShortCode" maxlength="8" [(ngModel)]="data.SHORT_CODE"
-                placeholder="Short Code" type="text" required autocomplete="off" />
+              <input class="input-full-width" nz-input name="ProductShortCode" maxlength="8"
+                [(ngModel)]="data.SHORT_CODE" placeholder="Short Code" type="text" required autocomplete="off" />
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-col nzSpan="2">
           <nz-form-item>
             <nz-form-label nzNoColon>Status</nz-form-label>
-
             <nz-form-control>
               <nz-switch name="STATUS" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
                 [(ngModel)]="data.STATUS" (ngModelChange)="onStatusChange(data.STATUS)">
@@ -77,28 +66,20 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-
         <div nz-row>
           <div nz-col nzSpan="14">
             <div nz-row>
               <div nz-col nzSpan="24">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Description</nz-form-label>
-
                   <nz-form-control nzErrorTip="Enter Description">
-                    <!-- <textarea nz-input name="desc" type="text" placeholder="Enter Description" autocomplete="off"
-                      [(ngModel)]="data.DESCRIPTION" (keypress)="commonFunction.allowOnly($event)" maxlength="1028"
-                      [nzAutosize]="{ minRows: 2, maxRows: 3 }" (focus)="isFocused = 'DESCRIPTION'" (blur)="isFocused = ''">
-                    </textarea> -->
-                    <angular-editor style="resize: none; color: black" name="DESCRIPTIONs" autocomplete="off"
-                      id="editor3" [(ngModel)]="data.DESCRIPTION" (ngModelChange)="checkDescriptionLength()"
-                      [config]="editorConfig" placeholder="Enter Description"></angular-editor>
-
-                    <h6 style="color: red; font-size: 10px" *ngIf="cleanTextLength > 0 || isFocused === 'DESCRIPTION'">
+                    <angular-editor class="editor-resize" name="DESCRIPTIONs" autocomplete="off" id="editor3"
+                      [(ngModel)]="data.DESCRIPTION" (ngModelChange)="checkDescriptionLength()" [config]="editorConfig"
+                      placeholder="Enter Description"></angular-editor>
+                    <h6 class="char-counter-red" *ngIf="cleanTextLength > 0 || isFocused === 'DESCRIPTION'">
                       {{ cleanTextLength }}/50,000
                     </h6>
-
-                    <div *ngIf="showLengthError" style="color: red; font-size: 11px;">
+                    <div *ngIf="showLengthError" class="length-error-text">
                       Description must not exceed 50,000 characters (including tags, formatting, and images).
                     </div>
                   </nz-form-control>
@@ -111,7 +92,6 @@
               <div nz-col nzSpan="12">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Brand Name</nz-form-label>
-
                   <nz-form-control nzErrorTip="Select Brand Name">
                     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Brand Name" name="BRAND_ID"
                       [(ngModel)]="data.BRAND_ID" required (ngModelChange)="OnBrandChange($event)">
@@ -123,7 +103,7 @@
               </div>
               <div nz-col nzSpan="2">
                 <nz-form-item>
-                  <div style="margin-top: 26px">
+                  <div class="brand-button-container">
                     <button nz-button nzType="primary" nzTooltipTitle="Add Brand" nz-tooltip (click)="addBrand()">
                       <span nz-icon nzType="plus" nzTheme="outline"></span>
                     </button>
@@ -133,7 +113,6 @@
               <div nz-col nzSpan="10">
                 <nz-form-item>
                   <nz-form-label nzNoColon nzRequired>Is Refurbished?</nz-form-label>
-
                   <nz-form-control>
                     <nz-switch name="IS_REFURBISHED" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                       [(ngModel)]="data.IS_REFURBISHED">
@@ -144,7 +123,6 @@
               <div nz-col nzSpan="12">
                 <nz-form-item>
                   <nz-form-label nzNoColon>HSN Code</nz-form-label>
-
                   <nz-form-control nzErrorTip="Select HSN Code">
                     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select HSN Code" name="HSNCODE"
                       [(ngModel)]="data.HSN_ID" required (ngModelChange)="OnHSNChange($event)">
@@ -156,28 +134,22 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-
               <div nz-col nzSpan="12">
                 <nz-form-item>
                   <nz-form-label nzNoColon>SKU Code
                     <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
                       nzTooltipTitle="SKU stands for Stock Keeping Unit. It is a unique code assigned to each inventory item to manage your inentory efficiently.">&nbsp;</span>
                   </nz-form-label>
-
                   <nz-form-control nzErrorTip="Enter SKU Code">
-                    <input style="width: 100%" nz-input name="SKU_CODE" maxlength="32" [(ngModel)]="data.SKU_CODE"
+                    <input class="input-full-width" nz-input name="SKU_CODE" maxlength="32" [(ngModel)]="data.SKU_CODE"
                       placeholder="Enter SKU Code" autocomplete="off"
                       (keypress)="commonFunction.allowOnlyaplhaandnum($event)" />
                   </nz-form-control>
                 </nz-form-item>
               </div>
-
-
-
               <div nz-col nzSpan="10">
                 <nz-form-item>
                   <nz-form-label nzNoColon>Is Have Variants?</nz-form-label>
-
                   <nz-form-control>
                     <nz-switch name="IS_HAVE_VARIANTS" (ngModelChange)="onVariantChange($event)" nzCheckedChildren="Yes"
                       nzUnCheckedChildren="No" [(ngModel)]="data.IS_HAVE_VARIANTS">
@@ -185,7 +157,6 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-
               <div nz-col nzSpan="12" *ngIf="!data.IS_HAVE_VARIANTS">
                 <nz-form-item>
                   <nz-form-label nzNoColon>Inventory Details &nbsp;
@@ -193,18 +164,15 @@
                         nzTooltipTitle="Please select an Image file (PNG, JPG, JPEG) with a size up to 1MB."
                         nzTooltipPlacement="top" nz-tooltip>
                       </i> </span></nz-form-label>
-
                   <nz-form-control nzHasFeedback nzErrorTip="Select Inventory Details">
                     <button *ngIf="
                         data.INVENTORY_DETAILS_IMAGE == ' ' ||
                         data.INVENTORY_DETAILS_IMAGE == null
-                      " nz-button style="padding: 0px 7px; font-size: 10px;width: 100%;" (click)="image2.click()">
+                      " nz-button class="upload-button" (click)="image2.click()">
                       <span nz-icon nzType="upload"></span>Upload Image
-                      <!-- <i nz-icon nzType="upload" nzTheme="outline"></i> -->
                       <input #image2 name="image2" type="file" accept=".png, .jpg, .jpeg"
-                        (change)="onFileSelected1($event)" style="display: none" />
+                        (change)="onFileSelected1($event)" class="file-input-hidden" />
                     </button>
-
                     <span *ngIf="
                         data.INVENTORY_DETAILS_IMAGE != null &&
                         data.INVENTORY_DETAILS_IMAGE != undefined &&
@@ -215,31 +183,29 @@
                           percentImageOne1 }}%</nz-progress>
                       </div>
                     </span>
-
                     <div *ngIf="
                         data.INVENTORY_DETAILS_IMAGE != null &&
                         data.INVENTORY_DETAILS_IMAGE != undefined &&
                         data.INVENTORY_DETAILS_IMAGE != ' '
                       ">
-                      <a style="color: blue; margin-right: 9px" (click)="viewImage1(data.INVENTORY_DETAILS_IMAGE)">
+                      <a class="image-link" (click)="viewImage1(data.INVENTORY_DETAILS_IMAGE)">
                         {{ data.INVENTORY_DETAILS_IMAGE }}
                       </a>
-
-                      <a style="color: blue; margin-right: 9px" (click)="viewImage1(data.INVENTORY_DETAILS_IMAGE)"
-                        nz-tooltip nzTooltipTitle="Click Here To View Uploaded Image">
+                      <a class="image-link view-icon" (click)="viewImage1(data.INVENTORY_DETAILS_IMAGE)" nz-tooltip
+                        nzTooltipTitle="Click Here To View Uploaded Image">
                         <span nz-icon nzType="eye" nzTheme="outline"></span>
                       </a>
                       <span *ngIf="data.ID">
-                        <span style="cursor: pointer" nz-popconfirm nzPopconfirmTitle="Are you sure want to delete?"
-                          nzPopconfirmPlacement="top" (nzOnConfirm)="image1DeleteConfirm1(data)"
-                          (nzOnCancel)="deleteCancel1()">
+                        <span class="delete-icon-container" nz-popconfirm
+                          nzPopconfirmTitle="Are you sure want to delete?" nzPopconfirmPlacement="top"
+                          (nzOnConfirm)="image1DeleteConfirm1(data)" (nzOnCancel)="deleteCancel1()">
                           <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
                             nzTooltipTitle="Delete">
                           </span>
                         </span>
                       </span>
                       <span *ngIf="!data.ID">
-                        <span style="cursor: pointer; margin-left: 0px" nz-popconfirm
+                        <span class="delete-icon-container" nz-popconfirm
                           nzPopconfirmTitle="Are you sure want to delete?" nzPopconfirmPlacement="top"
                           (nzOnConfirm)="removeImage1()" (nzOnCancel)="deleteCancel1()">
                           <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
@@ -254,67 +220,7 @@
             </div>
           </div>
         </div>
-
-        <!-- <div nz-col nzSpan="4">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon>Height</nz-form-label>
-            <nz-form-control nzErrorTip="Enter Height">
-              <nz-input-group [nzAddOnAfter]="'CM'">
-                <input nz-input name="HEIGHT" placeholder="Enter Height" required [(ngModel)]="data.HEIGHT"
-                  autocomplete="off" (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
-                  (paste)="commonFunction.handlePaste($event)" />
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col nzSpan="4">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon>Weight</nz-form-label>
-            <nz-form-control nzErrorTip="Enter Weight">
-              <nz-input-group [nzAddOnAfter]="'KG'">
-                <input nz-input name="WEIGHT" placeholder="Enter Weight" required [(ngModel)]="data.WEIGHT"
-                  autocomplete="off" (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
-                  (paste)="commonFunction.handlePaste($event)" />
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col nzSpan="4">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon>Length</nz-form-label>
-            <nz-form-control nzErrorTip="Enter Length">
-              <nz-input-group [nzAddOnAfter]="'CM'">
-                <input nz-input name="LENGTH" placeholder="Enter Length" required [(ngModel)]="data.LENGTH"
-                  autocomplete="off" (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
-                  (paste)="commonFunction.handlePaste($event)" />
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col nzSpan="4">
-          <nz-form-item>
-            <nz-form-label nzRequired nzNoColon>Breadth</nz-form-label>
-            <nz-form-control nzErrorTip="Enter Breadth">
-              <nz-input-group [nzAddOnAfter]="'CM'">
-                <input nz-input name="BREADTH" placeholder="Enter Breadth" required [(ngModel)]="data.BREADTH"
-                  autocomplete="off" (keypress)="commonFunction.forCostFunction($event)" maxlength="5"
-                  (paste)="commonFunction.handlePaste($event)" />
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-        </div> -->
-
-        <!-- <div nz-col nzSpan="5" *ngIf="data.ID">
-          <nz-form-item>
-            <nz-form-label nzNoColon>Rating</nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Select Rating">
-              <nz-rate style="font-size: 20px" name="rating" [(ngModel)]="data.RATING" nzAllowHalf
-                [nzDisabled]="true"></nz-rate>
-            </nz-form-control>
-          </nz-form-item>
-        </div> -->
       </div>
-
       <div nz-row *ngIf="!data.IS_HAVE_VARIANTS" [nzGutter]="4">
         <div nz-col nzSpan="24">
           <div class="my-box">
@@ -322,7 +228,6 @@
               <div nz-col nzSpan="3">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Base Unit</nz-form-label>
-
                   <nz-form-control nzErrorTip="Select Base Unit">
                     <nz-select [nzDisabled]="disableItems" nzShowSearch (ngModelChange)="onChange($event)"
                       [nzLoading]="Unitload" nzAllowClear="false" nzPlaceHolder="Select Base Unit " name="Unit Name"
@@ -333,13 +238,11 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-
               <div nz-col nzSpan="3">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Quantity Per Unit</nz-form-label>
-
                   <nz-form-control nzErrorTip="Select Qty Per Unit">
-                    <input style="width: 100%" nz-input name="BASE_QUANTITY" nzAllowClear="false" maxlength="8"
+                    <input class="input-full-width" nz-input name="BASE_QUANTITY" nzAllowClear="false" maxlength="8"
                       (keypress)="commonFunction.omit($event)" [(ngModel)]="data.BASE_QUANTITY"
                       placeholder="Quantity Per Unit" autocomplete="off" type="text" required
                       [disabled]="data.ID ? true : false" />
@@ -349,38 +252,33 @@
               <div nz-col nzSpan="3">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Average Level</nz-form-label>
-
                   <nz-form-control nzErrorTip="Enter Average Level">
-                    <nz-input-group style="width: 100%" [nzAddOnAfter]="UnitName">
-                      <input style="width: 100%" nz-input name="AVG_LEVEL" maxlength="8"
+                    <nz-input-group class="input-group-full-width" [nzAddOnAfter]="UnitName">
+                      <input class="input-full-width" nz-input name="AVG_LEVEL" maxlength="8"
                         (keypress)="commonFunction.onlynumdot($event)" [(ngModel)]="data.AVG_LEVEL"
                         placeholder="Average Level" autocomplete="off" type="text" required />
                     </nz-input-group>
                   </nz-form-control>
                 </nz-form-item>
               </div>
-
               <div nz-col nzSpan="3">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Re-Order Level</nz-form-label>
-
                   <nz-form-control nzErrorTip="Enter Re-Order Level">
-                    <nz-input-group style="width: 100%" [nzAddOnAfter]="UnitName">
-                      <input style="width: 100%" nz-input name="REORDER_STOCK_LEVEL" maxlength="8"
+                    <nz-input-group class="input-group-full-width" [nzAddOnAfter]="UnitName">
+                      <input class="input-full-width" nz-input name="REORDER_STOCK_LEVEL" maxlength="8"
                         (keypress)="commonFunction.onlynumdot($event)" [(ngModel)]="data.REORDER_STOCK_LEVEL"
                         placeholder="Re-Order Level" autocomplete="off" type="text" required />
                     </nz-input-group>
                   </nz-form-control>
                 </nz-form-item>
               </div>
-
               <div nz-col nzSpan="3">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Alert Level</nz-form-label>
-
                   <nz-form-control nzErrorTip="Enter Alert Level">
-                    <nz-input-group style="width: 100%" [nzAddOnAfter]="UnitName">
-                      <input style="width: 100%" nz-input name="ALERT_STOCK_LEVEL" maxlength="8"
+                    <nz-input-group class="input-group-full-width" [nzAddOnAfter]="UnitName">
+                      <input class="input-full-width" nz-input name="ALERT_STOCK_LEVEL" maxlength="8"
                         (keypress)="commonFunction.onlynumdot($event)" [(ngModel)]="data.ALERT_STOCK_LEVEL"
                         placeholder="Alert Level" autocomplete="off" type="text" required />
                     </nz-input-group>
@@ -390,10 +288,9 @@
               <div nz-col nzSpan="4">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Expected Delivery Day(s)</nz-form-label>
-
                   <nz-form-control nzErrorTip="Expected Delivery Day(s)">
                     <nz-input-group nzAddOnAfter="Days">
-                      <input style="width: 100%" nz-input name="EXPECTED_DELIVERY_IN_DAYS" nzAllowClear="false"
+                      <input class="input-full-width" nz-input name="EXPECTED_DELIVERY_IN_DAYS" nzAllowClear="false"
                         maxlength="8" (keypress)="commonFunction.omit($event)"
                         [(ngModel)]="data.EXPECTED_DELIVERY_IN_DAYS" placeholder="Expected Delivery Day(s)"
                         autocomplete="off" type="text" />
@@ -404,11 +301,10 @@
               <div nz-col nzSpan="5">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Expected Delivery Charges</nz-form-label>
-
                   <nz-form-control nzErrorTip="Expected Delivery Charges">
                     <nz-form-control nzErrorTip="Discount Price">
                       <nz-input-group nzAddOnBefore="₹">
-                        <input style="width: 65%" nz-input name="EXPECTED_DELIVERY_CHARGES" nzAllowClear="false"
+                        <input class="input-width-65" nz-input name="EXPECTED_DELIVERY_CHARGES" nzAllowClear="false"
                           maxlength="8" (keypress)="commonFunction.forCostFunction($event)"
                           (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.EXPECTED_DELIVERY_CHARGES"
                           placeholder="Expected Delivery Charges" autocomplete="off" type="text" />
@@ -424,10 +320,9 @@
               <div nz-col nzSpan="3">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Base Price</nz-form-label>
-
                   <nz-form-control nzErrorTip="Enter Base Price">
                     <nz-input-group nzAddOnBefore="₹">
-                      <input style="width: 100%; text-align: right" nz-input name="BASE_PRICE" nzAllowClear="false"
+                      <input class="input-full-width text-right" nz-input name="BASE_PRICE" nzAllowClear="false"
                         maxlength="8" (keypress)="commonFunction.forCostFunction($event)"
                         (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.BASE_PRICE"
                         (ngModelChange)="onBasePriceChange($event)" placeholder="Base Price" autocomplete="off"
@@ -439,7 +334,6 @@
               <div nz-col nzSpan="3">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Tax Preference</nz-form-label>
-
                   <nz-form-control nzErrorTip="Select Tax Preference">
                     <nz-select nzShowSearch nzAllowClear="false" nzPlaceHolder="Tax Preference" name="TaxPreference"
                       [(ngModel)]="data.TAX_PREFERENCE" (ngModelChange)="onChangeTax($event)" required>
@@ -449,11 +343,9 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-
               <div nz-col nzSpan="6" *ngIf="data.TAX_PREFERENCE === 'T'">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Tax Slab</nz-form-label>
-
                   <nz-form-control nzErrorTip="Select Tax Slab">
                     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Tax Slab" name="TAX_ID"
                       [(ngModel)]="data.TAX_ID" required (ngModelChange)="onTaxChange($event)">
@@ -463,27 +355,12 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-              <!-- <div nz-col nzSpan="5">
-							  <nz-form-item>
-								  <nz-form-label nzNoColon>Is This a Set?&nbsp;<span nz-icon nzType="info-circle"
-										  nzTheme="twotone" nz-tooltip
-										  nzTooltipTitle="Enable this option if the item is a set or a bundle of multiple inventory sold together."></span></nz-form-label>
-								  <nz-form-control>
-									  <nz-switch name="IS_SET" (ngModelChange)="onSetChange($event)"
-										  nzCheckedChildren="Yes" nzUnCheckedChildren="No"
-										  [(ngModel)]="data.IS_SET"></nz-switch>
-								  </nz-form-control>
-							  </nz-form-item>
-						  </div>
-						   -->
-
               <div nz-col nzSpan="3">
                 <nz-form-item>
                   <nz-form-label nzRequired nzNoColon>Selling Price</nz-form-label>
-
                   <nz-form-control nzErrorTip="Enter Selling Price">
                     <nz-input-group nzAddOnBefore="₹">
-                      <input style="width: 100%; text-align: right" nz-input name="SELLING_PRICE" maxlength="8"
+                      <input class="input-full-width text-right" nz-input name="SELLING_PRICE" maxlength="8"
                         (keypress)="commonFunction.forCostFunction($event)" (paste)="commonFunction.handlePaste($event)"
                         [(ngModel)]="data.SELLING_PRICE" (ngModelChange)="onSellingPriceChange($event)"
                         placeholder="Selling Price" autocomplete="off" type="text" required
@@ -495,7 +372,6 @@
               <div nz-col nzSpan="3">
                 <nz-form-item>
                   <nz-form-label nzNoColon>Discount Allowed?</nz-form-label>
-
                   <nz-form-control>
                     <nz-switch name="DISCOUNT_ALLOWED" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                       [(ngModel)]="data.DISCOUNT_ALLOWED">
@@ -503,163 +379,27 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-              <!-- <div nz-col nzSpan="4" *ngIf="data.DISCOUNT_ALLOWED">
-                <nz-form-item>
-                  <nz-form-label nzNoColon>Discount(%)</nz-form-label>
-                  <nz-form-control nzErrorTip="Discount Percentage">
-                    <nz-input-group nzAddOnAfter="%">
-                      <input
-                        style="width: 100%"
-                        nz-input
-                        name="DISCOUNTED_PERCENTAGE"
-                        nzAllowClear="false"
-                        [min]="0"
-                        [max]="100"
-                        (keypress)="onlynum2($event)"
-                        [(ngModel)]="data.DISCOUNTED_PERCENTAGE"
-                        (ngModelChange)="onDiscountPercentageChange($event)"
-                        placeholder="Discount Percentage"
-                        autocomplete="off"
-                        type="number"
-                      />
-                    </nz-input-group>
-                  </nz-form-control>
-                </nz-form-item>
-              </div> -->
               <div nz-col nzSpan="3" *ngIf="data.DISCOUNT_ALLOWED">
                 <nz-form-item>
                   <nz-form-label nzNoColon>Discount Price</nz-form-label>
                   <nz-form-control nzErrorTip="Discounted Price">
                     <nz-input-group nzAddOnBefore="₹">
-                      <input style="width: 100%" nz-input name="DISCOUNTED_PRICE" nzAllowClear="false" maxlength="8"
-                        (keypress)="commonFunction.forCostFunction($event)" (paste)="commonFunction.handlePaste($event)"
-                        [(ngModel)]="data.DISCOUNTED_PRICE" placeholder="Discounted Price" autocomplete="off"
-                        type="text" />
+                      <input class="input-full-width" nz-input name="DISCOUNTED_PRICE" nzAllowClear="false"
+                        maxlength="8" (keypress)="commonFunction.forCostFunction($event)"
+                        (paste)="commonFunction.handlePaste($event)" [(ngModel)]="data.DISCOUNTED_PRICE"
+                        placeholder="Discounted Price" autocomplete="off" type="text" />
                     </nz-input-group>
                   </nz-form-control>
                 </nz-form-item>
               </div>
-              <!-- <div nz-col nzSpan="6">
-							  <nz-form-item>
-								  <nz-form-label nzRequired nzNoColon>Serial No.</nz-form-label>
-								  <nz-form-control nzErrorTip="Enter Serial No.">
-									  <input style="width: 100%" nz-input name="SERIAL_NO" maxlength="20"
-										  [(ngModel)]="data.SERIAL_NO" (focus)="isFocused = 'SERIAL_NO'"
-										  (blur)="isFocused = ''" placeholder="Serial No." autocomplete="off" type="text"
-										  required />
-									  <h6 *ngIf="isFocused === 'SERIAL_NO' || (data.SERIAL_NO && isFocused === 'SERIAL_NO')"
-										  style="color: red; font-size: 10px">
-										  {{ (data.SERIAL_NO?.length || 0) }}/20
-									  </h6>
-								  </nz-form-control>
-							  </nz-form-item>
-						  </div> -->
-
-              <!-- <div nz-col nzSpan="4">
-                <nz-form-item>
-                  <nz-form-label nzNoColon>Return Allowed?</nz-form-label>
-
-                  <nz-form-control>
-                    <nz-switch
-                      name="RETURN_ALOW"
-                      nzCheckedChildren="Yes"
-                      nzUnCheckedChildren="No"
-                      [(ngModel)]="data.RETURN_ALOW"
-                    >
-                    </nz-switch>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-
-              <div nz-col nzSpan="4" *ngIf="data.RETURN_ALOW">
-                <nz-form-item>
-                  <nz-form-label nzNoColon
-                    >Return Period
-                    <span
-                      nz-icon
-                      nzType="info-circle"
-                      nzTheme="twotone"
-                      nz-tooltip
-                      nzTooltipTitle="Add return period in day(s)"
-                      >&nbsp;</span
-                    ></nz-form-label
-                  >
-
-                  <nz-form-control nzErrorTip="Returning Period">
-                    <nz-input-group nzAddOnAfter="Days">
-                      <input
-                        style="width: 100%"
-                        nz-input
-                        name="RETURN_ALLOW_PERIOD"
-                        nzAllowClear="false"
-                        maxlength="8"
-                        (keypress)="commonFunction.omit($event)"
-                        [(ngModel)]="data.RETURN_ALLOW_PERIOD"
-                        placeholder="Returning Period"
-                        autocomplete="off"
-                        type="text"
-                      />
-                    </nz-input-group>
-                  </nz-form-control>
-                </nz-form-item>
-              </div> -->
-              <!-- <div nz-col nzSpan="4">
-                <nz-form-item>
-                  <nz-form-label nzNoColon>Replacement Allowed?</nz-form-label>
-
-                  <nz-form-control>
-                    <nz-switch
-                      name="REPLACEMENT_ALLOW"
-                      nzCheckedChildren="Yes"
-                      nzUnCheckedChildren="No"
-                      [(ngModel)]="data.REPLACEMENT_ALLOW"
-                    >
-                    </nz-switch>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-
-              <div nz-col nzSpan="4" *ngIf="data.REPLACEMENT_ALLOW">
-                <nz-form-item>
-                  <nz-form-label nzNoColon
-                    >Replacement Period<span
-                      nz-icon
-                      nzType="info-circle"
-                      nzTheme="twotone"
-                      nz-tooltip
-                      nzTooltipTitle="Add replacement period in day(s)"
-                      >&nbsp;</span
-                    ></nz-form-label
-                  >
-
-                  <nz-form-control nzErrorTip="Replacement Period">
-                    <nz-input-group nzAddOnAfter="Days">
-                      <input
-                        style="width: 100%"
-                        nz-input
-                        name="REPLACEMENT_PERIOD"
-                        nzAllowClear="false"
-                        maxlength="8"
-                        (keypress)="commonFunction.omit($event)"
-                        [(ngModel)]="data.REPLACEMENT_PERIOD"
-                        placeholder="Replacement Period"
-                        autocomplete="off"
-                        type="text"
-                      />
-                    </nz-input-group>
-                  </nz-form-control>
-                </nz-form-item>
-              </div> -->
             </div>
           </div>
         </div>
-
         <div nz-col nzSpan="24">
           <div nz-row class="my-box">
             <div nz-col nzSpan="2">
               <nz-form-item>
                 <nz-form-label nzNoColon>Is New?</nz-form-label>
-
                 <nz-form-control>
                   <nz-switch name="IS_NEW" nzCheckedChildren="Yes" nzUnCheckedChildren="No" [(ngModel)]="data.IS_NEW">
                   </nz-switch>
@@ -670,11 +410,10 @@
               <nz-form-item>
                 <nz-form-label nzRequired nzNoColon>
                   Tracking Type</nz-form-label>
-
                 <nz-form-control nzErrorTip="Select Tracking Type">
-                  <nz-select nzShowSearch nzAllowClear="false" style="width: 100%" nzPlaceHolder="Select Tracking Type"
-                    [(ngModel)]="data.INVENTORY_TRACKING_TYPE" (ngModelChange)="changeTrackingType($event)"
-                    name="trackingtype">
+                  <nz-select nzShowSearch nzAllowClear="false" class="select-full-width"
+                    nzPlaceHolder="Select Tracking Type" [(ngModel)]="data.INVENTORY_TRACKING_TYPE"
+                    (ngModelChange)="changeTrackingType($event)" name="trackingtype">
                     <nz-option nzValue="N" nzLabel="None"></nz-option>
                     <nz-option nzValue="S" nzLabel="Serial No. Wise"></nz-option>
                     <nz-option nzValue="B" nzLabel="Batch Wise"></nz-option>
@@ -682,11 +421,9 @@
                 </nz-form-control>
               </nz-form-item>
             </div>
-
             <div nz-col nzSpan="3" *ngIf="data.INVENTORY_TRACKING_TYPE === 'S'">
               <nz-form-item>
                 <nz-form-label nzNoColon>Warranty Allowed?</nz-form-label>
-
                 <nz-form-control>
                   <nz-switch name="WARRANTY_ALLOWED" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                     [(ngModel)]="data.WARRANTY_ALLOWED" (ngModelChange)="warrantyUpdate($event)"></nz-switch>
@@ -699,10 +436,9 @@
               <nz-form-item>
                 <nz-form-label nzNoColon>Warranty Period<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
                     nzTooltipTitle="Add warranty period in day(s)">&nbsp;</span></nz-form-label>
-
                 <nz-form-control nzErrorTip="Warranty Period">
                   <nz-input-group nzAddOnAfter="Days">
-                    <input style="width: 100%" nz-input name="WARRANTY_PERIOD" nzAllowClear="false" maxlength="8"
+                    <input class="input-full-width" nz-input name="WARRANTY_PERIOD" nzAllowClear="false" maxlength="8"
                       (keypress)="commonFunction.omit($event)" [(ngModel)]="data.WARRANTY_PERIOD"
                       placeholder="Warranty Period" autocomplete="off" type="text" />
                   </nz-input-group>
@@ -721,36 +457,29 @@
                       fileURL
                     " nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete?" nzPopconfirmPlacement="top"
                     (nzOnConfirm)="image1DeleteConfirm(data)" (nzOnCancel)="deleteCancel()"
-                    style="cursor: pointer; color: red; margin-left: 10px">
+                    class="warranty-delete-container">
                     <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
                       nzTooltipTitle="Delete"></span>
                   </span>
                 </nz-form-label>
                 <nz-form-control nzHasFeedback>
-                  <!-- Upload Button -->
                   <button *ngIf="
                       !fileURL &&
                       (!data.WARRANTY_CARD || data.WARRANTY_CARD.trim() === '')
-                    " nz-button style="
-                      height: 28px;
-                      padding: 0px 7px;
-                      font-size: 10px;
-                      width: 100%;
-                    " (click)="image1.click()">
+                    " class="warranty-upload-button" (click)="image1.click()">
                     <span nz-icon nzType="upload" nzTheme="outline"></span>
                     &nbsp; Warranty Card
                     <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg, .pdf, .doc, .docx"
-                      (change)="onFileSelected($event)" style="display: none" />
+                      (change)="onFileSelected($event)" class="file-input-hidden" />
                   </button>
                   &nbsp;
-
-                  <span style="color: blue; margin-right: 8px">
+                  <span class="warranty-file-name">
                     {{ data.WARRANTY_CARD }}
                   </span>
                   &nbsp;
                   <a *ngIf="
                       data.WARRANTY_CARD && data.WARRANTY_CARD.trim() !== ''
-                    " style="color: blue; margin-right: 9px" [href]="
+                    " class="warranty-view-link" [href]="
                       retriveimgUrl + 'WarrantyCard/' + data.WARRANTY_CARD
                     " target="_blank" nz-tooltip nzTooltipTitle="Click Here To View Uploaded file">
                     <span nz-icon nzType="eye" nzTheme="outline"></span>
@@ -761,7 +490,6 @@
             <div nz-col nzSpan="4" *ngIf="data.INVENTORY_TRACKING_TYPE === 'S'">
               <nz-form-item>
                 <nz-form-label nzNoColon>Guarantee Allowed?</nz-form-label>
-
                 <nz-form-control>
                   <nz-switch name="GUARANTEE_ALLOWED" (ngModelChange)="guarantyUpdate($event)" nzCheckedChildren="Yes"
                     nzUnCheckedChildren="No" [(ngModel)]="data.GUARANTEE_ALLOWED">
@@ -775,10 +503,9 @@
               <nz-form-item>
                 <nz-form-label nzNoColon>Gaurantee Period<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
                     nzTooltipTitle="Add gaurantee period in day(s)">&nbsp;</span></nz-form-label>
-
                 <nz-form-control nzErrorTip="Guarantee Period">
                   <nz-input-group nzAddOnAfter="Days">
-                    <input style="width: 100%" nz-input name="GUARANTEE_PERIOD" nzAllowClear="false" maxlength="8"
+                    <input class="input-full-width" nz-input name="GUARANTEE_PERIOD" nzAllowClear="false" maxlength="8"
                       (keypress)="commonFunction.omit($event)" [(ngModel)]="data.GUARANTEE_PERIOD"
                       placeholder="Gaurantee Period" autocomplete="off" type="text" />
                   </nz-input-group>
@@ -791,7 +518,6 @@
               ">
               <nz-form-item>
                 <nz-form-label nzNoColon>Expiry Allowed?</nz-form-label>
-
                 <nz-form-control>
                   <nz-switch name="EXPIRY_DATE_ALLOWED" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                     [(ngModel)]="data.EXPIRY_DATE_ALLOWED"></nz-switch>
@@ -799,35 +525,29 @@
               </nz-form-item>
             </div>
           </div>
-
-          <!-- <div nz-row class="my-box"></div> -->
         </div>
       </div>
     </nz-spin>
   </form>
-
   <div class="footer">
-    <button nz-button (click)="close(myForm)" type="button" class="ant-btn" style="margin-right: 8px">
+    <button nz-button (click)="close(myForm)" type="button" class="ant-btn footer-button-cancel">
       <span>Cancel</span>
     </button>
-
     <button nz-button *ngIf="!data.ID" [nzLoading]="isSpinning" [nzDropdownMenu]="menu"
       (nzOnConfirm)="save(false, myForm)" [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
       nzPopconfirmTitle="Are you sure, you want to save inventory information?" nzPopconfirmPlacement="top"
       type="button" class="ant-btn ant-btn-primary" nz-dropdown>
       <span>Save & Close</span>
     </button>
-
     <nz-dropdown-menu #menu="nzDropdownMenu">
       <ul nz-menu>
-        <li nz-menu-item class="menuc" style="border-radius: 4px; color: #ffffff">
+        <li nz-menu-item class="menuc menu-item-rounded">
           <a (nzOnConfirm)="save(true, myForm)" [nzOkText]="'Yes'" (nzOnCancel)="deleteCancel()" nz-popconfirm
             nzPopconfirmTitle="Are you sure, you want to save inventory information?" nzPopconfirmPlacement="top"
-            style="color: white !important">Save & New</a>
+            class="menu-link-white">Save & New</a>
         </li>
       </ul>
     </nz-dropdown-menu>
-
     <button *ngIf="data.ID" [nzLoading]="isSpinning" (nzOnConfirm)="save(false, myForm)" [nzOkText]="'Yes'"
       (nzOnCancel)="deleteCancel()" nz-popconfirm
       nzPopconfirmTitle="Are you sure, you want to update inventory information?" nzPopconfirmPlacement="top"
@@ -836,119 +556,6 @@
     </button>
   </div>
 </div>
-<!-- <nz-modal
-  [nzWidth]="900"
-  [nzStyle]="{ 'margin-top': '-80px' }"
-  [(nzVisible)]="CropImageModalVisible"
-  nzMaskClosable="false"
-  nzClosable="false"
-  [nzContent]="content2"
-  [nzTitle]="'Crop Image'"
-  (nzOnCancel)="CropImageModalCancel()"
-  [nzFooter]="CropImageModalFooter"
->
-  <ng-template #content2>
-    <nz-spin [nzSpinning]="isSpinningCrop">
-      <div
-        *ngIf="
-          cropimageshow != undefined &&
-          cropimageshow != null &&
-          cropimageshow != ''
-        "
-        class="ss"
-        style="height: 500px; overflow: scroll"
-      >
-    
-        <div *ngIf="croppedImage" style="text-align: center">
-          <p>Cropped Image:</p>
-          <img [src]="croppedImage" width="128" height="128" />
-        </div>
-        <image-cropper
-          [imageChangedEvent]="imageChangedEvent"
-          [maintainAspectRatio]="false"
-          [cropperMinWidth]="128"
-          [cropperMinHeight]="128"
-          [cropper]="cropperPosition"
-          [resizeToWidth]="128"
-          [resizeToHeight]="128"
-          format="png"
-          (imageCropped)="imageCropped($event)"
-          (imageLoaded)="imageLoaded($event)"
-          (cropperReady)="cropperReady($event)"
-          (loadImageFailed)="loadImageFailed()"
-        ></image-cropper>
-      </div>
-    </nz-spin>
-  </ng-template>
-  <ng-template #CropImageModalFooter>
-    <button nz-button nzType="default" (click)="CropImageModalCancel()">
-      Close
-    </button>
-    <button
-      nz-button
-      nzType="primary"
-      (click)="onFileSelected(imageChangedEvent)"
-    >
-      Upload
-    </button>
-  </ng-template>
-</nz-modal> -->
-<!-- <nz-modal
-  [nzWidth]="800"
-  [(nzVisible)]="ImageModalVisible"
-  nzMaskClosable="false"
-  nzClosable="false"
-  [nzContent]="content"
-  [nzTitle]="'View Warranty Card '"
-  (nzOnCancel)="ImageModalCancel()"
-  [nzFooter]="ImageModalFooter"
->
-  <ng-template #content>
-    <nz-spin [nzSpinning]="isSpinning">
-      <div
-        *ngIf="
-          sanitizedUrl2 != undefined &&
-          sanitizedUrl2 != null &&
-          sanitizedUrl2 != '' &&
-          (fileURL == undefined || fileURL == null || fileURL == '')
-        "
-        class="ss"
-        style="align-items: center"
-      >
-        <img
-          src="{{ imageshow }}"
-          alt="Preview"
-          style="
-            overflow: auto;
-            max-width: 600;
-            max-height: 400;
-            align-items: center;
-          "
-        />
-      </div>
-      <div
-        *ngIf="fileURL != undefined && fileURL != null && fileURL != ''"
-        class="ss"
-        style="align-items: center"
-      >
-        <img
-          [src]="imagePreview"
-          alt="Preview"
-          style="
-            overflow: auto;
-            max-width: 600px;
-            max-height: 400px;
-          "
-        />
-      </div>
-    </nz-spin>
-  </ng-template>
-  <ng-template #ImageModalFooter>
-    <button nz-button nzType="default" (click)="ImageModalCancel()">
-      Close
-    </button>
-  </ng-template>
-</nz-modal> -->
 <div *ngIf="drawerbrandVisible">
   <nz-drawer [nzBodyStyle]="{
       height: 'calc(100% - 55px)',
@@ -962,25 +569,12 @@
     </ng-container>
   </nz-drawer>
 </div>
-
 <nz-modal [nzWidth]="1000" [(nzVisible)]="ImageModalVisible1" nzMaskClosable="false" nzClosable="false"
   [nzContent]="content1" [nzTitle]="'Image View'" (nzOnCancel)="ImageModalCancel1()" [nzFooter]="ImageModalFooter1">
   <ng-template #content1>
     <nz-spin [nzSpinning]="isSpinning">
-      <div *ngIf="imageshow1" class="ss" style="
-          max-height: 80vh;
-          overflow: auto;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        ">
-        <iframe [src]="imageshow1" style="
-            width: 950px;
-            height: 550px;
-            max-width: 100%;
-            max-height: 80vh;
-            border: none;
-          " frameborder="0">
+      <div *ngIf="imageshow1" class="modal-iframe-container">
+        <iframe [src]="imageshow1" class="modal-iframe" frameborder="0">
         </iframe>
       </div>
     </nz-spin>

@@ -9,7 +9,6 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { HttpEventType } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -32,7 +31,6 @@ export class UserComponent implements OnInit {
   urlImageOneShow: boolean = false;
   fileURL: any = '';
   organizationid: any = sessionStorage.getItem('orgId');
-
   public commonFunction = new CommonFunctionService();
   constructor(
     private api: ApiServiceService,
@@ -46,14 +44,11 @@ export class UserComponent implements OnInit {
     this.orgid = this.organizationid
       ? this.commonFunction.decryptdata(this.organizationid)
       : 0;
-    // this.data.ORG_ID = this.organizationid;
-
     this.selectedRole = new RoleMaster();
     this.loadRoles();
   }
   loadRoles() {
     this.isSpinning = true;
-
     this.api.getAllRoles(0, 0, '', '', " AND TYPE='Super Admin' AND ID!='27'").subscribe(
       (roles) => {
         this.roles = roles['data'];
@@ -65,18 +60,15 @@ export class UserComponent implements OnInit {
       }
     );
   }
-
   resetDrawer(websitebannerPage: NgForm) {
     this.fileURL = null;
     this.data = new UserMaster();
     websitebannerPage.form.markAsPristine();
     websitebannerPage.form.markAsUntouched();
   }
-
   close(): void {
     this.drawerClose();
   }
-
   @ViewChild('icon') myElementRef!: ElementRef;
   CropImageModalCancel() {
     this.CropImageModalVisible = false;
@@ -84,7 +76,6 @@ export class UserComponent implements OnInit {
     this.myElementRef.nativeElement.value = null;
   }
   CropImageModalVisible = false;
-  // CropImageModalFooter: string|TemplateRef<{}>|ModalButtonOptions<any>[]|null|undefined;
   isSpinningCrop = false;
   cropimageshow: any;
   base64ToFile(base64String: string, filename: string): File {
@@ -98,22 +89,17 @@ export class UserComponent implements OnInit {
     }
     return new File([u8arr], filename, { type: mime });
   }
-
   imageChangedEvent: any = '';
   croppedImage: any = '';
   fileChangeEvent(event: any): void {
     this.CropImageModalVisible = true;
     this.cropimageshow = true;
-
     this.imageChangedEvent = event;
   }
-
   cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
   imageCropped(event: ImageCroppedEvent) {
     this.enhanceImageQuality(event.base64, 128, 128);
   }
-
-  // Function to compress image and ensure size < 1MB
   async enhanceImageQuality(
     base64: any,
     finalWidth: number,
@@ -123,27 +109,19 @@ export class UserComponent implements OnInit {
       this.croppedImage = await new Promise((resolve, reject) => {
         const img = new Image();
         img.src = base64;
-        img.crossOrigin = 'Anonymous'; // Prevents tainted canvas issues.
-
+        img.crossOrigin = 'Anonymous';
         img.onload = async () => {
-          await img.decode(); // Ensures the image is fully loaded
-
-          // **Create initial high-resolution canvas**
+          await img.decode();
           const tempCanvas = document.createElement('canvas');
           const tempCtx = tempCanvas.getContext('2d');
-
           if (!tempCtx) return reject('Canvas context not available');
-
-          tempCanvas.width = img.width * 2; // Upscale before downscaling
+          tempCanvas.width = img.width * 2;
           tempCanvas.height = img.height * 2;
-
           tempCtx.imageSmoothingEnabled = true;
           tempCtx.imageSmoothingQuality = 'high';
-          tempCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+          tempCtx.fillStyle = 'white';
           tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
           tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
-
-          // **Stepwise Downscaling**
           const downscaleCanvas = (
             sourceCanvas: HTMLCanvasElement,
             width: number,
@@ -151,42 +129,32 @@ export class UserComponent implements OnInit {
           ): HTMLCanvasElement => {
             const newCanvas = document.createElement('canvas');
             const newCtx = newCanvas.getContext('2d');
-
             if (!newCtx) return sourceCanvas;
-
             newCanvas.width = width;
             newCanvas.height = height;
-
             newCtx.imageSmoothingEnabled = true;
             newCtx.imageSmoothingQuality = 'high';
-            newCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+            newCtx.fillStyle = 'white';
             newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
             newCtx.drawImage(sourceCanvas, 0, 0, width, height);
-
             return newCanvas;
           };
-
           let currentCanvas = tempCanvas;
           const downscaleSteps = [
-            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], // Step 1
-            [finalWidth * 2, finalHeight * 2], // Step 2
-            [finalWidth, finalHeight], // Final resolution
+            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)],
+            [finalWidth * 2, finalHeight * 2],
+            [finalWidth, finalHeight],
           ];
-
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
           }
-
-          // **Convert to PNG at Max Quality**
           resolve(currentCanvas.toDataURL('image/png', 1.0));
         };
-
         img.onerror = (err) => reject(`Image load error: ${err}`);
       });
     } catch (error) {
     }
   }
-
   imageWidth: number = 0;
   imageHeight: number = 0;
   imageLoaded(event) {
@@ -196,19 +164,11 @@ export class UserComponent implements OnInit {
     this.imagePreview = this.croppedImage;
     this.imageWidth = event?.original?.size.width;
     this.imageHeight = event?.original?.size.height;
-    // Image loaded successfully
   }
-
   cropperReady(event) {
-    // Cropper ready
-    // event.height = 128;
-    // event.width = 128;
   }
-
   loadImageFailed() {
-    // Image failed to load
   }
-
   isOk = true;
   save(addNew: boolean, websitebannerPage: NgForm): void {
     this.isSpinning = false;
@@ -223,9 +183,6 @@ export class UserComponent implements OnInit {
       (this.data.EMAIL_ID == undefined ||
         this.data.EMAIL_ID == null ||
         this.data.EMAIL_ID == '') &&
-      // (this.data.MOBILE_NUMBER == undefined ||
-      //   this.data.MOBILE_NUMBER == null ||
-      //   this.data.MOBILE_NUMBER == '') &&
       (this.data.PASSWORD == undefined ||
         this.data.PASSWORD == null ||
         this.data.PASSWORD == '') &&
@@ -260,13 +217,6 @@ export class UserComponent implements OnInit {
       this.isOk = false;
       this.message.error('Please Enter a Valid Email.', '');
     }
-    // else if (
-    //   this.data.MOBILE_NUMBER == null ||
-    //   this.data.MOBILE_NUMBER == undefined
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error(' Please Enter Mobile Number.', '');
-    // }
     else if (
       (this.data.PASSWORD == null ||
         this.data.PASSWORD == undefined ||
@@ -290,7 +240,6 @@ export class UserComponent implements OnInit {
       this.isOk = false;
       this.message.error('Please Enter a Valid Password.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -322,7 +271,6 @@ export class UserComponent implements OnInit {
             USER_TYPE: null,
             VENDOR_ID: null,
           };
-
           this.api.updateUser(udata).subscribe((successCode) => {
             if (successCode.code == '200') {
               if (
@@ -370,7 +318,6 @@ export class UserComponent implements OnInit {
                 this.data = new UserMaster();
                 this.resetDrawer(websitebannerPage);
               }
-
               this.isSpinning = false;
             } else if (successCode['code'] == '300') {
               this.message.error('Mobile No. or Email Already Registered', '');
@@ -387,40 +334,30 @@ export class UserComponent implements OnInit {
       }
     }
   }
-
   imageshow: any = null;
   selectedFile: any;
   imagePreview: any;
-
   onFileSelected(event: any) {
-    const maxFileSize = 1 * 1024 * 1024; // 1MB
-
-    // Check file type
+    const maxFileSize = 1 * 1024 * 1024;
     if (
       event.target.files[0]?.type === 'image/jpeg' ||
       event.target.files[0]?.type === 'image/jpg' ||
       event.target.files[0]?.type === 'image/png'
     ) {
       const input = event.target as HTMLInputElement;
-
       if (input?.files?.length) {
         this.selectedFile = this.base64ToFile(
           this.croppedImage,
           'cropped-image.png'
         );
-
-        // Validate file size
         if (this.selectedFile.size > maxFileSize) {
           this.message.error('Photo size should not exceed 1MB.', '');
           return;
         }
-
-        // Read the file to validate dimensions
         const reader = new FileReader();
         reader.onload = (e: any) => {
           const img = new Image();
           img.onload = () => {
-            // Validate dimensions
             if (img.width !== 128 || img.height !== 128) {
               this.message.error(
                 'Photo dimensions must be 128x128 pixels.',
@@ -430,19 +367,15 @@ export class UserComponent implements OnInit {
               this.selectedFile = null;
               return;
             }
-
-            // If valid, set preview and proceed
-            this.imagePreview = this.croppedImage; // Base64 image data
+            this.imagePreview = this.croppedImage;
             this.fileURL = this.base64ToFile(
               this.croppedImage,
               'cropped-image.png'
             );
-
             var number = Math.floor(100000 + Math.random() * 900000);
             var fileExt = this.fileURL.name.split('.').pop();
             var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
             var url = d == null ? '' : d + number + '.' + fileExt;
-
             if (
               this.data.PROFILE_PHOTO != undefined &&
               this.data.PROFILE_PHOTO.trim() !== ''
@@ -457,15 +390,11 @@ export class UserComponent implements OnInit {
             this.urlImageOneShow = true;
             this.data.PROFILE_PHOTO = this.UrlImageOne;
           };
-
           img.onerror = () => {
             this.message.error('Invalid Photo file.', '');
           };
-
-          // Set the image source to trigger dimension validation
           img.src = this.croppedImage;
         };
-
         reader.readAsDataURL(this.selectedFile);
         this.CropImageModalVisible = false;
       }
@@ -482,51 +411,39 @@ export class UserComponent implements OnInit {
       this.data.PROFILE_PHOTO = null;
     }
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
-
   GetImage(link: string) {
     let imagePath = this.api.retriveimgUrl + 'userProfile/' + link;
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = imagePath;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   IconDeleteConfirm(data: any) {
     this.UrlImageOne = null;
     this.data.PROFILE_PHOTO = ' ';
     this.fileURL = null;
   }
-
   deleteCancel() { }
-
   removeImage() {
     this.data.PROFILE_PHOTO = ' ';
     this.fileURL = null;
     this.imageshow = null;
   }
-
   ViewImage: any;
   ImageModalVisible = false;
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   IconUpload() {
     this.timer = this.api
       .onUpload('userProfile', this.fileURL, this.UrlImageOne)
       .subscribe((res) => {
         this.data.PROFILE_PHOTO = this.UrlImageOne;
-
         if (res.type === HttpEventType.Response) {
         }
         if (res.type === HttpEventType.UploadProgress) {
@@ -543,7 +460,6 @@ export class UserComponent implements OnInit {
           this.data.PROFILE_PHOTO = null;
         } else if (res.type == 4 && res.status == 200) {
           if (res.body['code'] == 200) {
-            // this.message.success('Profile Photo Uploaded Successfully...', '');
             this.isSpinning = false;
             this.data.PROFILE_PHOTO = this.UrlImageOne;
           } else {

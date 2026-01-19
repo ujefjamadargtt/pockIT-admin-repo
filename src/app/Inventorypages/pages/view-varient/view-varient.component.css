@@ -1,0 +1,25 @@
+.inv-table-whitespace {
+  white-space: pre-line;
+}
+.inv-th-bold-center {
+  font-weight: bold;
+  text-align: center;
+}
+.inv-tr-center {
+  text-align: center;
+}
+.inv-td-center {
+  text-align: center;
+}
+.inv-tag-cursor {
+  cursor: pointer;
+}
+.inv-icon-size {
+  font-size: 15px;
+}
+.inv-icon-small {
+  font-size: 11px !important;
+}
+.inv-variant-text {
+  font-size: 11px !important;
+}

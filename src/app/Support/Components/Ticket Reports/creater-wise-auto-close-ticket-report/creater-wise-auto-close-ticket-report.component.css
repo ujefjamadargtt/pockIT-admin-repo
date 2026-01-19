@@ -1,32 +1,25 @@
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 .select{
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
     padding: 8px;
   }
-
   .search-box input {
     width: 188px;
     display: block;
   }
-
   .search-box button {
     width: 90px;
   }
-
   .search-button {
     margin-right: 8px;
   }
-
   nz-select {
     width: 100%;
   }
@@ -34,11 +27,92 @@ th {
     color: inherit;
     transition: color 0.3s ease-in-out;
   }
-  
   .active-filter {
     color: #092b9c;
   }
-
   :host ::ng-deep .ant-card-body {
     padding: 0px;
   }
+  .header-back-arrow-bold-pointer {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions-flex-end-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-btn-fixed-width-47 {
+  width: 47px;
+}
+.filter-padding-top-zero {
+  padding-top: 0px;
+}
+.filter-loading-center {
+  text-align: center;
+}
+.saved-filter-col-margin {
+  margin-bottom: 8px;
+}
+.saved-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.saved-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.saved-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.saved-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.saved-filter-actions-row {
+  margin-top: 7px;
+}
+.saved-filter-actions-container {
+  display: flex;
+  justify-content: space-between;
+}
+.saved-filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.saved-filter-action-icon {
+  font-size: 10px !important;
+}
+.no-margin-right {
+  margin-right: 0px;
+}
+.no-filter-data-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.filter-footer-btn-margin {
+  margin-right: 10px;
+}
+.creator-name-cell-left {
+  text-align: left !important;
+}
+.text-center{
+  text-align: center
+}

@@ -1,33 +1,147 @@
 th {
-    text-align: center !important;
-    vertical-align: middle !important;
-    /* font-weight: bold; */
+  text-align: center !important;
+  vertical-align: middle !important;
 }
-
-.select{
+.select {
   width: 200px;
   padding: 8px;
   display: block;
 }
-
 .search-box {
-    padding: 8px;
-  }
-
-  .search-box input {
-    width: 188px;
-    display: block;
-  }
-
-  .search-box button {
-    width: 90px;
-  }
-
-  .search-button {
-    margin-right: 8px;
-  }
-
-  nz-select {
+  padding: 8px;
+}
+.search-box input {
+  width: 188px;
+  display: block;
+}
+.search-box button {
+  width: 90px;
+}
+.search-button {
+  margin-right: 8px;
+}
+nz-select {
+  width: 100%;
+}
+.service-item-arrow-back-icon {
+    font-weight: bold;
+    cursor: pointer;
+}
+.service-item-header-actions-col {
+    display: flex;
+    justify-content: flex-end;
+}
+.service-item-filter-button-width {
+    width: 47px;
+}
+.service-item-add-button-margin {
+    margin-right: 0px;
+}
+.mrt-10{
+  margin-right: 10px
+}
+.row-padding-top-10 {
+  padding-top: 10px;
+}
+.flex-justify-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-operator-row {
+    margin: 10px 0px;
+}
+.filter-fieldset-style {
+    border: 1px dashed black;
+    border-radius: 5px;
     width: 100%;
-  }
-
+    padding: 5px 5px 5px;
+}
+.filter-legend-margin {
+    margin-bottom: 5px;
+}
+.filter-legend-text {
+    color: #092B9C !important;
+    font-weight: 500;
+    font-size: 14px;
+}
+.filter-delete-icon {
+    color: red;
+    cursor: pointer;
+}
+.filter-subfilter-margin {
+    margin-bottom: 5px;
+}
+.filter-when-text {
+    padding-top: 15px;
+    font-weight: bold;
+}
+.filter-warning-text {
+    color: red;
+    font-size: 11px;
+}
+.row-padding-top-10 {
+    padding-top: 10px;
+}
+.flex-justify-end {
+    display: flex;
+    justify-content: flex-end;
+}
+.filter-saved-row-padding {
+    padding-top: 10px;
+}
+.filter-saved-box {
+    border: 1px dashed black;
+    border-radius: 5px;
+    padding: 10px;
+}
+.filter-saved-tag {
+    margin: 5px;
+    display: inline-flex;
+    align-items: center;
+}
+.filter-saved-tag-text {
+    color: black;
+    margin-right: 10px;
+}
+.filter-saved-icon-green {
+    color: #01ac5c;
+    margin-right: 8px;
+}
+.filter-saved-icon-red {
+    color: red;
+    margin-right: 8px;
+}
+.filter-saved-icon-blue {
+    color: blue;
+}
+.filter-no-data-text {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.table-whitespace-preline {
+    white-space: pre-line;
+}
+.table-edit-icon-size {
+    font-size: 15px;
+}
+.full-width{
+  width: 100%;
+}
+.modal-image-container {
+    height: 400px;
+    overflow: auto;
+}
+.modal-iframe-size {
+    width: 832px;
+    height: 396px;
+}
+.modal-query-form-item {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+}
+.modal-query-details-text {
+    text-align: center;
+}

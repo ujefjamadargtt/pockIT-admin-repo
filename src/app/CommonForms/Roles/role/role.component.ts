@@ -45,10 +45,10 @@ export class RoleComponent implements OnInit {
   }
   selectedRoleName: any;
   onChange(selectedId: number): void {
-    // Find the selected role by ID
+
     const selectedRole = this.roles.find((role) => role.ID === selectedId);
 
-    // If found, you can use its NAME property
+
     if (selectedRole) {
       this.selectedRoleName = selectedRole.NAME;
       this.data.PARENT_NAME = this.selectedRoleName;
@@ -69,11 +69,11 @@ export class RoleComponent implements OnInit {
     );
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-]*$/; // Updated pattern
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-]*$/;
     const char = String.fromCharCode(event.keyCode || event.which);
 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault();
     }
   }
 
@@ -81,7 +81,7 @@ export class RoleComponent implements OnInit {
   save(addNew: boolean): void {
     this.isSpinning = false;
     this.isOk = true;
-    // Perform initial validation checks
+
     if (
       (this.data.NAME == null ||
         this.data.NAME == undefined ||
@@ -123,7 +123,7 @@ export class RoleComponent implements OnInit {
       return;
     }
     this.data.PARENT_ID = 0;
-    // If all validations pass, proceed with the API request
+
     if (this.data.ID) {
       this.api.updateRole(this.data).subscribe(
         (successCode) => {

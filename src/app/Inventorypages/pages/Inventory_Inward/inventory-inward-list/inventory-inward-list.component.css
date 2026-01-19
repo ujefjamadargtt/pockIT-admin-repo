@@ -1,43 +1,32 @@
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select{
 width: 200px;
 padding: 8px;
 display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
-
 .header {
   position: absolute;
   top: 0px;
@@ -47,31 +36,22 @@ nz-select {
   text-align: right;
   right: 0px;
 }
-
 .custom nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-/* .ant-select-single .ant-select-selector {
-  width: 100%;
-  height: 30px !important;
-  padding: 0 11px;
-} */
 nz-form-item {
 margin-bottom: 16px;
 }
-
 nz-form-control {
 width: 100%;
 }
-
 input[nz-input], nz-select {
 height: 32px;
 line-height: 32px;
 }
-
 nz-input-group[nzCompact] {
 display: flex;
 align-items: center;
@@ -79,40 +59,139 @@ align-items: center;
 th {
 text-align: center !important;
 vertical-align: middle !important;
-/* font-weight: bold; */
 }
-
 .select{
 width: 200px;
 padding: 8px;
 display: block;
 }
-
 .search-box {
 padding: 8px;
 }
-
 .search-box input {
 width: 188px;
 display: block;
 }
-
 .search-box button {
 width: 90px;
 }
-
 .search-button {
 margin-right: 8px;
 }
-
 nz-select {
 width: 100%;
 }
-
 .margin-row {
 margin: 10px 0px;
 }
-
 :host::ng-deep .ant-card-body {
 padding: 0px;
+}
+.arrow-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions-col {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-button-item {
+  width: 47px;
+}
+.add-button-item {
+  margin-right: 0px;
+}
+.filter-content-row {
+  padding-top: 0px;
+}
+.loading-center {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card-style {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-card-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-check-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions-col {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-tag-style {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-tag-icon {
+  font-size: 10px !important;
+}
+.filter-tag-style-last {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.no-data-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-col {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-btn {
+  margin-right: 10px;
+}
+.new-filter-btn {
+  margin-right: 10px;
+}
+.table-container-row {
+  margin-top: 10px;
+}
+.table-whitespace {
+  white-space: pre-line;
+}
+.action-cell {
+  text-align: center;
+}
+.view-tag {
+  cursor: pointer;
+}
+.view-tag-icon {
+  font-size: 15px;
+}
+.text-center-cell {
+  text-align: center;
+}
+.datepicker-width {
+  width: 100%;
+}
+.modal-text-center {
+  text-align: center;
 }

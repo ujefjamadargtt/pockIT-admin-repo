@@ -7,17 +7,13 @@
   border-radius: 10px;
   min-height: 190px;
 }
-
 .mainnam {
-  /* color: #000; */
   font-size: 11px !important;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .subname {
   color: #4c4c4ceb;
   font-size: 12px !important;
@@ -26,21 +22,212 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-
 .ant-tag {
   margin: 0 !important;
 }
-
 .ant-drawer-body {
   padding: 8px 20px !important;
 }
-
 .emptyDataTex {
   color: grey;
   font-weight: 500;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
+}
+.back-arrow-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.actions-header-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.territory-form-item {
+  width: 250px;
+}
+.territory-select-full-width {
+  width: 100%;
+}
+.filter-button-item {
+  width: 47px;
+}
+.filter-content-row {
+  padding-top: 0px;
+}
+.loading-container {
+  text-align: center;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.filter-name-text {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions-container {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-icon {
+  font-size: 10px !important;
+}
+.filter-view-tag {
+  margin-right: 0px;
+}
+.no-data-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-button {
+  margin-right: 10px;
+}
+.new-filter-button {
+  margin-right: 10px;
+}
+.job-cards-container {
+  padding: 10px;
+}
+.job-card-column {
+  padding: 0px 5px 10px;
+}
+.order-number-cell {
+  text-align: start;
+}
+.order-number-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+  font-size: 11px !important;
+}
+.status-cell {
+  font-size: 12px !important;
+  text-align: center;
+  margin-top: -10px;
+}
+.job-card-number-cell {
+  text-align: end;
+}
+.job-card-number-badge {
+  color: #1d39c4 !important;
+  background: #f0f5ff !important;
+  border-color: #adc6ff !important;
+  padding: 5px;
+  font-size: 11px !important;
+}
+.customer-name-cell {
+  font-size: 11px !important;
+  margin-top: 4px;
+  font-weight: 500;
+}
+.service-amount-cell {
+  font-size: 10px !important;
+  margin-top: 4px;
+  text-align: end;
+  font-weight: 600;
+}
+.company-name-cell {
+  font-size: 11px !important;
+  font-weight: 500;
+}
+.address-icon-cell {
+  align-self: center;
+  margin-bottom: -6px;
+}
+.address-text-cell {
+  font-size: 10px !important;
+}
+.address-text-style {
+  font-size: 10px !important;
+}
+.pincode-cell {
+  font-size: 10px !important;
+}
+.territory-cell {
+  font-size: 10px !important;
+  text-align: end;
+}
+.service-name-cell {
+  font-size: 10px !important;
+  text-align: start;
+}
+.estimated-time {
+  font-size: 10px !important;
+  text-align: end;
+}
+.technician-name {
+  font-size: 10px !important;
+  text-align: start;
+}
+.service-datetime {
+  font-size: 10px !important;
+  text-align: start;
+}
+.job-footer-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.customer-rating {
+  font-size: 10px !important;
+  text-align: start;
+}
+.job-photos-action {
+  align-self: flex-end;
+  text-align: center;
+}
+.expected-date {
+  font-size: 10px !important;
+  text-align: start;
+  cursor: pointer;
+}
+.job-photos-tag {
+  margin-top: 4px !important;
+}
+.load-more-container {
+  text-align: center;
+  padding-top: 10px;
+}
+.empty-state {
+  padding-top: 20vh;
+}
+.query-details-text {
+  text-align: center;
 }

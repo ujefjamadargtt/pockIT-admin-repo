@@ -7,7 +7,6 @@ import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpEventType } from '@angular/common/http';
 import { CurrencyMaster } from 'src/app/Pages/Models/CurrencyMaster';
-
 @Component({
   selector: 'app-currency-master-add',
   templateUrl: './currency-master-add.component.html',
@@ -18,11 +17,9 @@ export class CurrencyMasterAddComponent {
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
   public commonFunction = new CommonFunctionService();
-
   isSpinning = false;
   isOk = true;
   isFocused = '';
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
@@ -34,18 +31,15 @@ export class CurrencyMasterAddComponent {
     currencymaster.form.markAsPristine();
     currencymaster.form.markAsUntouched();
   }
-
   DECIMAL_SEPARATOR = [
     { Id: '.', Name: 'Period (.)' },
     { Id: ',', Name: 'Comma (,)' },
     { Id: '_', Name: 'Underscore (_)' },
   ];
-
   THOUSAND_SEPERATOR = [
     { Id: '.', Name: 'Period (.)' },
     { Id: ',', Name: 'Comma (,)' },
   ];
-
   SYMBOL = [
     { Id: '$', Name: '$' },
     { Id: '€', Name: '€' },
@@ -58,13 +52,11 @@ export class CurrencyMasterAddComponent {
     { Id: 'HK$', Name: 'HK$' },
     { Id: 'CHF', Name: 'CHF' },
   ];
-
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   ngOnInit() {
@@ -88,7 +80,6 @@ export class CurrencyMasterAddComponent {
         }
       );
   }
-
   save(addNew: boolean, currencymaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -135,21 +126,6 @@ export class CurrencyMasterAddComponent {
       this.isOk = false;
       this.message.error('Please Select Country.', '');
     }
-    // else if (
-    //   this.data.DECIMAL_SEPARATOR == null ||
-    //   this.data.DECIMAL_SEPARATOR == undefined ||
-    //   this.data.DECIMAL_SEPARATOR == ''
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Select Decimal Seperator.', '');
-    // } else if (
-    //   this.data.THOUSAND_SEPERATOR == null ||
-    //   this.data.THOUSAND_SEPERATOR == undefined ||
-    //   this.data.THOUSAND_SEPERATOR == ''
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error('Please Select Thousand Seperator.', '');
-    // }
     else if (
       this.data.EXCHANGE_RATE == null ||
       this.data.EXCHANGE_RATE == undefined ||
@@ -158,14 +134,6 @@ export class CurrencyMasterAddComponent {
       this.isOk = false;
       this.message.error(' Please Enter Exchange Rate.', '');
     }
-    // else if (
-    //   this.data.DECIMAL_SPACE == null ||
-    //   this.data.DECIMAL_SPACE == undefined ||
-    //   this.data.DECIMAL_SPACE == ''
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error(' Please Enter Decimal Place.', '');
-    // } 
     else if (
       this.data.SYMBOL == null ||
       this.data.SYMBOL == undefined ||
@@ -220,7 +188,6 @@ export class CurrencyMasterAddComponent {
                 this.data = new CurrencyMaster();
                 this.resetDrawer(currencymaster);
                 this.isSpinning = false;
-
                 this.api.getCurrency(1, 1, 'SEQ_NO', 'desc', '').subscribe(
                   (data) => {
                     if (data['code'] == 200) {
@@ -258,7 +225,6 @@ export class CurrencyMasterAddComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }

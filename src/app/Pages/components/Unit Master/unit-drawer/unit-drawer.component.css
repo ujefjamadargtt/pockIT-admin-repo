@@ -1,6 +1,23 @@
-nz-form-item  {
+nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 5px;
+}
+.form-container {
+  margin-top: 10px;
+}
+.char-count {
+  color: red;
+  font-size: 10px;
+}
+.footer-cancel-btn {
+  margin-right: 12px;
+}
+.menu-item-style {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-link-style {
+  color: white !important;
 }

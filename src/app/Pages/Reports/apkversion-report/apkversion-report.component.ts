@@ -3,12 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
-// import { NzTableQueryParams } from 'ng-zorro-antd/table';
-// import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-// import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { ExportService } from 'src/app/Service/export.service';
 import { fileURLToPath } from 'url';
-// import { ApiService } from '../Service/api.service';
 @Component({
   selector: 'app-apkversion-report',
   templateUrl: './apkversion-report.component.html',
@@ -16,7 +12,6 @@ import { fileURLToPath } from 'url';
 })
 export class APKVersionReportComponent implements OnInit {
   formTitle = 'APK Version Report';
-
   pageIndex = 1;
   pageSize = 10;
   totalRecords = 1;
@@ -28,17 +23,14 @@ export class APKVersionReportComponent implements OnInit {
   searchText: string = '';
   filterQuery: string = '';
   isFilterApplied: any = 'default';
-
   columns: string[][] = [
     ['CUSTOMER_CUR_VERSION', 'CUSTOMER_CUR_VERSION'],
     ['TECHNICIAN_CUR_VERSION', 'TECHNICIAN_CUR_VERSION'],
     ['CUSTOMER_DESCRIPTION', 'CUSTOMER_DESCRIPTION'],
     ['TECHNICIAN_DESCRIPTION', 'TECHNICIAN_DESCRIPTION'],
   ];
-
   isSpinning = false;
   filterClass: string = 'filter-invisible';
-
   constructor(
     private api: ApiServiceService,
     private datePipe: DatePipe,
@@ -53,7 +45,6 @@ export class APKVersionReportComponent implements OnInit {
     this.DATE[1] = new Date();
     this.search();
   }
-
   onKeypressEvent(reset: any) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -62,13 +53,11 @@ export class APKVersionReportComponent implements OnInit {
   keyup(event: any) {
     this.search(true);
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   disableFutureDates = (current: Date): boolean => {
     var tomorrow: any = new Date();
     tomorrow.setDate(tomorrow.getDate());
@@ -91,20 +80,16 @@ export class APKVersionReportComponent implements OnInit {
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
       this.filterQuery = likeQuery;
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     this.filterQuery = '';
-
     this.isFilterApplied = 'primary';
     this.search();
   }
-
   clearFilter() {
     this.filterClass = 'filter-invisible';
     this.isFilterApplied = 'default';
@@ -114,9 +99,7 @@ export class APKVersionReportComponent implements OnInit {
     this.DATE = [];
     this.search();
   }
-  // DATE;
   DATE: Date[] = [];
-
   excelData: any = [];
   exportLoading: boolean = false;
   importInExcel() {
@@ -136,7 +119,6 @@ export class APKVersionReportComponent implements OnInit {
       sort = '';
     }
     var likeQuery = '';
-
     if (this.searchText != '') {
       likeQuery = ' AND (';
       this.columns.forEach((column) => {
@@ -144,7 +126,6 @@ export class APKVersionReportComponent implements OnInit {
       });
       likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ')';
     }
-
     if (this.DATE[0] != null && this.DATE[1] != null) {
       this.filterQuery =
         " AND DATE(DATETIME) BETWEEN '" +
@@ -163,16 +144,11 @@ export class APKVersionReportComponent implements OnInit {
         "' AND MONTH(DATETIME)='" +
         this.datePipe.transform(this.MONTH1, 'y') +
         "' ";
-
-      // MONTHS = this.datePipe.transform(this.MONTH1, 'MM');
-      // YEARS = this.datePipe.transform(this.MONTH1, 'y');
     }
     var filter = '';
     filter = this.filterQuery;
-
     if (exportInExcel == false) {
       this.loadingRecords = true;
-
       this.api
         .getAPKDetails(
           this.pageIndex,
@@ -187,7 +163,6 @@ export class APKVersionReportComponent implements OnInit {
               this.loadingRecords = false;
               this.totalRecords = data['count'];
               this.dataList = data['data'];
-
               this.isSpinning = false;
               this.filterClass = 'filter-invisible';
             } else {
@@ -203,7 +178,6 @@ export class APKVersionReportComponent implements OnInit {
         );
     } else {
       this.exportLoading = false;
-
       this.api
         .getAPKDetails(
           this.pageIndex,
@@ -230,7 +204,6 @@ export class APKVersionReportComponent implements OnInit {
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -239,27 +212,22 @@ export class APKVersionReportComponent implements OnInit {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   BRANCH: any = [];
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
-
     if (this.excelData.length > 0) {
       for (var i = 0; i < this.excelData.length; i++) {
         obj1['Date'] = this.excelData[i]['DATETIME'];
@@ -270,7 +238,6 @@ export class APKVersionReportComponent implements OnInit {
           this.excelData[i]['CUSTOMER_DESCRIPTION'];
         obj1['Technician Description'] =
           this.excelData[i]['TECHNICIAN_DESCRIPTION'];
-
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -284,9 +251,7 @@ export class APKVersionReportComponent implements OnInit {
       this.message.error('There is a No Data', '');
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

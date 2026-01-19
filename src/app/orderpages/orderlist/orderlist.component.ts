@@ -6,7 +6,6 @@ import { orderMasterData } from 'src/app/Pages/Models/OrderMasterData';
 import { customer } from 'src/app/Pages/Models/customer';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-orderlist',
   templateUrl: './orderlist.component.html',
@@ -44,7 +43,6 @@ export class OrderlistComponent implements OnInit {
   count = 0;
   roleId = sessionStorage.getItem('roleId');
   vendorId = sessionStorage.getItem('vendorId');
-
   decreptedroleId = 0;
   decreptedvendorId = 0;
   backofficeId = sessionStorage.getItem('backofficeId');
@@ -57,7 +55,6 @@ export class OrderlistComponent implements OnInit {
     ? this.commonFunction.decryptdata(this.vId)
     : '';
   decreptedvID = parseInt(this.decreptedvIdString, 10);
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -74,8 +71,6 @@ export class OrderlistComponent implements OnInit {
       groups: [],
     },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -92,7 +87,6 @@ export class OrderlistComponent implements OnInit {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -101,14 +95,12 @@ export class OrderlistComponent implements OnInit {
   ngOnInit(): void {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-
     var decreptedroleIdString = this.roleId
       ? this.commonFunction.decryptdata(this.roleId)
       : '';
     this.decreptedroleId = parseInt(decreptedroleIdString, 10);
-
     var decreptedvendorId = this.vendorId
       ? this.commonFunction.decryptdata(this.vendorId)
       : '';
@@ -125,14 +117,11 @@ export class OrderlistComponent implements OnInit {
       this.decreptedbackofficeId = parseInt(decreptedbackofficeId, 10);
     }
     this.getDatas();
-
-  
   }
   back() {
     this.router.navigate(['/masters/menu']);
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -199,7 +188,6 @@ export class OrderlistComponent implements OnInit {
           });
         }
       });
-
     this.TERRITORY_IDS = [];
     if (this.decreptedroleId == 9) {
       this.api
@@ -304,7 +292,6 @@ export class OrderlistComponent implements OnInit {
     this.drawerTitle = 'Order Details';
     this.orderDetails = data;
     this.isSpinning = true;
-
     this.api.getorderdetails(0, 0, '', '', '', data.ID).subscribe((data) => {
       this.vieworderdata = data;
       this.api
@@ -323,7 +310,6 @@ export class OrderlistComponent implements OnInit {
       this.isSpinning = false;
     });
   }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -334,23 +320,19 @@ export class OrderlistComponent implements OnInit {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
   }
-
   loadMore() {
     if (this.dataList.length < this.totalRecords) {
       this.pageIndex = this.pageIndex + 1;
-
       var sort: string;
       try {
         sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
       } catch (error) {
         sort = '';
       }
-
       var likeQuery = '';
       let globalSearchQuery = '';
       if (this.searchText !== '') {
@@ -363,16 +345,11 @@ export class OrderlistComponent implements OnInit {
             .join(' OR ') +
           ')';
       }
-
-      // Combine global search query and column-specific search query
       likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
       this.isSpinning = true;
-
       if (this.decreptedroleId === 9) {
         likeQuery = likeQuery + ' AND ASSING_TO = ' + this.decreptedvID;
       }
-
       if (this.TYPE == 'CUSTOMER') {
         likeQuery = likeQuery + ' AND CUSTOMER_ID =' + this.FILTER_ID;
         this.getOrdersData2(sort, likeQuery);
@@ -384,7 +361,6 @@ export class OrderlistComponent implements OnInit {
           this.loadingRecords = false;
           this.dataList = [];
           this.isSpinning = false;
-          // this.getOrdersData2(sort, this.customerMangeer);
         } else {
           if (this.filterOfTerritory > 0) {
             likeQuery += ' AND TERRITORY_ID =' + this.filterOfTerritory;
@@ -433,7 +409,6 @@ export class OrderlistComponent implements OnInit {
         (data) => {
           if (data['code'] == 200) {
             console.log('like', likeQuery);
-
             this.loadingRecords = false;
             this.dataList = [...this.dataList, ...data['data']];
             this.isSpinning = false;
@@ -443,7 +418,6 @@ export class OrderlistComponent implements OnInit {
             this.message.error('Invalid filter parameter', '');
           } else {
             this.dataList = [...this.dataList, ...[]];
-            // this.message.error('Something Went Wrong ...', '');
             this.isSpinning = false;
           }
         },
@@ -466,21 +440,18 @@ export class OrderlistComponent implements OnInit {
         }
       );
   }
-
   search(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -493,18 +464,12 @@ export class OrderlistComponent implements OnInit {
           .join(' OR ') +
         ')';
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.isSpinning = true;
-
     if (this.decreptedroleId === 9) {
       console.log('new');
-
       likeQuery = likeQuery + ' AND ASSING_TO =' + this.decreptedvID;
     }
-
     if (this.TYPE == 'CUSTOMER') {
       likeQuery = likeQuery + ' AND CUSTOMER_ID =' + this.FILTER_ID;
       this.getOrdersData(sort, likeQuery);
@@ -516,7 +481,6 @@ export class OrderlistComponent implements OnInit {
         this.loadingRecords = false;
         this.dataList = [];
         this.isSpinning = false;
-        // this.getOrdersData(sort, this.customerMangeer);
       } else {
         if (this.filterOfTerritory > 0) {
           likeQuery += ' AND TERRITORY_ID =' + this.filterOfTerritory;
@@ -550,7 +514,6 @@ export class OrderlistComponent implements OnInit {
       }
       this.getOrdersData(sort, likeQuery);
     }
-    //
   }
   getOrdersData(sort, likeQuery) {
     this.api
@@ -565,7 +528,6 @@ export class OrderlistComponent implements OnInit {
         (data) => {
           if (data['code'] == 200) {
             console.log('likequery', likeQuery);
-
             this.loadingRecords = false;
             this.totalRecords = data['count'];
             this.dataList = data['data'];
@@ -602,27 +564,20 @@ export class OrderlistComponent implements OnInit {
         }
       );
   }
-
   drawerClose(): void {
     this.search(true);
-
     this.drawerVisible = false;
   }
-  //Drawer Methods
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   drawerCloseorder(): void {
     this.search(true);
     this.ordercreateVisible = false;
   }
-
-  //Drawer Methods
   get closeCallbackorder() {
     return this.drawerCloseorder.bind(this);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -634,7 +589,6 @@ export class OrderlistComponent implements OnInit {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
   filterData: any;
   openfilter() {
@@ -664,13 +618,9 @@ export class OrderlistComponent implements OnInit {
         groups: [],
       },
     ];
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -687,7 +637,6 @@ export class OrderlistComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -704,35 +653,27 @@ export class OrderlistComponent implements OnInit {
         groups: [],
       },
     ];
-
     this.filterFields[0]['options'] = this.customer;
     this.filterFields[6]['options'] = this.teritory;
     this.filterFields[4]['options'] = this.statuses;
     this.drawerFilterVisible = true;
   }
-
   whichbutton;
   updateBtn;
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
-
-      //  this.applyfilter(this.savedFilters[0]['FILTER_QUERY'])
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'CUSTOMER_NAME',
@@ -875,18 +816,15 @@ export class OrderlistComponent implements OnInit {
       placeholder: 'Select Service Date Time',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
-
     this.drawerflterClose('', '');
   }
   convertToQuery(filterGroups: any[]): string {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -900,34 +838,25 @@ export class OrderlistComponent implements OnInit {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
   filterQuery = '';
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
-  // shreya
   drawerVisibleCustomers: boolean;
   drawerTitleCustomers: string;
   drawerDataCustomers: customer = new customer();
@@ -935,7 +864,6 @@ export class OrderlistComponent implements OnInit {
   custid = 0;
   view(data: any): void {
     this.custid = data.CUSTOMER_ID;
-
     this.drawerTitleCustomers = `View details of ${data.CUSTOMER_NAME}`;
     this.drawerDataCustomers = Object.assign({}, data);
     this.drawerVisibleCustomers = true;
@@ -946,14 +874,12 @@ export class OrderlistComponent implements OnInit {
   get closeCallbackCustomers() {
     return this.drawerCloseCustomers.bind(this);
   }
-
   selectedFilter: string | null = null;
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  TabId: number = 143; // Ensure TabId is defined and initialized
-
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
+  TabId: number = 143; 
   applyfilter(item) {
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -963,7 +889,6 @@ export class OrderlistComponent implements OnInit {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -973,10 +898,8 @@ export class OrderlistComponent implements OnInit {
     sessionStorage.removeItem('ID');
   }
   filterloading: boolean = false;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -984,13 +907,12 @@ export class OrderlistComponent implements OnInit {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1011,7 +933,6 @@ export class OrderlistComponent implements OnInit {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
@@ -1028,14 +949,12 @@ export class OrderlistComponent implements OnInit {
       );
     this.filterQuery = '';
   }
-
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1047,54 +966,7 @@ export class OrderlistComponent implements OnInit {
     this.filterFields[6]['options'] = this.teritory;
     this.drawerFilterVisible = true;
   }
-
   isDeleting: boolean = false;
-
-  // deleteItem(item: any): void {
-  //   sessionStorage.removeItem('ID');
-  //   this.isDeleting = true;
-  //   this.filterloading = true;
-  //   this.api.deleteFilterById(item.ID).subscribe(
-  //     (data) => {
-  //       if (data['code'] == 200) {
-  //         this.savedFilters = this.savedFilters.filter(
-  //           (filter) => filter.ID !== item.ID
-  //         );
-  //         this.message.success('Filter deleted successfully.', '');
-  //         sessionStorage.removeItem('ID');
-  //         this.filterloading = true;
-  //         this.isDeleting = false;
-  //         this.isfilterapply = false;
-  //         this.filterClass = 'filter-invisible';
-
-  //         this.loadFilters();
-
-  //         if (this.selectedFilter == item.ID) {
-  //           this.filterQuery = '';
-  //           this.search(true);
-  //         } else {
-  //           this.isfilterapply = true;
-  //         }
-  //       } else {
-  //         this.message.error('Failed to delete filter.', '');
-  //         this.isDeleting = false;
-  //         this.filterloading = true;
-  //       }
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       this.loadingRecords = false;
-  //       if (err.status === 0) {
-  //         this.message.error(
-  //           'Unable to connect. Please check your internet or server connection and try again shortly.',
-  //           ''
-  //         );
-  //       } else {
-  //         this.message.error('Something Went Wrong.', '');
-  //       }
-  //     }
-  //   );
-  // }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -1111,9 +983,7 @@ export class OrderlistComponent implements OnInit {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -1137,11 +1007,9 @@ export class OrderlistComponent implements OnInit {
       }
     );
   }
-
   toggleLiveDemo(item): void {
     this.selectedQuery = item.SHOW_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   type = 'a';
   addresses = [];
@@ -1178,7 +1046,6 @@ export class OrderlistComponent implements OnInit {
   specialInstruction = '';
   editOrder(data: any): void {
     this.type = 'e';
-
     this.api.getorderdetails(0, 0, '', '', '', data.ID).subscribe((data2) => {
       this.vieworderdata = data2;
       this.vieworderdata.orderData[0]['ADDRESS_ID'] =
@@ -1210,7 +1077,6 @@ export class OrderlistComponent implements OnInit {
             });
           } else this.addresses = [];
         });
-
       this.expectedDate = new Date(
         this.vieworderdata.orderData[0]['EXPECTED_DATE_TIME']
       );
@@ -1221,7 +1087,6 @@ export class OrderlistComponent implements OnInit {
         this.vieworderdata.orderData[0]['SPECIAL_INSTRUCTIONS'];
       var d3 = this.vieworderdata.detailsData;
       var d4 = this.vieworderdata.detailsData;
-
       var d2: any = [];
       var d = this.vieworderdata.detailsData;
       d2 = d.reduce(
@@ -1233,7 +1098,6 @@ export class OrderlistComponent implements OnInit {
         (max, current) => (current.START_TIME > max.START_TIME ? current : max),
         d3[0]
       );
-
       var maxTime2 = d4.reduce(
         (max, current) => (current.END_TIME > max.END_TIME ? max : current),
         d4[0]
@@ -1253,13 +1117,11 @@ export class OrderlistComponent implements OnInit {
         this.vieworderdata.orderData[0].END_TIME
           ? this.vieworderdata.orderData[0].MAX_T_END_TIME
           : this.vieworderdata.orderData[0].END_TIME;
-
       this.MAX_T_START_TIME =
         this.vieworderdata.orderData[0].MAX_T_START_TIME >
         this.vieworderdata.orderData[0].START_TIME
           ? this.vieworderdata.orderData[0].MAX_T_START_TIME
           : this.vieworderdata.orderData[0].START_TIME;
-
       this.setDateDisableDateTime(this.vieworderdata.orderData[0]);
       this.vieworderdata.orderData[0]['IS_EXPRESS'] =
         this.vieworderdata.orderData[0].IS_EXPRESS == 0 ? false : true;
@@ -1274,7 +1136,6 @@ export class OrderlistComponent implements OnInit {
         )
         .subscribe((data3) => {
           this.teritoryData = data3['data'][0];
-
           this.vieworderdata.orderData[0].TERRITORY_NAME =
             this.teritoryData['NAME'];
           this.vieworderdata.orderData[0].MAX_T_START_TIME =
@@ -1301,7 +1162,6 @@ export class OrderlistComponent implements OnInit {
             day,
             ...this.teritoryData.END_TIME.split(':').map(Number)
           );
-
           this.terriotrystarttime1 = new Date(dateWithTime);
           this.terriotryendtime1 = new Date(dateWithTime1);
           this.getCategoriesNodes(this.vieworderdata.orderData[0]);
@@ -1309,7 +1169,6 @@ export class OrderlistComponent implements OnInit {
       this.ordercreateVisible = true;
     });
   }
-
   expandedKeys: any = [];
   selectedKeys: any;
   nodes: any = [];
@@ -1324,14 +1183,12 @@ export class OrderlistComponent implements OnInit {
         if (data['code'] == 200 && data['data'] != null) {
           this.nodes = data['data'];
           this.expandedKeys = this.getAllKeys(this.nodes);
-
           this.selectedKeys = this.nodes[0]['children'][0]['key'];
           this.getServices(this.selectedKeys, datas);
           this.nodes[0]['children'][0]['selected'] = true;
         } else this.nodes = [];
       });
   }
-
   getAllKeys(data: any): string[] {
     let keys: any = [];
     data.forEach((item) => {
@@ -1342,7 +1199,6 @@ export class OrderlistComponent implements OnInit {
     });
     return keys;
   }
-
   getServices(SUB_CATEGORY_ID, data) {
     if (data.CUSTOMER_TYPE == 'B' && data['IS_SPECIAL_CATALOGUE'] == 1) {
       this.api
@@ -1362,20 +1218,14 @@ export class OrderlistComponent implements OnInit {
         .subscribe((data) => {
           if (data['code'] == 200) {
             this.servicescatalogue = data['data'];
-
             this.serviceCatName = this.servicescatalogue[0]['CATEGORY_NAME'];
-            // this.category= this.servicescatalogue[0].CATEGORY_NAME
             this.serviceSubCatName =
               this.servicescatalogue[0]['SUB_CATEGORY_NAME'];
-
-            // this.serviceCatName = this.servicescatalogue[0].SERVICE_NAME;
-            // this.serviceItem= this.servicescatalogue[0].NAME
             this.servicescatalogue.forEach((element, i) => {
               this.servicescatalogue[i].QUANTITY = 1;
               this.servicescatalogue[i].TOTAL_AMOUNT = Number(
                 this.servicescatalogue[i].KEY_PRICE
               );
-
               this.servicescatalogue[i]['options'] = this.servicescatalogue[i][
                 'options'
               ] = Array.from(
@@ -1410,10 +1260,8 @@ export class OrderlistComponent implements OnInit {
           if (datas['code'] == 200) {
             this.servicescatalogue = datas['data'];
             this.serviceCatName = this.servicescatalogue[0]['CATEGORY_NAME'];
-            // this.category= this.servicescatalogue[0].CATEGORY_NAME
             this.serviceSubCatName =
               this.servicescatalogue[0].SUB_CATEGORY_NAME;
-
             this.servicescatalogue.forEach((element, i) => {
               this.servicescatalogue[i].QUANTITY = 1;
               this.servicescatalogue[i].TOTAL_AMOUNT = Number(
@@ -1431,12 +1279,10 @@ export class OrderlistComponent implements OnInit {
     }
   }
   filterOfTerritory = 0;
-
   applyfilterChange(event) {
     this.filterOfTerritory = event;
     this.search(true);
   }
-
   @Input() MIN_T_END_TIME: any;
   @Input() MAX_T_START_TIME: any;
   @Input() currentDate = new Date();
@@ -1444,15 +1290,11 @@ export class OrderlistComponent implements OnInit {
     var date: any = new Date();
     const [hours1, minutes1, second] =
       this.MIN_T_END_TIME.split(':').map(Number);
-
     const today = new Date();
-
-    this.currentDate = new Date(today); // Create a copy of the current date
-
+    this.currentDate = new Date(today); 
     this.currentDate.setMinutes(
       this.currentDate.getMinutes() + data.MAX_DURARTION_MIN
     );
-
     date.setHours(
       this.currentDate.getHours(),
       this.currentDate.getMinutes(),
@@ -1461,9 +1303,8 @@ export class OrderlistComponent implements OnInit {
     );
     var date1: any = new Date(this.currentDate);
     date1.setHours(hours1, minutes1, 0, 0);
-    const differenceInMs: any = date1 - date; // Difference in milliseconds
-    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); //
-
+    const differenceInMs: any = date1 - date; 
+    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); 
     if (differenceInMinutes > 0) {
     } else if (differenceInMinutes < 0) {
       this.currentDate.setDate(this.currentDate.getDate() + 1);

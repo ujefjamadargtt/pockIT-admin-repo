@@ -1,7 +1,30 @@
-nz-form-item  {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 5px;
-  }
-  
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 5px;
+}
+.mt-10px-ux {
+  margin-top: 10px;
+}
+.full-width-ux {
+  width: 100%;
+}
+.divider-slot1-ux {
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+.divider-slot2-ux {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.divider-slot3-ux {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.timepicker-full-ux {
+  width: 100%;
+}
+.btn-mr-12px-ux {
+  margin-right: 12px;
+}

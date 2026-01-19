@@ -1,42 +1,146 @@
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 .select {
     width: 200px;
     padding: 8px;
     display: block;
 }
-
 .search-box {
     padding: 8px;
 }
-
 .search-box input {
     width: 188px;
     display: block;
 }
-
 .search-box button {
     width: 90px;
 }
-
 .search-button {
     margin-right: 8px;
 }
-
 nz-select {
     width: 100%;
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
+}
+.header-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-action-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.excel-button-text {
+  color: white;
+}
+.filter-button-width {
+  width: 47px;
+}
+.filter-row-no-padding {
+  padding-top: 0;
+}
+.filter-loading-center {
+  text-align: center;
+}
+.filter-card-wrapper {
+  margin-bottom: 8px;
+}
+.saved-filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.saved-filter-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.saved-filter-title {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.saved-filter-actions-row {
+  margin-top: 7px;
+}
+.saved-filter-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.filter-action-icon {
+  font-size: 10px !important;
+}
+.filter-view-tag {
+  margin-right: 0;
+}
+.filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.filter-footer-btn {
+  margin-right: 10px;
+}
+.table-wrapper-margin {
+  margin-top: 10px;
+}
+.table-header-center {
+  text-align: center;
+}
+.table-header-bold {
+  font-weight: bold;
+}
+.filter-active {
+  color: #1890ff;
+}
+.filter-active-dark {
+  color: #092b9c;
+}
+.ticket-table .ant-table-thead > tr > th {
+  vertical-align: middle;
+}
+.filter-dropdown {
+  width: 300px;
+}
+.filter-dropdown-inner {
+  width: 280px;
+}
+.filter-range-picker {
+  width: 100%;
+}
+.ticket-view-tag {
+  cursor: pointer;
+}
+.ticket-view-icon {
+  font-size: 15px;
+}
+.text-center{
+    text-align: center
 }

@@ -36,21 +36,17 @@ import { customerAddLogin } from '../Pages/Models/customerAddLogin';
 export class ApiServiceService {
   clientId: number = 1;
   public commonFunction = new CommonFunctionService();
-
   cloudID: any;
   httpHeaders = new HttpHeaders();
   options = {
     headers: this.httpHeaders,
   };
-
   httpHeaders1 = new HttpHeaders();
   options1 = {
     headers: this.httpHeaders1,
   };
-
   gmUrl = appkeys.gmUrl;
   applicationId = 1;
-
   baseUrl = appkeys.baseUrl;
   url = appkeys.url;
   retriveimgUrl = appkeys.retriveimgUrl;
@@ -100,7 +96,6 @@ export class ApiServiceService {
     }
     this.getheader();
   }
-
   // logoutcall(): Observable<any> {
   //   var data = {
   //     USER_ID: this.commonFunction.decryptdata(
@@ -113,7 +108,6 @@ export class ApiServiceService {
   //     this.options
   //   );
   // }
-
   logoutcall(): Observable<any> {
     var data = {
       USER_ID: this.commonFunction.decryptdata(
@@ -140,15 +134,11 @@ export class ApiServiceService {
     while (s.length < L) s += randomchar();
     return s;
   }
-
-
   login(email: string, password: string, cloudid: any, type: any) {
     this.getheader();
-
     this.options = {
       headers: this.httpHeaders,
     };
-
     var data = {
       username: email,
       password: password,
@@ -156,14 +146,12 @@ export class ApiServiceService {
       DEVICE_ID: this.cookie.get('deviceId'),
       type: type
     };
-
     return this.httpClient.post(
       this.baseUrl + 'user/login',
       JSON.stringify(data),
       this.options
     );
   }
-
   createUser(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -172,43 +160,34 @@ export class ApiServiceService {
       this.options
     );
   }
-
   loggerInit() {
     this.getheader();
-
     this.options1 = {
       headers: this.httpHeaders1,
     };
-
     var data = {
       CLIENT_ID: this.clientId,
     };
-
     return this.httpClient.post(
       this.gmUrl + 'device/init',
       JSON.stringify(data),
       this.options1
     );
   }
-
   getForms(roleId: number) {
     this.getheader();
-
     this.options = {
       headers: this.httpHeaders,
     };
-
     var data = {
       ROLE_ID: roleId,
     };
-
     return this.httpClient.post<any>(
       this.url + 'user/getForms',
       JSON.stringify(data),
       this.options
     );
   }
-
   getAllForms(
     pageIndex: number,
     pageSize: number,
@@ -229,7 +208,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createForm(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -238,7 +216,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateForm(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -247,7 +224,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getAllRoles(
     pageIndex: number,
     pageSize: number,
@@ -287,7 +263,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateRole(application: any): Observable<any> {
     application.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -296,7 +271,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateUser(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -305,7 +279,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getRoleDetails(roleId: number) {
     var data = {
       ROLE_ID: roleId,
@@ -316,7 +289,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getAllUsers(
     pageIndex: number,
     pageSize: number,
@@ -337,20 +309,17 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addRoleDetails(roleId: number, data1: string[]): Observable<any> {
     var data = {
       ROLE_ID: roleId,
       data: data1,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/roleDetails/addBulk',
       data,
       this.options
     );
   }
-
   sendOTP(TYPE: any, TYPE_VALUE): Observable<any> {
     var data = {
       TYPE: TYPE,
@@ -362,7 +331,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   sendOTPCustomer(COUNTRY_CODE: any, TYPE_VALUE: any, TYPE: any): Observable<any> {
     const requestData = {
       COUNTRY_CODE,
@@ -374,14 +342,12 @@ export class ApiServiceService {
     //   requestData,
     //   { headers }
     // );
-
     return this.httpClient.post<any>(
       this.baseUrl + 'customer/sendOTP',
       JSON.stringify(requestData),
       this.options
     );
   }
-
   verifyOTPCust(
     TYPE: any,
     TYPE_VALUE: any,
@@ -400,14 +366,12 @@ export class ApiServiceService {
       CUSTOMER_CATEGORY_ID: CUSTOMER_CATEGORY_ID,
       CLOUD_ID: CLOUD_ID,
     };
-
     return this.httpClient.post<any[]>(
       this.baseUrl + 'customer/verifyOTP',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   confirmOTP(passwordData: any): Observable<any> {
     var data = {
       TYPE: passwordData.TYPE,
@@ -416,14 +380,12 @@ export class ApiServiceService {
       RID: passwordData.RID,
       VID: passwordData.VID,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/verifyOtp',
       JSON.stringify(data),
       this.options
     );
   }
-
   changePassword(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -432,7 +394,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   forgetPasswordAdmin(data: any): Observable<any> {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/user/forgetPasswordAdmin',
@@ -440,39 +401,32 @@ export class ApiServiceService {
       this.options
     );
   }
-
   deleteAllCookies() {
     // Retrieve all cookies
     const cookies: string[] = document.cookie.split(';');
-
     // Iterate over each cookie
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i];
       const eqPos = cookie.indexOf('=');
       const cookieName =
         eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
-
       // Explicitly delete the cookie with the root path '/'
       this.cookie.delete(cookieName, '/');
     }
   }
-
   onUpload(folderName, selectedFile, filename): Observable<any> {
     this.onuploadheader();
     let params = new HttpParams();
-
     const options1 = {
       headers: this.httpHeaders1,
       params: params,
       reportProgress: true, observe: 'events'
     };
-
     const fd = new FormData();
     fd.append('Image', selectedFile, filename);
     const req = new HttpRequest('POST', this.imgUrl + folderName, fd, options1);
     return this.httpClient.request(req);
   }
-
   // For Testing server
   onuploadheader() {
     this.httpHeaders1 = new HttpHeaders({
@@ -482,7 +436,6 @@ export class ApiServiceService {
       supportkey: this.cookie.get('supportKey'),
       Token: this.cookie.get('token'),
     });
-
     this.options1 = {
       headers: this.httpHeaders,
     };
@@ -502,27 +455,22 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'city/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   CreateCityMaster(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
-
     return this.httpClient.post<any>(
       this.url + 'city/create',
       JSON.stringify(user),
       this.options
     );
   }
-
   UpdateCityMaster(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
-
     return this.httpClient.put<any>(
       this.url + 'city/update',
       JSON.stringify(user),
@@ -543,14 +491,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'state/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   getAllBranch(
     pageIndex: number,
     pageSize: number,
@@ -579,7 +525,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateBranch(department: any): Observable<number> {
     department.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -603,14 +548,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'country/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   getAllPincode(
     pageIndex: number,
     pageSize: number,
@@ -625,14 +568,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<OrganizationMaster[]>(
       this.url + 'pincode/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   createPincode(pincode: pincode): Observable<number> {
     pincode.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -641,7 +582,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updatePincode(pincode: pincode): Observable<number> {
     pincode.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -664,14 +604,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<taxes[]>(
       this.url + 'taxDetails/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   createTaxDetails(taxes: taxes): Observable<number> {
     taxes.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -680,7 +618,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateTaxDetails(taxes: taxes): Observable<number> {
     taxes.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -689,7 +626,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCategoryData(
     pageIndex: number,
     pageSize: number,
@@ -710,7 +646,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createCategory(category: category): Observable<number> {
     category.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -719,7 +654,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCategory(category: category): Observable<number> {
     category.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -728,7 +662,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getSubCategoryData(
     pageIndex: number,
     pageSize: number,
@@ -757,7 +690,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updatesubCategory(category: subcategory): Observable<number> {
     category.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -766,7 +698,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCustomerDetails(
     pageIndex: number,
     pageSize: number,
@@ -781,14 +712,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<customer[]>(
       this.url + 'customer/getCustomerDetails',
       JSON.stringify(data),
       this.options
     );
   }
-
   getAllCustomer(
     pageIndex: number,
     pageSize: number,
@@ -803,14 +732,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<customer[]>(
       this.url + 'customer/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   createCustomer(customer: customer): Observable<number> {
     customer.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -819,7 +746,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCustomer(customer: customer): Observable<number> {
     customer.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -828,7 +754,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTeritory(
     pageIndex: number,
     pageSize: number,
@@ -849,7 +774,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateTerritory(data: any) {
     return this.httpClient.put(
       this.baseUrl + 'api/territory/update',
@@ -857,7 +781,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createTerritory(data: any) {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post(
@@ -866,7 +789,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceItem(
     pageIndex: number,
     pageSize: number,
@@ -887,7 +809,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateServiceItem(data: any) {
     return this.httpClient.put(
       this.baseUrl + 'api/service/update',
@@ -895,7 +816,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createServiceItem(data: any) {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post(
@@ -904,7 +824,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCurrency(
     pageIndex: number,
     pageSize: number,
@@ -925,7 +844,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCurrency(data: any) {
     return this.httpClient.put(
       this.baseUrl + 'api/currency/update',
@@ -933,7 +851,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createCurrency(data: any) {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post(
@@ -982,7 +899,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createSkill(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -991,7 +907,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateSkill(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1000,7 +915,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTaxData(
     pageIndex: number,
     pageSize: number,
@@ -1021,7 +935,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createTax(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1030,7 +943,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateTax(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1039,7 +951,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getOrderStatusData(
     pageIndex: number,
     pageSize: number,
@@ -1060,7 +971,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createOrderStatus(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1069,7 +979,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateOrderStatus(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1078,7 +987,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getJobCardStatusData(
     pageIndex: number,
     pageSize: number,
@@ -1099,7 +1007,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createJobCardStatus(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1108,7 +1015,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateJobCardStatus(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1117,7 +1023,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getLanguageData(
     pageIndex: number,
     pageSize: number,
@@ -1138,7 +1043,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createLanguage(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1147,7 +1051,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateLanguage(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1156,7 +1059,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getUnitData(
     pageIndex: number,
     pageSize: number,
@@ -1177,7 +1079,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getItemMappingData(
     pageIndex: number,
     pageSize: number,
@@ -1198,7 +1099,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addItemMapping(data: any) {
     data.CLIENT_ID = this.clientId;
     this.getheader();
@@ -1209,7 +1109,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createUnit(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1218,7 +1117,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateUnit(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1228,17 +1126,14 @@ export class ApiServiceService {
     );
   }
   // State get, create, update
-
   createState(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
-
     return this.httpClient.post<any>(
       this.url + 'state/create',
       JSON.stringify(data),
       this.options
     );
   }
-
   updateState(data: any): Observable<any> {
     return this.httpClient.put<any>(
       this.url + 'state/update',
@@ -1246,20 +1141,15 @@ export class ApiServiceService {
       this.options
     );
   }
-
   // City get, create, update
-
-
   createCity(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
-
     return this.httpClient.post<any>(
       this.url + 'city/create',
       JSON.stringify(data),
       this.options
     );
   }
-
   updateCity(data: any): Observable<any> {
     return this.httpClient.put<any>(
       this.url + 'city/update',
@@ -1275,7 +1165,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCountryData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1284,7 +1173,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCustomerCategeroyData(
     pageIndex: number,
     pageSize: number,
@@ -1313,7 +1201,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCustomerCategeroyData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1350,7 +1237,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateVendorData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1379,7 +1265,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createBackOffice(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1388,7 +1273,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateBackOffice(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1397,7 +1281,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceCatData(
     pageIndex: number,
     pageSize: number,
@@ -1418,7 +1301,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createServiceCat(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1427,7 +1309,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateServiceCat(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1436,8 +1317,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
-
   getTechnicianData(
     pageIndex: number,
     pageSize: number,
@@ -1458,7 +1337,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicianData1(
     pageIndex: number,
     pageSize: number,
@@ -1487,7 +1365,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateTechnicianData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1496,7 +1373,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addTerritoryPincodeMapping(
     TERRITORY_ID: number,
     CLIENT_ID: number,
@@ -1513,7 +1389,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getAllCustomerAddress(
     pageIndex: number,
     pageSize: number,
@@ -1528,14 +1403,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<customer[]>(
       this.url + 'customerAddress/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   createCustomerAddress(Address: Address): Observable<number> {
     Address.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -1544,7 +1417,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCustomerAddressNew(Address: Address): Observable<number> {
     Address.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -1573,7 +1445,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   mapBackofficeTerritoryMapping(
     BACKOFFICE_ID: number,
     USER_ID: any,
@@ -1596,7 +1467,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicianmapdataservice(
     pageIndex: number,
     pageSize: number,
@@ -1625,7 +1495,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getRecords(
     pageIndex: number,
     pageSize: number,
@@ -1647,7 +1516,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicianPincodeMappedData(
     pageIndex: number,
     pageSize: number,
@@ -1674,14 +1542,12 @@ export class ApiServiceService {
       CLIENT_ID: this.clientId,
       data: datas,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/technicianSkillMapping/addBulk',
       data,
       this.options
     );
   }
-
   getTechnicianmapdata(
     pageIndex: number,
     pageSize: number,
@@ -1716,14 +1582,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<customer[]>(
       this.baseUrl + 'api/appLanguage/getAppLanguageMaster',
       JSON.stringify(data),
       this.options
     );
   }
-
   getOrdersData(
     pageIndex: number,
     pageSize: number,
@@ -1752,7 +1616,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createOrdersData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -1769,7 +1632,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getstatetax(
     pageIndex: number,
     pageSize: number,
@@ -1814,7 +1676,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getActionLog(
     pageIndex: number,
     pageSize: number,
@@ -1855,7 +1716,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getInvoice(
     pageIndex: number,
     pageSize: number,
@@ -1897,7 +1757,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getInventorySubCategory(
     pageIndex: number,
     pageSize: number,
@@ -1926,7 +1785,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateInventorySubCategory(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1955,7 +1813,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getWarehousesLocation(
     pageIndex: number,
     pageSize: number,
@@ -1984,7 +1841,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateWarehousesLocation(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -1993,7 +1849,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getWarehouses(
     pageIndex: number,
     pageSize: number,
@@ -2042,7 +1897,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicaionActionLog(
     pageIndex: number,
     pageSize: number,
@@ -2063,7 +1917,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicaionLoacionTrack(
     pageIndex: number,
     pageSize: number,
@@ -2101,14 +1954,12 @@ export class ApiServiceService {
       filter: filter,
       ORDER_ID: ORDER_ID,
     };
-
     return this.httpClient.post<any>(
       this.url + 'customerServiceFeedback/getCustomerServiceFeedback',
       JSON.stringify(data),
       this.options
     );
   }
-
   getTechnicianReviewData(
     pageIndex: number,
     pageSize: number,
@@ -2125,14 +1976,12 @@ export class ApiServiceService {
       filter: filter,
       ORDER_ID: ORDER_ID,
     };
-
     return this.httpClient.post<any>(
       this.url + 'customertechnicianfeedback/getcustomerTechnicianFeedback',
       JSON.stringify(data),
       this.options
     );
   }
-
   // Past Order
   getAllPastOrders(
     pageIndex: number,
@@ -2154,7 +2003,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   // Accept Order
   acceptorder(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
@@ -2164,7 +2012,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getorderDetails(
     pageIndex: number,
     pageSize: number,
@@ -2185,7 +2032,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   jobCardChat(
     pageIndex: number,
     pageSize: number,
@@ -2206,7 +2052,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   jobCardChatDetails(
     pageIndex: number,
     pageSize: number,
@@ -2227,7 +2072,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   OrderAddressMap(
     pageIndex: number,
     pageSize: number,
@@ -2248,7 +2092,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   Ordermaster(
     pageIndex: number,
     pageSize: number,
@@ -2307,7 +2150,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createInventoryCategory(form: any): Observable<any> {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/inventoryCategory/create',
@@ -2315,7 +2157,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateInventoryCategory(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -2325,7 +2166,6 @@ export class ApiServiceService {
     );
   }
   // Support category calls
-
   createSupportSubcategory(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -2342,7 +2182,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getSupportSubcategory(
     pageIndex: number,
     pageSize: number,
@@ -2371,7 +2210,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   UpdateCustomersupport(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -2380,7 +2218,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getSupportCategory(
     pageIndex: number,
     pageSize: number,
@@ -2435,7 +2272,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'inventoryPurchase/get',
       JSON.stringify(data),
@@ -2458,7 +2294,6 @@ export class ApiServiceService {
       filter: filter,
       ID: ID,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'inventoryPurchase/get',
       JSON.stringify(data),
@@ -2473,7 +2308,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updatePurchaseOrder(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -2485,49 +2319,32 @@ export class ApiServiceService {
   addsLanguagesTeachniacianMapping(id: number, datas: any[]): Observable<any> {
     var data = {
       TECHNICIAN_ID: id,
-
       CLIENT_ID: this.clientId,
-
       data: datas,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/technicianLanguageMapping/addBulk',
-
       data,
-
       this.options
     );
   }
-
   getTechnicianLanguagesData(
     pageIndex: number,
-
     pageSize: number,
-
     sortKey: string,
-
     sortValue: string,
-
     filter: string
   ): Observable<any> {
     var data = {
       pageIndex: pageIndex,
-
       pageSize: pageSize,
-
       sortKey: sortKey,
-
       sortValue: sortValue,
-
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/technicianLanguageMapping/get',
-
       JSON.stringify(data),
-
       this.options
     );
   }
@@ -2559,7 +2376,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateInventorymovement(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -2582,14 +2398,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'organisation/getData',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateCustomerAddressDef(Address): Observable<number> {
     return this.httpClient.put<number>(
       this.url + 'customer/updateAddressDefault',
@@ -2597,7 +2411,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getDistrictData(
     pageIndex: number,
     pageSize: number,
@@ -2618,7 +2431,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createDistrict(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -2627,7 +2439,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateDistrict(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -2636,7 +2447,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createServiceMain(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -2645,7 +2455,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateServiceMain(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -2654,7 +2463,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createInventoryCategoryData(form: any): Observable<any> {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/inventoryCategory/create',
@@ -2662,7 +2470,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateInventoryCategoryData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -2671,9 +2478,7 @@ export class ApiServiceService {
       this.options
     );
   }
-
   // shubhammmm
-
   getdistrict(
     pageIndex: number,
     pageSize: number,
@@ -2688,14 +2493,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'district/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   getTechnicianunMappedpincodesDataterritory(
     pageIndex: number,
     pageSize: number,
@@ -2718,7 +2521,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addTechnicianPincodeMapping(
     TECHNICIAN_ID: number,
     TECHNICIAN_NAME: any,
@@ -2748,7 +2550,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getSkillData11(
     pageIndex: number,
     pageSize: number,
@@ -2771,7 +2572,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   markasinactivedataskill(
     TECHNICIAN_ID: number,
     datas: any[]
@@ -2786,7 +2586,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addTechnicianPincodeMappingskills(
     TECHNICIAN_ID: number,
     datas: any[],
@@ -2807,7 +2606,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicianPincodeMappedDatateirriry(
     pageIndex: number,
     pageSize: number,
@@ -2828,7 +2626,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addTechnicianPincodeMappingteroorty(
     TECHNICIAN_ID: number,
     datas: any[],
@@ -2845,7 +2642,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   markasinactivedatatettory(
     TECHNICIAN_ID: number,
     datas: any[]
@@ -2860,7 +2656,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getterritoryPincodeData11(
     pageIndex: number,
     pageSize: number,
@@ -2881,7 +2676,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getSkillData11service(
     pageIndex: number,
     pageSize: number,
@@ -2904,7 +2698,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getUnmapDocumentsservice(
     pageIndex: number,
     pageSize: number,
@@ -2952,7 +2745,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addTechnicianPincodeMappingskillsservice(
     TECHNICIAN_ID: number,
     datas: any[],
@@ -2969,7 +2761,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addDOcs(
     TECHNICIAN_ID: number,
     datas: any[],
@@ -2991,7 +2782,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   markasinactivedataskillservice(
     TECHNICIAN_ID: number,
     datas: any[]
@@ -3006,7 +2796,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   markasinactivedataDocs(TECHNICIAN_ID: number, datas: any[]): Observable<any> {
     var data = {
       SERVICE_ID: TECHNICIAN_ID,
@@ -3019,7 +2808,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   specificDocMapUnmap(
     TECHNICIAN_ID: number,
     datas: any[],
@@ -3037,7 +2825,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getpendinjobsdataa(
     pageIndex: number,
     pageSize: number,
@@ -3058,7 +2845,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getJobCardsForSchedular(
     pageIndex: number,
     pageSize: number,
@@ -3079,7 +2865,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicianLanguageData(
     pageIndex: number,
     pageSize: number,
@@ -3106,7 +2891,6 @@ export class ApiServiceService {
       CLIENT_ID: this.clientId,
       data: datas,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/technicianServiceCostMapping/addBulk',
       data,
@@ -3133,7 +2917,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   GetCustomersupport(
     pageIndex: number,
     pageSize: number,
@@ -3154,7 +2937,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getDistrict(
     pageIndex: number,
     pageSize: number,
@@ -3169,16 +2951,13 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'district/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   // 14-12-2024 shreya
-
   getOrgTime(
     pageIndex: number,
     pageSize: number,
@@ -3199,7 +2978,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceTerritoryget(
     pageIndex: number,
     pageSize: number,
@@ -3222,7 +3000,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceCustomerget(
     pageIndex: number,
     pageSize: number,
@@ -3245,7 +3022,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceTerritoryNonget(
     pageIndex: number,
     pageSize: number,
@@ -3266,7 +3042,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceTerritoryDetailscreate(form: any): Observable<any> {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/territoryServicenOnAvailabilityMapping/create',
@@ -3274,7 +3049,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceTerritoryDetailsupdate(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -3283,7 +3057,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getcategoryhierarchy(): Observable<any> {
     var data = {};
     return this.httpClient.get<any>(
@@ -3291,10 +3064,9 @@ export class ApiServiceService {
       this.options
     );
   }
-
- getTerritoryMapping(
-   COUPON_ID: number,
-  pageIndex: number,
+  getTerritoryMapping(
+    COUPON_ID: number,
+    pageIndex: number,
     pageSize: number,
     sortKey: string,
     sortValue: string,
@@ -3313,7 +3085,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCustomerReviewData11(
     pageIndex: number,
     pageSize: number,
@@ -3328,17 +3099,14 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'customerServiceFeedback/getCustomerServiceFeedback',
       JSON.stringify(data),
       this.options
     );
   }
-
   // /api/techniciancustomerfeedback/get
   // /api/customertechnicianfeedback/get
-
   getemailServiceConfigData(
     pageIndex: number,
     pageSize: number,
@@ -3353,14 +3121,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/emailServiceConfig/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   CreateemailServiceConfigData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -3369,7 +3135,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateemailServiceConfigData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -3378,7 +3143,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getWhatsappServiceConfigData(
     pageIndex: number,
     pageSize: number,
@@ -3393,14 +3157,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/whatsappserviceconfig/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   CreateWhatsappServiceConfigData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -3409,7 +3171,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updatewhatsappServiceConfigData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -3418,7 +3179,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createPaymentGatewayData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -3435,7 +3195,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getPaymentGatewayData(
     pageIndex: number,
     pageSize: number,
@@ -3456,7 +3215,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getSmsServiceConfigData(
     pageIndex: number,
     pageSize: number,
@@ -3471,14 +3229,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/smsServiceConfig/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   CreateSmsServiceConfigData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -3487,7 +3243,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateSmsServiceConfigData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -3496,7 +3251,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getWarehouseData(
     pageIndex: number,
     pageSize: number,
@@ -3511,14 +3265,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/warehouse/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   CreateWarehouseData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -3527,7 +3279,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateWarehouseData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -3536,9 +3287,7 @@ export class ApiServiceService {
       this.options
     );
   }
-
   //Sanjana
-
   createTemplate(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -3547,7 +3296,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getAllTemplates(
     pageIndex: number,
     pageSize: number,
@@ -3568,7 +3316,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createOrganization(organization: OrganizationMaster): Observable<number> {
     organization.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -3577,7 +3324,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateOrganization(organization: OrganizationMaster): Observable<number> {
     organization.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -3586,7 +3332,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicaionLoacionTrackmultiple(
     pageIndex: number,
     pageSize: number,
@@ -3608,7 +3353,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getnotifications(
     pageIndex: number,
     pageSize: number,
@@ -3623,14 +3367,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'notification/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   getPaymentTransaction(
     pageIndex: number,
     pageSize: number,
@@ -3645,14 +3387,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<[]>(
       this.url + 'invoicepaymentdetails/getPaymentTransactions',
       JSON.stringify(data),
       this.options
     );
   }
-
   getCategories(
     pageIndex: number,
     pageSize: number,
@@ -3669,11 +3409,9 @@ export class ApiServiceService {
     };
     return this.httpClient.get<any>(
       this.baseUrl + 'api/order/getCategories',
-
       this.options
     );
   }
-
   techniciancustomerfeedback(
     pageIndex: number,
     pageSize: number,
@@ -3688,14 +3426,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter, CUSTOMER_MANAGER_ID: CUSTOMER_MANAGER_ID
     };
-
     return this.httpClient.post<any>(
       this.url + 'technicianCustomerFeedback/getTechnicianCustomerFeedback',
       JSON.stringify(data),
       this.options
     );
   }
-
   getTechnicianReviewData1(
     pageIndex: number,
     pageSize: number,
@@ -3710,14 +3446,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter, CUSTOMER_MANAGER_ID: CUSTOMER_MANAGER_ID
     };
-
     return this.httpClient.post<any>(
       this.url + 'customertechnicianfeedback/getcustomerTechnicianFeedback',
       JSON.stringify(data),
       this.options
     );
   }
-
   createJobCard(data: any): Observable<number> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -3726,7 +3460,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createassignshedule(dataaaa): Observable<any> {
     return this.httpClient.post<number>(
       this.url + 'technicianJobSchedule/scheduleJob',
@@ -3734,7 +3467,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getDistinctData(
     TAB_ID: number,
     keywords: string
@@ -3793,7 +3525,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getSmsTemplates(
     pageIndex: number,
     pageSize: number,
@@ -3814,7 +3545,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createSmsTemplate(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -3823,7 +3553,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateSmsTemplate(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -3832,7 +3561,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   BulkServiceUpdate(TERRITORY_ID: any, data: any): Observable<any> {
     var datas = {
       TERRITORY_ID: TERRITORY_ID,
@@ -3846,7 +3574,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   BulkServiceUpdateB2b(CUSTOMER_ID: any, data: any): Observable<any> {
     var datas = {
       CUSTOMER_ID: CUSTOMER_ID,
@@ -3859,7 +3586,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getBulkdataForServiceChange(
     pageIndex: number,
     pageSize: number,
@@ -3882,7 +3608,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateassignshedule(dataaaa): Observable<any> {
     return this.httpClient.post<number>(
       this.url + 'technicianJobSchedule/updateScheduleJob',
@@ -3890,7 +3615,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createEmailTemplate(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -3899,7 +3623,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getKBFeedbackTransaction(
     pageIndex: number,
     pageSize: number,
@@ -3914,7 +3637,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<[]>(
       this.url + 'knowledgeBaseFeedbackTransactions/get',
       JSON.stringify(data),
@@ -3949,7 +3671,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getHelpDoc(
     pageIndex: number,
     pageSize: number,
@@ -3970,7 +3691,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createHelpDoc(organization: any): Observable<number> {
     organization.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -3979,7 +3699,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateHelpDoc(organization: any): Observable<number> {
     organization.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -3988,7 +3707,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getMultiServiceHierarchy(TERRITORY_ID: any): Observable<any> {
     var data = {
       TERRITORY_ID: TERRITORY_ID,
@@ -3999,7 +3717,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getMultiServiceHierarchyForB2b(CUSTOMER_ID: any): Observable<any> {
     var data = {
       CUSTOMER_ID: CUSTOMER_ID,
@@ -4010,7 +3727,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   BulkServiceADd(TERRITORY_ID: any, service_ids: any): Observable<any> {
     var datas = {
       TERRITORY_ID: TERRITORY_ID,
@@ -4024,7 +3740,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   b2bAvailabilityMapping(CUSTOMER_ID: any, service_ids: any): Observable<any> {
     var data = {
       CUSTOMER_ID: CUSTOMER_ID,
@@ -4037,7 +3752,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceTerritoryNongetB2B(
     pageIndex: number,
     pageSize: number,
@@ -4058,7 +3772,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceTerritoryDetailscreateb2b(form: any): Observable<any> {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/b2bAvailabilityMapping/create',
@@ -4066,7 +3779,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceTerritoryDetailsupdateb2b(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -4075,7 +3787,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getcurrentlocatiooftech(
     pageIndex: number,
     pageSize: number,
@@ -4104,7 +3815,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getjobsbetween(
     pageIndex: number,
     pageSize: number,
@@ -4137,7 +3847,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   gettechnicianconfigruationdata(
     pageIndex: number,
     pageSize: number,
@@ -4158,7 +3867,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createconfigration(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -4167,7 +3875,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateconfigration(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -4176,7 +3883,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   jobcompletion(customer: any): Observable<number> {
     // customer.CLIENT_ID = this.clientId;
     var data = {
@@ -4188,7 +3894,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServices(
     pageIndex: number,
     pageSize: number,
@@ -4220,7 +3925,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCustTechRatings(
     pageIndex: number,
     pageSize: number,
@@ -4241,7 +3945,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createCustTechRatings(data: any): Observable<any> {
     return this.httpClient.post<any>(
       this.url + 'customertechnicianfeedback/create',
@@ -4249,7 +3952,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCustTechRatings(user: any): Observable<any> {
     return this.httpClient.put<any>(
       this.url + 'customertechnicianfeedback/update',
@@ -4257,7 +3959,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceDetailsGetForHTMLContent(ID: number): Observable<any> {
     var data = {
       ID: ID,
@@ -4268,7 +3969,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCategoriesForOrder(TERRITORY_ID, CUSTOMER_ID): Observable<any> {
     var data = {
       TERRITORY_ID: TERRITORY_ID,
@@ -4280,7 +3980,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createFilterData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -4289,11 +3988,9 @@ export class ApiServiceService {
       this.options
     );
   }
-
   deleteFilterById(id: number): Observable<any> {
     // API endpoint with the id as a path parameter
     const url = `${this.baseUrl}api/saveFilter/delete/${id}`;
-
     // Make the POST API call
     return this.httpClient.post<any>(
       url, // API URL
@@ -4301,7 +3998,6 @@ export class ApiServiceService {
       this.options // HTTP options (e.g., headers)
     );
   }
-
   getFilterData1(
     pageIndex: number,
     pageSize: number,
@@ -4317,14 +4013,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'saveFilter/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   getFilterData(
     TAB_ID: number,
     USER_ID: number,
@@ -4337,14 +4031,12 @@ export class ApiServiceService {
       CLIENT_ID: CLIENT_ID,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/saveFilter/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   getActionLogforcalender(
     pageIndex: number,
     pageSize: number,
@@ -4365,7 +4057,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCalenderData(
     pageIndex: number,
     pageSize: number,
@@ -4392,7 +4083,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createCalenderData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -4401,7 +4091,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCalenderData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -4410,7 +4099,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getservicelogs(
     pageIndex: number,
     pageSize: number,
@@ -4435,7 +4123,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getServiceTerritoryDetailsget(
     pageIndex: number,
     pageSize: number,
@@ -4459,7 +4146,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getdashboardcount(
     pageIndex: number,
     pageSize: number,
@@ -4486,7 +4172,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   activetechnician(
     TECHNICIAN_ID: any,
     TECHNICIAN_NAME: any,
@@ -4505,7 +4190,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getVendorTerritoryMappedData(
     pageIndex: number,
     pageSize: number,
@@ -4526,7 +4210,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   mapVendorTerritoryMapping(
     VENDOR_ID: number,
     USER_ID: any,
@@ -4547,7 +4230,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicianAssignedJobs(
     pageIndex: number,
     pageSize: number,
@@ -4570,7 +4252,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   TechsendOTPToConfirm(
     MOBILE_NUMBER: any,
     COUNTRY_CODE: any,
@@ -4601,7 +4282,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   TechverifyOTPToConfirm(
     MOBILE_NUMBER: any,
     TECHNICIAN_ID: any,
@@ -4622,7 +4302,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateFilterData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -4631,7 +4310,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getjobphotos(
     pageIndex: any,
     pageSize: any,
@@ -4652,7 +4330,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCancelOrderReasonData(
     pageIndex: number,
     pageSize: number,
@@ -4673,7 +4350,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createCancelOrderReason(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -4682,7 +4358,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCancelOrderReason(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -4691,7 +4366,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicianData11(
     pageIndex: number,
     pageSize: number,
@@ -4716,7 +4390,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getBackOfficeData11(
     pageIndex: number,
     pageSize: number,
@@ -4741,7 +4414,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getcancelorderreq(
     pageIndex: number,
     pageSize: number,
@@ -4756,7 +4428,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'ordercancellationtransactions/get',
       JSON.stringify(data),
@@ -4777,7 +4448,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'shopOrdercancellationtransactions/get',
       JSON.stringify(data),
@@ -4826,7 +4496,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'ordercancellationtransactions/getCounts',
       JSON.stringify(data),
@@ -4847,14 +4516,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'shopordercancellationtransactions/getCounts',
       JSON.stringify(data),
       this.options
     );
   }
-
   gettechhavingbelow4starrating(
     pageIndex: number,
     pageSize: number,
@@ -4881,7 +4548,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getcusthavingbelow4starrating(
     pageIndex: number,
     pageSize: number,
@@ -4908,7 +4574,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getcusthaving5star(
     pageIndex: number,
     pageSize: number,
@@ -4961,7 +4626,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   gettotalorderpiechardata(
     pageIndex: number,
     pageSize: number,
@@ -4988,13 +4652,11 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getDistinctData1(
     TAB_ID: any,
     keywords: string,
     isMongo: boolean,
     filter: any
-
     // filter: string
   ): Observable<any> {
     var data = {
@@ -5009,7 +4671,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   // HSN Master
   getAllHSNSAC(
     pageIndex: number,
@@ -5031,7 +4692,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   CreateHSNSAC(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -5040,7 +4700,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateHSNSAC(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -5049,29 +4708,24 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createBannerMaster(role: any): Observable<any> {
     role.CLIENT_ID = this.clientId;
     // this.getHeader();
-
     return this.httpClient.post<any>(
       this.url + 'banner/create',
       JSON.stringify(role),
       this.options
     );
   }
-
   updateBannerMaster(role: any): Observable<any> {
     // this.getHeader();
     role.STATUS = role.STATUS == true ? 1 : 0;
-
     return this.httpClient.put<any>(
       this.url + 'banner/update',
       JSON.stringify(role),
       this.options
     );
   }
-
   getAllBannerMaster(
     pageIndex: number,
     pageSize: number,
@@ -5096,7 +4750,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getEarnings(
     pageIndex: number,
     pageSize: number,
@@ -5123,7 +4776,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateOrdersDetails(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -5132,7 +4784,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getchat(
     pageIndex: number,
     pageSize: number,
@@ -5153,18 +4804,15 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createchat(role: any): Observable<any> {
     role.CLIENT_ID = this.clientId;
     // this.getHeader();
-
     return this.httpClient.post<any>(
       this.url + 'jobchat/create',
       JSON.stringify(role),
       this.options
     );
   }
-
   getskillreq(
     pageIndex: number,
     pageSize: number,
@@ -5179,14 +4827,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'technicianSkillRequest/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   updateskillstatus(user: any): Observable<any> {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/technicianSkillRequest/updateSkillStatus',
@@ -5208,14 +4854,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'technicianSkillRequest/getStatusCount',
       JSON.stringify(data),
       this.options
     );
   }
-
   getcategoryhierarchyInventory(): Observable<any> {
     var data = {};
     return this.httpClient.post<any>(
@@ -5244,7 +4888,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   mapwarehouseTerritoryMapping(
     WAREHOUSE_ID: number,
     WAREHOUSE_MANAGER_ID: any,
@@ -5265,7 +4908,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getVarientData(
     pageIndex: number,
     pageSize: number,
@@ -5280,14 +4922,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/varient/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   CreateVarientData(data: any): Observable<any> {
     // data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -5296,7 +4936,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateVarientData(user: any): Observable<any> {
     // user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -5305,7 +4944,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   onImageUpload(
     userId: any,
     folderName: any,
@@ -5323,9 +4961,7 @@ export class ApiServiceService {
     this.options1 = {
       headers: this.httpHeaders1,
     };
-
     const fd = new FormData();
-
     fd.append('Image', selectedFile, filename);
     return this.httpClient.post<any>(
       appkeys.imgUrl + folderName,
@@ -5333,7 +4969,6 @@ export class ApiServiceService {
       this.options1
     );
   }
-
   onUpload1(userId: any, folderName: any, selectedFile: any, filename: any) {
     this.httpHeaders1 = new HttpHeaders({
       Accept: 'application/json',
@@ -5343,23 +4978,18 @@ export class ApiServiceService {
       supportkey: this.cookie.get('supportKey'),
       WP_CLIENT_ID: userId,
     });
-
     const queryParams = new HttpParams().set('WP_CLIENT_ID', userId); // Add WP_CLIENT_ID as a query parameter
-
     this.options1 = {
       headers: this.httpHeaders1,
     };
-
     const fd = new FormData();
     fd.append('Image', selectedFile, filename);
-
     return this.httpClient.post<any>(
       appkeys.imgUrl + folderName,
       fd,
       this.options1
     );
   }
-
   onUploadFiles(userId, file): Observable<any> {
     this.httpHeaders1 = new HttpHeaders({
       Accept: 'application/json',
@@ -5373,7 +5003,6 @@ export class ApiServiceService {
       headers: this.httpHeaders1,
     };
     const fd = new FormData();
-
     fd.append('Image', file);
     return this.httpClient.post<any>(
       this.imgUrl + 'WhatsAppTemplateImages',
@@ -5381,7 +5010,6 @@ export class ApiServiceService {
       this.options1
     );
   }
-
   globalSearch(
     pageIndex: number,
     pageSize: number,
@@ -5407,7 +5035,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   custToServiceRating(
     pageIndex: number,
     pageSize: number,
@@ -5423,14 +5050,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'customerServiceFeedback/getCustomerServiceFeedback',
       JSON.stringify(data),
       this.options
     );
   }
-
   getOrderSummaryreport(
     pageIndex: number,
     pageSize: number,
@@ -5451,7 +5076,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCustServicefeedbackreport(
     pageIndex: number,
     pageSize: number,
@@ -5472,7 +5096,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCustTechnicianfeedbackreport(
     pageIndex: number,
     pageSize: number,
@@ -5508,14 +5131,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'reports/refundReport',
       JSON.stringify(data),
       this.options
     );
   }
-
   getVendorPerformance(
     pageIndex: number,
     pageSize: number,
@@ -5531,14 +5152,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'reports/vendorPerformanceReport',
       JSON.stringify(data),
       this.options
     );
   }
-
   TechnicianwiseRepor(
     pageIndex: number,
     pageSize: number,
@@ -5554,7 +5173,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'reports/technicianwiseJobCardReport',
       JSON.stringify(data),
@@ -5576,14 +5194,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'reports/orderDetailedReport',
       JSON.stringify(data),
       this.options
     );
   }
-
   getTechnicianCustomerFeedbackReport(
     pageIndex: number,
     pageSize: number,
@@ -5599,14 +5215,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'reports/technicianCustomerFeedbackReport',
       JSON.stringify(data),
       this.options
     );
   }
-
   getorderCancellationReport(
     pageIndex: number,
     pageSize: number,
@@ -5622,7 +5236,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'reports/orderCancellationReport',
       JSON.stringify(data),
@@ -5669,7 +5282,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechnicianPerformanceReport(
     pageIndex: number,
     pageSize: number,
@@ -5712,7 +5324,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getWhatsappTransactionHistoryReport(
     pageIndex: number,
     pageSize: number,
@@ -5734,7 +5345,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getemailTransactionHistoryReport(
     pageIndex: number,
     pageSize: number,
@@ -5755,7 +5365,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getsmstransactionHistoryReport(
     pageIndex: number,
     pageSize: number,
@@ -5776,14 +5385,12 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getInventoryHirarchyInward(): Observable<any> {
     return this.httpClient.get<any>(
       this.baseUrl + 'api/inventory/getInventoryHirarchy',
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getb2bCustomerServceSummaryReport(
     pageIndex: number,
     pageSize: number,
@@ -5804,7 +5411,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getOrderwiseJobCardDetailedReport(
     pageIndex: number,
     pageSize: number,
@@ -5820,7 +5426,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'reports/orderwiseJobCardDetailedReport',
       JSON.stringify(data),
@@ -5861,14 +5466,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'globalTimeSlotMapping/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getTemplateCategoryData(
     pageIndex: number,
     pageSize: number,
@@ -5897,7 +5500,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateTemplateCategory(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -5917,7 +5519,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addLog(type, text, userId): Observable<number> {
     this.httpHeaders1 = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
@@ -5942,7 +5543,6 @@ export class ApiServiceService {
       this.options1
     );
   }
-
   getAllCoupons(
     pageIndex: number,
     pageSize: number,
@@ -5963,7 +5563,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createCoupon(coupon: Coupan): Observable<number> {
     coupon.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -5972,7 +5571,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCoupon(coupon: Coupan): Observable<number> {
     coupon.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -5981,7 +5579,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getAllCouponfacilities(
     pageIndex: number,
     pageSize: number,
@@ -6002,7 +5599,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCouponFacility(couponFacility: Coupanfacility): Observable<number> {
     couponFacility.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -6011,7 +5607,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createCouponFacility(couponFacility: Coupanfacility): Observable<number> {
     couponFacility.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -6020,7 +5615,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getAllCoupontypes(
     pageIndex: number,
     pageSize: number,
@@ -6041,7 +5635,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createCoupontype(coupontype: Coupontype): Observable<number> {
     coupontype.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -6050,7 +5643,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCoupontype(coupontype: Coupontype): Observable<number> {
     coupontype.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -6059,7 +5651,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   checkTextBoxIsValid1(value: any) {
     const expression = /^[A-Za-z1-9 ]*$/;
     return expression.test(String('' + value).toLowerCase());
@@ -6082,14 +5673,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<Faqresponse[]>(
       this.url + 'faqResponses/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   createFaqResponse(data: any): Observable<number> {
     return this.httpClient.post<number>(
       this.url + 'faqResponse/create/',
@@ -6097,7 +5686,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateFaqResponse(data: Faqresponse): Observable<number> {
     return this.httpClient.put<number>(
       this.url + 'faqResponse/update/',
@@ -6105,14 +5693,12 @@ export class ApiServiceService {
       this.options
     );
   }
-
   autoCloseTicket(): Observable<number> {
     return this.httpClient.post<number>(
       this.url + 'ticket/autoCloseTicket/',
       this.options
     );
   }
-
   submitNegativeFeedback(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -6121,7 +5707,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   gettickdeskDepartmentAdminMapping(
     pageIndex: number,
     pageSize: number,
@@ -6136,14 +5721,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'tickdeskDepartmentAdminMapping/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   gettickdeskSupportUserMapping(
     pageIndex: number,
     pageSize: number,
@@ -6158,14 +5741,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'tickdeskSupportUserMapping/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   getAllTimeSlot(
     pageIndex: number,
     pageSize: number,
@@ -6194,7 +5775,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateTimeSlot(department: any): Observable<any> {
     department.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -6203,7 +5783,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getplaceholder(
     pageIndex: number,
     pageSize: number,
@@ -6218,24 +5797,20 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'placeholder/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   createplaceholder(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
-
     return this.httpClient.post<any>(
       this.url + 'placeholder/create',
       JSON.stringify(data),
       this.options
     );
   }
-
   updateplaceholder(data: any): Observable<any> {
     return this.httpClient.put<any>(
       this.url + 'placeholder/update',
@@ -6243,7 +5818,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTemplateCategory(
     pageIndex: number,
     pageSize: number,
@@ -6259,14 +5833,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'tempaltecategory/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   getallTable(
     pageIndex: number,
     pageSize: number,
@@ -6282,7 +5854,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'placeholder/getTableData  ',
       JSON.stringify(data),
@@ -6304,7 +5875,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTicketGroupParent(
     pageIndex: number,
     pageSize: number,
@@ -6319,14 +5889,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any[]>(
       this.url + 'ticketGroup/getParent',
       JSON.stringify(data),
       this.options
     );
   }
-
   addBulkServicesForCoupon(
     COUPON_ID: number,
     SERVICE_DATA: any[]
@@ -6341,7 +5909,7 @@ export class ApiServiceService {
       this.options
     );
   }
-   addBulkTerritoryForCoupon(
+  addBulkTerritoryForCoupon(
     COUPON_ID: number,
     TERITORY_DATA: any[]
   ): Observable<any> {
@@ -6355,7 +5923,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getmappedcouponservice(
     pageIndex: number,
     pageSize: number,
@@ -6376,7 +5943,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getmappedcouponterritory(
     pageIndex: number,
     pageSize: number,
@@ -6408,8 +5974,7 @@ export class ApiServiceService {
       this.options
     );
   }
-
-   UnmappBulkCouponsTerritory(COUPON_ID: number, TERRITORY_DATA: any[]): Observable<any> {
+  UnmappBulkCouponsTerritory(COUPON_ID: number, TERRITORY_DATA: any[]): Observable<any> {
     var data = {
       COUPON_ID: COUPON_ID,
       TERRITORY_DATA: TERRITORY_DATA,
@@ -6427,16 +5992,13 @@ export class ApiServiceService {
       this.options
     );
   }
-
-   UnmappSingleCouponsTerritory(data: any): Observable<any> {
+  UnmappSingleCouponsTerritory(data: any): Observable<any> {
     return this.httpClient.put<any>(
       this.baseUrl + 'api/couponCodeTerritoryMapping/update',
       data,
       this.options
     );
   }
-
-
   // stock movement request
   stockMovementRequest(
     pageIndex: number,
@@ -6453,14 +6015,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryMovement/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllInnerStockMovementItemDetailsTable(
     pageIndex: number,
     pageSize: number,
@@ -6475,14 +6035,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'stockMovementRequestDetails/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   addStockMoveDetails(
     ID: number,
     data1: any[],
@@ -6506,7 +6064,6 @@ export class ApiServiceService {
       REQUESTED_BY: REQUESTED_BY,
       USER_ID: USER_ID,
     };
-
     return this.httpClient.post<any>(
       this.url + 'stockMovementRequest/checkMovementRequest',
       data,
@@ -6520,7 +6077,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   UpdateStockReqest11(user: any): Observable<any> {
     return this.httpClient.post<any>(
       this.url + 'stockMovementRequest/rejectRequest',
@@ -6528,19 +6084,14 @@ export class ApiServiceService {
       this.options
     );
   }
-
-
-
   createDepartment(department: any): Observable<any> {
     department.CLIENT_ID = this.clientId;
-
     return this.httpClient.post<any>(
       this.url + 'department/create/',
       JSON.stringify(department),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateDepartment(department: any): Observable<any> {
     department.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -6549,7 +6100,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllDepartments(
     pageIndex: number,
     pageSize: number,
@@ -6564,14 +6114,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'department/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllFaqHeads(
     pageIndex: number,
     pageSize: number,
@@ -6593,31 +6141,26 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createFaqHead(faqHead: Faqhead): Observable<any> {
     faqHead.CLIENT_ID = this.clientId;
     faqHead.STATUS = faqHead.STATUS ? 1 : 0;
     faqHead.IS_PARENT = faqHead.IS_PARENT ? 1 : 0;
-
     return this.httpClient.post<any[]>(
       this.url + 'faqHead/create/',
       JSON.stringify(faqHead),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateFaqHead(faqHead: Faqhead): Observable<any> {
     faqHead.CLIENT_ID = this.clientId;
     faqHead.STATUS = faqHead.STATUS ? 1 : 0;
     faqHead.IS_PARENT = faqHead.IS_PARENT ? 1 : 0;
-
     return this.httpClient.put<any[]>(
       this.url + 'faqHead/update/',
       JSON.stringify(faqHead),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllFaqs(
     pageIndex: number,
     pageSize: number,
@@ -6639,7 +6182,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createFaq(faq: Faq): Observable<any> {
     faq['USER_ID'] = this.cookie.get('userId');
     faq.CLIENT_ID = this.clientId;
@@ -6650,7 +6192,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateFaq(faq: Faq): Observable<any> {
     faq['USER_ID'] = this.cookie.get('userId');
     faq.CLIENT_ID = this.clientId;
@@ -6661,7 +6202,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getKnowledgeBaseCategoryData(
     pageIndex: number,
     pageSize: number,
@@ -6690,7 +6230,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateKnowledgeBaseCategoryData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -6699,7 +6238,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getKnowledgeBasesubCategoryData(
     pageIndex: number,
     pageSize: number,
@@ -6728,7 +6266,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateKnowledgeBasesubCategoryData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -6737,7 +6274,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getKnowledgeBaseData(
     pageIndex: number,
     pageSize: number,
@@ -6766,7 +6302,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateKnowledgeBaseData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -6775,19 +6310,16 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createTicketGroup(ticketGroup: Ticketgroup): Observable<any> {
     ticketGroup.IS_LAST = ticketGroup.IS_LAST ? 1 : 0;
     ticketGroup.CLIENT_ID = this.clientId;
     this.getheader();
-
     return this.httpClient.post<number>(
       this.url + 'ticketGroup/create/',
       JSON.stringify(ticketGroup),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getMappingFaqs(ticketId: number, headID: number, FAQ_TYPE: any): Observable<any> {
     var data = {
       TICKET_GROUP_ID: ticketId,
@@ -6796,28 +6328,24 @@ export class ApiServiceService {
       ORG_ID: 1,
     };
     this.getheader();
-
     return this.httpClient.post<Ticketfaqmapping[]>(
       this.url + 'ticketFaqMapping/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   addMappingFaqs(ticketId: number, data1: string[]): Observable<any> {
     var data = {
       TICKET_GROUP_ID: ticketId,
       data: data1,
     };
     this.getheader();
-
     return this.httpClient.post<number>(
       this.url + 'ticketFaqMapping/addBulk',
       data,
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   MarkAsUnmarkDept(BACKOFFICE_ID: number, BACKOFFICE_NAME: any, USER_ID: any, datas: any[]): Observable<any> {
     var data = {
       BACKOFFICE_ID: BACKOFFICE_ID,
@@ -6831,7 +6359,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   markunmappedDepartment(BACKOFFICE_ID: number, BACKOFFICE_NAME: any, USER_ID: any, datas: any[]): Observable<any> {
     var data = {
       BACKOFFICE_ID: BACKOFFICE_ID,
@@ -6846,7 +6373,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   markunmapDepartment(
     pageIndex: number,
     pageSize: number,
@@ -6870,7 +6396,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addMappingDeptservice(
     BACKOFFICE_ID: number,
     BACKOFFICE_NAME: any,
@@ -6888,12 +6413,10 @@ export class ApiServiceService {
     return this.httpClient.post<any>(
       // this.baseUrl + 'api/service/mapSkills',
       this.baseUrl + 'api/backofficeTeam/mapDepartment',
-
       data,
       this.options
     );
   }
-
   mappedDepartments(
     pageIndex: number,
     pageSize: number,
@@ -6914,7 +6437,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   CreateStockRequpdate(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -6923,7 +6445,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createMovement(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -6932,7 +6453,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   gettechniciancertificatereq(
     pageIndex: number,
     pageSize: number,
@@ -6947,14 +6467,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'techniciancertificaterequest/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updatetechniciancertificatestatus(user: any): Observable<any> {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/techniciancertificaterequest/updateCertificateStatus',
@@ -6976,14 +6494,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'techniciancertificaterequest/getStatusCount',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getHelpDocumentCategoryData(
     pageIndex: number,
     pageSize: number,
@@ -7012,7 +6528,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateHelpDocumentCategoryData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -7021,7 +6536,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   // 12-02-25 changes
   getInventoryInward(
     pageIndex: number,
@@ -7037,59 +6551,48 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryInward/get ',
       JSON.stringify(data),
       options
     );
   }
-
   createInventoryInward(inwardData: any): Observable<any> {
     inwardData.CLIENT_ID = this.clientId;
-
     let data = {
       INVENTORY_INWARD_DATA: inwardData,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryInward/inwardInventory',
       JSON.stringify(data),
       options
     );
   }
-
   updateInventoryInward(inwardData: any): Observable<any> {
     inwardData.forEach((element: any) => {
       element.CLIENT_ID = this.clientId;
     });
-
     let data = {
       INVENTORY_INWARD_DATA: inwardData,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryInward/inwardInventory',
       JSON.stringify(data),
       options
     );
   }
-
   // 14-02-25 changes
   getInventoryInwardDetails(
     pageIndex: number,
@@ -7105,36 +6608,30 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryInwardDetails/get ',
       JSON.stringify(data),
       options
     );
   }
-
   onInventorymasterImageUpload(imageData: any, id: any): Observable<any> {
     let data = {
       DATA: imageData,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventory/' + id + '/mapImagesToInventory',
       JSON.stringify(data),
       options
     );
   }
-
   getInventoryImageMapping(
     pageIndex: number,
     pageSize: number,
@@ -7149,19 +6646,16 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/inventoryImageMapping/get',
       JSON.stringify(data),
       options
     );
   }
-
   onInventorymasterImageDelete(
     imageData: any,
     masterID: any,
@@ -7170,19 +6664,16 @@ export class ApiServiceService {
     let data = {
       IMAGE_URL: imageData,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventory/' + masterID + '/' + id + '/deleteInventoryImage',
       JSON.stringify(data),
       options
     );
   }
-
   getHelpDocumentSubcategoryData(
     pageIndex: number,
     pageSize: number,
@@ -7211,7 +6702,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateHelpDocumentSubategoryData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -7220,7 +6710,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   gethelpDocumentCategory(
     pageIndex: number,
     pageSize: number,
@@ -7235,7 +6724,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'helpDocumentCategory/get',
       JSON.stringify(data),
@@ -7256,14 +6744,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<category[]>(
       this.url + 'helpDocumentSubCategory/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllTickets(
     pageIndex: number,
     pageSize: number,
@@ -7278,7 +6764,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.url + 'ticket/get',
@@ -7286,7 +6771,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' } // Correct placement of this.options
     );
   }
-
   getAllemployeeMaster(
     pageIndex: number,
     pageSize: number,
@@ -7301,7 +6785,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.url + 'user/get',
@@ -7309,7 +6792,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' } // Correct placement of this.options
     );
   }
-
   getAllTicketGroups(
     pageIndex: number,
     pageSize: number,
@@ -7324,7 +6806,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.url + 'ticketGroup/get',
@@ -7332,7 +6813,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' } // Correct placement of this.options
     );
   }
-
   getAllTicketGroupsprevious(
     pageIndex: number,
     pageSize: number,
@@ -7349,7 +6829,6 @@ export class ApiServiceService {
       filter: filter,
       ID: ID,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.url + 'ticketGroup/getTicketGroups',
@@ -7357,7 +6836,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' } // Correct placement of this.options
     );
   }
-
   updateTicketGroup(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -7366,7 +6844,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createTicketDetail(ticket: any): Observable<any> {
     ticket['ORG_ID'] = Number(1);
     this.getheader();
@@ -7376,7 +6853,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createTicket(ticket: any): Observable<any> {
     ticket['ORG_ID'] = Number(1);
     this.getheader();
@@ -7386,7 +6862,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllTicketDetails(
     pageIndex: number,
     pageSize: number,
@@ -7402,14 +6877,12 @@ export class ApiServiceService {
       filter: filter,
     };
     this.getheader();
-
     return this.httpClient.post<Ticketdetails[]>(
       this.url + 'ticketDetails/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateTicket(ticket: Ticket): Observable<any> {
     ticket.CLIENT_ID = this.clientId;
     ticket['KEY'] =
@@ -7419,14 +6892,12 @@ export class ApiServiceService {
     ticket['ACTION'] =
       ticket['ACTION'] != undefined && ticket['ACTION'] ? ticket['ACTION'] : '';
     this.getheader();
-
     return this.httpClient.put<number>(
       this.url + 'ticket/update/',
       JSON.stringify(ticket),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   onUpload2(folderName, selectedFile, filename) {
     this.httpHeaders1 = new HttpHeaders({
       Accept: 'application/json',
@@ -7436,14 +6907,11 @@ export class ApiServiceService {
       supportkey: this.cookie.get('supportKey'),
       Token: this.cookie.get('token'),
     });
-
     this.options1 = {
       headers: this.httpHeaders1,
     };
-
     const fd = new FormData();
     fd.append('Image', selectedFile, filename);
-
     return this.httpClient.post(this.imgUrl + folderName, fd, this.options1);
   }
   getMappingFaqs2(ticketId: number): Observable<any> {
@@ -7458,7 +6926,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   transferTicket(ticket: Ticket): Observable<any> {
     ticket.CLIENT_ID = this.clientId;
     ticket['KEY'] =
@@ -7466,14 +6933,12 @@ export class ApiServiceService {
         ? 'USER'
         : 'SUPPORT_USER';
     this.getheader();
-
     return this.httpClient.put<number>(
       this.url + 'ticket/update/',
       JSON.stringify(ticket),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateTicketGroup1(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -7482,7 +6947,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   approverejectmomentreq(user: any): Observable<any> {
     return this.httpClient.post<any>(
       this.url + 'inventoryMovement/approveMovement',
@@ -7490,7 +6954,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   stockMovementRequestnew(
     pageIndex: number,
     pageSize: number,
@@ -7506,14 +6969,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryMovement/detailedList',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllInnerStockMovementItemDetailsTableeee(
     pageIndex: number,
     pageSize: number,
@@ -7531,12 +6992,9 @@ export class ApiServiceService {
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
-
     const options = { headers: httpHeaders };
-
     // Constructing HttpParams (If needed, uncomment and use it)
     let params = new HttpParams();
-
     return this.httpClient.get<any>(
       `${this.url}inventoryMovement/${movementRequestMasterId}/movementDetails`,
       { headers: httpHeaders, params, observe: 'response' } // Ensure headers are passed correctly
@@ -7559,37 +7017,27 @@ export class ApiServiceService {
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
-
     const options = { headers: httpHeaders };
-
     // Constructing HttpParams (If needed, uncomment and use it)
     let params = new HttpParams();
-
     return this.httpClient.get<any>(
       `${this.url}inventoryMovement/${movementRequestMasterId}/movementList`,
       { headers: httpHeaders, params, observe: 'response' } // Ensure headers are passed correctly
     );
   }
-
-
-
   // 15-02-25 changes
   inventoryAdjestment(adjestmentData: any): Observable<any> {
     adjestmentData.CLIENT_ID = this.clientId;
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryAdjustment/adjustmentInventory',
       JSON.stringify(adjestmentData),
       options
     );
   }
-
-
   // Coupon Detailed Report Service
   getAllcouponuseddetailedreport(
     pageIndex: number,
@@ -7631,7 +7079,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getAllcouponsummaryreport(
     pageIndex: number,
     pageSize: number,
@@ -7670,7 +7117,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getJobTraining(
     pageIndex: number,
     pageSize: number,
@@ -7691,7 +7137,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   creatJobTraining(organization: any): Observable<any> {
     organization.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -7700,7 +7145,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateJobTraining(organization: any): Observable<any> {
     organization.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -7709,7 +7153,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllOrganizations(
     pageIndex: number,
     pageSize: number,
@@ -7725,14 +7168,12 @@ export class ApiServiceService {
       filter: filter,
     };
     this.getheader();
-
     return this.httpClient.post<any>(
       this.url + 'organisation/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getCustomerCouponSummaryReport(
     pageIndex: number,
     pageSize: number,
@@ -7753,7 +7194,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCustomerCouponDetailedReport(
     pageIndex: number,
     pageSize: number,
@@ -7779,7 +7219,6 @@ export class ApiServiceService {
       // { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllInventoryBrand(
     pageIndex: number,
     pageSize: number,
@@ -7800,7 +7239,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllBrands(
     pageIndex: number,
     pageSize: number,
@@ -7829,7 +7267,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateBrand(department: any): Observable<any> {
     department.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -7838,7 +7275,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getbackOfficeDepartmentMapping(
     pageIndex: number,
     pageSize: number,
@@ -7854,14 +7290,12 @@ export class ApiServiceService {
       filter: filter,
     };
     this.getheader();
-
     return this.httpClient.post<any>(
       this.url + 'backofficeDepartmentMapping/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getBreadInChat(
     pageIndex: number,
     pageSize: number,
@@ -7881,14 +7315,12 @@ export class ApiServiceService {
       ORG_ID: 1,
     };
     this.getheader();
-
     return this.httpClient.post<Ticket[]>(
       this.url + 'ticketGroup/getParent',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getGroupWiseAutoCloseTicketCount(
     pageIndex: number,
     pageSize: number,
@@ -7908,14 +7340,12 @@ export class ApiServiceService {
       END_DATE: END_DATE,
     };
     this.getheader();
-
     return this.httpClient.post<any>(
       this.url + 'ticket/getGroupWiseAutoCloseTicketCount',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getCreatorWiseAutoClose(
     pageIndex: number,
     pageSize: number,
@@ -7937,7 +7367,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   unmapBulkInventory(
     COUPON_ID: number,
     INVENTORY_DATA: any[]
@@ -7952,7 +7381,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   unmapSingleInventory(data: any): Observable<any> {
     return this.httpClient.put<any>(
       this.baseUrl + 'api/couponCodeInventoryMapping/update',
@@ -7974,7 +7402,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getmappedinventoryservice(
     pageIndex: number,
     pageSize: number,
@@ -8017,7 +7444,6 @@ export class ApiServiceService {
       DEPARTMENT_IDFilter: DEPARTMENT_IDFilter,
       TRANSFER_USER_IDFilter: TRANSFER_USER_IDFilter,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.url + 'ticketTransferReport/get',
@@ -8053,7 +7479,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateDashboard(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -8078,7 +7503,6 @@ export class ApiServiceService {
       filter: filter,
       ID: ID,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.url +
@@ -8087,7 +7511,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' } // Correct placement of this.options
     );
   }
-
   getTicketGroupWiseTimeTakenToCloseReport(
     pageIndex: number,
     pageSize: number,
@@ -8104,7 +7527,6 @@ export class ApiServiceService {
       filter: filter,
       ID: ID,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.url +
@@ -8113,7 +7535,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' } // Correct placement of this.options
     );
   }
-
   getGroupWiseAutoClose(
     pageIndex: number,
     pageSize: number,
@@ -8138,9 +7559,7 @@ export class ApiServiceService {
       DEPARTMENT_ID: DEPARTMENT_ID,
       TICKET_GENERATOR_BRANCH_ID: TICKET_GENERATOR_BRANCH_ID,
     };
-
     this.getheader();
-
     return this.httpClient.post<any>(
       this.url + 'ticket/getGroupWiseAutoCloseTicketReport',
       JSON.stringify(data),
@@ -8165,7 +7584,6 @@ export class ApiServiceService {
       ID: ID,
       ORG_ID: ORG_ID,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.url + 'ticketGroupwiseSummaryReport/getTicketGroupwiseSummaryReport',
@@ -8173,50 +7591,41 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' } // Correct placement of this.options
     );
   }
-
   createInventory(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventory/create',
       JSON.stringify(data),
       options
     );
   }
-
   updateInventory(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.put<any>(
       this.url + 'inventory/update',
       JSON.stringify(user),
       options
     );
   }
-
   addupdatebulkdata(data: any): Observable<any> {
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventory/addOrUpdateInventory',
       JSON.stringify(data),
       options
     );
   }
-
   getTicketAutoClose(
     pageIndex: number,
     pageSize: number,
@@ -8254,14 +7663,12 @@ export class ApiServiceService {
       ORG_ID: 1,
     };
     this.getheader();
-
     return this.httpClient.post<Ticket[]>(
       this.url + 'ticket/getUserwiseReport',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   // shubham Reschedule job 20-02-2025
   getjobreschedulereq(
     pageIndex: number,
@@ -8277,14 +7684,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'jobRescheduleTransactions/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getjobreqcount(
     pageIndex: number,
     pageSize: number,
@@ -8299,14 +7704,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'jobRescheduleTransactions/getCounts',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getjobCardInventories(
     pageIndex: number,
     pageSize: number,
@@ -8327,7 +7730,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   Inventorypurchase(
     pageIndex: number,
     pageSize: number,
@@ -8350,7 +7752,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAppLanguageData(
     pageIndex: number,
     pageSize: number,
@@ -8372,18 +7773,15 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAppLanguageDataFilterwise(
     movementRequestMasterId: number
   ): Observable<any> {
     this.getheader();
-
     return this.httpClient.get<any[]>(
       `${this.url}appLanguage/${movementRequestMasterId}/getAppLanguageMaster`,
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createAppLanguageData(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -8392,9 +7790,7 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   //appLanguage/create
-
   updateAppLanguageData(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -8403,7 +7799,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   SaveTranslationLanguageData(user: any): Observable<any> {
     //user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -8412,7 +7807,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createTranslationLanguageData(data: any): Observable<any> {
     //data.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -8421,7 +7815,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   acceptorderforshop(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -8430,7 +7823,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   approverejebtorder(user: any): Observable<any> {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/jobRescheduleTransactions/updateStatus',
@@ -8438,7 +7830,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getActionLogforshoppp(
     pageIndex: number,
     pageSize: number,
@@ -8459,7 +7850,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getshoporderrattingdata(
     pageIndex: number,
     pageSize: number,
@@ -8474,7 +7864,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/customerProductFeedback/getCustomerProductFeedback',
       JSON.stringify(data),
@@ -8498,18 +7887,14 @@ export class ApiServiceService {
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
-
     const options = { headers: httpHeaders };
-
     // Constructing HttpParams (If needed, uncomment and use it)
     let params = new HttpParams();
-
     return this.httpClient.get<any>(
       `${this.url}shopOrder/${orderid}/orderDetails`,
       { headers: httpHeaders, params, observe: 'response' } // Ensure headers are passed correctly
     );
   }
-
   getshopOrdersData(
     pageIndex: number,
     pageSize: number,
@@ -8530,7 +7915,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   paymentgatewaytransactionReport(
     pageIndex: number,
     pageSize: number,
@@ -8547,7 +7931,6 @@ export class ApiServiceService {
       filter: filter,
       ID: ID,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.url + 'paymentGatewayTransactions/get',
@@ -8555,9 +7938,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' } // Correct placement of this.options
     );
   }
-
-
-
   jobCardChatDetailsnew(
     pageIndex: number,
     pageSize: number,
@@ -8578,7 +7958,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getInventoryAdjestmentHistory(
     pageIndex: number,
     pageSize: number,
@@ -8593,19 +7972,16 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryAdjustment/get ',
       JSON.stringify(data),
       options
     );
   }
-
   getInventoryWarehouseStockManagement(
     pageIndex: number,
     pageSize: number,
@@ -8620,19 +7996,16 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventory/getDetailedInventoryStock',
       JSON.stringify(data),
       options
     );
   }
-
   getInventorySerialNoBatch(
     type,
     warehouseid,
@@ -8664,7 +8037,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getChannelData(
     pageIndex: number,
     pageSize: number,
@@ -8685,7 +8057,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createChannel(organization: any): Observable<any> {
     organization.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -8694,7 +8065,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateChannel(organization: any): Observable<any> {
     organization.CLIENT_ID = this.clientId;
     return this.httpClient.put<number>(
@@ -8703,8 +8073,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
-
   TechnicianStockRequpdate(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -8713,7 +8081,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createTechnicianMovement(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -8737,14 +8104,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'technicianMovement/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   TechnicianstockMovementRequestnew(
     pageIndex: number,
     pageSize: number,
@@ -8760,7 +8125,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'technicianMovement/detailedList',
       JSON.stringify(data),
@@ -8784,18 +8148,14 @@ export class ApiServiceService {
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
-
     const options = { headers: httpHeaders };
-
     // Constructing HttpParams (If needed, uncomment and use it)
     let params = new HttpParams();
-
     return this.httpClient.get<any>(
       `${this.url}technicianMovement/${movementRequestMasterId}/movementDetails`,
       { headers: httpHeaders, params, observe: 'response' } // Ensure headers are passed correctly
     );
   }
-
   getTechnicianDataforStockMovement(
     pageIndex: number,
     pageSize: number,
@@ -8823,14 +8183,12 @@ export class ApiServiceService {
       USER_ID: userId,
       SESSION_KEY: sessionKey,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + `api/technician/clearId`,
       JSON.stringify(data),
       this.options
     );
   }
-
   activatthisecustomer(CUSTOMER_ID: any, NAME: any, MOBILE_NO: any): Observable<any> {
     // API endpoint with the userId as a path parameter
     var data = {
@@ -8838,14 +8196,12 @@ export class ApiServiceService {
       NAME: NAME,
       MOBILE_NO: MOBILE_NO,
     };
-
     return this.httpClient.post<any>(
       this.baseUrl + `api/customer/activateProfile`,
       JSON.stringify(data),
       this.options
     );
   }
-
   getCouriers(
     PICKUP_PINCODE: any, DELIVERY_PINCODE: any, WEIGHT: any, LENGTH: any, BREADTH: any, HEIGHT: any
   ): Observable<any> {
@@ -8858,7 +8214,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getStockMgtReportReport(
     pageIndex: number,
     pageSize: number,
@@ -8899,7 +8254,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getTechniciansPartRequestReport(
     pageIndex: number,
     pageSize: number,
@@ -8962,7 +8316,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getItemlogs(
     pageIndex: number,
     pageSize: number,
@@ -9001,19 +8354,16 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryReports/getStockMgtReport',
       JSON.stringify(data),
       options
     );
   }
-
   getInventoryLog(
     pageIndex: number,
     pageSize: number,
@@ -9052,9 +8402,7 @@ export class ApiServiceService {
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
-
     const options = { headers: httpHeaders };
-
     let params = new HttpParams();
     if (filter) {
       params = params.set('filter', filter);
@@ -9088,9 +8436,7 @@ export class ApiServiceService {
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
-
     const options = { headers: httpHeaders };
-
     let params = new HttpParams();
     if (filter) {
       params = params.set('filter', filter);
@@ -9106,9 +8452,6 @@ export class ApiServiceService {
       { headers: httpHeaders, params, observe: 'response' } // Ensure headers are passed correctly
     );
   }
-
-
-
   updateStockforOrder(data: any): Observable<any> {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/inventory/updateStockforOrder',
@@ -9116,7 +8459,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getInventoryHirarchyInwardFilterWise2(type, warehouseid, iswmanager, technicianid, isFirst, MOVMENT_TYPE: any): Observable<any> {
     var data = {
       INVENTORY_TRACKING_TYPE: type,
@@ -9133,7 +8475,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getInventoryHirarchyInwardFilterWise(type, warehouseid, isFirst): Observable<any> {
     var data = {
       INVENTORY_TRACKING_TYPE: type,
@@ -9147,7 +8488,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getStocksbyCategory(
     pageIndex: number,
     pageSize: number,
@@ -9162,19 +8502,16 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     let options = {
       ...this.options,
       observe: 'response' as const,
     };
-
     return this.httpClient.post<any>(
       this.url + 'inventoryReports/getStocksbyCategory',
       JSON.stringify(data),
       options
     );
   }
-
   getStocksbyUnitReport(
     pageIndex: number,
     pageSize: number,
@@ -9195,7 +8532,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getEmailBodyValues(
     pageIndex: number,
     pageSize: number,
@@ -9218,80 +8554,42 @@ export class ApiServiceService {
       this.options
     );
   }
-
   notiDetailsAddBulk(
-
     // empID: number,
-
     title: string,
-
     desc: string,
-
     sharingType: number,
-
     nData: any,
-
     orgId: number,
-
     TYPE: any,
-
     ATTACHMENT: string,
-
     MEDIA_TYPE: string,
-
     SENDER_ID: any,
-
     NOTIFICATION_TYPE: string,
-
     TOPIC_NAME: string,
-
   ): Observable<any> {
     var data = {
-
       TITLE: title,
-
       DESCRIPTION: desc,
-
       data: nData,
-
       SHARING_TYPE: sharingType,
-
       // CUSTOMER_ID: empID,
-
       ATTACHMENT: ATTACHMENT,
-
       CLIENT_ID: this.clientId,
-
       ORG_ID: 1,
-
       IS_PANEL: 1,
-
       TYPE: TYPE,
-
       MEDIA_TYPE: MEDIA_TYPE,
-
       SENDER_ID: SENDER_ID,
-
       NOTIFICATION_TYPE: NOTIFICATION_TYPE,
-
       TOPIC_NAME: TOPIC_NAME
-
     };
-
-
-
     return this.httpClient.post<[]>(
-
       this.url + 'notification/sendNotification',
-
       JSON.stringify(data),
-
       { headers: this.httpHeaders, observe: 'response' }
-
     );
-
   }
-
   createChannels(form: any): Observable<any> {
     form.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -9309,14 +8607,12 @@ export class ApiServiceService {
     );
   }
   createterritoryTimeSlot(department: any): Observable<any> {
-
     return this.httpClient.post<any>(
       this.url + 'globalTimeSlotMapping/create',
       JSON.stringify(department),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   updateterritoryTimeSlot(department: any): Observable<any> {
     department.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -9325,7 +8621,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getTechnicianCashCollectionReport(
     pageIndex: number,
     pageSize: number,
@@ -9346,7 +8641,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   gettechniciandaylogsreport(
     pageIndex: number,
     pageSize: number,
@@ -9366,14 +8660,12 @@ export class ApiServiceService {
       searchFields: searchFields,
     };
     this.getheader();
-
     return this.httpClient.post<any>(
       this.url + 'technicainDayLog/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   gettechnicianactivitycalreport(
     pageIndex: number,
     pageSize: number,
@@ -9393,14 +8685,12 @@ export class ApiServiceService {
       searchFields: searchFields,
     };
     this.getheader();
-
     return this.httpClient.post<any>(
       this.url + 'technicianActivityCalender/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getDistinctOrderNumbers(
     pageIndex: number,
     pageSize: number,
@@ -9421,7 +8711,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   gettechnicianactivitylogsreport(
     TECHNICIAN_ID: any,
     FROM_DATE: any,
@@ -9455,7 +8744,6 @@ export class ApiServiceService {
       TERRITORY_ID: TERRITORY_ID,
     };
     this.getheader();
-
     return this.httpClient.post<any>(
       this.url + 'technicainDayLog/getTechnicianTimeSheet',
       JSON.stringify(data),
@@ -9475,7 +8763,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   NonSubscribedChannels(
     data: any
   ): Observable<any> {
@@ -9488,23 +8775,19 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   unsubscribeToMultipleTopics(topics: string[]): Observable<any> {
     const fcmToken = this.cookie.get('CLOUD_ID');
     if (!fcmToken) {
       console.error('No FCM token available!');
       return of(null);
     }
-
     this.getheader();
-
     return this.httpClient.post<any>(
       this.url + 'notification/unsubscribeMultiple',
       { token: fcmToken, topics },
       this.options
     );
   }
-
   //Sanjana
   getMapTechnicianData11(
     pageIndex: number,
@@ -9528,7 +8811,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getCustomerTechnicianmapdata(
     pageIndex: number,
     pageSize: number,
@@ -9549,7 +8831,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   addCustomerTechnicianMapping(
     CUSTOMER_ID: number,
     datas: any[],
@@ -9568,7 +8849,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   markasinactivedataTechnician(
     CUSTOMER_ID: number,
     datas: any[]
@@ -9583,7 +8863,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   gettechciansheduledata(
     pageIndex: number,
     pageSize: number,
@@ -9597,7 +8876,6 @@ export class ApiServiceService {
     CUSTOMER_TYPE: any,
     VENDOR_ID: any,
     IS_SCHEDULED_BY: any
-
   ): Observable<any> {
     var data = {
       pageIndex: pageIndex,
@@ -9619,7 +8897,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   createCustomerAddLogins(customer: customerAddLogin): Observable<number> {
     customer.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -9628,7 +8905,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateCustomerAddLogins(customer: customerAddLogin): Observable<number> {
     customer.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -9657,8 +8933,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
-
   generatetInvoice(data: any): Observable<number> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.post<number>(
@@ -9714,7 +8988,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   checkEmailTech(
     EMAIL_ID: number,
     MOBILE_NUMBER: number, TECHNICIAN_ID: any, TYPE: any
@@ -9731,12 +9004,10 @@ export class ApiServiceService {
       this.options
     );
   }
-
   sendotpp(EMAIL_ID: string): Observable<any> {
     const data = {
       EMAIL_ID: EMAIL_ID,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.baseUrl + 'admin/sendOTP',
@@ -9744,7 +9015,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   verifyotpp(EMAIL_ID: string, OTP: string): Observable<any> {
     const data = {
       EMAIL_ID: EMAIL_ID,
@@ -9757,7 +9027,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   changepassword(
     NEW_PASSWORD: string,
     USER_ID: number,
@@ -9775,7 +9044,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getTechnicianunMappedpincodesData(
     pageIndex: number,
     pageSize: number,
@@ -9820,8 +9088,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
-
   detailedJobReport(
     pageIndex: number,
     pageSize: number,
@@ -9842,9 +9108,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
-
-
   getunmappedInventoryservice(
     COUPON_ID: number,
     CATEGORY_ID: number,
@@ -9868,11 +9131,9 @@ export class ApiServiceService {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/coupon/inventory/get',
       JSON.stringify(data),
-
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getUnmappedcouponservices(
     COUPON_ID: number,
     CATEGORY_ID: number,
@@ -9881,7 +9142,8 @@ export class ApiServiceService {
     pageSize: number,
     sortKey: string,
     sortValue: string,
-    filter: string
+    filter: string,
+    serviceType: any
   ): Observable<any> {
     var data = {
       COUPON_ID: COUPON_ID,
@@ -9892,6 +9154,7 @@ export class ApiServiceService {
       sortKey: sortKey,
       sortValue: sortValue,
       filter: filter,
+      SERVICE_TYPE: serviceType
     };
     return this.httpClient.post<any>(
       this.baseUrl + 'api/coupon/services/get',
@@ -9919,7 +9182,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getuserloginlogsReport(
     pageIndex: number,
     pageSize: number,
@@ -9940,9 +9202,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
-
-
   getCustomerEmailMapping(
     pageIndex: number,
     pageSize: number,
@@ -9963,7 +9222,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   mapCustomerEmails(
     datas: any
   ): Observable<any> {
@@ -9973,7 +9231,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   mapCustomerEmailsUpdate(
     datas: any
   ): Observable<any> {
@@ -9983,7 +9240,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getAPKDetails(
     pageIndex: number,
     pageSize: number,
@@ -10004,7 +9260,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   getAPKInfo(
     pageIndex: number,
     pageSize: number,
@@ -10019,21 +9274,16 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<[]>(
       this.baseUrl + 'globalSetting/getVersion',
-
       JSON.stringify(data),
-
       this.options
     );
   }
-
   checkOnlineStatus(): boolean {
     return navigator.onLine;
   }
   apkUrl = this.baseUrl + 'upload/App/';
-
   onFileUploadWithProgress(
     folderName,
     selectedFile,
@@ -10045,38 +9295,25 @@ export class ApiServiceService {
       applicationkey: 'AfIpESwBr5eHp7w3',
       Token: this.cookie.get('token'),
     });
-
     const fd = new FormData();
-
     fd.append('Apk', selectedFile, filename);
-
     let params = new HttpParams();
-
     const options = {
       headers: this.httpHeaders1,
-
       params: params,
-
       reportProgress: true,
     };
-
     const req = new HttpRequest('POST', this.apkUrl, fd, options);
-
     return this.httpClient.request(req);
   }
-
   updateGlobalSettingInfo(apkInfo: any): Observable<any> {
     apkInfo.CLIENT_ID = this.clientId;
-
     return this.httpClient.put<any>(
       this.baseUrl + 'globalSetting/updatedVersion/',
-
       JSON.stringify(apkInfo),
-
       this.options
     );
   }
-
   TechnicianstockMovementRequestnewCust(
     pageIndex: number,
     pageSize: number,
@@ -10092,14 +9329,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'customerMovement/detailedList',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getAllInnerStockMovementItemDetailsTableeeecust(
     pageIndex: number,
     pageSize: number,
@@ -10117,12 +9352,9 @@ export class ApiServiceService {
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
-
     const options = { headers: httpHeaders };
-
     // Constructing HttpParams (If needed, uncomment and use it)
     let params = new HttpParams();
-
     return this.httpClient.get<any>(
       `${this.url}customerMovement/${movementRequestMasterId}/movementDetails`,
       { headers: httpHeaders, params, observe: 'response' } // Ensure headers are passed correctly
@@ -10145,18 +9377,14 @@ export class ApiServiceService {
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
-
     const options = { headers: httpHeaders };
-
     // Constructing HttpParams (If needed, uncomment and use it)
     let params = new HttpParams();
-
     return this.httpClient.get<any>(
       `${this.url}customerMovement/${movementRequestMasterId}/movementList`,
       { headers: httpHeaders, params, observe: 'response' } // Ensure headers are passed correctly
     );
   }
-
   getAllInnerTechnicianStockMovementItemDetailsTableeeecust(
     pageIndex: number,
     pageSize: number,
@@ -10174,18 +9402,14 @@ export class ApiServiceService {
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
-
     const options = { headers: httpHeaders };
-
     // Constructing HttpParams (If needed, uncomment and use it)
     let params = new HttpParams();
-
     return this.httpClient.get<any>(
       `${this.url}customerMovement/${movementRequestMasterId}/movementDetails`,
       { headers: httpHeaders, params, observe: 'response' } // Ensure headers are passed correctly
     );
   }
-
   getAllInnerStockMovementItemDetailsTablecust(
     pageIndex: number,
     pageSize: number,
@@ -10200,14 +9424,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'customerMovement/get',
       JSON.stringify(data),
       this.options
     );
   }
-
   TechnicianstockMovementRequestcust(
     pageIndex: number,
     pageSize: number,
@@ -10223,14 +9445,12 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'customerMovement/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   TechnicianStockRequpdatecust(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -10239,7 +9459,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   createTechnicianMovementcust(user: any): Observable<any> {
     user.CLIENT_ID = this.clientId;
     return this.httpClient.post<any>(
@@ -10248,9 +9467,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
-
-
   getcustomertransfer(
     pageIndex: number,
     pageSize: number,
@@ -10269,10 +9485,8 @@ export class ApiServiceService {
       this.url + 'customerMovement/getCustomers',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
-
     );
   }
-
   gettechniciantransfer(
     CUSTOMER_ID: any
   ): Observable<any> {
@@ -10283,10 +9497,8 @@ export class ApiServiceService {
       this.url + 'customerMovement/getTechnicians',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
-
     );
   }
-
   getInventoryHirarchyInwardFilterWise2cust(CUSTOMER_ID: any, TECHNICIAN_ID: any): Observable<any> {
     var data = {
       CUSTOMER_ID: CUSTOMER_ID,
@@ -10298,16 +9510,13 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   channelSubscribedUsers(data: any): Observable<any> {
-
     return this.httpClient.post<any>(
       this.baseUrl + 'api/channelSubscribedUsers/create',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   prepareDescriptionWithUploads(
     html: string,
     folderName: string,
@@ -10315,44 +9524,36 @@ export class ApiServiceService {
   ): void {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
-
     const imgElements = Array.from(tempDiv.querySelectorAll('img'));
     const uploadObservables: Observable<any>[] = [];
     const replacements: { element: HTMLImageElement; filename: string }[] = [];
-
     imgElements.forEach((img) => {
       const src = img.getAttribute('src');
       if (src && (src.startsWith('data:image/') || src.startsWith('blob:'))) {
         const filename = `image_${Date.now()}_${Math.floor(
           Math.random() * 10000
         )}.png`;
-
         const obs = this.convertSrcToFile(src).pipe(
           switchMap(
             (file) => this.onUpload2(folderName, file, filename) // 🔁 use passed folder
           )
         );
-
         uploadObservables.push(obs);
         replacements.push({ element: img, filename });
       }
     });
-
     if (uploadObservables.length === 0) {
       callback(tempDiv.innerHTML);
       return;
     }
-
     forkJoin(uploadObservables).subscribe(() => {
       replacements.forEach((rep) => {
         const url = `${this.retriveimgUrl}${folderName}/${rep.filename}`;
         rep.element.setAttribute('src', url);
       });
-
       callback(tempDiv.innerHTML);
     });
   }
-
   convertSrcToFile(src: string): Observable<File> {
     return new Observable((observer) => {
       fetch(src)
@@ -10366,10 +9567,8 @@ export class ApiServiceService {
         });
     });
   }
-
-
-//sanjana 
-    getAllMappedVendors(
+  //sanjana 
+  getAllMappedVendors(
     pageIndex: number,
     pageSize: number,
     sortKey: string,
@@ -10384,25 +9583,17 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<any>(
       this.url + 'vendorTerritoryMapping/get',
       JSON.stringify(data),
       this.options
     );
   }
-
-
-
-
-
-    Clogin(email: string, password: string, cloudid: any, type: any) {
+  Clogin(email: string, password: string, cloudid: any, type: any) {
     this.getheader();
-
     this.options = {
       headers: this.httpHeaders,
     };
-
     var data = {
       username: email,
       password: password,
@@ -10410,21 +9601,16 @@ export class ApiServiceService {
       DEVICE_ID: this.cookie.get('deviceId'),
       type: type
     };
-
     return this.httpClient.post(
       this.baseUrl + 'customer/customerlogin',
       JSON.stringify(data),
       this.options
     );
   }
-
-
-
-    Csendotpp(CEMAIL_ID: string): Observable<any> {
+  Csendotpp(CEMAIL_ID: string): Observable<any> {
     const data = {
       username: CEMAIL_ID,
     };
-
     this.getheader();
     return this.httpClient.post<any>(
       this.baseUrl + 'customer/sendotpforchangepassword',
@@ -10432,10 +9618,7 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
-
-
-    Cverifyotpp(CEMAIL_ID: string, COTP: string): Observable<any> {
+  Cverifyotpp(CEMAIL_ID: string, COTP: string): Observable<any> {
     const data = {
       EMAIL_ID: CEMAIL_ID,
       OTP: COTP,
@@ -10447,7 +9630,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   Cchangepassword(
     CNEW_PASSWORD: string,
     CUSER_ID: number,
@@ -10465,7 +9647,6 @@ export class ApiServiceService {
       { headers: this.httpHeaders, observe: 'response' }
     );
   }
-
   getCompanyNames(
     pageIndex: number,
     pageSize: number,
@@ -10480,7 +9661,6 @@ export class ApiServiceService {
       sortValue: sortValue,
       filter: filter,
     };
-
     return this.httpClient.post<customer[]>(
       this.url + 'customer/getCompanyNames',
       JSON.stringify(data),
@@ -10515,7 +9695,6 @@ export class ApiServiceService {
       this.options
     );
   }
-
   updateTerritoryHolidayMapping(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     return this.httpClient.put<any>(
@@ -10524,8 +9703,7 @@ export class ApiServiceService {
       this.options
     );
   }
- 
-cancelorderByAdmin(
+  cancelorderByAdmin(
     orderId: string,
     customerId: string,
     cancellationReason: string,
@@ -10547,7 +9725,6 @@ cancelorderByAdmin(
       this.options
     );
   }
-
   getshopOrdersData1(
     pageIndex: number,
     pageSize: number,
@@ -10566,6 +9743,80 @@ cancelorderByAdmin(
       this.baseUrl + 'api/shopOrder/get',
       JSON.stringify(data),
       { headers: this.httpHeaders, observe: 'response' }
+    );
+  }
+  updateordercancellationcharegestatus(user: any): Observable<any> {
+    // user.CLIENT_ID =1
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/order/updateCancellationChargeStatus',
+      JSON.stringify(user),
+      this.options
+    );
+  }
+  Cancelorderget(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/order/getcancelledorder',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  checkdomainexits(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string,
+    domain: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+      DOMAIN: domain
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/customer/checkDomains',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  convertinvoicetozip(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string,
+    INVOICE_IDS: any[],
+    INV_TYPE: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+      INVOICE_IDS: INVOICE_IDS,
+      INV_TYPE: INV_TYPE
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/invoice/invoiceIntoZIP',
+      JSON.stringify(data),
+      this.options
     );
   }
 }

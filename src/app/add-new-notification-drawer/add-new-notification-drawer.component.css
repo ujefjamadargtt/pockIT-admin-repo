@@ -1,14 +1,107 @@
 .header {
-    position: absolute;
-    top: 0px;
-    border-top: 1px solid rgb(232, 232, 232);
-    padding: 10px 20px;
-    margin-left: 690px;
+  position: absolute;
+  top: 0px;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 20px;
+  margin-left: 690px;
 }
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-    }
-
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+.radio-group-container {
+  text-align: center;
+}
+.form-fields-row {
+  margin-top: 16px;
+}
+.full-width-select {
+  width: 100%;
+}
+.option-custom-content {
+  min-height: 32px;
+}
+.option-row {
+  padding: 8px 0;
+}
+.avatar-column {
+  margin-top: 14px;
+}
+.avatar-styled {
+  color: red;
+  background-color: #fde3cf;
+  vertical-align: middle;
+}
+.details-column {
+  padding-left: 8px;
+}
+.name-column {
+  color: black;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.detail-field {
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+.user-type-field,
+.address-field,
+.mobile-field,
+.email-field {
+  padding: 2px 0;
+}
+.black-icon {
+  color: black;
+}
+.email-field {
+  color: rgb(100, 100, 245);
+}
+.character-count {
+  font-size: 10px;
+  color: red;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+.attachment-upload-btn {
+  height: 28px;
+  padding: 0px 7px;
+  font-size: 10px;
+  width: 70%;
+}
+.file-input-hidden {
+  display: none;
+}
+.file-name-display {
+  font-size: 13px;
+  color: #4c4cff;
+  margin-top: 4px;
+}
+.file-view-link {
+  margin-left: 10px;
+  color: inherit;
+}
+.file-delete-link {
+  margin-left: 10px;
+  color: inherit;
+  cursor: pointer;
+}
+.cancel-btn {
+  margin-right: 8px;
+}
+.send-btn {
+  margin-left: 8px;
+}
+.my-box {
+  margin-bottom: 16px;
+}
+.header {
+  margin-bottom: 16px;
+}
+.footer {
+  margin-top: 24px;
+  text-align: right;
+  padding: 16px 0;
+  border-top: 1px solid #f0f0f0;
+}

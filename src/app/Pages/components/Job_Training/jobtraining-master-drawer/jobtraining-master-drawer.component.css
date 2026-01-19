@@ -5,36 +5,70 @@
   margin-top: 12px;
   margin-bottom: 12px;
   background-color: #fafafa;
-
 }
-
 .header {
-
   position: absolute;
-
   top: 0px;
-
-  /* bottom: 0px; */
-
   width: 100%;
-
   border-top: 1px solid rgb(232, 232, 232);
-
   padding: 10px 16px;
-
   text-align: right;
-
-  /* left: 0px; */
-
   right: 0px;
-
-  /* background: #fff; */
-
 }
-
 nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 10px;
+}
+.select-width-full {
+  width: 100%;
+}
+.char-count-style {
+  color: red;
+  font-size: 10px;
+}
+.upload-button-style {
+  padding: 0px 7px;
+  font-size: 10px;
+}
+.file-input-hidden {
+  display: none !important;
+}
+.link-blue-margin {
+  color: blue;
+  margin-right: 9px;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.delete-icon-spacing {
+  cursor: pointer;
+  margin-left: 0px;
+}
+.editor-style {
+  resize: none;
+  color: black;
+}
+.error-message-style {
+  color: red;
+  font-size: 11px;
+}
+.cancel-button-margin {
+  margin-right: 8px;
+}
+.menu-item-style {
+  border-radius: 4px;
+  color: white !important;
+}
+.menu-link-style {
+  color: white !important;
+}
+.modal-iframe-container {
+  height: 400px;
+  overflow: auto;
+}
+.modal-iframe-style {
+  width: 832px;
+  height: 396px;
 }

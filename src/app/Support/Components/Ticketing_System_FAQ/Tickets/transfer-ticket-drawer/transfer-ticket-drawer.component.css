@@ -4,3 +4,10 @@ nz-form-item {
     width: -webkit-fill-available;
     padding: 0px 10px;
   }
+  .w-100{
+    width: 100%;
+  }
+  .mt-8
+  {
+    margin-top: 8px;
+  }

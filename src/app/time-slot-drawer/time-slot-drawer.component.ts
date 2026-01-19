@@ -15,12 +15,10 @@ export class TimeSlotDrawerComponent {
   @Input() data: TimeSlotData;
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   day_start_time: any;
   day_end_time: any;
   DAY_START_TIME: Date;
   DAY_END_TIME: Date;
-
   pageIndex = 1;
   pageSize = 10;
   sortValue: string = 'desc';
@@ -29,100 +27,78 @@ export class TimeSlotDrawerComponent {
   sort: string;
   likeQuery = '';
   filterQuery = '';
-
   isSpinning = false;
   isOk = true;
   organizationid: any = sessionStorage.getItem('orgId');
   dataList: any;
-  defaultDisabledHours: number[] = []; // Declare this property
-
+  defaultDisabledHours: number[] = []; 
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   public commonFunction = new CommonFunctionService();
-
   ngOnInit(): void {
     this.getglobalTimeSlotConfigData();
-
     this.organizationid = sessionStorage.getItem('orgId');
     this.data.ORG_ID = 1
     this.getOrganizationData();
   }
-  // Function to disable hours dynamically
   disableHours = (startLimit: Date, endLimit: Date) => {
     return Array.from({ length: 24 }, (_, i) => i).filter(
       (hour) => hour < startLimit.getHours() || hour > endLimit.getHours()
     );
   };
-
-  // Function to disable minutes dynamically
   disableMinutes = (selectedHour: number, startLimit: Date, endLimit: Date) => {
     if (!selectedHour) return [];
-
     if (selectedHour === startLimit.getHours()) {
       return Array.from({ length: startLimit.getMinutes() + 1 }, (_, i) => i);
     }
-
     if (selectedHour === endLimit.getHours()) {
       return Array.from(
         { length: 60 - endLimit.getMinutes() },
         (_, i) => i + endLimit.getMinutes()
       );
     }
-
     return [];
   };
-
   disableMinutes1 = (
     selectedHour: number,
     startLimit: Date,
     endLimit: Date
   ) => {
     if (!selectedHour) return [];
-
     if (selectedHour === startLimit.getHours()) {
       return Array.from({ length: startLimit.getMinutes() }, (_, i) => i);
     }
-
     if (selectedHour === endLimit.getHours()) {
       return Array.from(
         { length: 60 - endLimit.getMinutes() },
         (_, i) => i + endLimit.getMinutes()
       );
     }
-
     return [];
   };
-
   disableMinutes3 = (
     selectedHour: number,
     startLimit: Date,
     endLimit: Date
   ) => {
     if (!selectedHour) return [];
-
     if (selectedHour === startLimit.getHours()) {
       return Array.from({ length: startLimit.getMinutes() }, (_, i) => i);
     }
-
     if (selectedHour === endLimit.getHours()) {
       return Array.from(
         { length: 60 - endLimit.getMinutes() },
         (_, i) => i + endLimit.getMinutes()
       );
     }
-
     return [];
   };
-
-  // Conditions for each slot
   disabledSlot1Hours = () =>
     this.disableHours(this.DAY_START_TIME, this.DAY_END_TIME);
   disabledSlot1Minutes = (hour: number) =>
     this.disableMinutes3(hour, this.DAY_START_TIME, this.DAY_END_TIME);
-
   disabledSlot2Hours = () => {
     if (!this.data.SLOT1_END_TIME)
       return this.disableHours(this.DAY_START_TIME, this.DAY_END_TIME);
@@ -140,7 +116,6 @@ export class TimeSlotDrawerComponent {
       this.DAY_END_TIME
     );
   };
-
   disabledSlot3Hours = () => {
     if (!this.data.SLOT2_END_TIME)
       return this.disableHours(this.DAY_START_TIME, this.DAY_END_TIME);
@@ -158,14 +133,11 @@ export class TimeSlotDrawerComponent {
       this.DAY_END_TIME
     );
   };
-  // Function to disable hours dynamically for END time
   disableEndHours = (startTime: Date, endLimit: Date) => {
     if (!startTime)
       return this.disableHours(this.DAY_START_TIME, this.DAY_END_TIME);
     return this.disableHours(startTime, endLimit);
   };
-
-  // Function to disable minutes dynamically for END time
   disableEndMinutes = (startHour: number, startTime: Date, endLimit: Date) => {
     if (!startTime)
       return this.disableMinutes(
@@ -175,7 +147,6 @@ export class TimeSlotDrawerComponent {
       );
     return this.disableMinutes(startHour, startTime, endLimit);
   };
-
   disableEndMinutes1 = (startHour: number, startTime: Date, endLimit: Date) => {
     if (!startTime)
       return this.disableMinutes2(
@@ -185,38 +156,31 @@ export class TimeSlotDrawerComponent {
       );
     return this.disableMinutes2(startHour, startTime, endLimit);
   };
-
   disableMinutes2 = (
     selectedHour: number,
     startLimit: Date,
     endLimit: Date
   ) => {
     if (!selectedHour) return [];
-
     if (selectedHour === startLimit.getHours()) {
       return Array.from({ length: startLimit.getMinutes() + 1 }, (_, i) => i);
     }
-
     if (selectedHour === endLimit.getHours()) {
       return Array.from(
         { length: 60 - endLimit.getMinutes() },
         (_, i) => i + endLimit.getMinutes() + 1
       );
     }
-
     return [];
   };
-  // Conditions for END time slots
   disabledSlot1EndHours = () =>
     this.disableEndHours(this.data.SLOT1_START_TIME, this.DAY_END_TIME);
   disabledSlot1EndMinutes = (hour: number) =>
     this.disableEndMinutes(hour, this.data.SLOT1_START_TIME, this.DAY_END_TIME);
-
   disabledSlot2EndHours = () =>
     this.disableEndHours(this.data.SLOT2_START_TIME, this.DAY_END_TIME);
   disabledSlot2EndMinutes = (hour: number) =>
     this.disableEndMinutes(hour, this.data.SLOT2_START_TIME, this.DAY_END_TIME);
-
   disabledSlot3EndHours = () =>
     this.disableEndHours(this.data.SLOT3_START_TIME, this.DAY_END_TIME);
   disabledSlot3EndMinutes = (hour: number) =>
@@ -225,19 +189,15 @@ export class TimeSlotDrawerComponent {
       this.data.SLOT3_START_TIME,
       this.DAY_END_TIME
     );
-
   parseExpectedTime(expectedTime: string): Date | null {
-    // If you need it as a Date object, here's one way to convert it
     if (!expectedTime) return null;
-
     const [hours, minutes, seconds] = expectedTime.split(':').map(Number);
-    const now = new Date(); // Get current date
+    const now = new Date(); 
     now.setHours(hours);
     now.setMinutes(minutes);
     now.setSeconds(seconds);
-    return now; // Return the Date object with expected time
+    return now; 
   }
-
   getOrganizationData() {
     this.api
       .getAllOrganizations(1, 1, '', 'desc', ' AND ID= 1')
@@ -258,14 +218,12 @@ export class TimeSlotDrawerComponent {
         }
       });
   }
-
   formatTimeToHHmm(time: any): string {
-    const date = new Date(time); // Assuming time is a valid timestamp or ISO string
+    const date = new Date(time); 
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
   }
-
   save(addNew: boolean, Unitmaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -344,7 +302,6 @@ export class TimeSlotDrawerComponent {
             this.data.SLOT3_END_TIME
           );
         }
-
         if (this.data.ID) {
           this.api.updateTimeSlot(this.data).subscribe(
             (successCode: any) => {
@@ -394,17 +351,14 @@ export class TimeSlotDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }
-
   resetDrawer(Unitmaster: NgForm) {
     this.data = new TimeSlotData();
     Unitmaster.form.markAsPristine();
     Unitmaster.form.markAsUntouched();
   }
-
   getglobalTimeSlotConfigData() {
     this.api
       .getAllTimeSlot(
@@ -419,28 +373,22 @@ export class TimeSlotDrawerComponent {
           if (data['status'] == 200) {
             this.loadingRecords = false;
             this.dataList = data['body']['data'];
-
             if (this.dataList[0]?.ID) {
               this.data.SLOT1_START_TIME = this.parseExpectedTime(
                 this.dataList[0].SLOT1_START_TIME
               );
-
               this.data.SLOT1_END_TIME = this.parseExpectedTime(
                 this.dataList[0].SLOT1_END_TIME
               );
-
               this.data.SLOT2_START_TIME = this.parseExpectedTime(
                 this.dataList[0].SLOT2_START_TIME
               );
-
               this.data.SLOT2_END_TIME = this.parseExpectedTime(
                 this.dataList[0].SLOT2_END_TIME
               );
-
               this.data.SLOT3_START_TIME = this.parseExpectedTime(
                 this.dataList[0].SLOT3_START_TIME
               );
-
               this.data.SLOT3_END_TIME = this.parseExpectedTime(
                 this.dataList[0].SLOT3_END_TIME
               );
@@ -464,34 +412,27 @@ export class TimeSlotDrawerComponent {
         }
       );
   }
-
   isDataIdMissing(): boolean {
     return this.dataList?.length > 0 && !this.dataList[0]?.ID;
   }
-
   onTimeChange(field: string, value: Date) {
     if (value) {
       this.data[field] = this.roundMinutesToNearestInterval(new Date(value));
     }
   }
-
   roundMinutesToNearestInterval(date: Date): Date {
     const minutes = date.getMinutes();
     const roundedMinutes = Math.round(minutes / 10) * 10;
-
     let finalHour = date.getHours();
     let finalMinutes = roundedMinutes;
-
     if (roundedMinutes >= 60) {
       finalMinutes = 0;
       finalHour = (finalHour + 1) % 24;
     }
-
     const roundedDate = new Date(date);
     roundedDate.setHours(finalHour);
     roundedDate.setMinutes(finalMinutes);
     roundedDate.setSeconds(0);
-
     return roundedDate;
   }
 }

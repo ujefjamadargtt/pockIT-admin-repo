@@ -5,9 +5,6 @@ export class TechnicianRequestMovement {
   USER_ID: number = 0;
   USER_NAME: any;
   STATUS: string = '';
-  // DESTINATION_WAREHOUSE_ID: number = 0;
-  // SOURCE_WAREHOUSE_ID: number = 0;
-  // deletedItemData: any[] = [];
   REASON: any;
   MOVEMENT_TYPE: any;
   TECHNICIAN_ID: any;
@@ -15,11 +12,8 @@ export class TechnicianRequestMovement {
   WAREHOUSE_NAME;
   TECHNICIAN_NAME;
   TRANSFER_MODE = 'W';
-  // SOURCE_WAREHOUSE_NAME: any;
-  // DESTINATION_WAREHOUSE_NAME: any;
   INVENTORY_DETAILS: any[] = [];
 }
-
 export class InnerTable {
   MOVEMENT_ID: number = 0;
   VARIANT_ID: any = 0;
@@ -39,7 +33,6 @@ export class InnerTable {
   STOCK;
   STOCK_UNIT_ID;
 }
-
 export class InnerTableCust {
   MOVEMENT_ID: number = 0;
   INVENTORY_ID: any = 0;
@@ -65,7 +58,6 @@ export class InnerTableCust {
   VARIANT_ID: null;
   INVENTORY_DETAILS_ID: any;
 }
-
 export class TechnicianRequestMovementCust {
   ID: number = 0;
   DATE: any = new Date();

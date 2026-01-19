@@ -1,4 +1,3 @@
-
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
@@ -12,7 +11,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
   styleUrls: ['./paymenttransactionpage.component.css']
 })
 export class PaymenttransactionpageComponent {
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
@@ -20,42 +18,30 @@ export class PaymenttransactionpageComponent {
     private sanitizer: DomSanitizer,
     private httpClient: HttpClient
   ) { }
-
   @Input() paymentTransactionFilter: any
   pageIndex = 1;
   pageSize = 10;
   sortValue: string = 'desc';
   sortKey: string = 'id';
   sort(params: NzTableQueryParams): void {
-    // if (this.paymentTransactionFilter != null && this.paymentTransactionFilter != '') {
-
-
     const { pageSize, pageIndex, sort } = params;
-
     const currentSort = sort.find((item) => item.value !== null);
     const sortField = (currentSort && currentSort.key) || 'id';
     const sortOrder = (currentSort && currentSort.value) || 'desc';
-
-
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.getPaymentTransaction();
-    // }
   }
-
   paymentTransactionData: any
   getPaymentTransaction() {
     this.paymentTransactionFilter = this.paymentTransactionFilter == undefined ? '' : this.paymentTransactionFilter
@@ -82,52 +68,33 @@ export class PaymenttransactionpageComponent {
   handleCancel(): void {
     this.isModalVisible = false;
   }
-
   isModalVisible: boolean = false;
   pdfUrl: any
   showPaymentTransactionModal(data: any): void {
     if (data?.INVOICE_URL) {
       const a = this.api.retriveimgUrl + 'Invoices' + '/' + data.INVOICE_URL;
       this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(a);
-
       this.isModalVisible = true;
     } else {
       this.message.error('Invoice URL not available', '');
     }
   }
   downloadPDF(): void {
-    // Extract the original URL from the sanitized URL (without breaking security)
     const urlString = this.pdfUrl.changingThisBreaksApplicationSecurity || '';
-
-
     if (!urlString) {
       return;
     }
-
-    // Create HTTP request headers to force the PDF MIME type
     const headers = new HttpHeaders().set('Accept', 'application/pdf');
-
-    // Fetch the PDF as a Blob from the server with forced MIME type
     this.httpClient.get(urlString, { responseType: 'blob', headers: headers }).subscribe(
       (response: Blob) => {
-        // Log the received Blob to ensure it's a PDF
-
-
-        // Create a temporary Blob URL
         const blobUrl = URL.createObjectURL(response);
-
-        // Create an anchor element for download
         const a = document.createElement('a');
         a.href = blobUrl;
-        a.download = urlString.split('/').pop() || 'invoice.pdf'; // Use the file name from URL
-        a.target = '_self'; // Download in the same tab
-
-        // Trigger the download
+        a.download = urlString.split('/').pop() || 'invoice.pdf'; 
+        a.target = '_self'; 
         document.body.appendChild(a);
         a.click();
-        document.body.removeChild(a); // Clean up the DOM
-
-        // Revoke the Blob URL after the download starts
+        document.body.removeChild(a); 
         URL.revokeObjectURL(blobUrl);
       },
       (error) => {
@@ -135,5 +102,3 @@ export class PaymenttransactionpageComponent {
     );
   }
 }
-
-

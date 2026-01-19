@@ -16,55 +16,29 @@ export class FaqComponent implements OnInit {
   @Input() drawerClose: Function;
   @Input() data: Faq;
   @Input() URL;
-
   isSpinning = false;
   isFocused: string = '';
   faqHeads: Faqhead[];
   faqHeadscust: Faqhead[];
   faqHeadstech: Faqhead[];
   faqHeadsMain: Faqhead[];
-
   date = new Date();
   date1: any = this.datePipe.transform(this.date, 'yyyyMMdd');
   isOk = true;
   fileURL: any;
-
   fileDataURL: any;
   listOfOption: Array<{ label: string; value: string }> = [];
   f_key = 'VwKkXFiw';
   applicationId = Number(this.cookie.get('applicationId'));
-
   constructor(
     private api: ApiServiceService,
     private cookie: CookieService,
     private datePipe: DatePipe,
     private message: NzNotificationService
   ) { }
-
   ngOnInit() {
-
     this.loadFaqHeads();
   }
-
-  // loadFaqHeads() {
-  //   this.isSpinning = true;
-  //   this.api
-  //     .getAllFaqHeads(0, 0, '', '', ' AND IS_PARENT=0 AND STATUS=1 ')
-  //     .subscribe(
-  //       (localName) => {
-  //         this.faqHeads = localName['data'];
-  //         this.isSpinning = false;
-  //         
-
-  //         
-  //       },
-  //       (err) => {
-  //         
-  //         this.isSpinning = false;
-  //       }
-  //     );
-  // }
-
   loadFaqHeads() {
     this.isSpinning = true;
     this.api
@@ -74,10 +48,8 @@ export class FaqComponent implements OnInit {
           if (data['status'] == 200) {
             this.faqHeads = data['body']['data'];
             this.faqHeadsMain = data['body']['data'];
-
             this.faqHeadscust = this.faqHeadsMain.filter((item: any) => item.FAQ_HEAD_TYPE === 'C');
             this.faqHeadstech = this.faqHeadsMain.filter((item: any) => item.FAQ_HEAD_TYPE === 'T');
-
             this.isSpinning = false;
           } else {
             this.faqHeads = [];
@@ -108,7 +80,6 @@ export class FaqComponent implements OnInit {
       this.faqHeads = this.faqHeadstech
     }
   }
-
   resetDrawer(accountMasterPage: NgForm) {
     accountMasterPage.form.reset();
   }
@@ -116,17 +87,10 @@ export class FaqComponent implements OnInit {
     this.resetDrawer(accountMasterPage);
     this.drawerClose();
   }
-
   save2(addNew: boolean, accountMasterPage: NgForm) {
-
-
     if (this.data.ID) {
-      // this.data.TAGS = this.data.TAGS_STRING.toString();
-
       this.URL = this.data.URL;
-
       this.api.updateFaq(this.data).subscribe((successCode) => {
-
         if (successCode['status'] == '200') {
           this.message.success('Information Updated Successfully...', '');
           if (!addNew) this.drawerClose();
@@ -143,11 +107,7 @@ export class FaqComponent implements OnInit {
     } else {
       this.data.POSITIVE_HELPFUL_COUNT = 0;
       this.data.NEGATIVE_HELPFUL_COUNT = 0;
-      // this.data.TAGS = this.data.TAGS_STRING.toString();
-
       this.api.createFaq(this.data).subscribe((successCode) => {
-        // 
-
         if (successCode['status'] == '200') {
           this.message.success('Information Save Successfully...', '');
           if (!addNew) {
@@ -165,7 +125,6 @@ export class FaqComponent implements OnInit {
                 }
               },
               (err) => {
-
               }
             );
           }
@@ -191,7 +150,6 @@ export class FaqComponent implements OnInit {
       this.isOk = false;
       this.message.error('Please Fill All Required Information', '');
     }
-
     else if (
       this.data.FAQ_HEAD_ID == undefined ||
       this.data.FAQ_HEAD_ID == null || this.data.FAQ_HEAD_ID <= 0
@@ -214,9 +172,7 @@ export class FaqComponent implements OnInit {
       this.message.error('Please Enter Answer', '');
     }
     if (this.isOk) {
-      // this.data.ORG_ID = Number(this.cookie.get('orgId'));
       this.isSpinning = true;
-
       if (this.fileDataURL) {
         var number = Math.floor(100000 + Math.random() * 900000);
         var fileExt = this.fileDataURL.name.split('.').pop();
@@ -226,16 +182,12 @@ export class FaqComponent implements OnInit {
           'yyyyMMddHHmmss'
         );
         var url = formatedDate + number + '.' + fileExt;
-
         this.api
           .onUpload2('ticket', this.fileDataURL, url)
           .subscribe((successCode) => {
             if (successCode['code'] == '200') {
-
-
               this.data.URL = url;
               this.fileDataURL = null;
-
               this.save2(addNew, accountMasterPage);
             } else {
               this.isSpinning = false;
@@ -252,13 +204,7 @@ export class FaqComponent implements OnInit {
         }
       }
     }
-    // else
-    // {
-    //   this.message.error("Please Fill All Required Fields...","");
-    //   this.isSpinning = false;
-    // }
   }
-
   genarateKey() {
     var number = Math.floor(100000 + Math.random() * 900000);
     var fileExt = this.fileDataURL.name.split('.').pop();
@@ -267,33 +213,19 @@ export class FaqComponent implements OnInit {
     this.data.URL = this.api.retriveimgUrl + 'faq/' + url;
     return this.data.URL;
   }
-  // onFileSelectedURL(event) {
-  //   
-  //   this.fileDataURL = <File>event.target.files[0];
-  //   var fileExt = this.fileDataURL.name.split('.').pop();
-  // }
   onFileSelectedURL(event: any) {
     if (event.target.files && event.target.files.length > 0) {
-      // 
       this.fileDataURL = <File>event.target.files[0];
-
-      // Ensure 'name' property exists before accessing it
       if (this.fileDataURL.name) {
         var fileExt = this.fileDataURL.name.split('.').pop();
-
       }
     } else {
-
     }
   }
-
   response(status, data) {
-
     this.isSpinning = true;
     data.STATUS = status;
-
     this.api.updateFaqResponse(data).subscribe((successCode) => {
-
       if (successCode['code'] == '200') {
         this.message.success('Information Saved Successfully...', '');
         this.isSpinning = false;
@@ -303,7 +235,6 @@ export class FaqComponent implements OnInit {
       }
     });
   }
-
   getUrl(url) {
     if (url) return this.api.baseUrl + 'static/ticket/' + url;
     else return '';

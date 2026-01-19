@@ -9,7 +9,6 @@ import { saveOrderData } from 'src/app/orderpages/orderdetailsdrawer/orderdetail
 import { customer } from 'src/app/Pages/Models/customer';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-shoporderdetails',
   templateUrl: './shoporderdetails.component.html',
@@ -17,9 +16,7 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 })
 export class ShoporderdetailsComponent {
   sortKey1: string = 'ID'
-
   newdataList: any = [{ id: 1 }];
-
   value1: any = '';
   value2: any = '';
   @Input() TYPE_FOR_LOCAL = '';
@@ -64,7 +61,6 @@ export class ShoporderdetailsComponent {
   showactionlog: boolean = false;
   showinvoicetable: boolean = false;
   showmap: boolean = false;
-
   drawerDatapastorder: any;
   drawerTitlepastorder!: string;
   modalStyle = {
@@ -86,8 +82,7 @@ export class ShoporderdetailsComponent {
   drawerCustomerRatingVisible: boolean = false;
   drawerRatingVisible: boolean = false;
   drawerDataRating: any;
-
-  STATUS: string = ''; // This will store the selected value of the radio button
+  STATUS: string = ''; 
   data = {
     REMARK: '',
   };
@@ -99,7 +94,6 @@ export class ShoporderdetailsComponent {
   decrepteduserID = 0;
   openModal = false;
   public commonFunction = new CommonFunctionService();
-
   skills: any[] = [];
   jobdetails: any = '';
   estimatetime: any = 0;
@@ -116,12 +110,10 @@ export class ShoporderdetailsComponent {
       ? this.commonFunction.decryptdata(this.roleId)
       : '';
     this.decreptedroleId = parseInt(decreptedroleIdString, 10);
-
     this.decrepteduserIDString = this.userId
       ? this.commonFunction.decryptdata(this.userId)
       : '';
     this.decrepteduserID = parseInt(this.decrepteduserIDString, 10);
-
     this.chatfilter = ' AND ORDER_ID = ' + this.orderDetails.ID;
     this.invoicefilter = ' AND ORDER_ID = ' + this.orderDetails.ID;
     this.actionfilter = " AND ACTION_LOG_TYPE IN('O')" + this.invoicefilter;
@@ -147,7 +139,6 @@ export class ShoporderdetailsComponent {
       this.selecteddata = 'OD';
     }
     this.expectedDate = new Date();
-
     if (
       this.vieworderdata.orderData[0]['WAREHOUSE_DETAILS'] !== null &&
       this.vieworderdata.orderData[0]['WAREHOUSE_DETAILS'] !== undefined
@@ -158,9 +149,6 @@ export class ShoporderdetailsComponent {
       this.desWarehousename = this.warehousedetails[0]['NAME'];
       this.destPINCODE = this.warehousedetails[0]['PINCODE'].split('-')[0];
     }
-
-
-
     if (
       this.vieworderdata.orderData[0]['COURIER_DETAILS'] !== null &&
       this.vieworderdata.orderData[0]['COURIER_DETAILS'] !== undefined
@@ -175,11 +163,8 @@ export class ShoporderdetailsComponent {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using DatePipe
     const formattedStartDate: any = this.datePipe.transform(startOfMonth, 'yyyy-MM-dd');
     const formattedEndDate: any = this.datePipe.transform(endOfMonth, 'yyyy-MM-dd');
-
     this.selectedDate = [formattedStartDate, formattedEndDate];
   }
   close(): void {
@@ -188,7 +173,6 @@ export class ShoporderdetailsComponent {
   gettotal(value1: any, value2: any) {
     return Number(value1) * Number(value2);
   }
-
   changestagetye(data: any) {
     if (data === 'OK') {
       this.SelectWEIGHT = null;
@@ -197,13 +181,11 @@ export class ShoporderdetailsComponent {
       this.SelectBREADTH = null;
     }
   }
-
   viewCustomerRating() {
     this.drawerCustomerRatingTitle = 'Rating';
     this.drawerDataRating = this.orderDetails;
     this.drawerCustomerRatingVisible = true;
   }
-
   WAREHOUSE_ID: any = '';
   CourierData: any = [];
   CourierData1: any = {
@@ -748,10 +730,8 @@ export class ShoporderdetailsComponent {
     "status": 200,
     "user_insurance_manadatory": false
   }
-
   CourierdataCount: any = 0;
   spinCourier: boolean = false;
-
   getcourier() {
     if (
       this.WAREHOUSE_ID === null ||
@@ -761,7 +741,6 @@ export class ShoporderdetailsComponent {
       this.message.error('Please Select Warehouse', '');
     } else if (this.expectedDate === null || this.expectedDate === undefined) {
       this.message.error('Please select Expected date', '');
-      // return;
     } else if (
       this.selecteddata == 'SC' &&
       (this.SelectHEIGHT === null ||
@@ -811,7 +790,6 @@ export class ShoporderdetailsComponent {
               this.spinCourier = false;
               if (datass['body']['DATA'].status == 404) {
                 this.message.info(datass['body']['DATA'].message, '');
-
                 this.spinCourier = false;
                 this.CourierData = [];
                 this.CourierdataCount = 0;
@@ -869,7 +847,6 @@ export class ShoporderdetailsComponent {
   getcourier1() {
     if (this.expectedDate === null || this.expectedDate === undefined) {
       this.message.error('Please select Expected date', '');
-      // return;
     } else if (
       this.selecteddata == 'SC' &&
       (this.SelectHEIGHT === null ||
@@ -919,7 +896,6 @@ export class ShoporderdetailsComponent {
               this.spinCourier = false;
               if (datass['body']['DATA'].status == 404) {
                 this.message.info(datass['body']['DATA'].message, '');
-
                 this.spinCourier = false;
                 this.CourierData = [];
                 this.CourierdataCount = 0;
@@ -963,14 +939,12 @@ export class ShoporderdetailsComponent {
         );
     }
   }
-
   resetCourier() {
     this.spinCourier = false;
     this.CourierData = [];
     this.CourierdataCount = 0;
     this.Courier = 0;
   }
-
   setHeight(event) {
     this.SelectHEIGHT = event;
     this.resetCourier();
@@ -987,35 +961,17 @@ export class ShoporderdetailsComponent {
     this.SelectBREADTH = event;
     this.resetCourier();
   }
-
   Courier: any;
-
-  // openCourierURL(data: any, datass: any) {
-  //   console.log(data, "dataa")
-  //   console.log(datass, "datass")
-
-  //   if (data) {
-  //     window.open(data, '_blank');
-  //   } else {
-  //     console.warn('Courier URL is invalid or missing.');
-  //   }
-  // }
-
   openCourierURL(data: any, datass: any) {
     let url = data?.trim();
-
     if (data) {
-      // Check if URL already has http:// or https://
       const hasProtocol = /^https?:\/\//i.test(url);
       const finalUrl = hasProtocol ? url : `https://${url}`;
-
       window.open(finalUrl, '_blank');
     } else {
       alert('Invalid or missing courier tracking URL.');
     }
   }
-
-
   acceptorder(event: any) {
     if (
       (this.STATUS != null && this.STATUS != undefined && this.STATUS != '') ||
@@ -1108,7 +1064,6 @@ export class ShoporderdetailsComponent {
             this.orderData.ORDER_STATUS = 'OR';
           }
       }
-
       if (this.STATUS != 'R') {
         if (
           this.selecteddata === '' ||
@@ -1194,7 +1149,6 @@ export class ShoporderdetailsComponent {
       } else {
         this.orderData.ORDER_STATUS = this.selecteddata;
       }
-
       if (this.IS_SHIP_ORDER == 'M') {
         this.orderData.IS_SHIP_ORDER = 0;
       } else {
@@ -1230,7 +1184,6 @@ export class ShoporderdetailsComponent {
           this.vieworderdata.orderData[0]['ORDER_DATE_TIME'],
           'yyyy-MM-dd HH:mm:ss'
         ),
-
         INVENTORY_DETAILS: this.vieworderdata.detailsData.map((item: any) => ({
           ITEM_ID: item.INVENTORY_ID,
           ITEM_NAME: item.PRODUCT_NAME,
@@ -1242,23 +1195,17 @@ export class ShoporderdetailsComponent {
         })),
       };
       this.orderData.ID = this.vieworderdata.orderData[0]['ID'];
-
       this.isSpinning = true;
       this.BoadAccept = true;
-
       if (this.STATUS == 'A') {
         this.api.updateStockforOrder(requestData).subscribe(
           (successCode1) => {
             this.orderData.INVENTORY_DETAILS =
               successCode1['INVENTORY_DETAILS'];
-
             if (successCode1['code'] === 200) {
               this.api.acceptorderforshop(this.orderData).subscribe(
                 (successCode) => {
-
-
                   if (successCode.status == '200') {
-                    // this.BoadAccept = false;
                     if (this.STATUS == 'A') {
                       this.message.success('Order Accepted Successfully', '');
                       this.orderData = new saveOrderData();
@@ -1276,14 +1223,12 @@ export class ShoporderdetailsComponent {
                       this.STATUS = '';
                     }
                     this.getorderDetails2();
-                    // this.isSpinning = false;
                   } else if (successCode.status == '300') {
                     this.isSpinning = false;
                     this.BoadAccept = false;
                     this.message.error('Something went wrong with Shiprocket. please try again later', '');
                   } else {
                     this.BoadAccept = false;
-
                     if (this.STATUS == 'A') {
                       this.message.error('Failed To Accept Order.', '');
                     } else if (this.STATUS == 'R') {
@@ -1328,9 +1273,7 @@ export class ShoporderdetailsComponent {
       } else {
         this.api.acceptorderforshop(this.orderData).subscribe(
           (successCode) => {
-
             if (successCode.status == '200') {
-              // this.BoadAccept = false;
               if (this.STATUS == 'A') {
                 this.message.success('Order Accepted Successfully', '');
                 this.orderData = new saveOrderData();
@@ -1348,14 +1291,12 @@ export class ShoporderdetailsComponent {
                 this.STATUS = '';
               }
               this.getorderDetails2();
-              // this.isSpinning = false;
             } else if (successCode.status == 300) {
               this.isSpinning = false;
               this.BoadAccept = false;
               this.message.error('Something went wrong with Shiprocket. please try again later', '');
             } else {
               this.BoadAccept = false;
-
               if (this.STATUS == 'A') {
                 this.message.error('Failed To Accept Order.', '');
               } else if (this.STATUS == 'R') {
@@ -1378,7 +1319,6 @@ export class ShoporderdetailsComponent {
       this.isSpinning = false;
     }
   }
-
   CreateShipOrder() {
     if (
       this.selecteddata === '' ||
@@ -1433,11 +1373,7 @@ export class ShoporderdetailsComponent {
       this.message.error('Please Select Couries', '');
       return;
     } else {
-      // this.orderData.ORDER_SHIPROCKET_DATETIME = this.datePipe.transform(
-      //   new Date(), 'yyyy-MM-dd HH:mm:ss'
-      // );
     }
-
     this.orderData.ORDER_STATUS = this.selecteddata;
     if (this.selecteddata == 'SC') {
       this.orderData.WEIGHT = this.SelectWEIGHT;
@@ -1453,20 +1389,17 @@ export class ShoporderdetailsComponent {
       this.orderData.WAREHOUSE_DETAILS =
         this.vieworderdata.orderData[0]['WAREHOUSE_DETAILS'];
     }
-
     this.orderData.ID = this.vieworderdata.orderData[0]['ID'];
     this.isSpinning = true;
     this.BoadAccept = true;
     this.api.acceptorderforshop(this.orderData).subscribe(
       (successCode) => {
         if (successCode.status == '200') {
-          // this.BoadAccept = false;
           this.message.success('Order created in Shiprocket successfully', '');
           this.orderData = new saveOrderData();
           this.expectedDate = null;
           this.STATUS = '';
           this.getorderDetails2();
-          // this.isSpinning = false;
         } else if (successCode.body.code == 301) {
           this.isSpinning = false;
           this.BoadAccept = false;
@@ -1483,8 +1416,6 @@ export class ShoporderdetailsComponent {
       }
     );
   }
-
-
   AssignShipOrder() {
     if (
       this.selecteddata === '' ||
@@ -1495,12 +1426,8 @@ export class ShoporderdetailsComponent {
       return;
     }
     else {
-      // this.orderData.ORDER_SHIP_ASSIGN_DATETIME = this.datePipe.transform(
-      //   new Date(), 'yyyy-MM-dd HH:mm:ss'
-      // );
     }
     this.orderData.ORDER_STATUS = this.selecteddata;
-
     if (this.selecteddata == 'AO') {
       this.orderData.COURIER_ID = this.vieworderdata.orderData[0]['COURIER_ID']
       this.orderData.SHIPMENT_ID = this.vieworderdata.orderData[0]['SHIPMENT_ID']
@@ -1510,15 +1437,12 @@ export class ShoporderdetailsComponent {
     this.BoadAccept = true;
     this.api.acceptorderforshop(this.orderData).subscribe(
       (successCode) => {
-
         if (successCode.status == '200') {
-          // this.BoadAccept = false;
           this.message.success('Order Assigned successfully', '');
           this.orderData = new saveOrderData();
           this.expectedDate = null;
           this.STATUS = '';
           this.getorderDetails2();
-          // this.isSpinning = false;
         } else if (successCode.status == 301) {
           this.isSpinning = false;
           this.BoadAccept = false;
@@ -1536,7 +1460,6 @@ export class ShoporderdetailsComponent {
       }
     );
   }
-
   MarkAsDelivery() {
     this.orderData.ORDER_STATUS = 'DO';
     this.orderData.ID = this.vieworderdata.orderData[0]['ID'];
@@ -1545,15 +1468,12 @@ export class ShoporderdetailsComponent {
     this.BoadAccept = true;
     this.api.acceptorderforshop(this.orderData).subscribe(
       (successCode) => {
-
         if (successCode.status == '200') {
-          // this.BoadAccept = false;
           this.message.success('Order marked as out for delivery successfully', '');
           this.orderData = new saveOrderData();
           this.expectedDate = null;
           this.STATUS = '';
           this.getorderDetails2();
-          // this.isSpinning = false;
         } else if (successCode.status == 301) {
           this.isSpinning = false;
           this.BoadAccept = false;
@@ -1571,7 +1491,6 @@ export class ShoporderdetailsComponent {
       }
     );
   }
-
   MarkAsDelivered() {
     this.orderData.ORDER_STATUS = 'OS';
     this.orderData.ID = this.vieworderdata.orderData[0]['ID'];
@@ -1579,15 +1498,12 @@ export class ShoporderdetailsComponent {
     this.BoadAccept = true;
     this.api.acceptorderforshop(this.orderData).subscribe(
       (successCode) => {
-
         if (successCode.status == '200') {
-          // this.BoadAccept = false;
           this.message.success('Order marked as delivered successfully', '');
           this.orderData = new saveOrderData();
           this.expectedDate = null;
           this.STATUS = '';
           this.getorderDetails2();
-          // this.isSpinning = false;
         } else if (successCode.status == 301) {
           this.isSpinning = false;
           this.BoadAccept = false;
@@ -1615,30 +1531,22 @@ export class ShoporderdetailsComponent {
       return;
     }
     else {
-      // this.orderData.ORDER_LABEL_DATETIME = this.datePipe.transform(
-      //   new Date(), 'yyyy-MM-dd HH:mm:ss'
-      // );
     }
     this.orderData.ORDER_STATUS = this.selecteddata;
-
     if (this.selecteddata == 'GL') {
       this.orderData.SHIPMENT_ID = this.vieworderdata.orderData[0]['SHIPMENT_ID']
-
     }
     this.orderData.ID = this.vieworderdata.orderData[0]['ID'];
     this.isSpinning = true;
     this.BoadAccept = true;
     this.api.acceptorderforshop(this.orderData).subscribe(
       (successCode) => {
-
         if (successCode.status == '200') {
-          // this.BoadAccept = false;
           this.message.success('Label generated successfully', '');
           this.orderData = new saveOrderData();
           this.expectedDate = null;
           this.STATUS = '';
           this.getorderDetails2();
-          // this.isSpinning = false;
         } else if (successCode.status == 301) {
           this.isSpinning = false;
           this.BoadAccept = false;
@@ -1666,30 +1574,22 @@ export class ShoporderdetailsComponent {
       return;
     }
     else {
-      // this.orderData.ORDER_PICKUP_DATETIME = this.datePipe.transform(
-      //   new Date(), 'yyyy-MM-dd HH:mm:ss'
-      // );
     }
     this.orderData.ORDER_STATUS = this.selecteddata;
-
     if (this.selecteddata == 'SP') {
       this.orderData.SHIPMENT_ID = this.vieworderdata.orderData[0]['SHIPMENT_ID']
-
     }
     this.orderData.ID = this.vieworderdata.orderData[0]['ID'];
     this.isSpinning = true;
     this.BoadAccept = true;
     this.api.acceptorderforshop(this.orderData).subscribe(
       (successCode) => {
-
         if (successCode.status == '200') {
-          // this.BoadAccept = false;
           this.message.success('Send for pickup successfully', '');
           this.orderData = new saveOrderData();
           this.expectedDate = null;
           this.STATUS = '';
           this.getorderDetails2();
-          // this.isSpinning = false;
         } else if (successCode.status == 301) {
           this.isSpinning = false;
           this.BoadAccept = false;
@@ -1720,21 +1620,17 @@ export class ShoporderdetailsComponent {
       this.orderData.ACTUAL_DISPATCH_DATETIME = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
     }
     this.orderData.ORDER_STATUS = this.selecteddata;
-
     this.orderData.ID = this.vieworderdata.orderData[0]['ID'];
     this.isSpinning = true;
     this.BoadAccept = true;
     this.api.acceptorderforshop(this.orderData).subscribe(
       (successCode) => {
-
         if (successCode.status == '200') {
-          // this.BoadAccept = false;
           this.message.success('Order Dispatched successfully', '');
           this.orderData = new saveOrderData();
           this.expectedDate = null;
           this.STATUS = '';
           this.getorderDetails2();
-          // this.isSpinning = false;
         } else if (successCode.status == 301) {
           this.isSpinning = false;
           this.BoadAccept = false;
@@ -1755,11 +1651,9 @@ export class ShoporderdetailsComponent {
   drawerCloseRating(): void {
     this.drawerCustomerRatingVisible = false;
   }
-
   get closeCallbackRating() {
     return this.drawerClose.bind(this);
   }
-
   showaction() {
     this.showactionlog = true;
     this.showinvoicetable = false;
@@ -1769,7 +1663,6 @@ export class ShoporderdetailsComponent {
     this.showmap = false;
     this.getActionLog();
   }
-
   showverificationn() {
     this.showactionlog = false;
     this.showinvoicetable = false;
@@ -1786,7 +1679,6 @@ export class ShoporderdetailsComponent {
     this.showchat = false;
     this.showmap = false;
   }
-
   getActionLog() {
     var filter = '';
     if (this.checked == true && this.checked1 == false) {
@@ -1815,7 +1707,7 @@ export class ShoporderdetailsComponent {
     return data.map((day) => ({
       date: day.DATE,
       events: day.ACTION_LOGS.map((log) => ({
-        icon: this.getStatusIcon(log.ORDER_STATUS || ''), // Adjust icon logic as needed
+        icon: this.getStatusIcon(log.ORDER_STATUS || ''), 
         title: log.ACTION_DETAILS || 'Action performed',
         time: log.ORDER_DATE_TIME
           ? new Date(log.ORDER_DATE_TIME).toLocaleTimeString()
@@ -1845,14 +1737,12 @@ export class ShoporderdetailsComponent {
         return 'ℹ️';
     }
   }
-
   TYPE = 'ORDER';
   FILTER_ID: any = null;
   setFilter() {
     this.TYPE = 'SHOP_ORDER';
     this.FILTER_ID = this.orderDetails.ID;
   }
-
   getorderDetails2() {
     setTimeout(() => {
       this.api
@@ -1865,14 +1755,12 @@ export class ShoporderdetailsComponent {
             this.expectedDate = new Date();
             if (this.vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP') {
               this.selecteddata = 'OK';
-
             } else if (this.vieworderdata.orderData[0]['ORDER_STATUS'] == 'OK') {
               if (this.vieworderdata.orderData[0]['IS_SHIP_ORDER']) {
                 this.selecteddata = 'SC';
               } else {
                 this.selecteddata = 'DO';
               }
-              // this.selecteddata = 'SC';
             } else if (this.vieworderdata.orderData[0]['ORDER_STATUS'] == 'SC') {
               this.selecteddata = 'AO';
             } else if (this.vieworderdata.orderData[0]['ORDER_STATUS'] == 'AO') {
@@ -1894,26 +1782,19 @@ export class ShoporderdetailsComponent {
                 this.destPINCODE =
                   this.warehousedetails[0]['PINCODE'].split('-')[0];
               }
-
-
-
               if (
                 this.vieworderdata.orderData[0]['COURIER_DETAILS'] !== null &&
                 this.vieworderdata.orderData[0]['COURIER_DETAILS'] !== undefined
               ) {
-
                 this.Courierdetails = JSON.parse(
                   this.vieworderdata.orderData[0]['COURIER_DETAILS']
                 );
               }
-
             }
-            // this.isSpinning = false;
           } else {
             this.isSpinning = false;
             this.BoadAccept = false;
             this.vieworderdata = [];
-            // this.isSpinning = false;
           }
         }, err => {
           this.isSpinning = false;
@@ -1921,10 +1802,8 @@ export class ShoporderdetailsComponent {
           this.vieworderdata = [];
         });
     }, 1000);
-
   }
   skillsList: any = [];
-
   TECHNICIAN_ID: any;
   jobcardtechmapdata: any = [];
   filteredJobcardTechData: any[] = [];
@@ -1935,8 +1814,6 @@ export class ShoporderdetailsComponent {
   actionfilter = " AND ACTION_LOG_TYPE IN('O')";
   chatfilter: any = '';
   invoicefilter: any = '';
-
-  // shreya
   drawerVisibleCustomers: boolean;
   drawerTitleCustomers: string;
   drawerDataCustomers: customer = new customer();
@@ -1944,7 +1821,6 @@ export class ShoporderdetailsComponent {
   custid = 0;
   view(data: any): void {
     this.custid = data.CUSTOMER_ID;
-
     this.drawerTitleCustomers = `View details of ${data.CUSTOMER_NAME}`;
     this.drawerDataCustomers = Object.assign({}, data);
     this.drawerVisibleCustomers = true;
@@ -1955,7 +1831,6 @@ export class ShoporderdetailsComponent {
   get closeCallbackCustomers() {
     return this.drawerCloseCustomers.bind(this);
   }
-
   MIN_T_END_TIME: any;
   MAX_T_START_TIME: any;
   setDateDisableDateTime() {
@@ -1965,19 +1840,15 @@ export class ShoporderdetailsComponent {
           ? this.teritoryData.MAX_T_END_TIME
           : this.teritoryData.END_TIME
         : '00:00:00';
-
     this.MAX_T_START_TIME =
       this.teritoryData.MAX_T_START_TIME > this.teritoryData.START_TIME
         ? this.teritoryData.MAX_T_START_TIME
         : this.teritoryData.START_TIME;
-
     var date: any = new Date();
     const [hours1, minutes1, second] =
       this.MIN_T_END_TIME.split(':').map(Number);
-
     const today = new Date();
-
-    this.currentDate = new Date(today); // Create a copy of the current date
+    this.currentDate = new Date(today); 
     this.currentDate.setMinutes(
       this.currentDate.getMinutes() + this.teritoryData.MAX_DURARTION_MIN
     );
@@ -1989,15 +1860,13 @@ export class ShoporderdetailsComponent {
     );
     var date1: any = new Date(this.currentDate);
     date1.setHours(hours1, minutes1, 0, 0);
-    const differenceInMs: any = date1 - date; // Difference in milliseconds
-    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); //
-
+    const differenceInMs: any = date1 - date; 
+    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); 
     if (differenceInMinutes > 0) {
     } else if (differenceInMinutes < 0) {
       this.currentDate.setDate(this.currentDate.getDate() + 1);
     }
   }
-
   currentDate = new Date();
   currentDate2 = new Date();
   currentHour = new Date().getHours();
@@ -2005,13 +1874,11 @@ export class ShoporderdetailsComponent {
   currentSecond = new Date().getSeconds();
   disabledHours: any[] = [];
   disabledminutes: any[] = [];
-
   disabledPastDates = (current: Date): boolean => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time to start of today
-    return current < today; // Disable only past dates (yesterday and earlier)
+    today.setHours(0, 0, 0, 0); 
+    return current < today; 
   };
-
   deleteCancel() { }
   parseTimeString(timeString: string): { hour: number; minute: number } {
     const [hour, minute, seconds] = timeString.split(':').map(Number);
@@ -2026,48 +1893,37 @@ export class ShoporderdetailsComponent {
   checkLength() {
     this.showerror = !this.showerror;
   }
-
   formatTime(totalMinutes): string {
     var hoursMatch = Math.floor(totalMinutes / 60);
     var minutesMatch = totalMinutes % 60;
     const hours = hoursMatch ? this.padZero(hoursMatch) : '00';
     const minutes = minutesMatch ? this.padZero(minutesMatch) : '00';
-
     return `${hours}:${minutes}`;
   }
-
   padZero(value: string | number): string {
     return value.toString().padStart(2, '0');
   }
   isTextOverflowing(element: HTMLElement): boolean {
     return element.offsetWidth < element.scrollWidth;
   }
-
   type = 'a';
   addresses = [];
   terriotrystarttime1: any = null;
   terriotryendtime1: any = null;
-
   isTerritoryExpress = false;
   storeserviceaddress;
   storeBillingaddress;
-
-  //Drawer Methods
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   drawerCloseorder(): void {
     this.ordercreateVisible = false;
   }
-
-  //Drawer Methods
   get closeCallbackorder() {
     return this.drawerCloseorder.bind(this);
   }
   showExpress = false;
   specialInstruction = '';
-
   ordercreateVisible = false;
   expandedKeys: any = [];
   selectedKeys: any;
@@ -2075,11 +1931,9 @@ export class ShoporderdetailsComponent {
   servicescatalogue: any = [];
   serviceSubCatName = '';
   serviceCatName = '';
-
   @Input() MIN_T_END_TIME2: any;
   @Input() MAX_T_START_TIME2: any;
   @Input() currentDate5 = new Date();
-
   ScheduleJob(data: any) {
     sessionStorage.setItem('Territory_Schedular', data.TERRITORY_ID);
     this.router.navigateByUrl('/order/dispatcher');
@@ -2089,12 +1943,10 @@ export class ShoporderdetailsComponent {
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
   ImageModalVisible = false;
   GetImage(link: string) {
@@ -2102,38 +1954,28 @@ export class ShoporderdetailsComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   zoomLevel = 1;
   rotation = 0;
-
   zoomIn() {
     this.zoomLevel += 0.1;
   }
-
   zoomOut() {
     if (this.zoomLevel > 0.2) {
       this.zoomLevel -= 0.1;
     }
   }
-
   rotateLeft() {
     this.rotation -= 90;
   }
-
   rotateRight() {
     this.rotation += 90;
   }
-
   reset() {
     this.zoomLevel = 1;
     this.rotation = 0;
   }
-
-
   getwarehouse() {
     this.api.getWarehouses(0, 0, 'ID', 'desc', ' AND STATUS=1').subscribe(
       (data) => {
@@ -2142,11 +1984,9 @@ export class ShoporderdetailsComponent {
         }
       },
       (err) => {
-        // this.message.error('Server Not Found', '');
       }
     );
   }
-
   changeFromGodown(event: any) {
     this.CourierData = [];
     this.CourierdataCount = 0;
@@ -2154,24 +1994,18 @@ export class ShoporderdetailsComponent {
     this.desWarehousename = this.warehousedetails[0]['NAME'];
     this.destPINCODE = this.warehousedetails[0]['PINCODE'].split('-')[0];
   }
-
   isdetailsclosed = false;
   storeid: any;
   PartTitle: any = '';
   ViewDetails() {
     this.storeid = this.WAREHOUSE_ID;
     this.PartTitle = 'View item stock';
-    // this.search1();
     this.getlistofstock();
   }
-
   closedetailsd() {
-    // this.search();
     this.isdetailsclosed = false;
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -2180,7 +2014,6 @@ export class ShoporderdetailsComponent {
       tooltip.hide();
     }
   }
-
   loadingRecordIStock: boolean = false;
   getlistofstock() {
     let sort: string;
@@ -2190,7 +2023,6 @@ export class ShoporderdetailsComponent {
       sort = '';
     }
     this.loadingRecordIStock = true;
-
     this.api
       .getStockMgtReportReport(
         this.pageIndex,
@@ -2237,7 +2069,6 @@ export class ShoporderdetailsComponent {
         }
       );
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -2246,17 +2077,14 @@ export class ShoporderdetailsComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     if (currentSort != null && currentSort.value != undefined) {
@@ -2283,7 +2111,6 @@ export class ShoporderdetailsComponent {
   InvoiceClick() {
     this.getshopOrderData();
   }
-
   getshopOrderData(reset: boolean = false) {
     if (reset) {
       this.pageIndex = 1;
@@ -2303,7 +2130,6 @@ export class ShoporderdetailsComponent {
         likeQuery += ' ' + column[0] + " like '%" + this.searchText + "%' OR";
       });
       likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ') ';
-
     }
     if ((this.Customers != undefined) && (this.Customers != null) && (this.Customers.length > 0)) {
       this.filterQuery = " AND CUSTOMER_ID IN(" + this.Customers + ")";
@@ -2316,7 +2142,6 @@ export class ShoporderdetailsComponent {
     } else {
       this.filterQuery1 = '';
     }
-
     if (this.orderDetails.CUSTOMER_ID) {
       this.filterQuery = `AND CUSTOMER_ID = ${this.orderDetails.CUSTOMER_ID}`;
     }
@@ -2338,7 +2163,6 @@ export class ShoporderdetailsComponent {
             this.loadingRecords = false;
             this.totalRecords = data['body']['count'];
             this.newdataList = data['body']['data'];
-            // this.TabId = data['body']['TAB_ID'];
             this.isSpinning = false;
           } else if (data['status'] == 400) {
             this.loadingRecords = false;
@@ -2352,8 +2176,5 @@ export class ShoporderdetailsComponent {
             this.isSpinning = false;
           }
         });
-
   }
-
-
 }

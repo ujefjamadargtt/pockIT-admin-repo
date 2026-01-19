@@ -1,52 +1,138 @@
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 th {
     text-align: center !important;
     vertical-align: middle !important;
-    /* font-weight: bold; */
 }
-
 .select {
     width: 200px;
     padding: 8px;
     display: block;
 }
-
 .search-box {
     padding: 8px;
 }
-
 .search-box input {
     width: 188px;
     display: block;
 }
-
 .search-box button {
     width: 90px;
 }
-
 .search-button {
     margin-right: 8px;
 }
-
 nz-select {
     width: 100%;
 }
-
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
 }
-
 .truncate-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Adjust as needed */
     display: inline-block;
+}
+.full-width {
+    width: 100%;
+}
+.txt-ctr {
+    text-align: center;
+}
+.arrow-back-icon {
+    font-weight: bold;
+    cursor: pointer;
+}
+.header-actions-col {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 7px;
+}
+.date-picker-item {
+    margin-right: 10px !important;
+}
+.filter-row-padding {
+    padding-top: 0px;
+}
+.loading-center {
+    text-align: center;
+}
+.filter-card-col {
+    margin-bottom: 8px;
+}
+.filter-card-style {
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    border-radius: 7px;
+    align-items: center;
+}
+.filter-card-content {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+}
+.filter-name-span {
+    color: black;
+    text-align: center;
+    font-size: 25px;
+    white-space: nowrap;
+}
+.check-icon-style {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.filter-actions-row {
+    margin-top: 7px;
+}
+.filter-actions-content {
+    display: flex;
+    justify-content: space-between;
+}
+.filter-tag-common {
+    font-size: 10px !important;
+}
+.filter-tag-cursor {
+    cursor: pointer;
+}
+.filter-tag-icon {
+    font-size: 10px !important;
+}
+.filter-tag-last {
+    margin-right: 0px;
+}
+.no-data-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+.filter-buttons-col {
+    display: flex;
+    justify-content: flex-end;
+    align-items: left;
+    margin-top: 10px;
+}
+.reset-button-margin {
+    margin-right: 10px;
+}
+.new-filter-button-margin {
+    margin-right: 10px;
+}
+.table-header-bold-center {
+    font-weight: bold;
+    text-align: center;
+}
+.filter-dropdown-width-300 {
+    width: 300px;
+}
+.search-box-width-280 {
+    width: 280px;
 }

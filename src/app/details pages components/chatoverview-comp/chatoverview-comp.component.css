@@ -6,59 +6,43 @@
   border: 1px solid #efefef;
   border-radius: 10px;
 }
-
-
-
-
 .mainnam {
   color: #000;
   font-size: 13px !important;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .subnamm {
   color: #6A6A6A;
   font-size: 12px !important;
   font-weight: 500;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-
 ::-webkit-scrollbar {
   height: 5px;
   width: 4px;
 }
-
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px rgb(233, 233, 233);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-track:hover {
   box-shadow: inset 0 0 5px rgb(169, 168, 168);
 }
-
 ::-webkit-scrollbar-thumb {
   background: rgb(131, 131, 131);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   box-shadow: inset 0 0 5px rgb(8, 8, 8);
 }
-
-
 .ant-drawer-body {
   padding: 8px 20px !important;
 }
-
 .footer {
   left: 8px;
   width: 97% !important;
@@ -66,14 +50,11 @@
   padding: 10px !important;
   border-radius: 5px !important;
 }
-
 .backbbb {
   background: white !important;
   padding: 10px !important;
   border-radius: 5px !important;
 }
-
-
 .cardstyle1 {
   background-color: #fff;
   cursor: pointer;
@@ -82,28 +63,22 @@
   border: 1px solid #efefef;
   border-radius: 10px;
 }
-
 .mainnam1 {
   color: #000;
   font-size: 13px !important;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .subnamm1 {
   color: #6A6A6A;
   font-size: 12px !important;
   font-weight: 500;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-
 .nz-form-itemm {
   display: inline-block !important;
   margin-bottom: 5px !important;
@@ -111,10 +86,6 @@
   padding: 0px 10px !important;
   font-family: '"Poppins", sans-serif !important';
 }
-
-
-
-/* vaishnavi */
 nz-form-item {
   margin-top: 5px;
   display: inline-block;
@@ -122,18 +93,13 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 .select-container {
-
   display: flex;
   justify-content: center;
 }
-
 body {
   font-family: Arial, sans-serif;
 }
-
-
 .chat-container {
   max-height: 66vh;
   min-height: 55vh;
@@ -147,9 +113,7 @@ body {
   justify-content: flex-start;
   height: 200px;
   overflow: hidden;
-
 }
-
 .message-box {
   flex-grow: 1;
   margin-bottom: 10px;
@@ -159,13 +123,9 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #888 #f4f4f4;
 }
-
-
 .message-box::-webkit-scrollbar {
   width: 2px;
 }
-
-
 .box3 {
   margin: 8px 0px;
   border-radius: 15px;
@@ -176,7 +136,6 @@ body {
   position: relative;
   font-size: 12px;
 }
-
 .box33 {
   margin: 8px 0px;
   border-radius: 15px;
@@ -187,9 +146,6 @@ body {
   position: relative;
   font-size: 12px;
 }
-
-/* speech bubble 13 */
-
 .sb13:before {
   content: "";
   width: 0px;
@@ -202,10 +158,6 @@ body {
   right: -17px;
   top: 0px;
 }
-
-
-/* speech bubble 14 */
-
 .sb14:before {
   content: "";
   width: 0px;
@@ -218,35 +170,28 @@ body {
   left: -11px;
   top: 0px;
 }
-
 .message-box::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 3px;
 }
-
 .message-box::-webkit-scrollbar-track {
   background-color: #f4f4f4;
   border-radius: 3px;
 }
-
 .message {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
 }
-
 .customer-message {
   max-width: 70% !important;
   align-items: flex-start;
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
-  /* Ensures long words are wrapped */
   word-break: break-word;
-  /* Breaks words if too long */
   overflow-wrap: break-word;
 }
-
 .technician-message {
   max-width: 70%;
   align-items: flex-end;
@@ -254,49 +199,36 @@ body {
   flex-direction: column;
   margin-left: auto;
   word-wrap: break-word;
-  /* Ensures long words are wrapped */
   word-break: break-word;
-  /* Breaks words if too long */
   overflow-wrap: break-word;
 }
-
 .customer-name,
 .technician-name {
   font-weight: bold;
   font-size: 10px !important;
 }
-
 .timestamp {
-
   font-size: 10px !important;
   color: gray;
   margin-top: 5px;
 }
-
 .message-text {
-
   font-size: 13px;
   margin-top: 5px;
   background-color: #e4e4e4;
   padding: 5px;
   border-radius: 5px;
 }
-
 .technician-message .message-text {
   background-color: #d3f9d8;
 }
-
-
-
 .input-area {
   display: flex;
   justify-content: space-between;
   position: sticky;
   bottom: 0;
   z-index: 10;
-
 }
-
 textarea {
   width: 80%;
   padding: 8px;
@@ -305,7 +237,6 @@ textarea {
   border: 1px solid #ddd;
   resize: none;
 }
-
 .whatsapp-send-icon {
   width: 13%;
   background-color: #4CAF50;
@@ -318,12 +249,9 @@ textarea {
   height: 37px;
   cursor: pointer;
 }
-
 .whatsapp-send-icon:hover {
   background-color: #45a049;
 }
-
-
 .paper-clip {
   margin-right: 2px;
   background-color: #f4f4f4;
@@ -333,68 +261,53 @@ textarea {
   align-items: center;
   justify-content: center;
 }
-
-
-
-/* Action Log CSS */
 .timeline-container {
   padding: 20px;
   border-radius: 8px;
   max-width: 800px;
   margin: 0 auto;
 }
-
 h2 {
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
-
 .group-date {
   font-size: 12px;
   font-weight: bold;
   margin: 20px 0 10px;
   color: #555;
 }
-
 .event-details {
   padding: 10px 0;
 }
-
 .event-title {
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 1rem;
 }
-
 .event-meta {
   margin-top: 4px;
   font-size: 0.85rem;
   color: #888;
 }
-
 .event-meta .time {
   margin-right: 10px;
 }
-
 .event-description {
   margin-top: 5px;
   font-size: 10px;
   color: #666;
 }
-
 .icon {
   font-size: 1.2rem;
 }
-
-
 .invoice-container {
   font-family: 'Arial', sans-serif;
   color: #333;
   line-height: 1.5;
 }
-
 .invoice-header {
   display: flex;
   justify-content: space-between;
@@ -403,69 +316,57 @@ h2 {
   padding: 0 20px;
   border-bottom: 1px solid #ddd;
 }
-
 .company-info h2 {
   margin: 0;
   font-size: 22px;
   color: #092B9C !important;
 }
-
 .company-info p {
   margin: 5px 0;
   font-size: 14px;
   color: #666;
 }
-
 .invoice-info {
   text-align: right;
 }
-
 .invoice-info h3 {
   margin: 0;
   font-size: 24px;
   color: #444;
 }
-
 hr {
   border: 0;
   border-top: 1px solid #e4e4e4;
   margin: 20px 0;
 }
-
 .customer-info h3 {
   margin: 0;
   font-size: 20px;
   color: #444;
 }
-
 .customer-details {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
-
 .detail p {
   margin: 5px 0;
   font-size: 14px;
   color: #666;
 }
-
 .order-details {
   margin-top: 20px;
 }
-
 .order-details h3 {
   margin: 0;
   font-size: 20px;
   color: #444;
 }
-
 .invoice-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
 }
-
 .invoice-table th,
 .invoice-table td {
   padding: 10px;
@@ -473,37 +374,30 @@ hr {
   border: 1px solid #ddd;
   font-size: 14px;
 }
-
 .invoice-table th {
   background-color: #f7f7f7;
 }
-
 .invoice-summary {
   text-align: right;
   margin-top: 20px;
 }
-
 .invoice-summary p {
   margin: 5px 0;
   font-size: 16px;
 }
-
 .invoice-footer {
   text-align: center;
   margin-top: 30px;
 }
-
 .invoice-footer p {
   font-size: 14px;
   color: #666;
 }
-
 .invoice-footer .thank-you {
   font-size: 16px;
   font-weight: bold;
   color: #092B9C !important;
 }
-
 .invoice-container {
   max-height: 600px;
   overflow-y: scroll;
@@ -511,35 +405,70 @@ hr {
   background-color: white;
   box-sizing: border-box;
 }
-
 .invoice-container::-webkit-scrollbar {
   width: 0px;
   background: transparent;
 }
-
 .invoice-table {
   width: 100%;
   border-collapse: collapse;
 }
-
 .invoice-table th,
 .invoice-table td {
   padding: 10px;
   border: 1px solid #ddd;
   text-align: center;
 }
-
 .invoice-footer {
   margin-top: 20px;
   font-size: 14px;
 }
-
 .invoice-header h2,
 .invoice-info h3 {
   font-size: 18px;
 }
-
 .nz-modal-title {
   font-size: 20px;
   font-weight: bold;
+}
+.chat-bg {
+  background-image: url('/assets/chat.png');
+  background-repeat: repeat;
+  background-size: cover;
+}
+.select-container {
+  display: flex;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.full-width {
+  width: 100%;
+}
+.job-select-item {
+  margin-bottom: 10px;
+}
+.hidden {
+  display: none;
+}
+.job-service-name {
+  font-size: 14px;
+  color: #2d3748;
+  font-weight: 500;
+}
+.job-number {
+  font-size: 12px;
+  color: #4a5568;
+}
+.empty-wrapper {
+  height: 50vh;
+  width: 100%;
+}
+.empty-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.empty-margin-top {
+  margin-top: 38px;
 }

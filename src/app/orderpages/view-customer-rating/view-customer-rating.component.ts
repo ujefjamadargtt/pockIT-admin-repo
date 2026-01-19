@@ -3,7 +3,6 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, Input } from "@angular/core";
 import { NzNotificationService } from "ng-zorro-antd/notification";
 import { ApiServiceService } from "src/app/Service/api-service.service";
-
 @Component({
   selector: "app-view-customer-rating",
   templateUrl: "./view-customer-rating.component.html",
@@ -14,7 +13,6 @@ export class ViewCustomerRatingComponent {
   @Input() dataID: any;
   @Input() drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   pageIndex = 1;
   pageSize = 10;
   pageIndexforTechnician = 1;
@@ -31,25 +29,17 @@ export class ViewCustomerRatingComponent {
   progressTechList: any;
   averageTechnicianRating;
   globalTechnicianRating;
-
-
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private datePipe: DatePipe
   ) { }
-
   ngOnInit(): void {
     this.ViewCustomerReviewDetails();
     this.ViewTechnicianReviewDetails();
   }
-
   ViewCustomerReviewDetails() {
-
     this.isSpinning = true;
-
-
     this.api
       .getCustomerReviewData(
         this.pageIndex,
@@ -64,16 +54,9 @@ export class ViewCustomerRatingComponent {
           if (data["code"] === 200) {
             this.dataList = data["data"];
             this.totalRecords = Number(data["count"]);
-
-
-
             this.averageRating = Number(data["averageRating"]);
-
-
             this.globalRating = data["count"];
-
             this.progressList = data["progress"].reverse();
-            // 
           } else {
             this.dataList = [];
             this.message.error("Failed To Get Customer Review Details.", "");
@@ -86,7 +69,6 @@ export class ViewCustomerRatingComponent {
         }
       );
   }
-
   ViewTechnicianReviewDetails() {
     this.isSpinning = true;
     this.api
@@ -103,10 +85,8 @@ export class ViewCustomerRatingComponent {
           if (data["code"] === 200) {
             this.technicianData = data["data"];
             this.totalRecords = Number(data["count"]);
-
             this.averageTechnicianRating = Number(data["averageRating"]);
             this.globalTechnicianRating = data["count"];
-
             this.progressTechList = data["progress"].reverse();
           } else {
             this.technicianData = [];
@@ -120,13 +100,10 @@ export class ViewCustomerRatingComponent {
         }
       );
   }
-
   loadMore() {
-
     this.pageSize += 10;
     this.ViewCustomerReviewDetails();
   }
-
   loadMoreTechnician() {
     this.pageSizeforTechnician += 10;
     this.ViewTechnicianReviewDetails();

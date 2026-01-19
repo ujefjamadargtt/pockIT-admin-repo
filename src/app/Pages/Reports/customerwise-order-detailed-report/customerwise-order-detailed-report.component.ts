@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-customerwise-order-detailed-report',
   templateUrl: './customerwise-order-detailed-report.component.html',
@@ -21,11 +20,9 @@ export class CustomerwiseOrderDetailedReportComponent {
     private datepipe: DatePipe,
     private _exportService: ExportService
   ) {}
-
   @Input() orderdetailsdata;
   @Input() orderId;
   @Input() drawerClose!: () => void;
-
   ngOnInit() {
     this.getCustomers(this.searchkey);
     this.getteritorydata();
@@ -33,12 +30,8 @@ export class CustomerwiseOrderDetailedReportComponent {
       ? this.commonFunction.decryptdata(this.userId)
       : '0';
     this.USER_ID = Number(decryptedUserId);
-
-    // Set current month by default (first day of month)
     const today = new Date();
     this.MONTH1 = new Date(today.getFullYear(), today.getMonth(), 1);
-
-    // Call search with default filter applied
     this.search(true);
   }
   public commonFunction = new CommonFunctionService();
@@ -87,7 +80,6 @@ export class CustomerwiseOrderDetailedReportComponent {
   isSpinning = false;
   isFilterApplied2: any = 'default';
   Customers: any = [];
-
   clearFilter() {
     this.filterClass = 'filter-invisible';
     this.isFilterApplied2 = 'default';
@@ -96,20 +88,8 @@ export class CustomerwiseOrderDetailedReportComponent {
     this.filterQuery2 = '';
     this.dataList = [];
     this.MONTH1 = null;
-    // this.DATE = [];
     this.search();
   }
-  // onKeyupS(keys) {
-  //   const element = window.document.getElementById('button');
-  //   if (element != null) element.focus();
-  //   if (this.searchText.length >= 3 && keys.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
-  //     this.dataList = [];
-  //     this.search();
-  //   }
-  // }
-
   onKeyupS(keys: KeyboardEvent) {
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
@@ -118,21 +98,10 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
-  // keyup(event) {
-  //   if (this.searchText.length >= 3 && event.key === 'Enter') {
-  //     this.search();
-  //   } else if (this.searchText.length == 0 && event.key === 'Backspace') {
-  //     this.search();
-  //   }
-  // }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
@@ -141,77 +110,58 @@ export class CustomerwiseOrderDetailedReportComponent {
   isOrderDateApplied = false;
   isTechnicianNameApplied = false;
   isCustomerNameApplied = false;
-
   jobCardstatusText = '';
   isjobCardstatusText = false;
   jobCardstatusVisible = false;
-
   technameText = '';
   istechname = false;
   technameVisible = false;
-
   sernameText = '';
   issername = false;
   sernameVisible = false;
-
   seramtText = '';
   isseramt = false;
   seramtVisible = false;
-
   totalamtText = '';
   istotalamt = false;
   totalamtVisible = false;
-
   techcostText = '';
   istechcost = false;
   techcostVisible = false;
-
   vendorcostText = '';
   isvendorcost = false;
   vendorcostVisible = false;
-
   serskillText = '';
   isserskill = false;
   serskillVisible = false;
-
   seraddressText = '';
   isseraddress = false;
   seraddressVisible = false;
-
   techrateText = '';
   istechrate = false;
   techrateVisible = false;
-
   custrateText = '';
   iscustrete = false;
   custreteVisible = false;
-
   territoryText = '';
   isterritory = false;
   territoryVisible = false;
-
   isTextOverflow = false;
-
   OrderNoText = '';
   isOrderNoApplied = false;
   OrderNoVisible = false;
-
   CustomerNameText = '';
   isCustNameApplied = false;
   CustomernameVisible = false;
-
   CustomerEmailText = '';
   isCustEmailApplied = false;
   CustEmailVisible = false;
-
   CustomerMobileText = '';
   custMobVisible = false;
   isCustMobApplied = false;
-
   CompanyNameText = '';
   companyNameVisible = false;
   isCompanyNameApplied = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -220,7 +170,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       tooltip.hide();
     }
   }
-
   onKeyup(event: KeyboardEvent): void {
     if (this.CustomerNameText.length >= 3 && event.key === 'Enter') {
       this.search();
@@ -229,7 +178,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isCustNameApplied = false;
     }
-
     if (this.CustomerEmailText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isCustEmailApplied = true;
@@ -240,7 +188,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isCustEmailApplied = false;
     }
-
     if (this.CustomerMobileText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isCustMobApplied = true;
@@ -251,7 +198,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isCustMobApplied = false;
     }
-
     if (this.CompanyNameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isCompanyNameApplied = true;
@@ -259,7 +205,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isCompanyNameApplied = false;
     }
-
     if (this.OrderNoText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isOrderNoApplied = true;
@@ -267,7 +212,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isOrderNoApplied = false;
     }
-
     if (this.jobCardNoText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isCustomerNameApplied = true;
@@ -275,7 +219,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isCustomerNameApplied = false;
     }
-
     if (this.jobCardstatusText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isjobCardstatusText = true;
@@ -286,7 +229,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isjobCardstatusText = false;
     }
-
     if (this.technameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.istechname = true;
@@ -294,7 +236,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.istechname = false;
     }
-
     if (this.sernameText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.issername = true;
@@ -302,7 +243,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.issername = false;
     }
-
     if (this.seramtText.length > 0 && event.key === 'Enter') {
       this.search();
       this.isseramt = true;
@@ -310,7 +250,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isseramt = false;
     }
-
     if (this.totalamtText.length > 0 && event.key === 'Enter') {
       this.search();
       this.istotalamt = true;
@@ -318,7 +257,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.istotalamt = false;
     }
-
     if (this.techcostText.length > 0 && event.key === 'Enter') {
       this.search();
       this.istechcost = true;
@@ -326,7 +264,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.istechcost = false;
     }
-
     if (this.vendorcostText.length > 0 && event.key === 'Enter') {
       this.search();
       this.isvendorcost = true;
@@ -334,7 +271,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isvendorcost = false;
     }
-
     if (this.serskillText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isserskill = true;
@@ -342,7 +278,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isserskill = false;
     }
-
     if (this.seraddressText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isseraddress = true;
@@ -350,7 +285,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isseraddress = false;
     }
-
     if (this.techrateText.length > 0 && event.key === 'Enter') {
       this.search();
       this.istechrate = true;
@@ -358,7 +292,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.istechrate = false;
     }
-
     if (this.custrateText.length > 0 && event.key === 'Enter') {
       this.search();
       this.iscustrete = true;
@@ -366,7 +299,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.iscustrete = false;
     }
-
     if (this.territoryText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isterritory = true;
@@ -374,7 +306,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isterritory = false;
     }
-
     if (this.CategoryText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isCategoryFilterApplied = true;
@@ -382,7 +313,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isCategoryFilterApplied = false;
     }
-
     if (this.SubcategoryText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isSubCategoryFilterApplied = true;
@@ -390,7 +320,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isSubCategoryFilterApplied = false;
     }
-
     if (this.TaxText.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isTaxFilterApplied = true;
@@ -402,7 +331,6 @@ export class CustomerwiseOrderDetailedReportComponent {
   filterQuery: string = '';
   filterQuery1: string = '';
   filterQuery2: string = '';
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -412,14 +340,12 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.sortKey = 'ID';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -432,43 +358,36 @@ export class CustomerwiseOrderDetailedReportComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.CustomerNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `CUSTOMER_NAME LIKE '%${this.CustomerNameText.trim()}%'`;
     }
-
     if (this.CustomerEmailText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `CUSTOMER_EMAIL LIKE '%${this.CustomerEmailText.trim()}%'`;
     }
-
     if (this.CustomerMobileText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `CUSTOMER_MOBILE_NUMBER LIKE '%${this.CustomerMobileText.trim()}%'`;
     }
-
     if (this.CompanyNameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `COMPANY_NAME LIKE '%${this.CompanyNameText.trim()}%'`;
     }
-
     if (this.OrderNoText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `ORDER_NO LIKE '%${this.OrderNoText.trim()}%'`;
     }
-
     if (this.jobCardNoText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `JOB_CARD_NO LIKE '%${this.jobCardNoText.trim()}%'`;
     }
-
     if (this.jobcardstatusFilter1) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -480,7 +399,6 @@ export class CustomerwiseOrderDetailedReportComponent {
         (likeQuery ? ' AND ' : '') +
         `TECHNICIAN_NAME LIKE '%${this.technameText.trim()}%'`;
     }
-
     if (this.sernameText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -491,79 +409,61 @@ export class CustomerwiseOrderDetailedReportComponent {
         (likeQuery ? ' AND ' : '') +
         `SERVICE_AMOUNT LIKE '%${this.seramtText.trim()}%'`;
     }
-
     if (this.totalamtText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TOTAL_AMOUNT LIKE '%${this.totalamtText.trim()}%'`;
     }
-
     if (this.territoryText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TERRITORY_NAME LIKE '%${this.territoryText.trim()}%'`;
     }
-
     if (this.techcostText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TECHNICIAN_COST LIKE '%${this.techcostText.trim()}%'`;
     }
-
     if (this.vendorcostText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `VENDOR_COST LIKE '%${this.vendorcostText.trim()}%'`;
     }
-
     if (this.serskillText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SERVICE_SKILLS LIKE '%${this.serskillText.trim()}%'`;
     }
-
     if (this.seraddressText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SERVICE_ADDRESS LIKE '%${this.seraddressText.trim()}%'`;
     }
-
     if (this.techrateText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TECHNICIAN_RATING LIKE '%${this.techrateText.trim()}%'`;
     }
-
     if (this.custrateText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `CUSTOMER_RATING LIKE '%${this.custrateText.trim()}%'`;
     }
-
     if (this.CategoryText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `CATEGORY_NAME LIKE '%${this.CategoryText.trim()}%'`;
     }
-
     if (this.SubcategoryText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `SUB_CATEGORY_NAME LIKE '%${this.SubcategoryText.trim()}%'`;
     }
-
     if (this.TaxText !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TAX_AMOUNT LIKE '%${this.TaxText.trim()}%'`;
     }
-
-    // if (this.statusFilter) {
-    //   if (likeQuery !== '') {
-    //     likeQuery += ' AND ';
-    //   }
-    //   likeQuery += `TECHNICIAN_STATUS = '${this.statusFilter}'`;
-    // }
     if (this.statusFilter && this.statusFilter.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -575,48 +475,42 @@ export class CustomerwiseOrderDetailedReportComponent {
         likeQuery += `TECHNICIAN_STATUS IN (${statusList})`;
       }
     }
-
     if (this.statusFilter1) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `TRACK_STATUS = '${this.statusFilter1}'`;
     }
-
-    // Date Range Filter
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `ASSIGNED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-
     if (this.createdDate && this.createdDate.length === 2) {
       const [start, end] = this.createdDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `JOB_CREATED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-
     if (this.sheduledDate && this.sheduledDate.length === 2) {
       const [start, end] = this.sheduledDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `SCHEDULED_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
-
     if (this.MONTH1) {
       this.filterQuery2 =
         " AND YEAR(JOB_COMPLETED_DATETIME) = '" +
@@ -627,7 +521,6 @@ export class CustomerwiseOrderDetailedReportComponent {
     } else {
       this.filterQuery2 = '';
     }
-
     if (
       this.Customers != null &&
       this.Customers != undefined &&
@@ -636,19 +529,14 @@ export class CustomerwiseOrderDetailedReportComponent {
       let idArray = Array.isArray(this.Customers)
         ? this.Customers
         : [this.Customers];
-
       this.filterQuery1 = ` AND CUSTOMER_ID IN (${idArray
         .map((id) => `'${id}'`)
         .join(',')})`;
     } else {
       this.filterQuery1 = '';
     }
-
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-    // this.sortKey = 'NAME';
-    // sort = 'asc';
     if (exportInExcel == false) {
       this.api
         .getOrderwiseJobCardDetailedReport(
@@ -693,7 +581,6 @@ export class CustomerwiseOrderDetailedReportComponent {
     } else {
       this.loadingRecords = false;
       this.exportLoading = true;
-
       this.api
         .getOrderwiseJobCardDetailedReport(
           0,
@@ -717,7 +604,6 @@ export class CustomerwiseOrderDetailedReportComponent {
           (err: HttpErrorResponse) => {
             this.loadingRecords = false;
             this.exportLoading = false;
-
             if (err.status === 0) {
               this.message.error(
                 'Unable to connect. Please check your internet or server connection and try again shortly.',
@@ -738,74 +624,56 @@ export class CustomerwiseOrderDetailedReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     if (currentSort != null && currentSort.value != undefined) {
       this.search();
     }
   }
-
   close() {
     this.drawervisible = false;
   }
   drawerChapterMappingClose(): void {
     this.drawerCountryMappingVisible = false;
   }
-
   get closeChapterMappingCallback() {
     return this.drawerChapterMappingClose.bind(this);
   }
-
-  //For Input
   countrytext: string = '';
   orderNumberText: string = '';
-  // orderDateText: string = '';
   finalAmountText: string = '';
   orderStatusText: string = '';
   idVisible: boolean = false;
-
   customerNameText: string = '';
   customerNameVisible: boolean = false;
-
   technicianNameText: string = '';
   technicianNameVisible: boolean = false;
   OrderDateVisible = false;
   orderNumberVisible: boolean = false;
-
   orderStatusVisible: boolean = false;
-
   orderDateText: any = null;
   orderDateVisible: boolean = false;
-
   cancelDateText: any = null;
   cancelDateVisible: boolean = false;
-
   reasonText: string = '';
   reasonVisible: boolean = false;
-
   CategoryText: string = '';
   categoryVisible: boolean = false;
   isCategoryFilterApplied: boolean = false;
-
   SubcategoryText: string = '';
   subcategoryVisible: boolean = false;
   isSubCategoryFilterApplied: boolean = false;
-
   TaxText: string = '';
   taxVisible: boolean = false;
   isTaxFilterApplied: boolean = false;
-
   reset(): void {
     this.jobCardNoText = '';
     this.jobCardstatusText = '';
@@ -824,55 +692,40 @@ export class CustomerwiseOrderDetailedReportComponent {
     this.TaxText = '';
     this.SubcategoryText = '';
     this.CategoryText = '';
-
     this.search();
   }
-
-  // statusFilter: string | undefined = undefined;
-  // onStatusFilterChange(selectedStatus: string) {
-  //   this.statusFilter = selectedStatus;
-
-  //   this.search(true);
-  // }
   statusFilter: string[] | undefined = undefined;
   onStatusFilterChange(selectedStatus: string[]) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   listOfFilter: any[] = [
     { text: 'Pending', value: ['P'] },
     { text: 'Accepted', value: ['AC', 'AS'] },
     { text: 'Ongoing', value: ['ON'] },
     { text: 'Completed', value: ['CO'] },
   ];
-
   statusFilter1: string | undefined = undefined;
   onStatusFilterChange1(selectedStatus: string) {
     this.statusFilter1 = selectedStatus;
-
     this.search(true);
   }
   jobcardstatusFilter1: string | undefined = undefined;
   onjobcardStatusFilterChange1(selectedStatus: string) {
     this.jobcardstatusFilter1 = selectedStatus;
-
     this.search(true);
   }
-
   listOfFilter1: any[] = [
     { text: 'Start Traveling', value: 'ST' },
     { text: 'Reached', value: 'RD' },
     { text: 'Start Job', value: 'SJ' },
     { text: 'End Job', value: 'EJ' },
   ];
-
   listOfjobcardFilter1: any[] = [
     { text: 'Completed', value: 'Completed' },
     { text: 'Assigned', value: 'Assigned' },
     { text: 'Pending', value: 'Pending' },
   ];
-
   submittedDateVisible = false;
   isSubmittedDateFilterApplied: boolean = false;
   StartDate: any = [];
@@ -885,12 +738,11 @@ export class CustomerwiseOrderDetailedReportComponent {
         this.isSubmittedDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isSubmittedDateFilterApplied = false;
     }
   }
-
   createdDateVisible = false;
   iscreatedDateFilterApplied: boolean = false;
   createdDate: any = [];
@@ -907,7 +759,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.iscreatedDateFilterApplied = false;
     }
   }
-
   sheduledDateVisible = false;
   issheduledDateFilterApplied: boolean = false;
   sheduledDate: any = [];
@@ -924,7 +775,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.issheduledDateFilterApplied = false;
     }
   }
-
   onDateChange(selectedDate: any): void {
     if (this.orderDateText && this.orderDateText.length === 2) {
       this.search();
@@ -933,12 +783,10 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
     }
   }
-
   resetDateFilter(): void {
     this.orderDateText = null;
     this.search();
   }
-
   onCancelDateChange(selectedDate: any): void {
     if (this.cancelDateText && this.cancelDateText.length === 2) {
       this.search();
@@ -947,38 +795,24 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
     }
   }
-
   resetCancelDateFilter(): void {
     this.cancelDateText = null;
     this.search();
   }
-
   dataList: any = [];
   visible = false;
-
   columns1: { label: string; value: string }[] = [
     { label: 'Customer Name', value: 'CUSTOMER_NAME' },
-    // { label: 'Short Code', value: 'SHORT_CODE' },
   ];
-
-  // new filter
-
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   isLoading = false;
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-
-  //Edit Code 3
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
+  savedFilters: any; 
+  currentClientId = 1; 
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -995,14 +829,12 @@ export class CustomerwiseOrderDetailedReportComponent {
       groups: [],
     },
   ];
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   isfilterapply: boolean = false;
-
   filterClass: string = 'filter-invisible';
   getteritorydata() {
     this.api.getTeritory(0, 0, '', '', ' AND IS_ACTIVE=1').subscribe((data) => {
@@ -1032,7 +864,6 @@ export class CustomerwiseOrderDetailedReportComponent {
   updateBtn: any;
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1040,13 +871,12 @@ export class CustomerwiseOrderDetailedReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1061,21 +891,15 @@ export class CustomerwiseOrderDetailedReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
             this.filterQuery1 = '';
             this.filterQuery2 = '';
@@ -1093,7 +917,6 @@ export class CustomerwiseOrderDetailedReportComponent {
     this.filterQuery1 = '';
     this.filterQuery2 = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1101,7 +924,6 @@ export class CustomerwiseOrderDetailedReportComponent {
     this.filterQuery = '';
     this.filterQuery1 = '';
     this.filterQuery2 = '';
-
     sessionStorage.removeItem('ID');
     this.search();
   }
@@ -1127,13 +949,9 @@ export class CustomerwiseOrderDetailedReportComponent {
     this.drawerTitle = 'Customer Wise Order detailed Filter';
     this.drawerFilterVisible = true;
     this.filterFields[12]['options'] = this.territoryData1;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1150,7 +968,6 @@ export class CustomerwiseOrderDetailedReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1167,7 +984,6 @@ export class CustomerwiseOrderDetailedReportComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1177,21 +993,17 @@ export class CustomerwiseOrderDetailedReportComponent {
       FILTER_JSON: {},
     };
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
@@ -1266,7 +1078,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       ],
       placeholder: 'Enter Order No',
     },
-
     {
       key: 'JOB_CARD_NO',
       label: 'Job No.',
@@ -1422,21 +1233,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       ],
       placeholder: 'Select Sheduled Date',
     },
-    // {
-    //   key: 'SERVICE_SKILLS',
-    //   label: 'Service Skills',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Service Skills',
-    // },
-
     {
       key: 'TERRITORY_NAME',
       label: 'Territory',
@@ -1452,20 +1248,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       options: [],
       placeholder: 'Enter Territory Name',
     },
-    // {
-    //   key: 'TERRITORY_NAME',
-    //   label: 'Territory Name',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Territory Name',
-    // },
     {
       key: 'SERVICE_ADDRESS',
       label: 'Service Address',
@@ -1480,7 +1262,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       ],
       placeholder: 'Enter Service Address',
     },
-
     {
       key: 'CATEGORY_NAME',
       label: 'Category',
@@ -1495,7 +1276,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       ],
       placeholder: 'Enter Category',
     },
-
     {
       key: 'SUB_CATEGORY_NAME',
       label: 'Sub Category',
@@ -1510,7 +1290,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       ],
       placeholder: 'Enter Sub Category',
     },
-
     {
       key: 'TAX_AMOUNT',
       label: 'Tax',
@@ -1525,78 +1304,13 @@ export class CustomerwiseOrderDetailedReportComponent {
       ],
       placeholder: 'Enter Tax',
     },
-    // {
-    //   key: 'CUSTOMER_RATING',
-    //   label: 'Customer Rating',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Customer Rating',
-    // },
-    // {
-    //   key: 'TECHNICIAN_RATING',
-    //   label: 'Technician Rating',
-    //   type: 'text',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //     { value: 'Contains', display: 'Contains' },
-    //     { value: 'Does Not Contains', display: 'Does Not Contains' },
-    //     { value: 'Starts With', display: 'Starts With' },
-    //     { value: 'Ends With', display: 'Ends With' },
-    //   ],
-    //   placeholder: 'Enter Technician Rating',
-    // },
-    // {
-    //   key: 'TECHNICIAN_STATUS',
-    //   label: 'Technician Status',
-    //   type: 'select',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //   ],
-    //   options: [
-    //     { value: 'P', display: 'Pending' },
-    //     { value: "AS' OR STATUS = 'AC", display: 'Accepted' },
-    //     { value: 'ON', display: 'Ongoing' },
-    //     { value: 'CO', display: 'Completed' },
-    //   ],
-    //   placeholder: 'Select Technician Status',
-    // },
-
-    // {
-    //   key: 'TRACK_STATUS',
-    //   label: 'Track Status',
-    //   type: 'select',
-    //   comparators: [
-    //     { value: '=', display: 'Equal To' },
-    //     { value: '!=', display: 'Not Equal To' },
-    //   ],
-    //   options: [
-    //     { value: 'ST', display: 'Start Traveling' },
-    //     { value: 'RD', display: 'Reached' },
-    //     { value: 'SJ', display: 'Start Job' },
-    //     { value: 'EJ', display: 'End Job' },
-    //   ],
-    //   placeholder: 'Select Track Status',
-    // },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -1613,14 +1327,11 @@ export class CustomerwiseOrderDetailedReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.filterQuery1 = '';
             this.filterQuery2 = '';
-
             this.search(true);
           } else {
             this.isfilterapply = true;
@@ -1644,10 +1355,8 @@ export class CustomerwiseOrderDetailedReportComponent {
       }
     );
   }
-
   selectedFilter: string | null = null;
   applyfilter(item) {
-    //
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -1655,27 +1364,22 @@ export class CustomerwiseOrderDetailedReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
   drawerTitle;
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.filterFields[12]['options'] = this.territoryData1;
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -1683,14 +1387,11 @@ export class CustomerwiseOrderDetailedReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   excelData: any = [];
   exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
@@ -1705,7 +1406,6 @@ export class CustomerwiseOrderDetailedReportComponent {
         obj1['Order No'] = this.excelData[i]['ORDER_NO']
           ? this.excelData[i]['ORDER_NO']
           : '-';
-
         obj1['Job No.'] = this.excelData[i]['JOB_CARD_NO']
           ? this.excelData[i]['JOB_CARD_NO']
           : '-';
@@ -1724,7 +1424,6 @@ export class CustomerwiseOrderDetailedReportComponent {
         obj1['Company Name'] = this.excelData[i]['COMPANY_NAME']
           ? this.excelData[i]['COMPANY_NAME']
           : '-';
-
         obj1['Technician Name'] = this.excelData[i]['TECHNICIAN_NAME']
           ? this.excelData[i]['TECHNICIAN_NAME']
           : '-';
@@ -1732,13 +1431,10 @@ export class CustomerwiseOrderDetailedReportComponent {
           ? this.excelData[i]['SERVICE_NAME']
           : '-';
         obj1['Category'] = this.excelData[i]['CATEGORY_NAME'];
-
         obj1['Subcategory'] = this.excelData[i]['SUB_CATEGORY_NAME'];
-
         obj1['Service Amount (₹)'] = this.excelData[i]['SERVICE_AMOUNT']
           ? this.excelData[i]['SERVICE_AMOUNT']
           : '-';
-
         obj1['Technician Cost'] = this.excelData[i]['TECHNICIAN_COST']
           ? this.excelData[i]['TECHNICIAN_COST']
           : '-';
@@ -1746,18 +1442,15 @@ export class CustomerwiseOrderDetailedReportComponent {
           ? this.excelData[i]['VENDOR_COST']
           : '-';
         obj1['Tax Amount (₹)'] = this.excelData[i]['TAX_AMOUNT'];
-
         obj1['Total Amount (₹)'] = this.excelData[i]['TOTAL_AMOUNT']
           ? this.excelData[i]['TOTAL_AMOUNT']
           : '-';
-
         obj1['Assigned Date'] = this.excelData[i]['ASSIGNED_DATE']
           ? this.datepipe.transform(
               this.excelData[i]['ASSIGNED_DATE'],
               'dd/MM/yyyy'
             )
           : '-';
-
         obj1['Scheduled Date'] = this.excelData[i]['SCHEDULED_DATE_TIME']
           ? this.datepipe.transform(
               this.excelData[i]['SCHEDULED_DATE_TIME'],
@@ -1769,30 +1462,6 @@ export class CustomerwiseOrderDetailedReportComponent {
         obj1['Service Address'] = this.excelData[i]['SERVICE_ADDRESS'];
         obj1['Customer Rating'] = this.excelData[i]['CUSTOMER_RATING'];
         obj1['Technician Rating'] = this.excelData[i]['TECHNICIAN_RATING'];
-
-        // if (this.excelData[i]['TECHNICIAN_STATUS'] == 'AS') {
-        //   obj1['Technician Status'] = 'Accepted';
-        // } else if (this.excelData[i]['TECHNICIAN_STATUS'] == 'P') {
-        //   obj1['Technician Status'] = 'Pending';
-        // } else if (this.excelData[i]['TECHNICIAN_STATUS'] == 'ON') {
-        //   obj1['Technician Status'] = 'Ongoing';
-        // } else if (this.excelData[i]['TECHNICIAN_STATUS'] == 'CO') {
-        //   obj1['Technician Status'] = 'Completed';
-        // }
-        // if (this.excelData[i]['TRACK_STATUS'] == 'ST') {
-        //   obj1['Track Status'] = 'Start Traveling';
-        // } else if (this.excelData[i]['TRACK_STATUS'] == 'RD') {
-        //   obj1['Track Status'] = 'Reached';
-        // } else if (this.excelData[i]['TRACK_STATUS'] == 'SJ') {
-        //   obj1['Track Status'] = 'Start Job';
-        // } else if (this.excelData[i]['TRACK_STATUS'] == 'EJ') {
-        //   obj1['Track Status'] = 'End Job';
-        // } else if (
-        //   this.excelData[i]['TRACK_STATUS'] == null ||
-        //   this.excelData[i]['TRACK_STATUS'] == '-'
-        // ) {
-        //   obj1['Track Status'] = '-';
-        // }
         arry1.push(Object.assign({}, obj1));
         if (i == this.excelData.length - 1) {
           this._exportService.exportExcel(
@@ -1806,12 +1475,10 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   applyFilterMain() {
     this.filterQuery = '';
     this.filterQuery1 = '';
     this.filterQuery2 = '';
-
     var likeQuery = '';
     if (this.searchText != '') {
       likeQuery = ' AND';
@@ -1821,21 +1488,17 @@ export class CustomerwiseOrderDetailedReportComponent {
       likeQuery = likeQuery.substring(0, likeQuery.length - 2);
       this.filterQuery = likeQuery;
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     this.filterQuery = '';
     this.filterQuery1 = '';
     this.filterQuery2 = '';
-    // this.isFilterApplied = 'primary';
     this.search();
   }
-
   getCustomers(event) {
     event =
       event != '' && event != undefined && event != null
@@ -1871,18 +1534,15 @@ export class CustomerwiseOrderDetailedReportComponent {
           }
           this.isLoading = false;
         },
-
         (err) => {
           this.CustomersData = [];
         }
       );
   }
-
   onMonthChange(selectedMonth: Date) {
     this.MONTH1 = selectedMonth;
-    this.search(true); // true → reset pagination & apply new filter
+    this.search(true); 
   }
-
   onCustomerChange(selectedCustomerId: any) {
     this.Customers = selectedCustomerId;
     this.search(true);
@@ -1890,14 +1550,11 @@ export class CustomerwiseOrderDetailedReportComponent {
       !selectedCustomerId ||
       (Array.isArray(selectedCustomerId) && selectedCustomerId.length === 0)
     ) {
-      // This acts like your onCustomerClear
       this.Customers = [];
       this.pageIndex1 = 1;
       this.getCustomers('');
     }
   }
-
-  //by sanjana
   totalrecords = 0;
   loadMore() {
     if (this.totalrecords > this.Customers?.length) {
@@ -1905,9 +1562,7 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.getCustomers(this.searchkey);
     }
   }
-
   searchkey = '';
-
   keyup(event) {
     if (
       this.searchkey == '' &&
@@ -1918,7 +1573,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.getCustomers('');
     }
   }
-
   customersearch(event) {
     this.searchkey = event;
     if (event.length >= 3) {
@@ -1927,7 +1581,6 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.getCustomers(this.searchkey);
     }
   }
-
   onCustomerClear(): void {
     this.Customers = [];
     this.pageIndex1 = 1;

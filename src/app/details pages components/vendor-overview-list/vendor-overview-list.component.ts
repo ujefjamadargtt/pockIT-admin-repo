@@ -4,7 +4,6 @@ import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { endOfMonth, startOfYear, endOfYear, startOfMonth } from 'date-fns';
-
 @Component({
   selector: 'app-vendor-overview-list',
   templateUrl: './vendor-overview-list.component.html',
@@ -14,19 +13,16 @@ import { endOfMonth, startOfYear, endOfYear, startOfMonth } from 'date-fns';
 export class VendorOverviewListComponent implements OnInit {
   @Input() FILTER_ID: any
   @Input() TYPE: any = '';
-
   isSpinning: boolean = false;
   pageIndex = 1;
   pageSize = 10;
   selectedTerritor: string = '';
   isfilterapply = false;
   selectedTechnicianDropdown: string = 'tech1';
-
   techniciansdata: any[] = [];
   timelineData: any[] = [];
   technician: any[] = [];
   originalTechniciansData: any = [];
-
   leaveTechnicians = ['Technician 3', 'Technician 4'];
   searchText: string = '';
   filterQuery: string = '';
@@ -53,7 +49,6 @@ export class VendorOverviewListComponent implements OnInit {
     ['TAX_AMOUNT', 'TAX_AMOUNT'],
     ['FINAL_AMOUNT', 'FINAL_AMOUNT']
   ];
-
   Customers: any = [];
   filterQuery1: any = '';
   filterQuery2: any = '';
@@ -61,15 +56,12 @@ export class VendorOverviewListComponent implements OnInit {
   filterQuery4: any = '';
   filterQuery5: any = '';
   filterQuery6: any = '';
-
-
   CustomersData: any = []
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private datepipe: DatePipe
   ) { }
-
   ngOnInit(): void {
     this.getTechniciandata();
     this.value1 = this.datepipe.transform(new Date(), 'yyyy-MM-01');
@@ -77,12 +69,8 @@ export class VendorOverviewListComponent implements OnInit {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using datepipe
     const formattedStartDate: any = this.datepipe.transform(startOfMonth, 'yyyy-MM-dd');
     const formattedEndDate: any = this.datepipe.transform(endOfMonth, 'yyyy-MM-dd');
-
-    // Store the formatted dates in the selectedDate array
     this.selectedDate = [formattedStartDate, formattedEndDate];
   }
   getCustomers() {
@@ -116,30 +104,21 @@ export class VendorOverviewListComponent implements OnInit {
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-    // Format the dates using DatePipe
     const formattedStartDate: any = this.datepipe.transform(startOfMonth, 'yyyy-MM-dd');
     const formattedEndDate: any = this.datepipe.transform(endOfMonth, 'yyyy-MM-dd');
-
-    // Store the formatted dates in the selectedDate array
     this.selectedDate = [formattedStartDate, formattedEndDate];
     this.value1 = this.datepipe.transform(new Date(), 'yyyy-MM-01');
     this.value2 = this.datepipe.transform(new Date(), 'yyyy-MM-31');
     this.isFilterApplied = 'default';
     this.filterClass = 'filter-invisible';
     this.getTechniciandata(true);
-
-
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   applyFilter() {
-    // this.loadingRecords = true;
     if (this.selectedDate != null && this.selectedDate.length === 2) {
       this.value1 = this.datepipe.transform(this.selectedDate[0], 'yyyy-MM-dd');
       this.value2 = this.datepipe.transform(this.selectedDate[1], 'yyyy-MM-dd');
@@ -157,7 +136,6 @@ export class VendorOverviewListComponent implements OnInit {
       this.getTechniciandata(true);
     }
   }
-
   onKeypressEvent(keys) {
     const element = window.document.getElementById('buttonss');
     if (element != null) element.focus();
@@ -192,7 +170,6 @@ export class VendorOverviewListComponent implements OnInit {
       });
       likeQuery = likeQuery.substring(0, likeQuery.length - 2) + ') ';
     }
-
     if ((this.selectedDate == undefined) || (this.selectedDate.length == 0)) {
       this.filterQuery = '';
     } else {
@@ -214,13 +191,11 @@ export class VendorOverviewListComponent implements OnInit {
     } else {
       this.filterQuery3 = '';
     }
-
     if (this.TYPE == 'JOB' && this.FILTER_ID != null && this.FILTER_ID != null && this.FILTER_ID != '') {
       this.filterQuery4 = " AND JOB_CARD_ID=" + this.FILTER_ID;
     } else {
       this.filterQuery4 = '';
     }
-
     if (this.TYPE == 'CUSTOMER' && this.FILTER_ID != null && this.FILTER_ID != null && this.FILTER_ID != '') {
       this.filterQuery5 = " AND CUSTOMER_ID=" + this.FILTER_ID;
     } else {
@@ -231,19 +206,14 @@ export class VendorOverviewListComponent implements OnInit {
     } else {
       this.filterQuery6 = '';
     }
-    // likeQuery = this.filterQuery1;
-
     likeQuery = this.filterQuery + this.filterQuery1 + this.filterQuery2 + this.filterQuery3 + this.filterQuery4 + this.filterQuery5 + this.filterQuery6;
-
     this.isSpinning = true;
-
     this.api.getVendorData(this.pageIndex, this.pageSize, this.sortKey, sort, likeQuery).subscribe(
       (data) => {
         if (data['code'] == 200) {
           this.isSpinning = false;
           this.invoiceDataCount = data['count'];
           this.originalTechniciansData = data['data'];
-
         } else {
           this.originalTechniciansData = [];
           this.invoiceDataCount = 0;
@@ -257,7 +227,6 @@ export class VendorOverviewListComponent implements OnInit {
         this.message.error('Something Went Wrong', '');
       }
     );
-
   }
   handleHttpError(err: HttpErrorResponse) {
     this.isSpinning = false;
@@ -270,8 +239,6 @@ export class VendorOverviewListComponent implements OnInit {
       this.message.error('Something Went Wrong.', '');
     }
   }
-
-  // shreya
   drawerVisibleCustomers: boolean;
   drawerTitleCustomers: string;
   drawerDataCustomers: any;

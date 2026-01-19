@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonFunctionService } from '../Service/CommonFunctionService';
 import { ApiServiceService } from '../Service/api-service.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-
 @Component({
   selector: 'app-customer-dashboard',
   templateUrl: './customer-dashboard.component.html',
@@ -10,7 +9,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class CustomerDashboardComponent implements OnInit {
   public commonFunction = new CommonFunctionService();
-
   userName = sessionStorage.getItem('userName');
   decreptedUserName = this.userName
     ? this.commonFunction.decryptdata(this.userName)
@@ -31,32 +29,18 @@ export class CustomerDashboardComponent implements OnInit {
     private api: ApiServiceService,
     private sanitizer: DomSanitizer
   ) { }
-
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString: any;
-
   ngOnInit() {
-    // var dataUrl: any = 'https://analytics.uvtechsoft.com:7865/public-dashboards/72d66a3c0614430198054036b51f4d35'
-    // this.grafanaUrl =
-    //   this.sanitizer.bypassSecurityTrustResourceUrl(dataUrl);
     this.is_show = false;
-    // if (
-    //   this.roleIDMain != null &&
-    //   this.roleIDMain != undefined &&
-    //   this.roleIDMain != '0'
-    // ) {
-
     this.decrepteduserIDString = this.userId
       ? this.commonFunction.decryptdata(this.userId)
       : '';
-
     this.api
       .getAllCustomer(0, 0, '', '', ' AND ID = ' + this.decrepteduserIDString)
       .subscribe((data) => {
         if (data['code'] == '200' && data['count'] > 0) {
-
           const childIds = data['data'][0]['CLILDS'];
-          // const childIds = data['data'][0]['CLILDS'];
           this.api
             .getDashboard(1, 1, '', '', ' AND STATUS=1 AND ROLE_ID= 27')
             .subscribe(
@@ -64,18 +48,12 @@ export class CustomerDashboardComponent implements OnInit {
                 if (data['status'] == 200 && data['body']['data'][0] != null) {
                   this.is_show = true;
                   const snapshotLink = data['body']['data'][0]['SNAPSHOT_LINK'];
-
-
-                  // console.log(childIds, "childIds")
                   const unsafeUrl =
                     snapshotLink +
                     '?theme=light&fullscreen=true' +
                     `&var-CUST_ID=${childIds}` + '&kiosk';
-
                   this.grafanaUrl =
                     this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
-                  // console.log(this.grafanaUrl, "this.grafanaUrl")
-
                 }
               },
               (err) => {
@@ -83,9 +61,6 @@ export class CustomerDashboardComponent implements OnInit {
             );
         }
       });
-
-    // }
-
     if (
       this.rolemainname == null ||
       this.rolemainname == undefined ||
@@ -111,11 +86,4 @@ export class CustomerDashboardComponent implements OnInit {
         );
     }
   }
-
-  // onBlockedClick(event: MouseEvent): void {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   console.log('Click is blocked, but hover & scroll allowed');
-  // }
-
 }

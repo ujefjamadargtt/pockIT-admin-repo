@@ -7,24 +7,19 @@
   text-align: right;
   right: 0px;
 }
-
 nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 5px;
 }
-
 .mainnam {
-  /* color: #000; */
   font-size: 12px !important;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .subname {
   color: #4c4c4ceb;
   font-size: 11px !important;
@@ -32,4 +27,122 @@ nz-form-item {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.tree-select-full-width {
+  width: 100%;
+}
+
+.select-full-width {
+  width: 100%;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.input-width-65 {
+  width: 65%;
+}
+
+.input-group-full-width {
+  width: 100%;
+}
+
+.char-counter-red {
+  color: red;
+  font-size: 10px;
+}
+
+.length-error-text {
+  color: red;
+  font-size: 11px;
+}
+
+.editor-resize {
+  resize: none;
+  color: black;
+}
+
+.brand-button-container {
+  margin-top: 26px;
+}
+
+.upload-button {
+  padding: 0px 7px;
+  font-size: 10px;
+  width: 100%;
+}
+
+.file-input-hidden {
+  display: none ! important;
+}
+
+.image-link {
+  color: blue;
+  margin-right: 9px;
+}
+
+.view-icon {
+  margin-right: 9px;
+}
+
+.delete-icon-container {
+  cursor: pointer;
+  margin-left: 0px;
+}
+
+.warranty-delete-container {
+  cursor: pointer;
+  color: red;
+  margin-left: 10px;
+}
+
+.warranty-upload-button {
+  height: 28px;
+  padding: 0px 7px;
+  font-size: 10px;
+  width: 100%;
+}
+
+.warranty-file-name {
+  color: blue;
+  margin-right: 8px;
+}
+
+.warranty-view-link {
+  color: blue;
+  margin-right: 9px;
+}
+
+.footer-button-cancel {
+  margin-right: 8px;
+}
+
+.menu-item-rounded {
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+.menu-link-white {
+  color: white !important;
+}
+
+.modal-iframe-container {
+  max-height: 80vh;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-iframe {
+  width: 950px;
+  height: 550px;
+  max-width: 100%;
+  max-height: 80vh;
+  border: none;
 }

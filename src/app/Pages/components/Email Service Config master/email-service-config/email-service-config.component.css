@@ -5,30 +5,15 @@
     margin-top: 12px;
     margin-bottom: 12px;
     background-color: #fafafa;
-
   }
   .header {
-
     position: absolute;
- 
     top: 0px;
- 
-    /* bottom: 0px; */
- 
     width: 100%;
- 
     border-top: 1px solid rgb(232, 232, 232);
- 
     padding: 10px 16px;
- 
     text-align: right;
- 
-    /* left: 0px; */
- 
     right: 0px;
- 
-    /* background: #fff; */
- 
  }
 nz-form-item {
   display: inline-block;
@@ -36,41 +21,64 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 10px;
 }
-
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select{
 width: 200px;
 padding: 8px;
 display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
-
 :host::ng-deep .ant-form-item-explain{
   font-size: 13px;
+}
+.section-title {
+    display: block;
+    margin-bottom: 15px;
+}
+.character-count-h6 {
+    color: red;
+    font-size: 10px;
+}
+.info-icon {
+    cursor: pointer;
+}
+.text-left {
+    text-align: left;
+}
+.password-hint {
+    color: red;
+    font-size: 10px;
+}
+.password-error-message {
+    color: #ff4d4f;
+    font-size: 10px;
+    text-align: left;
+}
+.footer-btn-spacing {
+  margin-right: 8px;
+}
+.footer-menu-item {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-menu-link {
+  color: white !important;
 }

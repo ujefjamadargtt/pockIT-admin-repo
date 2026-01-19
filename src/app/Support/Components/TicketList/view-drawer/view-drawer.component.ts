@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-
 @Component({
   selector: 'app-view-drawer',
   templateUrl: './view-drawer.component.html',
@@ -10,15 +9,10 @@ export class ViewDrawerComponent {
   @Input()
   drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
-
-
   COMMENT;
   ButtonSpinning: boolean = false;
-  // userId = Number(sessionStorage.getItem("userId"));
   userId = 1;
   isLoading: boolean = false;
-
   dataList: any = [
     {
       COMMENTER_ID: 1,
@@ -46,7 +40,7 @@ export class ViewDrawerComponent {
       COMMENTER_NAME: 'Alex Brown',
       COMMENT: 'Ticket status updated to Ongoing by Admin on 2024-11-14 13:10:35 on 14/11/2024 13:10 PM',
       COMMENT_DATETIME: new Date('2024-12-03T10:30:00'),
-      TYPE: 'A' // Special tag type
+      TYPE: 'A' 
     },
     {
       COMMENTER_ID: 2,
@@ -56,15 +50,9 @@ export class ViewDrawerComponent {
       TYPE: 'C'
     }
   ];
-
-
-
-
   AddComment(): void {
     if (this.COMMENT.trim()) {
       this.ButtonSpinning = true;
-
-      // Simulate adding a comment with a timeout
       setTimeout(() => {
         this.dataList.push({
           COMMENTER_ID: this.userId,
@@ -73,35 +61,17 @@ export class ViewDrawerComponent {
           COMMENT_DATETIME: new Date(),
           TYPE: 'C'
         });
-
-        this.COMMENT = ''; // Clear input field
+        this.COMMENT = ''; 
         this.ButtonSpinning = false;
       }, 1000);
     }
   }
-
-
   onPick() {
-
-
   }
-
   onTransfer() {
-
-
   }
-
   onClose() {
-
-
   }
-
   onHold() {
-
-
   }
-
-
-
-
 }

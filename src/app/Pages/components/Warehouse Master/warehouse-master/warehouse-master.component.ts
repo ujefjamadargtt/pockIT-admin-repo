@@ -5,10 +5,8 @@ import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { WarehouseMasterData } from 'src/app/Pages/Models/WarehouseMasterData';
-// import { WarehouseMasterData } from 'src/app/Pages/Models/WarehouseMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-warehouse-master',
   templateUrl: './warehouse-master.component.html',
@@ -35,13 +33,11 @@ export class WarehouseMasterComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-  userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-
+  userId = sessionStorage.getItem('userId'); 
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
   TabId: number;
   ngOnInit(): void {
     if (this.searchText.length > 3) {
@@ -57,7 +53,7 @@ export class WarehouseMasterComponent {
     this.getDistrictData();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
   }
   formTitle = 'Manage Warehouses';
@@ -85,60 +81,58 @@ export class WarehouseMasterComponent {
   isPinApplied = false;
   isDistApplied = false;
   onCountryChange(): void {
-    //his.search();
     if (this.selectedCountries?.length) {
       this.search();
-      this.isCountryApplied = true; // Filter applied if selectedCategories has values
+      this.isCountryApplied = true; 
     } else {
       this.search();
-      this.isCountryApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isCountryApplied = false; 
     }
   }
   onCountryCodeChange(): void {
-    //his.search();
     if (this.selectedCodes?.length) {
       this.search();
-      this.isCodeApplied = true; // Filter applied if selectedCategories has values
+      this.isCodeApplied = true; 
     } else {
       this.search();
-      this.isCodeApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isCodeApplied = false; 
     }
   }
   onPincodeChange() {
     if (this.selectedPincodes?.length) {
       this.search();
-      this.isPinApplied = true; // Filter applied if selectedCategories has values
+      this.isPinApplied = true; 
     } else {
       this.search();
-      this.isPinApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isPinApplied = false; 
     }
   }
   onDistChange() {
     if (this.selectedDist?.length) {
       this.search();
-      this.isDistApplied = true; // Filter applied if selectedCategories has values
+      this.isDistApplied = true; 
     } else {
       this.search();
-      this.isDistApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isDistApplied = false; 
     }
   }
   DistVisible = false;
   onCityChange() {
     if (this.selectedCities?.length) {
       this.search();
-      this.isCityApplied = true; // Filter applied if selectedCategories has values
+      this.isCityApplied = true; 
     } else {
       this.search();
-      this.isCityApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isCityApplied = false; 
     }
   }
   onStateChange() {
     if (this.selectedStates?.length) {
       this.search();
-      this.isStateApplied = true; // Filter applied if selectedCategories has values
+      this.isStateApplied = true; 
     } else {
       this.search();
-      this.isStateApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isStateApplied = false; 
     }
   }
   drawerVendorMappingVisible = false;
@@ -156,7 +150,6 @@ export class WarehouseMasterComponent {
     this.drawerTitle = 'Add New Warehouse';
     this.drawerData = new WarehouseMasterData();
     this.drawervisible = true;
-
     this.api.getWarehouseData(1, 1, '', 'desc', '').subscribe(
       (data) => {
         if (data['code'] == 200) {
@@ -167,14 +160,11 @@ export class WarehouseMasterComponent {
       (err: HttpErrorResponse) => {
         this.loadingRecords = false;
         if (err.status === 0) {
-          // Network error
           this.message.error(
             'Unable to connect. Please check your internet or server connection and try again shortly.',
             ''
           );
-          // this.dataList = [];
         } else {
-          // Other errors
           this.message.error('Something Went Wrong.', '');
         }
       }
@@ -182,20 +172,10 @@ export class WarehouseMasterComponent {
   }
   showcloumnVisible: boolean = false;
   showcolumn = [
-    // { label: 'Warehouse Name', key: 'NAME', visible: true },
-    // {
-    //   label: 'Warehouse Manager Name',
-    //   key: 'WAREHOUSE_MANAGER_NAME',
-    //   visible: true,
-    // },
-    // { label: 'Email', key: 'EMAIL_ID', visible: true },
-    // { label: 'Country Code', key: 'COUNTRY_CODE', visible: true },
-    // { label: 'Mobile No.', key: 'MOBILE_NO', visible: true },
     { label: 'Address', key: 'ADDRESS_LINE1', visible: true },
     { label: 'State', key: 'STATE_NAME', visible: true },
     { label: 'District', key: 'DISTRICT_NAME', visible: true },
     { label: 'Pincode', key: 'PINCODE', visible: true },
-    // { label: 'Status', key: 'STATUS', visible: true },
   ];
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
@@ -213,7 +193,6 @@ export class WarehouseMasterComponent {
     this.router.navigate(['/masters/menu']);
   }
   filterClass: string = 'filter-invisible';
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -223,14 +202,12 @@ export class WarehouseMasterComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -244,7 +221,6 @@ export class WarehouseMasterComponent {
         ')';
     }
     this.loadingRecords = true;
-    // Country Filter
     if (this.Warehousetext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -254,33 +230,32 @@ export class WarehouseMasterComponent {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `COUNTRY_NAME IN ('${this.selectedCountries.join("','")}')`; 
     }
     if (this.selectedCities.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `CITY_NAME IN ('${this.selectedCities.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `CITY_NAME IN ('${this.selectedCities.join("','")}')`; 
     }
     if (this.selectedStates.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `STATE_NAME IN ('${this.selectedStates.join("','")}')`; 
     }
     if (this.selectedDist.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `DISTRICT_NAME IN ('${this.selectedDist.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `DISTRICT_NAME IN ('${this.selectedDist.join("','")}')`; 
     }
     if (this.selectedPincodes.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `PINCODE IN ('${this.selectedPincodes.join("','")}')`; // Update with actual field name in the DB
+      likeQuery += `PINCODE IN ('${this.selectedPincodes.join("','")}')`; 
     }
-
     if (this.Magagertext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -301,7 +276,6 @@ export class WarehouseMasterComponent {
         (likeQuery ? ' AND ' : '') +
         `ADDRESS_LINE1 LIKE '%${this.Addresstext.trim()}%'`;
     }
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
@@ -309,9 +283,7 @@ export class WarehouseMasterComponent {
       likeQuery += `STATUS = ${this.statusFilter}`;
     }
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getWarehouseData(
         this.pageIndex,
@@ -353,7 +325,6 @@ export class WarehouseMasterComponent {
         }
       );
   }
-
   countryCodes = [
     { label: '+91 (India)', value: '+91' },
     { label: '+92 (Pakistan)', value: '+92' },
@@ -604,7 +575,6 @@ export class WarehouseMasterComponent {
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-  //status Filter
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
@@ -614,8 +584,6 @@ export class WarehouseMasterComponent {
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -632,7 +600,6 @@ export class WarehouseMasterComponent {
       groups: [],
     },
   ];
-
   reset(): void {
     this.searchText = '';
     this.Warehousetext = '';
@@ -707,7 +674,6 @@ export class WarehouseMasterComponent {
   GSTVisible = false;
   Addresstext: string = '';
   AddressVisible = false;
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -716,22 +682,18 @@ export class WarehouseMasterComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   countryData: any = [];
   getCountyData() {
     this.api
@@ -819,7 +781,6 @@ export class WarehouseMasterComponent {
   PincodeVisible: any;
   CountryCodeVisible = false;
   isCodeApplied = false;
-
   distinctData: any = [];
   onFilterClick(columnKey: string): void {
     this.api.getDistinctData(136, columnKey).subscribe(
@@ -836,10 +797,7 @@ export class WarehouseMasterComponent {
       }
     );
   }
-
   filterQuery: string = '';
-  // new filter
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -851,9 +809,7 @@ export class WarehouseMasterComponent {
   orderData: any;
   filterdrawerTitle!: string;
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -870,9 +826,7 @@ export class WarehouseMasterComponent {
       groups: [],
     },
   ];
-
   filterData: any;
-  // currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Warehouse Filter';
     this.applyCondition = '';
@@ -880,9 +834,6 @@ export class WarehouseMasterComponent {
     this.filterFields[6]['options'] = this.StateData;
     this.filterFields[7]['options'] = this.districtData;
     this.filterFields[8]['options'] = this.PincodeData;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
@@ -902,7 +853,6 @@ export class WarehouseMasterComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -919,7 +869,6 @@ export class WarehouseMasterComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -930,16 +879,9 @@ export class WarehouseMasterComponent {
     };
     this.drawerFilterVisible = true;
   }
-
-  // drawerflterClose() {
-  //   this.drawerFilterVisible = false;
-  //   this.loadFilters();
-  // }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'NAME',
@@ -1011,7 +953,6 @@ export class WarehouseMasterComponent {
       ],
       placeholder: 'Enter Address',
     },
-
     {
       key: 'COUNTRY_NAME',
       label: 'Country',
@@ -1072,7 +1013,6 @@ export class WarehouseMasterComponent {
       options: [],
       placeholder: 'Enter Pincode Name',
     },
-
     {
       key: 'STATUS',
       label: 'Status',
@@ -1088,7 +1028,6 @@ export class WarehouseMasterComponent {
       placeholder: 'Select Status',
     },
   ];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
@@ -1097,8 +1036,7 @@ export class WarehouseMasterComponent {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -1112,46 +1050,34 @@ export class WarehouseMasterComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
-
   showFilter() {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   oldFilter: any[] = [];
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    // Assign the query to display
-    this.isModalVisible = true; // Show the modal
+    this.isModalVisible = true; 
   }
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
   filterloading: boolean = false;
-
   updateButton: any;
   updateBtn: any;
   whichbutton: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -1159,13 +1085,12 @@ export class WarehouseMasterComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -1180,21 +1105,15 @@ export class WarehouseMasterComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -1208,7 +1127,6 @@ export class WarehouseMasterComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -1217,12 +1135,8 @@ export class WarehouseMasterComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   isDeleting: boolean = false;
-
   deleteItem(item: any): void {
-    //
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -1238,13 +1152,10 @@ export class WarehouseMasterComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //
           } else {
             this.isfilterapply = true;
           }
@@ -1267,7 +1178,6 @@ export class WarehouseMasterComponent {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -1276,28 +1186,21 @@ export class WarehouseMasterComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   selectedFilter: string | null = null;
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
@@ -1310,7 +1213,6 @@ export class WarehouseMasterComponent {
     this.EditQueryData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Filter';
-
     this.drawerFilterVisible = true;
   }
   drawerMappingTitle: any = '';
@@ -1321,18 +1223,14 @@ export class WarehouseMasterComponent {
     this.drawerDatamapping = Object.assign({}, data);
     this.drawerMappigVisible = true;
   }
-
   draweMappingClose(): void {
     this.drawerMappigVisible = false;
     this.search();
   }
-
   get closeCallbackMapping() {
     return this.draweMappingClose.bind(this);
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

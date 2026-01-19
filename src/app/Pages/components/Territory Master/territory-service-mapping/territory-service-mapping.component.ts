@@ -5,7 +5,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { TerritoryMaster } from 'src/app/Pages/Models/TerritoryMaster';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-territory-service-mapping',
   templateUrl: './territory-service-mapping.component.html',
@@ -21,14 +20,11 @@ export class TerritoryServiceMappingComponent {
   sortKey: string = 'NAME';
   pageIndex = 1;
   pageSize = 10;
-
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService,
     private datePipe: DatePipe,
   ) {}
-
   WEEK_DAY = [
     { Id: "MON", Name: "Monday" },
     { Id: "TUE", Name: "Tuesday" },
@@ -38,32 +34,14 @@ export class TerritoryServiceMappingComponent {
     { Id: "SAT", Name: "Saturday" },
     { Id: "SUN", Name: "Sunday" }
   ];
-
-
   parseTimeString(time: string | null): Date | null {
-    if (!time) return null; // Handle null or undefined values
+    if (!time) return null; 
     const [hours, minutes] = time.split(':').map((val) => parseInt(val, 10));
     const date = new Date();
-    date.setHours(hours, minutes, 0, 0); // Set time parts
+    date.setHours(hours, minutes, 0, 0); 
     return date;
   }
-  
   serviceData: any = [];
-  // getServiceData() {
-  //   this.api.getServiceCatData(0, 0, '', '', '').subscribe(
-  //     (data) => {
-  //       if (data['code'] == 200) {
-  //         this.serviceData = data['data'];
-  //       } else {
-  //         this.serviceData = [];
-  //         this.message.error('Failed To Get Service Data', '');
-  //       }
-  //     },
-  //     () => {
-  //       this.message.error('Something Went Wrong', '');
-  //     }
-  //   );
-  // }
   ServiceMapping() {
     this.isSpinning = true;
     var sort: string;
@@ -72,7 +50,6 @@ export class TerritoryServiceMappingComponent {
     } catch (error) {
       sort = '';
     }
-    // Call the API with the constructed query
     this.api
       .getterritoryServiceData(
         0,
@@ -85,7 +62,6 @@ export class TerritoryServiceMappingComponent {
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
-           
             this.serviceData = data['data'].map((service) => ({
               ...service,
               START_TIME: this.parseTimeString(service.START_TIME),
@@ -103,7 +79,6 @@ export class TerritoryServiceMappingComponent {
         }
       );
   }
-
   sort(params: NzTableQueryParams) {
     this.isSpinning = true;
     const { pageSize, pageIndex, sort } = params;
@@ -112,17 +87,14 @@ export class TerritoryServiceMappingComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.ServiceMapping();
@@ -130,28 +102,8 @@ export class TerritoryServiceMappingComponent {
   close() {
     this.drawerClose();
   }
-
-
-  // OrgServiceCalender: any = [];
-  // getOrgServiceCalender() {
-  //   this.api.getOrgServiceCalender(0, 0, '', '', '').subscribe(
-  //     (data) => {
-  //       if (data['code'] == 200) {
-  //         this.OrgServiceCalender = data['data'];
-  //       } else {
-  //         this.OrgServiceCalender = [];
-  //         this.message.error('Failed To Get Organization Service Calender Data', '');
-  //       }
-  //     },
-  //     () => {
-  //       this.message.error('Something Went Wrong', '');
-  //     }
-  //   );
-  // }
-
   save() {
     this.isSpinning = true;
-
     const dataToSave = this.serviceData.map((data) => ({
       SERVICE_ID:data.SERVICE_ID,
       DATE:data.DATE,
@@ -162,10 +114,6 @@ export class TerritoryServiceMappingComponent {
       IS_SERIVCE_AVAILABILE: data.IS_SERIVCE_AVAILABILE,
        CLIENT_ID: data.CLIENT_ID,
     }));
-
-  
-   
-    // Call the API to save the task mapping data
     this.api.addTerritoryServiceMapping(this.data.ID, 1, dataToSave).subscribe(
       (successCode) => {
         if (successCode['code'] === 200) {

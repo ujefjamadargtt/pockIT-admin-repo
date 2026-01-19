@@ -4,7 +4,6 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-// import { VendorMasterData } from "../../Models/vendorMaterData";
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
@@ -14,7 +13,6 @@ import { VendorMasterData } from 'src/app/Pages/Models/vendorMaterData';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { appkeys } from 'src/app/app.constant';
-
 @Component({
   selector: 'app-vendor-master-drawer',
   templateUrl: './vendor-master-drawer.component.html',
@@ -24,14 +22,12 @@ export class VendorMasterDrawerComponent {
   @Input() data: VendorMasterData = new VendorMasterData();
   @Input() drawerClose;
   @Input() drawerVisible: boolean = false;
-
   emailPattern: RegExp =
     /^(?!.*\.\..*)(?!.*--.*)(?!.*-\.|-\@|\.-|\@-)[a-zA-Z0-9]([a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z]{2,})+$/;
   mobpattern = /^[6-9]\d{9}$/;
   passwordPattern: RegExp =
     /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z0-9!@#$%^&*(),.?\":{}|<>]{8,}$/;
   uploadedImage: any = '';
-
   public commonFunction = new CommonFunctionService();
   constructor(
     private message: NzNotificationService,
@@ -39,7 +35,6 @@ export class VendorMasterDrawerComponent {
     private datePipe: DatePipe,
     private sanitizer: DomSanitizer
   ) { }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -59,10 +54,8 @@ export class VendorMasterDrawerComponent {
       this.fullImageUrl =
         this.retriveimgUrl + 'VendorProfile/' + this.data.PROFILE_PHOTO;
       this.uploadedImage = this.data.PROFILE_PHOTO;
-
     } else {
     }
-
     this.organizationid = sessionStorage.getItem('orgId');
     this.data.ORG_ID = 1
     this.getallCountry();
@@ -72,17 +65,12 @@ export class VendorMasterDrawerComponent {
     if (this.data?.STATE_ID) {
       this.getDistByState(this.data.STATE_ID);
     }
-    // if (this.data?.DISTRICT_ID) {
-    //   this.getCityonDist(this.data.DISTRICT_ID);
-    // }
     if (this.data?.DISTRICT_ID) {
       this.getPincodesByDist(this.data.DISTRICT_ID);
     }
-    // Format the COUNTRY_CODE
     if (this.data.COUNTRY_CODE) {
       this.data.COUNTRY_CODE = this.data.COUNTRY_CODE;
     }
-
     if (
       this.data.COUNTRY_CODE == '' ||
       this.data.COUNTRY_CODE == undefined ||
@@ -91,12 +79,9 @@ export class VendorMasterDrawerComponent {
       this.data.COUNTRY_CODE = '+91';
     }
   }
-
   isFocused: string = '';
   isFocused11: string = '';
-
   isFocused1: boolean = false;
-
   isSpinning = false;
   isOk = true;
   passwordVisible: boolean = false;
@@ -105,19 +90,14 @@ export class VendorMasterDrawerComponent {
     this.DistData = [];
     this.PincodeData = [];
     this.fileURL = null;
-
     const defaultCountryCode = '+91';
-
     this.data = new VendorMasterData();
     this.data.ORG_ID = 1
     this.data.COUNTRY_CODE = defaultCountryCode;
-
     VendorDrawer.form.markAsPristine();
     VendorDrawer.form.markAsUntouched();
   }
-
   CropImageModalVisible = false;
-  // CropImageModalFooter: string|TemplateRef<{}>|ModalButtonOptions<any>[]|null|undefined;
   isSpinningCrop = false;
   cropimageshow: any;
   @ViewChild('image1') myElementRef!: ElementRef;
@@ -140,159 +120,94 @@ export class VendorMasterDrawerComponent {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   fileChangeEvent(event: any): void {
-    // 
-
     this.CropImageModalVisible = true;
     this.cropimageshow = true;
-
     this.imageChangedEvent = event;
   }
-
   cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
   imageCropped(event: any) {
     this.enhanceImageQuality(event.base64, 128, 128)
-    // this.imageWidth = event.original.size.width;
-    // this.imageHeight = event.original.size.height;
   }
-
   async enhanceImageQuality(base64: any, finalWidth: number, finalHeight: number): Promise<void> {
     try {
       this.croppedImage = await new Promise((resolve, reject) => {
         const img = new Image();
         img.src = base64;
-        img.crossOrigin = "Anonymous"; // Prevents tainted canvas issues.
-
+        img.crossOrigin = "Anonymous"; 
         img.onload = async () => {
-          await img.decode(); // Ensures the image is fully loaded
-
-          // **Create initial high-resolution canvas**
+          await img.decode(); 
           const tempCanvas = document.createElement("canvas");
           const tempCtx = tempCanvas.getContext("2d");
-
           if (!tempCtx) return reject("Canvas context not available");
-
-          tempCanvas.width = img.width * 2; // Upscale before downscaling
+          tempCanvas.width = img.width * 2; 
           tempCanvas.height = img.height * 2;
-
           tempCtx.imageSmoothingEnabled = true;
           tempCtx.imageSmoothingQuality = "high";
-          tempCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+          tempCtx.fillStyle = 'white'; 
           tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
           tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
-
-          // **Stepwise Downscaling**
           const downscaleCanvas = (sourceCanvas: HTMLCanvasElement, width: number, height: number): HTMLCanvasElement => {
             const newCanvas = document.createElement("canvas");
             const newCtx = newCanvas.getContext("2d");
-
             if (!newCtx) return sourceCanvas;
-
             newCanvas.width = width;
             newCanvas.height = height;
-
             newCtx.imageSmoothingEnabled = true;
             newCtx.imageSmoothingQuality = "high";
-            newCtx.fillStyle = 'white'; // Change this to any color, e.g., 'black' or '#ff0000' (red)
+            newCtx.fillStyle = 'white'; 
             newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
             newCtx.drawImage(sourceCanvas, 0, 0, width, height);
-
             return newCanvas;
           };
-
           let currentCanvas = tempCanvas;
           const downscaleSteps = [
-            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], // Step 1
-            [finalWidth * 2, finalHeight * 2], // Step 2
-            [finalWidth, finalHeight] // Final resolution
+            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], 
+            [finalWidth * 2, finalHeight * 2], 
+            [finalWidth, finalHeight] 
           ];
-
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
           }
-
-          // **Convert to PNG at Max Quality**
           resolve(currentCanvas.toDataURL("image/png", 1.0));
         };
-
         img.onerror = (err) => reject(`Image load error: ${err}`);
       });
-
     } catch (error) {
-      // console.error("Image enhancement failed:", error);
     }
   }
-  // imageCropped(event: ImageCroppedEvent) {
-  //   const canvas = document.createElement('canvas');
-  //   const ctx = canvas.getContext('2d');
-
-  //   if (!ctx) return;
-
-  //   canvas.width = 128;
-  //   canvas.height = 128;
-
-  //   const img: any = new Image();
-  //   img.src = event.base64;
-  //   img.onload = () => {
-  //     ctx.fillStyle = "#ffffff"; // Change this color if needed
-  //     ctx.fillRect(0, 0, canvas.width, canvas.height);
-  //     ctx.drawImage(img, 0, 0, 128, 128);
-
-  //     // Convert to JPEG with reduced quality
-  //     this.compressImage(canvas, 0.7); // Start with 70% quality
-  //   };
-  // }
-
-  // Function to compress image and ensure size < 1MB
   compressImage(canvas: HTMLCanvasElement, quality: number) {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-
-        const sizeInMB = blob.size / (1024 * 1024); // Convert to MB
-
-
+        const sizeInMB = blob.size / (1024 * 1024); 
         if (sizeInMB > 1 && quality > 0.1) {
-          // If size is still >1MB, reduce quality and try again
           this.compressImage(canvas, quality - 0.1);
         } else {
-          // Final compressed image (size is now below 1MB)
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             this.croppedImage = reader.result as string;
-            // 
           };
         }
       },
       'image/jpeg',
       quality
-    ); // Convert to JPEG with given quality
+    ); 
   }
-
   imageWidth: number = 0;
   imageHeight: number = 0;
   imageLoaded(event) {
-
     setTimeout(() => {
       this.cropperPosition = { x1: 0, y1: 0, x2: 128, y2: 128 };
     }, 50);
     this.imagePreview = this.croppedImage;
     this.imageWidth = event.original.size.width;
     this.imageHeight = event.original.size.height;
-    // Image loaded successfully
   }
-
   cropperReady(event) {
-    // 
-    // Cropper ready
-    // event.height = 128;
-    // event.width = 128;
   }
-
   loadImageFailed() {
-    // Image failed to load
   }
-
   save(addNew: boolean, VendorDrawer: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -453,14 +368,6 @@ export class VendorMasterDrawerComponent {
       this.isOk = false;
       this.message.error('Please select a district name.', '');
     }
-    // else if (
-    //   this.data.CITY_ID == null ||
-    //   this.data.CITY_ID == undefined ||
-    //   this.data.CITY_ID == 0
-    // ) {
-    //   this.isOk = false;
-    //   this.message.error("Please select a city name.", "");
-    // }
     else if (
       this.data.PINCODE_ID == null ||
       this.data.PINCODE_ID == undefined ||
@@ -469,25 +376,18 @@ export class VendorMasterDrawerComponent {
       this.isOk = false;
       this.message.error('Please select a pincode.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
-
       {
         this.data.ORG_ID = 1;
-
         if (this.fileURL) {
           const number = Math.floor(100000 + Math.random() * 900000);
           const fileExt = this.fileURL.name.split('.').pop();
           const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-          // this.UrlImageOne = `${d ?? ""}${number}.${fileExt}`;
           var url = `${d ?? ''}${number}.${fileExt}`;
-
           const uploadedfileExt = this.uploadedImage.split('.').pop();
-
           if (this.data.ID) {
             if (uploadedfileExt == fileExt) {
-
               this.UrlImageOne = this.uploadedImage;
             } else {
               this.UrlImageOne = url;
@@ -495,14 +395,11 @@ export class VendorMasterDrawerComponent {
           } else {
             this.UrlImageOne = url;
           }
-
           this.api
             .onUpload('VendorProfile', this.fileURL, this.UrlImageOne)
             .subscribe((res) => {
               if (res.type === HttpEventType.Response && res.status === 200) {
                 this.data.PROFILE_PHOTO = this.UrlImageOne;
-
-                // this.message.success('Icon Uploaded Successfully...', '');
                 this.handleSaveOperation(addNew, VendorDrawer);
               } else if (res.type === HttpEventType.Response) {
                 this.message.error('Failed to Upload Profile Photo.', '');
@@ -515,7 +412,6 @@ export class VendorMasterDrawerComponent {
       }
     }
   }
-
   handleSaveOperation(addNew: boolean, VendorDrawer: NgForm): void {
     if (this.data.ID) {
       this.api.updateVendorData(this.data).subscribe(
@@ -541,7 +437,6 @@ export class VendorMasterDrawerComponent {
           } else if (successCode.code == '200') {
             this.message.success('Vendor data updated successfully.', '');
             this.updateChannelData();
-
             if (!addNew) this.drawerClose();
             this.isSpinning = false;
           } else {
@@ -584,13 +479,8 @@ export class VendorMasterDrawerComponent {
             this.isSpinning = false;
           } else if (successCode.code == '200') {
             this.message.success('Vendor data created successfully.', '');
-            // this.createChannelData();
-
             if (!addNew) this.drawerClose();
-
             else {
-
-              // this.data = new VendorMasterData();
               this.resetDrawer(VendorDrawer);
               this.api.getVendorData(0, 0, '', 'desc', '').subscribe(
                 (data) => { },
@@ -614,7 +504,6 @@ export class VendorMasterDrawerComponent {
     }
   }
   createChannelData() {
-
     var data: any = {
       CHANNEL_NAME: this.pincodeChannel,
       USER_ID: this.data['ID'],
@@ -662,45 +551,33 @@ export class VendorMasterDrawerComponent {
   close() {
     this.drawerClose();
   }
-
   generatePassword(): void {
     const upperChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const lowerChars = 'abcdefghijklmnopqrstuvwxyz';
     const numbers = '0123456789';
     const specialChars = '!@#$%^&*(),.?":{}|<>';
     const allChars = upperChars + lowerChars + numbers + specialChars;
-
-    const passwordLength = 8; // Set to desired length
+    const passwordLength = 8; 
     let password = '';
-
-    // Ensure the password contains at least one of each required character type
     password += upperChars[Math.floor(Math.random() * upperChars.length)];
     password += specialChars[Math.floor(Math.random() * specialChars.length)];
     password += numbers[Math.floor(Math.random() * numbers.length)];
     password += lowerChars[Math.floor(Math.random() * lowerChars.length)];
-
-    // Fill the rest of the password length with random characters
     for (let i = password.length; i < passwordLength; i++) {
       password += allChars[Math.floor(Math.random() * allChars.length)];
     }
-
-    // Shuffle the password to avoid predictable patterns
     this.data.PASSWORD = password
       .split('')
       .sort(() => Math.random() - 0.5)
       .join('');
   }
-
   allowBusinessNameChars(event: KeyboardEvent): void {
-    const allowedChars = /^[A-Za-z0-9\-_. ()&]+$/; // Regex to match allowed characters
+    const allowedChars = /^[A-Za-z0-9\-_. ()&]+$/; 
     const char = String.fromCharCode(event.charCode);
-
-    // If the character is not allowed, prevent the default action (input)
     if (!allowedChars.test(char)) {
       event.preventDefault();
     }
   }
-
   alphaOnly(event: any) {
     event = event ? event : window.event;
     var charCode = event.which ? event.which : event.keyCode;
@@ -713,17 +590,13 @@ export class VendorMasterDrawerComponent {
     }
     return true;
   }
-
   isStateSpinning = false;
   isDistSpinning = false;
-  // isCitySpinning = false;
   isPincodeSpinning = false;
   DistData: any = [];
   PincodeData: any = [];
   StateData: any = [];
   CountryData: any = [];
-  // CityData: any = [];
-
   getallCountry() {
     this.api.getAllCountryMaster(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -744,26 +617,21 @@ export class VendorMasterDrawerComponent {
             ''
           );
         } else {
-          // this.message.error("Something went wrong.", "");
         }
       }
     );
   }
-
-  // Fetch states based on country ID
   getStatesByCountry(countryId: any, value: boolean = true) {
     if (value === false) {
       this.data.STATE_ID = null;
       this.data.DISTRICT_ID = null;
-      // this.data.CITY_ID = null;
       this.data.PINCODE_ID = null;
       this.data.PINCODE = null;
       this.StateData = [];
       this.DistData = [];
-      // this.CityData = [];
       this.PincodeData = [];
     }
-    this.isStateSpinning = true; // Set loading to true when fetching data
+    this.isStateSpinning = true; 
     this.api
       .getState(
         0,
@@ -771,7 +639,7 @@ export class VendorMasterDrawerComponent {
         '',
         'asc',
         `AND COUNTRY_ID = ${countryId} AND IS_ACTIVE = 1`
-      ) // Added ' AND IS_ACTIVE = 1'
+      ) 
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
@@ -780,7 +648,7 @@ export class VendorMasterDrawerComponent {
             this.StateData = [];
             this.message.error('Failed to get state data...', '');
           }
-          this.isStateSpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isStateSpinning = false; 
         },
         (err: HttpErrorResponse) => {
           this.isStateSpinning = false;
@@ -790,24 +658,19 @@ export class VendorMasterDrawerComponent {
               ''
             );
           } else {
-            // this.message.error("Something went wrong.", "");
           }
         }
       );
   }
-
-  // Fetch cities based on state ID
   getDistByState(stateId: number, value: boolean = true) {
     if (value === false) {
       this.data.DISTRICT_ID = null;
-      // this.data.CITY_ID = null;
       this.data.PINCODE_ID = null;
       this.data.PINCODE = null;
       this.DistData = [];
-      // this.CityData = [];
       this.PincodeData = [];
     }
-    this.isDistSpinning = true; // Set loading to true when fetching data
+    this.isDistSpinning = true; 
     this.api
       .getDistrictData(
         0,
@@ -815,7 +678,7 @@ export class VendorMasterDrawerComponent {
         '',
         'asc',
         `AND STATE_ID = ${stateId} AND IS_ACTIVE = 1`
-      ) // Added ' AND IS_ACTIVE = 1'
+      ) 
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
@@ -824,7 +687,7 @@ export class VendorMasterDrawerComponent {
             this.DistData = [];
             this.message.error('Failed to tet district data...', '');
           }
-          this.isDistSpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isDistSpinning = false; 
         },
         (err: HttpErrorResponse) => {
           this.isDistSpinning = false;
@@ -834,34 +697,23 @@ export class VendorMasterDrawerComponent {
               ''
             );
           } else {
-            // this.message.error("Something went wrong.", "");
           }
         }
       );
   }
-
   onDistrictChange(districtId: number | null) {
-    // Always clear city and pincode data when district changes
-    // this.data.CITY_ID = null;
-    // this.CityData = [];
     this.data.PINCODE_ID = null;
     this.data.PINCODE = null;
     this.PincodeData = [];
-
     if (districtId) {
-      // If a valid district is selected, fetch cities for the selected district
-      // this.getCityonDist(districtId);
       this.getPincodesByDist(districtId);
     }
   }
-
-  // Fetch pincodes based on dist ID
   Filterss: any = {};
   logfilt: any;
   filterdata1: any;
   pincodeChannel: any = '';
   pincodeChannelOld: any = '';
-
   getpincodename(pincode: any) {
     if (pincode != null && pincode != undefined && pincode != '') {
       var pin = this.PincodeData.filter((i) => i.ID == pincode);
@@ -881,29 +733,27 @@ export class VendorMasterDrawerComponent {
     }
   }
   getPincodesByDist(distId: number | null, value: boolean = true) {
-    // this.getCityonDist(distId);
     if (value === false) {
       this.data.PINCODE_ID = null;
       this.data.PINCODE = null;
       this.PincodeData = [];
     }
-    this.isPincodeSpinning = true; // Set loading to true when fetching data
+    this.isPincodeSpinning = true; 
     this.api
-      .getAllPincode(0, 0, '', 'asc', `AND DISTRICT = ${distId}`) // Added ' AND IS_ACTIVE = 1'
+      .getAllPincode(0, 0, '', 'asc', `AND DISTRICT = ${distId}`) 
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
             this.PincodeData = data['data'];
             this.data.PINCODE_ID = Number(this.data.PINCODE_ID);
             if (this.data.ID) {
-
               this.getpincodename(this.data.PINCODE_ID)
             }
           } else {
             this.PincodeData = [];
             this.message.error('Failed to get pincode data...', '');
           }
-          this.isPincodeSpinning = false; // Ensure spinning state is turned off after data is fetched
+          this.isPincodeSpinning = false; 
         },
         (err: HttpErrorResponse) => {
           this.isPincodeSpinning = false;
@@ -913,12 +763,10 @@ export class VendorMasterDrawerComponent {
               ''
             );
           } else {
-            // this.message.error("Something went wrong.", "");
           }
         }
       );
   }
-
   countryCodes = [
     { label: '+91 (India)', value: '+91' },
     { label: '+92 (Pakistan)', value: '+92' },
@@ -1157,9 +1005,6 @@ export class VendorMasterDrawerComponent {
     { label: 'Kyrgyzstan (+996)', value: '+996' },
     { label: 'Uzbekistan (+998)', value: '+998' },
   ];
-
-  // Profile Photo
-
   imageshow: any = null;
   selectedFile: any;
   imagePreview: any;
@@ -1174,47 +1019,36 @@ export class VendorMasterDrawerComponent {
   sanitizedLink: any = '';
   sanitizedFileURL: SafeUrl | null = null;
   imagePreviewURL;
-
   fullImageUrl: string;
   retriveimgUrl = appkeys.retriveimgUrl;
-
   imageDeleteConfirm(data: any) {
     this.fileURL = null;
     this.UrlImageOne = null;
     this.data.PROFILE_PHOTO = ' ';
     this.fileURL = null;
   }
-
   deleteCancel() { }
-
   onFileSelected(event: any): void {
-    const maxFileSize = 1 * 1024 * 1024; // 1 MB
+    const maxFileSize = 1 * 1024 * 1024; 
     const allowedWidth = 128;
     const allowedHeight = 128;
-
     if (event.target.files[0]?.type.match(/image\/(jpeg|jpg|png)/)) {
       this.fileURL = this.base64ToFile(this.croppedImage, 'cropped-image.png');
-
       if (this.fileURL.size > maxFileSize) {
         this.message.error('File size should not exceed 1MB.', '');
         this.fileURL = null;
         return;
       }
-
-      // Validate image dimensions
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const img = new Image();
         img.src = this.croppedImage;
         const input = event.target as HTMLInputElement;
-
         if (input?.files?.length) {
           this.selectedFile = input.files[0];
-
-          // Generate a preview of the selected image
           const reader = new FileReader();
           reader.onload = () => {
-            this.imagePreview = this.croppedImage; // Base64 image data
+            this.imagePreview = this.croppedImage; 
           };
           reader.readAsDataURL(this.selectedFile);
         }
@@ -1227,7 +1061,6 @@ export class VendorMasterDrawerComponent {
             this.fileURL = null;
             this.sanitizedFileURL = null;
           } else {
-            // Sanitize the file URL for preview
             this.sanitizedFileURL = this.sanitizer.bypassSecurityTrustUrl(
               URL.createObjectURL(this.fileURL)
             );
@@ -1235,7 +1068,6 @@ export class VendorMasterDrawerComponent {
           }
         };
       };
-
       reader.readAsDataURL(this.fileURL);
       this.CropImageModalVisible = false;
     } else {
@@ -1248,29 +1080,24 @@ export class VendorMasterDrawerComponent {
       this.sanitizedFileURL = null;
     }
   }
-
   removeImage1(): void {
     this.data.PROFILE_PHOTO = null;
     this.fileURL = null;
     this.imagePreviewURL = null;
     this.message.success('Profie Photo removed successfully.', '');
   }
-
   openImageInNewWindow(): void {
     if (this.fileURL) {
-      const imageURL = URL.createObjectURL(this.fileURL); // Get blob URL
+      const imageURL = URL.createObjectURL(this.fileURL); 
       window.open(imageURL, '_blank');
     } else {
       alert('No Profile Photo selected to view.');
     }
   }
-
   deleteImage(): void {
-    // Remove selected file and its preview
     this.fileURL = null;
     this.sanitizedFileURL = null;
   }
-
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }

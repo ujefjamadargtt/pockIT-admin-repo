@@ -3,16 +3,61 @@
     flex-direction: column;
     gap: 20px;
 }
-
 .condition-group {
     border: 1px solid #d9d9d9;
     padding: 15px;
     border-radius: 8px;
     background: #fafafa;
 }
-
 .filter-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+}
+.group-title {
+    margin-bottom: 2px;
+    font-weight: 600;
+    color: #092b9c !important;
+    padding-top: 16px;
+}
+.delete-icon {
+    color: red;
+    cursor: pointer;
+}
+.text-center {
+    text-align: center;
+    padding-bottom: 5px;
+}
+.logical-operator-width {
+    width: 120px;
+}
+.group-conditions {
+    border-radius: 5px;
+    border: 1px dashed #d9d9d9;
+    padding: 8px;
+    background: #fbfbfb;
+}
+.condition-row {
+    padding: 8px;
+    border-bottom: 1px solid #f6f6f6;
+}
+.when-text {
+    text-align: center;
+    padding: 5px;
+}
+.full-width {
+    width: 100%;
+}
+.text-right {
+    text-align: right;
+}
+.add-condition-btn {
+    margin-left: 10px;
+}
+.modal-input {
+    width: 100%;
+}
+.name-counter {
+    color: red;
+    font-size: 10px;
 }

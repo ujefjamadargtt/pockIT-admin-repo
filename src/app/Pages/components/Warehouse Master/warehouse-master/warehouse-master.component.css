@@ -5,72 +5,152 @@
     margin-top: 12px;
     margin-bottom: 12px;
     background-color: #fafafa;
-
   }
   .header {
-
     position: absolute;
- 
     top: 0px;
- 
-    /* bottom: 0px; */
- 
     width: 100%;
- 
     border-top: 1px solid rgb(232, 232, 232);
- 
     padding: 10px 16px;
- 
     text-align: right;
- 
-    /* left: 0px; */
- 
     right: 0px;
- 
-    /* background: #fff; */
- 
  }
 th {
   text-align: center !important;
   vertical-align: middle !important;
-  /* font-weight: bold; */
 }
-
 .select{
 width: 200px;
 padding: 8px;
 display: block;
 }
-
 .search-box {
   padding: 8px;
 }
-
 .search-box input {
   width: 188px;
   display: block;
 }
-
 .search-box button {
   width: 90px;
 }
-
 .search-button {
   margin-right: 8px;
 }
-
 nz-select {
   width: 100%;
 }
-
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
-
 .truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%; /* Adjust as needed */
+  max-width: 100%; 
   display: inline-block;
+}
+.warehouse-header-row {
+  align-items: center;
+}
+.warehouse-form-title {
+  display: flex;
+  align-items: center;
+}
+.warehouse-back-icon {
+  font-weight: bold;
+  cursor: pointer;
+}
+.warehouse-action-col {
+  display: flex;
+  justify-content: flex-end;
+}
+.warehouse-action-form {
+  display: flex;
+  align-items: center;
+}
+.warehouse-filter-btn-wrapper {
+  width: 47px;
+}
+.warehouse-search-wrapper {
+  margin-right: 8px;
+}
+.warehouse-add-btn-wrapper {
+  margin-right: 0;
+}
+.saved-filter-wrapper {
+  width: 100%;
+}
+.saved-filter-box {
+  padding: 0;
+}
+.saved-filter-row {
+  padding-top: 0;
+}
+.saved-filter-loading {
+  text-align: center;
+}
+.saved-filter-card-col {
+  margin-bottom: 8px;
+}
+.saved-filter-card {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.saved-filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+}
+.saved-filter-name {
+  color: #000;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.saved-filter-active-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.saved-filter-action-row {
+  margin-top: 7px;
+}
+.saved-filter-action-col {
+  display: flex;
+  justify-content: space-between;
+}
+.saved-filter-tag {
+  cursor: pointer;
+  font-size: 10px;
+}
+.saved-filter-tag-icon {
+  font-size: 10px;
+}
+.saved-filter-tag-last {
+  margin-right: 0;
+}
+.saved-filter-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.saved-filter-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.saved-filter-footer-btn {
+  margin-right: 10px;
+}
+.width-full{
+  width: 100%
+}
+.text-center{
+  text-align: center
 }

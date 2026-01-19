@@ -32,7 +32,6 @@ export class SmsServiceConfigsComponent {
     ['DEFAULT_COUNTRY_CODE', 'DEFAULT_COUNTRY_CODE'],
     ['USERNAME', 'USERNAME'],
   ];
-
   ProviderText: string = '';
   ProviderVisible = false;
   CountryVisible = false;
@@ -47,18 +46,15 @@ export class SmsServiceConfigsComponent {
   TypeVisible = false;
   authenticiation: any;
   selectedCountryCode: any;
-
   constructor(
     private router: Router,
     private api: ApiServiceService,
     private message: NzNotificationService
   ) { }
-
   whatsappApiAuthentication = [
     { Id: 1, Name: 'Basic' },
     { Id: 2, Name: 'OAuth2' },
   ];
-
   ngonInit() {
     if (this.searchText.length > 3) {
       this.search(true);
@@ -66,16 +62,13 @@ export class SmsServiceConfigsComponent {
       this.search(true);
     }
   }
-
   @ViewChild('searchInput') searchInput!: ElementRef;
-
   preventDefault(event: Event) {
     event.preventDefault();
     this.searchInput.nativeElement.focus();
   }
-
   mainsearchkeyup(event: KeyboardEvent) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault(); 
     if (
       this.searchText.length === 0 ||
       (event.key === 'Enter' && this.searchText.length >= 3)
@@ -83,20 +76,16 @@ export class SmsServiceConfigsComponent {
       this.search();
     }
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   drawerTitle = '';
   keyup() {
     if (this.searchText.length >= 3) {
@@ -105,12 +94,10 @@ export class SmsServiceConfigsComponent {
       this.search(true);
     }
   }
-
   shouldTruncateAt25(value: string): boolean {
-    const mCount = (value.match(/m/g) || []).length; // Count the number of 'm's
-    return value.length > 25 && mCount > 3; // Truncate at 25 if length > 25 and 'm' count > 4
+    const mCount = (value.match(/m/g) || []).length; 
+    return value.length > 25 && mCount > 3; 
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -119,34 +106,28 @@ export class SmsServiceConfigsComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   add(): void {
     this.drawerTitle = 'Add New SMS Service Configuration';
     this.drawerData = new smsservice();
     this.drawerVisible = true;
   }
-
   edit(data: smsservice): void {
     this.drawerTitle = 'Update SMS Service Configuration';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   search(reset: boolean = false) {
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
@@ -156,14 +137,12 @@ export class SmsServiceConfigsComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
     if (this.searchText !== '') {
@@ -177,7 +156,6 @@ export class SmsServiceConfigsComponent {
         ')';
     }
     this.loadingRecords = true;
-
     if (this.ProviderText) {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -197,23 +175,17 @@ export class SmsServiceConfigsComponent {
         .join(' OR ');
       likeQuery += (likeQuery ? ' AND (' : '(') + authConditions + ')';
     }
-
     if (this.selectedCountryCode && this.selectedCountryCode.length > 0) {
       const codeConditions = this.selectedCountryCode
         .map((type) => `DEFAULT_COUNTRY_CODE LIKE '%${type}%'`)
         .join(' OR ');
       likeQuery += (likeQuery ? ' AND (' : '(') + codeConditions + ')';
     }
-
-    // if (this.selectedCountryCode) {
-    //   likeQuery += (likeQuery ? ' AND ' : '') + `DEFAULT_COUNTRY_CODE LIKE '%${this.selectedCountryCode}%'`;
-    // }
     if (this.UserText) {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `USERNAME LIKE '%${this.UserText.trim()}%'`;
     }
-
     if (this.SenderText) {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -226,9 +198,7 @@ export class SmsServiceConfigsComponent {
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
     this.loadingRecords = true;
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
     this.api
       .getSmsServiceConfigData(
         this.pageIndex,
@@ -269,19 +239,16 @@ export class SmsServiceConfigsComponent {
         }
       );
   }
-
   onTypeChange(): void {
     this.search();
   }
-
   isProviderTextApplied = false;
   isURLTextApplied = false;
   isKeyTextApplied = false;
   isSenderTextApplied = false;
   isUserTextApplied = false;
   onKeyup(event: KeyboardEvent, field: string): void {
-    const fieldValue = this[field]; // Dynamically access the field value
-
+    const fieldValue = this[field]; 
     if (event.key === 'Enter') {
       if (fieldValue.length >= 3) {
         this.search();
@@ -292,8 +259,6 @@ export class SmsServiceConfigsComponent {
       this.setFilterApplied(field, false);
     }
   }
-
-  // Helper method to set filter applied states dynamically
   setFilterApplied(field: string, value: boolean): void {
     switch (field) {
       case 'ProviderText':
@@ -315,29 +280,24 @@ export class SmsServiceConfigsComponent {
         break;
     }
   }
-
   isAuthenticiationFilterApplied = false;
   onServiceChange() {
     if (!this.authenticiation || this.authenticiation.length === 0) {
-      // Reset the filter if authenticiation is empty
       this.authenticiation = null;
     }
     this.isAuthenticiationFilterApplied =
       this.authenticiation && this.authenticiation.length > 0;
     this.search();
   }
-
   isCountryCodeFilterApplied = false;
   onCountryCodeChange() {
     if (!this.selectedCountryCode || this.selectedCountryCode.length === 0) {
-      // Reset the filter if authenticiation is empty
       this.selectedCountryCode = null;
     }
     this.isCountryCodeFilterApplied =
       this.selectedCountryCode && this.selectedCountryCode.length > 0;
     this.search();
   }
-
   reset(): void {
     this.isProviderTextApplied = false;
     this.isURLTextApplied = false;
@@ -356,13 +316,11 @@ export class SmsServiceConfigsComponent {
     this.selectedCountryCode = null;
     this.search();
   }
-
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
     { text: 'Inactive', value: '0' },
@@ -605,7 +563,6 @@ export class SmsServiceConfigsComponent {
     { label: "Kyrgyzstan (+996)", value: "+996" },
     { label: "Uzbekistan (+998)", value: "+998" },
   ];
-
   showadd() {
     if (this.smsServiceConfigData.length == 0) {
       return true;

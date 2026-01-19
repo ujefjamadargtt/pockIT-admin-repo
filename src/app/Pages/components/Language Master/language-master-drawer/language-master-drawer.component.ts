@@ -4,7 +4,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { LanguageMasterData } from 'src/app/Pages/Models/LanguageMasterData';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-language-master-drawer',
   templateUrl: './language-master-drawer.component.html',
@@ -15,24 +14,20 @@ export class LanguageMasterDrawerComponent {
   isOk = true;
   isFocused: string = '';
   ngOnInit(): void { }
-
   public commonFunction = new CommonFunctionService();
   @Input() data: any = LanguageMasterData;
   @Input()
   drawerVisible: boolean = false;
   @Input() drawerClose: any = Function;
-
   constructor(
     private message: NzNotificationService,
     private api: ApiServiceService
   ) { }
-
   resetDrawer(Languagemaster: NgForm) {
     this.data = new LanguageMasterData();
     Languagemaster.form.markAsPristine();
     Languagemaster.form.markAsUntouched();
   }
-
   save(addNew: boolean, Languagemaster: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -70,7 +65,6 @@ export class LanguageMasterDrawerComponent {
       this.isOk = false;
       this.message.error(' Please Enter Sequence No.', '');
     }
-
     if (this.isOk) {
       this.isSpinning = true;
       {
@@ -107,7 +101,6 @@ export class LanguageMasterDrawerComponent {
                 } else {
                   this.data = new LanguageMasterData();
                   this.resetDrawer(Languagemaster);
-
                   this.api
                     .getLanguageData(1, 1, 'SEQ_NO', 'desc', '')
                     .subscribe(
@@ -151,7 +144,6 @@ export class LanguageMasterDrawerComponent {
       }
     }
   }
-
   close() {
     this.drawerClose();
   }

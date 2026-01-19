@@ -7,7 +7,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 import { ExportService } from 'src/app/Service/export.service';
-
 @Component({
   selector: 'app-customer-registration-report',
   templateUrl: './customer-registration-report.component.html',
@@ -30,7 +29,6 @@ export class CustomerRegistrationReportComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -38,7 +36,6 @@ export class CustomerRegistrationReportComponent {
     private _exportService: ExportService,
     public datepipe: DatePipe
   ) { }
-
   formTitle = 'Customer Registration Report';
   excelData: any = [];
   exportLoading: boolean = false;
@@ -58,7 +55,6 @@ export class CustomerRegistrationReportComponent {
   savedFilters: any[] = [];
   TabId: number;
   isDeleting: boolean = false;
-
   drawerTitle!: string;
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
@@ -71,7 +67,6 @@ export class CustomerRegistrationReportComponent {
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
   totalRecords = 1;
-
   columns: string[][] = [
     ['NAME', 'NAME'],
     ['REGISTRATION_DATE', 'REGISTRATION_DATE'],
@@ -81,53 +76,32 @@ export class CustomerRegistrationReportComponent {
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
-  // importInExcel() {
-  //   this.search(true, true);
-  // }
-
   nametext: string = '';
   iscustNameFilterApplied: boolean = false;
   custnamevisible = false;
-
   emailtext: string = '';
   isEmailFilterApplied: boolean = false;
   emailVisible = false;
-
   mobiletext: string = '';
   ismobileFilterApplied: boolean = false;
   mobileVisible = false;
-
   registrationDateVisible = false;
   isregistrationDateFilterApplied: boolean = false;
-
   reset(): void {
     this.searchText = '';
     this.nametext = '';
     this.emailtext = '';
     this.mobiletext = '';
-    // this.ratingtext = "";
-    // this.commenttext = "";
-
     this.search();
   }
-
   onKeyup(keys) {
     const element = window.document.getElementById('button');
-    // if (element != null) element.focus();
     if (this.searchText.length >= 3 && keys.key === 'Enter') {
       this.search(true);
     } else if (this.searchText.length === 0 && keys.key == 'Backspace') {
       this.dataList = [];
       this.search(true);
     }
-
-    // if (this.nametext.trim() === "") {
-    //   this.searchText = "";
-    // } else if (this.nametext.length >= 3 ) {
-    //   this.search();
-    // }
-
     if (this.nametext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.iscustNameFilterApplied = true;
@@ -135,7 +109,6 @@ export class CustomerRegistrationReportComponent {
       this.search();
       this.iscustNameFilterApplied = false;
     }
-
     if (this.emailtext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.isEmailFilterApplied = true;
@@ -143,7 +116,6 @@ export class CustomerRegistrationReportComponent {
       this.search();
       this.isEmailFilterApplied = false;
     }
-
     if (this.mobiletext.length >= 3 && keys.key === 'Enter') {
       this.search();
       this.ismobileFilterApplied = true;
@@ -151,26 +123,11 @@ export class CustomerRegistrationReportComponent {
       this.search();
       this.ismobileFilterApplied = false;
     }
-
-    // if (this.emailtext.trim() === "") {
-    //   this.searchText = "";
-    // } else if (this.emailtext.length >= 3) {
-    //   this.search();
-    // }
-
-    // if (this.mobiletext.trim() === "") {
-    //   this.searchText = "";
-    // } else if (this.mobiletext.length >= 3) {
-    //   this.search();
-    // }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -179,9 +136,7 @@ export class CustomerRegistrationReportComponent {
       this.loadFilters();
     }
   }
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -201,7 +156,6 @@ export class CustomerRegistrationReportComponent {
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -209,15 +163,12 @@ export class CustomerRegistrationReportComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   filterloading: boolean = false;
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -226,13 +177,11 @@ export class CustomerRegistrationReportComponent {
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
       )
-      // Use USER_ID as a number
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -247,21 +196,15 @@ export class CustomerRegistrationReportComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -275,7 +218,6 @@ export class CustomerRegistrationReportComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -284,7 +226,6 @@ export class CustomerRegistrationReportComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -301,9 +242,7 @@ export class CustomerRegistrationReportComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
@@ -329,7 +268,6 @@ export class CustomerRegistrationReportComponent {
       }
     );
   }
-
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -338,21 +276,17 @@ export class CustomerRegistrationReportComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   search(reset: boolean = false, exportInExcel: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -365,20 +299,15 @@ export class CustomerRegistrationReportComponent {
       this.sortKey = 'NAME';
       this.sortValue = 'desc';
     }
-
     this.loadingRecords = true;
-
     let sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     let likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -389,7 +318,6 @@ export class CustomerRegistrationReportComponent {
           .join(' OR ') +
         ')';
     }
-
     if (this.nametext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `NAME LIKE '%${this.nametext.trim()}%'`;
@@ -397,7 +325,6 @@ export class CustomerRegistrationReportComponent {
     } else {
       this.iscustNameFilterApplied = false;
     }
-
     if (this.emailtext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `EMAIL LIKE '%${this.emailtext.trim()}%'`;
@@ -405,7 +332,6 @@ export class CustomerRegistrationReportComponent {
     } else {
       this.isEmailFilterApplied = false;
     }
-
     if (this.mobiletext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
@@ -414,13 +340,11 @@ export class CustomerRegistrationReportComponent {
     } else {
       this.ismobileFilterApplied = false;
     }
-
-    // Date Range Filter
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; // Format as YYYY-MM-DD
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; // Format as YYYY-MM-DD
+        const formattedStart = new Date(start).toISOString().split('T')[0]; 
+        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `date(REGISTRATION_DATE) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
@@ -429,26 +353,6 @@ export class CustomerRegistrationReportComponent {
     } else {
       this.isregistrationDateFilterApplied = false;
     }
-
-    // if (this.ratingtext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `MOBILE_NO LIKE '%${this.ratingtext.trim()}%'`;
-    //   this.isratingNameFilterApplied = true;
-    // } else {
-    //   this.isratingNameFilterApplied = false;
-    // }
-
-    // if (this.commenttext !== "") {
-    //   likeQuery +=
-    //     (likeQuery ? " AND " : "") +
-    //     `EMAIL LIKE '%${this.commenttext.trim()}%'`;
-    //   this.iscommentFilterApplied = true;
-    // } else {
-    //   this.iscommentFilterApplied = false;
-    // }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     const finalDataList =
       this.filteredUnitData.length > 0 ? this.filteredUnitData : this.dataList;
@@ -496,7 +400,6 @@ export class CustomerRegistrationReportComponent {
     } else {
       this.loadingRecords = false;
       this.exportLoading = true;
-
       this.api
         .getCustomerRegistrationReport(
           0,
@@ -510,7 +413,6 @@ export class CustomerRegistrationReportComponent {
             if (data['code'] == 200) {
               this.loadingRecords = false;
               this.exportLoading = false;
-
               this.excelData = data['data'];
               this.convertInExcel();
             } else {
@@ -522,21 +424,18 @@ export class CustomerRegistrationReportComponent {
             this.loadingRecords = false;
             if (err.status === 0) {
               this.exportLoading = false;
-
               this.message.error(
                 'Unable to connect. Please check your internet or server connection and try again shortly.',
                 ''
               );
             } else {
               this.exportLoading = false;
-
               this.message.error('Something Went Wrong.', '');
             }
           }
         );
     }
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -545,30 +444,22 @@ export class CustomerRegistrationReportComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   openfilter() {
     this.drawerTitle = 'Customer Registration Report Filter';
     this.drawerFilterVisible = true;
-
-    // Edit Code 2
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -577,13 +468,9 @@ export class CustomerRegistrationReportComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -600,7 +487,6 @@ export class CustomerRegistrationReportComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -618,13 +504,11 @@ export class CustomerRegistrationReportComponent {
       },
     ];
   }
-
   convertInExcel() {
     var arry1: any = [];
     var obj1: any = new Object();
     if (this.excelData.length > 0) {
       for (var i = 0; i < this.excelData.length; i++) {
-        // obj1["Registration Date"] = this.excelData[i]["REGISTRATION_DATE"];
         obj1['Registration Date'] = this.excelData[i]['REGISTRATION_DATE']
           ? this.datepipe.transform(
             this.excelData[i]['REGISTRATION_DATE'],
@@ -647,39 +531,26 @@ export class CustomerRegistrationReportComponent {
       this.message.error('There is a No Data', '');
     }
   }
-
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
   isModalVisible = false;
   selectedQuery: string = '';
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
-  // excelData: any = [];
-  // exportLoading: boolean = false;
-
   importInExcel() {
     this.search(true, true);
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
   filterFields: any[] = [
     {
       key: 'REGISTRATION_DATE',
@@ -709,7 +580,6 @@ export class CustomerRegistrationReportComponent {
       ],
       placeholder: 'Enter Customer Name',
     },
-
     {
       key: 'EMAIL',
       label: 'Email Id',
@@ -739,14 +609,11 @@ export class CustomerRegistrationReportComponent {
       placeholder: 'Enter Mobile Number',
     },
   ];
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
   onDateRangeChange(): void {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
@@ -755,14 +622,12 @@ export class CustomerRegistrationReportComponent {
         this.isregistrationDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; // or [] if you prefer
+      this.StartDate = null; 
       this.search();
       this.isregistrationDateFilterApplied = false;
     }
   }
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {

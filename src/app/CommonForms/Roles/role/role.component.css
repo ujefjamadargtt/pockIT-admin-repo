@@ -1,6 +1,23 @@
+.bo-full-width {
+  width: 100%;
+}
+.bo-char-count {
+  color: red;
+  font-size: 10px;
+}
+.bo-footer-btn {
+  margin-right: 8px;
+}
+.bo-save-new-menu {
+  border-radius: 4px;
+  color: white !important;
+}
+.bo-save-new-link {
+  color: white !important;
+}
 nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px !important;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  }
+  display: inline-block;
+  margin-bottom: 5px !important;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}

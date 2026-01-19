@@ -6,7 +6,6 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { paymentgateway } from 'src/app/Pages/Models/paymentgateway';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-payment-gateway-master',
   templateUrl: './payment-gateway-master.component.html',
@@ -21,7 +20,6 @@ export class PaymentGatewayMasterComponent {
   pageSize = 10;
   sortValue: string = 'desc';
   sortKey: string = 'NAME';
-
   isLoading = true;
   columns: string[][] = [
     ['GATEWAY_NAME', 'GATEWAY_NAME'],
@@ -43,24 +41,18 @@ export class PaymentGatewayMasterComponent {
   totalRecords = 1;
   dataList: any = [];
   drawerTitle!: string;
-
   GatewayName: string = '';
-  // Maxvisible: number = '';
   GatewayType: string = '';
   apikey: string = '';
   apisecret: string = '';
   endpointurl: string = '';
   webhookurl: string = '';
-  // currency: string = '';
-  // currency: any = [];
   encryptionkey: string = '';
   merchant: string = '';
   settlementtime: string = '';
   mode: string = '';
-
   currency: any = [];
   currencyvisible: boolean = false;
-
   gatewayvisible = false;
   gatewaytypevisible = false;
   apikeyvisible = false;
@@ -68,7 +60,6 @@ export class PaymentGatewayMasterComponent {
   merchantvisible = false;
   endpointvisible = false;
   webhookvisible = false;
-  // currencyvisible: boolean = false;
   encryptionkeyvisible = false;
   showcloumnVisible = false;
   timevisible = false;
@@ -89,7 +80,6 @@ export class PaymentGatewayMasterComponent {
   isminamountFilterApplied = false;
   ismaxamountFilterApplied = false;
   selectedFilter: string | null = null;
-
   statusFilter: string | undefined = undefined;
   listOfFilter: any[] = [
     { text: 'Active', value: '1' },
@@ -99,18 +89,15 @@ export class PaymentGatewayMasterComponent {
     { text: 'Test', value: '1' },
     { text: 'Live', value: '0' },
   ];
-
   listOfTimes: any[] = [
     { text: 'Same Days', value: '1' },
     { text: '1-2 Days', value: '0' },
     { text: '3-5 Days', value: '0' },
   ];
-
   searchCurrencies(): void {
     this.searchText = '';
     this.search();
   }
-
   isfilterapply: boolean = false;
   filterClass: string = 'filter-invisible';
   filterQuery: string = '';
@@ -131,12 +118,10 @@ export class PaymentGatewayMasterComponent {
     { label: 'Min Amount', value: 'MIN_AMOUNT' },
     { label: 'Max Amount', value: 'MAX_AMOUNT' },
   ];
-
   isColumnVisible(key: any): boolean {
     const column = this.showcolumn.find((col) => col.key === key);
     return column ? column.visible : true;
   }
-
   showcolumn = [
     { label: 'Gateway Name', key: 'GATEWAY_NAME', visible: true },
     { label: 'Gateway Type', key: 'GATEWAY_TYPE', visible: true },
@@ -153,19 +138,15 @@ export class PaymentGatewayMasterComponent {
     { label: 'Max Amount', key: 'MAX_AMOUNT', visible: true },
     { label: 'Settlement Time', key: 'SETTLEMENT_TIME', visible: true },
   ];
-
   TimeData = [
     { value: 'same-day', label: 'Same Day' },
     { value: '1-2 days', label: '1-2 Days' },
     { value: '3-5 days', label: '3-5 Days' },
   ];
-
   ModeData = [
     { value: 'Test', label: 'Test' },
     { value: 'Live', label: 'Live' },
   ];
-
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -182,9 +163,7 @@ export class PaymentGatewayMasterComponent {
       groups: [],
     },
   ];
-
   filterData: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -201,13 +180,11 @@ export class PaymentGatewayMasterComponent {
       groups: [],
     },
   ];
-
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router
   ) { }
-
   keyup(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -218,23 +195,16 @@ export class PaymentGatewayMasterComponent {
       this.search(true);
     }
   }
-
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
-
   minamount: string = '';
   maxamount: string = '';
-
   minamountFilter() {
     if (this.minamount === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.minamount.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
@@ -242,11 +212,8 @@ export class PaymentGatewayMasterComponent {
   }
   maxamountFilter() {
     if (this.maxamount === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.maxamount.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
@@ -260,7 +227,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.isnameFilterApplied = false;
     }
-
     if (this.GatewayType.length >= 3 && event.key === 'Enter') {
       this.search();
       this.istypeFilterApplied = true;
@@ -268,7 +234,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.istypeFilterApplied = false;
     }
-
     if (this.apikey.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isapikeyFilterApplied = true;
@@ -276,7 +241,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.isapikeyFilterApplied = false;
     }
-
     if (this.apisecret.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isapisecretFilterApplied = true;
@@ -284,7 +248,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.isapisecretFilterApplied = false;
     }
-
     if (this.merchant.length >= 3 && event.key === 'Enter') {
       this.search();
       this.ismerchantFilterApplied = true;
@@ -292,7 +255,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.ismerchantFilterApplied = false;
     }
-
     if (this.endpointurl.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isendpointFilterApplied = true;
@@ -300,7 +262,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.isendpointFilterApplied = false;
     }
-
     if (this.webhookurl.length >= 3 && event.key === 'Enter') {
       this.search();
       this.iswebhookFilterApplied = true;
@@ -308,7 +269,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.iswebhookFilterApplied = false;
     }
-
     if (this.encryptionkey.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isencryptionkeyFilterApplied = true;
@@ -316,7 +276,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.isencryptionkeyFilterApplied = false;
     }
-
     if (this.settlementtime.length > 0 && event.key === 'Enter') {
       this.search();
       this.istimeFilterApplied = true;
@@ -324,7 +283,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.istimeFilterApplied = false;
     }
-
     if (this.minamount.length >= 3 && event.key === 'Enter') {
       this.search();
       this.isminamountFilterApplied = true;
@@ -332,7 +290,6 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.isminamountFilterApplied = false;
     }
-
     if (this.maxamount.length >= 3 && event.key === 'Enter') {
       this.search();
       this.ismaxamountFilterApplied = true;
@@ -340,127 +297,74 @@ export class PaymentGatewayMasterComponent {
       this.search();
       this.ismaxamountFilterApplied = false;
     }
-
-    // if (this.settlementtime.length >= 3 && event.key === 'Enter') {
-    //
-
-    //   this.search();
-    //   this.istimeFilterApplied = true; // Filter applied if selectedCategories has values
-    // } else if (this.settlementtime == null || this.settlementtime == undefined || this.settlementtime == '') {
-    //
-
-    //   // this.search();
-    //   this.istimeFilterApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
-    // }
-    // this.search();
-
-    // if (this.settlementtime.length) {
-    //   this.search();
-    //   this.istimeFilterApplied = true;
-    // } else if (this.merchant.length == 0 && event.key === 'Backspace') {
-    //   this.search();
-    //   this.istimeFilterApplied = false;
-    // }
   }
-
   gatewayNameFilter() {
     if (this.GatewayName.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.GatewayName.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   gatewayTypeeFilter() {
     if (this.GatewayType.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.GatewayType.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   apiKeyFilter() {
     if (this.apikey.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.apikey.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   merchantFilter() {
     if (this.merchant.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.merchant.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   apiSecretFilter() {
     if (this.apisecret.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.apisecret.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   endpointurlFilter() {
     if (this.endpointurl.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.endpointurl.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   webhookurlFilter() {
     if (this.webhookurl.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.webhookurl.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
     }
   }
-
   encryptionKeyFilter() {
     if (this.encryptionkey.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.encryptionkey.length >= 3) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
       this.message.warning('Please enter at least 3 characters to filter.', '');
@@ -468,25 +372,19 @@ export class PaymentGatewayMasterComponent {
   }
   settlementtimeFilter() {
     if (this.settlementtime.trim() === '') {
-      // Clear the filter and display all data
-      this.searchText = ''; // Clear global search if any
-      // this.onKeyup();
+      this.searchText = ''; 
     } else if (this.settlementtime.length > 0) {
-      // Apply the filter for CATEGORY_NAME
       this.search();
     } else {
     }
   }
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
   }
-
   onCategoryChange(): void {
     this.search();
   }
-
   reset(): void {
     this.searchText = '';
     this.GatewayName = '';
@@ -502,159 +400,13 @@ export class PaymentGatewayMasterComponent {
     this.mode = '';
     this.search();
   }
-
   onSearchKeyUp(): void {
     if (this.searchText.length >= 3 || this.searchText.length === 0) {
-      // Trigger search only if 3+ characters or if input is cleared
       this.search();
     } else {
     }
   }
-
-  // search(reset: boolean = false): void {
-  //   if (this.searchText.length < 3 && this.searchText.length !== 0) {
-  //
-  //     return;
-  //   }
-
-  //   if (reset) {
-  //     this.pageIndex = 1;
-  //     this.sortKey = 'id';
-  //     this.sortValue = 'desc';
-  //   }
-
-  //   let sort: string;
-  //   try {
-  //     sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
-  //   } catch (error) {
-  //     sort = '';
-  //   }
-
-  //   // let likeQuery = '';
-  //   // let globalSearchQuery = '';
-
-  //   // if (this.searchText !== '') {
-  //   //   globalSearchQuery = ' AND (' + this.columns.map((column) => {
-  //   //     return `${column[0]} like '%${this.searchText}%'`;
-  //   //   }).join(' OR ') + ')';
-  //   // }
-
-  //   let likeQuery = '';
-  //   let globalSearchQuery = '';
-
-  //   // Global Search (using searchText)
-  //   if (this.searchText !== '') {
-  //     globalSearchQuery = ' AND (' + this.columns.map((column) => {
-  //       return `${column[0]} like '%${this.searchText}%'`;
-  //     }).join(' OR ') + ')';
-  //   }
-
-  //   this.loadingRecords = true;
-
-  //   // // GatewayName Filter
-  //   if (this.GatewayName !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `GATEWAY_NAME LIKE '%${this.GatewayName.trim()}%'`;
-  //   }
-  //   // GatewayType Filter
-  //   if (this.GatewayType !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `GATEWAY_TYPE LIKE '%${this.GatewayType.trim()}%'`;
-  //   }
-
-  //   // apikey Filter
-  //   if (this.apikey !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `API_KEY LIKE '%${this.apikey.trim()}%'`;
-  //   }
-
-  //   // apisecret
-  //   if (this.apisecret !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `API_SECRET LIKE '%${this.apisecret.trim()}%'`;
-  //   }
-
-  //   // merchant
-  //   if (this.merchant !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `API_SECRET LIKE '%${this.merchant.trim()}%'`;
-  //   }
-
-  //   // Endpointurl Filter
-  //   if (this.endpointurl !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `ENDPOINT_URL LIKE '%${this.endpointurl.trim()}%'`;
-  //   }
-
-  //   // Webhook Filter
-  //   if (this.webhookurl !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `WEBHOOK_URL LIKE '%${this.webhookurl.trim()}%'`;
-  //   }
-  //
-
-  //   // currency
-  //   if (this.currency !== '' && this.currency != null && this.currency != undefined && this.currency.length > 0) {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `SUPPORTED_CURRENCIES LIKE '%${this.currency}%'`;
-  //   }
-
-  //   // encryptionkey
-  //   if (this.encryptionkey !== '') {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `ENCRYPTION_KEY LIKE '%${this.encryptionkey.trim()}%'`;
-  //   }
-
-  //   // Settlement time
-  //   if (this.settlementtime !== '' && this.settlementtime != null && this.settlementtime != undefined) {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `SETTLEMENT_TIME LIKE '%${this.settlementtime.trim()}%'`;
-  //   }
-
-  //   // Mode
-  //   if (this.mode !== '' && this.mode != null && this.mode != undefined) {
-  //     likeQuery += (likeQuery ? ' AND ' : '') + `MODE LIKE '%${this.mode.trim()}%'`;
-  //   }
-
-  //   // Status Filter
-  //   if (this.statusFilter) {
-  //     if (likeQuery !== '') {
-  //       likeQuery += ' AND ';
-  //     }
-  //     likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
-  //   }
-
-  //   // Combine global search query and column-specific search query
-  //   likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-  //   likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-  //   this.loadingRecords = true;
-
-  //   this.api.getPaymentGatewayData(
-  //     this.pageIndex,
-  //     this.pageSize,
-  //     this.sortKey,
-  //     sort,
-  //     likeQuery
-  //   ).subscribe(
-  //     (data) => {
-  //       if (data['code'] === 200) {
-  //         this.loadingRecords = false;
-  //         this.totalRecords = data['count'];
-  //         this.dataList = data['data'];
-  //       } else {
-  //         this.loadingRecords = false;
-  //         this.dataList = [];
-  //         this.message.error('Something Went Wrong ...', '');
-  //       }
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       this.loadingRecords = false;
-  //       if (err.status === 0) {
-  //         this.message.error(
-  //           'Network error: Please check your internet connection.',
-  //           ''
-  //         );
-  //       } else {
-  //         this.message.error('Something Went Wrong.', '');
-  //       }
-  //     }
-  //   );
-  // }
-
   TabId: number;
-
-
   search(reset: boolean = false) {
     if (
       this.searchText.trim().length < 3 &&
@@ -662,22 +414,18 @@ export class PaymentGatewayMasterComponent {
     ) {
       return;
     }
-
     if (reset) {
       this.pageIndex = 1;
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
-
     let globalSearchQuery = '';
     if (this.searchText !== '') {
       globalSearchQuery =
@@ -689,79 +437,41 @@ export class PaymentGatewayMasterComponent {
           .join(' OR ') +
         ')';
     }
-
-    // if (reset) {
-    //   this.pageIndex = 1;
-    //   this.sortKey = 'id';
-    //   this.sortValue = 'desc';
-    // }
-
-    // var sort: string;
-    // try {
-    //   sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
-    // } catch (error) {
-    //   sort = '';
-    // }
-
-    // var likeQuery = '';
-    // let globalSearchQuery = '';
-
-    //   // Global Search (using searchText)
-    //   if (this.searchText !== '') {
-    //     globalSearchQuery = ' AND (' + this.columns.map((column) => {
-    //       return `${column[0]} like '%${this.searchText}%'`;
-    //     }).join(' OR ') + ')';
-    //   }
     this.loadingRecords = true;
-
-    // // GatewayName Filter
     if (this.GatewayName !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `GATEWAY_NAME LIKE '%${this.GatewayName.trim()}%'`;
     }
-    // GatewayType Filter
     if (this.GatewayType !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `GATEWAY_TYPE LIKE '%${this.GatewayType.trim()}%'`;
     }
-
-    // apikey Filter
     if (this.apikey !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `API_KEY LIKE '%${this.apikey.trim()}%'`;
     }
-
-    // apisecret
     if (this.apisecret !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `API_SECRET LIKE '%${this.apisecret.trim()}%'`;
     }
-
-    // merchant
     if (this.merchant !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `MERCHANT_ID LIKE '%${this.merchant.trim()}%'`;
     }
-
-    // Endpointurl Filter
     if (this.endpointurl !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `ENDPOINT_URL LIKE '%${this.endpointurl.trim()}%'`;
     }
-
-    // Webhook Filter
     if (this.webhookurl !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `WEBHOOK_URL LIKE '%${this.webhookurl.trim()}%'`;
     }
-
-    // currency
     if (
       this.currency !== '' &&
       this.currency != null &&
@@ -776,15 +486,11 @@ export class PaymentGatewayMasterComponent {
     else {
       this.iscurrenciesFilterApplied = false;
     }
-
-    // encryptionkey
     if (this.encryptionkey !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `ENCRYPTION_KEY LIKE '%${this.encryptionkey.trim()}%'`;
     }
-
-    // Settlement time
     if (
       this.settlementtime !== '' &&
       this.settlementtime != null &&
@@ -794,8 +500,6 @@ export class PaymentGatewayMasterComponent {
         (likeQuery ? ' AND ' : '') +
         `SETTLEMENT_TIME LIKE '%${this.settlementtime.trim()}%'`;
     }
-
-    // Mode
     if (this.mode !== '' && this.mode != null && this.mode != undefined) {
       likeQuery +=
         (likeQuery ? ' AND ' : '') + `MODE LIKE '%${this.mode.trim()}%'`;
@@ -803,55 +507,14 @@ export class PaymentGatewayMasterComponent {
     }
     else {
       this.ismodeFilterApplied = false;
-
     }
-
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
-    // Combine global search query and column-specific search query
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
-
-    // this.loadingRecords = false;
-
-    // this.api
-    //   .getPaymentGatewayData(
-    //     this.pageIndex,
-    //     this.pageSize,
-    //     this.sortKey,
-    //     sort,
-    //     likeQuery
-    //   )
-    //   .subscribe(
-    //     (data) => {
-    //       if (data["code"] == 200) {
-    //         this.loadingRecords = false;
-    //         this.totalRecords = data["count"];
-    //         this.dataList = data["data"];
-    //       } else {
-    //         this.loadingRecords = false;
-    //         this.dataList = [];
-    //         this.message.error("Something Went Wrong ...", "");
-    //       }
-    //     },
-    //     (err: HttpErrorResponse) => {
-    //       this.loadingRecords = false;
-    //       if (err.status === 0) {
-    //         this.message.error(
-    //           "Network error: Please check your internet connection.",
-    //           ""
-    //         );
-    //       } else {
-    //         this.message.error("Something Went Wrong.", "");
-    //       }
-    //     }
-    //   );
-
     this.api
       .getPaymentGatewayData(
         this.pageIndex,
@@ -893,51 +556,16 @@ export class PaymentGatewayMasterComponent {
         }
       );
   }
-
   ngOnInit() {
     this.getCurrencyData();
-    // this.getCurrencydata();
   }
-
-  CurrencyData: any[] = []; // To store mapped currency data
-
-  // getCurrencydata() {
-  //   this.api.getCurrency(0, 0, "", "", " AND IS_ACTIVE = 1").subscribe(
-  //     (data) => {
-  //       if (data["code"] == 200) {
-  //         this.CurrencyData = data["data"];
-  //       } else {
-  //         this.CurrencyData = [];
-  //         this.message.error("Failed To Get Curremcy Data", "");
-  //       }
-  //     },
-  //     () => {
-  //       this.message.error("Something Went Wrong", "");
-  //     }
-  //   );
-  // }
-
+  CurrencyData: any[] = []; 
   add(): void {
     this.drawerTitle = 'Add New Payment Gateway';
     this.drawerData = new paymentgateway();
     this.drawerVisible = true;
-
-    // this.api.getPaymentGatewayData(1, 1, "ID", "desc", "" + "").subscribe(
-    //   (data) => {
-    //     if (data["count"] == 0) {
-    //       this.drawerData.ID = 1;
-    //     } else {
-    //       this.drawerData.ID = data["data"][0]["ID"] + 1;
-    //     }
-    //   },
-    //   (err) => {
-    //
-    //   }
-    // );
-
     this.drawerVisible = true;
   }
-
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
     const { pageSize, pageIndex, sort } = params;
@@ -946,39 +574,30 @@ export class PaymentGatewayMasterComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
-
     this.search();
   }
-
   edit(data: paymentgateway): void {
     this.drawerTitle = 'Update Payment Gateway';
     this.drawerData = Object.assign({}, data);
     this.drawerVisible = true;
   }
-
   drawerClose(): void {
     this.search();
     this.drawerVisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
-  // Main Filter
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
       this.filterClass = 'filter-invisible';
@@ -987,8 +606,6 @@ export class PaymentGatewayMasterComponent {
       this.loadFilters();
     }
   }
-
-  // Main Filter code
   hide: boolean = true;
   filterQuery1: any = '';
   INSERT_NAME: any;
@@ -1004,7 +621,6 @@ export class PaymentGatewayMasterComponent {
     'Start With',
     'End With',
   ];
-
   getComparisonOptions(selectedColumn: string): string[] {
     if (
       selectedColumn === 'IS_ACTIVE' ||
@@ -1027,23 +643,18 @@ export class PaymentGatewayMasterComponent {
     ];
   }
   columns2: string[][] = [['AND'], ['OR']];
-
   showFilter = false;
   toggleFilter() {
     this.showFilter = !this.showFilter;
   }
-
   showSortFilter = false;
   toggleSortFilter() {
     this.showSortFilter = !this.showSortFilter;
   }
-
   SELECTCOLOUM_NAME: any;
   TABLE_VALUE: any;
   COMPARISION_VALUE: any;
-
   conditions: any[] = [];
-
   InsertNewCondition() {
     this.conditions.push({
       SELECTCOLOUM_NAME: '',
@@ -1051,15 +662,11 @@ export class PaymentGatewayMasterComponent {
       TABLE_VALUE: '',
     });
   }
-
   deleteCondition(index: number) {
     this.conditions.splice(index, 1);
   }
-
   operators: string[] = ['AND', 'OR'];
-  // QUERY_NAME: string = '';
   showQueriesArray = [];
-
   filterBox = [
     {
       CONDITION: '',
@@ -1073,7 +680,6 @@ export class PaymentGatewayMasterComponent {
       ],
     },
   ];
-
   addCondition() {
     this.filterBox.push({
       CONDITION: '',
@@ -1087,16 +693,13 @@ export class PaymentGatewayMasterComponent {
       ],
     });
   }
-
   removeCondition(index: number) {
     this.filterBox.splice(index, 1);
   }
-
   insertSubCondition(conditionIndex: number, subConditionIndex: number) {
     const lastFilterIndex = this.filterBox.length - 1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1109,7 +712,6 @@ export class PaymentGatewayMasterComponent {
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION3'
       ];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1129,19 +731,14 @@ export class PaymentGatewayMasterComponent {
       });
     }
   }
-
   back() {
     this.router.navigate(['/masters/menu']);
   }
-
   removeSubCondition(conditionIndex: number, subConditionIndex: number) {
     this.hide = true;
     this.filterBox[conditionIndex].FILTER.splice(subConditionIndex, 1);
   }
-
-
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -1150,7 +747,6 @@ export class PaymentGatewayMasterComponent {
       tooltip.hide();
     }
   }
-
   generateQuery() {
     var isOk = true;
     var i = this.filterBox.length - 1;
@@ -1176,7 +772,6 @@ export class PaymentGatewayMasterComponent {
       isOk = false;
       this.message.error('Please select operator.', '');
     }
-
     if (isOk) {
       this.filterBox.push({
         CONDITION: '',
@@ -1191,19 +786,15 @@ export class PaymentGatewayMasterComponent {
       });
     }
   }
-
-  /*******  Create filter query***********/
   query = '';
   query2 = '';
   showquery: any;
   isSpinner: boolean = false;
-
   createFilterQuery(): void {
     const lastFilterIndex = this.filterBox.length - 1;
     1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1217,7 +808,6 @@ export class PaymentGatewayMasterComponent {
       'SELECTION3'
       ];
     const selection4 = this.filterBox[lastFilterIndex]['CONDITION'];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1231,17 +821,14 @@ export class PaymentGatewayMasterComponent {
       this.message.error('Please Select the Operator', '');
     } else {
       this.isSpinner = true;
-
       for (let i = 0; i < this.filterBox.length; i++) {
         if (i != 0) {
           this.query += ') ' + this.filterBox[i]['CONDITION'] + ' (';
         } else this.query = '(';
-
         this.query2 = '';
         for (let j = 0; j < this.filterBox[i]['FILTER'].length; j++) {
           const filter = this.filterBox[i]['FILTER'][j];
           if (j == 0) {
-            //this.query2 += '(';
           } else {
             if (filter['CONDITION'] == 'AND') {
               this.query2 = this.query2 + ' AND ';
@@ -1249,11 +836,9 @@ export class PaymentGatewayMasterComponent {
               this.query2 = this.query2 + ' OR ';
             }
           }
-
           let selection1 = filter['SELECTION1'];
           let selection2 = filter['SELECTION2'];
           let selection3 = filter['SELECTION3'];
-
           if (selection2 == 'Contains') {
             this.query2 += `${selection1} LIKE '%${selection3}%'`;
           } else if (selection2 == 'End With') {
@@ -1264,23 +849,17 @@ export class PaymentGatewayMasterComponent {
             this.query2 += `${selection1} ${selection2} '${selection3}'`;
           }
           if (j + 1 == this.filterBox[i]['FILTER'].length) {
-            //this.query2 += ') ';
             this.query += this.query2;
           }
         }
-
         if (i + 1 == this.filterBox.length) {
           this.query += ')';
         }
       }
-
       this.showquery = this.query;
-
       var newQuery = ' AND ' + this.query;
-
       this.filterQuery1 = newQuery;
-
-      let sort = ''; // Assign a default value to sort
+      let sort = ''; 
       let filterQuery = '';
       this.api
         .getPaymentGatewayData(
@@ -1289,7 +868,6 @@ export class PaymentGatewayMasterComponent {
           this.sortKey,
           sort,
           newQuery
-          // filterQuery
         )
         .subscribe(
           (data) => {
@@ -1307,136 +885,14 @@ export class PaymentGatewayMasterComponent {
             if (err['ok'] === false) this.message.error('Server Not Found', '');
           }
         );
-
       this.QUERY_NAME = '';
     }
   }
-
-  // applyFilter(i, j) {
-  //
-  //   const inputValue = this.filterBox[i].FILTER[j].SELECTION3;
-  //   const lastFilterIndex = this.filterBox.length - 1;
-  //   const lastSubFilterIndex =
-  //     this.filterBox[lastFilterIndex]["FILTER"].length - 1;
-
-  //   const selection1 =
-  //     this.filterBox[lastFilterIndex]["FILTER"][lastSubFilterIndex][
-  //     "SELECTION1"
-  //     ];
-  //   const selection2 =
-  //     this.filterBox[lastFilterIndex]["FILTER"][lastSubFilterIndex][
-  //     "SELECTION2"
-  //     ];
-  //   const selection3 =
-  //     this.filterBox[lastFilterIndex]["FILTER"][lastSubFilterIndex][
-  //     "SELECTION3"
-  //     ];
-
-  //   if (!selection1) {
-  //     this.message.error("Please select a column", "");
-  //   } else if (!selection2) {
-  //     this.message.error("Please select a comparison", "");
-  //   } else if (!selection3 || selection3.length < 1) {
-  //     this.message.error(
-  //       "Please enter a valid value with at least 1 characters",
-  //       ""
-  //     );
-  //   } else if (
-  //     typeof inputValue === "string" &&
-  //     !this.isValidInput(inputValue)
-  //   ) {
-  //     // Show error message
-  //     this.message.error(`Invalid Input: ${inputValue} is not allowed.`, "");
-  //   } else {
-  //
-  //
-
-  //     // var DemoData:any = this.filterBox
-  //     let sort: string;
-  //     let filterQuery = "";
-
-  //     try {
-  //       sort = this.sortValue.startsWith("a") ? "asc" : "desc";
-  //     } catch (error) {
-  //       sort = "";
-  //     }
-  //     // Define a function to get the comparison value filter
-
-  //     this.isSpinner = true;
-  //     const getComparisonFilter = (
-  //       comparisonValue: any,
-  //       columnName: any,
-  //       tableValue: any
-  //     ) => {
-  //       switch (comparisonValue) {
-  //         case "=":
-  //         case "!=":
-  //         case "<":
-  //         case ">":
-  //         case "<=":
-  //         case ">=":
-  //           return `${tableValue} ${comparisonValue} '${columnName}'`;
-  //         case "Contains":
-  //           return `${tableValue} LIKE '%${columnName}%'`;
-  //         case "Does not Contain":
-  //           return `${tableValue} NOT LIKE '%${columnName}%'`;
-  //         case "Start With":
-  //           return `${tableValue} LIKE '${columnName}%'`;
-  //         case "End With":
-  //           return `${tableValue} LIKE '%${columnName}'`;
-  //         default:
-  //           return "";
-  //       }
-  //     };
-
-  //     const FILDATA = this.filterBox[i]["FILTER"]
-  //       .map((item) => {
-  //         const filterCondition = getComparisonFilter(
-  //           item.SELECTION2,
-  //           item.SELECTION3,
-  //           item.SELECTION1
-  //         );
-  //         return `AND (${filterCondition})`;
-  //       })
-  //       .join(" ");
-
-  //
-
-  //
-
-  //     this.api
-  //       .getPaymentGatewayData(
-  //         this.pageIndex,
-  //         this.pageSize,
-  //         this.sortKey,
-  //         sort,
-  //         FILDATA
-  //       )
-  //       .subscribe(
-  //         (data) => {
-  //           if (data["code"] === 200) {
-  //             this.totalRecords = data["count"];
-  //             this.dataList = data["data"];
-  //             this.isSpinner = false;
-  //             this.filterQuery = "";
-  //           } else {
-  //             this.dataList = [];
-  //             this.isSpinner = false;
-  //           }
-  //         },
-  //         (err) => {
-  //           if (err["ok"] === false) this.message.error("Server Not Found", "");
-  //         }
-  //       );
-  //   }
-  // }
-
-  // CurrencyData: any = [];
   getCurrencyData() {
     this.api.getCurrency(0, 0, '', '', ' AND IS_ACTIVE = 1').subscribe(
       (data) => {
         if (data['code'] === 200) {
-          this.CurrencyData = data['data']; // Assign the response data to CurrencyData
+          this.CurrencyData = data['data']; 
         } else {
           this.CurrencyData = [];
           this.message.error('Failed To Get Currency Data', '');
@@ -1447,20 +903,6 @@ export class PaymentGatewayMasterComponent {
       }
     );
   }
-
-  // loadCurrencyData(): void {
-  //   this.api.getCurrency(0, 0, "", "", " AND IS_ACTIVE = 1").subscribe(
-  //     (gatecallResult: any[]) => {
-  //       this.CurrencyData = gatecallResult.map((data: any) => ({
-  //         CURRENCY_NAME: data.CURRENCY_NAME,
-  //         SUPPORTED_CURRENCIES: data.SUPPORTED_CURRENCIES
-  //       }));
-  //     },
-  //     (error) => {
-  //     }
-  //   );
-  // }
-
   resetValues(): void {
     this.filterBox = [
       {
@@ -1477,46 +919,36 @@ export class PaymentGatewayMasterComponent {
     ];
     this.search();
   }
-
   public visiblesave = false;
-
   saveQuery() {
     this.visiblesave = !this.visiblesave;
   }
-
   QUERY_NAME: string = '';
   name1: any;
   name2: any;
   INSERT_NAMES: any[] = [];
-
   Insertname() {
     if (this.QUERY_NAME.trim()) {
       this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
       this.visiblesave = false;
-      this.QUERY_NAME = ''; // Clear input after adding
+      this.QUERY_NAME = ''; 
     } else {
     }
   }
-
   handleLiveDemoChange(event: any) {
     this.visible = event;
   }
   toggleLiveDemo1() {
     this.visible = false;
   }
-
   handleCancelTop(): void {
     this.visiblesave = false;
   }
   handleOkTop(): void {
-    // this.createFilterQuery();
-
     const lastFilterIndex = this.filterBox.length - 1;
     1;
     const lastSubFilterIndex =
       this.filterBox[lastFilterIndex]['FILTER'].length - 1;
-
     const selection1 =
       this.filterBox[lastFilterIndex]['FILTER'][lastSubFilterIndex][
       'SELECTION1'
@@ -1530,7 +962,6 @@ export class PaymentGatewayMasterComponent {
       'SELECTION3'
       ];
     const selection4 = this.filterBox[lastFilterIndex]['CONDITION'];
-
     if (!selection1) {
       this.message.error('Please select a column', '');
     } else if (!selection2) {
@@ -1544,17 +975,14 @@ export class PaymentGatewayMasterComponent {
       this.message.error('Please Select the Operator', '');
     } else {
       this.isSpinner = true;
-
       for (let i = 0; i < this.filterBox.length; i++) {
         if (i != 0) {
           this.query += ') ' + this.filterBox[i]['CONDITION'] + ' (';
         } else this.query = '(';
-
         this.query2 = '';
         for (let j = 0; j < this.filterBox[i]['FILTER'].length; j++) {
           const filter = this.filterBox[i]['FILTER'][j];
           if (j == 0) {
-            //this.query2 += '(';
           } else {
             if (filter['CONDITION'] == 'AND') {
               this.query2 = this.query2 + ' AND ';
@@ -1562,11 +990,9 @@ export class PaymentGatewayMasterComponent {
               this.query2 = this.query2 + ' OR ';
             }
           }
-
           let selection1 = filter['SELECTION1'];
           let selection2 = filter['SELECTION2'];
           let selection3 = filter['SELECTION3'];
-
           if (selection2 == 'Contains') {
             this.query2 += `${selection1} LIKE '%${selection3}%'`;
           } else if (selection2 == 'End With') {
@@ -1577,33 +1003,26 @@ export class PaymentGatewayMasterComponent {
             this.query2 += `${selection1} ${selection2} '${selection3}'`;
           }
           if (j + 1 == this.filterBox[i]['FILTER'].length) {
-            //this.query2 += ') ';
             this.query += this.query2;
           }
         }
-
         if (i + 1 == this.filterBox.length) {
           this.query += ')';
         }
       }
-
       this.showquery = this.query;
     }
-
     if (this.QUERY_NAME == '' || this.QUERY_NAME.trim() == '') {
       this.message.error('Please Enter Query Name', '');
     } else {
       this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
-
       this.visiblesave = false;
-      this.QUERY_NAME = ''; // Clear input after adding
+      this.QUERY_NAME = ''; 
     }
     this.visiblesave = false;
   }
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   restrictedKeywords = [
     'SELECT',
     'INSERT',
@@ -1626,16 +1045,13 @@ export class PaymentGatewayMasterComponent {
     'COMMIT',
     '--',
     ';',
-    '/*',
-    '*/',
+    '',
   ];
-
   isValidInput(input: string): boolean {
     return !this.restrictedKeywords.some((keyword) =>
       input.toUpperCase().includes(keyword)
     );
   }
-
   filterFields: any[] = [
     {
       key: 'GATEWAY_NAME',
@@ -1792,10 +1208,7 @@ export class PaymentGatewayMasterComponent {
       placeholder: 'Enter Webhook Url',
     },
   ];
-
   oldFilter: any[] = [];
-
-  // filterQuery = '';
   applyfilter(item) {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
@@ -1804,9 +1217,7 @@ export class PaymentGatewayMasterComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   filterloading: boolean = false;
-
   deleteItem(item: any): void {
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
@@ -1823,7 +1234,6 @@ export class PaymentGatewayMasterComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
@@ -1851,27 +1261,15 @@ export class PaymentGatewayMasterComponent {
       }
     );
   }
-
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   drawerFilterVisible: boolean = false;
-  // drawerData: CurrencyMaster = new CurrencyMaster();
   applyCondition: any;
-  currentClientId = 1; // Set the client ID
-
+  currentClientId = 1; 
   openfilter() {
     this.drawerTitle = 'Payment Gateway Filter';
-    // this.applyCondition = "";
-    // this.filterFields[1]['options'] = this.inventorydata;
-    // this.filterFields[2]['options'] = this.inventorycatdata;
-    // this.filterFields[3]['options'] = this.inventorysubcatdata;
-    // this.filterFields[4]['options'] = this.warehousedata;
-    // this.filterFields[5]['options'] = this.destinationwarehousedata;
-    // this.filterFields[7]['options'] = this.unitdata;
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -1880,15 +1278,10 @@ export class PaymentGatewayMasterComponent {
       FILTER_QUERY: '',
       FILTER_JSON: {},
     };
-
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -1905,7 +1298,6 @@ export class PaymentGatewayMasterComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -1923,76 +1315,53 @@ export class PaymentGatewayMasterComponent {
       },
     ];
   }
-
   handleCancel(): void {
-    this.isModalVisible = false; // Close the modal
-    this.selectedQuery = ''; // Clear the selected query
+    this.isModalVisible = false; 
+    this.selectedQuery = ''; 
   }
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerflterClose('', '');
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
-
     this.FILTER_NAME = data.FILTER_NAME;
-    //
-
     this.filterData = data;
     this.EditQueryData = data;
     this.editButton = 'Y';
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   drawerflterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
-
-
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   get closefilterCallback() {
     return this.drawerflterClose.bind(this);
   }
-
-  // new  Main filter
-  // TabId: number;
   public commonFunction = new CommonFunctionService();
   userId = sessionStorage.getItem('userId');
   decrepteduserIDString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   USER_ID = parseInt(this.decrepteduserIDString, 10);
-  // isfilterapply: boolean = false;
-  // drawerFilterVisible: boolean = false;
-  // filterQuery: string = "";
-  // filterClass: string = "filter-invisible";
   savedFilters: any[] = [];
-
   whichbutton: any;
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -2000,14 +1369,12 @@ export class PaymentGatewayMasterComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -2022,22 +1389,15 @@ export class PaymentGatewayMasterComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -2051,9 +1411,7 @@ export class PaymentGatewayMasterComponent {
       );
     this.filterQuery = '';
   }
-
   isDeleting: boolean = false;
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';

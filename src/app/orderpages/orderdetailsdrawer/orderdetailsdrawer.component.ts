@@ -7,8 +7,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { customer } from 'src/app/Pages/Models/customer';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
-// sanjana
 export class saveOrderData {
   ORDER_STATUS: any = '';
   EXPECTED_DATE_TIME: null;
@@ -17,7 +15,6 @@ export class saveOrderData {
   ACCEPTANCE_REMARK: any = '';
   ASSING_TO: number = 0
 }
-
 @Component({
   selector: 'app-orderdetailsdrawer',
   templateUrl: './orderdetailsdrawer.component.html',
@@ -34,24 +31,21 @@ export class OrderdetailsdrawerComponent {
       ? this.commonFunction.decryptdata(this.roleId)
       : '';
     this.decreptedroleId = parseInt(decreptedroleIdString, 10);
-
     this.getorderDetails();
     this.decrepteduserIDString = this.userId
       ? this.commonFunction.decryptdata(this.userId)
       : '';
     this.decrepteduserID = parseInt(this.decrepteduserIDString, 10);
-
     this.chatfilter = ' AND ORDER_ID = ' + this.orderDetails.ID;
     this.invoicefilter = ' AND ORDER_ID = ' + this.orderDetails.ID;
     this.actionfilter = " AND ACTION_LOG_TYPE IN('O')" + this.invoicefilter;
-
     this.getAllMappedVendors();
   }
   formatTimess(time: string): string {
     if (!time) return '';
     let [hours, minutes] = time.split(':');
     let period = +hours >= 12 ? 'PM' : 'AM';
-    let formattedHours = +hours % 12 || 12; // Convert 0 or 12 to 12
+    let formattedHours = +hours % 12 || 12; 
     return `${formattedHours}:${minutes} ${period}`;
   }
   showjobcard: boolean = true;
@@ -73,7 +67,6 @@ export class OrderdetailsdrawerComponent {
   @Input() teritoryData: any;
   @Input() orderid: any;
   @Input() orderDetails: any;
-
   date = new Date();
   close(): void {
     this.drawerClose();
@@ -83,7 +76,6 @@ export class OrderdetailsdrawerComponent {
   }
   openModal = false;
   public commonFunction = new CommonFunctionService();
-
   skills: any[] = [];
   jobdetails: any = '';
   estimatetime: any = 0;
@@ -126,13 +118,6 @@ export class OrderdetailsdrawerComponent {
   }
   remoteJob = false;
   createJob() {
-    // if (
-    //   this.jobdetails == undefined ||
-    //   this.jobdetails == null ||
-    //   this.jobdetails.trim() == ''
-    // ) {
-    //   this.message.error('Enter additional remark', '');
-    // } else
     if (
       this.estimatetime == undefined ||
       this.estimatetime == null ||
@@ -179,7 +164,6 @@ export class OrderdetailsdrawerComponent {
           '>' +
           this.selectService.SERVICE_NAME;
       }
-
       var data = {
         USER_ID: this.decrepteduserID,
         TASK_DESCRIPTION: this.jobdetails,
@@ -206,7 +190,6 @@ export class OrderdetailsdrawerComponent {
         EXPECTED_DATE_TIME: this.vieworderdata.orderData[0].EXPECTED_DATE_TIME,
         IS_REMOTE_JOB: this.remoteJob,
       };
-
       if (
         this.selectService['SERVICE_SKILLS'] == undefined ||
         this.selectService['SERVICE_SKILLS'] == null ||
@@ -242,54 +225,42 @@ export class OrderdetailsdrawerComponent {
       );
     }
   }
-
-  // sanjana
-
   DATETIME: Date;
   orderData: any = new saveOrderData();
-
   drawerVisiblepastorder: boolean = false;
   drawerDatapastorder: any;
   drawerTitlepastorder!: string;
-
   drawerCustomerRatingTitle!: string;
   drawerCustomerRatingVisible: boolean = false;
   drawerRatingVisible: boolean = false;
   drawerDataRating: any;
-
-  STATUS: string = ''; // This will store the selected value of the radio button
+  STATUS: string = ''; 
   data = {
     REMARK: '',
   };
-
   viewPastOrders(data: any) {
     this.drawerTitlepastorder =
       `Past Order Of ` + this.orderDetails.CUSTOMER_NAME;
     this.drawerDatapastorder = this.orderDetails;
     this.drawerVisiblepastorder = true;
   }
-
   viewCustomerRating() {
     this.drawerCustomerRatingTitle = 'Rating';
     this.drawerDataRating = this.orderDetails;
     this.drawerCustomerRatingVisible = true;
   }
-
   viewCustomerchat() {
     this.showjobcard = false;
     this.showverification = false;
     this.showchat = true;
     this.showmap = false;
   }
-
   drawerClosepastorder(): void {
     this.drawerVisiblepastorder = false;
   }
-
   get closeCallbackpastorder() {
     return this.drawerClosepastorder.bind(this);
   }
-
   acceptorder() {
     if (this.STATUS != null && this.STATUS != undefined && this.STATUS != '') {
       if (this.STATUS == 'R') {
@@ -330,7 +301,6 @@ export class OrderdetailsdrawerComponent {
         else
           this.orderData.EXPECTED_DATE_TIME =
             this.vieworderdata.orderData[0].EXPECTED_DATE_TIME;
-
         this.vieworderdata['detailsData'].forEach((element) => {
           if (element.IS_JOB_CREATED_DIRECTLY == 1)
             serviceIds.push(element.SERVICE_ITEM_ID);
@@ -342,21 +312,10 @@ export class OrderdetailsdrawerComponent {
           'yyyy-MM-dd HH:mm'
         );
       }
-
-      // this.orderData.ASSIGNED_TO = this.vendors
-
-
-
-      //   if (this.decreptedroleId === 8) {
-      //   this.orderData.ASSING_TO = 
-      //     (this.STATUS === 'R' || this.STATUS === 'Res') ? 0 : this.vendors;
-      // }
-
       if (this.decreptedroleId === 8) {
         if (this.STATUS === 'R' || this.STATUS === 'Res') {
           this.orderData.ASSING_TO = 0;
         } else {
-          // जर vendors array असेल आणि length == 0 असेल तर 0 पाठवा
           if (Array.isArray(this.vendors) && this.vendors.length === 0) {
             this.orderData.ASSING_TO = 0;
           } else {
@@ -364,11 +323,6 @@ export class OrderdetailsdrawerComponent {
           }
         }
       }
-
-
-
-
-
       this.orderData.ID = this.orderDetails.ID;
       this.orderData.TERRITORY_ID = this.orderData['SERVICE_ITEM_IDS'] =
         serviceIds;
@@ -400,7 +354,6 @@ export class OrderdetailsdrawerComponent {
             if (this.STATUS == 'Res') {
               this.message.error('Failed To Rescheduled Order.', '');
             }
-
             this.isSpinning = false;
           }
         },
@@ -413,19 +366,15 @@ export class OrderdetailsdrawerComponent {
     }
   }
   deleteCancel() { }
-
   drawerCloseRating(): void {
     this.drawerCustomerRatingVisible = false;
   }
-
   get closeCallbackRating() {
     return this.drawerClose.bind(this);
   }
-
   techData: any = [];
   TECHNICIAN_NAME: any;
   selectedTechnicianName: string = '';
-
   getTechnicianData() {
     this.api.getTechnicianData(0, 0, '', '', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -441,12 +390,10 @@ export class OrderdetailsdrawerComponent {
       }
     );
   }
-
   checked = true;
   showactionlog: boolean = false;
   showinvoicetable: boolean = false;
   showmap: boolean = false;
-
   showaction() {
     this.showactionlog = true;
     this.showinvoicetable = false;
@@ -456,7 +403,6 @@ export class OrderdetailsdrawerComponent {
     this.showmap = false;
     this.getActionLog();
   }
-
   showverificationn() {
     this.showactionlog = false;
     this.showinvoicetable = false;
@@ -473,14 +419,10 @@ export class OrderdetailsdrawerComponent {
     this.showchat = false;
     this.showmap = false;
   }
-
   modalStyle = {
     top: '20px',
   };
-
   checked1 = false;
-
-  // purvamam
   timelineData: any = [];
   invoiceData: any = [];
   getActionLog() {
@@ -511,7 +453,7 @@ export class OrderdetailsdrawerComponent {
     return data.map((day) => ({
       date: day.DATE,
       events: day.ACTION_LOGS.map((log) => ({
-        icon: this.getStatusIcon(log.ORDER_STATUS || ''), // Adjust icon logic as needed
+        icon: this.getStatusIcon(log.ORDER_STATUS || ''), 
         title: log.ACTION_DETAILS || 'Action performed',
         time: log.ORDER_DATE_TIME
           ? new Date(log.ORDER_DATE_TIME).toLocaleTimeString()
@@ -541,25 +483,20 @@ export class OrderdetailsdrawerComponent {
         return 'ℹ️';
     }
   }
-
   TYPE = 'ORDER';
   FILTER_ID: any = null;
   setFilter() {
     this.TYPE = 'ORDER';
     this.FILTER_ID = this.orderDetails.ID;
   }
-
   dataList: any = [{ id: 1 }];
-
   TIME: any;
   DATE: any;
-
   isSpinning = false;
   expectedDate: Date | null = null;
   time: any;
   orderDetailsData: any = [];
   jobCardIds: any[] = [];
-
   getorderDetails2() {
     this.api
       .getorderdetails(0, 0, '', '', '', this.orderDetails.ID)
@@ -575,7 +512,6 @@ export class OrderdetailsdrawerComponent {
         (data) => {
           if (data['code'] == 200) {
             this.orderDetailsData = data['data'];
-
             this.jobCardIds = this.orderDetailsData.map(
               (order) => order.JOB_CARD_ID
             );
@@ -583,7 +519,6 @@ export class OrderdetailsdrawerComponent {
             var d2: any = [];
             var d3 = this.orderDetailsData;
             var d4 = this.orderDetailsData;
-
             d2 = d.reduce(
               (max, current) =>
                 current.TOTAL_DURARTION_MIN > max.TOTAL_DURARTION_MIN
@@ -591,35 +526,28 @@ export class OrderdetailsdrawerComponent {
                   : max,
               d[0]
             );
-
             if (d2)
               this.teritoryData.MAX_DURARTION_MIN = d2.TOTAL_DURARTION_MIN;
-
             var maxTime = d3.reduce(
               (max, current) =>
                 current.START_TIME > max.START_TIME ? current : max,
               d3[0]
             );
-
             var maxTime2 = d4.reduce(
               (max, current) =>
                 current.END_TIME > max.END_TIME ? max : current,
               d4[0]
             );
-
             if (maxTime) this.teritoryData.START_TIME = maxTime.START_TIME;
             if (maxTime2) this.teritoryData.END_TIME = maxTime2.END_TIME;
             this.setDateDisableDateTime();
           } else {
             this.orderDetailsData = [];
-            // this.message.error('Failed To Get Order Details Data', '');
           }
         },
         () => {
-          // this.message.error('Something Went Wrong', '');
         }
       );
-
     this.api
       .getSkillData(0, 0, '', '', ' AND IS_ACTIVE = 1')
       .subscribe((data) => {
@@ -643,14 +571,11 @@ export class OrderdetailsdrawerComponent {
   actionfilter = " AND ACTION_LOG_TYPE IN('O')";
   chatfilter: any = '';
   invoicefilter: any = '';
-
   jobdetaildrawerTitle = '';
   jobdetailsshow = false;
   jobdetailsdata: any;
-
   openjobcarddetails(data: any) {
     this.invoicefilter = ' AND JOB_CARD_ID=' + data.JOB_CARD_ID;
-
     this.jobdetaildrawerTitle = 'Job details of ' + data.JOB_CARD_NO;
     this.api
       .getpendinjobsdataa(1, 1, '', '', ' AND ID=' + data.JOB_CARD_ID)
@@ -670,12 +595,9 @@ export class OrderdetailsdrawerComponent {
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
   }
-  //Drawer Methods
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }
-
-  // shreya
   drawerVisibleCustomers: boolean;
   drawerTitleCustomers: string;
   drawerDataCustomers: customer = new customer();
@@ -683,7 +605,6 @@ export class OrderdetailsdrawerComponent {
   custid = 0;
   view(data: any): void {
     this.custid = data.CUSTOMER_ID;
-
     this.drawerTitleCustomers = `View details of ${data.CUSTOMER_NAME}`;
     this.drawerDataCustomers = Object.assign({}, data);
     this.drawerVisibleCustomers = true;
@@ -694,7 +615,6 @@ export class OrderdetailsdrawerComponent {
   get closeCallbackCustomers() {
     return this.drawerCloseCustomers.bind(this);
   }
-
   MIN_T_END_TIME: any;
   MAX_T_START_TIME: any;
   setDateDisableDateTime() {
@@ -702,19 +622,15 @@ export class OrderdetailsdrawerComponent {
       this.teritoryData.MAX_T_END_TIME < this.teritoryData.END_TIME
         ? this.teritoryData.MAX_T_END_TIME
         : this.teritoryData.END_TIME;
-
     this.MAX_T_START_TIME =
       this.teritoryData.MAX_T_START_TIME > this.teritoryData.START_TIME
         ? this.teritoryData.MAX_T_START_TIME
         : this.teritoryData.START_TIME;
-
     var date: any = new Date();
     const [hours1, minutes1, second] =
       this.MIN_T_END_TIME.split(':').map(Number);
-
     const today = new Date();
-
-    this.currentDate = new Date(today); // Create a copy of the current date
+    this.currentDate = new Date(today); 
     this.currentDate.setMinutes(
       this.currentDate.getMinutes() + this.teritoryData.MAX_DURARTION_MIN
     );
@@ -726,15 +642,13 @@ export class OrderdetailsdrawerComponent {
     );
     var date1: any = new Date(this.currentDate);
     date1.setHours(hours1, minutes1, 0, 0);
-    const differenceInMs: any = date1 - date; // Difference in milliseconds
-    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); //
-
+    const differenceInMs: any = date1 - date; 
+    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); 
     if (differenceInMinutes > 0) {
     } else if (differenceInMinutes < 0) {
       this.currentDate.setDate(this.currentDate.getDate() + 1);
     }
   }
-
   currentDate = new Date();
   currentDate2 = new Date();
   currentHour = new Date().getHours();
@@ -748,23 +662,19 @@ export class OrderdetailsdrawerComponent {
     endHour: number,
     endMinute: number
   ): { hour: number; minute: number } {
-    const totalMinutes = endHour * 60 + endMinute; // Convert end time to total minutes
-    const maxStartMinutes = totalMinutes - this.teritoryData.MAX_DURARTION_MIN; // Subtract service duration
+    const totalMinutes = endHour * 60 + endMinute; 
+    const maxStartMinutes = totalMinutes - this.teritoryData.MAX_DURARTION_MIN;
     return {
       hour: Math.floor(maxStartMinutes / 60),
       minute: maxStartMinutes % 60,
     };
   }
-
   calculateMaxStartTime2(records: any) {
     if (!Array.isArray(records) || records.length === 0) {
       return [];
     }
-
-    // Sort records in descending order and slice top 3
     return records.sort((a, b) => b - a).slice(0, 3);
   }
-
   getDisabledHours = (): number[] => {
     const disabledHours: number[] = [];
     const currentDate = new Date();
@@ -772,17 +682,14 @@ export class OrderdetailsdrawerComponent {
     const { hour: startHour, minute: startMinute } = this.parseTimeString(
       this.MAX_T_START_TIME
     );
-
     const { hour: endHour, minute: endMinute } = this.parseTimeString(
       this.MIN_T_END_TIME
     );
-
     var maxStartHour: any = this.calculateMaxStartTime2([
       currentHour,
       startHour,
       this.currentDate.getHours(),
     ]);
-
     if (this.expectedDate) {
       if (this.expectedDate.toDateString() == currentDate.toDateString()) {
         for (let i = 0; i < 24; i++) {
@@ -798,11 +705,9 @@ export class OrderdetailsdrawerComponent {
         }
       }
     }
-
     this.disabledHours = disabledHours;
     return disabledHours;
   };
-
   getDisabledMinutes = (hour: number): number[] => {
     var disabledMinutes: number[] = [];
     const currentDate = new Date();
@@ -814,7 +719,6 @@ export class OrderdetailsdrawerComponent {
     const { hour: endHour, minute: endMinute } = this.parseTimeString(
       this.MIN_T_END_TIME
     );
-
     if (this.expectedDate) {
       if (this.expectedDate.toDateString() == currentDate.toDateString()) {
         if (hour == startHour) {
@@ -873,22 +777,18 @@ export class OrderdetailsdrawerComponent {
         }
       }
     }
-
     this.disabledminutes = disabledMinutes;
     return disabledMinutes;
   };
-
   parseTimeString(timeString: string): { hour: number; minute: number } {
     const [hour, minute, seconds] = timeString.split(':').map(Number);
     return { hour, minute };
   }
-
   setDate(event) {
     this.expectedDate = event;
     this.time = null;
     this.setDateDisableDateTime();
   }
-
   setTime(value) {
     if (value != undefined && value != null) {
       let minutes = value.getMinutes();
@@ -896,7 +796,6 @@ export class OrderdetailsdrawerComponent {
       value.setMinutes(minutes);
       value.setSeconds(0);
       value.setMilliseconds(0);
-
       if (this.disabledHours.includes(value.getHours())) {
         this.time = undefined;
         this.message.error(
@@ -914,21 +813,17 @@ export class OrderdetailsdrawerComponent {
       this.time = undefined;
     }
   }
-
   showerror = false;
   checkLength() {
     this.showerror = !this.showerror;
   }
-
   formatTime(totalMinutes): string {
     var hoursMatch = Math.floor(totalMinutes / 60);
     var minutesMatch = totalMinutes % 60;
     const hours = hoursMatch ? this.padZero(hoursMatch) : '00';
     const minutes = minutesMatch ? this.padZero(minutesMatch) : '00';
-
     return `${hours}:${minutes}`;
   }
-
   padZero(value: string | number): string {
     return value.toString().padStart(2, '0');
   }
@@ -948,35 +843,26 @@ export class OrderdetailsdrawerComponent {
     );
     return new Date(dateWithTime1);
   }
-
   type = 'a';
   addresses = [];
   terriotrystarttime1: any = null;
   terriotryendtime1: any = null;
-
   isTerritoryExpress = false;
   storeserviceaddress;
   storeBillingaddress;
-
-  //Drawer Methods
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-
   drawerCloseorder(): void {
     this.ordercreateVisible = false;
   }
-
-  //Drawer Methods
   get closeCallbackorder() {
     return this.drawerCloseorder.bind(this);
   }
   showExpress = false;
   specialInstruction = '';
-
   editOrder(data: any): void {
     this.type = 'e';
-
     this.api.getorderdetails(0, 0, '', '', '', data.ID).subscribe((data2) => {
       this.vieworderdata = data2;
       this.vieworderdata.orderData[0]['ADDRESS_ID'] =
@@ -1008,7 +894,6 @@ export class OrderdetailsdrawerComponent {
             });
           } else this.addresses = [];
         });
-
       this.expectedDate = new Date(
         this.vieworderdata.orderData[0]['EXPECTED_DATE_TIME']
       );
@@ -1025,7 +910,6 @@ export class OrderdetailsdrawerComponent {
         (max, current) => (current.START_TIME > max.START_TIME ? current : max),
         d3[0]
       );
-
       var maxTime2 = d4.reduce(
         (max, current) => (current.END_TIME > max.END_TIME ? max : current),
         d4[0]
@@ -1047,19 +931,16 @@ export class OrderdetailsdrawerComponent {
       this.vieworderdata.detailsData.forEach((element, index) => {
         if (element.IS_EXPRESS) this.showExpress = true;
       });
-
       this.MIN_T_END_TIME2 =
         this.vieworderdata.orderData[0].MAX_T_END_TIME <
           this.vieworderdata.orderData[0].END_TIME
           ? this.vieworderdata.orderData[0].MAX_T_END_TIME
           : this.vieworderdata.orderData[0].END_TIME;
-
       this.MAX_T_START_TIME2 =
         this.vieworderdata.orderData[0].MAX_T_START_TIME >
           this.vieworderdata.orderData[0].START_TIME
           ? this.vieworderdata.orderData[0].MAX_T_START_TIME
           : this.vieworderdata.orderData[0].START_TIME;
-
       this.setDateDisableDateTime2(this.vieworderdata.orderData[0]);
       this.api
         .getTeritory(
@@ -1072,7 +953,6 @@ export class OrderdetailsdrawerComponent {
         )
         .subscribe((data3) => {
           this.teritoryData = data3['data'][0];
-
           this.vieworderdata.orderData[0].TERRITORY_NAME =
             this.teritoryData['NAME'];
           this.vieworderdata.orderData[0].MAX_T_START_TIME =
@@ -1099,7 +979,6 @@ export class OrderdetailsdrawerComponent {
             day,
             ...this.teritoryData.END_TIME.split(':').map(Number)
           );
-
           this.terriotrystarttime1 = new Date(dateWithTime);
           this.terriotryendtime1 = new Date(dateWithTime1);
           this.getCategoriesNodes(this.vieworderdata.orderData[0]);
@@ -1107,7 +986,6 @@ export class OrderdetailsdrawerComponent {
       this.ordercreateVisible = true;
     });
   }
-
   ordercreateVisible = false;
   expandedKeys: any = [];
   selectedKeys: any;
@@ -1123,14 +1001,12 @@ export class OrderdetailsdrawerComponent {
         if (data['code'] == 200 && data['data'] != null) {
           this.nodes = data['data'];
           this.expandedKeys = this.getAllKeys(this.nodes);
-
           this.selectedKeys = this.nodes[0]['children'][0]['key'];
           this.getServices(this.selectedKeys, datas);
           this.nodes[0]['children'][0]['selected'] = true;
         } else this.nodes = [];
       });
   }
-
   getAllKeys(data: any): string[] {
     let keys: any = [];
     data.forEach((item) => {
@@ -1141,7 +1017,6 @@ export class OrderdetailsdrawerComponent {
     });
     return keys;
   }
-
   getServices(SUB_CATEGORY_ID, data) {
     if (data.CUSTOMER_TYPE == 'B' && data['IS_SPECIAL_CATALOGUE'] == 1) {
       this.api
@@ -1161,20 +1036,14 @@ export class OrderdetailsdrawerComponent {
         .subscribe((data) => {
           if (data['code'] == 200) {
             this.servicescatalogue = data['data'];
-
             this.serviceCatName = this.servicescatalogue[0]['CATEGORY_NAME'];
-            // this.category= this.servicescatalogue[0].CATEGORY_NAME
             this.serviceSubCatName =
               this.servicescatalogue[0]['SUB_CATEGORY_NAME'];
-
-            // this.serviceCatName = this.servicescatalogue[0].SERVICE_NAME;
-            // this.serviceItem= this.servicescatalogue[0].NAME
             this.servicescatalogue.forEach((element, i) => {
               this.servicescatalogue[i].QUANTITY = 1;
               this.servicescatalogue[i].TOTAL_AMOUNT = Number(
                 this.servicescatalogue[i].KEY_PRICE
               );
-
               this.servicescatalogue[i]['options'] = this.servicescatalogue[i][
                 'options'
               ] = Array.from(
@@ -1209,10 +1078,8 @@ export class OrderdetailsdrawerComponent {
           if (datas['code'] == 200) {
             this.servicescatalogue = datas['data'];
             this.serviceCatName = this.servicescatalogue[0]['CATEGORY_NAME'];
-            // this.category= this.servicescatalogue[0].CATEGORY_NAME
             this.serviceSubCatName =
               this.servicescatalogue[0].SUB_CATEGORY_NAME;
-
             this.servicescatalogue.forEach((element, i) => {
               this.servicescatalogue[i].QUANTITY = 1;
               this.servicescatalogue[i].TOTAL_AMOUNT = Number(
@@ -1229,7 +1096,6 @@ export class OrderdetailsdrawerComponent {
         });
     }
   }
-
   @Input() MIN_T_END_TIME2: any;
   @Input() MAX_T_START_TIME2: any;
   @Input() currentDate5 = new Date();
@@ -1237,10 +1103,8 @@ export class OrderdetailsdrawerComponent {
     var date: any = new Date();
     const [hours1, minutes1, second] =
       this.MIN_T_END_TIME2.split(':').map(Number);
-
     const today = new Date();
-
-    this.currentDate5 = new Date(today); // Create a copy of the current date
+    this.currentDate5 = new Date(today); 
     this.currentDate5.setMinutes(
       this.currentDate5.getMinutes() + data.MAX_DURARTION_MIN
     );
@@ -1252,16 +1116,14 @@ export class OrderdetailsdrawerComponent {
     );
     var date1: any = new Date(this.currentDate5);
     date1.setHours(hours1, minutes1, 0, 0);
-    const differenceInMs: any = date1 - date; // Difference in milliseconds
-    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); //
-
+    const differenceInMs: any = date1 - date; 
+    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); 
     if (differenceInMinutes > 0) {
     } else if (differenceInMinutes < 0) {
       this.currentDate5.setDate(this.currentDate5.getDate() + 1);
     }
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -1279,12 +1141,10 @@ export class OrderdetailsdrawerComponent {
   ImageModalCancel() {
     this.ImageModalVisible = false;
   }
-
   viewImage(imageURL: string): void {
     this.ViewImage = 1;
     this.GetImage(imageURL);
   }
-
   sanitizedLink: any = '';
   ImageModalVisible = false;
   GetImage(link: string) {
@@ -1292,41 +1152,31 @@ export class OrderdetailsdrawerComponent {
     this.sanitizedLink =
       this.sanitizer.bypassSecurityTrustResourceUrl(imagePath);
     this.imageshow = this.sanitizedLink;
-
-    // Display the modal only after setting the image URL
     this.ImageModalVisible = true;
   }
-
   zoomLevel = 1;
   rotation = 0;
-
   zoomIn() {
     this.zoomLevel += 0.1;
   }
-
   zoomOut() {
     if (this.zoomLevel > 0.2) {
       this.zoomLevel -= 0.1;
     }
   }
-
   rotateLeft() {
     this.rotation -= 90;
   }
-
   rotateRight() {
     this.rotation += 90;
   }
-
   reset() {
     this.zoomLevel = 1;
     this.rotation = 0;
   }
-
   parts: any = [];
   getParts() {
     this.parts = [];
-
     this.api
       .getjobCardInventories(
         0,
@@ -1346,12 +1196,8 @@ export class OrderdetailsdrawerComponent {
         () => { }
       );
   }
-
-  // sanjana
-
   vendors: any[] = [];
   vendorsList: any[] = [];
-
   getAllMappedVendors() {
     this.api
       .getAllMappedVendors(

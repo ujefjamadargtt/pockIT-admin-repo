@@ -1,3 +1,234 @@
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
+.header-controls-row {
+  margin-bottom: 16px;
+}
+.header-controls-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-button-container {
+  width: 47px;
+}
+.filter-toggle-btn {
+  width: 100%;
+}
+.search-input-group {
+  min-width: 250px;
+}
+.search-input {
+  width: 100%;
+}
+.search-action-btn {
+  padding: 0 12px;
+}
+.filter-content-row {
+  padding-top: 0px;
+}
+.filter-loading-container {
+  text-align: center;
+  padding: 20px;
+}
+.filter-grid {
+  margin-bottom: 16px;
+}
+.filter-card-col {
+  margin-bottom: 8px;
+}
+.filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.filter-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+  position: relative;
+  min-height: 40px;
+}
+.filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+  flex: 1;
+}
+.truncated-filter-name,
+.full-filter-name {
+  display: inline-block;
+}
+.empty-filter-name {
+  display: inline-block;
+}
+.filter-applied-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.filter-actions-row {
+  margin-top: 7px;
+}
+.filter-actions {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0;
+  flex: 1;
+  min-width: 60px;
+  text-align: center;
+  white-space: nowrap;
+}
+.tag-icon {
+  font-size: 10px !important;
+}
+.no-filters-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  padding: 20px;
+}
+.filter-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.reset-filter-btn {
+  margin-right: 10px;
+}
+.new-filter-btn {
+  margin-right: 10px;
+}
+.ratings-table {
+  margin-top: 16px;
+}
+.manage-ratings-header,
+.overview-header,
+.given-ratings-header,
+.job-created-date-header,
+.job-no-header,
+.order-no-header,
+.assigned-date-header,
+.scheduled-date-header,
+.service-name-header,
+.service-address-header {
+  font-weight: bold;
+  text-align: center;
+}
+.table-row {
+  vertical-align: top;
+}
+.manage-ratings-cell {
+  white-space: nowrap;
+}
+.give-ratings-tag {
+  cursor: pointer;
+  font-weight: 600;
+}
+.overview-cell {
+  white-space: nowrap;
+}
+.overview-tag {
+  cursor: pointer;
+  font-weight: 600;
+}
+.overview-icon {
+  font-size: 15px;
+}
+.given-ratings-cell {
+  text-align: center;
+}
+.rating-display {
+  font-size: 10px;
+  text-align: start;
+  display: inline-block;
+}
+.job-created-date-cell,
+.job-card-no-cell,
+.order-no-cell,
+.assigned-date-cell,
+.scheduled-date-cell {
+  text-align: center;
+  white-space: nowrap;
+}
+.service-name-cell {
+  text-align: left;
+}
+.service-address-cell {
+  text-align: left;
+}
+.truncated-job-card-no,
+.truncated-order-no,
+.truncated-service-name,
+.truncated-service-address {
+  cursor: pointer;
+}
+.full-job-card-no,
+.full-order-no,
+.full-service-name,
+.full-service-address {
+  display: inline-block;
+}
+.empty-value {
+  color: #999;
+}
+.filter-icon {
+  margin-left: 4px;
+  cursor: pointer;
+}
+.date-range-picker {
+  width: 100%;
+}
+.filter-search-input {
+  width: 100%;
+}
+.clear-filter-icon {
+  cursor: pointer;
+  color: #999;
+}
+.search-filter-icon {
+  color: #999;
+}
+.filter-text-display {
+  text-align: center;
+  font-size: 14px;
+  word-wrap: break-word;
+  padding: 8px;
+}
+.modal-question {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+.modal-divider {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #f0f0f0;
+}
+.otp-form-item {
+  display: inline-block;
+  width: -webkit-fill-available;
+  text-align: left;
+  margin-bottom: 7px;
+}
+.otp-form-control {
+  text-align: left;
+}
+.otp-input {
+  width: 100%;
+}
+.modal-cancel-btn,
+.modal-update-btn,
+.modal-verify-btn {
+  margin: 0 4px;
+}

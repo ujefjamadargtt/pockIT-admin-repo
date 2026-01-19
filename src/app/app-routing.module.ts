@@ -10,8 +10,6 @@ import { OrderlistComponent } from "./orderpages/orderlist/orderlist.component";
 import { JobCompletionpopupComponent } from "./job-completionpopup/job-completionpopup.component";
 import { CustomerDashboardComponent } from "./customer-dashboard/customer-dashboard.component";
 import { JobWiseTicketsRaisedreportComponent } from "./job-wise-tickets-raisedreport/job-wise-tickets-raisedreport.component";
-// import { MaindashboardComponent } from "./maindashboard/maindashboard.component";
-// import { SearchpageComponent } from './searchpage/searchpage.component';
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -24,7 +22,6 @@ const routes: Routes = [
   { path: "technicianmap", component: ListTechnicainMapComponent },
   { path: "job-completed", component: JobCompletionpopupComponent },
   { path: "job-details-report", component: JobWiseTicketsRaisedreportComponent },
-  // { path: "search", component: SearchpageComponent },
   {
     path: 'masters',
     loadChildren: () =>
@@ -61,7 +58,6 @@ const routes: Routes = [
   },
   { path: "**", redirectTo: "dashboard" },
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

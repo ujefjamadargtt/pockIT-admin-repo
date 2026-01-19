@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { whatsappconfig } from 'src/app/Pages/Models/whatsappconfig';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-whatsapp-service-config',
   templateUrl: './whatsapp-service-config.component.html',
@@ -38,23 +37,20 @@ export class WhatsappServiceConfigComponent {
   close() {
     this.drawerClose();
   }
-  TIMEOUT_DATE: Date | null = null; // Initialize as null or a valid Date object
-  // Default to the current time
+  TIMEOUT_DATE: Date | null = null; 
   ngOnInit() {
     const timeoutSeconds = this.data.TIMEOUT_SECONDS || 0;
     this.TIMEOUT_DATE = new Date(1970, 0, 1, 0, 0, timeoutSeconds);
   }
-
   onTimeChange(value: Date | null): void {
     if (value && !isNaN(value.getTime())) {
       this.TIMEOUT_DATE = value;
       this.data.TIMEOUT_SECONDS = value.getSeconds();
     } else {
-      this.TIMEOUT_DATE = new Date(1970, 0, 1, 0, 0, 0); // Default to 0 seconds
-      this.data.TIMEOUT_SECONDS = 0; // Reset to default
+      this.TIMEOUT_DATE = new Date(1970, 0, 1, 0, 0, 0); 
+      this.data.TIMEOUT_SECONDS = 0; 
     }
   }
-
   save(addNew: boolean, whatsappDrawer: NgForm): void {
     this.isSpinning = false;
     this.isOk = true;
@@ -78,9 +74,6 @@ export class WhatsappServiceConfigComponent {
         this.data.DEFAULT_COUNTRY_CODE == undefined ||
         this.data.DEFAULT_COUNTRY_CODE.trim() == '') &&
       (this.TIMEOUT_DATE == null || this.TIMEOUT_DATE == undefined)
-      // (this.data.SENDER_PHONE_NUMBER == null ||
-      //   this.data.SENDER_PHONE_NUMBER == undefined ||
-      //   this.data.SENDER_PHONE_NUMBER.trim() == '');
     ) {
       this.isOk = false;
       this.message.error('Please Fill All The Required Fields ', '');
@@ -123,19 +116,12 @@ export class WhatsappServiceConfigComponent {
       this.isOk = false;
       this.message.error('Please provide the Timeout Date.', '');
     }
-
-    // if (this.data.TIMEOUT_SECONDS) {
-    //   const timeoutDate = new Date(this.data.TIMEOUT_SECONDS);
-    //   this.data.TIMEOUT_SECONDS = timeoutDate.getSeconds();
-    // }
     this.data.TIMEOUT_SECONDS = Number(
       this.datePipe.transform(this.TIMEOUT_DATE, 'ss')
     );
     if (this.isOk) {
       this.isSpinning = true;
-
       if (this.data.ID) {
-        // Update existing Email Service Config data
         this.api.updatewhatsappServiceConfigData(this.data).subscribe(
           (response: any) => {
             this.isSpinning = false;
@@ -214,14 +200,12 @@ export class WhatsappServiceConfigComponent {
     }
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; // Updated pattern to include '&'
-    const char = event.key; // Get the key value directly
-
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-\&]*$/; 
+    const char = event.key; 
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
-
   countryCodes = [
     { label: '+91 (India)', value: '+91' },
     { label: '+92 (Pakistan)', value: '+92' },

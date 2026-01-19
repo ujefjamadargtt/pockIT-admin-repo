@@ -3,12 +3,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { emailtemplate } from 'src/app/Pages/Models/emailtemplate';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-email-templates',
   templateUrl: './email-templates.component.html',
@@ -17,7 +15,6 @@ import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
 export class EmailTemplatesComponent {
   isFilterApplied: any = 'default';
   filterClass: string = 'filter-invisible';
-
   formTitle = 'Manage Email Templates';
   pageIndex = 1;
   pageSize = 10;
@@ -31,14 +28,11 @@ export class EmailTemplatesComponent {
   startValue: any;
   endValue: any;
   TYPE = '';
-
   columns1: string[][] = [
     ['TEMPLATE_NAME', 'Name'],
     ['LANGUAGE_CODE_NAME', 'Language'],
     ['TEMPLATE_CATEGORY_NAME', 'Category'],
   ];
-
-  //drawer Variables
   drawerVisible: boolean = false;
   drawerTitle: string = '';
   drawerData: emailtemplate = new emailtemplate();
@@ -61,7 +55,6 @@ export class EmailTemplatesComponent {
   Languagetext = '';
   laguagevisible = false;
   statusFilter: string | undefined = undefined;
-  // Edit Code 3
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -78,7 +71,6 @@ export class EmailTemplatesComponent {
       groups: [],
     },
   ];
-
   onStatusFilterChange(selectedStatus: string) {
     this.statusFilter = selectedStatus;
     this.search(true);
@@ -100,7 +92,6 @@ export class EmailTemplatesComponent {
   reset(): void {
     this.searchText = '';
     this.temptext = '';
-    //this.Shortcodetext = "";
     this.search();
   }
   onKeyup(event: KeyboardEvent): void {
@@ -118,13 +109,6 @@ export class EmailTemplatesComponent {
       this.search();
       this.issubApplied = false;
     }
-    // if (this.Seqtext.length > 0 && event.key === "Enter") {
-    //   this.search();
-    //   this.isSeqApplied = true;
-    // } else if (this.Seqtext.length == 0 && event.key === "Backspace") {
-    //   this.search();
-    //   this.isSeqApplied = false;
-    // }
   }
   templateCategories = [
     { Id: 'Welcome Email', Name: 'Welcome Email' },
@@ -151,12 +135,10 @@ export class EmailTemplatesComponent {
     this.getTemplateCategories1();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; // Decrypt userId or use '0' as fallback
+      : '0'; 
     this.USER_ID = Number(decryptedUserId);
-    // this.loadFilters();
   }
   isTextOverflow = false;
-
   checkOverflow(element: HTMLElement, tooltip: any): void {
     this.isTextOverflow = element.scrollWidth > element.clientWidth;
     if (this.isTextOverflow) {
@@ -188,15 +170,12 @@ export class EmailTemplatesComponent {
       (data) => {
         if (data['code'] == 200) {
           this.templateCategories1 = data['data'];
-
-          //this.loadFilters();
         } else {
           this.templateCategories1 = [];
           this.message.error('Something Went Wrong ...', '');
         }
       },
       (err: HttpErrorResponse) => {
-        // this.loadingRecords = false;
         if (err.status === 0) {
           this.message.error(
             'Network error: Please check your internet connection.',
@@ -208,7 +187,6 @@ export class EmailTemplatesComponent {
       }
     );
   }
-
   templateCategory: any = [];
   getTemplateCategories1() {
     this.api
@@ -228,33 +206,6 @@ export class EmailTemplatesComponent {
   }
   LangugageData: any[] = [];
   isSpinning = false;
-
-  // getallLanguages() {
-  //   this.api.getLanguageData(0, 0, "", "asc", " AND IS_ACTIVE =1").subscribe(
-  //     (data) => {
-  //       if (data["code"] == 200) {
-  //         this.LangugageData = data["data"];
-  //         this.isSpinning = false;
-  //       } else {
-  //         this.LangugageData = [];
-  //         this.message.error("Failed to get Langugae data...", "");
-  //         this.isSpinning = false;
-  //       }
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       this.isSpinning = false;
-  //       if (err.status === 0) {
-  //         this.message.error(
-  //           "Unable to connect. Please check your internet or server connection and try again shortly.",
-  //           ""
-  //         );
-  //       } else {
-  //         this.message.error("Something went wrong.", "");
-  //       }
-  //     }
-  //   );
-  // }
-
   getallLanguages() {
     this.api.getLanguageData(0, 0, '', 'asc', ' AND IS_ACTIVE =1').subscribe(
       (data) => {
@@ -270,7 +221,6 @@ export class EmailTemplatesComponent {
       }
     );
   }
-
   onKeyupS(keys) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
@@ -284,7 +234,6 @@ export class EmailTemplatesComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    // this.search(true);
   }
   sort(params: NzTableQueryParams) {
     this.loadingRecords = true;
@@ -294,22 +243,18 @@ export class EmailTemplatesComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
     this.search();
   }
-
   LANGUAGE_CODE = [
     { ID: 'en', NAME: 'English' },
     { ID: 'en_US', NAME: 'English(US)' },
@@ -321,7 +266,6 @@ export class EmailTemplatesComponent {
     { ID: 'ru', NAME: 'Russian' },
     { ID: 'de', NAME: 'German' },
   ];
-
   columns: string[][] = [
     ['TEMPLATE_NAME', 'TEMPLATE_NAME'],
     ['TEMPLATE_CATEGORY_NAME', 'TEMPLATE_CATEGORY_NAME'],
@@ -329,31 +273,6 @@ export class EmailTemplatesComponent {
   ];
   selectedLanguages: any[] = [];
   search(reset: boolean = false) {
-    // this.loadingRecords = true;
-    // if (reset) {
-    //   this.pageIndex = 1;
-    // }
-
-    // var sort: string;
-    // try {
-    //   sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
-    // } catch (error) {
-    //   sort = '';
-    // }
-    // var likeQuery = '';
-    // if (this.TYPE != '' && this.STATUS != '') {
-    //   this.filterQuery = '?category=' + this.TYPE + '&status=' + this.STATUS;
-    // } else if (this.TYPE != '' && this.STATUS == '') {
-    //   this.filterQuery = '?category=' + this.TYPE;
-    // } else if (this.TYPE == '' && this.STATUS != '') {
-    //   this.filterQuery = '?status=' + this.STATUS;
-    // }
-    // if (this.TYPE == '' && this.STATUS == '' && this.searchText != '') {
-    //   likeQuery = '?name=' + this.searchText;
-    // } else if (this.searchText != '') {
-    //   likeQuery = '&name=' + this.searchText;
-    // }
-
     if (this.searchText.length < 3 && this.searchText.length !== 0) {
       return;
     }
@@ -362,18 +281,14 @@ export class EmailTemplatesComponent {
       this.sortKey = 'id';
       this.sortValue = 'desc';
     }
-
     var sort: string;
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
-
     var likeQuery = '';
     let globalSearchQuery = '';
-
-    // Global Search (using searchText)
     if (this.searchText !== '') {
       globalSearchQuery =
         ' AND (' +
@@ -385,42 +300,25 @@ export class EmailTemplatesComponent {
         ')';
     }
     this.loadingRecords = true;
-
-    // name Filter
     if (this.temptext !== '') {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TEMPLATE_NAME LIKE '%${this.temptext.trim()}%'`;
     }
-
     if (this.selectedCategory.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      // Wrap each value in single quotes for SQL syntax
       const formattedValues = this.selectedCategory
         .map((sep: string) => `'${sep}'`)
         .join(',');
       likeQuery += `TEMPLATE_CATEGORY_ID IN (${formattedValues})`;
     }
-
-    // if (this.selectedLanguages.length > 0) {
-    //   if (likeQuery !== '') {
-    //     likeQuery += ' AND ';
-    //   }
-    //   // Wrap each value in single quotes for SQL syntax
-    //   const formattedValues = this.selectedLanguages
-    //     .map((sep: string) => `'${sep}'`)
-    //     .join(',');
-    //   likeQuery += `LANGUAGE_CODE IN (${formattedValues})`;
-    // }
-
-    // Country Filter
     if (this.selectedLanguages.length > 0) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
-      likeQuery += `LANGUAGE_CODE IN (${this.selectedLanguages.join(',')})`; // Update with actual field name in the DB
+      likeQuery += `LANGUAGE_CODE IN (${this.selectedLanguages.join(',')})`; 
     }
     if (this.templatestatusFilter) {
       if (likeQuery !== '') {
@@ -428,14 +326,12 @@ export class EmailTemplatesComponent {
       }
       likeQuery += `TEMPLATE_STATUS = "${this.templatestatusFilter}"`;
     }
-    // Status Filter
     if (this.statusFilter) {
       if (likeQuery !== '') {
         likeQuery += ' AND ';
       }
       likeQuery += `IS_ACTIVE = ${this.statusFilter}`;
     }
-
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     this.api
       .getEmailTemplates(
@@ -481,31 +377,28 @@ export class EmailTemplatesComponent {
   selectedCategory: any[] = [];
   isCategoryApplied = false;
   onCountryChange(): void {
-    //his.search();
     if (this.selectedCategory?.length) {
       this.search();
-      this.isCategoryApplied = true; // Filter applied if selectedCategories has values
+      this.isCategoryApplied = true; 
     } else {
       this.search();
-      this.isCategoryApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isCategoryApplied = false; 
     }
   }
   isLanguageApplied = false;
   onLanguageChange(): void {
-    //his.search();
     if (this.selectedLanguages?.length) {
       this.search();
-      this.isLanguageApplied = true; // Filter applied if selectedCategories has values
+      this.isLanguageApplied = true; 
     } else {
       this.search();
-      this.isLanguageApplied = false; // Filter reset if selectedCategories is null, undefined, or empty
+      this.isLanguageApplied = false; 
     }
   }
   drawerClose(): void {
     this.search();
     this.drawervisible = false;
   }
-
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
@@ -515,18 +408,11 @@ export class EmailTemplatesComponent {
   back() {
     this.router.navigate(['/masters/menu']);
   }
-  // add(): void {
-  //   this.drawerTitle = 'Add New Template';
-  //   this.drawerData = new emailtemplate();
-  //   //this.loadForms()
-  //   this.drawerVisible = true;
-  // }
   add(): void {
     this.drawerTitle = 'Add New Template';
     this.drawerData = new emailtemplate();
     this.drawervisible = true;
   }
-
   drawerVisible1: boolean = false;
   drawerTitle1;
   drawervisible = false;
@@ -537,18 +423,14 @@ export class EmailTemplatesComponent {
     this.drawerData.TEMPLATE_CATEGORY_ID = Number(data.TEMPLATE_CATEGORY_ID);
     this.drawerData.BODY_VALUES = JSON.parse(this.drawerData.BODY_VALUES);
   }
-
   drawerClose1(): void {
     this.drawerVisible1 = false;
   }
-
   clearFilter() {
     this.filterClass = 'filter-invisible';
-
     this.TYPE = '';
     this.STATUS = '';
     this.filterQuery = '';
-
     this.search();
   }
   applyFilter() {
@@ -557,37 +439,30 @@ export class EmailTemplatesComponent {
     var sort: string;
     this.startValue = this.datePipe.transform(this.startValue, 'yyyy-MM-dd');
     this.endValue = this.datePipe.transform(this.endValue, 'yyyy-MM-dd');
-
     try {
       sort = this.sortValue.startsWith('a') ? 'asc' : 'desc';
     } catch (error) {
       sort = '';
     }
     this.filterQuery = '';
-
     this.search();
     this.filterClass = 'filter-invisible';
   }
-
   showFilter(): void {
     if (this.filterClass === 'filter-visible')
       this.filterClass = 'filter-invisible';
     else this.filterClass = 'filter-visible';
   }
-
   disabledDate1 = (endValue: Date): any => {
     if (this.startValue != null) {
       if (!endValue) {
         return false;
       }
-
       var modulePreviousDate = new Date(this.startValue);
       modulePreviousDate.setDate(modulePreviousDate.getDate() + -1);
-
       return endValue <= new Date(modulePreviousDate);
     }
   };
-
   disabledStartDate = (startValue: Date): boolean => {
     if (!startValue || !this.endValue) {
       return false;
@@ -597,7 +472,6 @@ export class EmailTemplatesComponent {
   onKeypressEvent(reset: any) {
     const element = window.document.getElementById('button');
     if (element != null) element.focus();
-    // this.search(false);
   }
   showMainFilter() {
     if (this.filterClass === 'filter-visible') {
@@ -608,15 +482,11 @@ export class EmailTemplatesComponent {
     }
   }
   TabId: number;
-  USER_ID: number; // Declare USER_ID as a number
-  savedFilters: any; // Define the type of savedFilters if possible
-  currentClientId = 1; // Set the client ID
-  //TabId: number; // Ensure TabId is defin
-
+  USER_ID: number; 
+  savedFilters: any; 
+  currentClientId = 1; 
   isLoading = false;
-
   applyCondition: any;
-
   filterGroups2: any = [
     {
       operator: 'AND',
@@ -633,22 +503,15 @@ export class EmailTemplatesComponent {
       groups: [],
     },
   ];
-
   filterData: any;
-  // currentClientId = 1;
   openfilter() {
     this.drawerTitle = 'Email Template Filter';
     this.filterFields[2]['options'] = this.LanguageData1;
     this.filterFields[1]['options'] = this.templateCategory;
-    // this.applyCondition = "";
     this.drawerFilterVisible = true;
-
-    // Edit code 2
-
     this.editButton = 'N';
     this.FILTER_NAME = '';
     this.EditQueryData = [];
-
     this.filterGroups = [
       {
         operator: 'AND',
@@ -665,7 +528,6 @@ export class EmailTemplatesComponent {
         groups: [],
       },
     ];
-
     this.filterGroups2 = [
       {
         operator: 'AND',
@@ -682,7 +544,6 @@ export class EmailTemplatesComponent {
         groups: [],
       },
     ];
-
     this.filterData = {
       TAB_ID: this.TabId,
       USER_ID: this.commonFunction.decryptdata(this.userId || ''),
@@ -693,40 +554,24 @@ export class EmailTemplatesComponent {
     };
   }
   selectedFilter: string | null = null;
-  // filterQuery = '';
-
-  // applyfilter(item) {
-  //   this.filterClass = 'filter-invisible';
-  //   this.selectedFilter = item.ID;
-  //   this.isfilterapply = true;
-  //   this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
-  //   this.search(true);
-  // }
-
-  isModalVisible = false; // Controls modal visibility
-  selectedQuery: string = ''; // Holds the query to display
-
+  isModalVisible = false; 
+  selectedQuery: string = ''; 
   toggleLiveDemo(query: any): void {
     this.selectedQuery = query.FILTER_QUERY;
     this.isModalVisible = true;
   }
-
   handleCancel(): void {
     this.isModalVisible = false;
     this.selectedQuery = '';
   }
-
-  // Edit Code 1
   EditQueryData = [];
   editButton: any;
   FILTER_NAME: any;
-
   editQuery(data: any) {
     this.filterGroups = JSON.parse(data.FILTER_JSON)[0];
     this.filterGroups2 = JSON.parse(data.FILTER_JSON)[1];
     this.filterFields[2]['options'] = this.LanguageData1;
     this.filterFields[1]['options'] = this.templateCategory;
-
     this.FILTER_NAME = data.FILTER_NAME;
     this.filterData = data;
     this.EditQueryData = data;
@@ -734,17 +579,8 @@ export class EmailTemplatesComponent {
     this.drawerTitle = 'Edit Filter';
     this.drawerFilterVisible = true;
   }
-
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
-
-  // drawerfilterClose() {
-  //   this.drawerFilterVisible = false;
-  //   this.loadFilters();
-  // }
-  // get filtercloseCallback() {
-  //   return this.drawerfilterClose.bind(this);
-  // }
   filterFields: any[] = [
     {
       key: 'TEMPLATE_NAME',
@@ -773,17 +609,6 @@ export class EmailTemplatesComponent {
         { value: 'Ends With', display: 'Ends With' },
       ],
       options: [
-        // { value: 'Welcome Email', display: 'Welcome Email' },
-        // { value: 'Password Reset', display: 'Password Reset' },
-        // {
-        //   value: 'Appointment Confirmation',
-        //   display: 'Appointment Confirmation',
-        // },
-        // { value: 'Order Notification', display: 'Order Notification' },
-        // { value: 'Promotional Email', display: 'Promotional Email' },
-        // { value: 'Follow-up Email', display: 'Follow-up Email' },
-        // { value: 'Feedback Request', display: 'Feedback Request' },
-        // { value: 'Other', display: 'Other' },
       ],
       placeholder: 'Enter Category',
     },
@@ -800,7 +625,6 @@ export class EmailTemplatesComponent {
         { value: 'Ends With', display: 'Ends With' },
       ],
       options: [],
-
       placeholder: 'Enter Language Name',
     },
     {
@@ -830,20 +654,15 @@ export class EmailTemplatesComponent {
         { value: '1', display: 'Active' },
         { value: '0', display: 'Inactive' },
       ],
-
       placeholder: 'Select Status',
     },
   ];
   filterloading: boolean = false;
   whichbutton: any;
-  // filterloading: boolean = false;
-
   updateButton: any;
   updateBtn: any;
-
   loadFilters() {
     this.filterloading = true;
-
     this.api
       .getFilterData1(
         0,
@@ -851,16 +670,12 @@ export class EmailTemplatesComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) // Use USER_ID as a number
+      ) 
       .subscribe(
         (response) => {
           if (response.code === 200) {
             this.filterloading = false;
             this.savedFilters = response.data;
-
-
-
-
             if (this.whichbutton == 'SA' || this.updateBtn == 'UF') {
               if (this.whichbutton == 'SA') {
                 sessionStorage.removeItem('ID');
@@ -875,21 +690,15 @@ export class EmailTemplatesComponent {
                   (element: any) =>
                     Number(element.ID) === Number(sessionStorage.getItem('ID'))
                 );
-
                 this.applyfilter(IDIndex);
               } else {
                 if (this.whichbutton == 'SA') {
                   this.applyfilter(this.savedFilters[0]);
                 }
               }
-
               this.whichbutton = '';
               this.updateBtn = '';
             }
-            // else if (this.whichbutton == 'SA') {
-            //   this.applyfilter(this.savedFilters[0]);
-            // }
-
             this.filterQuery = '';
           } else {
             this.filterloading = false;
@@ -903,7 +712,6 @@ export class EmailTemplatesComponent {
       );
     this.filterQuery = '';
   }
-
   Clearfilter() {
     this.filterClass = 'filter-invisible';
     this.selectedFilter = '';
@@ -912,10 +720,7 @@ export class EmailTemplatesComponent {
     sessionStorage.removeItem('ID');
     this.search();
   }
-
   deleteItem(item: any): void {
-    //  
-
     sessionStorage.removeItem('ID');
     this.isDeleting = true;
     this.filterloading = true;
@@ -931,13 +736,10 @@ export class EmailTemplatesComponent {
           this.isDeleting = false;
           this.isfilterapply = false;
           this.filterClass = 'filter-invisible';
-
           this.loadFilters();
-
           if (this.selectedFilter == item.ID) {
             this.filterQuery = '';
             this.search(true);
-            //  
           } else {
             this.isfilterapply = true;
           }
@@ -960,9 +762,7 @@ export class EmailTemplatesComponent {
       }
     );
   }
-
   applyfilter(item) {
-    //  
     this.filterClass = 'filter-invisible';
     this.selectedFilter = item.ID;
     sessionStorage.setItem('ID', item.ID);
@@ -970,40 +770,31 @@ export class EmailTemplatesComponent {
     this.filterQuery = ' AND (' + item.FILTER_QUERY + ')';
     this.search(true);
   }
-
   drawerfilterClose(buttontype, updateButton): void {
     this.drawerFilterVisible = false;
     this.loadFilters();
-
     this.whichbutton = buttontype;
     this.updateBtn = updateButton;
-
     if (buttontype == 'SA') {
       this.loadFilters();
     } else if (buttontype == 'SC') {
       this.loadFilters();
     }
   }
-
   isDeleting: boolean = false;
-
   oldFilter: any[] = [];
-
   onFilterApplied(obj) {
     this.oldFilter.push({ query: obj.query, name: obj.name });
     this.drawerfilterClose('', '');
   }
-
   get closefilterCallback() {
     return this.drawerfilterClose.bind(this);
   }
-
   convertToQuery(filterGroups: any[]): string {
     const processGroup = (group: any): string => {
       const conditions = group.conditions.map((conditionObj) => {
         const { field, comparator, value } = conditionObj.condition;
-        let processedValue = typeof value === 'string' ? `'${value}'` : value; // Add quotes for strings
-
+        let processedValue = typeof value === 'string' ? `'${value}'` : value; 
         switch (comparator) {
           case 'Contains':
             return `${field} LIKE '%${value}%'`;
@@ -1017,14 +808,10 @@ export class EmailTemplatesComponent {
             return `${field} ${comparator} ${processedValue}`;
         }
       });
-
       const nestedGroups = (group.groups || []).map(processGroup);
-
-      // Combine conditions and nested group queries using the group's operator
       const allClauses = [...conditions, ...nestedGroups];
       return `(${allClauses.join(` ${group.operator} `)})`;
     };
-
-    return filterGroups.map(processGroup).join(' AND '); // Top-level groups are combined with 'AND'
+    return filterGroups.map(processGroup).join(' AND '); 
   }
 }

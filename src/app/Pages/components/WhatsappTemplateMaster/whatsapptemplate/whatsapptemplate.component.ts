@@ -76,7 +76,6 @@ export class WhatsapptemplateComponent {
   baseurl = appkeys.baseUrl;
   dynamicInputValue1;
   Value;
-
   Name: any = [];
   Type: any = [];
   array2;
@@ -119,7 +118,6 @@ export class WhatsapptemplateComponent {
   customtrue: boolean = false;
   addedButtons: any[] = [];
   tempcustom;
-  // isName: boolean = true;
   showtable: boolean = false;
   web = 0;
   copy = 0;
@@ -169,9 +167,7 @@ export class WhatsapptemplateComponent {
     editable: true,
     spellcheck: true,
     height: '80px',
-    //  minHeight: '0',
     maxHeight: 'auto',
-
     width: 'auto',
     minWidth: '0',
     translate: 'yes',
@@ -234,11 +230,9 @@ export class WhatsapptemplateComponent {
     toolbarPosition: 'top',
   };
   ngOnInit() { }
-
   close(): void {
     this.drawerClose();
   }
-
   isValidMobile(mobile) {
     const expression = /^[1-9]\d{9}$/;
     return expression.test(String('' + mobile).toLowerCase());
@@ -247,20 +241,17 @@ export class WhatsapptemplateComponent {
     const expression = /}}[.,]?[a-zA-Z]+/;
     return expression.test(String('' + body).toLowerCase());
   }
-
   hasCurlyBraceContent = false;
-
   checkCurlyBraces(event: Event): void {
     const text = (event.target as HTMLTextAreaElement).value;
-    const regex = /\{\{\d+\}\}/; // Matches patterns like {{1}}, {{123}}, etc.
+    const regex = /\{\{\d+\}\}/; 
     this.hasCurlyBraceContent = regex.test(text);
   }
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s_]*$/; // Updated pattern
+    const allowedPattern = /^[a-zA-Z\s_]*$/; 
     const char = String.fromCharCode(event.keyCode || event.which);
-
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
   save(addNew: boolean): void {
@@ -272,7 +263,6 @@ export class WhatsapptemplateComponent {
       this.matches1 = this.text.match(pattern);
     }
     var isOk = true;
-
     if (
       (this.data.NAME == undefined ||
         this.data.NAME == null ||
@@ -396,18 +386,13 @@ export class WhatsapptemplateComponent {
     if (isOk) {
       for (const char of this.data.NAME) {
         if (char === ' ') {
-          // 
-
           this.NAME += '_';
         } else if (char === char.toUpperCase()) {
           this.NAME += char.toLowerCase();
-          // 
         } else {
           this.NAME += char;
-          // 
         }
       }
-
       this.NAME1 = this.data.BODY_TEXT.replace(/&#34/g, '"')
         .replace(/<span>/g, '')
         .replace(/<\/span>/g, '')
@@ -429,7 +414,6 @@ export class WhatsapptemplateComponent {
             text: familyDetail.custom,
           });
         }
-
         if (familyDetail.Type === 'URL') {
           this.array1.push({
             type: 'URL',
@@ -438,7 +422,6 @@ export class WhatsapptemplateComponent {
             example: [familyDetail.tempinput],
           });
         }
-
         if (familyDetail.Type === 'PHONE_NUMBER') {
           this.array1.push({
             type: 'PHONE_NUMBER',
@@ -446,7 +429,6 @@ export class WhatsapptemplateComponent {
             phone_number: '+910' + familyDetail.mobile,
           });
         }
-
         if (familyDetail.Type === 'COPY_CODE') {
           this.array1.push({
             type: 'COPY_CODE',
@@ -458,9 +440,7 @@ export class WhatsapptemplateComponent {
       this.array1 = this.array1.filter(
         (item) => item.text !== undefined && item.text !== null
       );
-
       this.isSpinning = true;
-
       const filteredArray = this.array1.filter((item) => {
         for (var i = 0; i < this.FamilyDetails.length; i++) {
           if (item.type === this.FamilyDetails[i].Type) {
@@ -469,12 +449,6 @@ export class WhatsapptemplateComponent {
         }
         return false;
       });
-      // 
-      // 
-      // 
-      // 
-      // 
-
       var datas = {
         WP_CLIENT_ID: this.userId,
         NAME: this.NAME,
@@ -492,7 +466,6 @@ export class WhatsapptemplateComponent {
           this.data.HEADER_TEXT !== null && this.data.HEADER_TEXT !== undefined
             ? this.data.HEADER_TEXT.toString()
             : '',
-
         HEADER_VALUES: this.data.HEADER_VALUES
           ? this.data.HEADER_VALUES
           : this.IMAGE
@@ -502,15 +475,12 @@ export class WhatsapptemplateComponent {
               : this.mediaIdDoc
                 ? [this.mediaIdDoc]
                 : null,
-
         BODY_TEXT: this.NAME1.toString(),
         BODY_VALUES: this.data.BODY_VALUES,
-
         FOOTER_TEXT:
           this.data.FOOTER_TEXT !== null && this.data.FOOTER_TEXT !== undefined
             ? this.data.FOOTER_TEXT.toString()
             : '',
-
         BUTTON_VALUES: JSON.stringify(this.addedButtons),
         CREATED_DATETIME: this.datePipe.transform(
           new Date(),
@@ -522,20 +492,14 @@ export class WhatsapptemplateComponent {
         ),
         STATUS: 'S',
       };
-
-
       datas.BODY_VALUES = Array.isArray(this.data.BODY_VALUES)
         ? JSON.stringify(this.data.BODY_VALUES)
         : JSON.stringify([this.data.BODY_VALUES]);
-
       this.api.createTemplate(datas).subscribe(
         (successCode) => {
-
-
           if (successCode['code'] == 300) {
             this.message.info('Template name already exists.', '');
             this.isSpinning = false;
-            // this.isName = false;\
             this.data.NAME = '';
           } else if (successCode['code'] == 200) {
             this.message.success('Template created successfully', '');
@@ -559,18 +523,15 @@ export class WhatsapptemplateComponent {
       );
     }
   }
-
   onFileSelected(event: any) {
     this.fileSizeimg = Number(
       parseFloat(String(event.target.files[0].size / 1024 / 1024)).toFixed(2)
     );
-
     if (this.fileSizeimg < 5) {
       this.visiblemedia = true;
       const reader = new FileReader();
       const [file] = event.target.files;
       reader.readAsDataURL(file);
-
       reader.onload = () => {
         this.image = reader.result as string;
       };
@@ -587,7 +548,6 @@ export class WhatsapptemplateComponent {
         }
       }
       this.IMAGE = url;
-
       this.isSpinning = true;
       this.api
         .onImageUpload(this.userId, 'WhatsAppTemplateImages', this.fileURL, url)
@@ -613,17 +573,14 @@ export class WhatsapptemplateComponent {
       this.IMAGE = '';
     }
   }
-
   checkInput() {
     if (this.data.HEADER_TEXT == '' || this.data.HEADER_TEXT == undefined) {
       this.showDynamicInput = false;
     }
-
     const regex = /}}(?!)/;
     if (this.data.HEADER_TEXT.includes('}}')) {
       this.showDynamicInput = true;
     }
-
     if (this.data.HEADER_TEXT.match(regex)) {
       this.i++;
     } else {
@@ -632,7 +589,6 @@ export class WhatsapptemplateComponent {
     this.check();
     this.Date = new Date();
   }
-
   check() {
     const pattern = /{{\d+}/g;
     const matches = this.data.HEADER_TEXT.match(pattern);
@@ -653,11 +609,9 @@ export class WhatsapptemplateComponent {
       this.inputValue = this.data.HEADER_TEXT;
     }
   }
-
   check1() {
     const pattern = /{{\d+}/g;
     const matches = this.data.BODY_TEXT.match(pattern);
-
     if (matches && this.data.BODY_VALUES != undefined) {
       for (let i = 0; i < matches.length; i++) {
         this.inputBody = this.inputBody.replace(
@@ -675,7 +629,6 @@ export class WhatsapptemplateComponent {
       this.inputBody = this.data.BODY_TEXT;
     }
   }
-
   checkInput1() {
     if (this.data.BODY_TEXT == '' || this.data.BODY_TEXT == undefined) {
       this.showDynamicInput1 = false;
@@ -684,7 +637,6 @@ export class WhatsapptemplateComponent {
       this.showDynamicInput1 = true;
     }
     const regex = /}}(?!)/;
-
     if (this.data.BODY_TEXT.match(regex)) {
       this.i++;
     } else {
@@ -693,7 +645,6 @@ export class WhatsapptemplateComponent {
     this.check1();
     this.Date = new Date();
   }
-
   checkInputURL1() {
     if (this.WEBSITE_URL == '' || this.WEBSITE_URL == undefined) {
       this.showDynamicInputURL = false;
@@ -702,7 +653,6 @@ export class WhatsapptemplateComponent {
       this.showDynamicInputURL = true;
     }
     const regex = /}}(?!)/;
-
     if (this.WEBSITE_URL.match(regex)) {
       this.i++;
     } else {
@@ -710,7 +660,6 @@ export class WhatsapptemplateComponent {
     }
     this.checkInputURL();
   }
-
   checkInputURL() {
     const pattern = /{{\d+}/g;
     const matches = this.WEBSITE_URL.match(pattern);
@@ -727,13 +676,11 @@ export class WhatsapptemplateComponent {
       }
     }
   }
-
   clearbuttons() {
     this.visiblebuttonn = false;
     this.websitebuttontext = null;
     this.data.BUTTON_VALUES = '';
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -741,13 +688,10 @@ export class WhatsapptemplateComponent {
     }
     return true;
   }
-
   onFileSelected1(event: any) {
     this.fileSizevid = Number(
       parseFloat(String(event.target.files[0].size / 1024 / 1024)).toFixed(2)
     );
-
-    // //
     if (this.fileSizevid < 16) {
       this.visiblemedia = true;
       this.fileDataIMAGE_URL = <File>event.target.files[0];
@@ -758,13 +702,9 @@ export class WhatsapptemplateComponent {
         reader.onload = () => {
           this.video = reader.result as string;
         };
-
         var number = Math.floor(100000 + Math.random() * 900000);
-
         var fileExt = this.fileDataIMAGE_URL.name.split('.').pop();
-
         var d = this.datePipe.transform(new Date(), 'yyyyMMdd');
-
         var url = '';
         url = this.fileDataIMAGE_URL.name;
         this.isSpinning = true;
@@ -787,7 +727,6 @@ export class WhatsapptemplateComponent {
                 this.message.error('Failed to upload the video', '');
             };
           });
-
         this.event = url;
         this.VIDEO_URL = this.baseurl + 'upload/WhatsAppTemplateImages' + url;
       }
@@ -797,14 +736,12 @@ export class WhatsapptemplateComponent {
       this.VIDEO_URL = '';
     }
   }
-
   onFileSelected3(event) {
     this.fileURLPDF = <File>event.target.files[0];
     this.upload = event.target.files[0].name;
     this.DOCUMENT = this.imgUrl + 'WhatsAppTemplateImages/' + this.upload;
     let typeArry = event.target.files[0].name.split('.');
     this.TYPE = event.target.files[0].name.split('.')[typeArry.length - 1];
-
     this.fileSizedoc = Number(
       parseFloat(String(event.target.files[0].size / 1024 / 1024)).toFixed(2)
     );
@@ -835,43 +772,33 @@ export class WhatsapptemplateComponent {
       );
     }
   }
-
   clearbuttons3() {
     this.visiblebuttonn = false;
     this.BUTTON12 = null;
     this.code = '';
-    // this.data.BUTTON_VALUES = null;
   }
-
   clearbuttons1() {
     this.visiblebuttonn = false;
     this.BUTTON12 = null;
     this.code = '';
-
-    // this.data.BUTTON_VALUES = null;
     this.array = this.array.filter(
       (item) => item.text !== undefined && item.text !== null
     );
   }
-
   clearcustom() {
     this.data.BUTTON_VALUES = null;
     this.tempcustom = '';
     this.visiblebuttonn = false;
   }
-
   clearbuttons2() {
     this.visiblebuttonn = false;
     this.BUTTON1 = null;
     this.mobile = null;
-    // this.data.BUTTON_VALUES = null;
   }
-
   showfile() {
     const fileUrl = this.imgUrl + 'WhatsAppTemplateImages/' + this.upload;
     window.open(fileUrl);
   }
-
   offercode() {
     this.Date = new Date();
     if (this.data.BUTTON_VALUES == 'COPY_CODE') {
@@ -882,13 +809,10 @@ export class WhatsapptemplateComponent {
     } else {
       this.prefixValue = '';
     }
-
     this.mobile = '';
     this.code = '';
     this.WEBSITE_URL = '';
     this.custom = '';
-
-
     if (this.phone == 1) {
       this.disablephone = true;
     }
@@ -902,7 +826,6 @@ export class WhatsapptemplateComponent {
       this.disablecustom = true;
     }
   }
-
   addFamilyDetails() {
     if (this.FamilyDetails.length == 0) {
       this.FamilyDetails = [
@@ -941,21 +864,18 @@ export class WhatsapptemplateComponent {
       ];
       this.i++;
     }
-
     this.Type = '';
     this.Name = '';
     this.Value = '';
     this.mobile = '';
     this.code = '';
     this.WEBSITE_URL = '';
-    // this.prefixValue = '';
     this.websitebuttontext = '';
     this.custom = '';
     this.BUTTON1 = '';
     this.BUTTON12 = '';
     this.tempinput = '';
   }
-
   addData1() {
     if (
       this.data.BUTTON_VALUES == '' ||
@@ -964,11 +884,9 @@ export class WhatsapptemplateComponent {
     ) {
       this.message.error('Please Select Button', '');
     }
-
     const hasCopyCode = this.FamilyDetails.some(
       (detail) => detail.Type === 'COPY_CODE'
     );
-
     if (this.data.BUTTON_VALUES === 'COPY_CODE' && hasCopyCode) {
       this.message.error(
         'A button with Type "COPY_CODE" already exists,You can Add Only 1 Button Maximum',
@@ -976,11 +894,9 @@ export class WhatsapptemplateComponent {
       );
       return;
     }
-
     const urlCount = this.FamilyDetails.filter(
       (detail) => detail.Type === 'URL'
     ).length;
-
     if (this.data.BUTTON_VALUES === 'URL' && urlCount >= 2) {
       this.message.error(
         'You can add a maximum of two buttons with Type "URL".',
@@ -988,11 +904,9 @@ export class WhatsapptemplateComponent {
       );
       return;
     }
-
     const hasPhoneNumber = this.FamilyDetails.some(
       (detail) => detail.Type === 'PHONE_NUMBER'
     );
-
     if (this.data.BUTTON_VALUES === 'PHONE_NUMBER' && hasPhoneNumber) {
       this.message.error(
         'A button with Type "PHONE_NUMBER" already exists, You can Add Only 1 Button Maximum',
@@ -1000,7 +914,6 @@ export class WhatsapptemplateComponent {
       );
       return;
     }
-
     this.array = [
       {
         type: 'QUICK_REPLY',
@@ -1027,7 +940,6 @@ export class WhatsapptemplateComponent {
       this.matches2 = this.WEBSITE_URL.match(pattern);
     }
     var isOk = true;
-
     if (this.data.BUTTON_VALUES == '') {
       this.message.error('Please select button and add details ', '');
       isOk = false;
@@ -1094,7 +1006,6 @@ export class WhatsapptemplateComponent {
       this.message.error('Please enter name for custom button', '');
       isOk = false;
     }
-
     if (isOk) {
       if (this.WEBSITE_URL != '') {
         this.webtrue = true;
@@ -1108,25 +1019,11 @@ export class WhatsapptemplateComponent {
         this.offertrue = true;
         this.copy++;
       }
-      //
       if (this.custom != '') {
         this.tempcustom = this.custom;
         this.quick++;
       }
       this.showtable = true;
-      // const newButton = {
-      //   type: this.data.BUTTON_VALUES,
-      //   buttonText:
-      //     this.data.BUTTON_VALUES === 'PHONE_NUMBER'
-      //       ? this.BUTTON1
-      //       : this.data.BUTTON_VALUES === 'COPY_CODE'
-      //       ? this.BUTTON12
-      //       : this.data.BUTTON_VALUES === 'URL'
-      //       ? this.websitebuttontext
-      //       : this.custom,
-      // };
-      // this.addedButtons.push(newButton);
-
       const newButton = {
         type: this.data.BUTTON_VALUES,
         buttonText:
@@ -1139,11 +1036,6 @@ export class WhatsapptemplateComponent {
                 : this.custom,
       };
       this.addedButtons.push(newButton);
-
-      // const arrayAsString = JSON.stringify(this.addedButtons);
-      // 
-
-      //
       if (this.temp == 10) {
         this.visiblebutton = true;
         this.message.info('You have reached  limit of adding buttons ', '');
@@ -1154,7 +1046,6 @@ export class WhatsapptemplateComponent {
         this.visiblebuttonn = false;
         this.message.success('Button added successfully ', '');
       }
-
       if (this.index1 > -1) {
         this.Type[this.index1]['Type'] = this.Type;
         (this.Name[this.index1]['Name'] = this.custom ? this.custom : ''),
@@ -1168,15 +1059,11 @@ export class WhatsapptemplateComponent {
         this.BUTTON12[this.index1]['BUTTON12'] = this.BUTTON12;
         this.custom[this.index1]['custom'] = this.custom;
         this.tempinput[this.index1]['tempinput'] = this.tempinput;
-
         this.index1 = -1;
       } else {
         this.addFamilyDetails();
       }
-
-      //this.data.BUTTON_VALUES = null;
       this.Type = '';
-
       this.Value = '';
       this.mobile = '';
       this.code = '';
@@ -1188,7 +1075,6 @@ export class WhatsapptemplateComponent {
       this.URL_SAMPLE = [];
     }
   }
-
   clearFields() {
     this.Type = '';
     this.Value = '';
@@ -1201,81 +1087,10 @@ export class WhatsapptemplateComponent {
     this.tempinput = '';
     this.URL_SAMPLE = [];
   }
-
-  // clear(i) {
-  //   this.temp--;
-
-  //   if (this.temp == 2) {
-  //     this.visiblebutton = false;
-  //   }
-  //   if (this.temp == 3) {
-  //     this.visiblebutton = false;
-  //   }
-  //   if (i >= 0 && i < this.FamilyDetails.length) {
-  //     this.removedElement = this.FamilyDetails[i];
-  //     this.removedElements.push(this.removedElement);
-  //     this.FamilyDetails.splice(i, 1);
-  //     this.addedButtons.splice(i, 1);
-  //   }
-  //   this.addedButtons.forEach((item) => {
-  //     
-  //     for (var j = 0; j < this.removedElements.length; j++) {
-  //       
-  //       if (item.type === this.removedElements[j].Type) {
-  //         if (item.type === 'QUICK_REPLY') {
-  //           this.tempcustom = null;
-  //           this.quick--;
-  //         } else if (item.type === 'URL') {
-  //           this.websitebuttontext = null;
-  //           this.web--;
-  //         } else if (item.type === 'PHONE_NUMBER') {
-  //           this.BUTTON1 = null;
-  //           this.phone--;
-  //         } else if (item.type === 'COPY_CODE') {
-  //           this.BUTTON12 = null;
-  //           this.copy--;
-  //         }
-  //       }
-  //     }
-  //   });
-  //   this.array.forEach((item) => {
-  //     for (var j = 0; j < this.removedElements.length; j++) {
-  //       if (item.type === this.removedElements[j].Type) {
-  //         if (item.type === 'QUICK_REPLY') {
-  //           this.tempcustom = null;
-  //           this.quick--;
-  //         } else if (item.type === 'URL') {
-  //           this.websitebuttontext = null;
-  //           this.web--;
-  //         } else if (item.type === 'PHONE_NUMBER') {
-  //           this.BUTTON1 = null;
-  //           this.phone--;
-  //         } else if (item.type === 'COPY_CODE') {
-  //           this.BUTTON12 = null;
-  //           this.copy--;
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   this.message.success('Button Removed Successfully ', '');
-  //   this.showtable = false;
-  //   if (this.temp == 0) {
-  //     this.showtable = false;
-  //   }
-  //   
-  // }
-
   clear(i: number): void {
-    // Ensure the index is valid before proceeding
     if (i >= 0 && i < this.FamilyDetails.length) {
-      // Remove the selected button from FamilyDetails
       const removedElement = this.FamilyDetails.splice(i, 1)[0];
-
-      // Also remove the corresponding button from addedButtons
       this.addedButtons.splice(i, 1);
-
-      // Handle button type-specific logic
       if (removedElement.Type === 'QUICK_REPLY') {
         this.tempcustom = null;
         this.quick--;
@@ -1289,35 +1104,26 @@ export class WhatsapptemplateComponent {
         this.BUTTON12 = null;
         this.copy--;
       }
-
-      // Notify user of successful removal
       this.message.success('Button removed successfully', '');
     }
-
-    // Check the number of remaining buttons to update visibility
     this.showtable = this.FamilyDetails.length > 0;
   }
-
   cancel() { }
-
   clearimg() {
     this.fileURL = null;
     this.visiblemedia = false;
     this.IMAGE = '';
   }
-
   clearvid() {
     this.fileDataIMAGE_URL = null;
     this.visiblemedia = false;
     this.VIDEO_URL = '';
   }
-
   cleardoc() {
     this.fileURLPDF = null;
     this.visiblemedia = false;
     this.DOCUMENT = '';
   }
-
   focus(inputElement: HTMLInputElement) {
     inputElement.addEventListener('paste', (event: ClipboardEvent) => {
       event.preventDefault();
@@ -1325,46 +1131,9 @@ export class WhatsapptemplateComponent {
       document.execCommand('insertText', false, text);
     });
   }
-
   onFocus(event: FocusEvent) {
-    // Call your `focus` function here
     this.focus(event.target as HTMLInputElement);
   }
-
-  // convertB() {
-  //   // Wrap the text in <strong> tags if not already present
-  //   if (this.data.BODY_TEXT === undefined) {
-  //     this.data.BODY_TEXT = '<strong></strong>';
-  //   }
-
-  //   // Ensure that new input is always inside the <strong> tags
-  //   const bodyTextWithoutTags = this.data.BODY_TEXT.replace(/<\/?strong>/g, ''); // Remove existing tags
-  //   this.data.BODY_TEXT = `<strong>${bodyTextWithoutTags}</strong>`;
-
-  //   this.checkInput1();
-  // }
-
-  // convertI() {
-  //   // this.data.BODY_TEXT += '_';
-  //   // this.italici++;
-  //   // if (this.italici % 2 === 0) {
-  //   //   this.data.BODY_TEXT = this.data.BODY_TEXT.replace(/\_/g, '<em>');
-  //   // } else {
-  //   //   this.data.BODY_TEXT = this.data.BODY_TEXT.replace(/\_/g, '</em>');
-  //   // }
-  //   // this.checkInput1();
-
-  //   // Wrap the text in <em> tags if not already present
-  //   if (this.data.BODY_TEXT === undefined) {
-  //     this.data.BODY_TEXT = '<em></em>';
-  //   }
-
-  //   // Ensure that new input is always inside the <em> tags
-  //   const bodyTextWithoutTags = this.data.BODY_TEXT.replace(/<\/?em>/g, ''); // Remove existing tags
-  //   this.data.BODY_TEXT = `<em>${bodyTextWithoutTags}</em>`;
-
-  //   this.checkInput1();
-  // }
   convertB() {
     const textArea = document.getElementById(
       'messages2'
@@ -1373,31 +1142,24 @@ export class WhatsapptemplateComponent {
       textArea.selectionStart,
       textArea.selectionEnd
     );
-
     if (selectedText) {
-      // Wrap the selected text in <strong> tags
       const newText =
         textArea.value.slice(0, textArea.selectionStart) +
         `<strong>${selectedText}</strong>` +
         textArea.value.slice(textArea.selectionEnd);
-
       this.data.BODY_TEXT = newText;
     } else {
-      // If no text is selected, apply <strong> around the whole body content
       if (this.data.BODY_TEXT === undefined) {
         this.data.BODY_TEXT = '<strong></strong>';
       }
-
       const bodyTextWithoutTags = this.data.BODY_TEXT.replace(
         /<\/?strong>/g,
         ''
-      ); // Remove existing tags
+      ); 
       this.data.BODY_TEXT = `<strong>${bodyTextWithoutTags}</strong>`;
     }
-
     this.checkInput1();
   }
-
   convertI() {
     const textArea = document.getElementById(
       'messages2'
@@ -1406,34 +1168,25 @@ export class WhatsapptemplateComponent {
       textArea.selectionStart,
       textArea.selectionEnd
     );
-
     if (selectedText) {
-      // Wrap the selected text in <em> tags
       const newText =
         textArea.value.slice(0, textArea.selectionStart) +
         `<em>${selectedText}</em>` +
         textArea.value.slice(textArea.selectionEnd);
-
       this.data.BODY_TEXT = newText;
     } else {
-      // If no text is selected, apply <em> around the whole body content
       if (this.data.BODY_TEXT === undefined) {
         this.data.BODY_TEXT = '<em></em>';
       }
-
-      const bodyTextWithoutTags = this.data.BODY_TEXT.replace(/<\/?em>/g, ''); // Remove existing tags
+      const bodyTextWithoutTags = this.data.BODY_TEXT.replace(/<\/?em>/g, ''); 
       this.data.BODY_TEXT = `<em>${bodyTextWithoutTags}</em>`;
     }
-
     this.checkInput1();
   }
   onEmojiSelect(event: any) {
-    // Ensure BODY_TEXT is initialized
     if (!this.data || typeof this.data.BODY_TEXT !== 'string') {
       this.data.BODY_TEXT = '';
     }
-
-    // Extract emoji codes from BODY_TEXT
     const emojiCodePattern = /&#(x[\dA-Fa-f]+|\d+);/g;
     const emojiCodes = this.data.BODY_TEXT.match(emojiCodePattern);
     if (emojiCodes) {
@@ -1453,28 +1206,21 @@ export class WhatsapptemplateComponent {
         }
       });
     }
-
-    // Handle emoji insertion
     const ev = Object.assign({}, event);
     const sub1 = this.data.BODY_TEXT.substring(0, this.cursorPosition || 0);
     const sub2 = this.data.BODY_TEXT.substring(
       this.cursorPosition || 0,
       this.data.BODY_TEXT.length
     );
-
     this.data.BODY_TEXT = sub1 + `${ev.emoji.native}` + sub2;
     this.cursorPosition = (sub1 + `${ev.emoji.native}`).length;
-
-    // Call additional logic
     this.checkInput1();
   }
-
   keyup(event: any): void {
     const textarea: any = document.getElementById('messages2');
     const cursorPosition = textarea.selectionStart;
     this.cursorPosition = cursorPosition;
   }
-
   onEditorMouseUp(event: MouseEvent): void {
     const textarea: any = document.getElementById('messages2');
     const cursorPosition = textarea.selectionStart;

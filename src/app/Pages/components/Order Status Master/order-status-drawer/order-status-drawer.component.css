@@ -1,7 +1,56 @@
-nz-form-item  {
+nz-form-item {
   display: inline-block;
   margin-bottom: 5px;
   width: -webkit-fill-available;
   padding: 0px 5px;
 }
-
+.form-counter-error {
+  color: red;
+  font-size: 10px;
+}
+.textarea-full-width {
+  width: 100%;
+}
+.upload-icon-btn {
+  height: 28px;
+  padding: 0 7px;
+  font-size: 12px;
+}
+.hidden-file-input {
+  display: none !important;
+}
+.icon-preview-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.view-icon-link {
+  color: blue;
+  margin-right: 9px;
+}
+.icon-delete-wrapper {
+  cursor: pointer;
+}
+.with-left-gap {
+  margin-left: 10px;
+}
+.footer-cancel-btn {
+  margin-right: 12px;
+}
+.footer-menu-item {
+  border-radius: 4px;
+  color: white !important;
+}
+.footer-menu-link {
+  color: white !important;
+}
+.image-preview-container {
+  align-items: center;
+}
+.image-preview-img {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600px;
+  max-height: 400px;
+}

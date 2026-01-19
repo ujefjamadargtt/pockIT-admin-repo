@@ -3,26 +3,13 @@ table {
     border-collapse: collapse;
     width: 100%;
 }
-
-/* td,
-th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 5px;
-    text-align: center !important;
-    vertical-align: middle !important;
-} */
-
-/* tr:nth-child(even) {
-    background-color: #dddddd;
-} */
-.vv{
+.vv {
     margin-top: 2%;
     position: relative;
     display: inline-block;
     height: 34px;
     padding: 4px 11px;
-    color: rgba(0,0,0,.65);
+    color: rgba(0, 0, 0, .65);
     font-size: 14px;
     line-height: 32px;
     background-color: #fff;
@@ -31,12 +18,10 @@ th {
     border-radius: 4px;
     transition: all .3s;
 }
-
 .container {
     height: 100px;
     position: relative;
 }
-
 .vertical-center {
     margin: 0;
     position: relative;
@@ -44,7 +29,140 @@ th {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
-
 :host::ng-deep .ant-card-body {
     padding: 0px;
-  }
+}
+.form-back-arrow {
+    font-weight: bold;
+    cursor: pointer;
+}
+.header-action-flex-container {
+    display: flex;
+    justify-content: flex-end;
+}
+.filter-btn-fixed-width {
+    width: 47px;
+}
+.th-bold-center-ticket {
+    font-weight: bold;
+    text-align: center;
+}
+.th-center-date {
+    text-align: center;
+}
+.th-bold-center-createdby {
+    font-weight: bold;
+    text-align: center;
+}
+.th-bold-center-department {
+    font-weight: bold;
+    text-align: center;
+}
+.th-bold-center-mobile {
+    font-weight: bold;
+    text-align: center;
+}
+.th-bold-center-email {
+    font-weight: bold;
+    text-align: center;
+}
+.th-bold-center-question {
+    font-weight: bold;
+    text-align: center;
+}
+.td-text-left-important {
+    text-align: left !important;
+}
+.ticket-view-tag-pointer {
+    cursor: pointer;
+}
+.icon-eye-size {
+    font-size: 15px;
+}
+.range-picker-full-width {
+    width: 100%;
+}
+.filter-no-data-text {
+    text-align: center;
+    color: red;
+    font-weight: bold
+}
+.filter-footer-btn-spacing {
+    margin-right: 10px;
+    justify-content: end;
+}
+.saved-filter-item-spacing {
+    margin-bottom: 8px
+}
+.saved-filter-card-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+}
+.saved-filter-selected-icon{
+     position: absolute;
+                            top: 5px;
+                            right: 5px;
+                            font-size: 15px;
+                            cursor: pointer;
+}
+.saved-filter-action-row{
+    margin-top: 7px
+}
+.saved-filter-action-container{
+    display: flex; justify-content: space-between
+}
+.saved-filter-title {
+    color: black;
+    text-align: center;
+    font-size: 25px;
+    white-space: nowrap;
+}
+.saved-filter-card-box {
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    padding: 5px 10px;
+    border-radius: 7px;
+    align-items: center;
+}
+.filter-loading-center {
+    text-align: center
+}
+.filter-row-padding-reset {
+    padding-top: 0px
+}
+.filter-footer-action-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: left;
+    margin-top: 10px;
+}
+.saved-filter-action-container {
+  display: flex;
+  justify-content: space-between;
+}
+.saved-filter-action-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.saved-filter-action-icon {
+  font-size: 10px !important;
+}
+.saved-filter-no-margin {
+  margin-right: 0px;
+}
+.filter-no-data-text {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.filter-footer-action-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.filter-footer-btn-spacing {
+  margin-right: 10px;
+}

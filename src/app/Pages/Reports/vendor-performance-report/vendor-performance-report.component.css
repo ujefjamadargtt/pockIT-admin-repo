@@ -1,3 +1,105 @@
 :host::ng-deep .ant-card-body {
   padding: 0px;
 }
+.cn-back-bold {
+  font-weight: bold;
+  cursor: pointer;
+}
+.cn-header-flex {
+  display: flex;
+  justify-content: flex-end;
+}
+.cn-excel-white {
+  color: white;
+}
+.cn-filter-width {
+  width: 47px;
+}
+.cn-filter-row {
+  padding-top: 0px;
+}
+.cn-loading-center {
+  text-align: center;
+}
+.cn-filter-margin {
+  margin-bottom: 8px;
+}
+.cn-filter-card {
+  align-items: center;
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-items: center;
+}
+.cn-filter-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.cn-filter-name {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.cn-check-pos {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.cn-filter-actions {
+  margin-top: 7px;
+}
+.cn-tag-container {
+  display: flex;
+  justify-content: space-between;
+}
+.cn-edit-tag,
+.cn-apply-tag,
+.cn-clear-tag,
+.cn-delete-tag,
+.cn-view-tag {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.cn-tag-icon-small {
+  font-size: 10px !important;
+}
+.cn-view-tag {
+  margin-right: 0px;
+}
+.cn-buttons-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.cn-reset-btn,
+.cn-new-btn {
+  margin-right: 10px;
+}
+.cn-table-container {
+  margin-top: 10px;
+}
+.cn-name-header,
+.cn-revenue-header,
+.cn-job-header {
+  text-align: center;
+}
+.cn-name-cell {
+  white-space: pre-line;
+}
+.cn-center-cell {
+  text-align: center;
+}
+.cn-modal-title {
+  text-align: center;
+}
+.cn-no-data {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}

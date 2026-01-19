@@ -1,6 +1,28 @@
-/* .filter-box nz-form-item {
-    display: inline-block;
-    margin-bottom: 5px;
-    width: -webkit-fill-available;
-    padding: 0px 10px;
-  } */
+.header-back-arrow-bold {
+  font-weight: bold;
+  cursor: pointer;
+}
+.header-actions-flex-end-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.filter-col-margin-right {
+  margin-right: 10px;
+}
+.filter-full-width {
+  width: 100%;
+}
+.filter-btn-margin-right {
+  margin-right: 10px;
+}
+.dept-header-center-bold {
+  font-weight: bold;
+  text-align: center;
+}
+.ticket-count-header-center-bold {
+  font-weight: bold;
+  text-align: center;
+}
+.dept-cell-left-align {
+  text-align: left !important;
+}

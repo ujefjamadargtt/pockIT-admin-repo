@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { paymentgateway } from 'src/app/Pages/Models/paymentgateway';
-
 @Component({
   selector: 'app-paymentgateways',
   templateUrl: './paymentgateways.component.html',
@@ -28,7 +27,6 @@ export class PaymentgatewaysComponent {
   drawerTitle = ''
   add(): void {
     this.drawerTitle = "Create New Payment gateway Config";
-
     this.drawerVisible = true;
   }
   edit(data) { }
@@ -39,17 +37,14 @@ export class PaymentgatewaysComponent {
     const sortOrder = (currentSort && currentSort.value) || 'desc';
     this.pageIndex = pageIndex;
     this.pageSize = pageSize;
-
     if (this.pageSize != pageSize) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     if (this.sortKey != sortField) {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     }
-
     this.sortKey = sortField;
     this.sortValue = sortOrder;
   }

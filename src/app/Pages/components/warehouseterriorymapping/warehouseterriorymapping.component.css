@@ -4,8 +4,123 @@ nz-form-item  {
     width: -webkit-fill-available;
     padding: 0px 5px;
   }
-  
   *:focus {
     outline: none;
   }
-  
+  .form-row {
+  margin-bottom: 16px;
+}
+.country-col {
+  padding-right: 8px;
+}
+.territory-col {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.add-button-col {
+  padding-left: 8px;
+}
+.country-select,
+.territory-select {
+  width: 100%;
+}
+.add-territory-button {
+  width: 100%;
+  margin-top: 5px;
+}
+.empty-label {
+  height: 32px;
+  display: block;
+}
+.form-divider {
+  margin: 16px 0;
+  border: none;
+  border-top: 1px solid #d9d9d9;
+}
+.search-row {
+  margin-bottom: 16px;
+}
+.search-col {
+  text-align: right;
+  padding-right: 20px;
+  width: 100% !important;
+}
+.search-input-group {
+  margin-left: 26px !important;
+  width: calc(100% - 26px);
+}
+.search-input {
+  height: 32px;
+  width: 100%;
+}
+.search-button {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-row {
+  margin-top: 16px;
+}
+.territory-mapping-table {
+  width: 100%;
+}
+.mapped-column {
+  font-weight: bold;
+  text-align: center;
+}
+.country-column,
+.territory-column {
+  text-align: center;
+}
+.switch-cell {
+  white-space: pre-line;
+  vertical-align: middle;
+}
+.mapping-switch {
+  margin: 0 auto;
+}
+.country-cell,
+.territory-cell {
+  word-break: break-word;
+}
+.territory-mapping-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+.cancel-button {
+  margin-right: 8px;
+}
+.map-button {
+  min-width: 120px;
+}
+.my-scroll.no-wrap1 {
+  overflow-x: auto;
+}
+.ant-table-small .ant-table-thead > tr > th,
+.ant-table-small .ant-table-tbody > tr > td {
+  padding: 8px;
+}
+@media (max-width: 768px) {
+  .country-col,
+  .territory-col,
+  .add-button-col {
+    /* nzSpan: 24; */
+    margin-bottom: 8px;
+  }
+  .add-button-col {
+    text-align: right;
+  }
+  .search-col {
+    text-align: left;
+    padding-right: 0;
+  }
+  .search-input-group {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+}

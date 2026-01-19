@@ -1,22 +1,18 @@
-<div style="margin-top: 10px">
+<div class="editor-container">
   <form nz-form #ServiceCatmaster="ngForm">
-    <!-- <span><b>Category Details</b></span> -->
     <div nz-row>
       <div nz-col nzSpan="24">
-        <angular-editor style="resize: none; color: black" name="dataDesigners" id="editor3"
+        <angular-editor class="custom-editor" name="dataDesigners" id="editor3"
           [(ngModel)]="dataDesigner.FILE_CONTENT" [config]="editorConfig"></angular-editor>
       </div>
-
     </div>
   </form>
 </div>
-
-<div class="footer">
-  <button nz-button nzType="default" (click)="close()" class="ant-btn" style="margin-right: 12px">
+<div class="editor-footer">
+  <button nz-button nzType="default" (click)="close()" class="cancel-button">
     Cancel
   </button>
-
-  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="dataDesigner.ID"
+  <button type="button" class="save-button" nz-button [nzLoading]="isSpinning" *ngIf="dataDesigner.ID"
     (click)="save(false, ServiceCatmaster)">
     <span>Save & Close</span>
   </button>

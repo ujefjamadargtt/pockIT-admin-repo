@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { emailserviceconfig } from 'src/app/Pages/Models/emailserviceconfig';
 import { ApiServiceService } from 'src/app/Service/api-service.service';
 import { CommonFunctionService } from 'src/app/Service/CommonFunctionService';
-
 @Component({
   selector: 'app-email-service-config',
   templateUrl: './email-service-config.component.html',
@@ -21,33 +20,23 @@ export class EmailServiceConfigComponent {
     private datePipe: DatePipe
   ) { }
   service_provider = '^[a-zA-Z\s/()\-_.&]+$'
-  // emailPattern: string =
-  //   '^[a-zA-Z0-9](?!.*[_]{2})[a-zA-Z0-9._%+-]*[a-zA-Z0-9]@[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*(.[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)+.[a-zA-Z]{2,}$';
   isSpinning: boolean = false;
   close() {
     this.drawerClose();
   }
-
-  // emailPattern: string = "^(?!.*\\.\\..*)(?!.*--.*)(?!.*-\\.|\\.-)(?!.*-@|@-)[a-zA-Z0-9]([a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$";
-
   emailPattern: RegExp = /^(?!.*\.\..*)(?!.*--.*)(?!.*-\.|-\@|\.-|\@-)[a-zA-Z0-9]([a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z]{2,})+$/;
   passwordPattern: RegExp = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z0-9!@#$%^&*(),.?\":{}|<>]{8,}$/;
-
   isFocused: string = '';
-
   resetDrawer(CategoryDrawer: NgForm) {
     this.data = new emailserviceconfig();
     CategoryDrawer.form.markAsPristine();
     CategoryDrawer.form.markAsUntouched();
   }
-
   TIMEOUT_DATE: any;
-
   ngOnInit() {
     const timeoutSeconds = this.data.TIMEOUT_SECONDS || 0;
     this.TIMEOUT_DATE = new Date(1970, 0, 1, 0, 0, timeoutSeconds);
   }
-
   onTimeChange(value: Date): void {
     if (value instanceof Date && !isNaN(value.getTime())) {
       this.data.TIMEOUT_SECONDS = value.getSeconds();
@@ -55,8 +44,6 @@ export class EmailServiceConfigComponent {
       this.message.error('Invalid time selected.', '');
     }
   }
-
-
   public commonFunction = new CommonFunctionService();
   save(addNew: boolean, emailDrawer: NgForm): void {
     this.isSpinning = false;
@@ -147,9 +134,7 @@ export class EmailServiceConfigComponent {
     }
     if (this.isOk) {
       this.isSpinning = true;
-
       if (this.data.ID) {
-        // Update existing Email Service Config data
         this.api
           .updateemailServiceConfigData(this.data)
           .subscribe((response: any) => {
@@ -183,7 +168,6 @@ export class EmailServiceConfigComponent {
             this.isSpinning = false;
           });
       } else {
-        // Create new Email Service Config data
         this.api
           .CreateemailServiceConfigData(this.data)
           .subscribe((response: any) => {
@@ -228,7 +212,6 @@ export class EmailServiceConfigComponent {
       }
     }
   }
-
   EncryptionData = [
     { Id: 'SYM', Name: 'Symmetric Encryption' },
     { Id: 'ASYM', Name: 'Asymmetric Encryption' },
@@ -238,35 +221,26 @@ export class EmailServiceConfigComponent {
     { Id: 'HOMO', Name: 'Homomorphic Encryption' },
     { Id: 'QUANT', Name: 'Quantum Encryption' },
   ];
-
   isOk = true;
-
   passwordVisible: boolean = false;
-
-
   validateServiceProvider(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s/()\-_.&]+$/; // Updated pattern
+    const allowedPattern = /^[a-zA-Z\s/()\-_.&]+$/; 
     const char = String.fromCharCode(event.keyCode || event.which);
-
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); // Prevent invalid characters
+      event.preventDefault(); 
     }
   }
-
   validateSMTPPort(event: KeyboardEvent): void {
-    const allowedPattern = /^[0-9a-zA-Z.:]*$/; // Allow numbers, letters, periods, and colons
+    const allowedPattern = /^[0-9a-zA-Z.:]*$/; 
     const inputChar = String.fromCharCode(event.keyCode);
-
     if (!allowedPattern.test(inputChar)) {
       event.preventDefault();
     }
   }
-
   validateSMTPHost(): boolean {
     const smtpPattern = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$/;
     return smtpPattern.test(this.data.SMTP_HOST?.trim());
   }
-
   omit(event: any) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -274,6 +248,4 @@ export class EmailServiceConfigComponent {
     }
     return true;
   }
-
-
 }
