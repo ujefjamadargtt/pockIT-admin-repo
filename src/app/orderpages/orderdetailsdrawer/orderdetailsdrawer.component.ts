@@ -45,7 +45,7 @@ export class OrderdetailsdrawerComponent {
     if (!time) return '';
     let [hours, minutes] = time.split(':');
     let period = +hours >= 12 ? 'PM' : 'AM';
-    let formattedHours = +hours % 12 || 12; 
+    let formattedHours = +hours % 12 || 12;
     return `${formattedHours}:${minutes} ${period}`;
   }
   showjobcard: boolean = true;
@@ -234,7 +234,7 @@ export class OrderdetailsdrawerComponent {
   drawerCustomerRatingVisible: boolean = false;
   drawerRatingVisible: boolean = false;
   drawerDataRating: any;
-  STATUS: string = ''; 
+  STATUS: string = '';
   data = {
     REMARK: '',
   };
@@ -342,6 +342,10 @@ export class OrderdetailsdrawerComponent {
                 ''
               );
             }
+            this.getorderDetails2();
+            this.isSpinning = false;
+          } else if (successCode.code == '400') {
+            this.message.error(successCode.message, '');
             this.getorderDetails2();
             this.isSpinning = false;
           } else {
@@ -453,7 +457,7 @@ export class OrderdetailsdrawerComponent {
     return data.map((day) => ({
       date: day.DATE,
       events: day.ACTION_LOGS.map((log) => ({
-        icon: this.getStatusIcon(log.ORDER_STATUS || ''), 
+        icon: this.getStatusIcon(log.ORDER_STATUS || ''),
         title: log.ACTION_DETAILS || 'Action performed',
         time: log.ORDER_DATE_TIME
           ? new Date(log.ORDER_DATE_TIME).toLocaleTimeString()
@@ -630,7 +634,7 @@ export class OrderdetailsdrawerComponent {
     const [hours1, minutes1, second] =
       this.MIN_T_END_TIME.split(':').map(Number);
     const today = new Date();
-    this.currentDate = new Date(today); 
+    this.currentDate = new Date(today);
     this.currentDate.setMinutes(
       this.currentDate.getMinutes() + this.teritoryData.MAX_DURARTION_MIN
     );
@@ -642,8 +646,8 @@ export class OrderdetailsdrawerComponent {
     );
     var date1: any = new Date(this.currentDate);
     date1.setHours(hours1, minutes1, 0, 0);
-    const differenceInMs: any = date1 - date; 
-    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); 
+    const differenceInMs: any = date1 - date;
+    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60));
     if (differenceInMinutes > 0) {
     } else if (differenceInMinutes < 0) {
       this.currentDate.setDate(this.currentDate.getDate() + 1);
@@ -662,7 +666,7 @@ export class OrderdetailsdrawerComponent {
     endHour: number,
     endMinute: number
   ): { hour: number; minute: number } {
-    const totalMinutes = endHour * 60 + endMinute; 
+    const totalMinutes = endHour * 60 + endMinute;
     const maxStartMinutes = totalMinutes - this.teritoryData.MAX_DURARTION_MIN;
     return {
       hour: Math.floor(maxStartMinutes / 60),
@@ -1104,7 +1108,7 @@ export class OrderdetailsdrawerComponent {
     const [hours1, minutes1, second] =
       this.MIN_T_END_TIME2.split(':').map(Number);
     const today = new Date();
-    this.currentDate5 = new Date(today); 
+    this.currentDate5 = new Date(today);
     this.currentDate5.setMinutes(
       this.currentDate5.getMinutes() + data.MAX_DURARTION_MIN
     );
@@ -1116,8 +1120,8 @@ export class OrderdetailsdrawerComponent {
     );
     var date1: any = new Date(this.currentDate5);
     date1.setHours(hours1, minutes1, 0, 0);
-    const differenceInMs: any = date1 - date; 
-    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60)); 
+    const differenceInMs: any = date1 - date;
+    const differenceInMinutes = Math.floor(differenceInMs / (1000 * 60));
     if (differenceInMinutes > 0) {
     } else if (differenceInMinutes < 0) {
       this.currentDate5.setDate(this.currentDate5.getDate() + 1);

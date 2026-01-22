@@ -252,7 +252,7 @@ export class CouponComponent implements OnInit {
       this.data.COUPON_MAX_VALUE = null;
     }
   }
-  //
+  
   resetDrawer(couponMasterPage: NgForm) {
     this.data = new Coupan();
     couponMasterPage.form.markAsPristine();
@@ -513,4 +513,55 @@ export class CouponComponent implements OnInit {
       return true;
     }
   }
+  
+allowDecimal(event: KeyboardEvent): boolean {
+  const charCode = event.which ? event.which : event.keyCode;
+  const inputValue = (event.target as HTMLInputElement).value;
+  
+  if ([8, 9, 27, 13, 46].indexOf(charCode) !== -1 ||
+      
+      (charCode === 65 && event.ctrlKey === true) || 
+      (charCode === 67 && event.ctrlKey === true) || 
+      (charCode === 86 && event.ctrlKey === true) || 
+      (charCode === 88 && event.ctrlKey === true) || 
+      
+      (charCode >= 35 && charCode <= 39)) {
+    return true;
+  }
+  
+  if (charCode >= 48 && charCode <= 57) {
+    return true;
+  }
+  
+  if (charCode === 46 || charCode === 110 || charCode === 190) { 
+    if (inputValue.indexOf('.') !== -1) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
+  }
+  
+  event.preventDefault();
+  return false;
+}
+
+onPaste(event: ClipboardEvent): void {
+  event.preventDefault();
+  const pastedText = event.clipboardData?.getData('text') || '';
+  
+  const regex = /^\d*\.?\d*$/;
+  if (regex.test(pastedText) && pastedText !== '') {
+    const input = event.target as HTMLInputElement;
+    const currentValue = input.value;
+    const start = input.selectionStart || 0;
+    const end = input.selectionEnd || 0;
+    const newValue = currentValue.substring(0, start) + pastedText + currentValue.substring(end);
+    
+    if ((newValue.match(/\./g) || []).length <= 1) {
+      input.value = newValue;
+      this.data.COUPON_MAX_VALUE = newValue;
+      this.onCouponMaxValueChange(this.data.COUPON_MAX_VALUE);
+    }
+  }
+}
 }

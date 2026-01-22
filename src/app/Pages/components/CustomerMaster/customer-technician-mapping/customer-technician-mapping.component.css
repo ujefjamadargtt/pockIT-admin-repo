@@ -34,3 +34,60 @@
 .left-flex-row {
     display: flex;
 }
+
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+
+.pl-10 {
+  padding-left: 10px;
+}
+.pr-10 {
+  padding-right: 10px;
+}
+.pr-5 {
+  padding-right: 5px;
+}
+
+.inline-flex-form {
+  display: inline-flex;
+}
+.search-input-group {
+  margin-left: 26px !important;
+}
+.search-input {
+  height: 32px;
+}
+
+.table-wrapper {
+  position: relative;
+}
+.pre-line-table {
+  white-space: pre-line;
+}
+.pre-line-text {
+  white-space: pre-line;
+}
+
+.icon-column {
+  align-self: center;
+  text-align: center;
+  align-items: center;
+}
+.icon-large {
+  font-size: 26px !important;
+}
+
+.space-between-row {
+  display: flex;
+  justify-content: space-between;
+}
+.flex-row {
+  display: flex;
+}

@@ -123,7 +123,7 @@
               <nz-form-label nzRequired nzNoColon>Min Cart Amount</nz-form-label>
               <nz-form-control nzErrorTip="Please Enter Min Cart Amount">
                 <nz-input-group nzAddOnAfter="₹">
-                  <input nz-input (keypress)="commonFunction.onlynum($event)" name="min_cart_amount"
+                  <input nz-input (keypress)="allowDecimal($event)" (paste)="onPaste($event)" name="min_cart_amount"
                     [(ngModel)]="data.MIN_CART_AMOUNT" (ngModelChange)="onMinValueChange()" required autocomplete="off"
                     placeholder="Enter Min Cart Amount" class="coupon-width-full-a1" />
                 </nz-input-group>
@@ -187,7 +187,7 @@
               <nz-form-label nzNoColon>Coupon Max Value</nz-form-label>
               <nz-form-control nzErrorTip="Please Enter Coupon Max Value">
                 <nz-input-group nzAddOnAfter="₹">
-                  <input nz-input (keypress)="commonFunction.onlynum($event)" name="coupon_max_value"
+                  <input nz-input (keypress)="allowDecimal($event)" (paste)="onPaste($event)" name="coupon_max_value"
                     [(ngModel)]="data.COUPON_MAX_VALUE" (ngModelChange)="onCouponMaxValueChange($event)" required
                     autocomplete="off" placeholder="Enter Coupon Max Value" [disabled]="data.COUPON_VALUE_TYPE == 'A'"
                     class="coupon-width-full-a1" />
