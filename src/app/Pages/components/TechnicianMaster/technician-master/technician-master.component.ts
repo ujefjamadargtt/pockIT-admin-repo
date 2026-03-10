@@ -993,19 +993,7 @@ VEHICLE_NO
     this.drawerData = Object.assign({}, data);
     this.drawerLanguageVisible = true;
   }
-  drawerServiceVisible = false;
-  drawerServiceMappingClose(): void {
-    this.search();
-    this.drawerServiceVisible = false;
-  }
-  get closeServiceMappingCallback() {
-    return this.drawerServiceMappingClose.bind(this);
-  }
-  ServiceMapping(data: any): void {
-    this.drawerTitle = ` Map Services to the ${data.NAME} Technician`;
-    this.drawerData = Object.assign({}, data);
-    this.drawerServiceVisible = true;
-  }
+
   drawercalenderVisible = false;
   drawerCalenderMappingClose(): void {
     this.search();

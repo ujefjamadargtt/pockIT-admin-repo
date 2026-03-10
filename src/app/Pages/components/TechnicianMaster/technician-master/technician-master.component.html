@@ -774,20 +774,7 @@
     </ng-container>
   </nz-drawer>
 </div>
-<div *ngIf="drawerServiceVisible">
-  <nz-drawer [nzBodyStyle]="{
-      height: 'calc(105% - 55px)',
-      overflow: 'auto',
-      'padding-bottom': '53px'
-    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="widthsSkill"
-    [nzVisible]="drawerServiceVisible" [nzTitle]="drawerTitle" (nzOnClose)="drawerServiceMappingClose()"
-    (nzKeyboard)="(true)">
-    <ng-container *nzDrawerContent>
-      <app-technician-service-mapping [drawerClose]="closeServiceMappingCallback" [drawerVisible]="drawerServiceVisible"
-        [data]="drawerData"></app-technician-service-mapping>
-    </ng-container>
-  </nz-drawer>
-</div>
+
 <nz-modal [(nzVisible)]="isVisible1" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="295px"
   nzClosable="false" [nzFooter]="contextofrulesfootdiac" nzMaskClosable="true" (nzOnCancel)="handleCancel1()">
   <ng-container *nzModalContent>

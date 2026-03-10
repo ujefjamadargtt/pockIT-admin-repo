@@ -47,7 +47,7 @@ nz-form-item {
   font-size: 12px;
 }
 .file-input-hidden {
-  display: none;
+  display: none !important;
 }
 .uploaded-image-container {
   display: flex;

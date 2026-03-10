@@ -891,6 +891,7 @@ export class LoginComponent implements OnInit {
               'profile_url',
               data['UserData'][0]['PROFILE_PHOTO']
             );
+             sessionStorage.setItem('LoggedCustoemr', 'customer');
             this.router.navigate(['/customer-dashboard']).then(() => {
               window.location.reload();
             });

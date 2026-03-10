@@ -197,7 +197,11 @@ export class TerritoryMasterAddComponent {
       this.message.error('Please Enter Sequence No.', '');
     }
     if (this.isOk) {
+      if(this.data.WEEKLY_OFFS !==null && this.data.WEEKLY_OFFS !== undefined && this.data.WEEKLY_OFFS !==''){
       this.data.WEEKLY_OFFS = this.selectedDays.toString();
+      }else{
+      this.data.WEEKLY_OFFS = '';
+      }
       if (
         this.data.START_TIME != undefined &&
         this.data.START_TIME != null &&
