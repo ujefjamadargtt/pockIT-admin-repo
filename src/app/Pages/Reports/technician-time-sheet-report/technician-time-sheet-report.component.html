@@ -252,24 +252,27 @@
                     </td>
                     <td class="text-center">{{ data?.EXPECTED_DATE_TIME ? (data.EXPECTED_DATE_TIME | date : "dd/MM/yyyy
                         HH:mm a") : "-" }}</td>
-                    <td align="left" nz-tooltip [nzTooltipTitle]="isTextOverflow ? data['ORDER_NO'] : null"
-                        class="truncate-text">{{ data["ORDER_NO"] || "-" }}</td>
-                    <td align="left" nz-tooltip [nzTooltipTitle]="isTextOverflow ? data['JOB_CARD_NO'] : null"
-                        class="truncate-text">{{ data["JOB_CARD_NO"] || "-" }}</td>
-                    <td align="left" nz-tooltip [nzTooltipTitle]="isTextOverflow ? data['SERVICE_NAME'] : null"
-                        class="truncate-text">{{ data["SERVICE_NAME"] || "-" }}</td>
+                    <td align="left" nz-tooltip [nzTooltipTitle]="data['ORDER_NO']">
+                        <div class="truncate-text">{{ data["ORDER_NO"] || "-" }}</div>
+                    </td>
+                    <td align="left" nz-tooltip [nzTooltipTitle]="data['JOB_CARD_NO']">
+                        <div class="truncate-text">{{ data["JOB_CARD_NO"] || "-" }}</div>
+                    </td>
+                    <td align="left" nz-tooltip [nzTooltipTitle]="data['SERVICE_NAME']">
+                        <div class="truncate-text">{{ data["SERVICE_NAME"] || "-" }}</div>
+                    </td>
                     <td class="text-center">{{ formatTime(data.START_TIME) || "-" }}</td>
                     <td class="text-center">{{ formatTime(data.END_TIME) || "-" }}</td>
                     <td class="text-center">{{ data?.SCHEDULED_DATE_TIME ? (data.SCHEDULED_DATE_TIME | date :
-                        "dd/MM/yyyy HH:mm a") : "-" }}</td>
+                        "dd/MM/yyyy") : "-" }}</td>
                     <td class="text-center">{{ data?.END_DATE_TIME ? (data.END_DATE_TIME | date : "dd/MM/yyyy HH:mm a")
                         : "-" }}</td>
                     <td class="text-center">{{ data?.JOB_COMPLETED_DATETIME ? (data.JOB_COMPLETED_DATETIME | date :
                         "dd/MM/yyyy HH:mm a") : "-" }}</td>
                     <td align="left">{{ data.TOTAL_TIME || "-" }}</td>
-                    <td align="left">{{ data.IS_EARLY_OR_LATE ? (data.IS_EARLY_OR_LATE === "E" ? "Early" : "Late") : "-"
-                        }}</td>
-                    <td class="text-center">{{ data.WORK_DEVIATION || "-" }}</td>
+                    <td align="left">{{ data.IS_EARLY_OR_LATE ? (data.IS_EARLY_OR_LATE === "E" ? "Early" :
+                        (data.IS_EARLY_OR_LATE === "L" ? "Late" : data.IS_EARLY_OR_LATE)) : "-" }}</td>
+                    <td class="text-center">{{ data.WORK_DEVIATION ?? "-" }}</td>
                 </tr>
             </tbody>
         </nz-table>

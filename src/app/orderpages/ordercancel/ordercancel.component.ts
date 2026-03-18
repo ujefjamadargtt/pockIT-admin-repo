@@ -797,7 +797,7 @@ export class OrdercancelComponent {
   }
   orderId: any;
   getTechniciansJobs(data) {
-    this.orderId = data.ID;
+    this.orderId = data.ORDER_ID;
     this.jobdetailsshow = true;
   }
 }

@@ -185,10 +185,7 @@ export class UserComponent implements OnInit {
         this.data.EMAIL_ID == '') &&
       (this.data.PASSWORD == undefined ||
         this.data.PASSWORD == null ||
-        this.data.PASSWORD == '') &&
-      (this.data.PROFILE_PHOTO == undefined ||
-        this.data.PROFILE_PHOTO == null ||
-        this.data.PROFILE_PHOTO == '')
+        this.data.PASSWORD == '')
     ) {
       this.isOk = false;
       this.message.error('Please Fill All The Required Fields ', '');
@@ -225,14 +222,6 @@ export class UserComponent implements OnInit {
     ) {
       this.isOk = false;
       this.message.error(' Please Enter Password.', '');
-    } else if (
-      this.data.PROFILE_PHOTO == null ||
-      this.data.PROFILE_PHOTO == undefined ||
-      this.data.PROFILE_PHOTO == '' ||
-      this.data.PROFILE_PHOTO == ' '
-    ) {
-      this.isOk = false;
-      this.message.error('Please Upload Profile Photo', '');
     } else if (
       !this.commonFunction.passPattern.test(this.data.PASSWORD) &&
       !this.data.ID

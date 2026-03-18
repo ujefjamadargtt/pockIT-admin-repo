@@ -44,6 +44,7 @@ export class MainServiceListComponent implements OnInit {
     ['NAME', 'NAME'],
     ['CATEGORY_NAME', 'CATEGORY_NAME'],
     ['SUB_CATEGORY_NAME', 'SUB_CATEGORY_NAME'],
+    ['SHORT_CODE', 'SHORT_CODE']
   ];
 
   loadingRecords = false;

@@ -796,7 +796,7 @@ export class TechnicianTimeSheetReportComponent implements OnInit {
             'dd/MM/yyyy hh:mm a'
           )
           : '-'),
-          (obj1['Order Name'] = this.excelData[i]['ORDER_NO'] || '-');
+          (obj1['Order Number'] = this.excelData[i]['ORDER_NO'] || '-');
         obj1['Job Number'] = this.excelData[i]['JOB_CARD_NO'] || '-';
         obj1['Service Name'] = this.excelData[i]['SERVICE_NAME'] || '-';
         obj1['Start Time'] =

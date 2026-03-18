@@ -63,24 +63,24 @@ export class AddStockMovementRequestMasterComponent {
     private message: NzNotificationService,
     private datePipe: DatePipe
   ) { }
-  roleid = sessionStorage.getItem('roleId'); 
+  roleid = sessionStorage.getItem('roleId');
   toGodownName: any;
   tempSelectedItemData: any;
   @Input() category: any;
   isFromGodownLoading1: boolean = false;
   tempSelectedUnitData: any;
   itemWiseUnitList: any;
-  userId = sessionStorage.getItem('userId'); 
+  userId = sessionStorage.getItem('userId');
   USER_ID: number;
   ngOnInit(): void {
     this.data.DATE = new Date();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; 
+      : '0';
     this.USER_ID = Number(decryptedUserId);
     const decryptedUserId1 = this.roleid
       ? this.commonFunction.decryptdata(this.roleid)
-      : '0'; 
+      : '0';
     this.roleID = Number(decryptedUserId1);
     this.newItemTableData = this.item2.map((item) => item);
     this.GodownMaster();
@@ -727,19 +727,22 @@ export class AddStockMovementRequestMasterComponent {
         return;
       }
       existingItem.QUANTITY += Number(this.data2.QUANTITY);
-      this.items = [...this.items]; 
+      this.items = [...this.items];
     } else if (this.index > -1) {
       this.items[this.index] = Object.assign({}, this.data2);
-      this.items = [...this.items]; 
+      this.items = [...this.items];
     } else {
       let selectedUnit = this.itemWiseUnitList.find(
         (val: any) => val.UNIT_ID === this.data2.UNIT_ID
       );
+      const selectedVariant = this.data2.VARIANT_ID
+        ? this.InwardVarientsGet.find((v: any) => v.ID === this.data2.VARIANT_ID)
+        : null;
       this.INNERTABLEDATA = {
         INVENTORY_ID: this.inventoryid,
         QUANTITY: Number(this.data2.QUANTITY),
         UNIT_ID: this.data2.UNIT_ID,
-        PARENT_ID: this.PARENT_ID,
+        PARENT_ID: selectedVariant ? selectedVariant.PARENT_ID : this.PARENT_ID,
         INVENTORY_TRACKING_TYPE: inventorytrackingtype,
         INVENTORY_NAME: this.data2.INVENTORY_NAME,
         INVENTROY_SUB_CAT_ID: this.data2.INVENTROY_SUB_CAT_ID,
@@ -747,20 +750,20 @@ export class AddStockMovementRequestMasterComponent {
         INVENTORY_CAT_ID: this.data2.INVENTORY_CAT_ID,
         INVENTROY_SUB_CAT_NAME: this.data2.INVENTROY_SUB_CAT_NAME,
         UNIT_NAME: selectedUnit?.UNIT_NAME,
-        IS_VERIENT: this.ItemDetails.IS_VERIENT,
+        IS_VERIENT: selectedVariant ? selectedVariant.IS_VERIENT : this.ItemDetails.IS_VERIENT,
         VARIANT_NAME: this.data2.VARIANT_NAME,
         VARIANT_ID: this.ItemDetails.ID,
         SERIAL_NO: this.data2.SERIAL_NO,
         BATCH_NO: this.data2.BATCH_NO,
         STOCK: this.data2.STOCK,
         STOCK_UNIT_ID: this.data2.STOCK_UNIT_ID,
-        QUANTITY_PER_UNIT: this.ItemDetails.BASE_QUANTITY,
+        QUANTITY_PER_UNIT: selectedVariant ? selectedVariant.BASE_QUANTITY : this.ItemDetails.BASE_QUANTITY,
       };
       this.batchData = this.batchData.filter(
         (data) => data.BATCH_NO != this.INNERTABLEDATA.BATCH_NO
       );
       this.items.push(this.INNERTABLEDATA);
-      this.items = [...this.items]; 
+      this.items = [...this.items];
     }
     this.index = -1;
     this.totaldata = this.items.length;
@@ -1028,7 +1031,7 @@ export class AddStockMovementRequestMasterComponent {
         }
         const child = ancestry[ancestry.length - 1];
         this.PARENT_ID = child.details?.PARENT_ID;
-        this.data2.INVENTORY_ID = child.id; 
+        this.data2.INVENTORY_ID = child.id;
         this.inventoryid = child.id;
         this.data2.INVENTORY_NAME = child.title;
         this.ItemDetails = child.details;

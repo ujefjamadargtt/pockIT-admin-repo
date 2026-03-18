@@ -135,7 +135,7 @@
   </div>
 </div>
 <nz-modal [(nzVisible)]="mapDraweVisible" nzClosable="false" nzMaskClosable="false" nzWidth="1000px"
-  [nzFooter]="modalFooter" [nzStyle]="{ height: '40vh' }" (nzOnCancel)="clearSearchBox()">
+  [nzFooter]="modalFooter" [nzStyle]="{ height: '40vh' }" [nzTitle]="customHeader" (nzOnCancel)="clearSearchBox()">
   <ng-template #customHeader>
     <div class="custom-header">
       <div class="left-section">

@@ -535,7 +535,7 @@ export class WarehouseDrawerComponent {
       } else {
         this.data.COUNTRY_NAME = null;
       }
-      this.isStateSpinning = true; 
+      this.isStateSpinning = true;
       this.api
         .getState(
           0,
@@ -543,7 +543,7 @@ export class WarehouseDrawerComponent {
           'NAME',
           'asc',
           ` AND COUNTRY_ID=${countryId} AND IS_ACTIVE = 1`
-        ) 
+        )
         .subscribe(
           (data) => {
             if (data['code'] === 200) {
@@ -552,11 +552,11 @@ export class WarehouseDrawerComponent {
               this.StateData = [];
               this.message.error('Failed To Get State Data...', '');
             }
-            this.isStateSpinning = false; 
+            this.isStateSpinning = false;
           },
           () => {
             this.message.error('Something went wrong.', '');
-            this.isStateSpinning = false; 
+            this.isStateSpinning = false;
           }
         );
     } else {
@@ -592,7 +592,7 @@ export class WarehouseDrawerComponent {
       } else {
         this.data.COUNTRY_NAME = null;
       }
-      this.isStateSpinning = true; 
+      this.isStateSpinning = true;
       this.api
         .getState(
           0,
@@ -600,7 +600,7 @@ export class WarehouseDrawerComponent {
           'NAME',
           'asc',
           ` AND COUNTRY_ID=${countryId} AND IS_ACTIVE = 1`
-        ) 
+        )
         .subscribe(
           (data) => {
             if (data['code'] === 200) {
@@ -610,11 +610,11 @@ export class WarehouseDrawerComponent {
               this.StateData = [];
               this.message.error('Failed To Get State Data...', '');
             }
-            this.isStateSpinning = false; 
+            this.isStateSpinning = false;
           },
           () => {
             this.message.error('Something went wrong.', '');
-            this.isStateSpinning = false; 
+            this.isStateSpinning = false;
           }
         );
     } else {
@@ -647,7 +647,7 @@ export class WarehouseDrawerComponent {
       } else {
         this.data.STATE_NAME = null;
       }
-      this.isDistSpinning = true; 
+      this.isDistSpinning = true;
       this.api
         .getDistrictData(
           0,
@@ -655,7 +655,7 @@ export class WarehouseDrawerComponent {
           'NAME',
           'asc',
           ` AND IS_ACTIVE=1 AND STATE_ID=${stateId}`
-        ) 
+        )
         .subscribe(
           (data) => {
             if (data['code'] === 200) {
@@ -664,11 +664,11 @@ export class WarehouseDrawerComponent {
               this.DistData = [];
               this.message.error('Failed To Get District Data...', '');
             }
-            this.isDistSpinning = false; 
+            this.isDistSpinning = false;
           },
           () => {
             this.message.error('Something went wrong.', '');
-            this.isDistSpinning = false; 
+            this.isDistSpinning = false;
           }
         );
     } else {
@@ -698,7 +698,7 @@ export class WarehouseDrawerComponent {
       } else {
         this.data.STATE_NAME = null;
       }
-      this.isDistSpinning = true; 
+      this.isDistSpinning = true;
       this.api
         .getDistrictData(
           0,
@@ -706,7 +706,7 @@ export class WarehouseDrawerComponent {
           'NAME',
           'asc',
           ` AND IS_ACTIVE=1 AND STATE_ID=${stateId}`
-        ) 
+        )
         .subscribe(
           (data) => {
             if (data['code'] === 200) {
@@ -716,11 +716,11 @@ export class WarehouseDrawerComponent {
               this.DistData = [];
               this.message.error('Failed To Get District Data...', '');
             }
-            this.isDistSpinning = false; 
+            this.isDistSpinning = false;
           },
           () => {
             this.message.error('Something went wrong.', '');
-            this.isDistSpinning = false; 
+            this.isDistSpinning = false;
           }
         );
     } else {
@@ -758,33 +758,24 @@ export class WarehouseDrawerComponent {
       this.data.PINCODE = null;
     }
   }
-  OnMangerSelect(manager: any) {
-    if (manager != null && manager != undefined && manager != '') {
-      var pin: any = this.WarehouseManagerData.filter((i) => i.ID == manager);
-      if (pin != null && pin != undefined && pin != '') {
-        this.data.WAREHOUSE_MANAGER_NAME = pin[0]['NAME'];
-        if (
-          this.data.MOBILE_NO == null ||
-          this.data.MOBILE_NO == undefined ||
-          this.data.MOBILE_NO == ''
-        ) {
-          this.data.MOBILE_NO = pin[0]['MOBILE_NUMBER'];
-          this.data.COUNTRY_CODE = pin[0]['COUNTRY_CODE'];
-        }
-        if (
-          this.data.EMAIL_ID == null ||
-          this.data.EMAIL_ID == undefined ||
-          this.data.EMAIL_ID == ''
-        ) {
-          this.data.EMAIL_ID = pin[0]['EMAIL_ID'];
-        }
-      } else {
-        this.data.WAREHOUSE_MANAGER_NAME = null;
-      }
+OnMangerSelect(manager: any) {
+  if (manager != null && manager != undefined && manager != '') {
+    var pin: any = this.WarehouseManagerData.filter((i) => i.ID == manager);
+    if (pin != null && pin != undefined && pin != '') {
+      this.data.WAREHOUSE_MANAGER_NAME = pin[0]['NAME'];
+      this.data.MOBILE_NO = pin[0]['MOBILE_NUMBER'];
+      this.data.COUNTRY_CODE = pin[0]['COUNTRY_CODE'];
+      this.data.EMAIL_ID = pin[0]['EMAIL_ID'];
     } else {
       this.data.WAREHOUSE_MANAGER_NAME = null;
     }
+  } else {
+    this.data.WAREHOUSE_MANAGER_NAME = null;
+    this.data.EMAIL_ID = '';
+    this.data.MOBILE_NO = null;
+    this.data.COUNTRY_CODE = null;
   }
+}
   getPincodesByCity(stateId: any, value: boolean = true) {
     if (value === false) {
       this.data.PIN_CODE_ID = 0;
@@ -797,7 +788,7 @@ export class WarehouseDrawerComponent {
       } else {
         this.data.DISTRICT_NAME = null;
       }
-      this.isPincodeSpinning = true; 
+      this.isPincodeSpinning = true;
       this.api
         .getAllPincode(
           0,
@@ -805,7 +796,7 @@ export class WarehouseDrawerComponent {
           'ID',
           'asc',
           ` AND IS_ACTIVE=1 AND DISTRICT=${stateId}`
-        ) 
+        )
         .subscribe(
           (data) => {
             if (data['code'] === 200) {
@@ -819,7 +810,7 @@ export class WarehouseDrawerComponent {
           },
           () => {
             this.message.error('Something went wrong.', '');
-            this.isPincodeSpinning = false; 
+            this.isPincodeSpinning = false;
           }
         );
     } else {
@@ -980,7 +971,7 @@ export class WarehouseDrawerComponent {
       this.selectedLocation = formattedaddress;
       this.map2.setCenter({ lat, lng });
       setTimeout(() => {
-        this.map2.setZoom(19); 
+        this.map2.setZoom(19);
       }, 100);
       if (this.marker) {
         this.marker.setMap(null);
@@ -1032,10 +1023,10 @@ export class WarehouseDrawerComponent {
         lat = place.geometry.location.lat();
         lng = place.geometry.location.lng();
         this.placeName = place?.name || '';
-        this.getAddress(lat, lng, place); 
+        this.getAddress(lat, lng, place);
         this.map2.setCenter(place.geometry.location);
         setTimeout(() => {
-          this.map2.setZoom(19); 
+          this.map2.setZoom(19);
         }, 100);
         this.marker.setPosition(place.geometry.location);
       });
@@ -1050,7 +1041,7 @@ export class WarehouseDrawerComponent {
           this.getAddress(lat, lng, null);
           this.map2.setCenter(location);
           setTimeout(() => {
-            this.map2.setZoom(19); 
+            this.map2.setZoom(19);
           }, 100);
           this.marker.setPosition(location);
         }
@@ -1070,8 +1061,8 @@ export class WarehouseDrawerComponent {
           const service = new google.maps.places.PlacesService(this.map2);
           service.getDetails({ placeId: placeId }, (placeResult, placeStatus) => {
             if (placeStatus === 'OK' && placeResult) {
-              this.placeName = placeResult.name || ''; 
-              this.getAddress(lat, lng, placeResult);  
+              this.placeName = placeResult.name || '';
+              this.getAddress(lat, lng, placeResult);
             } else {
               this.getAddress(lat, lng, null);
             }
@@ -1111,7 +1102,7 @@ export class WarehouseDrawerComponent {
       } else {
         this.data.COUNTRY_NAME = null;
       }
-      this.isStateSpinning = true; 
+      this.isStateSpinning = true;
       this.api
         .getState(
           0,
@@ -1119,7 +1110,7 @@ export class WarehouseDrawerComponent {
           'NAME',
           'asc',
           ` AND COUNTRY_ID=${countryId} AND IS_ACTIVE = 1`
-        ) 
+        )
         .subscribe(
           (data) => {
             if (data['code'] === 200) {
@@ -1153,11 +1144,11 @@ export class WarehouseDrawerComponent {
               this.StateData = [];
               this.message.error('Failed To Get State Data...', '');
             }
-            this.isStateSpinning = false; 
+            this.isStateSpinning = false;
           },
           () => {
             this.message.error('Something went wrong.', '');
-            this.isStateSpinning = false; 
+            this.isStateSpinning = false;
           }
         );
     } else {
@@ -1190,7 +1181,7 @@ export class WarehouseDrawerComponent {
       } else {
         this.data.STATE_NAME = null;
       }
-      this.isDistSpinning = true; 
+      this.isDistSpinning = true;
       this.api
         .getDistrictData(
           0,
@@ -1198,7 +1189,7 @@ export class WarehouseDrawerComponent {
           'NAME',
           'asc',
           ` AND IS_ACTIVE=1 AND STATE_ID=${stateId}`
-        ) 
+        )
         .subscribe(
           (data) => {
             if (data['code'] === 200) {
@@ -1226,11 +1217,11 @@ export class WarehouseDrawerComponent {
               this.DistData = [];
               this.message.error('Failed To Get District Data...', '');
             }
-            this.isDistSpinning = false; 
+            this.isDistSpinning = false;
           },
           () => {
             this.message.error('Something went wrong.', '');
-            this.isDistSpinning = false; 
+            this.isDistSpinning = false;
           }
         );
     } else {
@@ -1256,7 +1247,7 @@ export class WarehouseDrawerComponent {
       } else {
         this.data.DISTRICT_NAME = null;
       }
-      this.isPincodeSpinning = true; 
+      this.isPincodeSpinning = true;
       this.api
         .getAllPincode(
           0,
@@ -1264,7 +1255,7 @@ export class WarehouseDrawerComponent {
           'ID',
           'asc',
           ` AND IS_ACTIVE=1 AND DISTRICT=${districtId}`
-        ) 
+        )
         .subscribe(
           (data) => {
             if (data['code'] === 200) {
@@ -1290,7 +1281,7 @@ export class WarehouseDrawerComponent {
           },
           () => {
             this.message.error('Something went wrong.', '');
-            this.isPincodeSpinning = false; 
+            this.isPincodeSpinning = false;
           }
         );
     } else {

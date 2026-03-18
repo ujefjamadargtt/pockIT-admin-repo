@@ -1,5 +1,5 @@
 export const url = {
-  link: 'https://console.pockitengineers.com/authdev/', // Poduction Server IP
+  link: 'https://console.pockitengineers.com/auth/', // Poduction Server IP
 
   // link: 'https://pockit.pockitengineers.com/auth/', // Pre-production Server
 
