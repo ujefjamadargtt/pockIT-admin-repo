@@ -101,6 +101,9 @@ margin: 10px 0px;
 .form-item-margin-right {
   margin-right: 0px;
 }
+.form-item-margin-right2 {
+  margin-right: 15px;
+}
 .row-padding-top {
   padding-top: 0px;
 }
@@ -231,4 +234,13 @@ margin: 10px 0px;
 }
 .select-full-width {
   width: 100%;
+}
+.btn-static-uid {
+  border-color: #1890ff;
+  color: #1890ff;
+}
+.btn-static-uid:hover {
+  background-color: #e6f7ff;
+  border-color: #40a9ff;
+  color: #40a9ff;
 }

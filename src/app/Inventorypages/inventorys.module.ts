@@ -90,6 +90,10 @@ import { StocksByUnitReportComponent } from './pages/Inventory_Reports/stocks-by
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CustomertoTechStockMoveListComponent } from './pages/CustomerToTechnician/customerto-tech-stock-move-list/customerto-tech-stock-move-list.component';
 import { CustomertoTechStockMoveDrawerComponent } from './pages/CustomerToTechnician/customerto-tech-stock-move-drawer/customerto-tech-stock-move-drawer.component';
+import { StaticInventoryComponent } from './static-inventory/static-inventory.component';
+import { TechnicianwisestaticInventoryReportComponent } from './pages/Inventory_Reports/technicianwisestatic-inventory-report/technicianwisestatic-inventory-report.component';
+import { CommonFunctionService } from '../Service/CommonFunctionService';
+
 @NgModule({
   declarations: [
     InventorymastermoduleComponent,
@@ -127,7 +131,9 @@ import { CustomertoTechStockMoveDrawerComponent } from './pages/CustomerToTechni
     ViewVarientStockComponent,
     StocksByUnitReportComponent,
     CustomertoTechStockMoveListComponent,
-    CustomertoTechStockMoveDrawerComponent
+    CustomertoTechStockMoveDrawerComponent,
+    StaticInventoryComponent,
+    TechnicianwisestaticInventoryReportComponent
   ],
 
   imports: [
@@ -188,5 +194,6 @@ import { CustomertoTechStockMoveDrawerComponent } from './pages/CustomerToTechni
     NzRateModule,
     AngularEditorModule
   ],
+  providers: [CommonFunctionService],
 })
 export class InventoryModule { }

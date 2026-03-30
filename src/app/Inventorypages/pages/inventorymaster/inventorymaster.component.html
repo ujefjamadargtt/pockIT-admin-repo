@@ -24,6 +24,12 @@
           </button>
         </ng-template>
       </nz-form-item>
+      <nz-form-item class="form-item-margin-right2" *ngIf="decreptedroleId != 23">
+        <button (click)="addStatic()" nz-button nzType="default"  class="btn-static-uid" nzJustify="end">
+          <i nz-icon nzType="plus"></i>
+          Static Inventory
+        </button>
+      </nz-form-item>
       <nz-form-item class="form-item-margin-right" *ngIf="decreptedroleId != 23">
         <button (click)="add()" nz-button nzType="primary" nzJustify="end">
           <i nz-icon nzType="plus"></i>
@@ -853,6 +859,18 @@
     <ng-container *nzDrawerContent>
       <app-view-varientstock [drawerClose]="closeCallbackStockDetails" [Inventorydata]="viewdrawerData"
         [ITEM_NAME]="ITEM_NAME" [TYPE]="'M'"></app-view-varientstock>
+    </ng-container>
+  </nz-drawer>
+</div>
+<div *ngIf="staticdrawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(110% - 61px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'100%'" [nzVisible]="staticdrawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerCloseStaticInventory()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-static-inventory></app-static-inventory>
     </ng-container>
   </nz-drawer>
 </div>

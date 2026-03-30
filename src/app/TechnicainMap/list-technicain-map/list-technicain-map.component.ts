@@ -601,8 +601,8 @@ export class ListTechnicainMapComponent implements OnInit {
   ColorArray: any = [];
   uniqueValues: any = [];
   sheduledataarray = [];
-  searchValue: string = ''; 
-  originalTechniciansData: any[] = []; 
+  searchValue: string = '';
+  originalTechniciansData: any[] = [];
   onSearchChange(value: string): void {
     this.searchValue = value;
     if (value.length >= 3) {
@@ -650,11 +650,11 @@ export class ListTechnicainMapComponent implements OnInit {
           time: new Date(loc.CREATED_MODIFIED_DATE).toLocaleString(),
         }))
         .filter(
-          (loc: any) => !isNaN(loc.latitude) && !isNaN(loc.longitude) 
+          (loc: any) => !isNaN(loc.latitude) && !isNaN(loc.longitude)
         );
       if (locations.length === 0) {
         this.message.error('No valid locations found for the technician.', '');
-        return; 
+        return;
       }
       const mapCenter = {
         lat:
@@ -665,7 +665,7 @@ export class ListTechnicainMapComponent implements OnInit {
           locations.length,
       };
       if (isNaN(mapCenter.lat) || isNaN(mapCenter.lng)) {
-        return; 
+        return;
       }
       const mapElement = document.getElementById('map');
       if (mapElement) {
@@ -823,7 +823,9 @@ export class ListTechnicainMapComponent implements OnInit {
       );
       this.terriotrystarttime1 = new Date(dateWithTime);
       this.terriotryendtime1 = new Date(dateWithTime1);
-      this.columns = this.generateTimeColumnsFromRange();
+      // this.columns = this.generateTimeColumnsFromRange();
+      this.columns = this.generateTimeColumns();
+
     }
     if (event != '' && event != null && event != undefined) {
       sessionStorage.setItem('territoryid', event);
@@ -870,7 +872,7 @@ export class ListTechnicainMapComponent implements OnInit {
         (x: any) => x.ID == Number(this.selectedterritory)
       );
       if (filterterritory.length > 0) {
-         this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
+        this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
         this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
         const currentDate = new Date(this.todaydate);
         const year = currentDate.getFullYear();
@@ -890,7 +892,8 @@ export class ListTechnicainMapComponent implements OnInit {
         );
         this.terriotrystarttime1 = new Date(dateWithTime);
         this.terriotryendtime1 = new Date(dateWithTime1);
-        this.columns = this.generateTimeColumnsFromRange();
+        // this.columns = this.generateTimeColumnsFromRange();
+        this.columns = this.generateTimeColumns();
       }
       if (
         this.selectedterritory != '' &&
@@ -967,7 +970,7 @@ export class ListTechnicainMapComponent implements OnInit {
         (x: any) => x.ID == Number(event)
       );
       if (filterterritory.length > 0) {
-         this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
+        this.terriotrystarttime = filterterritory[0].GLOBAL_START_TIME;
         this.terriotryendtime = filterterritory[0].GLOBAL_END_TIME;
         const currentDate = new Date(this.todaydate);
         const year = currentDate.getFullYear();
@@ -987,7 +990,8 @@ export class ListTechnicainMapComponent implements OnInit {
         );
         this.terriotrystarttime1 = new Date(dateWithTime);
         this.terriotryendtime1 = new Date(dateWithTime1);
-        this.columns = this.generateTimeColumnsFromRange();
+        // this.columns = this.generateTimeColumnsFromRange();
+        this.columns = this.generateTimeColumns();
       }
       if (event != '' && event != null && event != undefined) {
         sessionStorage.setItem('territoryid', event);
@@ -1282,8 +1286,8 @@ export class ListTechnicainMapComponent implements OnInit {
           this.sheduledata = data['data'];
           if (this.sheduledata.length == 0) {
           } else {
-            var dataaaaaaaa = this.filterDataByTime('', '');
-            this.sheduledata = dataaaaaaaa;
+            // var dataaaaaaaa = this.filterDataByTime('', '');
+            // this.sheduledata = dataaaaaaaa;
           }
           this.api
             .gettechnicianjobshedulecount(0, 0, '', '', filterQuery11 + this.customerMangeer, this.datepipe.transform(date, 'yyyy-MM-dd'))
@@ -1349,7 +1353,7 @@ export class ListTechnicainMapComponent implements OnInit {
   extractJobDetails(data: any[]): any[] {
     let jobDetails: any[] = [];
     data.forEach((entry) => {
-      let jobData: any = {}; 
+      let jobData: any = {};
       Object.keys(entry).forEach((key) => {
         if (
           key !== 'ID' &&
@@ -1644,7 +1648,7 @@ export class ListTechnicainMapComponent implements OnInit {
     return hours * 60 + minutes;
   }
   private isTimeString(key: string): boolean {
-    return /^\d{2}:\d{2}$/.test(key); 
+    return /^\d{2}:\d{2}$/.test(key);
   }
   generateTimeColumnsFromRange(): string[] {
     const columns: string[] = [];
@@ -1735,7 +1739,7 @@ export class ListTechnicainMapComponent implements OnInit {
                   setTimeout(() => {
                     this.onscrolldata.scrollTo({
                       top: 0,
-                      behavior: 'smooth', 
+                      behavior: 'smooth',
                     });
                   }, 0);
                 }

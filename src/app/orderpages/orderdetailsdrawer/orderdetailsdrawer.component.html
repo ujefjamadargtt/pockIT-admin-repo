@@ -258,6 +258,14 @@
           <div nz-col nzSpan="8" class="order-summary-right">
             ₹ {{ vieworderdata.orderData[0].TAX_AMOUNT | number }}
           </div>
+          <div nz-col nzSpan="16" class="order-summary-right">(+)&nbsp;Inventory Amount</div>
+          <div nz-col nzSpan="8" class="order-summary-right">
+            ₹ {{ vieworderdata.orderData[0].TOTAL_INVENTORY_AMOUNT | number }}
+          </div>
+          <div nz-col nzSpan="16" class="order-summary-right">(-) Wallet Amount</div>
+          <div nz-col nzSpan="8" class="order-summary-right">
+            ₹ {{ vieworderdata.orderData[0].WALLET_AMOUNT_USED | number }}
+          </div>
         </div>
         <div nz-row class="order-summary-total">
           <div nz-col nzSpan="16" class="order-summary-total-label">Order Total</div>
@@ -304,14 +312,17 @@
     " [nzColor]="'#00b778'">
         Order Accepted
       </nz-tag>
-      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'" [nzColor]="'#e50000'">Order Rejected</nz-tag>
-      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'" [nzColor]="'#0351ea'">Order Scheduled</nz-tag>
+      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OR'"
+        [nzColor]="'#e50000'">Order Rejected</nz-tag>
+      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'OS'"
+        [nzColor]="'#0351ea'">Order Scheduled</nz-tag>
       <nz-tag class="order-status-tag" *ngIf="
           (vieworderdata.orderData[0]['ORDER_STATUS'] == 'OP' ||
             vieworderdata.orderData[0]['ORDER_STATUS'] == 'OA') &&
           vieworderdata.orderData[0]['REFUND_STATUS'] == 'P'
         " [nzColor]="'#d10404'">Cancel Requested</nz-tag>
-      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'ON'" [nzColor]="'#0351ea'">Order Ongoing</nz-tag>
+      <nz-tag class="order-status-tag" *ngIf="vieworderdata.orderData[0]['ORDER_STATUS'] == 'ON'"
+        [nzColor]="'#0351ea'">Order Ongoing</nz-tag>
       <nz-tag class="order-status-tag" *ngIf="
           vieworderdata.orderData[0]['ORDER_STATUS'] == 'OC' ||
           vieworderdata.orderData[0]['ORDER_STATUS'] == 'CO'
@@ -663,8 +674,7 @@
                         (mouseenter)="checkOverflow(textContainerpinn, tooltipRefter)">
                         Territory :{{ vieworderdata.orderData[0].TERRITORY_NAME }}
                       </div>
-                      <div class="subnam job-service-container truncate-text" nz-col nzSpan="24"
-                        [nzTooltipTitle]="
+                      <div class="subnam job-service-container truncate-text" nz-col nzSpan="24" [nzTooltipTitle]="
                           isTextOverflow ? data.SERVICE_NAME : null
                         " #tooltipRefser="nzTooltip" nz-tooltip #textContainerpinn (mouseenter)="
                           checkOverflow(textContainerpinn, tooltipRefser)
@@ -743,7 +753,7 @@
                         <span *ngIf="
                             part.JOB_CARD_NO != undefined &&
                             part.JOB_CARD_NO != null
-                          "class="parts-jobcard-badge
+                          " class="parts-jobcard-badge
                           " [attr.title]="part.JOB_CARD_NO">
                           {{ part.JOB_CARD_NO }}</span>
                       </div>
@@ -788,11 +798,16 @@
                         Quantity : {{ part.QUANTITY }}
                       </div>
                       <div class="subnam parts-status-col" nz-col nzSpan="9">
-                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'P'" [nzColor]="'#ff9d19'">Pending</nz-tag>
-                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'A'" [nzColor]="'green'">Approved</nz-tag>
-                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'AC'" [nzColor]="'green'">Approved By Customer</nz-tag>
-                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'AP'" [nzColor]="'green'">Auto Approved</nz-tag>
-                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'R'" [nzColor]="'red'">Rejected</nz-tag>                       
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'P'"
+                          [nzColor]="'#ff9d19'">Pending</nz-tag>
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'A'"
+                          [nzColor]="'green'">Approved</nz-tag>
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'AC'" [nzColor]="'green'">Approved By
+                          Customer</nz-tag>
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'AP'" [nzColor]="'green'">Auto
+                          Approved</nz-tag>
+                        <nz-tag class="parts-status-tag" *ngIf="part['STATUS'] == 'R'"
+                          [nzColor]="'red'">Rejected</nz-tag>
                       </div>
                     </div>
                   </div>

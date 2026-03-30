@@ -1173,6 +1173,14 @@ export class ApiServiceService {
       this.options
     );
   }
+  createCustomerWalletData(data: any): Observable<any> {
+    data.CLIENT_ID = this.clientId;
+    return this.httpClient.post<any>(
+      this.url + 'customerWallet/createWalletTransaction',
+      JSON.stringify(data),
+      this.options
+    );
+  }
   getCustomerCategeroyData(
     pageIndex: number,
     pageSize: number,
@@ -9815,6 +9823,270 @@ export class ApiServiceService {
     };
     return this.httpClient.post<any>(
       this.baseUrl + 'api/invoice/invoiceIntoZIP',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getAllWalletlist(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    this.getheader();
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.url + 'customerWallet/getwalletlist',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  saveWalletTransaction(data: any): Observable<any> {
+    return this.httpClient.post<any>(
+      this.url + 'customerWallet/saveWalletTransaction',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  searchTerritory(data: any): Observable<any> {
+    return this.httpClient.post<any>(
+      this.url + 'territory/search',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getTerritoryCustomerCount(payload: any): Observable<any> {
+    return this.httpClient.post<any>(
+      this.url + 'customerWallet/getTerritorywiseCustomers',
+      payload,
+      this.options
+    );
+  }
+  getStaticInventoryData(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string,
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/staticInventory/get',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  createStatucInventory(data: any): Observable<any> {
+    data.CLIENT_ID = this.clientId;
+    let options = {
+      ...this.options,
+      observe: 'response' as const,
+    };
+    return this.httpClient.post<any>(
+      this.url + 'staticInventory/create',
+      JSON.stringify(data),
+      options
+    );
+  }
+  updateStaticInventory(user: any): Observable<any> {
+    user.CLIENT_ID = this.clientId;
+    let options = {
+      ...this.options,
+      observe: 'response' as const,
+    };
+    return this.httpClient.put<any>(
+      this.url + 'staticInventory/update',
+      JSON.stringify(user),
+      options
+    );
+  }
+  defaultWalletTransactionGet(data: any): Observable<any> {
+    return this.httpClient.post<any>(
+      this.url + 'defaultWalletTransaction/get',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  defaultWalletTransactionCreate(data: any): Observable<any> {
+    data.CLIENT_ID = this.clientId
+    return this.httpClient.post<any>(
+      this.url + 'defaultWalletTransaction/create',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  defaultWalletTransactionUpdate(data: any): Observable<any> {
+    data.CLIENT_ID = this.clientId;
+    return this.httpClient.put<any>(
+      this.url + 'defaultWalletTransaction/ update',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getCustomerWalletTransaction(data: any): Observable<any> {
+    return this.httpClient.post<any>(
+      this.url + 'customerWallet/getCustomerWalletTransaction',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  saveDefaultWalletAmount(data: any): Observable<any> {
+    data.CLIENT_ID = this.clientId;
+    return this.httpClient.post<any>(
+      this.url + 'defaultWalletTransaction/upsertDefaultData',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getCustomerWiseWalletReport(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/walletReports/getCustomerWiseWalletReport',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getCustomerWalletTransactionReport(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/walletReports/getCustomerWalletTransactionReport',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getTypewiseTransactionReport(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/walletReports/getTypewiseTransactionReport',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getCustomerwiseDebitedReport(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/walletReports/getCustomerwiseDebitedReport',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getCustomerwiseDebitedsummaryReport(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/walletReports/getCustomerwiseDebitedSummaryReport',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getTerritorywiseWalletReport(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/walletReports/getTerritorywiseWalletReport',
+      JSON.stringify(data),
+      this.options
+    );
+  }
+  getTechnicianWiseStaticInventoryReport(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/reports/technicianwisestaticInventoryReport',
       JSON.stringify(data),
       this.options
     );

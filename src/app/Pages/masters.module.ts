@@ -246,6 +246,14 @@ import { CouponterritotymappingComponent } from './components/Coupon/couponterri
 import { TerritoryCalendarComponent } from './components/Territory Master/territory-calendar/territory-calendar.component';
 import { OrdercancelchargeReportComponent } from './Reports/ordercancelcharge-report/ordercancelcharge-report.component';
 import { InvoiceReportsComponent } from './Reports/invoice-reports/invoice-reports.component';
+import { WalletListComponent } from './components/Wallet Master/wallet-list/wallet-list.component';
+import { WalletListDrawerComponent } from './components/Wallet Master/wallet-list-drawer/wallet-list-drawer.component';
+import { CustomerwiseWalletReportComponent } from './Reports/customerwise-wallet-report/customerwise-wallet-report.component';
+import { CustomerwiseWalletTransactionReportComponent } from './Reports/customerwise-wallet-transaction-report/customerwise-wallet-transaction-report.component';
+import { TypewiseTransactionReportComponent } from './Reports/typewise-transaction-report/typewise-transaction-report.component';
+import { CustomerUsageReportComponent } from './Reports/customer-usage-report/customer-usage-report.component';
+import { TerritoryWiseWalletTransactionComponent } from './Reports/territory-wise-wallet-transaction/territory-wise-wallet-transaction.component';
+import { CustomerUsageDetailsReportComponent } from './Reports/customer-usage-details-report/customer-usage-details-report.component';
 @NgModule({
   declarations: [
     MastersComponent,
@@ -437,6 +445,14 @@ import { InvoiceReportsComponent } from './Reports/invoice-reports/invoice-repor
     TerritoryCalendarComponent,
     OrdercancelchargeReportComponent,
     InvoiceReportsComponent,
+    WalletListComponent,
+    WalletListDrawerComponent,
+    CustomerwiseWalletReportComponent,
+    CustomerwiseWalletTransactionReportComponent,
+    TypewiseTransactionReportComponent,
+    CustomerUsageReportComponent,
+    TerritoryWiseWalletTransactionComponent,
+    CustomerUsageDetailsReportComponent 
   ],
   imports: [
     // PickerComponent,

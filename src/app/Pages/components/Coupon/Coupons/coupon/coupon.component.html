@@ -166,7 +166,8 @@
                 <nz-input-group nzAddOnAfter="₹">
                   <input nz-input (keypress)="commonFunction.onlynum($event)" name="coupon_value"
                     [(ngModel)]="data.COUPON_VALUE" required autocomplete="off" placeholder="Enter Coupon Value"
-                    class="coupon-width-full-a1" (ngModelChange)="updateMaxValue($event)" />
+                    class="coupon-width-full-a1" />
+                  <!-- class="coupon-width-full-a1" (ngModelChange)="updateMaxValue($event)" /> -->
                 </nz-input-group>
               </nz-form-control>
             </nz-form-item>
@@ -188,9 +189,9 @@
               <nz-form-control nzErrorTip="Please Enter Coupon Max Value">
                 <nz-input-group nzAddOnAfter="₹">
                   <input nz-input (keypress)="allowDecimal($event)" (paste)="onPaste($event)" name="coupon_max_value"
-                    [(ngModel)]="data.COUPON_MAX_VALUE" (ngModelChange)="onCouponMaxValueChange($event)" required
-                    autocomplete="off" placeholder="Enter Coupon Max Value" [disabled]="data.COUPON_VALUE_TYPE == 'A'"
-                    class="coupon-width-full-a1" />
+                    [(ngModel)]="data.COUPON_MAX_VALUE" required autocomplete="off" placeholder="Enter Coupon Max Value"
+                    [disabled]="data.COUPON_VALUE_TYPE == 'A'" class="coupon-width-full-a1" />
+                  <!-- [(ngModel)]="data.COUPON_MAX_VALUE" (ngModelChange)="onCouponMaxValueChange($event)" required -->
                 </nz-input-group>
               </nz-form-control>
             </nz-form-item>
@@ -207,7 +208,7 @@
             </div>
             <div nz-col nzSpan="12">
               <nz-form-item>
-                <nz-form-label nzNoColon>Is For Public</nz-form-label>
+                <nz-form-label nzNoColon>For Public?</nz-form-label>
                 <nz-form-control>
                   <nz-switch name="is_public_switch" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                     [(ngModel)]="data.IS_PUBLIC"></nz-switch>

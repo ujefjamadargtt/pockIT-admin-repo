@@ -165,55 +165,55 @@ export class InventorymasterComponent {
   onCategoryChange(): void {
     if (this.selectedcategories?.length) {
       this.search();
-      this.iscategoryFilterApplied = true; 
+      this.iscategoryFilterApplied = true;
     } else {
       this.search();
-      this.iscategoryFilterApplied = false; 
+      this.iscategoryFilterApplied = false;
     }
   }
   onsubCategoryChange(): void {
     if (this.selectedSubcategories?.length) {
       this.search();
-      this.issubcategoryFilterApplied = true; 
+      this.issubcategoryFilterApplied = true;
     } else {
       this.search();
-      this.issubcategoryFilterApplied = false; 
+      this.issubcategoryFilterApplied = false;
     }
   }
   onUnitChange(): void {
     if (this.selectedUnits?.length) {
       this.search();
-      this.isunitFilterApplied = true; 
+      this.isunitFilterApplied = true;
     } else {
       this.search();
-      this.isunitFilterApplied = false; 
+      this.isunitFilterApplied = false;
     }
   }
   onlocationChange(): void {
     if (this.selectedwarehouseLocations?.length) {
       this.search();
-      this.islocationFilterApplied = true; 
+      this.islocationFilterApplied = true;
     } else {
       this.search();
-      this.islocationFilterApplied = false; 
+      this.islocationFilterApplied = false;
     }
   }
   onwarehouseChange(): void {
     if (this.selectedWarehouses?.length) {
       this.search();
-      this.iswarehouseFilterApplied = true; 
+      this.iswarehouseFilterApplied = true;
     } else {
       this.search();
-      this.iswarehouseFilterApplied = false; 
+      this.iswarehouseFilterApplied = false;
     }
   }
   onDateChange(): void {
     if (this.selectedDate) {
       this.search();
-      this.isdateFilterApplied = true; 
+      this.isdateFilterApplied = true;
     } else {
       this.search();
-      this.isdateFilterApplied = false; 
+      this.isdateFilterApplied = false;
     }
   }
   onKeyup(event: KeyboardEvent): void {
@@ -288,7 +288,7 @@ export class InventorymasterComponent {
     this.getWarehouLoactionData();
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
-      : '0'; 
+      : '0';
     this.USER_ID = Number(decryptedUserId);
   }
   isColumnVisible(key: any): boolean {
@@ -621,6 +621,11 @@ export class InventorymasterComponent {
     this.drawerData = new InventoryMaster();
     this.drawerVisible = true;
   }
+  staticdrawerVisible: boolean = false;
+  addStatic(): void {
+    this.drawerTitle = 'Add Static Inventory';
+    this.staticdrawerVisible = true;
+  }
   edit(data: InventoryMaster): void {
     this.disableItems = true;
     this.ShowTax = false;
@@ -693,7 +698,7 @@ export class InventorymasterComponent {
     this.unitselect2 = null;
     this.unitselect3 = null;
     if (adjustmentForm) {
-      adjustmentForm.resetForm(); 
+      adjustmentForm.resetForm();
     }
     this.drawerClose();
   }
@@ -750,7 +755,7 @@ export class InventorymasterComponent {
           }
         );
       } else {
-        this.data.ADJUSTED_BY = null; 
+        this.data.ADJUSTED_BY = null;
       }
     }
   }
@@ -1005,7 +1010,7 @@ export class InventorymasterComponent {
       this.showquery = this.query;
       var newQuery = ' AND ' + this.query;
       this.filterQuery1 = newQuery;
-      let sort = ''; 
+      let sort = '';
       let filterQuery = '';
       this.api
         .getInventory(
@@ -1099,7 +1104,7 @@ export class InventorymasterComponent {
     if (this.QUERY_NAME.trim()) {
       this.INSERT_NAMES.push({ query: this.showquery, name: this.QUERY_NAME });
       this.visiblesave = false;
-      this.QUERY_NAME = ''; 
+      this.QUERY_NAME = '';
     } else {
     }
   }
@@ -1125,10 +1130,10 @@ export class InventorymasterComponent {
     this.search(true);
   }
   reset() { }
-  USER_ID: number; 
-  savedFilters: any; 
-  currentClientId = 1; 
-  TabId: number; 
+  USER_ID: number;
+  savedFilters: any;
+  currentClientId = 1;
+  TabId: number;
   filterloading: boolean = false;
   whichbutton: any;
   updateButton: any;
@@ -1142,7 +1147,7 @@ export class InventorymasterComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) 
+      )
       .subscribe(
         (response) => {
           if (response.code === 200) {
@@ -1240,7 +1245,7 @@ export class InventorymasterComponent {
   isModalVisible = false;
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    this.isModalVisible = true; 
+    this.isModalVisible = true;
   }
   drawerFilterVisible = false;
   drawerfilterClose(buttontype, updateButton) {
@@ -1338,8 +1343,8 @@ export class InventorymasterComponent {
     this.drawerflterClose();
   }
   handleCancel(): void {
-    this.isModalVisible = false; 
-    this.selectedQuery = ''; 
+    this.isModalVisible = false;
+    this.selectedQuery = '';
   }
   filterFields: any[] = [
     {
@@ -1593,6 +1598,9 @@ export class InventorymasterComponent {
   }
   drawerCloseStockDetails(): void {
     this.drawerStockDetails = false;
+  }
+  drawerCloseStaticInventory(): void {
+    this.staticdrawerVisible = false;
   }
   get closeCallbackStockDetails() {
     return this.drawerCloseStockDetails.bind(this);

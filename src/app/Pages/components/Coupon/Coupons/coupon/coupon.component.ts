@@ -59,11 +59,13 @@ export class CouponComponent implements OnInit {
       if (
         parseInt(value, 10) > parseInt(this.data.MIN_CART_AMOUNT.toString(), 10)
       ) {
-        this.message.info(
-          'Coupon value should be less than min cart amount',
-          ''
-        );
-        this.Ref.nativeElement.value = null;
+        // this.message.info(
+        //   'Coupon value should be less than min cart amount',
+        //   ''
+        // );
+        if (this.Ref && this.Ref.nativeElement) {
+          this.Ref.nativeElement.value = null;
+        }
         this.data.COUPON_VALUE = null;
         this.data.COUPON_MAX_VALUE = null;
         return;
@@ -79,11 +81,13 @@ export class CouponComponent implements OnInit {
         parseInt(maxValue, 10) >
         parseInt(this.data.MIN_CART_AMOUNT.toString(), 10)
       ) {
-        this.message.info(
-          'Coupon max value should be less than min cart amount',
-          ''
-        );
-        this.Ref2.nativeElement.value = null;
+        // this.message.info(
+        //   'Coupon max value should be less than min cart amount',
+        //   ''
+        // );
+        if (this.Ref2 && this.Ref2.nativeElement) {
+          this.Ref2.nativeElement.value = null;
+        }
         this.data.COUPON_MAX_VALUE = null;
       }
     }
@@ -127,12 +131,12 @@ export class CouponComponent implements OnInit {
   };
   disabledStartDate = (current: Date): boolean => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    today.setHours(0, 0, 0, 0);
     return current && current < today;
   };
   disabledEndDate = (current: Date): boolean => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    today.setHours(0, 0, 0, 0);
     if (this.data.START_DATE) {
       const startDate = new Date(this.data.START_DATE);
       startDate.setHours(0, 0, 0, 0);
@@ -150,15 +154,15 @@ export class CouponComponent implements OnInit {
       ) {
         return {
           nzDisabledHours: () =>
-            Array.from({ length: now.getHours() }, (_, i) => i), 
+            Array.from({ length: now.getHours() }, (_, i) => i),
           nzDisabledMinutes: (hour: number) =>
             hour === now.getHours()
               ? Array.from({ length: now.getMinutes() }, (_, i) => i)
-              : [], 
+              : [],
           nzDisabledSeconds: (hour: number, minute: number) =>
             hour === now.getHours() && minute === now.getMinutes()
               ? Array.from({ length: now.getSeconds() }, (_, i) => i)
-              : [], 
+              : [],
         };
       }
     }
@@ -169,8 +173,8 @@ export class CouponComponent implements OnInit {
     };
   };
   disabledDateTime2: any = (current: Date | null) => {
-    if (!this.data.START_DATE) return {}; 
-    const startDate = new Date(this.data.START_DATE); 
+    if (!this.data.START_DATE) return {};
+    const startDate = new Date(this.data.START_DATE);
     if (current && current instanceof Date) {
       if (
         current.getFullYear() === startDate.getFullYear() &&
@@ -179,15 +183,15 @@ export class CouponComponent implements OnInit {
       ) {
         return {
           nzDisabledHours: () =>
-            Array.from({ length: startDate.getHours() }, (_, i) => i), 
+            Array.from({ length: startDate.getHours() }, (_, i) => i),
           nzDisabledMinutes: (hour: number) =>
             hour === startDate.getHours()
               ? Array.from({ length: startDate.getMinutes() + 1 }, (_, i) => i)
-              : [], 
+              : [],
           nzDisabledSeconds: (hour: number, minute: number) =>
             hour === startDate.getHours() && minute === startDate.getMinutes()
               ? Array.from({ length: startDate.getSeconds() + 1 }, (_, i) => i)
-              : [], 
+              : [],
         };
       }
     }
@@ -206,9 +210,9 @@ export class CouponComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const newValue = input.value + event.key;
     if (!/^\d*$/.test(event.key)) {
-      event.preventDefault(); 
+      event.preventDefault();
     } else if (parseInt(newValue, 10) > 100) {
-      event.preventDefault(); 
+      event.preventDefault();
     }
   }
   public commonFunction = new CommonFunctionService();
@@ -252,7 +256,7 @@ export class CouponComponent implements OnInit {
       this.data.COUPON_MAX_VALUE = null;
     }
   }
-  
+
   resetDrawer(couponMasterPage: NgForm) {
     this.data = new Coupan();
     couponMasterPage.form.markAsPristine();
@@ -513,55 +517,55 @@ export class CouponComponent implements OnInit {
       return true;
     }
   }
-  
-allowDecimal(event: KeyboardEvent): boolean {
-  const charCode = event.which ? event.which : event.keyCode;
-  const inputValue = (event.target as HTMLInputElement).value;
-  
-  if ([8, 9, 27, 13, 46].indexOf(charCode) !== -1 ||
-      
-      (charCode === 65 && event.ctrlKey === true) || 
-      (charCode === 67 && event.ctrlKey === true) || 
-      (charCode === 86 && event.ctrlKey === true) || 
-      (charCode === 88 && event.ctrlKey === true) || 
-      
-      (charCode >= 35 && charCode <= 39)) {
-    return true;
-  }
-  
-  if (charCode >= 48 && charCode <= 57) {
-    return true;
-  }
-  
-  if (charCode === 46 || charCode === 110 || charCode === 190) { 
-    if (inputValue.indexOf('.') !== -1) {
-      event.preventDefault();
-      return false;
-    }
-    return true;
-  }
-  
-  event.preventDefault();
-  return false;
-}
 
-onPaste(event: ClipboardEvent): void {
-  event.preventDefault();
-  const pastedText = event.clipboardData?.getData('text') || '';
-  
-  const regex = /^\d*\.?\d*$/;
-  if (regex.test(pastedText) && pastedText !== '') {
-    const input = event.target as HTMLInputElement;
-    const currentValue = input.value;
-    const start = input.selectionStart || 0;
-    const end = input.selectionEnd || 0;
-    const newValue = currentValue.substring(0, start) + pastedText + currentValue.substring(end);
-    
-    if ((newValue.match(/\./g) || []).length <= 1) {
-      input.value = newValue;
-      this.data.COUPON_MAX_VALUE = newValue;
-      this.onCouponMaxValueChange(this.data.COUPON_MAX_VALUE);
+  allowDecimal(event: KeyboardEvent): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    const inputValue = (event.target as HTMLInputElement).value;
+
+    if ([8, 9, 27, 13, 46].indexOf(charCode) !== -1 ||
+
+      (charCode === 65 && event.ctrlKey === true) ||
+      (charCode === 67 && event.ctrlKey === true) ||
+      (charCode === 86 && event.ctrlKey === true) ||
+      (charCode === 88 && event.ctrlKey === true) ||
+
+      (charCode >= 35 && charCode <= 39)) {
+      return true;
+    }
+
+    if (charCode >= 48 && charCode <= 57) {
+      return true;
+    }
+
+    if (charCode === 46 || charCode === 110 || charCode === 190) {
+      if (inputValue.indexOf('.') !== -1) {
+        event.preventDefault();
+        return false;
+      }
+      return true;
+    }
+
+    event.preventDefault();
+    return false;
+  }
+
+  onPaste(event: ClipboardEvent): void {
+    event.preventDefault();
+    const pastedText = event.clipboardData?.getData('text') || '';
+
+    const regex = /^\d*\.?\d*$/;
+    if (regex.test(pastedText) && pastedText !== '') {
+      const input = event.target as HTMLInputElement;
+      const currentValue = input.value;
+      const start = input.selectionStart || 0;
+      const end = input.selectionEnd || 0;
+      const newValue = currentValue.substring(0, start) + pastedText + currentValue.substring(end);
+
+      if ((newValue.match(/\./g) || []).length <= 1) {
+        input.value = newValue;
+        this.data.COUPON_MAX_VALUE = newValue;
+        this.onCouponMaxValueChange(this.data.COUPON_MAX_VALUE);
+      }
     }
   }
-}
 }

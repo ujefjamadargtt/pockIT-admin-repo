@@ -50,10 +50,13 @@ export class SkillDrawerComponent {
         if (this.data.ID) {
           this.api.updateSkill(this.data).subscribe(
             (successCode: any) => {
-              if (successCode.code == 200) {
+              if (successCode.code === 200) {
                 this.isSpinning = false;
                 this.message.success('Skill Updated Successfully', '');
                 if (!addNew) this.drawerClose();
+              } else if (successCode.code === 301) {
+                this.message.error('Skill Already Exists', '');
+                this.isSpinning = false;
               } else {
                 this.message.error('Skill Updation Failed', '');
                 this.isSpinning = false;
@@ -79,6 +82,9 @@ export class SkillDrawerComponent {
                   this.data = new SkillMasterData();
                   this.resetDrawer(Skillmaster);
                 }
+              } else if (successCode.code === 301) {
+                this.message.error('Skill Already Exists', '');
+                this.isSpinning = false;
               } else {
                 this.isSpinning = false;
                 this.message.error('Skill Creation Failed', '');

@@ -5,7 +5,7 @@ export const url = {
 
   // link: 'https://pockitadmin.uvtechsoft.com:8767/', // Testing Server
 
-  // link: 'https://pn5m5nf6-8767.inc1.devtunnels.ms/',// ngrok darshan
+  // link: 'https://pn5m5nf6-9090.inc1.devtunnels.ms/', // local
 };
 export const appkeys = {
   gmUrl: 'http://gm.tecpool.in:8079/',

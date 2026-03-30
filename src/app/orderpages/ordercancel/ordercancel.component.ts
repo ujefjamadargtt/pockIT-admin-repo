@@ -389,7 +389,7 @@ export class OrdercancelComponent {
         this.isOrderDateApplied = true;
       }
     } else {
-      this.orderDateText = null; 
+      this.orderDateText = null;
       this.search();
       this.isOrderDateApplied = false;
     }
@@ -397,7 +397,7 @@ export class OrdercancelComponent {
   resetDateFilter(): void {
     this.orderDateText = '';
     this.isOrderDateApplied = false;
-    this.search(); 
+    this.search();
   }
   statusFilter: string | undefined = undefined;
   onStatusFilterChange(selectedStatus: string) {
@@ -420,10 +420,10 @@ export class OrdercancelComponent {
   drawerFilterVisible: boolean = false;
   applyCondition: any;
   isLoading = false;
-  isModalVisible = false; 
-  selectedQuery: string = ''; 
-  savedFilters: any; 
-  currentClientId = 1; 
+  isModalVisible = false;
+  selectedQuery: string = '';
+  savedFilters: any;
+  currentClientId = 1;
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -468,7 +468,7 @@ export class OrdercancelComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) 
+      )
       .subscribe(
         (response) => {
           if (response.code === 200) {

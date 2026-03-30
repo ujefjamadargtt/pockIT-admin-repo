@@ -194,17 +194,17 @@ export class AddbannermasterComponent implements OnInit {
       this.croppedImage = await new Promise((resolve, reject) => {
         const img = new Image();
         img.src = base64;
-        img.crossOrigin = 'Anonymous'; 
+        img.crossOrigin = 'Anonymous';
         img.onload = async () => {
-          await img.decode(); 
+          await img.decode();
           const tempCanvas = document.createElement('canvas');
           const tempCtx = tempCanvas.getContext('2d');
           if (!tempCtx) return reject('Canvas context not available');
-          tempCanvas.width = img.width * 2; 
+          tempCanvas.width = img.width * 2;
           tempCanvas.height = img.height * 2;
           tempCtx.imageSmoothingEnabled = true;
           tempCtx.imageSmoothingQuality = 'high';
-          tempCtx.fillStyle = 'white'; 
+          tempCtx.fillStyle = 'white';
           tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
           tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
           const downscaleCanvas = (
@@ -219,16 +219,16 @@ export class AddbannermasterComponent implements OnInit {
             newCanvas.height = height;
             newCtx.imageSmoothingEnabled = true;
             newCtx.imageSmoothingQuality = 'high';
-            newCtx.fillStyle = 'white'; 
+            newCtx.fillStyle = 'white';
             newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
             newCtx.drawImage(sourceCanvas, 0, 0, width, height);
             return newCanvas;
           };
           let currentCanvas = tempCanvas;
           const downscaleSteps = [
-            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)], 
-            [finalWidth * 2, finalHeight * 2], 
-            [finalWidth, finalHeight], 
+            [Math.floor(img.width * 1.5), Math.floor(img.height * 1.5)],
+            [finalWidth * 2, finalHeight * 2],
+            [finalWidth, finalHeight],
           ];
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
@@ -244,7 +244,7 @@ export class AddbannermasterComponent implements OnInit {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-        const sizeInMB = blob.size / (1024 * 1024); 
+        const sizeInMB = blob.size / (1024 * 1024);
         if (sizeInMB > 1 && quality > 0.1) {
           this.compressImage(canvas, quality - 0.1);
         } else {
@@ -257,7 +257,7 @@ export class AddbannermasterComponent implements OnInit {
       },
       'image/jpeg',
       quality
-    ); 
+    );
   }
   imageWidth: number = 0;
   imageHeight: number = 0;
@@ -552,21 +552,21 @@ export class AddbannermasterComponent implements OnInit {
   imageshow;
   imagePreview: any;
   selectedFile: any;
-  allowedWidth; 
+  allowedWidth;
   allowedHeight;
   onFileSelected(event: any) {
-    const maxFileSize = 1 * 1024 * 1024; 
+    const maxFileSize = 1 * 1024 * 1024;
     if (this.data.BANNER_TYPE === 'M' && this.data.BANNER_FOR === 'W') {
-      this.allowedWidth = 1290;
-      this.allowedHeight = 300;
+      this.allowedWidth = 1800;
+      this.allowedHeight = 1037;
     }
     if (this.data.BANNER_TYPE === 'M' && this.data.BANNER_FOR === 'M') {
-      this.allowedWidth = 645;
-      this.allowedHeight = 299;
+      this.allowedWidth = 1080;
+      this.allowedHeight = 622;
     }
     if (this.data.BANNER_TYPE === 'O') {
-      this.allowedWidth = 364;
-      this.allowedHeight = 400;
+      this.allowedWidth = 1080;
+      this.allowedHeight = 622;
     }
     if (
       event.target.files[0]?.type === 'image/jpeg' ||

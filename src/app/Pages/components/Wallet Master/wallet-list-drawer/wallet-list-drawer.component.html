@@ -1,0 +1,91 @@
+<nz-row class="toolbar-row" justify="end" align="middle">
+  <nz-col>
+    <form nz-form [nzLayout]="'inline'" class="toolbar-form">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input nz-input type="text" name="search" autocomplete="off" placeholder="Min 3 chars required"
+            [(ngModel)]="searchText" (keyup)="onKeyupS($event)" (keydown.enter)="onEnterKey($event)" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" nzSearch (click)="search()">
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </nz-col>
+</nz-row>
+<nz-row *ngIf="transactionData?.length" class="summary-row">
+  <nz-col nzSpan="24">
+    <div class="txn-summary-card">
+      <nz-row nzGutter="24">
+        <nz-col nzSpan="12" class="txn-date">
+          <i nz-icon nzType="calendar"></i>
+          Transaction Date :
+          {{ transactionData[0]?.TRANSACTION_DATE | date: "dd/MM/yyyy hh:mma" }}
+        </nz-col>
+        <nz-col nzSpan="12" class="txn-amount">
+          <i nz-icon nzType="wallet"></i>
+          Transaction Amount : ₹
+          {{ transactionData[0]?.WALLET_AMOUNT }}
+        </nz-col>
+      </nz-row>
+      <nz-row nzGutter="24" style="margin-top: 4px;">
+        <nz-col nzSpan="12" class="txn-expiry" *ngIf="transactionData[0]?.TYPE !== 'RF'">
+          <i nz-icon nzType="clock-circle"></i>
+          Expiry Date :
+          {{ transactionData[0]?.EXPIRY_DATE | date: "dd/MM/yyyy" }}
+        </nz-col>
+        <nz-col
+          nzSpan="12"
+          class="txn-expiry"
+          [nzOffset]="transactionData[0]?.TYPE === 'RF' ? 12 : 0"
+        >
+          <i nz-icon nzType="clock-circle"></i>
+          Total Spent Amount :
+          ₹ {{ totalSpendAmt | number:'1.2-2' }} </nz-col>
+      </nz-row>
+    </div>
+  </nz-col>
+</nz-row>
+<nz-row class="table-row">
+  <nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" [nzData]="transactionData" #walletTable nzBordered [nzFrontPagination]="false"
+      [nzLoading]="isSpinning" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+      [nzPageSize]="10" nzShowSizeChanger (nzQueryParams)="sort($event)" nzSize="small"
+      [nzScroll]="{ x: '700px', y: '39vh' }" ngSkipHydration [nzShowPagination]="true">
+      <thead nzSingleSort>
+        <tr>
+          <th nzShowSort [nzSortFn]="true" nzColumnKey="{{ 'CUSTOMER_NAME' }}" nzWidth="150px">
+            Customer Name
+          </th>
+          <th nzShowSort [nzSortFn]="true" nzColumnKey="{{ 'WALLET_AMOUNT' }}" nzWidth="80px" class="tbl-center">
+            Amount
+          </th>
+          <th nzWidth="80px" class="tbl-center">Used Amount</th>
+          <th nzShowSort [nzSortFn]="true" nzColumnKey="{{ 'BALANCE' }}" nzWidth="90px" class="tbl-center">
+            Balance
+          </th>
+          <th nzWidth="80px" class="tbl-center">Status</th>
+          <th nzWidth="80px" class="tbl-center" *ngIf="data.TYPE!='RF'">Expired</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of walletTable.data">
+          <td>{{ data.CUSTOMER_NAME || "-" }}</td>
+          <td class="tbl-center">₹ {{ data.WALLET_AMOUNT ?? "-" }}</td>
+          <td class="tbl-center">₹ {{ data.USED_AMT ?? "-" }}</td>
+          <td class="tbl-center">₹ {{ data.BALANCE ?? "-" }}</td>
+          <td class="tbl-center" align="center">
+            <nz-tag [nzColor]="data.STATUS === 'S' ? 'green' : 'red'">
+              {{ data.STATUS === "S" ? "Success" : "Failed" }}
+            </nz-tag>
+          </td>
+          <td class="tbl-center" *ngIf="data.TYPE!='RF'" align="center">
+            {{data.IS_EXPIRED === 0 ? 'No' : 'Yes'}}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-col>
+</nz-row>

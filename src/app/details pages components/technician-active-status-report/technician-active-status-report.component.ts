@@ -1386,17 +1386,17 @@ VEHICLE_NO
       this.getViewJobs(data);
       this.viewJobsdrawerTitle = `Jobs of ${data.NAME}`;
     } else {
-      if (this.decreptedroleIDString == '8' || this.decreptedroleIDString == '1') {
-        this.viewJobsDrawerVisible = true;
-        this.viewjobsdata = data;
-        this.getViewJobs(data);
-        this.viewJobsdrawerTitle = `Jobs of ${data.NAME}`;
-      } else {
+      // if (this.decreptedroleIDString == '8' || this.decreptedroleIDString == '1') {
+      //   this.viewJobsDrawerVisible = true;
+      //   this.viewjobsdata = data;
+      //   this.getViewJobs(data);
+      //   this.viewJobsdrawerTitle = `Jobs of ${data.NAME}`;
+      // } else {
         this.message.error(
           'No territory has been assigned to you. Please contact the Admin.',
           ''
         );
-      }
+      // }
     }
   }
   viewJobsdrawerClose(): void {

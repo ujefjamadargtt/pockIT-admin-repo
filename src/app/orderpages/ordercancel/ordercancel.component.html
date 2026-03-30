@@ -165,6 +165,14 @@
                 }"></span>
                         </nz-filter-trigger>
                     </th>
+                    <th nzShowSort nzColumnKey="PAYABLE_AMOUNT" nzWidth="150px" class="ordcancel-th-center"
+                        [nzSortFn]="true" nzCustomFilter>
+                        Paid Amount
+                    </th>
+                    <th nzShowSort nzColumnKey="WALLET_AMOUNT_USED" nzWidth="150px" class="ordcancel-th-center"
+                        [nzSortFn]="true" nzCustomFilter>
+                        Wallet Used
+                    </th>
                     <th nzWidth="150px" class="ordcancel-th-bold-center" nzColumnKey="{{ 'ORDER_STATUS_NAME' }}"
                         [nzSortFn]="true" [nzFilters]="listOfFilter" [nzFilterFn]="true" [nzFilterMultiple]="false"
                         (nzFilterChange)="onStatusFilterChange($event)">
@@ -194,6 +202,8 @@
                         </div>
                     </td>
                     <td align="right">{{ data["NET_AMOUNT"] ?? "-" }}</td>
+                    <td align="right">{{ data["PAYABLE_AMOUNT"] ?? "-" }}</td>
+                    <td align="right">{{ data["WALLET_AMOUNT_USED"] ?? "-" }}</td>
                     <td align="left" [nzTooltipTitle]="isTextOverflow ? data['ORDER_STATUS_NAME'] : null"
                         #tooltipRef2="nzTooltip" nz-tooltip>
                         <div #textContainer2 class="truncate-text"

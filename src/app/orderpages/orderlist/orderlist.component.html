@@ -3,7 +3,7 @@
     <div class="formname" *ngIf="TYPE == ''">
       <b>
         <span (click)="back()" nz-icon nzType="arrow-left" nzTheme="outline"
-         class="orders-back-icon"></span>&nbsp;&nbsp;Manage Orders
+          class="orders-back-icon"></span>&nbsp;&nbsp;Manage Orders
       </b>
     </div>
   </div>
@@ -80,8 +80,7 @@
                       </div>
                       <div nz-row class="filter-card-actions-row">
                         <div nz-col nzSpan="24" class="filter-card-actions">
-                          <nz-tag nzColor="#2db7f5" (click)="editQuery(item)"
-                           nz-tooltip nzTooltipTitle="Edit Filter"
+                          <nz-tag nzColor="#2db7f5" (click)="editQuery(item)" nz-tooltip nzTooltipTitle="Edit Filter"
                             class="filter-action-tag">
                             <span nz-icon nzType="edit" nzTheme="outline" class="filter-action-icon">
                             </span>&nbsp;&nbsp;Edit</nz-tag>
@@ -152,8 +151,7 @@
                   data['ORDER_STATUS'] == 'OP' &&
                   (data['REFUND_STATUS'] == null ||
                     data['REFUND_STATUS'] == 'R')
-                " (click)="editOrder(data)" nz-icon class="order-edit-icon"  nzType="edit"
-                nzTheme="outline">
+                " (click)="editOrder(data)" nz-icon class="order-edit-icon" nzType="edit" nzTheme="outline">
               </span>
               <span *ngIf="
                   data['ORDER_STATUS'] == 'OP' &&
@@ -243,13 +241,11 @@
                 ₹ {{ data.TOTAL_AMOUNT | number }}
               </span>
               &nbsp;
-              <span *ngIf="
-      data != undefined && data.PAYMENT_MODE == 'COD';
-      else elsepaymodeblock
-    ">
-                Cash On Delivery
+              <span [ngSwitch]="data?.PAYMENT_MODE">
+                <span *ngSwitchCase="'COD'">Cash On Delivery</span>
+                <span *ngSwitchCase="'WAL'">Wallet</span>
+                <span *ngSwitchDefault>Online</span>
               </span>
-              <ng-template #elsepaymodeblock>Online</ng-template>
             </div>
             <div (click)="vieworder(data)" class="subnam order-status-container" nz-col nzSpan="8">
               <nz-tag *ngIf="

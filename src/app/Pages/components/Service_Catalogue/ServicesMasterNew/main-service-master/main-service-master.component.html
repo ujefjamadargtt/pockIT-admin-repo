@@ -198,7 +198,7 @@
       </div>
       <div nz-col nzSpan="4">
         <nz-form-item>
-          <nz-form-label nzNoColon>Job Created Directly?</nz-form-label>
+          <nz-form-label nzNoColon>Sub Services?</nz-form-label>
           <nz-form-control>
             <nz-switch name="statusex" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
               (ngModelChange)="subServiceAvailable($event)" [(ngModel)]="data.IS_PARENT"></nz-switch>
@@ -394,7 +394,7 @@
                   <div nz-row>
                     <div nz-col nzSpan="9">
                       <nz-form-item>
-                        <nz-form-label nzNoColon nzRequired>Quantity</nz-form-label>
+                        <nz-form-label nzNoColon nzRequired>Min Quantity Per Order</nz-form-label>
                         <nz-form-control>
                           <nz-input-group nzCompact>
                             <input nz-input placeholder="Quantity" name="QTY" class="cls-qty-input" required
@@ -529,7 +529,9 @@
                     </div>
                     <div nz-col nzSpan="4">
                       <nz-form-item>
-                        <nz-form-label nzNoColon>Is New?</nz-form-label>
+                        <nz-form-label nzNoColon>New?&nbsp;<span nz-icon nzType="info-circle"
+                            nzTheme="twotone" nz-tooltip
+                            nzTooltipTitle="Is this a new service?"></span></nz-form-label>
                         <nz-form-control>
                           <nz-switch name="isnew" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
                             [(ngModel)]="data.IS_NEW"></nz-switch>

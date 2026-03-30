@@ -1,0 +1,240 @@
+.inv-back-icon-uid {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+.inv-header-right-uid {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+th {
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-weight: bold !important;
+}
+.select {
+  width: 200px;
+  padding: 8px;
+  display: block;
+}
+.search-box {
+  padding: 8px;
+}
+.search-box input {
+  width: 188px;
+  display: block;
+}
+.search-box button {
+  width: 90px;
+}
+.search-button {
+  margin-right: 8px;
+}
+nz-select {
+  width: 100%;
+}
+:host::ng-deep .ant-card-body {
+  padding: 0px;
+}
+.inv-back-icon-uid {
+  font-weight: bold;
+  cursor: pointer;
+}
+.inv-header-right-uid {
+  display: flex;
+  justify-content: flex-end;
+}
+.inv-filter-btn-wrap-uid {
+  width: 47px;
+}
+.flt-row-top-uid {
+  padding-top: 0px;
+}
+.flt-center-uid {
+  text-align: center;
+}
+.flt-card-wrapper-uid {
+  margin-bottom: 8px;
+}
+.flt-card-uid {
+  border: 1px solid #a8a8a8;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+.flt-card-header-uid {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-grow: 1;
+}
+.flt-card-title-uid {
+  color: black;
+  text-align: center;
+  font-size: 25px;
+  white-space: nowrap;
+}
+.flt-check-icon-uid {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.flt-card-actions-row-uid {
+  margin-top: 7px;
+}
+.flt-card-actions-uid {
+  display: flex;
+  justify-content: space-between;
+}
+.flt-action-tag-uid {
+  cursor: pointer;
+  font-size: 10px !important;
+}
+.flt-action-tag-view-uid {
+  cursor: pointer;
+  font-size: 10px !important;
+  margin-right: 0px;
+}
+.flt-action-icon-uid {
+  font-size: 10px !important;
+}
+.flt-nodata-uid {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+.flt-footer-uid {
+  display: flex;
+  justify-content: flex-end;
+  align-items: left;
+  margin-top: 10px;
+}
+.flt-footer-btn-uid {
+  margin-right: 10px;
+}
+.tbl-preline-uid {
+  white-space: pre-line;
+}
+.cat-th-center-bold-uid {
+  font-weight: bold;
+  text-align: center;
+}
+.cat-edit-tag-uid {
+  cursor: pointer;
+}
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+}
+.cat-edit-icon-uid {
+  font-size: 15px;
+}
+.cat-view-tag-uid {
+  cursor: pointer;
+}
+.cat-view-icon-uid {
+  font-size: 15px;
+}
+.cat-filter-input-uid {
+  margin-top: 5px;
+  width: 100%;
+}
+.img-preview-container-uid {
+  height: 300px;
+  overflow: auto;
+}
+.img-preview-uid {
+  height: auto;
+  width: auto;
+  overflow: auto;
+  max-width: 600px;
+  max-height: 400px;
+}
+.selected-query-text {
+  text-align: center;
+}
+.cat-th-center-bold-uid {
+  font-weight: 600 !important;
+  text-align: center !important;
+}
+.cat-edit-tag-uid {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+.cat-edit-icon-uid {
+  font-size: 12px;
+}
+.cat-filter-input-uid {
+  width: 180px;
+}
+.mainnam {
+  font-size: 12px !important;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.subname {
+  color: #4c4c4ceb;
+  font-size: 11px !important;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.search-box {
+  padding: 8px;
+}
+.new-row-highlight {
+  background-color: #e6f7ff !important;
+  transition: background-color 0.3s;
+}
+.selected-query-text {
+  font-family: monospace;
+  font-size: 13px;
+  word-break: break-all;
+  color: #333;
+}
+.inv-filter-btn-wrap-uid {
+  margin-right: 4px;
+}
+.tbl-preline-uid {
+  white-space: pre-line;
+}
+.tbl-edit-tag-uid {
+  cursor: pointer;
+}
+.tbl-save-tag-uid {
+  cursor: pointer;
+  margin-right: 5px;
+}
+.tbl-cancel-tag-uid {
+  cursor: pointer;
+}
+.tbl-input-full-uid {
+  width: 100%;
+}
+.tbl-textarea-full-uid {
+  width: 100%;
+}
+.tbl-input-period-uid {
+  width: 80px;
+}
+.tbl-input-full-uid[type="number"]::-webkit-outer-spin-button,
+.tbl-input-full-uid[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.tbl-input-full-uid[type="number"] {
+    -moz-appearance: textfield;
+}
+.arrow-back-icon {
+    font-weight: bold;
+    cursor: pointer;
+}

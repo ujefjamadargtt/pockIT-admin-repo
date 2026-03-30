@@ -87,6 +87,11 @@ import { APKVersionReportComponent } from './Reports/apkversion-report/apkversio
 import { CustomerwiseOrderDetailedReportComponent } from './Reports/customerwise-order-detailed-report/customerwise-order-detailed-report.component';
 import { OrdercancelchargeReportComponent } from './Reports/ordercancelcharge-report/ordercancelcharge-report.component';
 import { InvoiceReportsComponent } from './Reports/invoice-reports/invoice-reports.component';
+import { WalletListComponent } from './components/Wallet Master/wallet-list/wallet-list.component';
+import { CustomerwiseWalletReportComponent } from './Reports/customerwise-wallet-report/customerwise-wallet-report.component';
+import { TypewiseTransactionReportComponent } from './Reports/typewise-transaction-report/typewise-transaction-report.component';
+import { CustomerUsageReportComponent } from './Reports/customer-usage-report/customer-usage-report.component';
+import { TerritoryWiseWalletTransactionComponent } from './Reports/territory-wise-wallet-transaction/territory-wise-wallet-transaction.component';
 const routes: Routes = [
   {
     path: '',
@@ -295,6 +300,26 @@ const routes: Routes = [
       {
         path: 'invoice-reports',
         component: InvoiceReportsComponent,
+      },
+      {
+        path: 'wallet-list',
+        component: WalletListComponent,
+      },
+      {
+        path: 'customerwise-wallet-report',
+        component: CustomerwiseWalletReportComponent,
+      },
+      {
+        path: 'typewise-transaction-report',
+        component: TypewiseTransactionReportComponent,
+      },
+      {
+        path: 'customer-usage-report',
+        component: CustomerUsageReportComponent,
+      },
+      {
+        path: 'territory-wise-wallet-transaction-report',
+        component: TerritoryWiseWalletTransactionComponent,
       }
     ],
   },
