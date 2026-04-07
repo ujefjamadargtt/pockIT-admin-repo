@@ -98,32 +98,21 @@
           {{ vieworderdata.orderData[0]["EMAIL"] }}
         </a>
       </div>
-      <div class="subnam order-slot-info" nz-col nzSpan="12">
+      <div class="subnam order-slot-info" nz-col nzSpan="12" nzXs="24" nzSm="12">
         <span nzTooltipTitle="Slot time" nz-tooltip class="order-slot-tooltip">
-          <span nz-icon nzType="clock-circle" nzTheme="fill" class="order-slot-icon">
-          </span>
+          <span nz-icon nzType="clock-circle" nzTheme="fill" class="order-slot-icon"></span>
         </span>
         <ng-container *ngIf="vieworderdata.orderData[0]['SLOTS'] as slot">
-          <ng-container *ngIf="slot.includes('Slot 1')">
-            Morning ({{ slot.split('(')[1] }}
-          </ng-container>
-          <ng-container *ngIf="slot.includes('Slot 2')">
-            Afternoon ({{ slot.split('(')[1] }}
-          </ng-container>
-          <ng-container *ngIf="slot.includes('Slot 3')">
-            Evening ({{ slot.split('(')[1] }}
-          </ng-container>
+          <ng-container *ngIf="slot.includes('Slot 1')">Morning ({{ slot.split('(')[1] }}</ng-container>
+          <ng-container *ngIf="slot.includes('Slot 2')">Afternoon ({{ slot.split('(')[1] }}</ng-container>
+          <ng-container *ngIf="slot.includes('Slot 3')">Evening ({{ slot.split('(')[1] }}</ng-container>
         </ng-container>
       </div>
-      <div class="subnam order-service-date-container" nz-col nzSpan="12">
+      <div class="subnam order-service-date-container" nz-col nzSpan="12" nzXs="24" nzSm="12">
         <span class="order-service-date-text">
           <span nz-icon nzType="calendar" nzTheme="fill" class="order-service-date-icon" nzTooltipTitle="Service Date"
-            nz-tooltip>
-          </span>
-          {{
-          vieworderdata.detailsData[0]['EXPECTED_DATE_TIME']
-          | date : 'dd/MMM/yyyy hh:mm a'
-          }}
+            nz-tooltip></span>
+          {{ vieworderdata.detailsData[0]['EXPECTED_DATE_TIME'] | date : 'dd/MMM/yyyy hh:mm a' }}
         </span>
       </div>
     </div>
@@ -236,6 +225,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="subnam order-payable-amount" nz-col nzSpan="24">
+        Customer paid <strong>₹ {{ vieworderdata.orderData[0]['PAYABLE_AMOUNT'] }}</strong> at the time of order
       </div>
       <div nz-col nzSpan="24" class="mainnam">Summary</div>
       <div nz-col nzSpan="24">

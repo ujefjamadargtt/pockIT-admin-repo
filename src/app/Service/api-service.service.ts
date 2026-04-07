@@ -9889,6 +9889,26 @@ export class ApiServiceService {
       this.options
     );
   }
+  getStaticInventoryDataAll(
+    pageIndex: number,
+    pageSize: number,
+    sortKey: string,
+    sortValue: string,
+    filter: string,
+  ): Observable<any> {
+    var data = {
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      sortKey: sortKey,
+      sortValue: sortValue,
+      filter: filter,
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/staticInventory/getAll',
+      JSON.stringify(data),
+      this.options
+    );
+  }
   createStatucInventory(data: any): Observable<any> {
     data.CLIENT_ID = this.clientId;
     let options = {

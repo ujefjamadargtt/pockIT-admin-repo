@@ -31,6 +31,7 @@ export class StaticInventoryData {
     COST_PRICE: any = 0;
     BRAND_ID: any = 0;
     INVENTORY_CATEGORY_ID: any = 0;
+    STATUS: boolean = true;
    
     
 }

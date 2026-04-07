@@ -996,3 +996,38 @@ hr {
   font-weight: 500;
   color: orangered;
 }
+.order-slot-info,
+.order-service-date-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.order-service-date-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.order-payable-amount {
+  font-size: 13px;
+  color: #555;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #e8f4ff, #f0f9ff);
+  border: 1px solid #91caff;
+  border-left: 4px solid #1890ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.order-payable-amount strong {
+  color: #1890ff;
+  font-size: 15px;
+}
+.order-payable-amount .anticon {
+  color: #1890ff;
+  font-size: 16px;
+}

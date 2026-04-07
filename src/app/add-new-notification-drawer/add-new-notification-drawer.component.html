@@ -7,23 +7,11 @@
   <form nz-form #myForm="ngForm">
     <nz-spin [nzSpinning]="isSpinning">
       <div nz-row class="my-box radio-group-row" [nzGutter]="15">
-        <div
-          nz-col
-          nzXs="24"
-          nzSm="24"
-          nzMd="24"
-          nzLg="24"
-          nzXl="24"
-          class="radio-group-container"
-        >
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" class="radio-group-container">
           <nz-form-item>
             <nz-form-label nzNoColon>Push Notification To</nz-form-label>
             <nz-input-group>
-              <nz-radio-group
-                name="sharingMode"
-                [(ngModel)]="sharingMode"
-                (ngModelChange)="changeRadioButton($event)"
-              >
+              <nz-radio-group name="sharingMode" [(ngModel)]="sharingMode" (ngModelChange)="changeRadioButton($event)">
                 <label nz-radio nzValue="1">Vendor</label>
                 <label nz-radio nzValue="2">Back Office Team</label>
                 <label nz-radio nzValue="3">Customer</label>
@@ -40,101 +28,49 @@
           <nz-form-item>
             <nz-form-label nzNoColon>Customer Notification Type</nz-form-label>
             <nz-form-control>
-              <nz-radio-group
-                name="radioGroup2"
-                [(ngModel)]="radiogroup"
-                (ngModelChange)="onNotificationTypeChange($event)"
-              >
+              <nz-radio-group name="radioGroup2" [(ngModel)]="radiogroup"
+                (ngModelChange)="onNotificationTypeChange($event)">
                 <label nz-radio nzValue="S">Regular</label>
                 <label nz-radio nzValue="P">Promotions</label>
               </nz-radio-group>
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div
-          nz-col
-          nzSpan="8"
-          *ngIf="!entireOrg && sharingMode == '3' && radiogroup == 'P'"
-        >
+        <div nz-col nzSpan="8" *ngIf="!entireOrg && sharingMode == '3' && radiogroup == 'P'">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Select Country</nz-form-label>
             <nz-form-control>
-              <nz-select
-                name="countryId"
-                nzPlaceHolder="Select country"
-                nzShowSearch
-                class="full-width-select"
-                [(ngModel)]="selectedCountyId"
-                [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="getStatesByCountry(selectedCountyId, true)"
-                required
-                nzAllowClear=""
-              >
-                <nz-option
-                  *ngFor="let data of countryData"
-                  [nzValue]="data.value"
-                  [nzLabel]="data.display"
-                >
+              <nz-select name="countryId" nzPlaceHolder="Select country" nzShowSearch class="full-width-select"
+                [(ngModel)]="selectedCountyId" [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="getStatesByCountry(selectedCountyId, true)" required nzAllowClear="">
+                <nz-option *ngFor="let data of countryData" [nzValue]="data.value" [nzLabel]="data.display">
                 </nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div
-          nz-col
-          nzSpan="8"
-          *ngIf="!entireOrg && sharingMode == '3' && radiogroup == 'P'"
-        >
+        <div nz-col nzSpan="8" *ngIf="!entireOrg && sharingMode == '3' && radiogroup == 'P'">
           <nz-form-item>
             <nz-form-label nzNoColon>Select State</nz-form-label>
             <nz-form-control>
-              <nz-select
-                name="stateId"
-                nzPlaceHolder="Select state"
-                nzShowSearch
-                class="full-width-select"
-                [(ngModel)]="selectedStateId"
-                [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="getPincodesByCity($event)"
-                required
-                nzAllowClear=""
-              >
-                <nz-option
-                  *ngFor="let data of StateData"
-                  [nzValue]="data.ID"
-                  [nzLabel]="data.NAME"
-                >
+              <nz-select name="stateId" nzPlaceHolder="Select state" nzShowSearch class="full-width-select"
+                [(ngModel)]="selectedStateId" [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="getPincodesByCity($event)" required nzAllowClear="">
+                <nz-option *ngFor="let data of StateData" [nzValue]="data.ID" [nzLabel]="data.NAME">
                 </nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div
-          nz-col
-          nzSpan="8"
-          *ngIf="!entireOrg && sharingMode == '3' && radiogroup == 'P'"
-        >
+        <div nz-col nzSpan="8" *ngIf="!entireOrg && sharingMode == '3' && radiogroup == 'P'">
           <nz-form-item>
             <nz-form-label nzNoColon>Select Pincode</nz-form-label>
             <nz-form-control>
-              <nz-select
-                name="stateId"
-                nzPlaceHolder="Select pincode"
-                nzShowSearch
-                class="full-width-select"
-                [(ngModel)]="selectedPincode2"
-                [ngModelOptions]="{ standalone: true }"
-                required
-                nzAllowClear=""
-                (nzOnSearch)="searchAllPincodes2($event)"
-                (nzScrollToBottom)="loadMore2()"
-                [nzLoading]="isPincodeSpinning"
-              >
-                <nz-option
-                  *ngFor="let data of PincodeData2"
-                  [nzValue]="data.ID"
-                  [nzLabel]="data.PINCODE_NUMBER"
-                >
+              <nz-select name="stateId" nzPlaceHolder="Select pincode" nzShowSearch class="full-width-select"
+                [(ngModel)]="selectedPincode2" [ngModelOptions]="{ standalone: true }" required nzAllowClear=""
+                (nzOnSearch)="searchAllPincodes2($event)" (nzScrollToBottom)="loadMore2()"
+                [nzLoading]="isPincodeSpinning">
+                <nz-option *ngFor="let data of PincodeData2" [nzValue]="data.ID" [nzLabel]="data.PINCODE_NUMBER">
                 </nz-option>
               </nz-select>
             </nz-form-control>
@@ -142,15 +78,10 @@
         </div>
         <div nz-col nzSpan="24" *ngIf="!entireOrg && sharingMode == '4'">
           <nz-form-item>
-            <nz-form-label nzNoColon
-              >Technician Notification Type</nz-form-label
-            >
+            <nz-form-label nzNoColon>Technician Notification Type</nz-form-label>
             <nz-form-control>
-              <nz-radio-group
-                name="radioGroup3"
-                [(ngModel)]="radiogroup1"
-                (ngModelChange)="onTechnicianWiseChange($event)"
-              >
+              <nz-radio-group name="radioGroup3" [(ngModel)]="radiogroup1"
+                (ngModelChange)="onTechnicianWiseChange($event)">
                 <label nz-radio nzValue="ALL">All</label>
                 <label nz-radio nzValue="F">Freelancer</label>
                 <label nz-radio nzValue="V">Vendor Managed</label>
@@ -159,73 +90,35 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div
-          nz-col
-          nzSpan="20"
-          *ngIf="!entireOrg && radiogroup != 'P' && sharingMode != '6'"
-        >
+        <div nz-col nzSpan="20" *ngIf="!entireOrg && radiogroup != 'P' && sharingMode != '6'">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>{{ heading }}</nz-form-label>
             <nz-form-control>
-              <nz-select
-                *ngIf="sharingMode != '5'"
-                name="userID"
-                nzShowSearch
-                nzAllowClear
-                nzMode="multiple"
-                class="full-width-select"
-                [nzPlaceHolder]="heading"
-                [nzLoading]="loadingList"
-                [(ngModel)]="USER_IDS"
-                [nzMaxTagCount]="6"
-              >
-                <nz-option
-                  nzCustomContent
-                  class="option-custom-content"
-                  *ngFor="let emp of employeeList"
-                  [nzValue]="
+              <nz-select *ngIf="sharingMode != '5'" name="userID" nzShowSearch nzAllowClear nzMode="multiple"
+                class="full-width-select" [nzPlaceHolder]="heading" [nzLoading]="loadingList" [(ngModel)]="USER_IDS"
+                [nzMaxTagCount]="6">
+                <nz-option nzCustomContent class="option-custom-content" *ngFor="let emp of employeeList" [nzValue]="
                     sharingMode == '1' || sharingMode == '2'
                       ? emp.USER_ID
                       : emp.ID
-                  "
-                  [nzLabel]="sharingMode == '1' ? emp.BUSINESS_NAME : emp.NAME"
-                >
+                  " [nzLabel]="sharingMode == '1' ? emp.BUSINESS_NAME : emp.NAME">
                   <div nz-row class="option-row">
                     <div nz-col nzSpan="2" class="avatar-column">
-                      <nz-avatar
-                        nzText="{{ getInitial(emp.NAME) | uppercase }}"
-                        nzSize="large"
-                        class="avatar-styled"
-                      >
+                      <nz-avatar nzText="{{ getInitial(emp.NAME) | uppercase }}" nzSize="large" class="avatar-styled">
                       </nz-avatar>
                     </div>
                     <div nz-col nzSpan="22" class="details-column">
                       <div nz-row>
-                        <div
-                          nz-col
-                          nzSpan="24"
-                          class="name-column"
-                          nz-popover
-                          [nzPopoverTitle]="
+                        <div nz-col nzSpan="24" class="name-column" nz-popover [nzPopoverTitle]="
                             emp.NAME && emp.NAME?.length > 50 ? emp.NAME : ''
-                          "
-                        >
+                          ">
                           <b>{{
                             emp.NAME
-                              ? emp.NAME.length > 50
-                                ? (emp.NAME | slice : 0 : 50) + "..."
-                                : emp.NAME.length < 50
-                                ? (emp.NAME | slice : 0 : 40)
-                                : ""
-                              : "-"
-                          }}</b>
+                            ? emp.NAME.length > 50
+                            ? (emp.NAME | slice : 0 : 50) + "..."
+                            : emp.NAME.length < 50 ? (emp.NAME | slice : 0 : 40) : "" : "-" }}</b>
                         </div>
-                        <div
-                          nz-col
-                          nzSpan="12"
-                          class="detail-field user-type-field"
-                          nz-popover
-                          [nzPopoverTitle]="
+                        <div nz-col nzSpan="12" class="detail-field user-type-field" nz-popover [nzPopoverTitle]="
                             sharingMode == '1'
                               ? emp.BUSINESS_NAME?.length > 30
                                 ? emp.BUISNESS_NAME
@@ -239,49 +132,37 @@
                                 ? emp.DESIGNATION_NAME?.length
                                 : ''
                               : ''
-                          "
-                        >
-                          <i
-                            nz-icon
-                            nzType="user"
-                            nzTheme="outline"
-                            class="black-icon"
-                          ></i
-                          >&nbsp;
+                          ">
+                          <i nz-icon nzType="user" nzTheme="outline" class="black-icon"></i>&nbsp;
                           {{
-                            sharingMode == "1"
-                              ? emp.BUSINESS_NAME?.length > 30
-                                ? (emp.BUSINESS_NAME | slice : 0 : 30) + "..."
-                                : emp.BUSINESS_NAME
-                              : sharingMode == "2"
-                              ? emp.ROLE_NAME?.length > 30
-                                ? (emp.ROLE_NAME | slice : 0 : 30) + "..."
-                                : emp.ROLE_NAME
-                              : sharingMode == "3"
-                              ? emp.CUSTOMER_TYPE == "I"
-                                ? "Individual(B2C)"
-                                : emp.CUSTOMER_TYPE == "B"
-                                ? "Business(B2B)"
-                                : ""
-                              : sharingMode == "4"
-                              ? emp.TYPE === "O"
-                                ? "On Payroll"
-                                : emp.TYPE === "V"
-                                ? "Vendor Managed"
-                                : emp.TYPE === "F"
-                                ? "Freelancer"
-                                : "-"
-                              : emp.DESIGNATION_NAME?.length > 30
-                              ? (emp.DESIGNATION_NAME | slice : 0 : 30) + "..."
-                              : emp.DESIGNATION_NAME
+                          sharingMode == "1"
+                          ? emp.BUSINESS_NAME?.length > 30
+                          ? (emp.BUSINESS_NAME | slice : 0 : 30) + "..."
+                          : emp.BUSINESS_NAME
+                          : sharingMode == "2"
+                          ? emp.ROLE_NAME?.length > 30
+                          ? (emp.ROLE_NAME | slice : 0 : 30) + "..."
+                          : emp.ROLE_NAME
+                          : sharingMode == "3"
+                          ? emp.CUSTOMER_TYPE == "I"
+                          ? "Individual(B2C)"
+                          : emp.CUSTOMER_TYPE == "B"
+                          ? "Business(B2B)"
+                          : ""
+                          : sharingMode == "4"
+                          ? emp.TYPE === "O"
+                          ? "On Payroll"
+                          : emp.TYPE === "V"
+                          ? "Vendor Managed"
+                          : emp.TYPE === "F"
+                          ? "Freelancer"
+                          : "-"
+                          : emp.DESIGNATION_NAME?.length > 30
+                          ? (emp.DESIGNATION_NAME | slice : 0 : 30) + "..."
+                          : emp.DESIGNATION_NAME
                           }}
                         </div>
-                        <div
-                          nz-col
-                          nzSpan="12"
-                          class="detail-field address-field"
-                          nz-popover
-                          [nzPopoverTitle]="
+                        <div nz-col nzSpan="12" class="detail-field address-field" nz-popover [nzPopoverTitle]="
                             sharingMode == '1'
                               ? emp.ADDRESS_LINE_1?.length > 30
                                 ? emp.ADDRESS_LINE_1
@@ -295,55 +176,33 @@
                                 ? emp.ADDRESS_LINE_1
                                 : ''
                               : ''
-                          "
-                        >
-                          <i
-                            nz-icon
-                            nzType="environment"
-                            nzTheme="outline"
-                            class="black-icon"
-                          ></i
-                          >&nbsp;
+                          ">
+                          <i nz-icon nzType="environment" nzTheme="outline" class="black-icon"></i>&nbsp;
                           {{
-                            sharingMode == "1"
-                              ? emp.ADDRESS_LINE_1?.length > 30
-                                ? (emp.ADDRESS_LINE_1 | slice : 0 : 30) + "..."
-                                : emp.ADDRESS_LINE_1
-                              : sharingMode == "4"
-                              ? emp.ADDRESS_LINE1?.length > 30
-                                ? (emp.ADDRESS_LINE1 | slice : 0 : 30) + "..."
-                                : emp.ADDRESS_LINE1
-                              : emp.ADDRESS_LINE_1?.length > 30
-                              ? (emp.ADDRESS_LINE_1 | slice : 0 : 30) + "..."
-                              : emp.ADDRESS_LINE_1
+                          sharingMode == "1"
+                          ? emp.ADDRESS_LINE_1?.length > 30
+                          ? (emp.ADDRESS_LINE_1 | slice : 0 : 30) + "..."
+                          : emp.ADDRESS_LINE_1
+                          : sharingMode == "4"
+                          ? emp.ADDRESS_LINE1?.length > 30
+                          ? (emp.ADDRESS_LINE1 | slice : 0 : 30) + "..."
+                          : emp.ADDRESS_LINE1
+                          : emp.ADDRESS_LINE_1?.length > 30
+                          ? (emp.ADDRESS_LINE_1 | slice : 0 : 30) + "..."
+                          : emp.ADDRESS_LINE_1
                           }}
                         </div>
-                        <div
-                          nz-col
-                          nzSpan="12"
-                          class="detail-field mobile-field"
-                        >
-                          <i
-                            nz-icon
-                            nzType="mobile"
-                            nzTheme="outline"
-                            class="black-icon"
-                          ></i
-                          >&nbsp;
+                        <div nz-col nzSpan="12" class="detail-field mobile-field">
+                          <i nz-icon nzType="mobile" nzTheme="outline" class="black-icon"></i>&nbsp;
                           {{
-                            sharingMode == "1" ||
-                            sharingMode == "2" ||
-                            sharingMode == "4"
-                              ? emp.MOBILE_NUMBER
-                              : emp.MOBILE_NO
+                          sharingMode == "1" ||
+                          sharingMode == "2" ||
+                          sharingMode == "4"
+                          ? emp.MOBILE_NUMBER
+                          : emp.MOBILE_NO
                           }}
                         </div>
-                        <div
-                          nz-col
-                          nzSpan="12"
-                          class="detail-field email-field"
-                          nz-popover
-                          [nzPopoverTitle]="
+                        <div nz-col nzSpan="12" class="detail-field email-field" nz-popover [nzPopoverTitle]="
                             sharingMode == '1'
                               ? emp.EMAIL_ID?.length > 30
                                 ? emp.EMAIL_ID
@@ -357,27 +216,20 @@
                                 ? emp.EMAIL_ID?.length
                                 : ''
                               : ''
-                          "
-                        >
-                          <i
-                            nz-icon
-                            nzType="mail"
-                            nzTheme="outline"
-                            class="black-icon"
-                          ></i
-                          >&nbsp;
+                          ">
+                          <i nz-icon nzType="mail" nzTheme="outline" class="black-icon"></i>&nbsp;
                           {{
-                            sharingMode == "1"
-                              ? emp.EMAIL_ID?.length > 30
-                                ? (emp.EMAIL_ID | slice : 0 : 30) + "..."
-                                : emp.EMAIL_ID
-                              : sharingMode == "3"
-                              ? emp.EMAIL?.length > 30
-                                ? (emp.EMAIL | slice : 0 : 30) + "..."
-                                : emp.EMAIL
-                              : emp.EMAIL_ID?.length > 30
-                              ? (emp.EMAIL_ID | slice : 0 : 30) + "..."
-                              : emp.EMAIL_ID
+                          sharingMode == "1"
+                          ? emp.EMAIL_ID?.length > 30
+                          ? (emp.EMAIL_ID | slice : 0 : 30) + "..."
+                          : emp.EMAIL_ID
+                          : sharingMode == "3"
+                          ? emp.EMAIL?.length > 30
+                          ? (emp.EMAIL | slice : 0 : 30) + "..."
+                          : emp.EMAIL
+                          : emp.EMAIL_ID?.length > 30
+                          ? (emp.EMAIL_ID | slice : 0 : 30) + "..."
+                          : emp.EMAIL_ID
                           }}
                         </div>
                       </div>
@@ -385,50 +237,27 @@
                   </div>
                 </nz-option>
               </nz-select>
-              <nz-select
-                *ngIf="sharingMode == '5'"
-                name="pincode"
-                nzPlaceHolder="Select pincode"
-                nzShowSearch
-                (nzOnSearch)="searchAllPincodes($event)"
-                class="full-width-select"
-                [(ngModel)]="selectedPincode"
-                [ngModelOptions]="{ standalone: true }"
-                required
-                nzAllowClear=""
-                [nzLoading]="loadingList"
-                (nzScrollToBottom)="loadMore()"
-              >
-                <nz-option
-                  *ngFor="let data of PincodeData"
-                  [nzValue]="data.ID"
-                  [nzLabel]="data.PINCODE_NUMBER"
-                >
+              <nz-select *ngIf="sharingMode == '5'" name="pincode" nzPlaceHolder="Select pincode" nzShowSearch
+                (nzOnSearch)="searchAllPincodes($event)" class="full-width-select" [(ngModel)]="selectedPincode"
+                [ngModelOptions]="{ standalone: true }" required nzAllowClear="" [nzLoading]="loadingList"
+                (nzScrollToBottom)="loadMore()">
+                <nz-option *ngFor="let data of PincodeData" [nzValue]="data.ID" [nzLabel]="data.PINCODE_NUMBER">
                 </nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div
-          nz-col
-          nzSpan="4"
-          *ngIf="
+        <div nz-col nzSpan="4" *ngIf="
             !entireOrg &&
             sharingMode != '5' &&
             radiogroup != 'P' &&
             sharingMode != '6'
-          "
-        >
+          ">
           <nz-form-item>
             <nz-form-label nzNoColon>Select All</nz-form-label>
             <nz-form-control>
-              <nz-switch
-                name="selectAll"
-                nzCheckedChildren="Yes"
-                nzUnCheckedChildren="No"
-                (ngModelChange)="onSelectAllChecked($event)"
-                [(ngModel)]="SELECT_ALL"
-              >
+              <nz-switch name="selectAll" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                (ngModelChange)="onSelectAllChecked($event)" [(ngModel)]="SELECT_ALL">
               </nz-switch>
             </nz-form-control>
           </nz-form-item>
@@ -436,23 +265,9 @@
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Title</nz-form-label>
-            <nz-form-control
-              nzHasFeedback
-              nzErrorTip="Notification title is required"
-            >
-              <input
-                nz-input
-                autocomplete="off"
-                placeholder="Enter notification title"
-                name="title"
-                type="text"
-                pattern="([A-Za-z0-9\s]){1,}"
-                [(ngModel)]="TITLE"
-                required
-                maxlength="64"
-                (focus)="isFocused = 'title'"
-                (blur)="isFocused = ''"
-              />
+            <nz-form-control nzHasFeedback nzErrorTip="Notification title is required">
+              <input nz-input autocomplete="off" placeholder="Enter notification title" name="title" type="text"
+                [(ngModel)]="TITLE" required maxlength="64" (focus)="isFocused = 'title'" (blur)="isFocused = ''" />
             </nz-form-control>
             <h6 *ngIf="TITLE && isFocused === 'title'" class="character-count">
               {{ TITLE.length }}/ 64
@@ -462,27 +277,13 @@
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>Description</nz-form-label>
-            <nz-form-control
-              nzHasFeedback
-              nzErrorTip="Notification description is required"
-            >
-              <textarea
-                nz-input
-                rows="5"
-                name="description"
-                placeHolder="Enter notification description"
-                [(ngModel)]="DESCRIPTION"
-                maxlength="512"
-                required
-                (focus)="isFocused = 'description'"
-                (blur)="isFocused = ''"
-              >
+            <nz-form-control nzHasFeedback nzErrorTip="Notification description is required">
+              <textarea nz-input rows="5" name="description" placeHolder="Enter notification description"
+                [(ngModel)]="DESCRIPTION" maxlength="512" required (focus)="isFocused = 'description'"
+                (blur)="isFocused = ''">
               </textarea>
             </nz-form-control>
-            <h6
-              *ngIf="DESCRIPTION && isFocused === 'description'"
-              class="character-count"
-            >
+            <h6 *ngIf="DESCRIPTION && isFocused === 'description'" class="character-count">
               {{ DESCRIPTION.length }}/ 512
             </h6>
           </nz-form-item>
@@ -491,12 +292,7 @@
           <nz-form-item>
             <nz-form-label nzNoColon>Attachment Type</nz-form-label>
             <nz-form-control>
-              <nz-select
-                nz-input
-                nzPlaceHolder="Select attachment type"
-                name="attachmenttype"
-                [(ngModel)]="MEDIA_TYPE"
-              >
+              <nz-select nz-input nzPlaceHolder="Select attachment type" name="attachmenttype" [(ngModel)]="MEDIA_TYPE">
                 <nz-option nzValue="I" nzLabel="Image"></nz-option>
                 <nz-option nzValue="T" nzLabel="Document"></nz-option>
               </nz-select>
@@ -505,57 +301,26 @@
         </div>
         <div nz-col nzSpan="12" *ngIf="MEDIA_TYPE">
           <nz-form-item>
-            <nz-form-label nzNoColon
-              >Upload Attachment &nbsp;<span
-                nz-icon
-                nzType="info-circle"
-                nzTheme="twotone"
-                nz-tooltip
-                nzTooltipTitle="Please upload attachment upto 1 MB"
-              ></span
-            ></nz-form-label>
+            <nz-form-label nzNoColon>Upload Attachment &nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone"
+                nz-tooltip nzTooltipTitle="Please upload attachment upto 1 MB"></span></nz-form-label>
             <nz-form-control>
-              <button
-                *ngIf="!selectedFileName"
-                nz-button
-                class="attachment-upload-btn"
-                (click)="image1.click()"
-              >
+              <button *ngIf="!selectedFileName" nz-button class="attachment-upload-btn" (click)="image1.click()">
                 <span nz-icon nzType="upload"></span>
                 Select Attachment
-                <input
-                  #image1
-                  name="image1"
-                  type="file"
-                  [accept]="
+                <input #image1 name="image1" type="file" [accept]="
                     MEDIA_TYPE == 'I'
                       ? '.jpg, .jpeg, .png'
                       : '.pdf, .docx, .txt'
-                  "
-                  (change)="onFileSelected($event)"
-                  class="file-input-hidden"
-                />
+                  " (change)="onFileSelected($event)" class="file-input-hidden" />
               </button>
-              <nz-progress
-                *ngIf="progressBarImageOne"
-                [nzPercent]="percentImageOne"
-              ></nz-progress>
+              <nz-progress *ngIf="progressBarImageOne" [nzPercent]="percentImageOne"></nz-progress>
               <h6 *ngIf="selectedFileName" class="file-name-display">
                 {{ selectedFileName }}
-                <a
-                  [href]="imgUrl + 'notificationAttachment/' + selectedFileName"
-                  target="_blank"
-                  class="file-view-link"
-                >
+                <a [href]="imgUrl + 'notificationAttachment/' + selectedFileName" target="_blank"
+                  class="file-view-link">
                   <span nz-icon nzType="eye" nzTheme="fill"></span>
                 </a>
-                <a
-                  nz-icon
-                  nzType="delete"
-                  nzTheme="fill"
-                  class="file-delete-link"
-                  (click)="clearImage()"
-                >
+                <a nz-icon nzType="delete" nzTheme="fill" class="file-delete-link" (click)="clearImage()">
                 </a>
               </h6>
             </nz-form-control>
@@ -565,35 +330,17 @@
     </nz-spin>
   </form>
   <div class="footer">
-    <button
-      type="button"
-      nz-button
-      (click)="close(myForm)"
-      class="ant-btn cancel-btn"
-    >
+    <button type="button" nz-button (click)="close(myForm)" class="ant-btn cancel-btn">
       <span>Cancel</span>
     </button>
-    <button
-      type="button"
-      class="ant-btn ant-btn-primary send-btn"
-      nz-button
-      [nzLoading]="isSpinning"
-      nz-dropdown
-      (click)="save(false, myForm)"
-    >
+    <button type="button" class="ant-btn ant-btn-primary send-btn" nz-button [nzLoading]="isSpinning" nz-dropdown
+      (click)="save(false, myForm)">
       <span>Send</span>
     </button>
   </div>
   <div>
-    <nz-modal
-      [(nzVisible)]="isVisibleMiddle"
-      nzTitle="Compress File"
-      nzCentered
-      (nzOnCancel)="onCancel()"
-      (nzOnOk)="showConfirm()"
-      [nzOkLoading]="isSpinning"
-      [nzCancelLoading]="isSpinning"
-    >
+    <nz-modal [(nzVisible)]="isVisibleMiddle" nzTitle="Compress File" nzCentered (nzOnCancel)="onCancel()"
+      (nzOnOk)="showConfirm()" [nzOkLoading]="isSpinning" [nzCancelLoading]="isSpinning">
       <ng-container *nzModalContent>
         <p>
           The selected file is greater than 1 MB. Would you like to compress

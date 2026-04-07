@@ -217,6 +217,9 @@
                     <th nzWidth="150px" nzColumnKey="SHORT_CODE" class="cat-th-center-bold-uid">
                         SKU code
                     </th>
+                    <th nzWidth="150px" nzColumnKey="STATUS" class="cat-th-center-bold-uid">
+                        Status
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -410,7 +413,6 @@
                                 class="tbl-textarea-full-uid" maxlength="500"></textarea>
                         </ng-container>
                     </td>
-
                     <td [nzTooltipTitle]="isTextOverflow ? data['SKU code'] : null" #tooltipRef3="nzTooltip" nz-tooltip>
                         <ng-container *ngIf="!data.isEditing">
                             <div #textContainer3 class="truncate-text"
@@ -422,6 +424,11 @@
                             <input nzRequired nz-input [(ngModel)]="data.SKU_CODE" placeholder="Enter SKU Code"
                                 class="tbl-input-full-uid" maxlength="500" />
                         </ng-container>
+                    </td>
+                    <td align="center">
+                        <nz-switch [(ngModel)]="data.STATUS" [nzDisabled]="!data.isEditing"
+                            nzCheckedChildren="Active" nzUnCheckedChildren="Inactive">
+                        </nz-switch>
                     </td>
                 </tr>
             </tbody>

@@ -188,7 +188,7 @@ export class StaticInventoryComponent implements OnInit {
     }
     likeQuery = globalSearchQuery + (likeQuery ? ' AND ' + likeQuery : '');
     this.api
-      .getStaticInventoryData(
+      .getStaticInventoryDataAll(
         this.pageIndex,
         this.pageSize,
         this.sortKey,
@@ -658,7 +658,8 @@ export class StaticInventoryComponent implements OnInit {
       GUARANTEE_PERIOD: 0,
       INVENTORY_DETAILS_IMAGE: null,
       INVENTORY_CATEGORY_ID: null,
-      BRAND_ID: null
+      BRAND_ID: null,
+      STATUS: true,
     };
     this.dataList = [newRow, ...this.dataList];
   }
