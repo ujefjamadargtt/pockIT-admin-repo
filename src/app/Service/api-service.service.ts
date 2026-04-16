@@ -68,7 +68,7 @@ export class ApiServiceService {
       apikey: this.commonFunction.encryptdatas(this.API_KEY),
       deviceid: this.cookie.get('deviceId'),
       supportkey: this.cookie.get('supportKey'),
-      Token: this.cookie.get('token'),
+      Token: sessionStorage.getItem('token') || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -434,7 +434,7 @@ export class ApiServiceService {
       apikey: this.commonFunction.encryptdatas(this.API_KEY),
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       supportkey: this.cookie.get('supportKey'),
-      Token: this.cookie.get('token'),
+      Token: sessionStorage.getItem('token') || '',
     });
     this.options1 = {
       headers: this.httpHeaders,
@@ -4962,7 +4962,7 @@ export class ApiServiceService {
       Accept: 'application/json',
       apikey: this.commonFunction.encryptdatas(this.API_KEY),
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
-      Token: this.cookie.get('token'),
+      Token: sessionStorage.getItem('token') || '',
       supportkey: this.cookie.get('supportKey'),
       WP_CLIENT_ID: userId,
     });
@@ -4982,7 +4982,7 @@ export class ApiServiceService {
       Accept: 'application/json',
       apikey: this.commonFunction.encryptdatas(this.API_KEY),
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
-      Token: this.cookie.get('token'),
+      Token: sessionStorage.getItem('token') || '',
       supportkey: this.cookie.get('supportKey'),
       WP_CLIENT_ID: userId,
     });
@@ -5003,7 +5003,7 @@ export class ApiServiceService {
       Accept: 'application/json',
       apikey: this.commonFunction.encryptdatas(this.API_KEY),
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
-      Token: this.cookie.get('token'),
+      Token: sessionStorage.getItem('token') || '',
       supportkey: this.cookie.get('supportKey'),
       WP_CLIENT_ID: userId,
     });
@@ -6913,7 +6913,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId'),
       supportkey: this.cookie.get('supportKey'),
-      Token: this.cookie.get('token'),
+      Token: sessionStorage.getItem('token') || '',
     });
     this.options1 = {
       headers: this.httpHeaders1,
@@ -6996,7 +6996,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId') || '',
       supportkey: this.cookie.get('supportKey') || '',
-      Token: this.cookie.get('token') || '',
+      Token: sessionStorage.getItem('token') || '' || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -7021,7 +7021,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId') || '',
       supportkey: this.cookie.get('supportKey') || '',
-      Token: this.cookie.get('token') || '',
+      Token: sessionStorage.getItem('token') || '' || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -7076,7 +7076,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId'),
       supportkey: this.cookie.get('supportKey'),
-      Token: this.cookie.get('token'),
+      Token: sessionStorage.getItem('token') || '',
     });
     this.options = {
       headers: this.httpHeaders,
@@ -7114,7 +7114,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId'),
       supportkey: this.cookie.get('supportKey'),
-      Token: this.cookie.get('token'),
+      Token: sessionStorage.getItem('token') || '',
     });
     this.options = {
       headers: this.httpHeaders,
@@ -7891,7 +7891,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId') || '',
       supportkey: this.cookie.get('supportKey') || '',
-      Token: this.cookie.get('token') || '',
+      Token: sessionStorage.getItem('token') || '' || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -8152,7 +8152,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId') || '',
       supportkey: this.cookie.get('supportKey') || '',
-      Token: this.cookie.get('token') || '',
+      Token: sessionStorage.getItem('token') || '' || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -8406,7 +8406,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId') || '',
       supportkey: this.cookie.get('supportKey') || '',
-      Token: this.cookie.get('token') || '',
+      Token: sessionStorage.getItem('token') || '' || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -8440,7 +8440,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId') || '',
       supportkey: this.cookie.get('supportKey') || '',
-      Token: this.cookie.get('token') || '',
+      Token: sessionStorage.getItem('token') || '' || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -9301,7 +9301,7 @@ export class ApiServiceService {
       supportkey: this.cookie.get('supportKey'),
       apikey: '68h3u1OxG6We2UnRD4F3IratYZHQ5hRB',
       applicationkey: 'AfIpESwBr5eHp7w3',
-      Token: this.cookie.get('token'),
+      Token: sessionStorage.getItem('token') || '',
     });
     const fd = new FormData();
     fd.append('Apk', selectedFile, filename);
@@ -9356,7 +9356,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId') || '',
       supportkey: this.cookie.get('supportKey') || '',
-      Token: this.cookie.get('token') || '',
+      Token: sessionStorage.getItem('token') || '' || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -9381,7 +9381,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId') || '',
       supportkey: this.cookie.get('supportKey') || '',
-      Token: this.cookie.get('token') || '',
+      Token: sessionStorage.getItem('token') || '' || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -9406,7 +9406,7 @@ export class ApiServiceService {
       applicationkey: this.commonFunction.encryptdatas(this.APPLICATION_KEY),
       deviceid: this.cookie.get('deviceId') || '',
       supportkey: this.cookie.get('supportKey') || '',
-      Token: this.cookie.get('token') || '',
+      Token: sessionStorage.getItem('token') || '' || '',
       skip_zrok_interstitial: 'true',
       'ngrok-skip-browser-warning': 'true',
     });
@@ -10108,6 +10108,14 @@ export class ApiServiceService {
     return this.httpClient.post<any>(
       this.baseUrl + 'api/reports/technicianwisestaticInventoryReport',
       JSON.stringify(data),
+      this.options
+    );
+  }
+  addPaymentTransactions(form: any): Observable<any> {
+    form.CLIENT_ID = this.clientId;
+    return this.httpClient.post<any>(
+      this.baseUrl + 'api/invoicepaymentdetails/addPaymentTransactions',
+      JSON.stringify(form),
       this.options
     );
   }

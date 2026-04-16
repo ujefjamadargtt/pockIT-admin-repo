@@ -66,7 +66,7 @@ export class MainServiceListComponent implements OnInit {
   expressb2cVisible: boolean = false;
   estimationTimemins: string = '';
   estimationTimeVisible: boolean = false;
-  widths: string = '90%';
+  widths: string = '93%';
   widths1: string = '100%';
   widths11: string = '60%';
   widthsSkill: string = '100%';

@@ -30,7 +30,7 @@ export class JobassigndrawerComponent {
     private message: NzNotificationService,
     private api: ApiServiceService,
     private datepipe: DatePipe
-  ) {}
+  ) { }
   dublicatesheduledata: any;
   timeslots: any;
   mergedData: {
@@ -49,6 +49,7 @@ export class JobassigndrawerComponent {
   decreptedroleID = 0;
   customerMangeer: any = '';
   orgId: any;
+  selectedCalendarDate: Date;
   public commonFunction = new CommonFunctionService();
   ngOnInit(): void {
     this.timeslots = this.generateTimeColumns();
@@ -76,6 +77,7 @@ export class JobassigndrawerComponent {
     this.getTechnicianData();
     this.sheduledate = this.Jobassignsdata.EXPECTED_DATE_TIME;
     this.STARTTIME = new Date(this.Jobassignsdata.EXPECTED_DATE_TIME);
+    this.selectedCalendarDate = new Date(this.Jobassignsdata.EXPECTED_DATE_TIME);
     let startMinutes = this.STARTTIME.getMinutes();
     if (
       startMinutes != 0 &&
@@ -91,12 +93,12 @@ export class JobassigndrawerComponent {
     if (this.IS_ORDER_JOB == 'P') {
       this.ENDTIME = new Date(
         this.STARTTIME.getTime() +
-          this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
+        this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
       );
     } else if (this.IS_ORDER_JOB == 'O') {
       this.ENDTIME = new Date(
         this.STARTTIME.getTime() +
-          this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
+        this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
       );
     }
     let startMinutes1 = this.ENDTIME.getMinutes();
@@ -141,12 +143,12 @@ export class JobassigndrawerComponent {
           if (this.IS_ORDER_JOB == 'P') {
             this.ENDTIME = new Date(
               this.STARTTIME.getTime() +
-                this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
+              this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
             );
           } else if (this.IS_ORDER_JOB == 'O') {
             this.ENDTIME = new Date(
               this.STARTTIME.getTime() +
-                this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
+              this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
             );
           }
           let startMinutes1 = this.ENDTIME.getMinutes();
@@ -245,7 +247,7 @@ export class JobassigndrawerComponent {
           locations.length,
       };
       if (isNaN(mapCenter.lat) || isNaN(mapCenter.lng)) {
-        return; 
+        return;
       }
       const mapElement = document.getElementById('map');
       if (mapElement) {
@@ -255,7 +257,7 @@ export class JobassigndrawerComponent {
         });
         const directionsService = new google.maps.DirectionsService();
         const directionsRenderer = new google.maps.DirectionsRenderer({
-          suppressMarkers: true, 
+          suppressMarkers: true,
           map: map,
         });
         const waypoints = locations
@@ -277,7 +279,7 @@ export class JobassigndrawerComponent {
             locations[locations.length - 1].longitude
           ),
           waypoints: waypoints,
-          travelMode: google.maps.TravelMode.DRIVING, 
+          travelMode: google.maps.TravelMode.DRIVING,
         };
         directionsService.route(request, (result, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
@@ -285,8 +287,8 @@ export class JobassigndrawerComponent {
             locations.forEach((location: any, index: number) => {
               const markerIcon =
                 index === 0
-                  ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' 
-                  : 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'; 
+                  ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                  : 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';
               const marker = new google.maps.Marker({
                 position: { lat: location.latitude, lng: location.longitude },
                 map: map,
@@ -399,17 +401,17 @@ export class JobassigndrawerComponent {
     let currentJob = null;
     let rowSpanCount = 0;
     let randomColor = '';
-    let tempIndex = -1; 
+    let tempIndex = -1;
     rawData.forEach((row, index) => {
       if (row.job === currentJob && row.job !== 'No Job') {
         rowSpanCount++;
         this.mergedData[tempIndex].rowSpan = rowSpanCount;
-        this.mergedData.push({ ...row, rowSpan: 0, randomColor: '' }); 
+        this.mergedData.push({ ...row, rowSpan: 0, randomColor: '' });
       } else {
         currentJob = row.job;
         rowSpanCount = 1;
-        randomColor = row.job !== 'No Job' ? this.getRandomColor() : ''; 
-        tempIndex = this.mergedData.length; 
+        randomColor = row.job !== 'No Job' ? this.getRandomColor() : '';
+        tempIndex = this.mergedData.length;
         this.mergedData.push({ ...row, rowSpan: 1, randomColor });
       }
     });
@@ -419,16 +421,16 @@ export class JobassigndrawerComponent {
   }
   getRowColor(job: string): any {
     if (job.includes('JOB/20241210/150')) {
-      return { backgroundColor: '#e6f7ff' }; 
+      return { backgroundColor: '#e6f7ff' };
     } else if (job.includes('JOB/20241210/00014')) {
-      return { backgroundColor: '#fff1b8' }; 
+      return { backgroundColor: '#fff1b8' };
     } else if (job === 'No Job') {
-      return { backgroundColor: '#f6ffed' }; 
+      return { backgroundColor: '#f6ffed' };
     }
-    return {}; 
+    return {};
   }
   getRandomColor(): string {
-    const letters = '89ABCDEF'; 
+    const letters = '89ABCDEF';
     let color = '#';
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * letters.length)];
@@ -475,7 +477,7 @@ export class JobassigndrawerComponent {
     },
   ];
   trackByFn(index: number, item: any): any {
-    return item.label; 
+    return item.label;
   }
   onDrop(event: CdkDragDrop<any[]>): void {
     moveItemInArray(this.checkboxList, event.previousIndex, event.currentIndex);
@@ -621,9 +623,11 @@ export class JobassigndrawerComponent {
               normaldata[0].TRACK_STATUS != 'SJ' &&
               normaldata[0].STATUS != 'CO'
             ) {
-              this.sheduledate = this.Jobassignsdata.SCHEDULED_DATE_TIME
-                ? this.Jobassignsdata.SCHEDULED_DATE_TIME
-                : this.Jobassignsdata.EXPECTED_DATE_TIME;
+              this.sheduledate = this.selectedCalendarDate
+                ? this.selectedCalendarDate
+                : (this.Jobassignsdata.SCHEDULED_DATE_TIME
+                  ? this.Jobassignsdata.SCHEDULED_DATE_TIME
+                  : this.Jobassignsdata.EXPECTED_DATE_TIME);
               if (this.jobedit) {
                 const currentDate = new Date(
                   this.Jobassignsdata.SCHEDULED_DATE_TIME
@@ -631,7 +635,7 @@ export class JobassigndrawerComponent {
                     : this.Jobassignsdata.EXPECTED_DATE_TIME
                 );
                 const year = currentDate.getFullYear();
-                const month = currentDate.getMonth(); 
+                const month = currentDate.getMonth();
                 const day = currentDate.getDate();
                 const dateWithTime = new Date(
                   year,
@@ -648,26 +652,24 @@ export class JobassigndrawerComponent {
                 this.STARTTIME = dateWithTime;
                 this.ENDTIME = dateWithTime1;
               } else {
+                const existingStart = new Date(this.STARTTIME);
+                const existingEnd = new Date(this.ENDTIME);
+                const schedDate = new Date(this.sheduledate);
                 this.STARTTIME = new Date(
-                  this.Jobassignsdata.SCHEDULED_DATE_TIME
-                    ? this.Jobassignsdata.SCHEDULED_DATE_TIME
-                    : this.Jobassignsdata.EXPECTED_DATE_TIME
+                  schedDate.getFullYear(),
+                  schedDate.getMonth(),
+                  schedDate.getDate(),
+                  existingStart.getHours(),
+                  existingStart.getMinutes(),
+                  0, 0
                 );
-                let startMinutes = this.STARTTIME.getMinutes();
-                if (
-                  startMinutes != 0 &&
-                  startMinutes != 10 &&
-                  startMinutes != 20 &&
-                  startMinutes != 30 &&
-                  startMinutes != 40 &&
-                  startMinutes != 50
-                ) {
-                  let roundedStartMinutes = Math.floor(startMinutes / 10) * 10;
-                  this.STARTTIME.setMinutes(roundedStartMinutes);
-                }
                 this.ENDTIME = new Date(
-                  this.STARTTIME.getTime() +
-                    this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
+                  schedDate.getFullYear(),
+                  schedDate.getMonth(),
+                  schedDate.getDate(),
+                  existingEnd.getHours(),
+                  existingEnd.getMinutes(),
+                  0, 0
                 );
                 let startMinutes1 = this.ENDTIME.getMinutes();
                 if (
@@ -719,7 +721,7 @@ export class JobassigndrawerComponent {
                       }
                       this.ENDTIME = new Date(
                         this.STARTTIME.getTime() +
-                          this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
+                        this.Jobassignsdata.ESTIMATED_TIME_IN_MIN * 60000
                       );
                       let startMinutes1 = this.ENDTIME.getMinutes();
                       if (
@@ -814,7 +816,7 @@ export class JobassigndrawerComponent {
         }
       );
   }
-  assignjobtotech() {}
+  assignjobtotech() { }
   DATEEE: any;
   isspinnnnnnn = false;
   assigntechhdata() {
@@ -999,7 +1001,7 @@ export class JobassigndrawerComponent {
                       );
                       const endTimeDate = new Date(
                         dateWithTime11.getTime() +
-                          item.ESTIMATED_TIME_IN_MIN * 60000
+                        item.ESTIMATED_TIME_IN_MIN * 60000
                       );
                       previousEndTime = endTimeDate;
                       return {
@@ -1325,13 +1327,13 @@ export class JobassigndrawerComponent {
   sheduledate: any;
   isDisabled(timeSlot: string): boolean {
     if (!this.STARTTIME) {
-      return false; 
+      return false;
     }
     return timeSlot <= this.STARTTIME;
   }
   onStartTimeChange(startTime: string): void {
     this.STARTTIME = startTime;
-    this.ENDTIME = null; 
+    this.ENDTIME = null;
   }
   initDistanceCalculation(
     orderLocation: any,
@@ -1359,7 +1361,7 @@ export class JobassigndrawerComponent {
       const request = {
         origin: new google.maps.LatLng(orderLat, orderLng),
         destination: new google.maps.LatLng(techLat, techLng),
-        travelMode: google.maps.TravelMode.DRIVING, 
+        travelMode: google.maps.TravelMode.DRIVING,
       };
       directionsService.route(request, (result, status) => {
         if (
@@ -1370,7 +1372,7 @@ export class JobassigndrawerComponent {
             (sum: number, leg: any) => sum + leg.distance.value,
             0
           );
-          const distanceInKm = (totalDistance / 1000).toFixed(2); 
+          const distanceInKm = (totalDistance / 1000).toFixed(2);
           resolve(`${distanceInKm} km`);
         } else {
           reject(`Directions request failed due to ${status}`);
@@ -1390,7 +1392,7 @@ export class JobassigndrawerComponent {
   calculateTimeDifference11(start: any, end: any): string {
     const currentDate = new Date(this.sheduledate);
     const year = currentDate.getFullYear();
-    const month = currentDate.getMonth(); 
+    const month = currentDate.getMonth();
     const day = currentDate.getDate();
     const dateWithTime = new Date(
       year,
@@ -1410,7 +1412,7 @@ export class JobassigndrawerComponent {
   calculateTimeDifference1111(start: any, end: any): string {
     const currentDate = new Date(this.sheduledate);
     const year = currentDate.getFullYear();
-    const month = currentDate.getMonth(); 
+    const month = currentDate.getMonth();
     const day = currentDate.getDate();
     const dateWithTime = new Date(
       year,
@@ -1443,7 +1445,7 @@ export class JobassigndrawerComponent {
     const beforeMinute = parseInt(this.terriotrystarttime.split(':')[1], 10);
     const afterHour = parseInt(this.terriotryendtime.split(':')[0], 10);
     const afterMinute = parseInt(this.terriotryendtime.split(':')[1], 10);
-    const allowedMinutes = [0, 10, 20, 30, 40, 50]; 
+    const allowedMinutes = [0, 10, 20, 30, 40, 50];
     if (hour === beforeHour) {
       return Array.from({ length: 60 }, (_, i) => i).filter(
         (minute) => minute < beforeMinute || !allowedMinutes.includes(minute)
@@ -1466,9 +1468,9 @@ export class JobassigndrawerComponent {
   roundNumber(value: any): number | string {
     const [integerPart, decimalPart] = value.toString().split('.');
     if (decimalPart === '00') {
-      return parseInt(integerPart, 10); 
+      return parseInt(integerPart, 10);
     }
-    return value; 
+    return value;
   }
   openmodell: boolean = false;
   cancel() {
@@ -1605,7 +1607,7 @@ export class JobassigndrawerComponent {
             this.isspinnnnnnn = false;
           }
         },
-        () => {}
+        () => { }
       );
   }
   getbetweendatastart(event) {
@@ -1656,7 +1658,7 @@ export class JobassigndrawerComponent {
             this.isspinnnnnnn = false;
           }
         },
-        () => {}
+        () => { }
       );
   }
   getbetweendataend(event) {
@@ -1704,7 +1706,7 @@ export class JobassigndrawerComponent {
             this.isspinnnnnnn = false;
           }
         },
-        () => {}
+        () => { }
       );
   }
   assigntechdataaa: any;
@@ -1730,8 +1732,30 @@ export class JobassigndrawerComponent {
               ok = false;
             }
             if (ok) {
-              this.sheduledate = this.Jobassignsdata.EXPECTED_DATE_TIME;
-              this.STARTTIME = new Date(this.Jobassignsdata.EXPECTED_DATE_TIME);
+              this.sheduledate = this.selectedCalendarDate
+                ? this.selectedCalendarDate
+                : (this.Jobassignsdata.SCHEDULED_DATE_TIME
+                  ? this.Jobassignsdata.SCHEDULED_DATE_TIME
+                  : this.Jobassignsdata.EXPECTED_DATE_TIME);
+              const existingStart = new Date(this.STARTTIME);
+              const existingEnd = new Date(this.ENDTIME);
+              const schedDate = new Date(this.sheduledate);
+              this.STARTTIME = new Date(
+                schedDate.getFullYear(),
+                schedDate.getMonth(),
+                schedDate.getDate(),
+                existingStart.getHours(),
+                existingStart.getMinutes(),
+                0, 0
+              );
+              this.ENDTIME = new Date(
+                schedDate.getFullYear(),
+                schedDate.getMonth(),
+                schedDate.getDate(),
+                existingEnd.getHours(),
+                existingEnd.getMinutes(),
+                0, 0
+              );
               let startMinutes = this.STARTTIME.getMinutes();
               if (
                 startMinutes != 0 &&
@@ -1746,7 +1770,7 @@ export class JobassigndrawerComponent {
               }
               this.ENDTIME = new Date(
                 this.STARTTIME.getTime() +
-                  this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
+                this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
               );
               let startMinutes1 = this.ENDTIME.getMinutes();
               if (
@@ -1797,7 +1821,7 @@ export class JobassigndrawerComponent {
                     }
                     this.ENDTIME = new Date(
                       this.STARTTIME.getTime() +
-                        this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
+                      this.SERVICE_DATA.ESTIMATED_TIME_IN_MIN * 60000
                     );
                     let startMinutes1 = this.ENDTIME.getMinutes();
                     if (
@@ -1918,7 +1942,7 @@ export class JobassigndrawerComponent {
     }
   }
   disablePastDates = (current: Date): boolean => {
-    const today = new Date();
+    const today = this.selectedCalendarDate ? new Date(this.selectedCalendarDate) : new Date();
     today.setHours(0, 0, 0, 0);
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
@@ -1938,7 +1962,7 @@ export class JobassigndrawerComponent {
       const endTimeDate = new Date(this.ENDTIME);
       const nextDay = new Date(currentDate);
       nextDay.setDate(currentDate.getDate() + 1);
-      nextDay.setHours(0, 0, 0, 0); 
+      nextDay.setHours(0, 0, 0, 0);
       const isCrossingNextDay = endTimeDate >= nextDay;
       if (isCrossingNextDay) {
         this.showbutton = false;
@@ -2026,10 +2050,10 @@ export class JobassigndrawerComponent {
         icon: {
           url:
             index === 0
-              ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' 
+              ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
               : index === locations.length - 1
-              ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' 
-              : 'https://maps.google.com/mapfiles/ms/icons/red-dot.png', 
+                ? 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                : 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
           scaledSize: new google.maps.Size(40, 40),
         },
       });
@@ -2173,8 +2197,8 @@ export class JobassigndrawerComponent {
         { lat: technician.lat, lng: technician.lng },
       ],
       geodesic: true,
-      strokeColor: '#FF0000', 
-      strokeOpacity: 0, 
+      strokeColor: '#FF0000',
+      strokeOpacity: 0,
       strokeWeight: 1,
       icons: [
         {
@@ -2187,7 +2211,7 @@ export class JobassigndrawerComponent {
     walkingPath.setMap(map);
   }
   getNearestRoad(map: any, destination: any) {
-    const apiKey = this.apiKey; 
+    const apiKey = this.apiKey;
     const roadApiUrl = `https://roads.googleapis.com/v1/nearestRoads?points=${destination.lat},${destination.lng}&key=${apiKey}`;
     fetch(roadApiUrl)
       .then((response) => response.json())
@@ -2301,5 +2325,38 @@ export class JobassigndrawerComponent {
       }
     }
     return hoursToDisable;
+  };
+  onCalendarDateChange(date: Date): void {
+    if (!date) return;
+    const y = date.getFullYear();
+    const mo = date.getMonth();
+    const d = date.getDate();
+    const prev = new Date(this.sheduledate);
+    const isSameDate =
+      prev.getFullYear() === y &&
+      prev.getMonth() === mo &&
+      prev.getDate() === d;
+    if (isSameDate) {
+      this.selectedCalendarDate = date;
+      return;
+    }
+    const currentStart = this.STARTTIME ? new Date(this.STARTTIME) : new Date();
+    const currentEnd = this.ENDTIME ? new Date(this.ENDTIME) : new Date();
+    this.STARTTIME = new Date(y, mo, d, currentStart.getHours(), currentStart.getMinutes(), 0, 0);
+    this.ENDTIME = new Date(y, mo, d, currentEnd.getHours(), currentEnd.getMinutes(), 0, 0);
+    this.selectedCalendarDate = date;
+    this.sheduledate = new Date(y, mo, d);
+    this.SERVICE_DATA.EXPECTED_DATE_TIME = this.STARTTIME;
+    this.getTechnicianData();
+  }
+  disablePastDatesForCalendar = (current: Date): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const expectedDate = new Date(this.Jobassignsdata.EXPECTED_DATE_TIME);
+    expectedDate.setHours(0, 0, 0, 0);
+    const minAllowedDate = expectedDate > today ? expectedDate : today;
+    const currentDate = new Date(current);
+    currentDate.setHours(0, 0, 0, 0);
+    return currentDate < minAllowedDate;
   };
 }

@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     private api: ApiServiceService,
     private message: NzNotificationService,
     private cookie: CookieService
-  ) {}
+  ) { }
   currentApplicationVersion: any;
   public commonFunction = new CommonFunctionService();
   showOTP: boolean = false;
@@ -62,14 +62,14 @@ export class LoginComponent implements OnInit {
     ? this.commonFunction.decryptdata(this.roleId)
     : '';
   decreptedroleId = parseInt(this.decreptedroleIdString, 10);
-    userId = sessionStorage.getItem('userId');
+  userId = sessionStorage.getItem('userId');
   decrepteduserIdString = this.userId
     ? this.commonFunction.decryptdata(this.userId)
     : '';
   decrepteduserId = parseInt(this.decrepteduserIdString, 10);
   ngOnInit(): void {
     this.currentApplicationVersion = environment.appVersioning.appVersion;
-    if (this.cookie.get('token') === '' || this.cookie.get('token') === null) {
+    if (sessionStorage.getItem('token') === '' || sessionStorage.getItem('token') === null) {
       this.isLogedIn = false;
       this.router.navigate(['/login']);
     } else {
@@ -110,14 +110,9 @@ export class LoginComponent implements OnInit {
               );
             }
             this.message.success('Successfully Logged In', '');
-            this.cookie.set(
+            sessionStorage.setItem(
               'token',
               data['data'][0]['token'],
-              365,
-              '/',
-              '',
-              false,
-              'Strict'
             );
             this.cookie.set(
               'orgId',
@@ -431,8 +426,8 @@ export class LoginComponent implements OnInit {
     return this.inputType === 'email'
       ? 'Enter email address'
       : this.inputType === 'mobile'
-      ? 'Enter mobile number'
-      : 'Enter email ID / mobile number';
+        ? 'Enter mobile number'
+        : 'Enter email ID / mobile number';
   }
   onIdentifierInput(event: any) {
     const value = event.target.value;
@@ -453,7 +448,7 @@ export class LoginComponent implements OnInit {
     this.IsLoginSet = false
   }
   LoginAsAdmin() {
-    this.IsCustomerLoginSet= false
+    this.IsCustomerLoginSet = false
     this.CustLoginOpen = false;
     this.IsLoginSet = true;
     this.showOtpModal = false;
@@ -478,15 +473,15 @@ export class LoginComponent implements OnInit {
     return emailPattern.test(value);
   }
   resendforgotOtp(content: any) {
-    this.otpSent = false; 
-    this.remainingTime = 60; 
+    this.otpSent = false;
+    this.remainingTime = 60;
     this.startTimer();
   }
   startTimer(): void {
     if (this.timerSubscription) {
       return;
     }
-    const maxDuration = 30; 
+    const maxDuration = 30;
     this.remainingTime = Math.min(this.remainingTime, maxDuration);
     this.timerSubscription = interval(1000)
       .pipe(takeWhile(() => this.remainingTime > 0))
@@ -684,15 +679,7 @@ export class LoginComponent implements OnInit {
                 );
               }
               this.message.success('Successfully Logged In', '');
-              this.cookie.set(
-                'token',
-                successCode.body.token,
-                365,
-                '/',
-                '',
-                false,
-                'Strict'
-              );
+              sessionStorage.setItem('token', successCode.body.token,);
               this.cookie.set('orgId', '1', 365, '/', '', false, 'Strict');
               sessionStorage.setItem(
                 'backofficeId',
@@ -781,16 +768,16 @@ export class LoginComponent implements OnInit {
         `Please wait ${this.remainingTime} seconds before resending OTP.`,
         ''
       );
-      return; 
+      return;
     }
     this.loginotpverification();
   }
   CEMAIL_ID = '';
   CPASSWORD = '';
-  COTP=''
-  CUSER_ID:any
-  CUSER_NAME:any
-  IsCustomerLoginSet:boolean = false
+  COTP = ''
+  CUSER_ID: any
+  CUSER_NAME: any
+  IsCustomerLoginSet: boolean = false
   cpasswordVisible: boolean = false;
   CForgetClick: boolean = false;
   CsendOTPTrue: boolean = false;
@@ -806,8 +793,7 @@ export class LoginComponent implements OnInit {
   creEnterNewPasswordVisible: boolean = false;
   CisloginSpinning: boolean = false;
   cnewpasswordVisible: boolean = false;
-  backCustomeroption()
-  {
+  backCustomeroption() {
     this.CForgetClick = false;
     this.CsendOTPTrue = false;
     this.COTP = '';
@@ -816,12 +802,12 @@ export class LoginComponent implements OnInit {
     this.CNEW_PASSWORD = '';
   }
   CforgentPasswordClick() {
-    this.ForgetClick =false
-    this.sendOTPTrue=false
+    this.ForgetClick = false
+    this.sendOTPTrue = false
     this.CForgetClick = true;
     this.CsendOTPTrue = false;
   }
-    Clogin(): void {
+  Clogin(): void {
     if (this.CEMAIL_ID == '' && this.CPASSWORD == '') {
       this.isOk = false;
       this.message.error('Please Enter Email ID and Password.', '');
@@ -854,14 +840,9 @@ export class LoginComponent implements OnInit {
               );
             }
             this.message.success('Successfully Logged In', '');
-            this.cookie.set(
+            sessionStorage.setItem(
               'token',
-              data['token'],
-              365,
-              '/',
-              '',
-              false,
-              'Strict'
+              data['token']
             );
             sessionStorage.setItem(
               'userId',
@@ -891,11 +872,11 @@ export class LoginComponent implements OnInit {
               'profile_url',
               data['UserData'][0]['PROFILE_PHOTO']
             );
-             sessionStorage.setItem('LoggedCustoemr', 'customer');
+            sessionStorage.setItem('LoggedCustoemr', 'customer');
             this.router.navigate(['/customer-dashboard']).then(() => {
               window.location.reload();
             });
-          } 
+          }
           else {
             this.CisloginSpinning = false;
             this.message.error('You have entered wrong credentials', '');
@@ -915,7 +896,7 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-    CsendOTP() {
+  CsendOTP() {
     if (this.CEMAIL_ID == '' && this.CPASSWORD == '') {
       this.isOk = false;
       this.message.error('Please Enter Email ID', '');
@@ -952,7 +933,7 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-    CverifyOTP() {
+  CverifyOTP() {
     if (this.CEMAIL_ID == '' && this.CPASSWORD == '') {
       this.isOk = false;
       this.message.error('Please Enter Email ID and Password.', '');
@@ -997,7 +978,7 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-    CchangePassword() {
+  CchangePassword() {
     if (
       this.CNEW_PASSWORD == null ||
       this.CNEW_PASSWORD == undefined ||

@@ -58,10 +58,19 @@ export class MainServiceMasterComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) { }
   ngOnInit(): void {
+    if (this.data?.ID && this.data.SERVICE_EXCLUSIVES) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = this.data.SERVICE_EXCLUSIVES;
+      const liItems = Array.from(tempDiv.querySelectorAll('li'));
+      this.exclusivePoints = liItems
+        .map(li => li.textContent?.trim() || '')
+        .filter(t => t);
+    } else {
+      this.exclusivePoints = [];
+    }
     if (this.data?.ID) {
       const html = this.data.DESCRIPTION || '';
       this.cleanTextLength = html.length;
-      this.showLengthError = html.length > this.maxLength;
     }
     this.organizationid = sessionStorage.getItem('orgId');
     this.data.ORG_ID = 1;
@@ -166,49 +175,49 @@ export class MainServiceMasterComponent implements OnInit {
   restrictMinutes(event: any): void {
     const input = event.target.value;
     if (input > 59) {
-      event.target.value = 59; 
-      this.data.DURARTION_MIN = 59; 
+      event.target.value = 59;
+      this.data.DURARTION_MIN = 59;
     } else if (input < 0) {
-      event.target.value = ''; 
+      event.target.value = '';
       this.data.DURARTION_MIN = null;
     } else {
-      this.data.DURARTION_MIN = input; 
+      this.data.DURARTION_MIN = input;
     }
   }
   restrictHours(event: any): void {
     const input = event.target.value;
     if (input > 24) {
-      event.target.value = 24; 
-      this.data.DURARTION_HOUR = 24; 
+      event.target.value = 24;
+      this.data.DURARTION_HOUR = 24;
     } else if (input < 0) {
-      event.target.value = ''; 
+      event.target.value = '';
       this.data.DURARTION_HOUR = null;
     } else {
-      this.data.DURARTION_HOUR = input; 
+      this.data.DURARTION_HOUR = input;
     }
   }
   restrictHours1(event: any): void {
     const input = event.target.value;
     if (input > 24) {
-      event.target.value = 24; 
-      this.data.PREPARATION_HOURS = 24; 
+      event.target.value = 24;
+      this.data.PREPARATION_HOURS = 24;
     } else if (input < 0) {
-      event.target.value = ''; 
+      event.target.value = '';
       this.data.PREPARATION_HOURS = null;
     } else {
-      this.data.PREPARATION_HOURS = input; 
+      this.data.PREPARATION_HOURS = input;
     }
   }
   restrictMinutes1(event: any): void {
     const input = event.target.value;
     if (input > 59) {
-      event.target.value = 59; 
-      this.data.PREPARATION_MINUTES = 59; 
+      event.target.value = 59;
+      this.data.PREPARATION_MINUTES = 59;
     } else if (input < 0) {
-      event.target.value = ''; 
+      event.target.value = '';
       this.data.PREPARATION_MINUTES = null;
     } else {
-      this.data.PREPARATION_MINUTES = input; 
+      this.data.PREPARATION_MINUTES = input;
     }
   }
   changeAmount(event: any) {
@@ -322,7 +331,7 @@ export class MainServiceMasterComponent implements OnInit {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_START_TIME.split(':'); 
+                  data['body']['data'][0].DAY_START_TIME.split(':');
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -335,7 +344,7 @@ export class MainServiceMasterComponent implements OnInit {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_END_TIME.split(':'); 
+                  data['body']['data'][0].DAY_END_TIME.split(':');
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -406,7 +415,7 @@ export class MainServiceMasterComponent implements OnInit {
     let finalMinutes = roundedMinutes;
     if (roundedMinutes >= 60) {
       finalMinutes = 0;
-      finalHour = (finalHour + 1) % 24; 
+      finalHour = (finalHour + 1) % 24;
     }
     const roundedDate = new Date(date);
     roundedDate.setHours(finalHour);
@@ -421,6 +430,9 @@ export class MainServiceMasterComponent implements OnInit {
     this.data.UNIT_ID = 1;
     this.organizationid = sessionStorage.getItem('orgId');
     this.data.ORG_ID = 1;
+    this.exclusivePoints = [];
+    this.tempExclusivePoints = [];
+    this.newExclusivePoint = '';
     this.api
       .getAllOrganizations(1, 1, '', 'desc', ' AND ID=1')
       .subscribe((data) => {
@@ -460,7 +472,7 @@ export class MainServiceMasterComponent implements OnInit {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_START_TIME.split(':'); 
+                  data['body']['data'][0].DAY_START_TIME.split(':');
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -473,7 +485,7 @@ export class MainServiceMasterComponent implements OnInit {
               ) {
                 const today = new Date();
                 const timeParts =
-                  data['body']['data'][0].DAY_END_TIME.split(':'); 
+                  data['body']['data'][0].DAY_END_TIME.split(':');
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -531,8 +543,8 @@ export class MainServiceMasterComponent implements OnInit {
             (child) => child.key === selectedKey
           );
           if (subCategory) {
-            parentCategoryName = category.title; 
-            subCategoryName = subCategory.title; 
+            parentCategoryName = category.title;
+            subCategoryName = subCategory.title;
           }
         }
       });
@@ -567,7 +579,7 @@ export class MainServiceMasterComponent implements OnInit {
     const style = img.style;
     this.imgWidth = parseInt(style.width || '300');
     this.imgHeight = parseInt(style.height || '200');
-    this.imgAlign = style.float || ''; 
+    this.imgAlign = style.float || '';
     this.imageModalVisible = true;
   }
   applyImageStyle() {
@@ -683,6 +695,23 @@ export class MainServiceMasterComponent implements OnInit {
       });
     }
   }
+  cleanTextLengthforAboutService = 0;
+  showLengthErrorforAboutService = false;
+  maxLengthforAboutService = 512;
+  checkAboutServiceLength(): void {
+    const html = this.data.ABOUT_SERVICE || '';
+    const totalLength = html.length;
+    this.cleanTextLengthforAboutService = totalLength;
+    this.showLengthErrorforAboutService = totalLength > this.maxLengthforAboutService;
+    if (this.showLengthErrorforAboutService) {
+      const truncated = html.slice(0, this.maxLengthforAboutService);
+      this.data.ABOUT_SERVICE = '';
+      setTimeout(() => {
+        this.data.ABOUT_SERVICE = truncated;
+        this.cleanTextLengthforAboutService = truncated.length;
+      });
+    }
+  }
   continueSave(addNew: boolean, ServiceCatmaster: NgForm): void {
     if (this.data.DESCRIPTION) {
       setTimeout(() => {
@@ -696,6 +725,8 @@ export class MainServiceMasterComponent implements OnInit {
     }
     this.isSpinning = false;
     this.isOk = true;
+    this.data.SERVICE_EXCLUSIVES = this.getExclusivePointsHtml();
+    console.log(this.data.SERVICE_EXCLUSIVES);
     if (
       this.data.SUB_CATEGORY_ID == '' ||
       this.data.SUB_CATEGORY_ID == null ||
@@ -921,6 +952,20 @@ export class MainServiceMasterComponent implements OnInit {
       this.isOk = false;
       this.message.error(' Please select end time.', '');
     } else if (
+      this.data.ABOUT_SERVICE == undefined ||
+      this.data.ABOUT_SERVICE == null ||
+      this.data.ABOUT_SERVICE?.trim() == ''
+    ) {
+      this.isOk = false;
+      this.message.error('About service is required', '');
+    } else if (
+      this.data.SERVICE_EXCLUSIVES == undefined ||
+      this.data.SERVICE_EXCLUSIVES == null ||
+      this.data.SERVICE_EXCLUSIVES?.trim() == ''
+    ) {
+      this.isOk = false;
+      this.message.error('Service exclusives is required', '');
+    } else if (
       this.data.IS_PARENT &&
       (this.data.SERVICE_DETAILS_IMAGE != undefined ||
         this.data.SERVICE_DETAILS_IMAGE != null ||
@@ -1005,7 +1050,7 @@ export class MainServiceMasterComponent implements OnInit {
                   this.data.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.START_TIME.split(':'); 
+                  const timeParts = this.data.START_TIME.split(':');
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.START_TIME = new Date(today);
@@ -1017,7 +1062,7 @@ export class MainServiceMasterComponent implements OnInit {
                   this.data.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.END_TIME.split(':'); 
+                  const timeParts = this.data.END_TIME.split(':');
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.END_TIME = new Date(today);
@@ -1030,7 +1075,7 @@ export class MainServiceMasterComponent implements OnInit {
                   this.data.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.START_TIME.split(':'); 
+                  const timeParts = this.data.START_TIME.split(':');
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.START_TIME = new Date(today);
@@ -1042,7 +1087,7 @@ export class MainServiceMasterComponent implements OnInit {
                   this.data.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.END_TIME.split(':'); 
+                  const timeParts = this.data.END_TIME.split(':');
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.END_TIME = new Date(today);
@@ -1068,7 +1113,7 @@ export class MainServiceMasterComponent implements OnInit {
                 this.data.START_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = this.data.START_TIME.split(':'); 
+                const timeParts = this.data.START_TIME.split(':');
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -1080,7 +1125,7 @@ export class MainServiceMasterComponent implements OnInit {
                 this.data.END_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = this.data.END_TIME.split(':'); 
+                const timeParts = this.data.END_TIME.split(':');
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -1112,7 +1157,7 @@ export class MainServiceMasterComponent implements OnInit {
                   this.data.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.START_TIME.split(':'); 
+                  const timeParts = this.data.START_TIME.split(':');
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.START_TIME = new Date(today);
@@ -1124,7 +1169,7 @@ export class MainServiceMasterComponent implements OnInit {
                   this.data.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.END_TIME.split(':'); 
+                  const timeParts = this.data.END_TIME.split(':');
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.END_TIME = new Date(today);
@@ -1139,7 +1184,7 @@ export class MainServiceMasterComponent implements OnInit {
                   this.data.START_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.START_TIME.split(':'); 
+                  const timeParts = this.data.START_TIME.split(':');
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.START_TIME = new Date(today);
@@ -1151,7 +1196,7 @@ export class MainServiceMasterComponent implements OnInit {
                   this.data.END_TIME != ''
                 ) {
                   const today = new Date();
-                  const timeParts = this.data.END_TIME.split(':'); 
+                  const timeParts = this.data.END_TIME.split(':');
                   if (timeParts.length > 1) {
                     today.setHours(+timeParts[0], +timeParts[1], 0);
                     this.data.END_TIME = new Date(today);
@@ -1175,7 +1220,7 @@ export class MainServiceMasterComponent implements OnInit {
                 this.data.START_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = this.data.START_TIME.split(':'); 
+                const timeParts = this.data.START_TIME.split(':');
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.START_TIME = new Date(today);
@@ -1187,7 +1232,7 @@ export class MainServiceMasterComponent implements OnInit {
                 this.data.END_TIME != ''
               ) {
                 const today = new Date();
-                const timeParts = this.data.END_TIME.split(':'); 
+                const timeParts = this.data.END_TIME.split(':');
                 if (timeParts.length > 1) {
                   today.setHours(+timeParts[0], +timeParts[1], 0);
                   this.data.END_TIME = new Date(today);
@@ -1253,7 +1298,7 @@ export class MainServiceMasterComponent implements OnInit {
         img.src = base64;
         img.crossOrigin = 'Anonymous';
         img.onload = async () => {
-          await img.decode(); 
+          await img.decode();
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
           if (!ctx) return reject('Canvas context not available');
@@ -1279,13 +1324,13 @@ export class MainServiceMasterComponent implements OnInit {
           };
           let currentCanvas = canvas;
           const downscaleSteps = [
-            [Math.floor(finalWidth * 1.5), Math.floor(finalHeight * 1.5)], 
-            [finalWidth, finalHeight], 
+            [Math.floor(finalWidth * 1.5), Math.floor(finalHeight * 1.5)],
+            [finalWidth, finalHeight],
           ];
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
           }
-          resolve(currentCanvas.toDataURL('image/png', 2)); 
+          resolve(currentCanvas.toDataURL('image/png', 2));
         };
         img.onerror = (err) => reject(`Image load error: ${err}`);
       });
@@ -1297,7 +1342,7 @@ export class MainServiceMasterComponent implements OnInit {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-        const sizeInMB = blob.size / (1024 * 1024); 
+        const sizeInMB = blob.size / (1024 * 1024);
         if (sizeInMB > 1 && quality > 0.1) {
           this.compressImage(canvas, quality - 0.1);
         } else {
@@ -1310,7 +1355,7 @@ export class MainServiceMasterComponent implements OnInit {
       },
       'image/jpeg',
       quality
-    ); 
+    );
   }
   imageWidth: number = 0;
   imageHeight: number = 0;
@@ -1325,7 +1370,7 @@ export class MainServiceMasterComponent implements OnInit {
   loadImageFailed() {
   }
   onDetailsFileSelected(event: any) {
-    const maxFileSize = 5 * 1024 * 1024; 
+    const maxFileSize = 5 * 1024 * 1024;
     if (
       event.target.files[0]?.type === 'image/jpeg' ||
       event.target.files[0]?.type === 'image/jpg' ||
@@ -1340,7 +1385,7 @@ export class MainServiceMasterComponent implements OnInit {
         }
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.imagePreview3 = e.target.result; 
+          this.imagePreview3 = e.target.result;
           this.fileURL2 = this.selectedFile2;
           var number = Math.floor(100000 + Math.random() * 900000);
           var fileExt = this.fileURL2.name.split('.').pop();
@@ -1421,7 +1466,7 @@ export class MainServiceMasterComponent implements OnInit {
   imagePreview: any;
   sanitizedFileURL: SafeUrl | null = null;
   onFileSelected(event: any): void {
-    const maxFileSize = 1 * 1024 * 1024; 
+    const maxFileSize = 1 * 1024 * 1024;
     const canvasSize = 200;
     const file = event.target.files?.[0];
     if (!file) return;
@@ -1634,4 +1679,110 @@ export class MainServiceMasterComponent implements OnInit {
   ImageModal2Cancel() {
     this.ImageModal2Visible = false;
   }
+  exclusivePoints: string[] = [];
+  tempExclusivePoints: string[] = [];
+  isExclusiveModalVisible = false;
+  newExclusivePoint = '';
+  openExclusiveModal(): void {
+    this.tempExclusivePoints = [...this.exclusivePoints];
+    this.isExclusiveModalVisible = true;
+  }
+  closeExclusiveModal(): void {
+    this.isExclusiveModalVisible = false;
+    this.newExclusivePoint = '';
+  }
+  // addExclusivePoint(): void {
+  //   const val = this.newExclusivePoint.trim();
+  //   if (!val) return;
+
+  //   const lines = val
+  //     .split(/\r?\n/)
+  //     .map(l => l.trim())
+  //     .filter(l => l.length > 0);
+
+  //   if (lines.length > 1) {
+  //     // multi-line paste tha — sab alag alag add karo
+  //     [...lines].reverse().forEach(line => this.tempExclusivePoints.unshift(line));
+  //   } else {
+  //     this.tempExclusivePoints.unshift(val);
+  //   }
+
+  //   this.newExclusivePoint = '';
+  // }
+  removeTempPoint(index: number): void {
+    this.tempExclusivePoints.splice(index, 1);
+  }
+  removeExclusivePoint(index: number): void {
+    this.exclusivePoints.splice(index, 1);
+  }
+  saveExclusivePoints(): void {
+    this.exclusivePoints = [...this.tempExclusivePoints];
+    this.isExclusiveModalVisible = false;
+    this.newExclusivePoint = '';
+  }
+  getExclusivePointsHtml(): string {
+    if (this.exclusivePoints.length === 0) return '';
+    const items = this.exclusivePoints
+      .map(p => `<li>${p}</li>`)
+      .join('');
+    return `<ul>${items}</ul>`;
+  }
+  editingIndex: number = -1;
+  editingValue: string = '';
+  startEdit(index: number): void {
+    this.editingIndex = index;
+    this.editingValue = this.tempExclusivePoints[index];
+  }
+  saveEdit(index: number): void {
+    const val = this.editingValue.trim();
+    if (val) {
+      this.tempExclusivePoints[index] = val;
+    }
+    this.editingIndex = -1;
+    this.editingValue = '';
+  }
+  cancelEdit(): void {
+    this.editingIndex = -1;
+    this.editingValue = '';
+  }
+  pendingLines: string[] = [];
+
+onExclusivePaste(event: ClipboardEvent): void {
+  const pastedText = event.clipboardData?.getData('text') || '';
+  const lines = pastedText
+    .split(/\r?\n/)
+    .map(l => l.trim())
+    .filter(l => l.length > 0);
+
+  if (lines.length > 1) {
+    event.preventDefault();          // browser ko strip karne se rokao
+    this.pendingLines = lines;
+    this.newExclusivePoint = '';      // input khali dikhao
+  }
+  // single line — normal paste hone do
+}
+
+addExclusivePoint(): void {
+  // pending multi-line hai
+  if (this.pendingLines.length > 0) {
+    [...this.pendingLines].reverse().forEach(line =>
+      this.tempExclusivePoints.unshift(line)
+    );
+    this.pendingLines = [];
+    this.newExclusivePoint = '';
+    return;
+  }
+  // normal single point
+  const val = this.newExclusivePoint.trim();
+  if (!val) return;
+  this.tempExclusivePoints.unshift(val);
+  this.newExclusivePoint = '';
+}
+
+onInputChange(): void {
+  // user khud type kare toh pending clear karo
+  if (this.pendingLines.length > 0) {
+    this.pendingLines = [];
+  }
+}
 }

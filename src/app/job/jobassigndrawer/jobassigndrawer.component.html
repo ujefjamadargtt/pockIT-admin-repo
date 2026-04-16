@@ -84,7 +84,7 @@
                 <label nz-radio nzValue="M">Mapped</label>
               </nz-radio-group>
             </div>
-            <div nz-col nzSpan="22">
+            <div nz-col nzSpan="18">
               <nz-form-item class="form-item-zero-margin-uid">
                 <nz-input-group [nzSuffix]="suffixIconSearch">
                   <input type="text" nz-input placeholder="Enter 3 characters to search" [(ngModel)]="searchValue"
@@ -95,12 +95,24 @@
                 </ng-template>
               </nz-form-item>
             </div>
-            <div nz-col nzSpan="2" class="filter-btn-align-uid">
+            <div nz-col nzSpan="3" class="filter-btn-align-uid">
               <nz-form-item class="form-item-zero-margin-uid">
                 <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip
                   [nzType]="false ? 'primary' : 'default'" (click)="showMainFilter()">
                   <i nz-icon nzType="filter"></i>
                 </button>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="3" class="filter-btn-align-uid">
+              <nz-form-item class="form-item-zero-margin-uid">
+                <button nz-button nzTooltipTitle="Calendar" nzTooltipPlacement="top" nz-tooltip
+                  (click)="calendarPicker.open()">
+                  <i nz-icon nzType="calendar"></i>
+                </button>
+                <nz-date-picker #calendarPicker [(ngModel)]="selectedCalendarDate"
+                  (ngModelChange)="onCalendarDateChange($event)" [nzDisabledDate]="disablePastDatesForCalendar"
+                  [nzFormat]="'dd/MM/yyyy'" style="width:0;padding:0;border:none;visibility:hidden;position:absolute;">
+                </nz-date-picker>
               </nz-form-item>
             </div>
             <div nz-col nzSpan="24">
@@ -203,7 +215,7 @@
                     <span *ngIf="tech.EXPERIENCE_LEVEL == 'E'" class="subname">
                       Expert</span>
                   </div>
-                  <div nz-col nzSpan="10" class="subname">
+                  <div nz-col nzSpan="12" class="subname">
                     Type :
                     <span *ngIf="tech.TYPE == 'V'" class="subname">
                       Vendor Managed</span>
@@ -381,7 +393,7 @@
           </div>
           <div nz-col nzSpan="24">
             <nz-form-item class="assign-form-item-uid nz-form-item">
-              <nz-form-label nzRequired nzNoColon> Shedule Date </nz-form-label>
+              <nz-form-label nzRequired nzNoColon> Schedule Date </nz-form-label>
               <nz-form-control>
                 <nz-date-picker class="assign-date-full-uid" [(ngModel)]="sheduledate" name="sheduledate"
                   (ngModelChange)="getbetweendata($event)" [nzFormat]="'dd/MM/yyyy'"

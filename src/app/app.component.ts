@@ -136,20 +136,6 @@ export class AppComponent {
   arraysub: any;
   subscribedChannels1: any = sessionStorage.getItem('subscribedChannels1');
   ngOnInit(): void {
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     this.currentApplicationVersion = environment.appVersioning.appVersion;
     this.requestPermission();
     const firebaseApp = initializeApp(environment.firebase);
@@ -166,8 +152,7 @@ export class AppComponent {
       ? this.commonFunction.decryptdata(this.userId)
       : '';
     this.decrepteduserID = parseInt(this.decrepteduserIDString, 10);
-    if (this.cookie.get('token') === '' || this.cookie.get('token') === null) {
-      
+    if (sessionStorage.getItem('token') === '' || sessionStorage.getItem('token') === null) {
       sessionStorage.clear();
       localStorage.clear();
       this.cookie.delete('token');
@@ -181,7 +166,6 @@ export class AppComponent {
         this.router.navigate(['/job-completed'], {
           queryParams: { key: keyss },
         });
-        
       } else {
         this.isLogedIn = false;
         this.router.navigate(['/login']);
@@ -192,7 +176,6 @@ export class AppComponent {
         this.requestPermission();
         this.isLogedIn = true;
         this.loadForms();
-        
         this.getEarnings();
         if (
           this.decreptedroleId != 6 &&
@@ -239,10 +222,8 @@ export class AppComponent {
           this.imagePath = `${this.api.retriveimgUrl}userProfile/${this.profile_url}`;
         }
         this.onMasterChange(this.selectedMaster1);
-        
       } else {
         this.isLogedIn = false;
-        
         sessionStorage.clear();
         localStorage.clear();
         this.cookie.delete('token');
@@ -276,11 +257,9 @@ export class AppComponent {
           }
           this.api.subscribeToMultipleTopics(topics).subscribe({
             next: () => {
-              
               channelsArray = channelsArray.filter(
                 (channel: any) => !topics.includes(channel.CHANNEL_NAME)
               );
-              
               sessionStorage.setItem(
                 'subscribedChannels',
                 JSON.stringify(channelsArray)
@@ -307,10 +286,8 @@ export class AppComponent {
                 next: (response: any[]) => {
                   var newChannels = response['body']['data'].map((item: any) => item.CHANNEL_NAME);
                   if (newChannels.length > 0) {
-                    
                     this.api.subscribeToMultipleTopics(newChannels).subscribe({
                       next: () => {
-                        
                         const updatedChannelsArray = [
                           ...channelsArray,
                           ...newChannels.map(name => ({ CHANNEL_NAME: name })),
@@ -341,7 +318,6 @@ export class AppComponent {
             var channelsArray2: any = [{ CHANNEL_NAME: 'backoffice_channel' }];
             this.api.subscribeToMultipleTopics(topics2).subscribe({
               next: () => {
-                
                 sessionStorage.setItem(
                   'subscribedChannels1',
                   JSON.stringify(channelsArray2)
@@ -368,10 +344,8 @@ export class AppComponent {
                   next: (response: any[]) => {
                     var newChannels = response['body']['data'].map((item: any) => item.CHANNEL_NAME);
                     if (newChannels.length > 0) {
-                      
                       this.api.subscribeToMultipleTopics(newChannels).subscribe({
                         next: () => {
-                          
                           const updatedChannelsArray = [
                             ...channelsArray2,
                             ...newChannels.map(name => ({ CHANNEL_NAME: name })),
@@ -469,10 +443,8 @@ export class AppComponent {
           next: (response: any[]) => {
             var newChannels = response['body']['data'].map((item: any) => item.CHANNEL_NAME);
             if (newChannels.length > 0) {
-              
               this.api.subscribeToMultipleTopics(newChannels).subscribe({
                 next: () => {
-                  
                   const updatedChannelsArray = [
                     ...newChannels.map(name => ({ CHANNEL_NAME: name })),
                   ];
@@ -505,7 +477,6 @@ export class AppComponent {
     );
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        
         this.searchQuery = '';
       }
     });
@@ -629,13 +600,11 @@ export class AppComponent {
   }
   receiveMessages() {
     onMessage(this.messaging, (payload) => {
-      
       let storedMessages = JSON.parse(
         localStorage.getItem('NOTIFICATIONS') || '[]'
       );
       storedMessages.push(payload.notification);
       localStorage.setItem('NOTIFICATIONS', JSON.stringify(storedMessages));
-      
       this.currentMessage.next(payload.notification);
     });
   }
@@ -682,21 +651,17 @@ export class AppComponent {
             this.pageName = arr[3];
           } else {
             if (validPage != '/login') {
-              
               if (sessionStorage.getItem('LoggedCustoemr') === 'customer') {
                 this.router.navigateByUrl('/customer-dashboard');
               } else {
                 this.router.navigateByUrl('/dashboard');
               }
-              
-              
             }
           }
         });
     }
   }
   ngOnDestroy() {
-    
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
@@ -717,12 +682,10 @@ export class AppComponent {
         });
         this.menus = data['data'].sort(this.sortFunction);
         this.forms = data['data'];
-        
         this.titleWiseChildren = this.forms.reduce((acc, item) => {
           acc[item.title] = item.children; 
           return acc;
         }, {});
-        
         this.allTitles = this.forms.flatMap((category) =>
           category.children ? category.children.map((item) => item.title) : []
         );
@@ -827,10 +790,6 @@ export class AppComponent {
   get sendNotiDrawerCloseCallback() {
     return this.sendNotiDrawerClose.bind(this);
   }
-  
-  
-  
-  
   async isNotification() {
     this.isNotificationVisible = true;
     this.notificationCount = 0;
@@ -842,7 +801,6 @@ export class AppComponent {
     this.resetForm();
     this.isNotificationVisible = false;
   }
-  
   onTabChange(selectedIndex: any): void {
     const tabMapping = ['all', 'orders', 'jobs'];
     const tabvalue = tabMapping[selectedIndex];
@@ -870,8 +828,6 @@ export class AppComponent {
   }
   notifications: any[] = [];
   filteredNotifications: any[] = [];
-  
-  
   filterNotifications(): void {
     this.filteredNotifications = this.notifications.filter(
       (notification) =>
@@ -888,7 +844,6 @@ export class AppComponent {
           ))
     );
   }
-  
   isProfileVisible = false;
   isProfile() {
     this.isProfileVisible = true;
@@ -911,11 +866,9 @@ export class AppComponent {
   }
   @ViewChild('resetform') resetform: NgForm;
   resetForm(): void {
-    
     this.PASSWORD = '';
     this.NEWPASSWORD = '';
     this.CONFPASSWORD = '';
-    
     if (this.resetform) {
       this.resetform.resetForm();
     }
@@ -935,7 +888,6 @@ export class AppComponent {
     /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z0-9!@#$%^&*(),.?\":{}|<>]{8,}$/;
   handleOkTop(): void {
     let isOk = true;
-    
     if (
       (!this.PASSWORD || this.PASSWORD.trim() === '') &&
       (!this.NEWPASSWORD || this.NEWPASSWORD.trim() === '') &&
@@ -948,7 +900,6 @@ export class AppComponent {
       );
       return;
     }
-    
     else if (!this.PASSWORD || this.PASSWORD.trim() === '') {
       isOk = false;
       this._notificationService.error('Please enter current password', '');
@@ -1006,9 +957,7 @@ export class AppComponent {
             this.resetForm();
             this.isPasswordVisible = false;
             this.isLoading = false;
-            
             this.visiblesave = false;
-            
           } else if (successCode['message'] == 'Password not match') {
             this._notificationService.info(
               'Invalid old password',
@@ -1321,7 +1270,6 @@ export class AppComponent {
   get closeCallbackCustomers() {
     return this.drawerCloseCustomers.bind(this);
   }
-  
   vieworderdata: any;
   isSpinning2: boolean = false;
   orderDetails: any;
@@ -1382,7 +1330,6 @@ export class AppComponent {
   get closeCallback() {
     return this.drawerClose.bind(this);
   }
-  
   jobdetaildrawerTitle = '';
   jobdetailsshow = false;
   jobdetailsdata: any;
@@ -1408,7 +1355,6 @@ export class AppComponent {
   jobdetailsdrawerClose(): void {
     this.jobdetailsshow = false;
   }
-  
   get jobdetailscloseCallback() {
     return this.jobdetailsdrawerClose.bind(this);
   }
@@ -1431,12 +1377,10 @@ export class AppComponent {
   TechniciansdetailsdrawerClose(): void {
     this.Techniciansdetailsshow = false;
   }
-  
   get TechniciansdetailscloseCallback() {
     return this.TechniciansdetailsdrawerClose.bind(this);
   }
   TechniciansId: any;
-  
   drawerVisibleVendors: boolean;
   drawerTitleVendors: string;
   drawerDataVendors: any;
@@ -1482,7 +1426,6 @@ export class AppComponent {
         }
       });
   }
-  
   isDropdownVisible = false;
   clickedIcons: { title: string; icon: string; link: string }[] = [];
   selectedItems: {
@@ -1561,7 +1504,6 @@ export class AppComponent {
     this.getnotifications();
   }
   getnotifications() {
-    
     this.resetPasswordLoading = true;
     if (this.searchTerm !== '') {
       this.notficationfilter =
@@ -1734,12 +1676,6 @@ export class AppComponent {
       this.onSearch(); 
     } else if (this.searchTerm.length === 0 && event.key === 'Backspace') {
       this.notifications = [
-        
-        
-        
-        
-        
-        
       ];
       this.notficationfilter = '';
       this.onSearch(); 
@@ -1752,11 +1688,9 @@ export class AppComponent {
   onEnterKey(event: Event) {
     const keyboardEvent = event as KeyboardEvent;
     keyboardEvent.preventDefault();
-    
   }
   searchNotification(keys): void {
     const element = window.document.getElementById('notification');
-    
     if (this.searchTerm.length >= 3 && keys.key === 'Enter') {
       if (this.searchTerm !== '') {
         this.notficationfilter =
@@ -1789,12 +1723,9 @@ export class AppComponent {
         var filter = ` AND (TYPE='${type}' AND MEMBER_ID=${this.decrepteduserID
           }) OR (TOPIC_NAME IN ('${topics.join("','")}') AND MEMBER_ID=${this.decrepteduserID
           }  AND TYPE='${type}')`;
-        
-        
       } else {
         var filter = ` AND TYPE='${type}' AND MEMBER_ID=${this.decrepteduserID}`;
       }
-      
       this.api
         .getnotifications(
           this.pageIndex,
@@ -1804,12 +1735,9 @@ export class AppComponent {
           filter + this.notficationfilter
         )
         .subscribe((data) => {
-          
           this.totalRecords = data.count;
-          
           const searchTermLower = this.searchTerm.toLowerCase();
           this.notifications = data.data.filter((notification) => {
-            
             const titleMatch =
               notification.TITLE?.toLowerCase().includes(searchTermLower);
             const descriptionMatch =
@@ -1818,22 +1746,15 @@ export class AppComponent {
           });
         });
     } else if (this.searchTerm.length >= 0 && keys.key == 'Backspace') {
-      
-      
-      
     }
   }
-  
   onSearch(): void {
-    
     this.getnotifications();
   }
-  
   totalRecords: any = 0; 
   loadMore1() {
     this.resetPasswordLoading = true;
     this.pageIndex += 1;
-    
     this.onSearch();
   }
   trackByNotification(index: number, item: any) {
@@ -1882,7 +1803,6 @@ export class AppComponent {
     a.click();
     document.body.removeChild(a);
   }
-  
   isApkVersionModalVisible = false;
   isApkVersionModalConfirmLoading = false;
   apkVersionModalTitle: string = '';
@@ -1890,9 +1810,6 @@ export class AppComponent {
     this.api.getAPKInfo(0, 0, '', '', '').subscribe(
       (data) => {
         if (data['code'] == 200) {
-          
-          
-          
           this.CUSTOMER_PREVIOUS_VERSION =
             data['data'][0]['CUSTOMER_CUR_VERSION'];
           this.CUSTOMER_MIN_VERSION = data['data'][0]['CUSTOMER_MIN_VERSION'];
@@ -1906,7 +1823,6 @@ export class AppComponent {
       },
       (err) => {
         if (this.api.checkOnlineStatus()) {
-          
           this.message.error("The server's internet connection is down.", '');
         } else {
           this.message.error(

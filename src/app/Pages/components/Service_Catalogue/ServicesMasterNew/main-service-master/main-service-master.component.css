@@ -4,6 +4,7 @@ nz-form-item {
   width: -webkit-fill-available;
   padding: 0px 5px;
 }
+
 .mainnam {
   font-size: 12px !important;
   font-weight: 600;
@@ -11,6 +12,7 @@ nz-form-item {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .subname {
   color: #4c4c4ceb;
   font-size: 11px !important;
@@ -19,88 +21,111 @@ nz-form-item {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .cls-subcategory-tree-width {
   width: 100%;
 }
+
 .cls-name-length-indicator {
   color: red;
   font-size: 10px;
 }
+
 .cls-shortcode-length-indicator {
   color: red;
   font-size: 10px;
 }
+
 .cls-description-editor {
   resize: none;
   color: black;
 }
+
 .cls-description-counter {
   color: red;
   font-size: 10px;
 }
+
 .cls-description-error {
   color: red;
   font-size: 11px;
 }
+
 .cls-service-upload-btn {
   padding: 0px 7px;
   font-size: 10px;
 }
+
 .cls-details-upload-btn {
   height: 28px;
   padding: 0px 7px;
   font-size: 12px;
 }
+
 .cls-hidden-file-input {
   display: none !important;
 }
+
 .cls-file-link {
   color: #092b9c;
   margin-right: 9px;
   cursor: pointer;
 }
+
 .cls-file-text {
   color: #092b9c;
 }
+
 .cls-icon-clickable {
   cursor: pointer;
 }
+
 .cls-icon-clickable-no-margin {
   cursor: pointer;
   margin-left: 0px;
 }
+
 .cls-icon-clickable-left {
   cursor: pointer;
   margin-left: 10px;
 }
+
 .cls-details-container {
   display: flex;
   justify-content: left;
 }
+
 .box123 {
   padding-left: 5px;
   height: auto;
   margin-right: 5px
 }
+
 .cls-qty-input {
   width: 40%;
   padding: 4.7px 11px !important;
 }
+
 .cls-unit-select {
   width: 60%;
 }
+
 .cls-hsn-select {
   width: 100%;
 }
+
 .cls-duration-row {
   display: flex;
 }
+
 .cls-duration-hour {
   margin-right: 10px;
 }
+
 .cls-duration-min-select {
   width: 100px !important;
 }
+
 .cls-duration-min-btn {
   padding: 0px 11px !important;
   background: #fafafa !important;
@@ -112,15 +137,19 @@ nz-form-item {
   cursor: none !important;
   box-shadow: none;
 }
+
 .cls-prep-row {
   display: flex;
 }
+
 .cls-prep-hour {
   margin-right: 10px;
 }
+
 .cls-prep-min-select {
   width: 100px !important;
 }
+
 .cls-prep-min-btn {
   padding: 0px 11px !important;
   background: #fafafa !important;
@@ -132,71 +161,286 @@ nz-form-item {
   cursor: none !important;
   box-shadow: none;
 }
+
 .cls-skills-select {
   width: 100%;
 }
+
 .cls-warranty-length-indicator {
   color: red;
   font-size: 10px;
 }
+
 .cls-guarantee-length-indicator {
   color: red;
   font-size: 10px;
 }
+
 .cls-footer-cancel-btn {
   margin-right: 12px;
 }
+
 .cls-footer-menu-item {
   border-radius: 4px;
   color: white !important;
 }
+
 .cls-footer-menu-link {
   color: white !important;
 }
+
 .cls-image-preview-small {
   height: 300px;
   overflow: hidden;
 }
+
 .cls-image-iframe-small {
   width: 300px;
   height: 300px;
 }
+
 .cls-image-preview-large {
   height: 400px;
   overflow: auto;
 }
+
 .cls-image-iframe-large {
   width: 832px;
   height: 396px;
 }
+
 .cls-crop-container {
   height: 500px;
   overflow: scroll;
 }
+
 .cls-cropped-preview {
   text-align: center;
 }
+
 .cls-service-cost-wrapper {
   padding-right: 5px;
 }
+
 .cls-full-width-select {
   width: 100%;
 }
+
 .cls-cost-counter {
   color: red;
   font-size: 10px;
 }
+
 .cls-express-toggle-row {
   display: flex;
 }
+
 .cls-service-operation-wrapper {
   padding-left: 5px;
   height: 260px;
 }
+
 .cls-timepicker-fullwidth {
   width: 100%;
 }
-.mt-10
-{
+
+.mt-10 {
   margin-top: 10px
+}
+
+.cls-exclusive-tags {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.cls-exclusive-list {
+  border: 0.5px solid #d9d9d9;
+  border-radius: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.cls-exclusive-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-bottom: 0.5px solid #f0f0f0;
+}
+
+.cls-exclusive-list-item:last-child {
+  border-bottom: none;
+}
+
+.cls-exclusive-bullet {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #185FA5;
+  flex-shrink: 0;
+}
+
+.cls-exclusive-point-text {
+  flex: 1;
+  font-size: 13px;
+}
+
+
+
+.btn-exclusive {
+  height: 36px;
+  padding: 0 18px;
+  font-size: 13px;
+}
+
+.cls-exclusive-input {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.inp1 {
+  flex: 1;
+}
+.rm-btn{
+  cursor: pointer;
+}
+
+.cls-exclusive-input {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.cls-input-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.inp1 {
+  width: 100%;
+  height: 36px;
+}
+
+.inp1-pending {
+  width: 100%;
+  height: 36px;
+  border: 2px solid #faad14 !important;
+  background-color: #fffbe6 !important;
+  border-radius: 6px;
+}
+
+
+.cls-pending-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.cls-pending-overlay .cls-pending-clear {
+  margin-left: auto;
+  pointer-events: all;
+  cursor: pointer;
+  color: #999;
+  font-size: 12px;
+}
+
+.cls-pending-icon { font-size: 14px; }
+
+.cls-pending-text {
+  color: #ad6800;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+.cls-pending-preview {
+  background: #fffbe6;
+  border: 1px dashed #faad14;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.cls-pending-preview-title {
+  font-size: 11px;
+  color: #ad6800;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cls-pending-preview-item {
+  font-size: 12px;
+  color: #595959;
+  display: flex;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.cls-pending-num {
+  color: #faad14;
+  font-weight: 600;
+  min-width: 16px;
+}
+
+
+.cls-exclusive-list { margin-top: 8px; }
+
+.cls-exclusive-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cls-exclusive-point-text { flex: 1; }
+
+.cls-exclusive-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.edit-btn, .save-btn, .rm-btn {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+.inp-edit-active {
+  flex: 1;
+  width: 100%;
+  height: 36px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 2px solid #1890ff !important;
+  border-radius: 6px;
+  background-color: #e6f7ff !important;
+  padding: 4px 10px;
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.15);
+  transition: all 0.2s ease;
+}
+
+.inp-edit-active:focus {
+  border-color: #096dd9;
+  box-shadow: 0 0 0 4px rgba(24, 144, 255, 0.25);
+  outline: none;
+}
+
+
+.cls-exclusive-empty {
+  text-align: center;
+  color: #bbb;
+  padding: 16px;
 }

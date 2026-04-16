@@ -389,3 +389,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.filter-btn-align-uid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}

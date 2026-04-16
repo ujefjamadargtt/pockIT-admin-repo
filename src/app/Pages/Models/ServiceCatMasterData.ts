@@ -58,6 +58,9 @@ export class ServiceCatMasterDataNew {
     GUARANTEE_ALLOWED: boolean = true;
     WARRANTY_PERIOD: any;
     WARRANTY_ALLOWED: boolean = true;
+    SERVICE_EXCLUSIVES: any;
+    SUB_NAME: string = '';
+    ABOUT_SERVICE: string = '';
 }
 export class ServiceCatMasterDataNewB2b {
     NAME: any = '';

@@ -48,13 +48,13 @@ export class TechnicianMapJobsDataComponent {
   totalRecords = 1;
   dataList: any = [];
   filterClass: string = 'filter-invisible';
-  userId = sessionStorage.getItem('userId'); 
-  USER_ID: number; 
-  name = sessionStorage.getItem('userName'); 
-  NAME: number; 
-  savedFilters: any; 
-  currentClientId = 1; 
-  TabId: number; 
+  userId = sessionStorage.getItem('userId');
+  USER_ID: number;
+  name = sessionStorage.getItem('userName');
+  NAME: number;
+  savedFilters: any;
+  currentClientId = 1;
+  TabId: number;
   public commonFunction = new CommonFunctionService();
   isfilterapply: boolean = false;
   drawerFilterVisible: boolean = false;
@@ -78,7 +78,7 @@ export class TechnicianMapJobsDataComponent {
     private api: ApiServiceService,
     private message: NzNotificationService,
     private router: Router
-  ) {}
+  ) { }
   ngOnInit() {
     const decryptedUserId = this.userId
       ? this.commonFunction.decryptdata(this.userId)
@@ -159,7 +159,7 @@ export class TechnicianMapJobsDataComponent {
         this.isSchedulaedDateFilterApplied = true;
       }
     } else {
-      this.selectedScheduledDate = null; 
+      this.selectedScheduledDate = null;
       this.search();
       this.isSchedulaedDateFilterApplied = false;
     }
@@ -172,7 +172,7 @@ export class TechnicianMapJobsDataComponent {
         this.isAssignedDateFilterApplied = true;
       }
     } else {
-      this.selectedAssignedDate = null; 
+      this.selectedAssignedDate = null;
       this.search();
       this.isAssignedDateFilterApplied = false;
     }
@@ -188,7 +188,7 @@ export class TechnicianMapJobsDataComponent {
         this.isJobCreatedDateFilterApplied = true;
       }
     } else {
-      this.selectedJobCreatedDate = null; 
+      this.selectedJobCreatedDate = null;
       this.search();
       this.isJobCreatedDateFilterApplied = false;
     }
@@ -225,15 +225,15 @@ export class TechnicianMapJobsDataComponent {
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date
-            .getDate()
-            .toString()
-            .padStart(2, '0')} ${date
-            .getHours()
-            .toString()
-            .padStart(2, '0')}:${date
-            .getMinutes()
-            .toString()
-            .padStart(2, '0')}:00`;
+              .getDate()
+              .toString()
+              .padStart(2, '0')} ${date
+                .getHours()
+                .toString()
+                .padStart(2, '0')}:${date
+                  .getMinutes()
+                  .toString()
+                  .padStart(2, '0')}:00`;
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
         likeQuery +=
@@ -264,15 +264,15 @@ export class TechnicianMapJobsDataComponent {
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date
-            .getDate()
-            .toString()
-            .padStart(2, '0')} ${date
-            .getHours()
-            .toString()
-            .padStart(2, '0')}:${date
-            .getMinutes()
-            .toString()
-            .padStart(2, '0')}:00`;
+              .getDate()
+              .toString()
+              .padStart(2, '0')} ${date
+                .getHours()
+                .toString()
+                .padStart(2, '0')}:${date
+                  .getMinutes()
+                  .toString()
+                  .padStart(2, '0')}:00`;
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
         likeQuery +=
@@ -287,15 +287,15 @@ export class TechnicianMapJobsDataComponent {
           `${date.getFullYear()}-${(date.getMonth() + 1)
             .toString()
             .padStart(2, '0')}-${date
-            .getDate()
-            .toString()
-            .padStart(2, '0')} ${date
-            .getHours()
-            .toString()
-            .padStart(2, '0')}:${date
-            .getMinutes()
-            .toString()
-            .padStart(2, '0')}:00`;
+              .getDate()
+              .toString()
+              .padStart(2, '0')} ${date
+                .getHours()
+                .toString()
+                .padStart(2, '0')}:${date
+                  .getMinutes()
+                  .toString()
+                  .padStart(2, '0')}:00`;
         const formattedStart = formatDate(new Date(start));
         const formattedEnd = formatDate(new Date(end));
         likeQuery +=
@@ -400,7 +400,7 @@ export class TechnicianMapJobsDataComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) 
+      )
       .subscribe(
         (response) => {
           if (response.code === 200) {
@@ -504,7 +504,7 @@ export class TechnicianMapJobsDataComponent {
   }
   toggleLiveDemo(item): void {
     this.selectedQuery = item.FILTER_QUERY;
-    this.isModalVisible = true; 
+    this.isModalVisible = true;
   }
   applyCondition: any;
   filterGroups: any[] = [
@@ -752,8 +752,8 @@ export class TechnicianMapJobsDataComponent {
     },
   ];
   handleCancel(): void {
-    this.isModalVisible = false; 
-    this.selectedQuery = ''; 
+    this.isModalVisible = false;
+    this.selectedQuery = '';
   }
   EditQueryData = [];
   editButton: any;
@@ -1125,6 +1125,69 @@ export class TechnicianMapJobsDataComponent {
       }
     );
   }
+  showPaymentPendingModal = false;
+  pendingPaymentData: any = null;
+
+  forcePaymentDone(): void {
+    if (this.isPaymentLoading) return;
+    this.isPaymentLoading = true;
+    if (this.pendingPaymentData) {
+      this.addPaymentTransaction(this.pendingPaymentData);
+    }
+  }
+  username = sessionStorage.getItem('userName');
+  isPaymentLoading: boolean = false;
+  addPaymentTransaction(data: any): void {
+    this.filterloading = true;
+    this.isSpinningACtive = true;
+
+    const payload = {
+      ORDER_ID: data?.ORDER_ID || null,
+      CUSTOMER_ID: data?.CUSTOMER_ID || null,
+      JOB_CARD_ID: data?.ID || null,
+      JOB_CARD_NO: data?.JOB_CARD_NO || null,
+      TECHNICIAN_ID: data?.TECHNICIAN_ID || null,
+      VENDOR_ID: data?.VENDOR_ID || 0,
+      MOBILE_NUMBER: this.viewjobsdata?.MOBILE_NUMBER || null,
+      PAYMENT_FOR: 'P',
+      PAYMENT_MODE: 'C',
+      PAYMENT_TYPE: 'C',
+      TRANSACTION_DATE: new Date().toISOString().split('T')[0],
+      TRANSACTION_ID: null,
+      TRANSACTION_STATUS: 'Success',
+      TRANSACTION_AMOUNT: data?.TOTAL_AMOUNT || null,
+      PAYLOAD: {},
+      RESPONSE_DATA: {},
+      RESPONSE_CODE: 200,
+      MERCHANT_ID: null,
+      RESPONSE_MESSAGE: `Payment marked as done by user: ${this.username}`,
+      CLIENT_ID: 1,
+      TECHNICIAN_NAME: data?.TECHNICIAN_NAME || null,
+      is_updated_admin: 1
+    };
+
+    this.api.addPaymentTransactions(payload).subscribe(
+      (res) => {
+        this.isPaymentLoading = false;
+        this.showPaymentPendingModal = false;
+        this.pendingPaymentData = null;
+        this.filterloading = false;
+        this.isSpinningACtive = false;
+        if (res['code'] == 200) {
+          this.message.success('Payment status updated successfully.', '');
+          this.search();
+        } else {
+          this.message.error('Failed to update payment status.', '');
+        }
+      },
+      (err: HttpErrorResponse) => {
+        this.isPaymentLoading = false;
+        this.filterloading = false;
+        this.isSpinningACtive = false;
+        this.message.error('Something went wrong, please try again later.', '');
+      }
+    );
+  }
   ChangeJobPaymentStatusForTech(data) {
     var d = {
       JOB_CARD_ID: data.ID,
@@ -1139,6 +1202,15 @@ export class TechnicianMapJobsDataComponent {
     this.filterloading = true;
     this.api.ChangeJobPaymentStatusForTech(d).subscribe((res) => {
       if (res.status == 200) {
+        if (res.body.code == 400) {
+          this.filterloading = false;
+          this.pendingPaymentData = {
+            ...data,
+            MOBILE_NUMBER: data?.TECHNICIAN_MOBILE_NO
+          };
+          this.showPaymentPendingModal = true;
+          return;
+        }
         this.isSpinningACtive = false;
         this.loadVerifyOTP = false;
         this.ViewUpdateOTP = false;
