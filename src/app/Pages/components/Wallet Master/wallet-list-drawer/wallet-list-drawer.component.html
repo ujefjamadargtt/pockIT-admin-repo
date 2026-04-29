@@ -30,7 +30,7 @@
           {{ transactionData[0]?.WALLET_AMOUNT }}
         </nz-col>
       </nz-row>
-      <nz-row nzGutter="24" style="margin-top: 4px;">
+      <nz-row nzGutter="24" class="expry-date">
         <nz-col nzSpan="12" class="txn-expiry" *ngIf="transactionData[0]?.TYPE !== 'RF'">
           <i nz-icon nzType="clock-circle"></i>
           Expiry Date :

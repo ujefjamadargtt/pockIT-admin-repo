@@ -65,13 +65,13 @@
         </nz-form-item>
       </div>
     </div>
-    <div nz-row>
-      <div nz-col nzSpan="24">
+    <div nz-row [nzGutter]="16">
+      <div nz-col nzSpan="12">
         <nz-form-item>
           <nz-form-label nzNoColon nzRequired>
             Category Icon&nbsp;
             <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
-              nzTooltipTitle=" Please select an image file (PNG, JPG, JPEG) with a image dimension 200*200."></span>
+              nzTooltipTitle="Please select an image file (PNG, JPG, JPEG) with dimensions 200x200."></span>
             <span *ngIf="(data.ICON && data.ICON != ' ') || fileURL" nz-popconfirm
               nzPopconfirmTitle="Are you sure you want to delete?" nzPopconfirmPlacement="top"
               (nzOnConfirm)="image1DeleteConfirm(data)" (nzOnCancel)="deleteCancel()" class="icon-delete-action-ac03">
@@ -86,23 +86,42 @@
               <input #image1 name="image1" type="file" accept=".png, .jpg, .jpeg" class="hidden-file-input-ac05"
                 (change)="onFileSelected($event)" />
             </button>
-            <div *ngIf="
-                data.ICON &&
-                data.ICON != null &&
-                data.ICON != undefined &&
-                data.ICON != ' ' &&
-                data.ICON != '' &&
-                (fileURL == undefined || fileURL == null || fileURL == '')
-              " class="icon-preview-wrapper-ac06">
+            <div *ngIf="data.ICON && data.ICON.trim() !== '' && !fileURL" class="icon-preview-wrapper-ac06">
               <img nz-image [nzSrc]="fullImageUrl" alt="Uploaded Image" class="icon-preview-img-ac07" />
             </div>
-            <div *ngIf="
-                fileURL != undefined &&
-                fileURL != null &&
-                fileURL != '' &&
-                fileURL != ' '
-              " class="ss icon-preview-center-ac08">
+            <div *ngIf="fileURL" class="icon-preview-center-ac08">
               <img nz-image [nzSrc]="imagePreview" alt="Preview" class="icon-preview-square-ac09" />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon nzRequired>
+            Banner Image&nbsp;
+            <span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+              nzTooltipTitle="Please select an image file (PNG, JPG, JPEG) with an image dimension of 1800 x 400.">
+            </span>
+            <span *ngIf="(data.BANNER_IMAGE && data.BANNER_IMAGE != ' ') || bannerFileURL" nz-popconfirm
+              nzPopconfirmTitle="Are you sure you want to delete?" nzPopconfirmPlacement="top"
+              (nzOnConfirm)="image2DeleteConfirm(data)" (nzOnCancel)="deleteCancel()" class="icon-delete-action-ac03">
+              <span nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#FF0000'" nz-tooltip
+                nzTooltipTitle="Delete"></span>
+            </span>
+          </nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Banner Image">
+            <button *ngIf="!bannerFileURL && (!data.BANNER_IMAGE || data.BANNER_IMAGE.trim() === '')" nz-button
+              class="upload-btn-ac04" (click)="image2.click()">
+              Upload Banner
+              <input #image2 name="image2" type="file" accept=".png, .jpg, .jpeg" class="hidden-file-input-ac05"
+                (change)="onBannerFileSelected($event)" />
+            </button>
+            <div *ngIf="data.BANNER_IMAGE && data.BANNER_IMAGE.trim() !== '' && !bannerFileURL"
+              class="icon-preview-wrapper-ac06">
+              <img nz-image [nzSrc]="fullBannerImageUrl" alt="Uploaded Banner" class="icon-preview-img-ac07" />
+            </div>
+            <div *ngIf="bannerFileURL" class="icon-preview-center-ac08">
+              <img nz-image [nzSrc]="bannerImagePreview" alt="Banner Preview" class="icon-preview-square-ac09" />
             </div>
           </nz-form-control>
         </nz-form-item>

@@ -137,7 +137,7 @@ export class TerritoryWiseServiceChangeComponent implements OnInit {
   expressb2cVisible: boolean = false;
   estimationTimemins: string = '';
   estimationTimeVisible: boolean = false;
-  widths: string = '35%';
+  widths: string = '30%';
   widths1: string = '100%';
   widths11: string = '60%';
   ServiceData: any = [];

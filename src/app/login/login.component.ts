@@ -306,6 +306,9 @@ export class LoginComponent implements OnInit {
             this.ForgetClick = false;
             this.sendOTPTrue = true;
             this.isSendOtpSpinning = false;
+          } else if (successCode.body.code == 301) {
+            this.message.error(successCode.body.message, '');
+            this.isSendOtpSpinning = false;
           } else {
             this.message.error('Failed to send otp', '');
             this.isSendOtpSpinning = false;
@@ -918,7 +921,10 @@ export class LoginComponent implements OnInit {
             this.CForgetClick = false;
             this.CsendOTPTrue = true;
             this.CisSendOtpSpinning = false;
-          } else {
+          } else if (successCode.body.code == 301) {
+            this.message.error(successCode.body.message, '');
+            this.CisSendOtpSpinning = false;
+          }else {
             this.message.error('Failed to send otp', '');
             this.CisSendOtpSpinning = false;
           }

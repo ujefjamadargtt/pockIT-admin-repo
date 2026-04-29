@@ -254,6 +254,7 @@ import { TypewiseTransactionReportComponent } from './Reports/typewise-transacti
 import { CustomerUsageReportComponent } from './Reports/customer-usage-report/customer-usage-report.component';
 import { TerritoryWiseWalletTransactionComponent } from './Reports/territory-wise-wallet-transaction/territory-wise-wallet-transaction.component';
 import { CustomerUsageDetailsReportComponent } from './Reports/customer-usage-details-report/customer-usage-details-report.component';
+import { PaymentTransactionReportComponent } from './Reports/payment-transaction-report/payment-transaction-report.component';
 @NgModule({
   declarations: [
     MastersComponent,
@@ -452,7 +453,8 @@ import { CustomerUsageDetailsReportComponent } from './Reports/customer-usage-de
     TypewiseTransactionReportComponent,
     CustomerUsageReportComponent,
     TerritoryWiseWalletTransactionComponent,
-    CustomerUsageDetailsReportComponent 
+    CustomerUsageDetailsReportComponent,
+    PaymentTransactionReportComponent 
   ],
   imports: [
     // PickerComponent,

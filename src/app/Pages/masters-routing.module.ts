@@ -92,6 +92,7 @@ import { CustomerwiseWalletReportComponent } from './Reports/customerwise-wallet
 import { TypewiseTransactionReportComponent } from './Reports/typewise-transaction-report/typewise-transaction-report.component';
 import { CustomerUsageReportComponent } from './Reports/customer-usage-report/customer-usage-report.component';
 import { TerritoryWiseWalletTransactionComponent } from './Reports/territory-wise-wallet-transaction/territory-wise-wallet-transaction.component';
+import { PaymentTransactionReportComponent } from './Reports/payment-transaction-report/payment-transaction-report.component';
 const routes: Routes = [
   {
     path: '',
@@ -320,6 +321,10 @@ const routes: Routes = [
       {
         path: 'territory-wise-wallet-transaction-report',
         component: TerritoryWiseWalletTransactionComponent,
+      },
+      {
+        path: 'payment-transaction-report',
+        component:PaymentTransactionReportComponent
       }
     ],
   },

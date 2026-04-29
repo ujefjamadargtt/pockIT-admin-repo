@@ -1,6 +1,6 @@
 {
   "name": "itbuddy",
-  "version": "2.6.5",
+  "version": "2.6.7",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

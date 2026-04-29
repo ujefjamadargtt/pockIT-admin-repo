@@ -964,7 +964,7 @@ export class MainServiceMasterComponent implements OnInit {
       this.data.SERVICE_EXCLUSIVES?.trim() == ''
     ) {
       this.isOk = false;
-      this.message.error('Service exclusives is required', '');
+      this.message.error('Service exclusions  is required', '');
     } else if (
       this.data.IS_PARENT &&
       (this.data.SERVICE_DETAILS_IMAGE != undefined ||

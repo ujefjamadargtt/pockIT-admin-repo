@@ -242,10 +242,10 @@
               </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-              <nz-form-label nzRequired nzNoColon>Service Exclusive</nz-form-label>
+              <nz-form-label nzRequired nzNoColon>Service Exclusion</nz-form-label>
               <nz-form-control>
                 <button nz-button nzType="dashed" nzDanger class="btn-exclusive" (click)="openExclusiveModal()">
-                  <span nz-icon nzType="plus"></span> Add Exclusive Points
+                  <span nz-icon nzType="plus"></span>Add Exclusion Points
                 </button>
               </nz-form-control>
             </nz-form-item>
@@ -784,7 +784,7 @@
     </button>
   </ng-template>
 </nz-modal>
-<nz-modal [(nzVisible)]="isExclusiveModalVisible" nzTitle="Service Exclusive Points" [nzFooter]="exclusiveModalFooter"
+<nz-modal [(nzVisible)]="isExclusiveModalVisible" nzTitle="Service Exclusion Points" [nzFooter]="exclusiveModalFooter"
   (nzOnCancel)="closeExclusiveModal()" nzWidth="520px">
   <ng-container *nzModalContent>
 

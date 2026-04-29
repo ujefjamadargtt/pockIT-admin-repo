@@ -24,10 +24,12 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 })
 export class CategoryComponent implements OnInit {
   @ViewChild('image1') myElementRef!: ElementRef;
+  @ViewChild('image2') myElementRef2!: ElementRef;
   CropImageModalCancel() {
     this.CropImageModalVisible = false;
     this.cropimageshow = false;
     this.myElementRef.nativeElement.value = null;
+    this.myElementRef2.nativeElement.value = null;
   }
   @Input() drawerClose: Function;
   @Input() data: category;
@@ -57,10 +59,10 @@ export class CategoryComponent implements OnInit {
   fullImageUrl: string;
   retriveimgUrl = appkeys.retriveimgUrl;
   validateInput(event: KeyboardEvent): void {
-    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-]*$/; 
+    const allowedPattern = /^[a-zA-Z\s\/\(\)_\-]*$/;
     const char = String.fromCharCode(event.keyCode || event.which);
     if (!allowedPattern.test(char)) {
-      event.preventDefault(); 
+      event.preventDefault();
     }
   }
   uploadedImage: any = '';
@@ -77,6 +79,12 @@ export class CategoryComponent implements OnInit {
       this.fullImageUrl = this.retriveimgUrl + 'Category/' + this.data.ICON;
       this.uploadedImage = this.data.ICON;
     } else {
+    }
+    if (this.data.ID != null
+      && this.data.BANNER_IMAGE != null
+      && this.data.BANNER_IMAGE.trim() !== ''
+    ) {
+      this.fullBannerImageUrl = this.retriveimgUrl + 'Category/' + this.data.BANNER_IMAGE;
     }
   }
   omit(event: any) {
@@ -95,6 +103,8 @@ export class CategoryComponent implements OnInit {
     accountMasterPage.form.markAsPristine();
     accountMasterPage.form.markAsUntouched();
     this.fileURL = '';
+    this.bannerFileURL = '';
+    this.bannerImagePreview = null;
   }
   alphaOnly(event) {
     event = event ? event : window.event;
@@ -145,6 +155,13 @@ export class CategoryComponent implements OnInit {
   sanitizedFileURL: SafeUrl | null = null;
   imageshow;
   imagePreview: any;
+  bannerFileURL: any = '';
+  bannerImagePreview: any;
+  selectedBannerFile: any;
+  UrlImageTwo: any;
+  progressBarImageTwo: boolean = false;
+  percentImageTwo = 0;
+  fullBannerImageUrl: string;
   selectedFile: any;
   onFileSelected(event: any): void {
     const maxFileSize = 1 * 1024 * 1024;
@@ -280,10 +297,10 @@ export class CategoryComponent implements OnInit {
     const img: any = new Image();
     img.src = event.base64;
     img.onload = () => {
-      ctx.fillStyle = '#ffffff'; 
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, 200, 200);
-      this.compressImage(canvas, 1); 
+      this.compressImage(canvas, 1);
     };
   }
   imageCropped(event: any) {
@@ -306,7 +323,7 @@ export class CategoryComponent implements OnInit {
         img.src = base64;
         img.crossOrigin = 'Anonymous';
         img.onload = async () => {
-          await img.decode(); 
+          await img.decode();
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
           if (!ctx) return reject('Canvas context not available');
@@ -332,13 +349,13 @@ export class CategoryComponent implements OnInit {
           };
           let currentCanvas = canvas;
           const downscaleSteps = [
-            [Math.floor(finalWidth * 1.5), Math.floor(finalHeight * 1.5)], 
-            [finalWidth, finalHeight], 
+            [Math.floor(finalWidth * 1.5), Math.floor(finalHeight * 1.5)],
+            [finalWidth, finalHeight],
           ];
           for (const [w, h] of downscaleSteps) {
             currentCanvas = downscaleCanvas(currentCanvas, w, h);
           }
-          resolve(currentCanvas.toDataURL('image/png', 2)); 
+          resolve(currentCanvas.toDataURL('image/png', 2));
         };
         img.onerror = (err) => reject(`Image load error: ${err}`);
       });
@@ -350,7 +367,7 @@ export class CategoryComponent implements OnInit {
     canvas.toBlob(
       (blob) => {
         if (!blob) return;
-        const sizeInMB = blob.size / (1024 * 1024); 
+        const sizeInMB = blob.size / (1024 * 1024);
         if (sizeInMB > 1 && quality > 0.1) {
           this.compressImage(canvas, quality - 0.1);
         } else {
@@ -363,7 +380,7 @@ export class CategoryComponent implements OnInit {
       },
       'image/jpeg',
       quality
-    ); 
+    );
   }
   imageWidth: number = 0;
   imageHeight: number = 0;
@@ -409,6 +426,15 @@ export class CategoryComponent implements OnInit {
     ) {
       this.isOk = false;
       this.message.error('Please Upload Category Icon', '');
+      return;
+    } else if (
+      this.data.BANNER_IMAGE == undefined ||
+      this.data.BANNER_IMAGE == null ||
+      this.data.BANNER_IMAGE == '' ||
+      this.data.BANNER_IMAGE == ' '
+    ) {
+      this.isOk = false;
+      this.message.error('Please Upload Banner Image', '');
       return;
     } else if (
       this.data.SEQ_NO == undefined ||
@@ -495,7 +521,7 @@ export class CategoryComponent implements OnInit {
   }
   openImageInNewWindow(): void {
     if (this.fileURL) {
-      const imageURL = URL.createObjectURL(this.fileURL); 
+      const imageURL = URL.createObjectURL(this.fileURL);
       window.open(imageURL, '_blank');
     } else {
       alert('No Icon selected to view.');
@@ -504,5 +530,99 @@ export class CategoryComponent implements OnInit {
   deleteImage(): void {
     this.fileURL = null;
     this.sanitizedFileURL = null;
+  }
+  onBannerFileSelected(event: any): void {
+    const maxFileSize = 1 * 1024 * 1024;
+    const requiredWidth = 1800;
+    const requiredHeight = 400;
+
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+      this.message.error(
+        'Please select a valid Image file (PNG, JPG, JPEG) with an image dimension of 1800 x 1037.',
+        ''
+      );
+      this.resetBannerImageUpload();
+      return;
+    }
+
+    if (file.size > maxFileSize) {
+      this.message.error('Banner Image size should not exceed 1MB.', '');
+      this.resetBannerImageUpload();
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const img = new Image();
+      img.src = e.target.result;
+      img.onload = () => {
+
+        // ✅ Dimension validation (no resizing)
+        if (img.width !== requiredWidth || img.height !== requiredHeight) {
+          this.message.error(
+            `Please select a valid Image file (PNG, JPG, JPEG) with an image dimension of ${requiredWidth} x ${requiredHeight}.`,
+            ''
+          );
+          this.resetBannerImageUpload();
+          return;
+        }
+
+        this.bannerImagePreview = e.target.result;
+        this.bannerFileURL = file;
+        this.selectedBannerFile = file;
+
+        const number = Math.floor(100000 + Math.random() * 900000);
+        const fileExt = file.name.split('.').pop();
+        const d = this.datePipe.transform(new Date(), 'yyyyMMdd');
+        let url = (d ?? '') + number + '.' + fileExt;
+
+        if (this.data.BANNER_IMAGE?.trim()) {
+          const arr = this.data.BANNER_IMAGE.split('/');
+          if (arr.length > 1) url = arr[5];
+        }
+
+        this.UrlImageTwo = url;
+
+        this.api.onUpload('Category', this.bannerFileURL, this.UrlImageTwo)
+          .subscribe((res) => {
+            if (res.type === HttpEventType.UploadProgress) {
+              this.percentImageTwo = Math.round((100 * res.loaded) / res.total);
+              if (this.percentImageTwo === 100) {
+                this.isSpinning = false;
+                setTimeout(() => (this.progressBarImageTwo = false), 2000);
+              }
+            } else if (res.type === 2 && res.status !== 200) {
+              this.message.error('Failed To Upload Banner Image...', '');
+              this.resetBannerImageUpload();
+            } else if (res.type === 4 && res.status === 200) {
+              if (res.body?.code === 200) {
+                this.message.success('Banner Image Uploaded Successfully...', '');
+                this.data.BANNER_IMAGE = this.UrlImageTwo;
+              } else {
+                this.resetBannerImageUpload();
+              }
+            }
+          });
+      };
+    };
+    reader.readAsDataURL(file);
+  }
+  resetBannerImageUpload() {
+    this.isSpinning = false;
+    this.progressBarImageTwo = false;
+    this.percentImageTwo = 0;
+    this.data.BANNER_IMAGE = null;
+    this.bannerFileURL = null;
+    this.bannerImagePreview = null;
+    this.selectedBannerFile = null;
+  }
+  image2DeleteConfirm(data: any) {
+    this.bannerFileURL = null;
+    this.UrlImageTwo = null;
+    this.data.BANNER_IMAGE = ' ';
+    this.bannerImagePreview = null;
   }
 }

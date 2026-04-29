@@ -49,9 +49,15 @@ image-cropper {
 }
 .upload-btn-ac04 {
   height: 28px;
-  padding: 0px 7px;
+  padding: 0px 12px;
   font-size: 10px;
-  width: 40%;
+  width: auto;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+.hidden-file-input-ac05 {
+  display: none !important;
 }
 .hidden-file-input-ac05 {
   display: none !important;

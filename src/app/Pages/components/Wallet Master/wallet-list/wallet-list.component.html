@@ -342,7 +342,7 @@
                 <nz-option *ngFor="let t of territorySearchResults" [nzLabel]="t.NAME" [nzValue]="t.ID">
                 </nz-option>
                 <nz-option *ngIf="territoryHasMore" nzDisabled nzCustomContent>
-                  <div style="text-align: center; cursor: pointer" (click)="searchTerritory(true)">
+                  <div class="territory-data" (click)="searchTerritory(true)">
                     Load More
                   </div>
                 </nz-option>
@@ -522,7 +522,7 @@
               maxlength="500" (blur)="isFocused = ''">
             </textarea>
           </nz-form-control>
-          <h6 style="color: red; font-size: 10px; margin-top: 3px" *ngIf="
+          <h6 class="form-text-remark" *ngIf="
               isFocused === 'REMARK' ||
               (walletTransactionData.REMARKS && isFocused === 'REMARK')
             ">

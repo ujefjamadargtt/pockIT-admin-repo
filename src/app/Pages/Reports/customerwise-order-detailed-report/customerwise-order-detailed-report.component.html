@@ -248,6 +248,14 @@
                 }"></span>
             </nz-filter-trigger>
           </th>
+          <th nzShowSort nzColumnKey="VENDOR_NAME" nzWidth="250px" [nzSortFn]="true" nzCustomFilter>
+            Vendor Name
+            <nz-filter-trigger [(nzVisible)]="vendornameVisible" [nzDropdownMenu]="vendornamedrop">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: isvendorname ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
           <th nzShowSort nzColumnKey="SERVICE_NAME" nzWidth="250px" [nzSortFn]="true" nzCustomFilter>
             Service Name
             <nz-filter-trigger [(nzVisible)]="sernameVisible" [nzDropdownMenu]="sernamedrop">
@@ -304,6 +312,18 @@
                 }"></span>
             </nz-filter-trigger>
           </th>
+          <th nzShowSort nzColumnKey="INVENTORY_TOTAL_TAX" nzCustomFilter nzWidth="150px">
+            Total Part Tax Amount(₹)
+          </th>
+          <th nzShowSort nzColumnKey="TOTAL_INVENTORY_AMOUNT" nzCustomFilter nzWidth="150px">
+            Total Part Amount(₹)
+          </th>
+          <th nzShowSort nzColumnKey="DISCOUNT_AMOUNT" nzCustomFilter nzWidth="150px">
+            Discount Amount(₹)
+          </th>
+          <th nzShowSort nzColumnKey="WALLET_AMOUNT_USED" nzCustomFilter nzWidth="150px">
+            Wallet Used?
+          </th>
           <th nzShowSort nzColumnKey="TOTAL_AMOUNT" [nzSortFn]="true" nzCustomFilter nzWidth="180px">
             Total Amount(₹)
             <nz-filter-trigger [(nzVisible)]="totalamtVisible" [nzDropdownMenu]="totalamtdrop">
@@ -327,6 +347,15 @@
             <nz-filter-trigger [(nzVisible)]="sheduledDateVisible" [nzDropdownMenu]="sheduledDatedropdown">
               <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
                   color: issheduledDateFilterApplied ? '#092B9C' : 'inherit'
+                }"></span>
+            </nz-filter-trigger>
+          </th>
+          <th nzShowSort nzColumnKey="ORDER_COMPLETED_DATETIME" [nzSortFn]="true" nzCustomFilter nzWidth="170px"
+            [nzFilterFn]="true">
+            Completed Date
+            <nz-filter-trigger [(nzVisible)]="completedDateVisible" [nzDropdownMenu]="completedDatedropdown">
+              <span nz-icon nzType="filter" nzTheme="fill" [ngStyle]="{
+                  color: iscompletedDateFilterApplied ? '#092B9C' : 'inherit'
                 }"></span>
             </nz-filter-trigger>
           </th>
@@ -405,7 +434,7 @@
           <td class="text-center">{{ data.CUSTOMER_MOBILE_NUMBER }}</td>
           <td class="text-left" [nzTooltipTitle]="isTextOverflow ? data['COMPANY_NAME'] : null"
             #tooltipRef19="nzTooltip" nz-tooltip>
-            <div #textContainer19 class="truncate-text" (mouseenter)="checkOverflow(textContainer1, tooltipRef1)">
+            <div #textContainer19 class="truncate-text" (mouseenter)="checkOverflow(textContainer19, tooltipRef1)">
               <ng-container *ngIf="data['COMPANY_NAME']; else noReason">
                 {{ data["COMPANY_NAME"] }}
               </ng-container>
@@ -417,6 +446,15 @@
             <div #textContainer1 class="truncate-text" (mouseenter)="checkOverflow(textContainer1, tooltipRef1)">
               <ng-container *ngIf="data['TECHNICIAN_NAME']; else noReason">
                 {{ data["TECHNICIAN_NAME"] }}
+              </ng-container>
+              <ng-template #noReason>-</ng-template>
+            </div>
+          </td>
+          <td class="text-left" [nzTooltipTitle]="isTextOverflow ? data['VENDOR_NAME'] : null" #tooltipRef20="nzTooltip"
+            nz-tooltip>
+            <div #textContainer20 class="truncate-text" (mouseenter)="checkOverflow(textContainer20, tooltipRef1)">
+              <ng-container *ngIf="data['VENDOR_NAME']; else noReason">
+                {{ data["VENDOR_NAME"] }}
               </ng-container>
               <ng-template #noReason>-</ng-template>
             </div>
@@ -454,6 +492,18 @@
           <td class="text-center">
             {{ data.TAX_AMOUNT ?? "-" }}
           </td>
+          <td class="text-center">
+            {{ data.INVENTORY_TOTAL_TAX ?? "-" }}
+          </td>
+          <td class="text-center">
+            {{ data.TOTAL_INVENTORY_AMOUNT ?? "-" }}
+          </td>
+          <td class="text-center">
+            {{ data.DISCOUNT_AMOUNT ?? "-" }}
+          </td>
+          <td class="text-center">
+            {{ (data.WALLET_AMOUNT_USED && data.WALLET_AMOUNT_USED > 0) ? 'Yes' : 'No' }}
+          </td>
           <td class="text-right">{{ data.TOTAL_AMOUNT }}</td>
           <td class="text-center">
             {{
@@ -466,6 +516,13 @@
             {{
             data?.SCHEDULED_DATE_TIME
             ? (data.SCHEDULED_DATE_TIME | date : "dd/MM/yyyy")
+            : "-"
+            }}
+          </td>
+          <td class="text-center">
+            {{
+            data?.ORDER_COMPLETED_DATETIME
+            ? (data.ORDER_COMPLETED_DATETIME | date : "dd/MM/yyyy")
             : "-"
             }}
           </td>
@@ -541,6 +598,21 @@
             <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="technameText"
               (click)="reset()"></span>
             <span nz-icon nzType="search" nzTheme="outline" *ngIf="technameText == ''"></span>
+          </ng-template>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #vendornamedrop="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-input-group [nzSuffix]="inputClearTpl">
+            <input type="text" nz-input [(ngModel)]="vendornameText" (onkeypress)="search()" (keyup)="onKeyup($event)"
+              placeholder="Search Vendor Name" />
+          </nz-input-group>
+          <ng-template #inputClearTpl>
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="vendornameText"
+              (click)="reset()"></span>
+            <span nz-icon nzType="search" nzTheme="outline" *ngIf="vendornameText == ''"></span>
           </ng-template>
         </div>
       </div>
@@ -703,6 +775,15 @@
         <div class="search-box">
           <nz-range-picker [(ngModel)]="sheduledDate" name="sheduledDate" class="wt-100"
             [nzFormat]="commonFunction.dateFormatMMM" (ngModelChange)="onsheduledDateRangeChange()">
+          </nz-range-picker>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #completedDatedropdown="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-range-picker [(ngModel)]="completedDate" name="completedDate" class="wt-100"
+            [nzFormat]="commonFunction.dateFormatMMM" (ngModelChange)="oncompletedDateRangeChange()">
           </nz-range-picker>
         </div>
       </div>

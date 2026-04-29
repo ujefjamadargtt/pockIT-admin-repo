@@ -19,7 +19,7 @@ export class CustomerwiseOrderDetailedReportComponent {
     private router: Router,
     private datepipe: DatePipe,
     private _exportService: ExportService
-  ) {}
+  ) { }
   @Input() orderdetailsdata;
   @Input() orderId;
   @Input() drawerClose!: () => void;
@@ -114,8 +114,11 @@ export class CustomerwiseOrderDetailedReportComponent {
   isjobCardstatusText = false;
   jobCardstatusVisible = false;
   technameText = '';
+  vendornameText = '';
   istechname = false;
+  isvendorname = false;
   technameVisible = false;
+  vendornameVisible = false;
   sernameText = '';
   issername = false;
   sernameVisible = false;
@@ -327,6 +330,13 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.search();
       this.isTaxFilterApplied = false;
     }
+    if (this.vendornameText.length >= 3 && event.key === 'Enter') {
+      this.search();
+      this.isvendorname = true;
+    } else if (this.vendornameText.length == 0 && event.key === 'Backspace') {
+      this.search();
+      this.isvendorname = false;
+    }
   }
   filterQuery: string = '';
   filterQuery1: string = '';
@@ -398,6 +408,11 @@ export class CustomerwiseOrderDetailedReportComponent {
       likeQuery +=
         (likeQuery ? ' AND ' : '') +
         `TECHNICIAN_NAME LIKE '%${this.technameText.trim()}%'`;
+    }
+    if (this.vendornameText !== '') {
+      likeQuery +=
+        (likeQuery ? ' AND ' : '') +
+        `VENDOR_NAME LIKE '%${this.vendornameText.trim()}%'`;
     }
     if (this.sernameText !== '') {
       likeQuery +=
@@ -484,31 +499,41 @@ export class CustomerwiseOrderDetailedReportComponent {
     if (this.StartDate && this.StartDate.length === 2) {
       const [start, end] = this.StartDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; 
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
+        const formattedStart = new Date(start).toISOString().split('T')[0];
+        const formattedEnd = new Date(end).toISOString().split('T')[0];
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
-          `ASSIGNED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
+          `DATE(ASSIGNED_DATE) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
     if (this.createdDate && this.createdDate.length === 2) {
       const [start, end] = this.createdDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; 
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
+        const formattedStart = new Date(start).toISOString().split('T')[0];
+        const formattedEnd = new Date(end).toISOString().split('T')[0];
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
-          `JOB_CREATED_DATE BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
+          `DATE(JOB_CREATED_DATE) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
     if (this.sheduledDate && this.sheduledDate.length === 2) {
       const [start, end] = this.sheduledDate;
       if (start && end) {
-        const formattedStart = new Date(start).toISOString().split('T')[0]; 
-        const formattedEnd = new Date(end).toISOString().split('T')[0]; 
+        const formattedStart = new Date(start).toISOString().split('T')[0];
+        const formattedEnd = new Date(end).toISOString().split('T')[0];
         likeQuery +=
           (likeQuery ? ' AND ' : '') +
           `SCHEDULED_DATE_TIME BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
+      }
+    }
+    if (this.completedDate && this.completedDate.length === 2) {
+      const [start, end] = this.completedDate;
+      if (start && end) {
+        const formattedStart = new Date(start).toISOString().split('T')[0];
+        const formattedEnd = new Date(end).toISOString().split('T')[0];
+        likeQuery +=
+          (likeQuery ? ' AND ' : '') +
+          `DATE(ORDER_COMPLETED_DATETIME) BETWEEN '${formattedStart}' AND '${formattedEnd}'`;
       }
     }
     if (this.MONTH1) {
@@ -738,7 +763,7 @@ export class CustomerwiseOrderDetailedReportComponent {
         this.isSubmittedDateFilterApplied = true;
       }
     } else {
-      this.StartDate = null; 
+      this.StartDate = null;
       this.search();
       this.isSubmittedDateFilterApplied = false;
     }
@@ -760,8 +785,11 @@ export class CustomerwiseOrderDetailedReportComponent {
     }
   }
   sheduledDateVisible = false;
+  completedDateVisible = false;
   issheduledDateFilterApplied: boolean = false;
+  iscompletedDateFilterApplied: boolean = false;
   sheduledDate: any = [];
+  completedDate: any = [];
   onsheduledDateRangeChange(): void {
     if (this.sheduledDate && this.sheduledDate.length === 2) {
       const [start, end] = this.sheduledDate;
@@ -773,6 +801,19 @@ export class CustomerwiseOrderDetailedReportComponent {
       this.sheduledDate = null;
       this.search();
       this.issheduledDateFilterApplied = false;
+    }
+  }
+  oncompletedDateRangeChange(): void {
+    if (this.completedDate && this.completedDate.length === 2) {
+      const [start, end] = this.completedDate;
+      if (start && end) {
+        this.search();
+        this.iscompletedDateFilterApplied = true;
+      }
+    } else {
+      this.completedDate = null;
+      this.search();
+      this.iscompletedDateFilterApplied = false;
     }
   }
   onDateChange(selectedDate: any): void {
@@ -809,10 +850,10 @@ export class CustomerwiseOrderDetailedReportComponent {
   drawerFilterVisible: boolean = false;
   applyCondition: any;
   isLoading = false;
-  isModalVisible = false; 
-  selectedQuery: string = ''; 
-  savedFilters: any; 
-  currentClientId = 1; 
+  isModalVisible = false;
+  selectedQuery: string = '';
+  savedFilters: any;
+  currentClientId = 1;
   filterGroups: any[] = [
     {
       operator: 'AND',
@@ -871,7 +912,7 @@ export class CustomerwiseOrderDetailedReportComponent {
         'id',
         'desc',
         ` AND TAB_ID = ${this.TabId} AND USER_ID = ${this.USER_ID}`
-      ) 
+      )
       .subscribe(
         (response) => {
           if (response.code === 200) {
@@ -1399,9 +1440,9 @@ export class CustomerwiseOrderDetailedReportComponent {
       for (var i = 0; i < this.excelData.length; i++) {
         obj1['Job Created Date'] = this.excelData[i]['JOB_CREATED_DATE']
           ? this.datepipe.transform(
-              this.excelData[i]['JOB_CREATED_DATE'],
-              'dd/MM/yyyy'
-            )
+            this.excelData[i]['JOB_CREATED_DATE'],
+            'dd/MM/yyyy'
+          )
           : '-';
         obj1['Order No'] = this.excelData[i]['ORDER_NO']
           ? this.excelData[i]['ORDER_NO']
@@ -1447,15 +1488,15 @@ export class CustomerwiseOrderDetailedReportComponent {
           : '-';
         obj1['Assigned Date'] = this.excelData[i]['ASSIGNED_DATE']
           ? this.datepipe.transform(
-              this.excelData[i]['ASSIGNED_DATE'],
-              'dd/MM/yyyy'
-            )
+            this.excelData[i]['ASSIGNED_DATE'],
+            'dd/MM/yyyy'
+          )
           : '-';
         obj1['Scheduled Date'] = this.excelData[i]['SCHEDULED_DATE_TIME']
           ? this.datepipe.transform(
-              this.excelData[i]['SCHEDULED_DATE_TIME'],
-              'dd/MM/yyyy'
-            )
+            this.excelData[i]['SCHEDULED_DATE_TIME'],
+            'dd/MM/yyyy'
+          )
           : '-';
         obj1['Service Skills'] = this.excelData[i]['SERVICE_SKILLS'];
         obj1['Territory Name'] = this.excelData[i]['TERRITORY_NAME'];
@@ -1467,7 +1508,7 @@ export class CustomerwiseOrderDetailedReportComponent {
           this._exportService.exportExcel(
             arry1,
             'Customer Wise Order Details ' +
-              this.datepipe.transform(new Date(), 'dd/MM/yyyy')
+            this.datepipe.transform(new Date(), 'dd/MM/yyyy')
           );
         }
       }
@@ -1503,14 +1544,14 @@ export class CustomerwiseOrderDetailedReportComponent {
     event =
       event != '' && event != undefined && event != null
         ? ' AND (NAME like "%' +
-          event +
-          '%" OR EMAIL like "%' +
-          event +
-          '%" OR COMPANY_NAME like "%' +
-          event +
-          '%" OR  MOBILE_NO like "%' +
-          event +
-          '%" ) '
+        event +
+        '%" OR EMAIL like "%' +
+        event +
+        '%" OR COMPANY_NAME like "%' +
+        event +
+        '%" OR  MOBILE_NO like "%' +
+        event +
+        '%" ) '
         : '';
     this.isLoading = true;
     this.api
@@ -1541,7 +1582,7 @@ export class CustomerwiseOrderDetailedReportComponent {
   }
   onMonthChange(selectedMonth: Date) {
     this.MONTH1 = selectedMonth;
-    this.search(true); 
+    this.search(true);
   }
   onCustomerChange(selectedCustomerId: any) {
     this.Customers = selectedCustomerId;

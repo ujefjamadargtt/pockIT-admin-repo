@@ -7,4 +7,5 @@ export class category {
     STATUS: Boolean = true;
     IS_NEW: boolean = true;
     SEQ_NO: number;
+    BANNER_IMAGE: any;
 }

@@ -111,7 +111,7 @@
                 </button>
                 <nz-date-picker #calendarPicker [(ngModel)]="selectedCalendarDate"
                   (ngModelChange)="onCalendarDateChange($event)" [nzDisabledDate]="disablePastDatesForCalendar"
-                  [nzFormat]="'dd/MM/yyyy'" style="width:0;padding:0;border:none;visibility:hidden;position:absolute;">
+                  [nzFormat]="'dd/MM/yyyy'" class="cal-st">
                 </nz-date-picker>
               </nz-form-item>
             </div>
