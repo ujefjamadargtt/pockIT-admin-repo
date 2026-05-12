@@ -711,7 +711,7 @@
   nzTitle="Notifications" (nzOnClose)="isNotificationCancel()" nzWidth="40%">
   <ng-container *nzDrawerContent>
     <div class="notification-header">
-      <button *ngIf="decreptedroleId == 8" nz-button nzType="primary" nzTooltipTitle="Push Notifications"
+      <button *ngIf="decreptedroleId == 8 || decreptedroleId == 26" nz-button nzType="primary" nzTooltipTitle="Push Notifications"
         nzTooltipPlacement="bottom" [nzSize]="'small'" nz-tooltip (click)="openSendNotiDrawer()"
         class="push-notification-btn">
         Push Notifications &nbsp;

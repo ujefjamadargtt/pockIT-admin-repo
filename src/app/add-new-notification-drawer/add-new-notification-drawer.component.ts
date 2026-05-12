@@ -283,7 +283,102 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       this.loadCustomerPage(true);
     }, 400);
   }
+  private customerLoadedAt: number = 0;
+  private CACHE_TTL_MS = 5 * 60 * 1000;
+  excludedIds: number[] = [];
+  unSelectSearchText: string = '';
+  unSelectFilteredList: any[] = [];
+  pendingUnSelectIds: number[] = [];
+  isUnSelectConfirmVisible: boolean = false;
+  isUnSelectLoading: boolean = false;
+  confirmUnselect(): void {
+    this.isUnSelectLoading = true;
+    this.isUnSelectConfirmVisible = false;
+    setTimeout(() => {
+      this.isSpinning = true;
+      setTimeout(() => {
+        const toRemove = new Set(this.pendingUnSelectIds);
+        this.excludedIds = [...this.excludedIds, ...this.pendingUnSelectIds];
+        this.USER_IDS = this.USER_IDS.filter((id: number) => !toRemove.has(id));
+        this.SELECT_ALL = false;
+        this.notificationType = 'C';   
+        this.pendingUnSelectIds = [];
+        this.isUnSelectLoading = false;
+        this.isSpinning = false;
+        if (this.unSelectSearchText) {
+          this.onUnSelectSearch(this.unSelectSearchText);
+        }
+      }, 100);
+    }, 50);
+  }
+  cancelUnselect(): void {
+    this.pendingUnSelectIds = [];
+    this.isUnSelectConfirmVisible = false;
+  }
+  openUnSelectConfirm(): void {
+    if (this.pendingUnSelectIds.length === 0) return;
+    this.isUnSelectConfirmVisible = true;
+  }
+  getCustomerNameById(id: number): string {
+    if (!id) return '';
+    const emp = this.employeeList.find((e: any) => e.ID === id);
+    return emp ? emp.NAME : '';
+  }
+  trackByEmpId(index: number, emp: any): number {
+    return emp.ID;
+  }
+  onUnSelectSearch(searchText: string): void {
+    const trimmed = (searchText || '').trim().toLowerCase();
+    if (!trimmed) {
+      this.unSelectFilteredList = [];
+      return;
+    }
+    this.unSelectFilteredList = this.employeeList.filter((emp: any) =>
+      emp.NAME?.toLowerCase().includes(trimmed) ||
+      emp.MOBILE_NO?.includes(trimmed) ||
+      emp.EMAIL?.toLowerCase().includes(trimmed)
+    );
+  }
+  clearUnSelectSearch(): void {
+    this.unSelectSearchText = '';
+    this.unSelectFilteredList = [];
+  }
+  toggleUnselect(empId: number): void {
+    const isExcluded = this.excludedIds.includes(empId);
+    const isPending = this.pendingUnSelectIds.includes(empId);
+    if (isExcluded) {
+      this.excludedIds = this.excludedIds.filter(id => id !== empId);
+      if (!this.USER_IDS.includes(empId)) {
+        this.USER_IDS = [...this.USER_IDS, empId];
+      }
+      if (this.excludedIds.length === 0) {
+        this.SELECT_ALL = true;
+      }
+      if (this.unSelectSearchText) {
+        this.onUnSelectSearch(this.unSelectSearchText);
+      }
+    } else if (isPending) {
+      this.pendingUnSelectIds = this.pendingUnSelectIds.filter(id => id !== empId);
+    } else {
+      this.pendingUnSelectIds.push(empId);
+    }
+  }
   selectAllCustomers(): void {
+    const now = Date.now();
+    const cacheValid = this.customerAllLoaded &&
+      (now - this.customerLoadedAt) < this.CACHE_TTL_MS;
+    if (cacheValid) {
+      this.USER_IDS = this.employeeList
+        .filter((e: any) => e.ID !== '__load_more__')
+        .map((e: any) => e.ID);
+      this.notificationType = 'T';
+      this.SELECT_ALL = true;
+      this.excludedIds = [];
+      this.pendingUnSelectIds = [];
+      this.unSelectSearchText = '';
+      this.unSelectFilteredList = [];
+      return;
+    }
     this.isSpinning = true;
     this.loadingList = true;
     const searchFilter = this.customerSearchText
@@ -294,32 +389,22 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       .subscribe(
         (data) => {
           this.loadingList = false;
+          this.isSpinning = false;
           if (data['code'] == 200) {
             const allRecords: any[] = data['data'] || [];
-            this.USER_IDS = allRecords.map((e: any) => e.ID);
-            this.notificationType = 'T';
-            this.customerAllLoaded = true;
-            const BATCH_SIZE = 50;
-            let batchIndex = 0;
             const merged = new Map<number, any>(
               this.employeeList.map((e: any) => [e.ID, e])
             );
-            const pushNextBatch = () => {
-              const start = batchIndex * BATCH_SIZE;
-              const end = start + BATCH_SIZE;
-              const batch = allRecords.slice(start, end);
-              batch.forEach((e: any) => merged.set(e.ID, e));
-              this.employeeList = Array.from(merged.values());
-              batchIndex++;
-              if (end < allRecords.length) {
-                setTimeout(pushNextBatch, 0);
-              } else {
-                this.isSpinning = false;
-              }
-            };
-            pushNextBatch();
-          } else {
-            this.isSpinning = false;
+            allRecords.forEach((e: any) => merged.set(e.ID, e));
+            this.employeeList = Array.from(merged.values());
+            this.USER_IDS = allRecords.map((e: any) => e.ID);
+            this.notificationType = 'T';
+            this.customerAllLoaded = true;
+            this.customerLoadedAt = Date.now();
+            this.excludedIds = [];
+            this.pendingUnSelectIds = [];
+            this.unSelectSearchText = '';
+            this.unSelectFilteredList = [];
           }
         },
         (err) => {
@@ -1082,7 +1167,11 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       } else {
         this.USER_IDS = [];
         this.notificationType = 'C';
-        this.SELECT_ALL = false;  
+        this.SELECT_ALL = false;
+        this.excludedIds = [];
+        this.pendingUnSelectIds = [];
+        this.unSelectSearchText = '';
+        this.unSelectFilteredList = [];
         this.loadCustomerPage(true);
       }
       return;
