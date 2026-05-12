@@ -23,8 +23,9 @@ export class DashboardComponent implements OnInit {
   rolemainname = this.rolename
     ? this.commonFunction.decryptdata(this.rolename)
     : '';
-  grafanaUrl: SafeResourceUrl;
   is_show = false;
+  selectedTab: number = 0;
+  dashboardTabs: { title: string; url: SafeResourceUrl }[] = [];
   constructor(
     private api: ApiServiceService,
     private sanitizer: DomSanitizer
@@ -39,7 +40,7 @@ export class DashboardComponent implements OnInit {
       this.api
         .getDashboard(
           1,
-          1,
+          3,
           '',
           '',
           ' AND STATUS=1 AND ROLE_ID=' + this.roleIDMain
@@ -47,16 +48,18 @@ export class DashboardComponent implements OnInit {
         .subscribe(
           (data) => {
             if (data['status'] == 200) {
-              if (
-                data['body']['data'][0] != null &&
-                data['body']['data'][0] != undefined
-              ) {
+              const records = data['body']['data'];
+              if (records && records.length > 0) {
                 this.is_show = true;
-                const unsafeUrl =
-                  data['body']['data'][0]['SNAPSHOT_LINK'] +
-                  '?theme=light&fullscreen=true&kiosk';
-                this.grafanaUrl =
-                  this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
+                this.dashboardTabs = records.map((item: any) => ({
+                  title: item['NAME'] || item['TITLE'] || 'Dashboard',
+                  url: this.sanitizer.bypassSecurityTrustResourceUrl(
+                    item['SNAPSHOT_LINK'] +
+                    '?theme=light&kiosk' +
+                    '&from=now-1y&to=now' +
+                    '&var-territory=All'
+                  ),
+                }));
               }
             }
           },

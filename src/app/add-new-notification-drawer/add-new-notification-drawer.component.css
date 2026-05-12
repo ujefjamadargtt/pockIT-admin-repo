@@ -71,7 +71,7 @@ nz-form-item {
   width: 70%;
 }
 .file-input-hidden {
-  display: none;
+  display: none !important;
 }
 .file-name-display {
   font-size: 13px;

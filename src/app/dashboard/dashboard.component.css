@@ -36,3 +36,36 @@
 .welcome-email {
   font-size: 12px !important;
 }
+.tab-header {
+  display: flex;
+  gap: 4px;
+  padding: 12px 12px 0 12px;
+  border-bottom: 2px solid #051856;
+  background: #fff;
+  position: relative;
+  z-index: 10;
+}
+.tab-btn {
+  padding: 8px 24px;
+  border: 1px solid #d9d9d9;
+  border-bottom: none;
+  background: #f5f5f5;
+  cursor: pointer;
+  border-radius: 4px 4px 0 0;
+  font-size: 14px;
+  color: #555;
+  transition: all 0.2s;
+  position: relative;
+  z-index: 10;
+}
+.tab-btn.active {
+  background: #051856;
+  color: #fff;
+  border-color: #051856;
+}
+.tab-content {
+  border: 1px solid #e8e8e8;
+  border-top: none;
+  position: relative;
+  z-index: 1;
+}

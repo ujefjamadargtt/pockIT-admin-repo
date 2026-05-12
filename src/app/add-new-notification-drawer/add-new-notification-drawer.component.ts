@@ -37,7 +37,12 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   loadingList: boolean = false;
   percentImageOne: number;
   progressBarImageOne: boolean;
-  hidePincode: boolean = false; 
+  hidePincode: boolean = false;
+  customerPageIndex: number = 1;
+  customerPageSize: number = 20;
+  customerSearchText: string = '';
+  customerAllLoaded: boolean = false;
+  isCustomerLoading: boolean = false;
   constructor(
     private api: ApiServiceService,
     private message: NzNotificationService,
@@ -71,13 +76,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       this.StateData = [];
     }
     this.api
-      .getState(
-        0,
-        0,
-        'NAME',
-        'asc',
-        ' AND IS_ACTIVE = 1 AND COUNTRY_ID=' + countryId
-      )
+      .getState(0, 0, 'NAME', 'asc', ' AND IS_ACTIVE = 1 AND COUNTRY_ID=' + countryId)
       .subscribe(
         (data) => {
           if (data['code'] === 200) {
@@ -166,19 +165,11 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       );
     } else if (btnValue == '3') {
       this.heading = 'Select Customers';
-      this.api
-        .getAllCustomer(0, 0, '', 'desc', ' AND ACCOUNT_STATUS=1')
-        .subscribe(
-          (data) => {
-            if (data['code'] == 200) {
-              this.loadingList = false;
-              this.employeeList = data['data'];
-            }
-          },
-          (err) => {
-            if (err['ok'] == false) this.message.error('Server Not Found', '');
-          }
-        );
+      this.customerPageIndex = 1;
+      this.customerSearchText = '';
+      this.customerAllLoaded = false;
+      this.employeeList = [];
+      this.loadCustomerPage(true);
     } else if (btnValue == '4') {
       this.heading = 'Select Technicians';
       this.api
@@ -198,13 +189,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       this.heading = 'Select Pincode';
       this.notificationType = 'T';
       this.api
-        .getAllPincode(
-          this.pageIndex,
-          this.pageSize,
-          '',
-          'desc',
-          ' AND IS_ACTIVE=1'
-        )
+        .getAllPincode(this.pageIndex, this.pageSize, '', 'desc', ' AND IS_ACTIVE=1')
         .subscribe(
           (data) => {
             if (data['code'] == 200) {
@@ -220,6 +205,129 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       this.heading = '';
       this.notificationType = 'T';
     }
+  }
+  loadCustomerPage(reset: boolean = false): void {
+    if (this.isCustomerLoading) return;
+    if (!reset && this.customerAllLoaded) return;
+    if (reset) {
+      this.customerPageIndex = 1;
+      this.customerAllLoaded = false;
+      this.employeeList = [];
+    }
+    this.isCustomerLoading = true;
+    this.loadingList = true;
+    const pageToFetch = this.customerPageIndex;
+    this.customerPageIndex++;
+    const searchFilter = this.customerSearchText
+      ? ` AND (NAME LIKE '%${this.customerSearchText}%' OR MOBILE_NO LIKE '%${this.customerSearchText}%' OR EMAIL LIKE '%${this.customerSearchText}%')`
+      : '';
+    this.api
+      .getAllCustomer(
+        pageToFetch,
+        this.customerPageSize,
+        '',
+        'desc',
+        ' AND ACCOUNT_STATUS=1' + searchFilter
+      )
+      .subscribe(
+        (data) => {
+          this.isCustomerLoading = false;
+          this.loadingList = false;
+          if (data['code'] == 200) {
+            const incoming: any[] = data['data'] || [];
+            if (incoming.length < this.customerPageSize) {
+              this.customerAllLoaded = true;
+            }
+            const existingIds = new Set(this.employeeList.map((e: any) => e.ID));
+            const newRecords = incoming.filter((e: any) => !existingIds.has(e.ID));
+            this.employeeList = [...this.employeeList, ...newRecords];
+          }
+        },
+        (err) => {
+          this.isCustomerLoading = false;
+          this.loadingList = false;
+          this.customerPageIndex--;
+          if (err['ok'] == false) this.message.error('Server Not Found', '');
+        }
+      );
+  }
+  onCustomerSelectionChange(selectedIds: any[]): void {
+    const filtered = (selectedIds || []).filter((id: any) => id !== '__load_more__');
+    this.USER_IDS = filtered;
+    if (this.sharingMode === '3') {
+      if (filtered.length === 0) {
+        this.SELECT_ALL = false;
+        this.notificationType = 'C';
+      } else if (this.SELECT_ALL) {
+        this.SELECT_ALL = false;
+        this.notificationType = 'C';
+      }
+    }
+  }
+  private customerSearchTimer: any = null;
+  searchCustomers(searchText: string): void {
+    if (this.sharingMode !== '3') return;
+    const trimmed = (searchText || '').trim();
+    if (!trimmed) {
+      clearTimeout(this.customerSearchTimer);
+      if (this.customerSearchText !== '') {
+        this.customerSearchText = '';
+        this.loadCustomerPage(true);
+      }
+      return;
+    }
+    if (trimmed === this.customerSearchText) return;
+    clearTimeout(this.customerSearchTimer);
+    this.customerSearchTimer = setTimeout(() => {
+      this.customerSearchText = trimmed;
+      this.loadCustomerPage(true);
+    }, 400);
+  }
+  selectAllCustomers(): void {
+    this.isSpinning = true;
+    this.loadingList = true;
+    const searchFilter = this.customerSearchText
+      ? ` AND (NAME LIKE '%${this.customerSearchText}%' OR MOBILE_NO LIKE '%${this.customerSearchText}%' OR EMAIL LIKE '%${this.customerSearchText}%')`
+      : '';
+    this.api
+      .getAllCustomer(0, 0, '', 'desc', ' AND ACCOUNT_STATUS=1' + searchFilter)
+      .subscribe(
+        (data) => {
+          this.loadingList = false;
+          if (data['code'] == 200) {
+            const allRecords: any[] = data['data'] || [];
+            this.USER_IDS = allRecords.map((e: any) => e.ID);
+            this.notificationType = 'T';
+            this.customerAllLoaded = true;
+            const BATCH_SIZE = 50;
+            let batchIndex = 0;
+            const merged = new Map<number, any>(
+              this.employeeList.map((e: any) => [e.ID, e])
+            );
+            const pushNextBatch = () => {
+              const start = batchIndex * BATCH_SIZE;
+              const end = start + BATCH_SIZE;
+              const batch = allRecords.slice(start, end);
+              batch.forEach((e: any) => merged.set(e.ID, e));
+              this.employeeList = Array.from(merged.values());
+              batchIndex++;
+              if (end < allRecords.length) {
+                setTimeout(pushNextBatch, 0);
+              } else {
+                this.isSpinning = false;
+              }
+            };
+            pushNextBatch();
+          } else {
+            this.isSpinning = false;
+          }
+        },
+        (err) => {
+          this.isSpinning = false;
+          this.loadingList = false;
+          if (err['ok'] == false) this.message.error('Server Not Found', '');
+        }
+      );
   }
   searchTextPincode = '';
   searchAllPincodes(searchText) {
@@ -264,13 +372,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         query = ` AND PINCODE_NUMBER LIKE '%${this.searchTextPincode}%'`;
       }
       this.api
-        .getAllPincode(
-          this.pageIndex,
-          this.pageSize,
-          '',
-          'desc',
-          ' AND IS_ACTIVE=1' + query
-        )
+        .getAllPincode(this.pageIndex, this.pageSize, '', 'desc', ' AND IS_ACTIVE=1' + query)
         .subscribe(
           (data) => {
             if (data['code'] == 200) {
@@ -345,7 +447,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
             resolve(compressedFile);
           },
           file.type,
-          0.6 
+          0.6
         );
       };
       reader.readAsDataURL(file);
@@ -353,7 +455,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   }
   async compressTextFile(file: File): Promise<File> {
     const text = await file.text();
-    const compressedText = text.replace(/\s+/g, ' ').trim(); 
+    const compressedText = text.replace(/\s+/g, ' ').trim();
     const compressedFile = new File([compressedText], file.name, {
       type: file.type,
     });
@@ -508,11 +610,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         this.urlImageOne = `${d ?? ''}${number}.${fileExt}`;
         this.selectedFileName = this.urlImageOne;
         this.api
-          .onUpload(
-            'notificationAttachment',
-            this.referenceForFile,
-            this.urlImageOne
-          )
+          .onUpload('notificationAttachment', this.referenceForFile, this.urlImageOne)
           .subscribe((res) => {
             if (res.type === HttpEventType.Response) {
             }
@@ -552,11 +650,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
           this.urlImageOne = `${d ?? ''}${number}.${fileExt}`;
           this.selectedFileName = this.urlImageOne;
           this.api
-            .onUpload(
-              'notificationAttachment',
-              compressedFile,
-              this.urlImageOne
-            )
+            .onUpload('notificationAttachment', compressedFile, this.urlImageOne)
             .subscribe((res) => {
               if (res.type === HttpEventType.Response) {
               }
@@ -628,40 +722,21 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         event.target.value = null;
         return;
       }
-      if (
-        this.MEDIA_TYPE === 'T' &&
-        !documentExtensions.includes(fileExtension)
-      ) {
-        this.message.error(
-          'Please upload a valid document (pdf, docx, txt)',
-          ''
-        );
+      if (this.MEDIA_TYPE === 'T' && !documentExtensions.includes(fileExtension)) {
+        this.message.error('Please upload a valid document (pdf, docx, txt)', '');
         this.isSpinning = false;
         event.target.value = null;
         return;
       }
       this.isSpinning = true;
     }
-    const allowedExtensions = [
-      'jpg',
-      'jpeg',
-      'png',
-      'pdf',
-      'docx',
-      'txt',
-      'mp3',
-      'mp4',
-      'avi',
-    ];
-    const file = event.target.files[0]; 
+    const allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'docx', 'txt', 'mp3', 'mp4', 'avi'];
+    const file = event.target.files[0];
     if (file) {
       const fileName = file.name;
       const fileExtension = fileName.split('.').pop()?.toLowerCase();
       if (!fileExtension || !allowedExtensions.includes(fileExtension)) {
-        this.message.error(
-          'Invalid file type! Please select a valid file.',
-          ''
-        );
+        this.message.error('Invalid file type! Please select a valid file.', '');
         this.isSpinning = false;
         event.target.value = null;
         return;
@@ -723,18 +798,12 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   selectedCountyId;
   selectedStateId;
   onNotificationTypeChange(eve) {
-    this.hidePincode = false
+    this.hidePincode = false;
   }
   onTechnicianWiseChange(event) {
     if (event) {
       this.api
-        .getTechnicianData(
-          0,
-          0,
-          '',
-          'desc',
-          ' AND TECHNICIAN_STATUS=1 AND TYPE=' + `'${event}'`
-        )
+        .getTechnicianData(0, 0, '', 'desc', ' AND TECHNICIAN_STATUS=1 AND TYPE=' + `'${event}'`)
         .subscribe(
           (data) => {
             if (data['code'] == 200) {
@@ -820,7 +889,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       );
   }
   getPincodesByCity(districtId: number) {
-    this.isPincodeSpinning = true; 
+    this.isPincodeSpinning = true;
     this.api
       .getAllPincode(
         this.pageIndex,
@@ -837,11 +906,11 @@ export class AddNewNotificationDrawerComponent implements OnInit {
             this.PincodeData2 = [];
             this.message.error('Failed To Get Pincode Data...', '');
           }
-          this.isPincodeSpinning = false; 
+          this.isPincodeSpinning = false;
         },
         () => {
           this.message.error('Something went wrong.', '');
-          this.isPincodeSpinning = false; 
+          this.isPincodeSpinning = false;
         }
       );
   }
@@ -892,12 +961,8 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         '5': 'Please Select Pincode',
       };
       this.isSpinning = false;
-      this.message.error(
-        messageMap[this.sharingMode] || 'Please Select a User',
-        ''
-      );
-    }
-    else if (!this.TITLE?.trim()) {
+      this.message.error(messageMap[this.sharingMode] || 'Please Select a User', '');
+    } else if (!this.TITLE?.trim()) {
       isOk = false;
       this.isSpinning = false;
       this.message.error('Please Enter Valid Notification Title', '');
@@ -905,8 +970,7 @@ export class AddNewNotificationDrawerComponent implements OnInit {
       isOk = false;
       this.isSpinning = false;
       this.message.error('Invalid characters in Title', '');
-    }
-    else if (!this.DESCRIPTION?.trim()) {
+    } else if (!this.DESCRIPTION?.trim()) {
       isOk = false;
       this.isSpinning = false;
       this.message.error('Please Enter Valid Notification Description', '');
@@ -933,35 +997,19 @@ export class AddNewNotificationDrawerComponent implements OnInit {
         this.topicName = 'system_alerts_channel';
         this.USER_IDS = [];
       }
-      if (
-        this.notificationType == 'T' &&
-        this.sharingMode == '4' &&
-        this.radiogroup1 == 'ALL'
-      ) {
+      if (this.notificationType == 'T' && this.sharingMode == '4' && this.radiogroup1 == 'ALL') {
         this.topicName = 'technician_channel';
         this.USER_IDS = [];
       }
-      if (
-        this.notificationType == 'T' &&
-        this.sharingMode == '4' &&
-        this.radiogroup1 == 'F'
-      ) {
+      if (this.notificationType == 'T' && this.sharingMode == '4' && this.radiogroup1 == 'F') {
         this.topicName = 'freelancer_channel';
         this.USER_IDS = [];
       }
-      if (
-        this.notificationType == 'T' &&
-        this.sharingMode == '4' &&
-        this.radiogroup1 == 'V'
-      ) {
+      if (this.notificationType == 'T' && this.sharingMode == '4' && this.radiogroup1 == 'V') {
         this.topicName = 'vendor_managed_channel';
         this.USER_IDS = [];
       }
-      if (
-        this.notificationType == 'T' &&
-        this.sharingMode == '4' &&
-        this.radiogroup1 == 'O'
-      ) {
+      if (this.notificationType == 'T' && this.sharingMode == '4' && this.radiogroup1 == 'O') {
         this.topicName = 'on_payroll_channel';
         this.USER_IDS = [];
       }
@@ -1028,6 +1076,17 @@ export class AddNewNotificationDrawerComponent implements OnInit {
   radiogroup = '';
   radiogroup1: any = 'ALL';
   onSelectAllChecked(switchStatus: boolean) {
+    if (this.sharingMode === '3') {
+      if (switchStatus) {
+        this.selectAllCustomers();
+      } else {
+        this.USER_IDS = [];
+        this.notificationType = 'C';
+        this.SELECT_ALL = false;  
+        this.loadCustomerPage(true);
+      }
+      return;
+    }
     let ids: any = [];
     if (switchStatus == true) {
       if (this.sharingMode != '1' && this.sharingMode != '2') {

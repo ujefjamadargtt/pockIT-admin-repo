@@ -94,9 +94,83 @@
           <nz-form-item>
             <nz-form-label nzRequired nzNoColon>{{ heading }}</nz-form-label>
             <nz-form-control>
-              <nz-select *ngIf="sharingMode != '5'" name="userID" nzShowSearch nzAllowClear nzMode="multiple"
+              <nz-select *ngIf="sharingMode == '3'" name="userID" nzShowSearch nzAllowClear nzMode="multiple"
                 class="full-width-select" [nzPlaceHolder]="heading" [nzLoading]="loadingList" [(ngModel)]="USER_IDS"
-                [nzMaxTagCount]="6">
+                [nzMaxTagCount]="6" (nzOnSearch)="searchCustomers($event)"
+                (ngModelChange)="onCustomerSelectionChange($event)">
+                <nz-option nzCustomContent class="option-custom-content" *ngFor="let emp of employeeList"
+                  [nzValue]="emp.ID" [nzLabel]="emp.NAME">
+                  <div nz-row class="option-row">
+                    <div nz-col nzSpan="2" class="avatar-column">
+                      <nz-avatar nzText="{{ getInitial(emp.NAME) | uppercase }}" nzSize="large" class="avatar-styled">
+                      </nz-avatar>
+                    </div>
+                    <div nz-col nzSpan="22" class="details-column">
+                      <div nz-row>
+                        <div nz-col nzSpan="24" class="name-column" nz-popover [nzPopoverTitle]="
+                            emp.NAME && emp.NAME?.length > 50 ? emp.NAME : ''
+                          ">
+                          <b>{{
+                            emp.NAME
+                            ? emp.NAME.length > 50
+                            ? (emp.NAME | slice : 0 : 50) + "..."
+                            : emp.NAME.length < 50 ? (emp.NAME | slice : 0 : 40) : "" : "-" }}</b>
+                        </div>
+                        <div nz-col nzSpan="12" class="detail-field user-type-field">
+                          <i nz-icon nzType="user" nzTheme="outline" class="black-icon"></i>&nbsp;
+                          {{
+                          emp.CUSTOMER_TYPE == "I"
+                          ? "Individual(B2C)"
+                          : emp.CUSTOMER_TYPE == "B"
+                          ? "Business(B2B)"
+                          : ""
+                          }}
+                        </div>
+                        <div nz-col nzSpan="12" class="detail-field address-field" nz-popover [nzPopoverTitle]="
+                            emp.ADDRESS_LINE_1 && emp.ADDRESS_LINE_1?.length > 30 ? emp.ADDRESS_LINE_1 : ''
+                          ">
+                          <i nz-icon nzType="environment" nzTheme="outline" class="black-icon"></i>&nbsp;
+                          {{
+                          emp.ADDRESS_LINE_1?.length > 30
+                          ? (emp.ADDRESS_LINE_1 | slice : 0 : 30) + "..."
+                          : emp.ADDRESS_LINE_1
+                          }}
+                        </div>
+                        <div nz-col nzSpan="12" class="detail-field mobile-field">
+                          <i nz-icon nzType="mobile" nzTheme="outline" class="black-icon"></i>&nbsp;
+                          {{ emp.MOBILE_NO }}
+                        </div>
+                        <div nz-col nzSpan="12" class="detail-field email-field" nz-popover [nzPopoverTitle]="
+                            emp.EMAIL && emp.EMAIL?.length > 30 ? emp.EMAIL : ''
+                          ">
+                          <i nz-icon nzType="mail" nzTheme="outline" class="black-icon"></i>&nbsp;
+                          {{
+                          emp.EMAIL?.length > 30
+                          ? (emp.EMAIL | slice : 0 : 30) + "..."
+                          : emp.EMAIL
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </nz-option>
+                <nz-option *ngIf="!customerAllLoaded" nzCustomContent nzValue="__load_more__"
+                  nzLabel="── Load More ──">
+                  <div style="text-align:center; padding: 6px 0;"
+                    (mousedown)="$event.stopPropagation(); $event.preventDefault(); loadCustomerPage(false)">
+                    <span *ngIf="isCustomerLoading" nz-icon nzType="loading" nzTheme="outline"
+                      style="margin-right:6px;"></span>
+                    <span *ngIf="!isCustomerLoading" nz-icon nzType="down-circle" nzTheme="outline"
+                      style="margin-right:6px;"></span>
+                    <span style="color: #1890ff; font-weight: 500;">
+                      {{ isCustomerLoading ? 'Loading...' : 'Load More Customers' }}
+                    </span>
+                  </div>
+                </nz-option>
+              </nz-select>
+              <nz-select *ngIf="sharingMode != '5' && sharingMode != '3'" name="userID" nzShowSearch nzAllowClear
+                nzMode="multiple" class="full-width-select" [nzPlaceHolder]="heading" [nzLoading]="loadingList"
+                [(ngModel)]="USER_IDS" [nzMaxTagCount]="6">
                 <nz-option nzCustomContent class="option-custom-content" *ngFor="let emp of employeeList" [nzValue]="
                     sharingMode == '1' || sharingMode == '2'
                       ? emp.USER_ID
@@ -143,12 +217,6 @@
                           ? emp.ROLE_NAME?.length > 30
                           ? (emp.ROLE_NAME | slice : 0 : 30) + "..."
                           : emp.ROLE_NAME
-                          : sharingMode == "3"
-                          ? emp.CUSTOMER_TYPE == "I"
-                          ? "Individual(B2C)"
-                          : emp.CUSTOMER_TYPE == "B"
-                          ? "Business(B2B)"
-                          : ""
                           : sharingMode == "4"
                           ? emp.TYPE === "O"
                           ? "On Payroll"
@@ -223,10 +291,6 @@
                           ? emp.EMAIL_ID?.length > 30
                           ? (emp.EMAIL_ID | slice : 0 : 30) + "..."
                           : emp.EMAIL_ID
-                          : sharingMode == "3"
-                          ? emp.EMAIL?.length > 30
-                          ? (emp.EMAIL | slice : 0 : 30) + "..."
-                          : emp.EMAIL
                           : emp.EMAIL_ID?.length > 30
                           ? (emp.EMAIL_ID | slice : 0 : 30) + "..."
                           : emp.EMAIL_ID
